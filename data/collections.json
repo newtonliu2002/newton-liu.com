@@ -1,0 +1,65 @@
+{
+  "_comment": "Hand-edited. One entry per gallery. `slug` must match the folder name under images/ and collections/. Subtitles and blurbs are placeholders — rewrite them in your own voice.",
+  "collections": [
+    {
+      "slug": "galapagos",
+      "title": "Galápagos",
+      "subtitle": "Endemics without fear",
+      "blurb": "Placeholder — replace with your own words about this trip."
+    },
+    {
+      "slug": "peru",
+      "title": "Peru",
+      "subtitle": "Andes to Amazon",
+      "blurb": "Placeholder — replace with your own words about this trip."
+    },
+    {
+      "slug": "sri-lanka",
+      "title": "Sri Lanka",
+      "subtitle": "Wet-zone endemics",
+      "blurb": "Placeholder — replace with your own words about this trip."
+    },
+    {
+      "slug": "malaysia",
+      "title": "Malaysia",
+      "subtitle": "Lowland and montane rainforest",
+      "blurb": "Placeholder — replace with your own words about this trip."
+    },
+    {
+      "slug": "yunnan",
+      "title": "Yunnan",
+      "subtitle": "The eastern Himalaya",
+      "blurb": "Placeholder — replace with your own words about this trip."
+    },
+    {
+      "slug": "guangxi",
+      "title": "Guangxi",
+      "subtitle": "Karst and limestone forest",
+      "blurb": "Placeholder — replace with your own words about this trip."
+    },
+    {
+      "slug": "hawaii",
+      "title": "Hawai'i",
+      "subtitle": "Honeycreepers and seabirds",
+      "blurb": "Placeholder — replace with your own words about this trip."
+    },
+    {
+      "slug": "yellowstone",
+      "title": "Yellowstone",
+      "subtitle": "Winter in the northern range",
+      "blurb": "Placeholder — replace with your own words about this trip."
+    },
+    {
+      "slug": "west",
+      "title": "The American West",
+      "subtitle": "Sagebrush, canyon and coast",
+      "blurb": "Placeholder — replace with your own words about this trip."
+    },
+    {
+      "slug": "elsewhere",
+      "title": "Elsewhere",
+      "subtitle": "Everything that doesn't have a home yet",
+      "blurb": "Placeholder — replace with your own words about this trip."
+    }
+  ]
+}

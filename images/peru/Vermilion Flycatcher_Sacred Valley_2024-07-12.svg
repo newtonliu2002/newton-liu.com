@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 800" width="1600" height="800">
+<defs>
+<linearGradient id="s" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#2c2119"/><stop offset="74%" stop-color="#96633a"/>
+</linearGradient>
+<radialGradient id="g" cx="49%" cy="41%" r="58%">
+<stop offset="0%" stop-color="#f2c877" stop-opacity="0.8"/>
+<stop offset="100%" stop-color="#f2c877" stop-opacity="0"/>
+</radialGradient>
+<linearGradient id="v" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#000" stop-opacity="0.3"/>
+<stop offset="45%" stop-color="#000" stop-opacity="0"/>
+<stop offset="100%" stop-color="#000" stop-opacity="0.45"/>
+</linearGradient>
+<filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3"/>
+<feColorMatrix type="saturate" values="0"/></filter>
+</defs>
+<rect width="1600" height="800" fill="url(#s)"/>
+<rect width="1600" height="800" fill="url(#g)"/>
+<circle cx="784" cy="328" r="40" fill="#f2c877" opacity="0.5"/>
+<path d="M0 458 L400 502 L800 546 L1200 414 L1600 458 L1600 800 L0 800 Z" fill="#120c07" opacity="0.5"/>
+<path d="M0 570 L400 614 L800 658 L1200 526 L1600 570 L1600 800 L0 800 Z" fill="#120c07"/>
+<rect width="1600" height="800" fill="url(#v)"/>
+<rect width="1600" height="800" filter="url(#n)" opacity="0.045"/>
+<text x="800" y="760" fill="#fff" fill-opacity="0.2" font-family="Georgia,serif"
+ font-size="16" font-style="italic" text-anchor="middle">placeholder</text>
+</svg>

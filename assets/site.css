@@ -1,222 +1,340 @@
 /* ==========================================================================
-   Newton Liu — photography portfolio
-   Dark, quiet, image-first. No external fonts or assets: everything here is
-   self-contained so GitHub Pages serves it instantly and it can never break
-   because a CDN went away.
+   newton-liu.com
+
+   ALL styling lives in this file. Every design decision that you might
+   plausibly want to change is a custom property in the :root block below —
+   restyling the site should mostly mean editing that block and nothing else.
+   If you find yourself hunting for a hard-coded colour further down, that's a
+   bug: lift it up here.
    ========================================================================== */
 
 :root {
-  --bg:            #0a0b0d;
-  --bg-raised:     #131519;
-  --hairline:      #24272d;
-  --text:          #eceae6;
+  /* ---- Colour ------------------------------------------------------- */
+  --bg:            #0a0b0d;   /* page */
+  --bg-raised:     #131519;   /* cards, image wells before load */
+  --hairline:      #23262c;
+  --text:          #f0eeea;
   --text-dim:      #9a9ca3;
   --text-faint:    #63666d;
-  --accent:        #c9963f;   /* warm, reads as low sun rather than "brand" */
+  --accent:        #c9963f;   /* low sun; used sparingly */
+  --on-accent:     #14100a;
 
-  --row-h:         280px;     /* target justified-row height; see .grid */
-  --gap:           10px;
-
+  /* ---- Type --------------------------------------------------------- */
   --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
   --sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-  --measure: 34rem;
+  --step--1: clamp(0.78rem, 0.76rem + 0.1vw, 0.84rem);
+  --step-0:  clamp(1rem, 0.97rem + 0.15vw, 1.08rem);
+  --step-1:  clamp(1.25rem, 1.15rem + 0.5vw, 1.6rem);
+  --step-2:  clamp(1.6rem, 1.35rem + 1.2vw, 2.4rem);
+  --step-3:  clamp(2.1rem, 1.5rem + 3vw, 4.2rem);
+
+  --measure: 36rem;
+
+  /* ---- Layout ------------------------------------------------------- */
+  --wrap:      74rem;   /* prose + cards */
+  --wrap-wide: 108rem;  /* photo grids get more room */
+  --gutter:    clamp(1.25rem, 4vw, 2.5rem);
+
+  --row-h:  300px;   /* target height of a justified gallery row */
+  --gap:    10px;    /* between photographs */
+  --radius: 2px;     /* photographs are nearly square-cornered on purpose */
+
+  --ease: cubic-bezier(0.2, 0.7, 0.3, 1);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; }
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
 
 body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
   font-family: var(--sans);
-  font-size: 16px;
+  font-size: var(--step-0);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 img { display: block; max-width: 100%; }
+a   { color: inherit; }
 
-a { color: inherit; }
+::selection { background: var(--accent); color: var(--on-accent); }
 
-::selection { background: var(--accent); color: #14100a; }
-
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
 .skip-link {
-  position: absolute;
-  left: -9999px;
-  top: 0;
-  background: var(--accent);
-  color: #14100a;
-  padding: 0.6rem 1rem;
-  z-index: 200;
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--accent); color: var(--on-accent); padding: 0.6rem 1rem;
 }
 .skip-link:focus { left: 0; }
 
-/* ---------- Layout containers ---------------------------------------- */
+/* ---------- Containers ------------------------------------------------ */
 
 .wrap {
   width: 100%;
-  max-width: 68rem;
+  max-width: var(--wrap);
   margin-inline: auto;
-  padding-inline: 1.5rem;
+  padding-inline: var(--gutter);
 }
-
-/* The gallery gets more room than the prose. */
 .wrap-wide {
   width: 100%;
-  max-width: 104rem;
+  max-width: var(--wrap-wide);
   margin-inline: auto;
-  padding-inline: 1rem;
+  padding-inline: clamp(0.5rem, 2vw, 1.5rem);
 }
 
-/* ---------- Masthead -------------------------------------------------- */
+.section-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: var(--step--1);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin: 0 0 2rem;
+}
+
+.lede {
+  font-size: var(--step-1);
+  line-height: 1.5;
+  max-width: var(--measure);
+  color: var(--text-dim);
+  margin: 0 0 1.5rem;
+}
+
+.text-link {
+  text-decoration: none;
+  font-size: var(--step--1);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s var(--ease);
+}
+.text-link:hover { border-bottom-color: var(--accent); }
+
+/* ---------- Masthead --------------------------------------------------- */
 
 .masthead {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: saturate(140%) blur(12px);
-  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  position: sticky; top: 0; z-index: 50;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: saturate(150%) blur(14px);
+  -webkit-backdrop-filter: saturate(150%) blur(14px);
   border-bottom: 1px solid var(--hairline);
 }
 
 .masthead-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  min-height: 4.5rem;
-  padding-block: 0.85rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1.5rem; min-height: 4.25rem;
 }
 
-.wordmark {
-  text-decoration: none;
-  display: grid;
-  gap: 0.15rem;
-}
+.wordmark { text-decoration: none; display: grid; gap: 0.1rem; }
 .wordmark-name {
   font-family: var(--serif);
-  font-size: 1.2rem;
-  letter-spacing: 0.01em;
+  font-size: var(--step-1);
+  line-height: 1.1;
+  letter-spacing: 0.005em;
 }
 .wordmark-sub {
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase;
   color: var(--text-faint);
 }
 
 .nav {
-  display: flex;
-  gap: 1.5rem;
-  font-size: 0.78rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  display: flex; gap: clamp(1rem, 3vw, 2rem);
+  font-size: var(--step--1); letter-spacing: 0.14em; text-transform: uppercase;
 }
 .nav a {
-  text-decoration: none;
-  color: var(--text-dim);
-  padding-block: 0.25rem;
-  border-bottom: 1px solid transparent;
-  transition: color 0.2s, border-color 0.2s;
+  text-decoration: none; color: var(--text-dim);
+  padding-block: 0.3rem; border-bottom: 1px solid transparent;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
 }
-.nav a:hover { color: var(--text); border-bottom-color: var(--accent); }
-
-/* ---------- Intro ----------------------------------------------------- */
-
-.intro {
-  padding-block: clamp(3.5rem, 9vw, 7rem) clamp(2rem, 5vw, 3.5rem);
+.nav a:hover, .nav a[aria-current="page"] {
+  color: var(--text); border-bottom-color: var(--accent);
 }
-.intro h1 {
+
+/* ---------- Hero ------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  min-height: min(82vh, 780px);
+  display: flex; align-items: flex-end;
+  padding-block: clamp(4rem, 12vh, 9rem) clamp(3rem, 8vh, 5rem);
+  overflow: hidden;
+  background: var(--bg-raised);
+}
+
+/* Filled by site.js with the featured photograph. */
+.hero-media {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  transform: scale(1.04);
+  animation: hero-settle 14s var(--ease) forwards;
+}
+@keyframes hero-settle { to { transform: scale(1); } }
+
+.hero-scrim {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to top, var(--bg) 2%, rgba(10,11,13,0.35) 48%, rgba(10,11,13,0.55) 100%);
+}
+
+.hero-inner { position: relative; }
+
+.hero-title {
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(2rem, 5.2vw, 3.4rem);
-  line-height: 1.12;
+  font-size: var(--step-3);
+  line-height: 1.06;
+  letter-spacing: -0.015em;
   margin: 0 0 1.1rem;
-  max-width: 18ch;
   text-wrap: balance;
+  text-shadow: 0 2px 40px rgba(0,0,0,0.6);
 }
-.intro p {
-  margin: 0;
-  max-width: var(--measure);
+
+.hero-sub {
+  margin: 0 0 2rem;
+  max-width: 30rem;
   color: var(--text-dim);
-  font-size: 1.02rem;
+  font-size: var(--step-1);
+  text-shadow: 0 1px 20px rgba(0,0,0,0.7);
 }
 
-/* ---------- Filters --------------------------------------------------- */
-
-.gallery-section { padding-bottom: clamp(3rem, 7vw, 5.5rem); }
-
-.filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  padding-bottom: 1.75rem;
-}
-
-.filter-btn {
-  appearance: none;
-  background: transparent;
-  border: 1px solid var(--hairline);
-  border-radius: 999px;
-  color: var(--text-dim);
-  font: inherit;
-  font-size: 0.76rem;
-  letter-spacing: 0.09em;
+.hero-cta {
+  display: inline-block;
+  text-decoration: none;
+  font-size: var(--step--1);
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  padding: 0.42rem 0.95rem;
-  cursor: pointer;
-  transition: color 0.18s, border-color 0.18s, background-color 0.18s;
+  padding: 0.85rem 1.6rem;
+  border: 1px solid var(--text-dim);
+  transition: background-color 0.25s var(--ease), color 0.25s var(--ease),
+              border-color 0.25s var(--ease);
 }
-.filter-btn:hover { color: var(--text); border-color: var(--text-faint); }
-.filter-btn[aria-pressed="true"] {
-  color: #14100a;
-  background: var(--accent);
-  border-color: var(--accent);
-}
-.filter-count {
-  font-size: 0.85em;
-  opacity: 0.65;
-  margin-left: 0.4em;
+.hero-cta:hover {
+  background: var(--text); color: var(--bg); border-color: var(--text);
 }
 
-/* ---------- Justified grid -------------------------------------------
-   Flexbox justified rows. Each tile carries its own aspect ratio in a
-   custom property (--ar), set inline from photos.json:
+/* ---------- Collection cards -------------------------------------------- */
 
-     flex-basis  = --ar * --row-h   → natural width at the target height
-     flex-grow   = --ar             → every tile in a row scales by the
-                                      same factor, so heights stay equal
-     aspect-ratio= --ar             → height follows from the final width
+.collections { padding-block: clamp(3.5rem, 9vw, 6.5rem); }
 
-   The ::after pseudo-element soaks up the leftover grow on the final row
-   so a lonely last photo isn't stretched across the whole viewport.
-   -------------------------------------------------------------------- */
-
-.grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--gap);
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
+  gap: clamp(1rem, 2.5vw, 1.75rem);
 }
-.grid::after {
+
+.collection-card {
+  position: relative;
+  display: block;
+  text-decoration: none;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--bg-raised);
+  isolation: isolate;
+}
+
+.collection-card img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.8s var(--ease), opacity 0.5s ease;
+}
+.collection-card:hover img,
+.collection-card:focus-visible img { transform: scale(1.05); }
+
+.collection-card::after {
   content: "";
-  flex-grow: 1e6;
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.15) 55%, rgba(0,0,0,0.05) 100%);
 }
+
+.card-body {
+  position: absolute; inset: auto 0 0 0; z-index: 2;
+  padding: 1.4rem 1.5rem;
+}
+.card-title {
+  font-family: var(--serif);
+  font-size: var(--step-2);
+  line-height: 1.1;
+  margin: 0;
+}
+.card-sub {
+  margin: 0.2rem 0 0;
+  font-size: var(--step--1);
+  color: rgba(255,255,255,0.72);
+}
+.card-count {
+  position: absolute; top: 1.1rem; right: 1.25rem; z-index: 2;
+  font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+}
+
+/* An empty collection shouldn't look broken — it looks *pending*. */
+.collection-card.is-empty { border: 1px dashed var(--hairline); }
+.collection-card.is-empty::after { background: none; }
+.collection-card.is-empty .card-title { color: var(--text-dim); }
+
+/* ---------- About teaser ------------------------------------------------ */
+
+.about-teaser {
+  padding-block: clamp(3rem, 7vw, 5rem);
+  border-top: 1px solid var(--hairline);
+}
+
+/* ---------- Gallery page ------------------------------------------------ */
+
+.gallery-head {
+  padding-block: clamp(3rem, 8vw, 5.5rem) clamp(1.75rem, 4vw, 2.75rem);
+}
+.gallery-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: var(--step-3);
+  line-height: 1.05;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.015em;
+}
+.gallery-sub {
+  margin: 0 0 1.25rem;
+  color: var(--accent);
+  font-size: var(--step--1);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.gallery-blurb { max-width: var(--measure); color: var(--text-dim); margin: 0; }
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-size: var(--step--1);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  text-decoration: none;
+  transition: color 0.2s var(--ease);
+}
+.back-link:hover { color: var(--text); }
+
+/* Justified rows via flexbox.
+   Each tile carries its aspect ratio in --ar, set inline from photos.json:
+     flex-basis = ar * row-h  → its natural width at the target row height
+     flex-grow  = ar          → every tile in a row scales by the same factor,
+                                so their heights stay equal
+     aspect-ratio = ar        → height follows from the final width
+   The ::after soaks up leftover grow so a lone last photo isn't stretched. */
+
+.grid { display: flex; flex-wrap: wrap; gap: var(--gap); }
+.grid::after { content: ""; flex-grow: 1e6; }
 
 .grid-status {
-  color: var(--text-faint);
-  font-size: 0.9rem;
-  padding: 3rem 0;
-  width: 100%;
-  text-align: center;
+  width: 100%; text-align: center; padding: 4rem 1rem;
+  color: var(--text-faint); font-size: var(--step--1);
 }
 
 .tile {
@@ -226,223 +344,162 @@ a { color: inherit; }
   flex-shrink: 1;
   flex-basis: calc(var(--ar) * var(--row-h));
   aspect-ratio: var(--ar);
-  margin: 0;
-  padding: 0;
-  border: 0;
+  max-width: 100%;
+  margin: 0; padding: 0; border: 0;
   background: var(--bg-raised);
+  border-radius: var(--radius);
   overflow: hidden;
   cursor: zoom-in;
-  /* Stops one very wide panorama from eating an entire row on its own. */
-  max-width: 100%;
 }
 
 .tile img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.3, 1), opacity 0.5s ease;
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.7s var(--ease), opacity 0.5s ease;
 }
+.tile img[data-loaded="false"] { opacity: 0; }
+.tile:hover img, .tile:focus-visible img { transform: scale(1.04); }
 
-.tile:hover img,
-.tile:focus-visible img { transform: scale(1.035); }
-
-/* Caption bar slides up on hover; always present for keyboard focus. */
 .tile-label {
-  position: absolute;
-  inset: auto 0 0 0;
-  padding: 2.5rem 0.9rem 0.75rem;
-  background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
-  color: #fff;
-  text-align: left;
-  opacity: 0;
-  transform: translateY(6px);
-  transition: opacity 0.28s ease, transform 0.28s ease;
+  position: absolute; inset: auto 0 0 0;
+  padding: 3rem 1rem 0.85rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0));
+  color: #fff; text-align: left;
+  opacity: 0; transform: translateY(6px);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
   pointer-events: none;
 }
-.tile:hover .tile-label,
-.tile:focus-visible .tile-label { opacity: 1; transform: none; }
-
+.tile:hover .tile-label, .tile:focus-visible .tile-label {
+  opacity: 1; transform: none;
+}
 .tile-title {
-  display: block;
-  font-family: var(--serif);
-  font-size: 1rem;
+  display: block; font-family: var(--serif); font-size: var(--step-0);
   line-height: 1.25;
 }
 .tile-place {
-  display: block;
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
-  color: rgba(255,255,255,0.72);
-  margin-top: 0.15rem;
+  display: block; font-size: 0.7rem; letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.7); margin-top: 0.1rem;
 }
 
-/* Fade photos in as they decode, so the grid doesn't flash-pop. */
-.tile img[data-loaded="false"] { opacity: 0; }
+/* ---------- Prose pages -------------------------------------------------- */
 
-/* ---------- Prose blocks ---------------------------------------------- */
-
-.prose {
-  padding-block: clamp(2.5rem, 6vw, 4.5rem);
-  border-top: 1px solid var(--hairline);
+.prose { padding-block: clamp(3rem, 8vw, 5.5rem); }
+.prose h1 {
+  font-family: var(--serif); font-weight: 400;
+  font-size: var(--step-3); line-height: 1.05;
+  margin: 0 0 1.5rem; letter-spacing: -0.015em;
 }
 .prose h2 {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: 1.6rem;
-  margin: 0 0 1rem;
+  font-family: var(--serif); font-weight: 400;
+  font-size: var(--step-2); margin: 2.5rem 0 0.75rem;
 }
-.prose p {
-  max-width: var(--measure);
-  color: var(--text-dim);
-  margin: 0 0 1rem;
-}
+.prose p { max-width: var(--measure); color: var(--text-dim); margin: 0 0 1.15rem; }
+.prose a { color: var(--text); text-decoration-color: var(--accent); text-underline-offset: 4px; }
 
 .contact-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.25rem;
+  list-style: none; margin: 1.5rem 0 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 1.5rem;
 }
 .contact-list a {
-  color: var(--text);
-  text-decoration: none;
-  border-bottom: 1px solid var(--accent);
-  padding-bottom: 2px;
+  color: var(--text); text-decoration: none;
+  border-bottom: 1px solid var(--accent); padding-bottom: 2px;
 }
 .contact-list a:hover { color: var(--accent); }
 
-/* ---------- Footer ---------------------------------------------------- */
+/* ---------- Footer -------------------------------------------------------- */
 
 .footer {
   border-top: 1px solid var(--hairline);
   padding-block: 2.5rem 3.5rem;
+  margin-top: auto;
 }
-.footer p {
-  margin: 0;
-  color: var(--text-faint);
-  font-size: 0.82rem;
+.footer-inner {
+  display: flex; flex-wrap: wrap; gap: 1rem;
+  align-items: baseline; justify-content: space-between;
 }
+.footer p { margin: 0; color: var(--text-faint); font-size: var(--step--1); }
+.footer-links { display: flex; gap: 1.25rem; }
+.footer-links a { text-decoration: none; }
+.footer-links a:hover { color: var(--text); }
 
-/* ---------- Lightbox --------------------------------------------------- */
+/* ---------- Lightbox ------------------------------------------------------ */
 
 .lightbox {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  background: rgba(6, 7, 8, 0.97);
-  display: grid;
-  grid-template-rows: 1fr;
-  place-items: center;
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(6,7,8,0.975);
+  display: grid; place-items: center;
   padding: clamp(1rem, 4vw, 3rem);
-  animation: lb-in 0.22s ease;
+  animation: fade-in 0.22s ease;
 }
 .lightbox[hidden] { display: none; }
-
-@keyframes lb-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
 
 .lb-figure {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  max-width: 100%;
-  max-height: 100%;
+  margin: 0; display: flex; flex-direction: column; align-items: center;
+  gap: 1.1rem; max-width: 100%; max-height: 100%;
 }
-
 .lb-image {
   max-width: 100%;
-  /* Leaves room for the caption underneath. */
-  max-height: calc(100vh - 12rem);
+  max-height: calc(100vh - 13rem);   /* leaves room for the caption */
   object-fit: contain;
 }
-
-.lb-caption {
-  text-align: center;
-  max-width: 46rem;
-}
+.lb-caption { text-align: center; max-width: 46rem; }
 .lb-title {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: 1.35rem;
-  margin: 0 0 0.3rem;
+  font-family: var(--serif); font-weight: 400;
+  font-size: var(--step-1); margin: 0 0 0.25rem;
 }
-.lb-meta {
-  margin: 0;
-  color: var(--text-dim);
-  font-size: 0.86rem;
-}
+.lb-meta { margin: 0; color: var(--text-dim); font-size: var(--step--1); }
 .lb-exif {
-  margin: 0.45rem 0 0;
-  color: var(--text-faint);
-  font-size: 0.74rem;
-  letter-spacing: 0.05em;
+  margin: 0.4rem 0 0; color: var(--text-faint);
+  font-size: 0.72rem; letter-spacing: 0.06em;
   font-variant-numeric: tabular-nums;
 }
-.lb-exif:empty, .lb-meta:empty { display: none; }
+.lb-meta:empty, .lb-exif:empty { display: none; }
 
 .lb-close, .lb-nav {
-  position: absolute;
-  appearance: none;
-  background: transparent;
-  border: 0;
-  color: var(--text-dim);
-  cursor: pointer;
-  line-height: 1;
-  transition: color 0.18s;
-  z-index: 2;
+  position: absolute; appearance: none; background: none; border: 0;
+  color: var(--text-faint); cursor: pointer; line-height: 1;
+  transition: color 0.18s var(--ease);
 }
 .lb-close:hover, .lb-nav:hover { color: var(--text); }
-
-.lb-close {
-  top: 1rem;
-  right: 1.25rem;
-  font-size: 2.4rem;
-  padding: 0.25rem 0.6rem;
-}
-.lb-nav {
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 3.5rem;
-  padding: 0.5rem 1rem;
-}
-.lb-prev { left: 0.25rem; }
-.lb-next { right: 0.25rem; }
+.lb-close { top: 0.75rem; right: 1rem; font-size: 2.4rem; padding: 0.25rem 0.6rem; }
+.lb-nav   { top: 50%; transform: translateY(-50%); font-size: 3.25rem; padding: 0.5rem 1rem; }
+.lb-prev  { left: 0.25rem; }
+.lb-next  { right: 0.25rem; }
 
 body.lb-open { overflow: hidden; }
 
-/* ---------- Responsive ------------------------------------------------- */
+/* ---------- Responsive ---------------------------------------------------- */
 
 @media (max-width: 900px) {
   :root { --row-h: 210px; --gap: 8px; }
+  .hero { min-height: 68vh; }
 }
 
 @media (max-width: 620px) {
-  :root { --row-h: 150px; --gap: 6px; }
+  :root { --row-h: 148px; --gap: 5px; }
 
-  .masthead-inner { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
   .masthead { position: static; }
-  .nav { gap: 1.1rem; }
+  .masthead-inner { flex-direction: column; align-items: flex-start; gap: 0.6rem; padding-block: 0.9rem; }
 
-  /* Captions are useless without hover; the lightbox carries them instead. */
+  /* Hover captions are meaningless on touch — the lightbox carries them. */
   .tile-label { display: none; }
 
-  .lb-nav { font-size: 2.5rem; padding: 0.4rem 0.6rem; }
-  .lb-image { max-height: calc(100vh - 14rem); }
+  .lb-nav { font-size: 2.4rem; padding: 0.4rem 0.5rem; }
+  .lb-image { max-height: calc(100vh - 15rem); }
+
+  .footer-inner { flex-direction: column; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
-  .tile:hover img { transform: none; }
+  .tile:hover img, .collection-card:hover img { transform: none; }
 }
 
-/* Printing a photo portfolio is odd, but don't hand back a black rectangle. */
 @media print {
-  .masthead, .filters, .lightbox, .footer { display: none !important; }
+  .masthead, .lightbox, .footer, .hero-cta { display: none !important; }
   body { background: #fff; color: #000; }
 }

@@ -1,0 +1,434 @@
+{
+  "photos": [
+    {
+      "src": "images/guangxi/Pied Falconet_Longzhou_2025-04-07.svg",
+      "title": "Pied Falconet",
+      "collection": "guangxi",
+      "location": "Longzhou",
+      "date": "2025-04-07",
+      "width": 1600,
+      "height": 1067,
+      "exif": {}
+    },
+    {
+      "src": "images/guangxi/Silver Pheasant_Nonggang_2025-04-06.svg",
+      "title": "Silver Pheasant",
+      "collection": "guangxi",
+      "location": "Nonggang",
+      "date": "2025-04-06",
+      "width": 1067,
+      "height": 1600,
+      "exif": {}
+    },
+    {
+      "src": "images/guangxi/White-headed Langur_Chongzuo_2025-04-05.svg",
+      "title": "White-headed Langur",
+      "collection": "guangxi",
+      "location": "Chongzuo",
+      "date": "2025-04-05",
+      "width": 1600,
+      "height": 900,
+      "exif": {}
+    },
+    {
+      "src": "images/guangxi/Nonggang Babbler_Nonggang_2025-04-04.svg",
+      "title": "Nonggang Babbler",
+      "collection": "guangxi",
+      "location": "Nonggang",
+      "date": "2025-04-04",
+      "width": 1600,
+      "height": 1067,
+      "exif": {}
+    },
+    {
+      "src": "images/yunnan/Fire-tailed Sunbird_Gaoligongshan_2025-03-30.svg",
+      "title": "Fire-tailed Sunbird",
+      "collection": "yunnan",
+      "location": "Gaoligongshan",
+      "date": "2025-03-30",
+      "width": 1400,
+      "height": 1400,
+      "exif": {}
+    },
+    {
+      "src": "images/yunnan/Yunnan Snub-nosed Monkey_Baima Snow Mtn_2025-03-28.svg",
+      "title": "Yunnan Snub-nosed Monkey",
+      "collection": "yunnan",
+      "location": "Baima Snow Mtn",
+      "date": "2025-03-28",
+      "width": 1600,
+      "height": 1067,
+      "exif": {}
+    },
+    {
+      "src": "images/yunnan/Black-necked Crane_Dashanbao_2025-03-25.svg",
+      "title": "Black-necked Crane",
+      "collection": "yunnan",
+      "location": "Dashanbao",
+      "date": "2025-03-25",
+      "width": 1600,
+      "height": 900,
+      "exif": {}
+    },
+    {
+      "src": "images/yunnan/Grey Peacock-Pheasant_Xishuangbanna_2025-03-22.svg",
+      "title": "Grey Peacock-Pheasant",
+      "collection": "yunnan",
+      "location": "Xishuangbanna",
+      "date": "2025-03-22",
+      "width": 1067,
+      "height": 1600,
+      "exif": {}
+    },
+    {
+      "src": "images/yunnan/Mrs Hume's Pheasant_Nabanhe_2025-03-21.svg",
+      "title": "Mrs Hume's Pheasant",
+      "collection": "yunnan",
+      "location": "Nabanhe",
+      "date": "2025-03-21",
+      "width": 1600,
+      "height": 1067,
+      "exif": {}
+    },
+    {
+      "src": "images/yellowstone/American Dipper_Soda Butte Creek_2025-01-20.svg",
+      "title": "American Dipper",
+      "collection": "yellowstone",
+      "location": "Soda Butte Creek",
+      "date": "2025-01-20",
+      "width": 1600,
+      "height": 1067,
+      "exif": {}
+    },
+    {
+      "src": "images/yellowstone/Great Grey Owl_Northern Range_2025-01-19.svg",
+      "title": "Great Grey Owl",
+      "collection": "yellowstone",
+      "location": "Northern Range",
+      "date": "2025-01-19",
+      "width": 1067,
+      "height": 1600,
+      "exif": {}
+    },
+    {
+      "src": "images/yellowstone/Bison in Snow_Hayden Valley_2025-01-18.svg",
+      "title": "Bison in Snow",
+      "collection": "yellowstone",
+      "location": "Hayden Valley",
+      "date": "2025-01-18",
+      "width": 1600,
+      "height": 900,
+      "exif": {}
+    },
+    {
+      "src": "images/yellowstone/Grey Wolf_Lamar Valley_2025-01-16.svg",
+      "title": "Grey Wolf",
+      "collection": "yellowstone",
+      "location": "Lamar Valley",
+      "date": "2025-01-16",
+      "width": 1600,
+      "height": 1067,
+      "exif": {}
+    },
+    {
+      "src": "images/west/Burrowing Owl_Imperial Valley_2024-11-08.svg",
+      "title": "Burrowing Owl",
+      "collection": "west",
+      "location": "Imperial Valley",
+      "date": "2024-11-08",
+      "width": 1067,
+      "height": 1600,
+      "exif": {}
+    },
+    {
+      "src": "images/west/Elegant Tern_Bolsa Chica_2024-11-06.svg",
+      "title": "Elegant Tern",
+      "collection": "west",
+      "location": "Bolsa Chica",
+      "date": "2024-11-06",
+      "width": 1600,
+      "height": 1067,
+      "exif": {}
+    },
+    {
+      "src": "images/west/California Condor_Big Sur_2024-11-02.svg",
+      "title": "California Condor",
+      "collection": "west",
+      "location": "Big Sur",
+      "date": "2024-11-02",
+      "width": 1600,
+      "height": 1067,
+      "exif": {}
+    },
+    {
+      "src": "images/peru/Hoatzin_Tambopata_2024-07-18.svg",
+      "title": "Hoatzin",
+      "collection": "peru",
+      "location": "Tambopata",
+      "date": "2024-07-18",
+      "width": 1600,
+      "height": 900,
+      "exif": {}
+    },
+    {
+      "src": "images/peru/Andean Cock-of-the-rock_Manu NP_2024-07-14.svg",
+      "title": "Andean Cock-of-the-rock",
+      "collection": "peru",
+      "location": "Manu NP",
+      "date": "2024-07-14",
+      "width": 1600,
+      "height": 1067,
+      "exif": {}
+    },
+    {
+      "src": "images/peru/Vermilion Flycatcher_Sacred Valley_2024-07-12.svg",
+      "title": "Vermilion Flycatcher",
+      "collection": "peru",
+      "location": "Sacred Valley",
+      "date": "2024-07-12",
+      "width": 1600,
+      "height": 800,
+      "exif": {}
+    },
+    {
+      "src": "images/peru/Torrent Duck_Urubamba_2024-07-11.svg",
+      "title": "Torrent Duck",
+      "collection": "peru",
+      "location": "Urubamba",
+      "date": "2024-07-11",
+      "width": 1067,
+      "height": 1600,
+      "exif": {}
+    },
+    {
+      "src": "images/peru/Andean Condor_Colca Canyon_2024-07-08.svg",
+      "title": "Andean Condor",
+      "collection": "peru",
+      "location": "Colca Canyon",
+      "date": "2024-07-08",
+      "width": 1600,
+      "height": 1067,
+      "exif": {}
+    },
+    {
+      "src": "images/peru/Inca Tern_Paracas_2024-07-05.svg",
+      "title": "Inca Tern",
+      "collection": "peru",
+      "location": "Paracas",
+      "date": "2024-07-05",
+      "width": 1400,
+      "height": 1400,
+      "exif": {}
+    },
+    {
+      "src": "images/west/Greater Sage-Grouse_Sublette County_2024-04-09.svg",
+      "title": "Greater Sage-Grouse",
+      "collection": "west",
+      "location": "Sublette County",
+      "date": "2024-04-09",
+      "width": 1600,
+      "height": 900,
+      "exif": {}
+    },
+    {
+      "src": "images/sri-lanka/Purple-faced Langur_Horton Plains_2024-02-17.svg",
+      "title": "Purple-faced Langur",
+      "collection": "sri-lanka",
+      "location": "Horton Plains",
+      "date": "2024-02-17",
+      "width": 1600,
+      "height": 1067,
+      "exif": {}
+    },
+    {
+      "src": "images/sri-lanka/Indian Peafowl_Yala NP_2024-02-16.svg",
+      "title": "Indian Peafowl",
+      "collection": "sri-lanka",
+      "location": "Yala NP",
+      "date": "2024-02-16",
+      "width": 1400,
+      "height": 1400,
+      "exif": {}
+    },
+    {
+      "src": "images/sri-lanka/Sri Lanka Junglefowl_Yala NP_2024-02-15.svg",
+      "title": "Sri Lanka Junglefowl",
+      "collection": "sri-lanka",
+      "location": "Yala NP",
+      "date": "2024-02-15",
+      "width": 1067,
+      "height": 1600,
+      "exif": {}
+    },
+    {
+      "src": "images/sri-lanka/Serendib Scops Owl_Sinharaja_2024-02-12.svg",
+      "title": "Serendib Scops Owl",
+      "collection": "sri-lanka",
+      "location": "Sinharaja",
+      "date": "2024-02-12",
+      "width": 1600,
+      "height": 900,
+      "exif": {}
+    },
+    {
+      "src": "images/sri-lanka/Sri Lanka Blue Magpie_Sinharaja_2024-02-11.svg",
+      "title": "Sri Lanka Blue Magpie",
+      "collection": "sri-lanka",
+      "location": "Sinharaja",
+      "date": "2024-02-11",
+      "width": 1600,
+      "height": 1067,
+      "exif": {}
+    },
+    {
+      "src": "images/malaysia/Blue-winged Leafbird_Fraser's Hill_2023-09-09.svg",
+      "title": "Blue-winged Leafbird",
+      "collection": "malaysia",
+      "location": "Fraser's Hill",
+      "date": "2023-09-09",
+      "width": 1400,
+      "height": 1400,
+      "exif": {}
+    },
+    {
+      "src": "images/malaysia/Colugo_Panti Forest_2023-09-07.svg",
+      "title": "Colugo",
+      "collection": "malaysia",
+      "location": "Panti Forest",
+      "date": "2023-09-07",
+      "width": 1600,
+      "height": 1067,
+      "exif": {}
+    },
+    {
+      "src": "images/malaysia/Malayan Banded Pitta_Panti Forest_2023-09-06.svg",
+      "title": "Malayan Banded Pitta",
+      "collection": "malaysia",
+      "location": "Panti Forest",
+      "date": "2023-09-06",
+      "width": 1600,
+      "height": 900,
+      "exif": {}
+    },
+    {
+      "src": "images/malaysia/Diard's Trogon_Taman Negara_2023-09-04.svg",
+      "title": "Diard's Trogon",
+      "collection": "malaysia",
+      "location": "Taman Negara",
+      "date": "2023-09-04",
+      "width": 1067,
+      "height": 1600,
+      "exif": {}
+    },
+    {
+      "src": "images/malaysia/Rhinoceros Hornbill_Taman Negara_2023-09-03.svg",
+      "title": "Rhinoceros Hornbill",
+      "collection": "malaysia",
+      "location": "Taman Negara",
+      "date": "2023-09-03",
+      "width": 1600,
+      "height": 1067,
+      "exif": {}
+    },
+    {
+      "src": "images/galapagos/Lava Heron_Santa Cruz_2023-05-09.svg",
+      "title": "Lava Heron",
+      "collection": "galapagos",
+      "location": "Santa Cruz",
+      "date": "2023-05-09",
+      "width": 1600,
+      "height": 800,
+      "exif": {}
+    },
+    {
+      "src": "images/galapagos/Marine Iguana_Fernandina_2023-05-07.svg",
+      "title": "Marine Iguana",
+      "collection": "galapagos",
+      "location": "Fernandina",
+      "date": "2023-05-07",
+      "width": 1600,
+      "height": 1067,
+      "exif": {}
+    },
+    {
+      "src": "images/galapagos/Flightless Cormorant_Fernandina_2023-05-07.svg",
+      "title": "Flightless Cormorant",
+      "collection": "galapagos",
+      "location": "Fernandina",
+      "date": "2023-05-07",
+      "width": 1400,
+      "height": 1400,
+      "exif": {}
+    },
+    {
+      "src": "images/galapagos/Galapagos Penguin_Isabela_2023-05-06.svg",
+      "title": "Galapagos Penguin",
+      "collection": "galapagos",
+      "location": "Isabela",
+      "date": "2023-05-06",
+      "width": 1067,
+      "height": 1600,
+      "exif": {}
+    },
+    {
+      "src": "images/galapagos/Blue-footed Booby_North Seymour_2023-05-04.svg",
+      "title": "Blue-footed Booby",
+      "collection": "galapagos",
+      "location": "North Seymour",
+      "date": "2023-05-04",
+      "width": 1600,
+      "height": 900,
+      "exif": {}
+    },
+    {
+      "src": "images/galapagos/Waved Albatross_Espanola_2023-05-02.svg",
+      "title": "Waved Albatross",
+      "collection": "galapagos",
+      "location": "Espanola",
+      "date": "2023-05-02",
+      "width": 1600,
+      "height": 1067,
+      "exif": {}
+    },
+    {
+      "src": "images/hawaii/Nene_Haleakala_2022-06-19.svg",
+      "title": "Nene",
+      "collection": "hawaii",
+      "location": "Haleakala",
+      "date": "2022-06-19",
+      "width": 1600,
+      "height": 1067,
+      "exif": {}
+    },
+    {
+      "src": "images/hawaii/Laysan Albatross_Kilauea Point_2022-06-17.svg",
+      "title": "Laysan Albatross",
+      "collection": "hawaii",
+      "location": "Kilauea Point",
+      "date": "2022-06-17",
+      "width": 1067,
+      "height": 1600,
+      "exif": {}
+    },
+    {
+      "src": "images/hawaii/Apapane_Volcanoes NP_2022-06-14.svg",
+      "title": "Apapane",
+      "collection": "hawaii",
+      "location": "Volcanoes NP",
+      "date": "2022-06-14",
+      "width": 1600,
+      "height": 900,
+      "exif": {}
+    },
+    {
+      "src": "images/hawaii/I'iwi_Hakalau_2022-06-12.svg",
+      "title": "I'iwi",
+      "collection": "hawaii",
+      "location": "Hakalau",
+      "date": "2022-06-12",
+      "width": 1600,
+      "height": 1067,
+      "exif": {}
+    }
+  ]
+}
