@@ -300,6 +300,15 @@ a   { color: inherit; }
   margin: 0 0 0.5rem;
   letter-spacing: -0.015em;
 }
+/* One date for the whole collection, sitting under its title. */
+.gallery-date {
+  margin: 0.35rem 0 1.25rem;
+  color: var(--text-faint);
+  font-size: var(--step--1);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
 .gallery-sub {
   margin: 0 0 1.25rem;
   color: var(--accent);
@@ -309,8 +318,8 @@ a   { color: inherit; }
 }
 .gallery-blurb { max-width: var(--measure); color: var(--text-dim); margin: 0; }
 
-/* Both are optional — collapse rather than leaving a gap. */
-.gallery-sub:empty, .gallery-blurb:empty { display: none; }
+/* All optional — collapse rather than leaving a gap. */
+.gallery-date:empty, .gallery-sub:empty, .gallery-blurb:empty { display: none; }
 
 .back-link {
   display: inline-block;

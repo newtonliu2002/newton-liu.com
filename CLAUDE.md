@@ -30,25 +30,38 @@ images/_thumbs/             generated derivatives (committed — Pages needs the
 
 Folders under `images/` starting with `_` are skipped by the scanner.
 
-## Captions are off
+## What's shown under a photograph
 
-Photographs are shown with **no title, date, location or camera data**. This
-is deliberate, not an oversight — do not add captions back without being asked.
+**Only the technical line: camera, lens, aperture, shutter, ISO.** No title,
+no filename, no date, no location. This is deliberate — do not add them back
+without being asked.
 
-The data is still collected and refreshed on every `build.py` run; only the
-display is switched off. The switch is the `CAPTIONS` object at the top of
-`assets/site.js`:
+Dates appear **once per collection**, under the gallery heading ("December
+2025"), never on individual photographs. That line is derived from the capture
+dates in the manifest by `collectionDate()` in `site.js`, so it stays correct
+as photographs are added. Set `"date"` on a collection in
+`data/collections.json` to override it with fixed text.
+
+Two switches at the top of `assets/site.js` control all of this:
 
 ```js
 var CAPTIONS = {
   grid:     { title: false, location: false },
-  lightbox: { title: false, location: false, date: false, exif: false }
+  lightbox: { title: false, location: false, date: false, exif: true }
 };
+
+var EXIF_FIELDS = ["camera", "lens", "aperture", "shutter", "iso"];
 ```
 
-Flip a field to `true` and that line reappears immediately — no rebuild, no
-re-import. `grid` is the caption over a thumbnail on hover; `lightbox` is the
-block under the enlarged photograph.
+Flip a `CAPTIONS` field to `true` and that line reappears immediately — no
+rebuild, no re-import. `grid` is the caption over a thumbnail on hover;
+`lightbox` is the block under the enlarged photograph.
+
+`EXIF_FIELDS` sets which technical values print and in what order. `"focal"`
+(e.g. `500mm`) is collected and available but intentionally not listed.
+Missing values are skipped, which is why drone frames show fewer items — their
+reported "lens" is a bare spec that just repeats the aperture, so `build.py`
+drops it.
 
 Related: the photographs keep their **original camera filenames**
 (`0Z9A0369.jpg`, `DJI-20251228080241-0076-D.jpg`). Do not invent titles for

@@ -33,8 +33,14 @@
      ------------------------------------------------------------------ */
   var CAPTIONS = {
     grid:     { title: false, location: false },
-    lightbox: { title: false, location: false, date: false, exif: false }
+    lightbox: { title: false, location: false, date: false, exif: true }
   };
+
+  // Which EXIF fields print, and in what order. Any field that's missing from
+  // a given photograph is skipped, so drone frames (which report no lens
+  // worth naming) simply show fewer items.
+  // Also available but deliberately not shown: "focal" (e.g. "500mm").
+  var EXIF_FIELDS = ["camera", "lens", "aperture", "shutter", "iso"];
 
   var body = document.body;
   var BASE = body.dataset.base || "";
@@ -65,6 +71,35 @@
     var d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
     if (isNaN(d.getTime())) return value;
     return d.toLocaleDateString(undefined, { day: "numeric", month: "long", year: "numeric" });
+  }
+
+  // The date printed under a gallery's heading — one line for the whole
+  // collection rather than a date on every photograph. Derived from the
+  // capture dates in the manifest, so it stays right as photographs are
+  // added. Set "date" on the collection in data/collections.json to override.
+  function collectionDate(photos) {
+    var dates = photos
+      .map(function (p) { return p.date; })
+      .filter(function (d) { return /^\d{4}-\d{2}-\d{2}$/.test(d); })
+      .sort();
+    if (!dates.length) return "";
+
+    function parse(s) {
+      var b = s.split("-");
+      return new Date(Number(b[0]), Number(b[1]) - 1, Number(b[2]));
+    }
+    var first = parse(dates[0]);
+    var last = parse(dates[dates.length - 1]);
+
+    var monthYear = { month: "long", year: "numeric" };
+    var full = function (d) { return d.toLocaleDateString(undefined, monthYear); };
+
+    if (first.getFullYear() === last.getFullYear()) {
+      if (first.getMonth() === last.getMonth()) return full(last);
+      // Same year, different months: "October – December 2025"
+      return first.toLocaleDateString(undefined, { month: "long" }) + " – " + full(last);
+    }
+    return full(first) + " – " + full(last);
   }
 
   function aspectOf(photo) {
@@ -164,8 +199,13 @@
   function exifLine(photo) {
     var e = photo.exif;
     if (!CAPTIONS.lightbox.exif || !e) return "";
-    return [e.camera, e.lens, e.focal, e.aperture, e.shutter, e.iso && "ISO " + e.iso]
-      .filter(Boolean).join("  ·  ");
+    return EXIF_FIELDS
+      .map(function (field) {
+        if (!e[field]) return "";
+        return field === "iso" ? "ISO " + e[field] : e[field];
+      })
+      .filter(Boolean)
+      .join("  ·  ");
   }
 
   function metaLine(photo) {
@@ -328,6 +368,7 @@
     collectionName = meta.title || "";           // used for alt text
 
     var titleEl = document.querySelector(".gallery-title");
+    var dateEl  = document.querySelector(".gallery-date");
     var subEl   = document.querySelector(".gallery-sub");
     var blurbEl = document.querySelector(".gallery-blurb");
 
@@ -339,6 +380,8 @@
     if (blurbEl) blurbEl.textContent = meta.blurb || "";
 
     shown = photos.filter(function (p) { return p.collection === slug; });
+
+    if (dateEl) dateEl.textContent = meta.date || collectionDate(shown);
     renderGrid(shown);
     wireLightbox();
   }
