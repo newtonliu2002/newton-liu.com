@@ -14,6 +14,28 @@
 (function () {
   "use strict";
 
+  /* ------------------------------------------------------------------
+     CAPTIONS — what, if anything, is printed under a photograph.
+
+     Everything is off: the photographs are shown without titles, dates,
+     locations or camera data. Flip any of these to true to bring that line
+     back; the data is always there, refreshed from the files on every run of
+     tools/build.py, so nothing needs regenerating first.
+
+       title     the photograph's name
+       location  where it was taken
+       date      when it was taken
+       exif      camera, lens, focal length, aperture, shutter, ISO
+
+     `grid` controls the caption that slides up over a thumbnail on hover;
+     `lightbox` controls the block under the enlarged photograph. A field
+     shows only if it is true in both its own row and the surface's row.
+     ------------------------------------------------------------------ */
+  var CAPTIONS = {
+    grid:     { title: false, location: false },
+    lightbox: { title: false, location: false, date: false, exif: false }
+  };
+
   var body = document.body;
   var BASE = body.dataset.base || "";
   var PAGE = body.dataset.page || "";
@@ -51,9 +73,17 @@
     return Math.max(0.4, Math.min(4, w / h));   // clamp so nothing wrecks a row
   }
 
+  // Screen readers still need something, even when nothing is printed on
+  // screen. Falls back to the collection, which is the only description
+  // that exists when captions are off.
+  var collectionName = "";
+
   function altFor(photo) {
-    return [photo.title, photo.location && "photographed at " + photo.location]
-      .filter(Boolean).join(", ") || "Photograph";
+    if (CAPTIONS.lightbox.title && photo.title) {
+      return [photo.title, photo.location && "photographed at " + photo.location]
+        .filter(Boolean).join(", ");
+    }
+    return collectionName ? "Photograph from " + collectionName : "Photograph";
   }
 
   function status(container, message) {
@@ -133,13 +163,16 @@
 
   function exifLine(photo) {
     var e = photo.exif;
-    if (!e) return "";
+    if (!CAPTIONS.lightbox.exif || !e) return "";
     return [e.camera, e.lens, e.focal, e.aperture, e.shutter, e.iso && "ISO " + e.iso]
       .filter(Boolean).join("  ·  ");
   }
 
   function metaLine(photo) {
-    return [photo.location, formatDate(photo.date)].filter(Boolean).join("  ·  ");
+    return [
+      CAPTIONS.lightbox.location && photo.location,
+      CAPTIONS.lightbox.date && formatDate(photo.date)
+    ].filter(Boolean).join("  ·  ");
   }
 
   function renderGrid(photos) {
@@ -156,7 +189,9 @@
       var tile = el("button", "tile");
       tile.type = "button";
       tile.style.setProperty("--ar", aspectOf(photo).toFixed(4));
-      tile.setAttribute("aria-label", "View " + (photo.title || "photograph") + " larger");
+      tile.setAttribute("aria-label", CAPTIONS.grid.title && photo.title
+        ? "View " + photo.title + " larger"
+        : "View photograph " + (i + 1) + " of " + photos.length + " larger");
 
       var img = el("img");
       img.src = url(photo.thumb || photo.src);
@@ -174,16 +209,22 @@
       }
       tile.appendChild(img);
 
-      var label = el("span", "tile-label");
-      var t = el("span", "tile-title");
-      t.textContent = photo.title || "";
-      label.appendChild(t);
-      if (photo.location) {
-        var place = el("span", "tile-place");
-        place.textContent = photo.location;
-        label.appendChild(place);
+      var showTitle = CAPTIONS.grid.title && photo.title;
+      var showPlace = CAPTIONS.grid.location && photo.location;
+      if (showTitle || showPlace) {
+        var label = el("span", "tile-label");
+        if (showTitle) {
+          var t = el("span", "tile-title");
+          t.textContent = photo.title;
+          label.appendChild(t);
+        }
+        if (showPlace) {
+          var place = el("span", "tile-place");
+          place.textContent = photo.location;
+          label.appendChild(place);
+        }
+        tile.appendChild(label);
       }
-      tile.appendChild(label);
 
       tile.addEventListener("click", function () { open(i); });
       frag.appendChild(tile);
@@ -199,9 +240,14 @@
     var photo = shown[index];
     lbImage.src = url(photo.src);
     lbImage.alt = altFor(photo);
-    lbTitle.textContent = photo.title || "";
+    lbTitle.textContent = (CAPTIONS.lightbox.title && photo.title) || "";
     lbMeta.textContent = metaLine(photo);
     lbExif.textContent = exifLine(photo);
+
+    // With every caption off there is no text block, so let the photograph
+    // use the height the caption would have taken.
+    lightbox.classList.toggle("is-bare",
+      !lbTitle.textContent && !lbMeta.textContent && !lbExif.textContent);
 
     // Warm the neighbours so arrowing through feels instant.
     [index + 1, index - 1].forEach(function (n) {
@@ -279,6 +325,7 @@
   function renderGallery(collections, photos) {
     var slug = body.dataset.collection;
     var meta = collections.filter(function (c) { return c.slug === slug; })[0] || {};
+    collectionName = meta.title || "";           // used for alt text
 
     var titleEl = document.querySelector(".gallery-title");
     var subEl   = document.querySelector(".gallery-sub");

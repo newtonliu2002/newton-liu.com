@@ -1,10 +1,10 @@
 {
   "photos": [
     {
-      "src": "images/west/The Rock with Wings_Shiprock NM_2025-12-28.jpg",
-      "title": "The Rock with Wings",
+      "src": "images/west/DJI-20251228080241-0076-D.jpg",
+      "title": "DJI-20251228080241-0076-D",
       "collection": "west",
-      "location": "Shiprock NM",
+      "location": "",
       "date": "2025-12-28",
       "width": 2000,
       "height": 1123,
@@ -15,13 +15,64 @@
         "shutter": "1/500s",
         "iso": "100"
       },
-      "thumb": "images/_thumbs/west/The Rock with Wings_Shiprock NM_2025-12-28.jpg"
+      "thumb": "images/_thumbs/west/DJI-20251228080241-0076-D.jpg"
     },
     {
-      "src": "images/west/The Dike Runs West_Shiprock NM_2025-12-28.jpg",
-      "title": "The Dike Runs West",
+      "src": "images/west/DJI-20251228075954-0067-D.jpg",
+      "title": "DJI-20251228075954-0067-D",
       "collection": "west",
-      "location": "Shiprock NM",
+      "location": "",
+      "date": "2025-12-28",
+      "width": 2000,
+      "height": 1123,
+      "exif": {
+        "camera": "DJI FC4382",
+        "focal": "19mm",
+        "aperture": "f/2.8",
+        "shutter": "1/500s",
+        "iso": "100"
+      },
+      "thumb": "images/_thumbs/west/DJI-20251228075954-0067-D.jpg"
+    },
+    {
+      "src": "images/west/DJI-20251228075547-0061-D.jpg",
+      "title": "DJI-20251228075547-0061-D",
+      "collection": "west",
+      "location": "",
+      "date": "2025-12-28",
+      "width": 2000,
+      "height": 1123,
+      "exif": {
+        "camera": "Hasselblad L2D-20c",
+        "focal": "12mm",
+        "aperture": "f/3.5",
+        "shutter": "1/400s",
+        "iso": "100"
+      },
+      "thumb": "images/_thumbs/west/DJI-20251228075547-0061-D.jpg"
+    },
+    {
+      "src": "images/west/DJI-20251228074816-0049-D.jpg",
+      "title": "DJI-20251228074816-0049-D",
+      "collection": "west",
+      "location": "",
+      "date": "2025-12-28",
+      "width": 2000,
+      "height": 1123,
+      "exif": {
+        "camera": "Hasselblad L2D-20c",
+        "focal": "12mm",
+        "aperture": "f/3.5",
+        "shutter": "1/200s",
+        "iso": "100"
+      },
+      "thumb": "images/_thumbs/west/DJI-20251228074816-0049-D.jpg"
+    },
+    {
+      "src": "images/west/DJI-20251228074312-0042-D.jpg",
+      "title": "DJI-20251228074312-0042-D",
+      "collection": "west",
+      "location": "",
       "date": "2025-12-28",
       "width": 2000,
       "height": 1123,
@@ -32,30 +83,13 @@
         "shutter": "1/240s",
         "iso": "100"
       },
-      "thumb": "images/_thumbs/west/The Dike Runs West_Shiprock NM_2025-12-28.jpg"
+      "thumb": "images/_thumbs/west/DJI-20251228074312-0042-D.jpg"
     },
     {
-      "src": "images/west/Shiprock at Sunrise_Shiprock NM_2025-12-28.jpg",
-      "title": "Shiprock at Sunrise",
+      "src": "images/west/B0000870.jpg",
+      "title": "B0000870",
       "collection": "west",
-      "location": "Shiprock NM",
-      "date": "2025-12-28",
-      "width": 2000,
-      "height": 1123,
-      "exif": {
-        "camera": "DJI FC4382",
-        "focal": "19mm",
-        "aperture": "f/2.8",
-        "shutter": "1/500s",
-        "iso": "100"
-      },
-      "thumb": "images/_thumbs/west/Shiprock at Sunrise_Shiprock NM_2025-12-28.jpg"
-    },
-    {
-      "src": "images/west/Shiprock at Blue Hour_Shiprock NM_2025-12-28.jpg",
-      "title": "Shiprock at Blue Hour",
-      "collection": "west",
-      "location": "Shiprock NM",
+      "location": "",
       "date": "2025-12-28",
       "width": 2000,
       "height": 1500,
@@ -67,47 +101,13 @@
         "shutter": "3s",
         "iso": "400"
       },
-      "thumb": "images/_thumbs/west/Shiprock at Blue Hour_Shiprock NM_2025-12-28.jpg"
+      "thumb": "images/_thumbs/west/B0000870.jpg"
     },
     {
-      "src": "images/west/Shiprock and the Volcanic Dike_Shiprock NM_2025-12-28.jpg",
-      "title": "Shiprock and the Volcanic Dike",
+      "src": "images/west/B0000538.jpg",
+      "title": "B0000538",
       "collection": "west",
-      "location": "Shiprock NM",
-      "date": "2025-12-28",
-      "width": 2000,
-      "height": 1123,
-      "exif": {
-        "camera": "Hasselblad L2D-20c",
-        "focal": "12mm",
-        "aperture": "f/3.5",
-        "shutter": "1/200s",
-        "iso": "100"
-      },
-      "thumb": "images/_thumbs/west/Shiprock and the Volcanic Dike_Shiprock NM_2025-12-28.jpg"
-    },
-    {
-      "src": "images/west/Morning Below Shiprock_Shiprock NM_2025-12-28.jpg",
-      "title": "Morning Below Shiprock",
-      "collection": "west",
-      "location": "Shiprock NM",
-      "date": "2025-12-28",
-      "width": 2000,
-      "height": 1123,
-      "exif": {
-        "camera": "Hasselblad L2D-20c",
-        "focal": "12mm",
-        "aperture": "f/3.5",
-        "shutter": "1/400s",
-        "iso": "100"
-      },
-      "thumb": "images/_thumbs/west/Morning Below Shiprock_Shiprock NM_2025-12-28.jpg"
-    },
-    {
-      "src": "images/west/Courthouse Towers at Dusk_Arches National Park UT_2025-12-25.jpg",
-      "title": "Courthouse Towers at Dusk",
-      "collection": "west",
-      "location": "Arches National Park UT",
+      "location": "",
       "date": "2025-12-25",
       "width": 1600,
       "height": 2000,
@@ -119,11 +119,11 @@
         "shutter": "1s",
         "iso": "50"
       },
-      "thumb": "images/_thumbs/west/Courthouse Towers at Dusk_Arches National Park UT_2025-12-25.jpg"
+      "thumb": "images/_thumbs/west/B0000538.jpg"
     },
     {
-      "src": "images/west/The Road North_2025-12-24.jpg",
-      "title": "The Road North",
+      "src": "images/west/DJI-20251224080854-0037-D.jpg",
+      "title": "DJI-20251224080854-0037-D",
       "collection": "west",
       "location": "",
       "date": "2025-12-24",
@@ -136,45 +136,11 @@
         "shutter": "1/30s",
         "iso": "200"
       },
-      "thumb": "images/_thumbs/west/The Road North_2025-12-24.jpg"
+      "thumb": "images/_thumbs/west/DJI-20251224080854-0037-D.jpg"
     },
     {
-      "src": "images/west/Winter Range at Sunset_2025-12-23.jpg",
-      "title": "Winter Range at Sunset",
-      "collection": "west",
-      "location": "",
-      "date": "2025-12-23",
-      "width": 2000,
-      "height": 741,
-      "exif": {
-        "camera": "Hasselblad L2D-20c",
-        "focal": "12mm",
-        "aperture": "f/2.8",
-        "shutter": "1/80s",
-        "iso": "120"
-      },
-      "thumb": "images/_thumbs/west/Winter Range at Sunset_2025-12-23.jpg"
-    },
-    {
-      "src": "images/west/Last Light on the Peaks_2025-12-23.jpg",
-      "title": "Last Light on the Peaks",
-      "collection": "west",
-      "location": "",
-      "date": "2025-12-23",
-      "width": 2000,
-      "height": 1499,
-      "exif": {
-        "camera": "DJI FC4382",
-        "focal": "19mm",
-        "aperture": "f/2.8",
-        "shutter": "1/160s",
-        "iso": "150"
-      },
-      "thumb": "images/_thumbs/west/Last Light on the Peaks_2025-12-23.jpg"
-    },
-    {
-      "src": "images/west/Alpenglow Above the Lake_2025-12-23.jpg",
-      "title": "Alpenglow Above the Lake",
+      "src": "images/west/DJI-20251223171450-0023-D.jpg",
+      "title": "DJI-20251223171450-0023-D",
       "collection": "west",
       "location": "",
       "date": "2025-12-23",
@@ -187,30 +153,45 @@
         "shutter": "1/60s",
         "iso": "150"
       },
-      "thumb": "images/_thumbs/west/Alpenglow Above the Lake_2025-12-23.jpg",
-      "featured": true
+      "thumb": "images/_thumbs/west/DJI-20251223171450-0023-D.jpg"
     },
     {
-      "src": "images/west/Ruffed Grouse_2025-12-18.jpg",
-      "title": "Ruffed Grouse",
+      "src": "images/west/DJI-20251223170618-0014-D.jpg",
+      "title": "DJI-20251223170618-0014-D",
       "collection": "west",
       "location": "",
-      "date": "2025-12-18",
-      "width": 1600,
-      "height": 2000,
+      "date": "2025-12-23",
+      "width": 2000,
+      "height": 1499,
       "exif": {
-        "camera": "Canon EOS R5m2",
-        "lens": "RF100-500mm F4.5-7.1 L IS USM",
-        "focal": "500mm",
-        "aperture": "f/7.1",
-        "shutter": "1/320s",
-        "iso": "2000"
+        "camera": "DJI FC4382",
+        "focal": "19mm",
+        "aperture": "f/2.8",
+        "shutter": "1/160s",
+        "iso": "150"
       },
-      "thumb": "images/_thumbs/west/Ruffed Grouse_2025-12-18.jpg"
+      "thumb": "images/_thumbs/west/DJI-20251223170618-0014-D.jpg"
     },
     {
-      "src": "images/west/Frost-Covered Bison_2025-12-18.jpg",
-      "title": "Frost-Covered Bison",
+      "src": "images/west/DJI-20251223170556-0012-D.jpg",
+      "title": "DJI-20251223170556-0012-D",
+      "collection": "west",
+      "location": "",
+      "date": "2025-12-23",
+      "width": 2000,
+      "height": 741,
+      "exif": {
+        "camera": "Hasselblad L2D-20c",
+        "focal": "12mm",
+        "aperture": "f/2.8",
+        "shutter": "1/80s",
+        "iso": "120"
+      },
+      "thumb": "images/_thumbs/west/DJI-20251223170556-0012-D.jpg"
+    },
+    {
+      "src": "images/west/U2A8046.jpg",
+      "title": "U2A8046",
       "collection": "west",
       "location": "",
       "date": "2025-12-18",
@@ -224,11 +205,11 @@
         "shutter": "1/125s",
         "iso": "250"
       },
-      "thumb": "images/_thumbs/west/Frost-Covered Bison_2025-12-18.jpg"
+      "thumb": "images/_thumbs/west/U2A8046.jpg"
     },
     {
-      "src": "images/west/Bison in a Whiteout_2025-12-18.jpg",
-      "title": "Bison in a Whiteout",
+      "src": "images/west/U2A7753.jpg",
+      "title": "U2A7753",
       "collection": "west",
       "location": "",
       "date": "2025-12-18",
@@ -242,47 +223,29 @@
         "shutter": "1/200s",
         "iso": "500"
       },
-      "thumb": "images/_thumbs/west/Bison in a Whiteout_2025-12-18.jpg"
+      "thumb": "images/_thumbs/west/U2A7753.jpg"
     },
     {
-      "src": "images/west/Bull Bison in Winter_2025-12-17.jpg",
-      "title": "Bull Bison in Winter",
+      "src": "images/west/U2A7585.jpg",
+      "title": "U2A7585",
       "collection": "west",
       "location": "",
-      "date": "2025-12-17",
+      "date": "2025-12-18",
       "width": 1600,
       "height": 2000,
       "exif": {
-        "camera": "Canon EOS C50",
-        "lens": "RF70-200mm F2.8 L IS USM",
-        "focal": "200mm",
-        "aperture": "f/4",
-        "shutter": "1/125s",
-        "iso": "320"
+        "camera": "Canon EOS R5m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/320s",
+        "iso": "2000"
       },
-      "thumb": "images/_thumbs/west/Bull Bison in Winter_2025-12-17.jpg"
+      "thumb": "images/_thumbs/west/U2A7585.jpg"
     },
     {
-      "src": "images/west/Bison on the Bluffs_2025-12-17.jpg",
-      "title": "Bison on the Bluffs",
-      "collection": "west",
-      "location": "",
-      "date": "2025-12-17",
-      "width": 1600,
-      "height": 2000,
-      "exif": {
-        "camera": "Canon EOS C50",
-        "lens": "RF70-200mm F2.8 L IS USM",
-        "focal": "200mm",
-        "aperture": "f/4",
-        "shutter": "1/125s",
-        "iso": "320"
-      },
-      "thumb": "images/_thumbs/west/Bison on the Bluffs_2025-12-17.jpg"
-    },
-    {
-      "src": "images/west/American Dipper_2025-12-17.jpg",
-      "title": "American Dipper",
+      "src": "images/west/U2A6934.jpg",
+      "title": "U2A6934",
       "collection": "west",
       "location": "",
       "date": "2025-12-17",
@@ -296,11 +259,47 @@
         "shutter": "1/640s",
         "iso": "1600"
       },
-      "thumb": "images/_thumbs/west/American Dipper_2025-12-17.jpg"
+      "thumb": "images/_thumbs/west/U2A6934.jpg"
     },
     {
-      "src": "images/west/Ridgeline Camp_2025-12-16.jpg",
-      "title": "Ridgeline Camp",
+      "src": "images/west/0Z9A0522.jpg",
+      "title": "0Z9A0522",
+      "collection": "west",
+      "location": "",
+      "date": "2025-12-17",
+      "width": 1600,
+      "height": 2000,
+      "exif": {
+        "camera": "Canon EOS C50",
+        "lens": "RF70-200mm F2.8 L IS USM",
+        "focal": "200mm",
+        "aperture": "f/4",
+        "shutter": "1/125s",
+        "iso": "320"
+      },
+      "thumb": "images/_thumbs/west/0Z9A0522.jpg"
+    },
+    {
+      "src": "images/west/0Z9A0369.jpg",
+      "title": "0Z9A0369",
+      "collection": "west",
+      "location": "",
+      "date": "2025-12-17",
+      "width": 1600,
+      "height": 2000,
+      "exif": {
+        "camera": "Canon EOS C50",
+        "lens": "RF70-200mm F2.8 L IS USM",
+        "focal": "200mm",
+        "aperture": "f/4",
+        "shutter": "1/125s",
+        "iso": "320"
+      },
+      "thumb": "images/_thumbs/west/0Z9A0369.jpg"
+    },
+    {
+      "src": "images/west/DJI-20251216123908-0034-D.jpg",
+      "title": "DJI-20251216123908-0034-D",
       "collection": "west",
       "location": "",
       "date": "2025-12-16",
@@ -313,11 +312,12 @@
         "shutter": "1/50s",
         "iso": "125"
       },
-      "thumb": "images/_thumbs/west/Ridgeline Camp_2025-12-16.jpg"
+      "thumb": "images/_thumbs/west/DJI-20251216123908-0034-D.jpg",
+      "featured": true
     },
     {
-      "src": "images/west/Snow on the Foothills_2025-12-15.jpg",
-      "title": "Snow on the Foothills",
+      "src": "images/west/B0000090.jpg",
+      "title": "B0000090",
       "collection": "west",
       "location": "",
       "date": "2025-12-15",
@@ -331,7 +331,7 @@
         "shutter": "1/45s",
         "iso": "200"
       },
-      "thumb": "images/_thumbs/west/Snow on the Foothills_2025-12-15.jpg"
+      "thumb": "images/_thumbs/west/B0000090.jpg"
     }
   ]
 }

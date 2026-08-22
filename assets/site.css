@@ -309,6 +309,9 @@ a   { color: inherit; }
 }
 .gallery-blurb { max-width: var(--measure); color: var(--text-dim); margin: 0; }
 
+/* Both are optional — collapse rather than leaving a gap. */
+.gallery-sub:empty, .gallery-blurb:empty { display: none; }
+
 .back-link {
   display: inline-block;
   margin-bottom: 1.5rem;
@@ -453,7 +456,11 @@ a   { color: inherit; }
   font-size: 0.72rem; letter-spacing: 0.06em;
   font-variant-numeric: tabular-nums;
 }
-.lb-meta:empty, .lb-exif:empty { display: none; }
+.lb-title:empty, .lb-meta:empty, .lb-exif:empty { display: none; }
+
+/* No caption at all — give the photograph the room back. */
+.lightbox.is-bare .lb-figure { gap: 0; }
+.lightbox.is-bare .lb-image { max-height: calc(100vh - 5rem); }
 
 .lb-close, .lb-nav {
   position: absolute; appearance: none; background: none; border: 0;

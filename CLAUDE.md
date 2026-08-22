@@ -30,6 +30,34 @@ images/_thumbs/             generated derivatives (committed — Pages needs the
 
 Folders under `images/` starting with `_` are skipped by the scanner.
 
+## Captions are off
+
+Photographs are shown with **no title, date, location or camera data**. This
+is deliberate, not an oversight — do not add captions back without being asked.
+
+The data is still collected and refreshed on every `build.py` run; only the
+display is switched off. The switch is the `CAPTIONS` object at the top of
+`assets/site.js`:
+
+```js
+var CAPTIONS = {
+  grid:     { title: false, location: false },
+  lightbox: { title: false, location: false, date: false, exif: false }
+};
+```
+
+Flip a field to `true` and that line reappears immediately — no rebuild, no
+re-import. `grid` is the caption over a thumbnail on hover; `lightbox` is the
+block under the enlarged photograph.
+
+Related: the photographs keep their **original camera filenames**
+(`0Z9A0369.jpg`, `DJI-20251228080241-0076-D.jpg`). Do not invent titles for
+them. The `Title_Location_Date.jpg` convention that `build.py` parses is
+available if Newton ever wants it, but it is his to use, not yours.
+
+Collection `subtitle` and `blurb` in `data/collections.json` are empty for the
+same reason — they're his words to write.
+
 ## Conventions
 
 - **No build step.** No npm, no bundler, no framework. What you edit is what

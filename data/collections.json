@@ -1,65 +1,65 @@
 {
-  "_comment": "Hand-edited. One entry per gallery. `slug` must match the folder name under images/ and collections/. Subtitles and blurbs are placeholders — rewrite them in your own voice.",
+  "_comment": "Hand-edited. One entry per gallery. `slug` must match the folder name under images/ and collections/. `subtitle` shows under the title on the home card and gallery page; `blurb` is the paragraph on the gallery page. Both are optional — leave empty and nothing is shown.",
   "collections": [
     {
       "slug": "galapagos",
       "title": "Galápagos",
-      "subtitle": "Endemics without fear",
-      "blurb": "Placeholder — replace with your own words about this trip."
+      "subtitle": "",
+      "blurb": ""
     },
     {
       "slug": "peru",
       "title": "Peru",
-      "subtitle": "Andes to Amazon",
-      "blurb": "Placeholder — replace with your own words about this trip."
+      "subtitle": "",
+      "blurb": ""
     },
     {
       "slug": "sri-lanka",
       "title": "Sri Lanka",
-      "subtitle": "Wet-zone endemics",
-      "blurb": "Placeholder — replace with your own words about this trip."
+      "subtitle": "",
+      "blurb": ""
     },
     {
       "slug": "malaysia",
       "title": "Malaysia",
-      "subtitle": "Lowland and montane rainforest",
-      "blurb": "Placeholder — replace with your own words about this trip."
+      "subtitle": "",
+      "blurb": ""
     },
     {
       "slug": "yunnan",
       "title": "Yunnan",
-      "subtitle": "The eastern Himalaya",
-      "blurb": "Placeholder — replace with your own words about this trip."
+      "subtitle": "",
+      "blurb": ""
     },
     {
       "slug": "guangxi",
       "title": "Guangxi",
-      "subtitle": "Karst and limestone forest",
-      "blurb": "Placeholder — replace with your own words about this trip."
+      "subtitle": "",
+      "blurb": ""
     },
     {
       "slug": "hawaii",
       "title": "Hawai'i",
-      "subtitle": "Honeycreepers and seabirds",
-      "blurb": "Placeholder — replace with your own words about this trip."
+      "subtitle": "",
+      "blurb": ""
     },
     {
       "slug": "yellowstone",
       "title": "Yellowstone",
-      "subtitle": "Winter in the northern range",
-      "blurb": "Placeholder — replace with your own words about this trip."
+      "subtitle": "",
+      "blurb": ""
     },
     {
       "slug": "west",
       "title": "The American West",
-      "subtitle": "Bison, badlands and desert monoliths",
-      "blurb": "December 2025. Placeholder — replace with your own words."
+      "subtitle": "",
+      "blurb": ""
     },
     {
       "slug": "elsewhere",
       "title": "Elsewhere",
-      "subtitle": "Everything that doesn't have a home yet",
-      "blurb": "Placeholder — replace with your own words about this trip."
+      "subtitle": "",
+      "blurb": ""
     }
   ]
 }
