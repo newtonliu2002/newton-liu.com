@@ -1,0 +1,225 @@
+{
+  "photos": [
+    {
+      "src": "images/_placeholders/red-fox-hunting.svg",
+      "title": "Red Fox Hunting",
+      "category": "wildlife",
+      "location": "Hokkaido, JP",
+      "date": "2026-02-04",
+      "width": 1600,
+      "height": 900,
+      "exif": {
+        "camera": "—",
+        "lens": "—",
+        "focal": "—",
+        "aperture": "—",
+        "shutter": "—",
+        "iso": "—"
+      }
+    },
+    {
+      "src": "images/_placeholders/aurora-over-the-range.svg",
+      "title": "Aurora Over the Range",
+      "category": "landscape",
+      "location": "Brooks Range, AK",
+      "date": "2026-01-29",
+      "width": 1600,
+      "height": 900,
+      "exif": {
+        "camera": "—",
+        "lens": "—",
+        "focal": "—",
+        "aperture": "—",
+        "shutter": "—",
+        "iso": "—"
+      }
+    },
+    {
+      "src": "images/_placeholders/snowy-owl-at-dusk.svg",
+      "title": "Snowy Owl at Dusk",
+      "category": "birds",
+      "location": "Amherst Island, ON",
+      "date": "2026-01-12",
+      "width": 1600,
+      "height": 1067,
+      "exif": {
+        "camera": "—",
+        "lens": "—",
+        "focal": "—",
+        "aperture": "—",
+        "shutter": "—",
+        "iso": "—"
+      }
+    },
+    {
+      "src": "images/_placeholders/great-grey-owl.svg",
+      "title": "Great Grey Owl",
+      "category": "birds",
+      "location": "Sax-Zim Bog, MN",
+      "date": "2025-12-28",
+      "width": 1600,
+      "height": 1067,
+      "exif": {
+        "camera": "—",
+        "lens": "—",
+        "focal": "—",
+        "aperture": "—",
+        "shutter": "—",
+        "iso": "—"
+      }
+    },
+    {
+      "src": "images/_placeholders/coyote-in-the-sage.svg",
+      "title": "Coyote in the Sage",
+      "category": "wildlife",
+      "location": "Lamar Valley, WY",
+      "date": "2025-11-02",
+      "width": 1600,
+      "height": 1067,
+      "exif": {
+        "camera": "—",
+        "lens": "—",
+        "focal": "—",
+        "aperture": "—",
+        "shutter": "—",
+        "iso": "—"
+      }
+    },
+    {
+      "src": "images/_placeholders/alpenglow.svg",
+      "title": "Alpenglow",
+      "category": "landscape",
+      "location": "Torres del Paine, CL",
+      "date": "2025-10-30",
+      "width": 1600,
+      "height": 1000,
+      "exif": {
+        "camera": "—",
+        "lens": "—",
+        "focal": "—",
+        "aperture": "—",
+        "shutter": "—",
+        "iso": "—"
+      }
+    },
+    {
+      "src": "images/_placeholders/bull-moose--first-snow.svg",
+      "title": "Bull Moose, First Snow",
+      "category": "wildlife",
+      "location": "Denali NP, AK",
+      "date": "2025-09-21",
+      "width": 1600,
+      "height": 1067,
+      "exif": {
+        "camera": "—",
+        "lens": "—",
+        "focal": "—",
+        "aperture": "—",
+        "shutter": "—",
+        "iso": "—"
+      }
+    },
+    {
+      "src": "images/_placeholders/grizzly-at-the-falls.svg",
+      "title": "Grizzly at the Falls",
+      "category": "wildlife",
+      "location": "Katmai NP, AK",
+      "date": "2025-08-14",
+      "width": 1067,
+      "height": 1600,
+      "exif": {
+        "camera": "—",
+        "lens": "—",
+        "focal": "—",
+        "aperture": "—",
+        "shutter": "—",
+        "iso": "—"
+      }
+    },
+    {
+      "src": "images/_placeholders/puffins-on-the-cliff.svg",
+      "title": "Puffins on the Cliff",
+      "category": "birds",
+      "location": "Machias Seal Island",
+      "date": "2025-07-09",
+      "width": 1600,
+      "height": 1067,
+      "exif": {
+        "camera": "—",
+        "lens": "—",
+        "focal": "—",
+        "aperture": "—",
+        "shutter": "—",
+        "iso": "—"
+      }
+    },
+    {
+      "src": "images/_placeholders/braided-river.svg",
+      "title": "Braided River",
+      "category": "landscape",
+      "location": "Southeast Iceland",
+      "date": "2025-06-11",
+      "width": 1600,
+      "height": 800,
+      "exif": {
+        "camera": "—",
+        "lens": "—",
+        "focal": "—",
+        "aperture": "—",
+        "shutter": "—",
+        "iso": "—"
+      }
+    },
+    {
+      "src": "images/_placeholders/fog-in-the-valley.svg",
+      "title": "Fog in the Valley",
+      "category": "landscape",
+      "location": "Great Smoky Mtns, TN",
+      "date": "2025-05-26",
+      "width": 1600,
+      "height": 1067,
+      "exif": {
+        "camera": "—",
+        "lens": "—",
+        "focal": "—",
+        "aperture": "—",
+        "shutter": "—",
+        "iso": "—"
+      }
+    },
+    {
+      "src": "images/_placeholders/roseate-spoonbill.svg",
+      "title": "Roseate Spoonbill",
+      "category": "birds",
+      "location": "Ding Darling, FL",
+      "date": "2025-04-02",
+      "width": 1067,
+      "height": 1600,
+      "exif": {
+        "camera": "—",
+        "lens": "—",
+        "focal": "—",
+        "aperture": "—",
+        "shutter": "—",
+        "iso": "—"
+      }
+    },
+    {
+      "src": "images/_placeholders/sandhill-cranes.svg",
+      "title": "Sandhill Cranes",
+      "category": "birds",
+      "location": "Platte River, NE",
+      "date": "2025-03-18",
+      "width": 1600,
+      "height": 900,
+      "exif": {
+        "camera": "—",
+        "lens": "—",
+        "focal": "—",
+        "aperture": "—",
+        "shutter": "—",
+        "iso": "—"
+      }
+    }
+  ]
+}

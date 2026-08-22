@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+._*
+
+# Full-resolution masters — keep these out of a public repo.
+originals/
+*.CR2
+*.CR3
+*.NEF
+*.ARW
+*.RAF
+*.dng
+*.DNG
+*.tif
+*.tiff
+*.psd

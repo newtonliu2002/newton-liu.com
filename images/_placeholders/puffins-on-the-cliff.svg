@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" width="1600" height="1067">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1f3540"/>
+      <stop offset="72%" stop-color="#5b8496"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="77%" cy="48%" r="55%">
+      <stop offset="0%" stop-color="#ecf3f5" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#ecf3f5" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="vig" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#000" stop-opacity="0.35"/>
+      <stop offset="45%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.45"/>
+    </linearGradient>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="1067" fill="url(#sky)"/>
+  <rect width="1600" height="1067" fill="url(#glow)"/>
+  <circle cx="1232" cy="512" r="59" fill="#ecf3f5" opacity="0.55"/>
+
+  <path d="M0 566 L400 630 L800 694 L1200 758 L1600 566 L1600 1067 L0 1067 Z"
+        fill="#0b1116" opacity="0.55"/>
+  <path d="M0 704 L400 768 L800 832 L1200 896 L1600 704 L1600 1067 L0 1067 Z"
+        fill="#0b1116"/>
+
+  <rect width="1600" height="1067" fill="url(#vig)"/>
+  <rect width="1600" height="1067" filter="url(#grain)" opacity="0.05"/>
+
+  <text x="800" y="1002" fill="#ffffff" fill-opacity="0.22"
+        font-family="Georgia, serif" font-size="23" font-style="italic"
+        text-anchor="middle">placeholder</text>
+</svg>

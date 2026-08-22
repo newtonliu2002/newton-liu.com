@@ -1,0 +1,448 @@
+/* ==========================================================================
+   Newton Liu — photography portfolio
+   Dark, quiet, image-first. No external fonts or assets: everything here is
+   self-contained so GitHub Pages serves it instantly and it can never break
+   because a CDN went away.
+   ========================================================================== */
+
+:root {
+  --bg:            #0a0b0d;
+  --bg-raised:     #131519;
+  --hairline:      #24272d;
+  --text:          #eceae6;
+  --text-dim:      #9a9ca3;
+  --text-faint:    #63666d;
+  --accent:        #c9963f;   /* warm, reads as low sun rather than "brand" */
+
+  --row-h:         280px;     /* target justified-row height; see .grid */
+  --gap:           10px;
+
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  --sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --measure: 34rem;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; }
+
+a { color: inherit; }
+
+::selection { background: var(--accent); color: #14100a; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--accent);
+  color: #14100a;
+  padding: 0.6rem 1rem;
+  z-index: 200;
+}
+.skip-link:focus { left: 0; }
+
+/* ---------- Layout containers ---------------------------------------- */
+
+.wrap {
+  width: 100%;
+  max-width: 68rem;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+/* The gallery gets more room than the prose. */
+.wrap-wide {
+  width: 100%;
+  max-width: 104rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+/* ---------- Masthead -------------------------------------------------- */
+
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: saturate(140%) blur(12px);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.masthead-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: 4.5rem;
+  padding-block: 0.85rem;
+}
+
+.wordmark {
+  text-decoration: none;
+  display: grid;
+  gap: 0.15rem;
+}
+.wordmark-name {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  letter-spacing: 0.01em;
+}
+.wordmark-sub {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.nav {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.nav a {
+  text-decoration: none;
+  color: var(--text-dim);
+  padding-block: 0.25rem;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.nav a:hover { color: var(--text); border-bottom-color: var(--accent); }
+
+/* ---------- Intro ----------------------------------------------------- */
+
+.intro {
+  padding-block: clamp(3.5rem, 9vw, 7rem) clamp(2rem, 5vw, 3.5rem);
+}
+.intro h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2rem, 5.2vw, 3.4rem);
+  line-height: 1.12;
+  margin: 0 0 1.1rem;
+  max-width: 18ch;
+  text-wrap: balance;
+}
+.intro p {
+  margin: 0;
+  max-width: var(--measure);
+  color: var(--text-dim);
+  font-size: 1.02rem;
+}
+
+/* ---------- Filters --------------------------------------------------- */
+
+.gallery-section { padding-bottom: clamp(3rem, 7vw, 5.5rem); }
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-bottom: 1.75rem;
+}
+
+.filter-btn {
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  color: var(--text-dim);
+  font: inherit;
+  font-size: 0.76rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 0.42rem 0.95rem;
+  cursor: pointer;
+  transition: color 0.18s, border-color 0.18s, background-color 0.18s;
+}
+.filter-btn:hover { color: var(--text); border-color: var(--text-faint); }
+.filter-btn[aria-pressed="true"] {
+  color: #14100a;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.filter-count {
+  font-size: 0.85em;
+  opacity: 0.65;
+  margin-left: 0.4em;
+}
+
+/* ---------- Justified grid -------------------------------------------
+   Flexbox justified rows. Each tile carries its own aspect ratio in a
+   custom property (--ar), set inline from photos.json:
+
+     flex-basis  = --ar * --row-h   → natural width at the target height
+     flex-grow   = --ar             → every tile in a row scales by the
+                                      same factor, so heights stay equal
+     aspect-ratio= --ar             → height follows from the final width
+
+   The ::after pseudo-element soaks up the leftover grow on the final row
+   so a lonely last photo isn't stretched across the whole viewport.
+   -------------------------------------------------------------------- */
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap);
+}
+.grid::after {
+  content: "";
+  flex-grow: 1e6;
+}
+
+.grid-status {
+  color: var(--text-faint);
+  font-size: 0.9rem;
+  padding: 3rem 0;
+  width: 100%;
+  text-align: center;
+}
+
+.tile {
+  --ar: 1.5;
+  position: relative;
+  flex-grow: var(--ar);
+  flex-shrink: 1;
+  flex-basis: calc(var(--ar) * var(--row-h));
+  aspect-ratio: var(--ar);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--bg-raised);
+  overflow: hidden;
+  cursor: zoom-in;
+  /* Stops one very wide panorama from eating an entire row on its own. */
+  max-width: 100%;
+}
+
+.tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.3, 1), opacity 0.5s ease;
+}
+
+.tile:hover img,
+.tile:focus-visible img { transform: scale(1.035); }
+
+/* Caption bar slides up on hover; always present for keyboard focus. */
+.tile-label {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 2.5rem 0.9rem 0.75rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
+  color: #fff;
+  text-align: left;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+  pointer-events: none;
+}
+.tile:hover .tile-label,
+.tile:focus-visible .tile-label { opacity: 1; transform: none; }
+
+.tile-title {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.25;
+}
+.tile-place {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.72);
+  margin-top: 0.15rem;
+}
+
+/* Fade photos in as they decode, so the grid doesn't flash-pop. */
+.tile img[data-loaded="false"] { opacity: 0; }
+
+/* ---------- Prose blocks ---------------------------------------------- */
+
+.prose {
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  border-top: 1px solid var(--hairline);
+}
+.prose h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 1.6rem;
+  margin: 0 0 1rem;
+}
+.prose p {
+  max-width: var(--measure);
+  color: var(--text-dim);
+  margin: 0 0 1rem;
+}
+
+.contact-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+.contact-list a {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 2px;
+}
+.contact-list a:hover { color: var(--accent); }
+
+/* ---------- Footer ---------------------------------------------------- */
+
+.footer {
+  border-top: 1px solid var(--hairline);
+  padding-block: 2.5rem 3.5rem;
+}
+.footer p {
+  margin: 0;
+  color: var(--text-faint);
+  font-size: 0.82rem;
+}
+
+/* ---------- Lightbox --------------------------------------------------- */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(6, 7, 8, 0.97);
+  display: grid;
+  grid-template-rows: 1fr;
+  place-items: center;
+  padding: clamp(1rem, 4vw, 3rem);
+  animation: lb-in 0.22s ease;
+}
+.lightbox[hidden] { display: none; }
+
+@keyframes lb-in { from { opacity: 0; } to { opacity: 1; } }
+
+.lb-figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.lb-image {
+  max-width: 100%;
+  /* Leaves room for the caption underneath. */
+  max-height: calc(100vh - 12rem);
+  object-fit: contain;
+}
+
+.lb-caption {
+  text-align: center;
+  max-width: 46rem;
+}
+.lb-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 1.35rem;
+  margin: 0 0 0.3rem;
+}
+.lb-meta {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 0.86rem;
+}
+.lb-exif {
+  margin: 0.45rem 0 0;
+  color: var(--text-faint);
+  font-size: 0.74rem;
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
+}
+.lb-exif:empty, .lb-meta:empty { display: none; }
+
+.lb-close, .lb-nav {
+  position: absolute;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--text-dim);
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.18s;
+  z-index: 2;
+}
+.lb-close:hover, .lb-nav:hover { color: var(--text); }
+
+.lb-close {
+  top: 1rem;
+  right: 1.25rem;
+  font-size: 2.4rem;
+  padding: 0.25rem 0.6rem;
+}
+.lb-nav {
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 3.5rem;
+  padding: 0.5rem 1rem;
+}
+.lb-prev { left: 0.25rem; }
+.lb-next { right: 0.25rem; }
+
+body.lb-open { overflow: hidden; }
+
+/* ---------- Responsive ------------------------------------------------- */
+
+@media (max-width: 900px) {
+  :root { --row-h: 210px; --gap: 8px; }
+}
+
+@media (max-width: 620px) {
+  :root { --row-h: 150px; --gap: 6px; }
+
+  .masthead-inner { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .masthead { position: static; }
+  .nav { gap: 1.1rem; }
+
+  /* Captions are useless without hover; the lightbox carries them instead. */
+  .tile-label { display: none; }
+
+  .lb-nav { font-size: 2.5rem; padding: 0.4rem 0.6rem; }
+  .lb-image { max-height: calc(100vh - 14rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .tile:hover img { transform: none; }
+}
+
+/* Printing a photo portfolio is odd, but don't hand back a black rectangle. */
+@media print {
+  .masthead, .filters, .lightbox, .footer { display: none !important; }
+  body { background: #fff; color: #000; }
+}
