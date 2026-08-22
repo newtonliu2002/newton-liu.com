@@ -39,8 +39,7 @@
   // Which EXIF fields print, and in what order. Any field that's missing from
   // a given photograph is skipped, so drone frames (which report no lens
   // worth naming) simply show fewer items.
-  // Also available but deliberately not shown: "focal" (e.g. "500mm").
-  var EXIF_FIELDS = ["camera", "lens", "aperture", "shutter", "iso"];
+  var EXIF_FIELDS = ["camera", "lens", "focal", "aperture", "shutter", "iso"];
 
   var body = document.body;
   var BASE = body.dataset.base || "";
@@ -168,12 +167,8 @@
         card.appendChild(img);
       }
 
-      var count = el("span", "card-count");
-      count.textContent = shots.length
-        ? shots.length + (shots.length === 1 ? " photo" : " photos")
-        : "coming soon";
-      card.appendChild(count);
-
+      // No photo counts, here or anywhere else — a collection is a body of
+      // work, not a tally.
       var bodyEl = el("div", "card-body");
       var title = el("h3", "card-title");
       title.textContent = c.title;

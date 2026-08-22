@@ -57,11 +57,14 @@ Flip a `CAPTIONS` field to `true` and that line reappears immediately — no
 rebuild, no re-import. `grid` is the caption over a thumbnail on hover;
 `lightbox` is the block under the enlarged photograph.
 
-`EXIF_FIELDS` sets which technical values print and in what order. `"focal"`
-(e.g. `500mm`) is collected and available but intentionally not listed.
-Missing values are skipped, which is why drone frames show fewer items — their
+`EXIF_FIELDS` sets which technical values print and in what order. Missing
+values are skipped, which is why drone frames show fewer items — their
 reported "lens" is a bare spec that just repeats the aperture, so `build.py`
 drops it.
+
+**No photo counts anywhere.** Not on collection cards, not in headings, not
+"19 photos" or "coming soon". A collection is a body of work, not a tally.
+This applies to anything added later too.
 
 Related: the photographs keep their **original camera filenames**
 (`0Z9A0369.jpg`, `DJI-20251228080241-0076-D.jpg`). Do not invent titles for
