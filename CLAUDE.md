@@ -46,12 +46,19 @@ Folders under `images/` starting with `_` are skipped by the scanner.
 ## Adding photographs
 
 ```bash
-# 1. Export from Lightroom: sRGB, q80, long edge 2000px, strip location info
-# 2. Drop into images/<collection>/ using the filename convention
+# Export from Lightroom at any size — import.py handles the downscaling.
+python3 tools/import.py ~/Desktop/"2025.12 West JPEG" --collection west
+# ...then rename the files to Title_Location_YYYY-MM-DD.jpg, and:
 python3 tools/build.py
 python3 -m http.server 8000     # preview at localhost:8000
 git add -A && git commit -m "Add Yunnan 2025" && git push
 ```
+
+`import.py` resizes to a 2000px long edge (~23x smaller), reads only from the
+source folder, and **refuses to import anything carrying GPS coordinates**
+unless you pass `--strip-exif` or `--allow-gps`. Use `--dry-run` first when
+unsure. It is the reason masters never end up in the repo — always import
+through it rather than copying files into `images/` by hand.
 
 `build.py` never overwrites hand-authored text (`title`, `location`, `date`,
 `caption`, `collection`). It only refreshes mechanical fields — dimensions,

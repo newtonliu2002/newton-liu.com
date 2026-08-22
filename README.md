@@ -16,17 +16,26 @@ won't work — the site loads its data over `fetch`, which browsers block on
 
 ## Add photographs
 
-1. Export from Lightroom: **sRGB, quality 80, long edge 2000px**, and tick
-   *Remove Location Info*.
-2. Drop them into `images/<collection>/`, named
-   `Title_Location_YYYY-MM-DD.jpg` — for example
-   `images/peru/Hoatzin_Tambopata_2024-07-18.jpg`. Location and date are
+1. Export from Lightroom as JPEG — **any size**, the importer downscales.
+2. Import them:
+
+```bash
+python3 tools/import.py ~/Desktop/"2025.12 West JPEG" --collection west
+```
+
+   This resizes to a 2000px long edge (roughly 23× smaller), never touches
+   your source folder, and refuses to import a photograph carrying GPS
+   coordinates unless you explicitly allow or strip it.
+
+3. Rename the imported files to `Title_Location_YYYY-MM-DD.jpg` — for example
+   `Ruffed Grouse_Sawtooth NF ID_2025-12-18.jpg`. Location and date are both
    optional; a missing date is read from EXIF.
-3. Rebuild and publish:
+
+4. Rebuild and publish:
 
 ```bash
 python3 tools/build.py
-git add -A && git commit -m "Add Peru 2024" && git push
+git add -A && git commit -m "Add the West, December 2025" && git push
 ```
 
 `build.py` reads each file's dimensions and EXIF, generates 1200px thumbnails

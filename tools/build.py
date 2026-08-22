@@ -231,7 +231,11 @@ def format_exif(fields):
         out["camera"] = (make + " " + model).strip()
 
     lens = (fields.get("lens") or "").strip()
-    if lens and lens.lower() not in ("----", "unknown"):
+    # Drones and phones report the lens as a bare spec ("70.0 mm f/2.8"),
+    # which just repeats the focal length and aperture printed beside it.
+    # Named glass ("RF100-500mm F4.5-7.1 L IS USM") is worth showing.
+    bare_spec = re.fullmatch(r"[\d.]+\s*mm(\s*f/?[\d.]+)?", lens, re.I)
+    if lens and not bare_spec and lens.lower() not in ("----", "unknown"):
         out["lens"] = lens
 
     if fields.get("focal_length"):
