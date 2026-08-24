@@ -113,6 +113,25 @@ falling back to the first. It is never cropped.
 
 `--book-gap` on `.grid.book` sets the gutter.
 
+## Prose pages (About, Contact)
+
+Both use the gallery's vocabulary rather than the old centred `.prose` block: a
+sticky left rail carrying the page label and jump links, a right-hand column of
+text at a 62ch measure, section headings as hairline-ruled small caps.
+
+The markup is `.about-band` (optional photograph) then `.about-body` >
+`.about-rail` + `.about-prose`. `.about-body.is-bare` adds the top padding a
+page needs when it has no band — Contact uses it, because two pages opening on
+the same photograph looks like a mistake.
+
+The About band is **the one photograph hand-written into HTML**. It is page
+furniture, not a collection entry, so it is deliberately outside `photos.json`
+— but nothing checks that the file still exists, so if that frame is ever
+deleted from `images/west/`, change the `src` too.
+
+The older `.prose`/`.prose h1` rules are still in `site.css` but nothing uses
+them now. They're the fallback if a plain text page is ever wanted.
+
 ## Conventions
 
 - **No build step.** No npm, no bundler, no framework. What you edit is what

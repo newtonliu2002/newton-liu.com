@@ -36,6 +36,7 @@
   --measure: 36rem;
 
   /* ---- Layout ------------------------------------------------------- */
+  --masthead-h: 4.25rem;  /* sticky bar; anything that pins below it uses this */
   --wrap:      74rem;   /* prose + cards */
   --wrap-wide: 108rem;  /* photo grids get more room */
   --gutter:    clamp(1.25rem, 4vw, 2.5rem);
@@ -134,7 +135,7 @@ a   { color: inherit; }
 
 .masthead-inner {
   display: flex; align-items: center; justify-content: space-between;
-  gap: 1.5rem; min-height: 4.25rem;
+  gap: 1.5rem; min-height: var(--masthead-h);
 }
 
 .wordmark { text-decoration: none; display: grid; gap: 0.1rem; }
@@ -636,4 +637,140 @@ body.lb-open { overflow: hidden; }
 .grid.book .tile.is-natural {
   flex: 0 0 auto;
   aspect-ratio: var(--cell-ar);
+}
+
+/* ==========================================================================
+   Prose pages (About, Contact)
+
+   The gallery's vocabulary applied to text: a left rail against a right-hand
+   column, tiny letterspaced labels, hairline rules between sections. The
+   photograph is a quiet band rather than an opener — this page is text, and
+   the photographs are not the subject.
+
+   Colours come from :root, not from this block. The handoff this came from
+   assumed a #fafafa page; the site is white.
+   ========================================================================== */
+
+.about-band {
+  display: flex;
+  justify-content: center;
+  padding: 2vh 0 clamp(2.5rem, 8vh, 6rem);
+}
+
+.about-band img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 44vh;
+}
+
+.about-body {
+  display: grid;
+  grid-template-columns: minmax(200px, 1fr) 62%;
+  column-gap: 3%;
+  align-items: start;
+  padding-bottom: clamp(4rem, 12vh, 8rem);
+}
+
+/* No band above it, so it has to make its own headroom. */
+.about-body.is-bare { padding-top: clamp(3rem, 8vw, 5.5rem); }
+
+.about-body .contact-list { margin-bottom: 1rem; }
+
+.about-rail {
+  position: sticky;
+  top: calc(var(--masthead-h) + 2rem);
+  text-align: left;
+  padding-top: 0.25rem;
+}
+
+.about-title {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: var(--step--1);
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.about-name {
+  margin: 1rem 0 0;
+  font-size: 0.62rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.about-jump {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 2.1rem;
+}
+
+.about-jump a {
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  text-decoration: none;
+  transition: color 0.2s var(--ease);
+}
+.about-jump a:hover { color: var(--text); }
+
+.about-prose {
+  min-width: 0;
+  max-width: 62ch;
+}
+
+.about-prose .lede {
+  margin: 0 0 3.5em;
+  max-width: none;
+  font-size: var(--step-1);
+  line-height: 1.62;
+  color: var(--text);
+  text-wrap: pretty;
+}
+
+.about-prose p {
+  margin: 0 0 1.5em;
+  max-width: none;
+  font-size: var(--step-0);
+  line-height: 1.78;
+  color: var(--text-dim);
+  text-wrap: pretty;
+}
+
+/* Section headings are ruled small caps, not display type — the rail already
+   carries the page's voice. */
+.about-prose h2 {
+  margin: 4em 0 1.15em;
+  padding-top: 1.1em;
+  border-top: 1px solid var(--hairline);
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text);
+  scroll-margin-top: calc(var(--masthead-h) + 2rem);
+}
+
+.about-prose > *:first-child { margin-top: 0; }
+
+.about-prose a {
+  color: var(--text);
+  text-decoration-color: var(--accent);
+  text-underline-offset: 4px;
+}
+
+/* Reuses .contact-list from the old prose rules, minus its top margin — the
+   rhythm here is set by the h2 above it. */
+.about-prose .contact-list { margin-top: 0; }
+
+@media (max-width: 1000px) {
+  .about-body { display: block; }
+  .about-rail { position: static; margin-bottom: 3.5vh; }
+  .about-jump { flex-direction: row; gap: 1.25rem; margin-top: 1.1rem; }
 }
