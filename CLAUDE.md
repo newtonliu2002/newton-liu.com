@@ -84,6 +84,11 @@ gives it** and, at each position, picks the first block template whose cells
 match the orientations coming up. So sequence is controlled entirely by the
 manifest order — the layout only decides arrangement, never order.
 
+**Reorder a gallery by reordering `data/photos.json`.** `build.py` preserves
+the position of anything already in the manifest and appends newly imported
+photographs at the end (newest first) to be placed by hand. It does not
+re-sort, because that would silently undo an arrangement.
+
 Photographs are classified from `width`/`height`: `W` panorama (ratio ≥ 2.2)
 gets its own full-width band, `P` upright (≤ 0.92), `L` landscape between. A
 cell marked `S` takes either and crops it square. **Cropping never crosses the

@@ -9,15 +9,19 @@
    ========================================================================== */
 
 :root {
-  /* ---- Colour ------------------------------------------------------- */
-  --bg:            #0a0b0d;   /* page */
-  --bg-raised:     #131519;   /* cards, image wells before load */
-  --hairline:      #23262c;
-  --text:          #f0eeea;
-  --text-dim:      #9a9ca3;
-  --text-faint:    #63666d;
-  --accent:        #c9963f;   /* low sun; used sparingly */
-  --on-accent:     #14100a;
+  /* ---- Colour -------------------------------------------------------
+     Light ground. Photographs carry all the colour on the page, so every
+     surface here is neutral and the accent is used sparingly.
+     (The previous dark palette is in git history if it's ever wanted back —
+     it was only ever these eight values.) */
+  --bg:            #ffffff;   /* page */
+  --bg-raised:     #f2f1ee;   /* cards, image wells before load */
+  --hairline:      #e3e1dc;
+  --text:          #16171b;
+  --text-dim:      #5a5d64;
+  --text-faint:    #8a8d94;
+  --accent:        #9a6a1e;   /* low sun, darkened to hold up on white */
+  --on-accent:     #ffffff;
 
   /* ---- Type --------------------------------------------------------- */
   --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
@@ -178,10 +182,12 @@ a   { color: inherit; }
 }
 @keyframes hero-settle { to { transform: scale(1); } }
 
+/* The hero sets type over a photograph, so it stays light-on-dark even though
+   the page around it is white. The scrim only darkens where the words sit. */
 .hero-scrim {
   position: absolute; inset: 0;
   background:
-    linear-gradient(to top, var(--bg) 2%, rgba(10,11,13,0.35) 48%, rgba(10,11,13,0.55) 100%);
+    linear-gradient(to top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.26) 44%, rgba(0,0,0,0.04) 80%);
 }
 
 .hero-inner { position: relative; }
@@ -194,13 +200,14 @@ a   { color: inherit; }
   letter-spacing: -0.015em;
   margin: 0 0 1.1rem;
   text-wrap: balance;
+  color: #fff;
   text-shadow: 0 2px 40px rgba(0,0,0,0.6);
 }
 
 .hero-sub {
   margin: 0 0 2rem;
   max-width: 30rem;
-  color: var(--text-dim);
+  color: rgba(255,255,255,0.86);
   font-size: var(--step-1);
   text-shadow: 0 1px 20px rgba(0,0,0,0.7);
 }
@@ -212,12 +219,13 @@ a   { color: inherit; }
   letter-spacing: 0.16em;
   text-transform: uppercase;
   padding: 0.85rem 1.6rem;
-  border: 1px solid var(--text-dim);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.7);
   transition: background-color 0.25s var(--ease), color 0.25s var(--ease),
               border-color 0.25s var(--ease);
 }
 .hero-cta:hover {
-  background: var(--text); color: var(--bg); border-color: var(--text);
+  background: #fff; color: #111; border-color: #fff;
 }
 
 /* ---------- Collection cards -------------------------------------------- */
@@ -254,9 +262,12 @@ a   { color: inherit; }
   background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.15) 55%, rgba(0,0,0,0.05) 100%);
 }
 
+/* Card text sits on the dark gradient over a photograph, so it stays light
+   even on a white page. Empty cards have no gradient — see .is-empty below. */
 .card-body {
   position: absolute; inset: auto 0 0 0; z-index: 2;
   padding: 1.4rem 1.5rem;
+  color: #fff;
 }
 .card-title {
   font-family: var(--serif);
@@ -272,7 +283,10 @@ a   { color: inherit; }
 /* An empty collection shouldn't look broken — it looks *pending*. */
 .collection-card.is-empty { border: 1px dashed var(--hairline); }
 .collection-card.is-empty::after { background: none; }
-.collection-card.is-empty .card-title { color: var(--text-dim); }
+/* No gradient behind it, so this one follows the page, not the photograph. */
+.collection-card.is-empty .card-body { color: var(--text-dim); }
+.collection-card.is-empty .card-title,
+.collection-card.is-empty .card-sub { color: var(--text-dim); }
 
 /* ---------- About teaser ------------------------------------------------ */
 
@@ -431,7 +445,7 @@ a   { color: inherit; }
 
 .lightbox {
   position: fixed; inset: 0; z-index: 100;
-  background: rgba(6,7,8,0.975);
+  background: rgba(255,255,255,0.985);
   display: grid; place-items: center;
   padding: clamp(1rem, 4vw, 3rem);
   animation: fade-in 0.22s ease;

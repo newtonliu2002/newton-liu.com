@@ -300,7 +300,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title} — Newton Liu Photography</title>
 <meta name="description" content="{title} — photographs by Newton Liu.">
-<meta name="theme-color" content="#0a0b0d">
+<meta name="theme-color" content="#ffffff">
 <link rel="stylesheet" href="../../assets/site.css">
 </head>
 
@@ -466,9 +466,17 @@ def collect(make_thumbs=True):
 
             photos.append(entry)
 
-    # Newest first; undated photographs sink rather than float.
-    photos.sort(key=lambda p: (p.get("date") or "0000-00-00", p["src"]), reverse=True)
-    return photos
+    # The order of data/photos.json IS the gallery's running order — the packed
+    # grid lays photographs out in exactly this sequence — so a hand-arranged
+    # manifest has to survive a rebuild. Anything already in the manifest keeps
+    # its position; newly imported photographs join the end, newest first, to
+    # be placed by hand.
+    position = {src: i for i, src in enumerate(existing)}
+    seen = [p for p in photos if p["src"] in position]
+    fresh = [p for p in photos if p["src"] not in position]
+    seen.sort(key=lambda p: position[p["src"]])
+    fresh.sort(key=lambda p: (p.get("date") or "0000-00-00", p["src"]), reverse=True)
+    return seen + fresh
 
 
 def main():
