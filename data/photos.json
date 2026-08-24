@@ -88,23 +88,6 @@
       "thumb": "images/_thumbs/west/B0000538.jpg"
     },
     {
-      "src": "images/west/DJI-20251228075547-0061-D.jpg",
-      "title": "DJI-20251228075547-0061-D",
-      "collection": "west",
-      "location": "",
-      "date": "2025-12-28",
-      "width": 2000,
-      "height": 1123,
-      "exif": {
-        "camera": "Hasselblad L2D-20c",
-        "focal": "12mm",
-        "aperture": "f/3.5",
-        "shutter": "1/400s",
-        "iso": "100"
-      },
-      "thumb": "images/_thumbs/west/DJI-20251228075547-0061-D.jpg"
-    },
-    {
       "src": "images/west/B0000870.jpg",
       "title": "B0000870",
       "collection": "west",
@@ -123,23 +106,6 @@
       "thumb": "images/_thumbs/west/B0000870.jpg"
     },
     {
-      "src": "images/west/DJI-20251223170556-0012-D.jpg",
-      "title": "DJI-20251223170556-0012-D",
-      "collection": "west",
-      "location": "",
-      "date": "2025-12-23",
-      "width": 2000,
-      "height": 741,
-      "exif": {
-        "camera": "Hasselblad L2D-20c",
-        "focal": "12mm",
-        "aperture": "f/2.8",
-        "shutter": "1/80s",
-        "iso": "120"
-      },
-      "thumb": "images/_thumbs/west/DJI-20251223170556-0012-D.jpg"
-    },
-    {
       "src": "images/west/DJI-20251223171450-0023-D.jpg",
       "title": "DJI-20251223171450-0023-D",
       "collection": "west",
@@ -155,6 +121,23 @@
         "iso": "150"
       },
       "thumb": "images/_thumbs/west/DJI-20251223171450-0023-D.jpg"
+    },
+    {
+      "src": "images/west/DJI-20251223170556-0012-D.jpg",
+      "title": "DJI-20251223170556-0012-D",
+      "collection": "west",
+      "location": "",
+      "date": "2025-12-23",
+      "width": 2000,
+      "height": 741,
+      "exif": {
+        "camera": "Hasselblad L2D-20c",
+        "focal": "12mm",
+        "aperture": "f/2.8",
+        "shutter": "1/80s",
+        "iso": "120"
+      },
+      "thumb": "images/_thumbs/west/DJI-20251223170556-0012-D.jpg"
     },
     {
       "src": "images/west/DJI-20251224080854-0037-D.jpg",
@@ -246,6 +229,24 @@
       "thumb": "images/_thumbs/west/U2A7753.jpg"
     },
     {
+      "src": "images/west/U2A6934.jpg",
+      "title": "U2A6934",
+      "collection": "west",
+      "location": "",
+      "date": "2025-12-17",
+      "width": 2000,
+      "height": 1334,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/640s",
+        "iso": "1600"
+      },
+      "thumb": "images/_thumbs/west/U2A6934.jpg"
+    },
+    {
       "src": "images/west/U2A8046.jpg",
       "title": "U2A8046",
       "collection": "west",
@@ -280,24 +281,6 @@
         "iso": "2000"
       },
       "thumb": "images/_thumbs/west/U2A7585.jpg"
-    },
-    {
-      "src": "images/west/U2A6934.jpg",
-      "title": "U2A6934",
-      "collection": "west",
-      "location": "",
-      "date": "2025-12-17",
-      "width": 2000,
-      "height": 1334,
-      "exif": {
-        "camera": "Canon EOS R5m2",
-        "lens": "RF100-500mm F4.5-7.1 L IS USM",
-        "focal": "500mm",
-        "aperture": "f/7.1",
-        "shutter": "1/640s",
-        "iso": "1600"
-      },
-      "thumb": "images/_thumbs/west/U2A6934.jpg"
     }
   ]
 }
