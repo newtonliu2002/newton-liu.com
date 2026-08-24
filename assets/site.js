@@ -210,59 +210,204 @@
     ].filter(Boolean).join("  ·  ");
   }
 
+  /* ------------------------------------------------------------------
+     THE PACKED GRID
+
+     Photographs may be cropped, including to a square, but never across the
+     divide: a landscape stays a landscape and an upright stays an upright.
+
+     Each row has one anchor cell carrying an aspect-ratio; the rest stretch to
+     the height it sets and take their width from a percentage. So rows sit
+     flush at any window width with no measuring and no resize handler.
+
+     Cell needs:  L landscape · P upright · S either, cropped square · W pano
+     ------------------------------------------------------------------ */
+
+  function famOf(photo) {
+    var ar = aspectOf(photo);
+    return ar >= 2.2 ? "W" : ar <= 0.92 ? "P" : "L";
+  }
+
+  function cellFits(need, photo) {
+    var f = famOf(photo);
+    return need === "S" ? f !== "W" : need === f;
+  }
+
+  // w: share of the row's width. ar: aspect-ratio, on the anchor cell only.
+  var BLOCKS = [
+    { need: ["L", "L", "L"],                       // big left, two stacked right
+      cols: [{ w: 62, ar: 1.45, take: 1 }, { w: 38, take: 2 }] },
+    { need: ["L", "L"],                            // unequal pair
+      cols: [{ w: 56, ar: 1.62, take: 1 }, { w: 44, take: 1 }] },
+    { need: ["L", "L", "L"],                       // three across
+      cols: [{ w: 34, ar: 1.42, take: 1 }, { w: 33, take: 1 }, { w: 33, take: 1 }] },
+    { need: ["L", "L", "L"],                       // two stacked left, big right
+      cols: [{ w: 38, take: 2 }, { w: 62, ar: 1.45, take: 1 }] },
+    { need: ["S", "S"],                            // two squares
+      cols: [{ w: 50, ar: 1, take: 1 }, { w: 50, take: 1 }] },
+    { need: ["L", "P"],                            // landscape, upright beside it
+      cols: [{ w: 66, take: 1 }, { w: 34, ar: 0.76, take: 1 }] },
+    { need: ["P", "L"],
+      cols: [{ w: 34, ar: 0.76, take: 1 }, { w: 66, take: 1 }] },
+    { need: ["P", "P"],                            // two uprights
+      cols: [{ w: 50, ar: 0.78, take: 1 }, { w: 50, take: 1 }] }
+  ];
+
+  var WIDE = { need: ["W"], cols: [{ w: 100, ar: 2.45, take: 1 }] };
+
+  function composeBlocks(photos) {
+    var out = [];
+    var i = 0, k = 0, guard = 0;
+
+    while (i < photos.length && guard++ < 500) {
+      var left = photos.length - i;
+      var block = null;
+
+      if (famOf(photos[i]) === "W") block = WIDE;
+      else {
+        for (var n = 0; n < BLOCKS.length && !block; n++) {
+          var cand = BLOCKS[(k + n) % BLOCKS.length];
+          if (cand.need.length > left) continue;
+          var ok = true;
+          for (var j = 0; j < cand.need.length; j++) {
+            if (!cellFits(cand.need[j], photos[i + j])) { ok = false; break; }
+          }
+          if (ok) { block = cand; k = (k + n + 1) % BLOCKS.length; }
+        }
+      }
+
+      if (block) {
+        out.push({ block: block, from: i });
+        i += block.need.length;
+      } else {
+        out.push({ block: null, from: i });        // runs alone, uncropped
+        i += 1;
+      }
+    }
+    return out;
+  }
+
+  // One thumbnail. `index` is its position in the collection, so the lightbox
+  // arrows keep walking the collection's own order.
+  function makeTile(photo, index, total) {
+    var tile = el("button", "tile");
+    tile.type = "button";
+    tile.setAttribute("aria-label", CAPTIONS.grid.title && photo.title
+      ? "View " + photo.title + " larger"
+      : "View photograph " + (index + 1) + " of " + total + " larger");
+
+    var img = el("img");
+    img.src = url(photo.thumb || photo.src);
+    img.alt = altFor(photo);
+    img.loading = index < 8 ? "eager" : "lazy";
+    img.decoding = "async";
+    img.dataset.loaded = "false";
+
+    var reveal = function () { img.dataset.loaded = "true"; };
+    if (img.complete) reveal();
+    else {
+      img.addEventListener("load", reveal, { once: true });
+      img.addEventListener("error", reveal, { once: true });
+    }
+    tile.appendChild(img);
+
+    var showTitle = CAPTIONS.grid.title && photo.title;
+    var showPlace = CAPTIONS.grid.location && photo.location;
+    if (showTitle || showPlace) {
+      var label = el("span", "tile-label");
+      if (showTitle) {
+        var t = el("span", "tile-title");
+        t.textContent = photo.title;
+        label.appendChild(t);
+      }
+      if (showPlace) {
+        var place = el("span", "tile-place");
+        place.textContent = photo.location;
+        label.appendChild(place);
+      }
+      tile.appendChild(label);
+    }
+
+    tile.addEventListener("click", function () { open(index); });
+    return tile;
+  }
+
+  // The opener: whichever photograph is flagged `featured`, else the first.
+  // Never cropped — it keeps its own ratio and the full width of the page.
+  function renderOpener(photos) {
+    var slot = document.querySelector(".book-opener");
+    if (!slot) return 0;
+
+    var at = 0;
+    for (var n = 0; n < photos.length; n++) { if (photos[n].featured) { at = n; break; } }
+    var photo = photos[at];
+
+    var img = el("img");
+    img.src = url(photo.src);
+    img.alt = altFor(photo);
+    img.decoding = "async";
+
+    slot.textContent = "";
+    slot.classList.toggle("is-upright", aspectOf(photo) <= 0.95);
+    slot.appendChild(img);
+    slot.addEventListener("click", function () { open(at); });
+    return at;
+  }
+
   function renderGrid(photos) {
     var grid = document.getElementById("grid");
+    var lead = document.querySelector(".book-lead");
+
     if (!photos.length) {
+      // An empty collection has no opener either — otherwise the page starts
+      // with a tall band of nothing above the message.
+      if (lead) lead.hidden = true;
       status(grid, "Photographs from this trip haven't been added yet.");
       return;
     }
+    if (lead) lead.hidden = false;
+
+    var openerAt = renderOpener(photos);
+    var rest = [];
+    photos.forEach(function (p, i) { if (i !== openerAt) rest.push({ photo: p, at: i }); });
 
     grid.textContent = "";
     var frag = document.createDocumentFragment();
 
-    photos.forEach(function (photo, i) {
-      var tile = el("button", "tile");
-      tile.type = "button";
-      tile.style.setProperty("--ar", aspectOf(photo).toFixed(4));
-      tile.setAttribute("aria-label", CAPTIONS.grid.title && photo.title
-        ? "View " + photo.title + " larger"
-        : "View photograph " + (i + 1) + " of " + photos.length + " larger");
+    composeBlocks(rest.map(function (r) { return r.photo; })).forEach(function (step) {
+      var row = el("div", "book-row");
+      var cursor = step.from;
 
-      var img = el("img");
-      img.src = url(photo.thumb || photo.src);
-      img.alt = altFor(photo);
-      img.loading = i < 8 ? "eager" : "lazy";   // first rows shouldn't fade in late
-      img.decoding = "async";
-      img.dataset.loaded = "false";
-
-      var reveal = function () { img.dataset.loaded = "true"; };
-      if (img.complete) reveal();
-      else {
-        img.addEventListener("load", reveal, { once: true });
-        // A missing file shouldn't leave an invisible hole in the grid.
-        img.addEventListener("error", reveal, { once: true });
-      }
-      tile.appendChild(img);
-
-      var showTitle = CAPTIONS.grid.title && photo.title;
-      var showPlace = CAPTIONS.grid.location && photo.location;
-      if (showTitle || showPlace) {
-        var label = el("span", "tile-label");
-        if (showTitle) {
-          var t = el("span", "tile-title");
-          t.textContent = photo.title;
-          label.appendChild(t);
-        }
-        if (showPlace) {
-          var place = el("span", "tile-place");
-          place.textContent = photo.location;
-          label.appendChild(place);
-        }
-        tile.appendChild(label);
+      if (!step.block) {
+        var lone = rest[cursor];
+        var col = el("div", "book-col");
+        col.style.flex = "0 0 " + (famOf(lone.photo) === "P" ? 34 : 72) + "%";
+        var soloTile = makeTile(lone.photo, lone.at, photos.length);
+        soloTile.classList.add("is-natural");
+        soloTile.style.setProperty("--cell-ar", aspectOf(lone.photo).toFixed(4));
+        col.appendChild(soloTile);
+        row.className = "book-row is-solo";
+        row.appendChild(col);
+        frag.appendChild(row);      // must go in the fragment like every other
+        return;                     // row, or it jumps ahead of all of them
       }
 
-      tile.addEventListener("click", function () { open(i); });
-      frag.appendChild(tile);
+      step.block.cols.forEach(function (spec) {
+        var col = el("div", "book-col");
+        col.style.flex = "0 0 " + spec.w + "%";
+        for (var n = 0; n < spec.take; n++) {
+          var item = rest[cursor++];
+          var tile = makeTile(item.photo, item.at, photos.length);
+          if (spec.ar) {
+            tile.classList.add("is-anchor");
+            tile.style.setProperty("--cell-ar", String(spec.ar));
+          }
+          col.appendChild(tile);
+        }
+        row.appendChild(col);
+      });
+
+      frag.appendChild(row);
     });
 
     grid.appendChild(frag);

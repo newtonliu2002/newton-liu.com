@@ -325,16 +325,20 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 </header>
 
 <main>
-  <div class="wrap gallery-head">
-    <a class="back-link" href="../../#collections">&larr; All collections</a>
-    <h1 class="gallery-title">{title}</h1>
-    <p class="gallery-date"></p>
-    <p class="gallery-sub"></p>
-    <p class="gallery-blurb"></p>
+  <div class="wrap-wide book-lead">
+    <figure class="book-opener"></figure>
   </div>
 
-  <div class="wrap-wide">
-    <div id="grid" class="grid" aria-live="polite">
+  <div class="wrap-wide book-body">
+    <aside class="book-rail">
+      <a class="back-link" href="../../#collections">&larr; All collections</a>
+      <h1 class="gallery-title">{title}</h1>
+      <p class="gallery-date"></p>
+      <p class="gallery-sub"></p>
+      <p class="gallery-blurb"></p>
+    </aside>
+
+    <div id="grid" class="grid book" aria-live="polite">
       <p class="grid-status">Loading photographs…</p>
     </div>
   </div>

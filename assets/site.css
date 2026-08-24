@@ -513,3 +513,113 @@ body.lb-open { overflow: hidden; }
   .masthead, .lightbox, .footer, .hero-cta { display: none !important; }
   body { background: #fff; color: #000; }
 }
+/* ==========================================================================
+   Packed-grid gallery. Append to assets/site.css.
+
+   Rows are flush at every window width because exactly one cell per row
+   carries an aspect-ratio (the anchor) and every other cell stretches to the
+   height that cell sets. No measurement, no resize handling.
+   ========================================================================== */
+
+/* --- opener: full page, centred, never cropped ------------------------- */
+
+.book-lead {
+  display: flex;
+  justify-content: center;
+  padding: 2vh 0 clamp(26px, 4.5vw, 72px);
+}
+
+.book-opener {
+  margin: 0;
+  cursor: zoom-in;
+  display: flex;
+  justify-content: center;
+  max-width: 100%;
+}
+
+.book-opener img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 76vh;
+}
+
+.book-opener.is-upright img { max-height: 84vh; }
+
+/* --- body: text column left, photographs right ------------------------ */
+
+.book-body {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) 62%;
+  column-gap: 3%;
+  align-items: start;
+}
+
+.book-rail { text-align: left; }
+.book-rail .gallery-title { margin-top: 0; }
+
+@media (max-width: 1000px) {
+  .book-body { display: block; }
+  .book-rail { margin-bottom: 4vh; }
+}
+
+/* --- blocks ------------------------------------------------------------ */
+
+.grid.book {
+  --book-gap: 10px;
+  display: block;
+  min-width: 0;
+}
+
+.book-row {
+  display: flex;
+  gap: var(--book-gap);
+  align-items: stretch;
+  margin-bottom: var(--book-gap);
+}
+
+.book-row.is-solo { justify-content: center; }
+
+.book-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--book-gap);
+  min-width: 0;
+}
+
+/* Cells crop to fill, so a landscape can become a squarer landscape and an
+   upright a squarer upright — never one into the other. */
+.grid.book .tile {
+  position: relative;
+  display: block;
+  width: 100%;
+  flex: 1 1 0;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background: none;
+  overflow: hidden;
+  cursor: zoom-in;
+  aspect-ratio: auto;
+}
+
+.grid.book .tile.is-anchor {
+  flex: 0 0 auto;
+  aspect-ratio: var(--cell-ar);
+}
+
+.grid.book .tile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* A photograph that packs with nothing else keeps its own ratio. */
+.grid.book .tile.is-natural {
+  flex: 0 0 auto;
+  aspect-ratio: var(--cell-ar);
+}

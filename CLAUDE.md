@@ -74,6 +74,30 @@ available if Newton ever wants it, but it is his to use, not yours.
 Collection `subtitle` and `blurb` in `data/collections.json` are empty for the
 same reason — they're his words to write.
 
+## The gallery layout (packed grid)
+
+Collection pages open with an uncropped full-width photograph, then a text rail
+on the left and packed photo blocks on the right.
+
+`composeBlocks()` in `site.js` walks the collection **in the order photos.json
+gives it** and, at each position, picks the first block template whose cells
+match the orientations coming up. So sequence is controlled entirely by the
+manifest order — the layout only decides arrangement, never order.
+
+Photographs are classified from `width`/`height`: `W` panorama (ratio ≥ 2.2)
+gets its own full-width band, `P` upright (≤ 0.92), `L` landscape between. A
+cell marked `S` takes either and crops it square. **Cropping never crosses the
+divide** — a landscape never becomes an upright.
+
+Rows are flush at any window width because exactly one cell per row (the
+anchor) carries an `aspect-ratio` and every other cell stretches to the height
+it sets. There is no measurement and no resize handler; don't add one.
+
+The opener is the photograph flagged `"featured": true` in `photos.json`,
+falling back to the first. It is never cropped.
+
+`--book-gap` on `.grid.book` sets the gutter.
+
 ## Conventions
 
 - **No build step.** No npm, no bundler, no framework. What you edit is what
