@@ -234,7 +234,16 @@
   }
 
   // w: share of the row's width. ar: aspect-ratio, on the anchor cell only.
+  // pri: tried first when several templates fit. Higher wins.
   var BLOCKS = [
+    // Uprights are rarer than landscapes and suffer most from being squeezed,
+    // so a block led by one is preferred and gives it the dominant cell: full
+    // row height at nearly half the width, with two landscapes stacked beside.
+    { pri: 2, need: ["P", "L", "L"],
+      cols: [{ w: 46, ar: 0.78, take: 1 }, { w: 54, take: 2 }] },
+    { pri: 2, need: ["L", "L", "P"],
+      cols: [{ w: 54, take: 2 }, { w: 46, ar: 0.78, take: 1 }] },
+
     { need: ["L", "L", "L"],                       // big left, two stacked right
       cols: [{ w: 62, ar: 1.45, take: 1 }, { w: 38, take: 2 }] },
     { need: ["L", "L"],                            // unequal pair
@@ -243,17 +252,43 @@
       cols: [{ w: 34, ar: 1.42, take: 1 }, { w: 33, take: 1 }, { w: 33, take: 1 }] },
     { need: ["L", "L", "L"],                       // two stacked left, big right
       cols: [{ w: 38, take: 2 }, { w: 62, ar: 1.45, take: 1 }] },
-    { need: ["S", "S"],                            // two squares
-      cols: [{ w: 50, ar: 1, take: 1 }, { w: 50, take: 1 }] },
     { need: ["L", "P"],                            // landscape, upright beside it
       cols: [{ w: 66, take: 1 }, { w: 34, ar: 0.76, take: 1 }] },
     { need: ["P", "L"],
       cols: [{ w: 34, ar: 0.76, take: 1 }, { w: 66, take: 1 }] },
     { need: ["P", "P"],                            // two uprights
-      cols: [{ w: 50, ar: 0.78, take: 1 }, { w: 50, take: 1 }] }
+      cols: [{ w: 50, ar: 0.78, take: 1 }, { w: 50, take: 1 }] },
+
+    // Square-cropping discards the most of a photograph, so it's the last
+    // arrangement tried rather than one of the first.
+    { pri: -1, need: ["S", "S"],
+      cols: [{ w: 50, ar: 1, take: 1 }, { w: 50, take: 1 }] }
   ];
 
   var WIDE = { need: ["W"], cols: [{ w: 100, ar: 2.45, take: 1 }] };
+
+  // Best-fitting template at this position, or null. `k` rotates the search so
+  // that among equally-suited templates the same one doesn't repeat.
+  function pickBlock(photos, i, left, k) {
+    var best = null, bestScore = -Infinity;
+
+    for (var n = 0; n < BLOCKS.length; n++) {
+      var at = (k + n) % BLOCKS.length;
+      var cand = BLOCKS[at];
+      if (cand.need.length > left) continue;
+
+      var ok = true;
+      for (var j = 0; j < cand.need.length; j++) {
+        if (!cellFits(cand.need[j], photos[i + j])) { ok = false; break; }
+      }
+      if (!ok) continue;
+
+      // Priority dominates; the rotation only breaks ties between equals.
+      var score = (cand.pri || 0) * 100 - n;
+      if (score > bestScore) { bestScore = score; best = { block: cand, at: at }; }
+    }
+    return best;
+  }
 
   function composeBlocks(photos) {
     var out = [];
@@ -263,17 +298,11 @@
       var left = photos.length - i;
       var block = null;
 
-      if (famOf(photos[i]) === "W") block = WIDE;
-      else {
-        for (var n = 0; n < BLOCKS.length && !block; n++) {
-          var cand = BLOCKS[(k + n) % BLOCKS.length];
-          if (cand.need.length > left) continue;
-          var ok = true;
-          for (var j = 0; j < cand.need.length; j++) {
-            if (!cellFits(cand.need[j], photos[i + j])) { ok = false; break; }
-          }
-          if (ok) { block = cand; k = (k + n + 1) % BLOCKS.length; }
-        }
+      if (famOf(photos[i]) === "W") {
+        block = WIDE;
+      } else {
+        var hit = pickBlock(photos, i, left, k);
+        if (hit) { block = hit.block; k = (hit.at + 1) % BLOCKS.length; }
       }
 
       if (block) {
@@ -394,7 +423,10 @@
 
       step.block.cols.forEach(function (spec) {
         var col = el("div", "book-col");
-        col.style.flex = "0 0 " + spec.w + "%";
+        // Grow from a zero basis rather than a percentage: the gaps come out
+        // of the free space first, so the columns still add up to exactly the
+        // row's width. Percentages summing to 100 plus a gap overflow it.
+        col.style.flex = spec.w + " 1 0";
         for (var n = 0; n < spec.take; n++) {
           var item = rest[cursor++];
           var tile = makeTile(item.photo, item.at, photos.length);

@@ -70,6 +70,24 @@
       "thumb": "images/_thumbs/west/DJI-20251228075954-0067-D.jpg"
     },
     {
+      "src": "images/west/B0000538.jpg",
+      "title": "B0000538",
+      "collection": "west",
+      "location": "",
+      "date": "2025-12-25",
+      "width": 1600,
+      "height": 2000,
+      "exif": {
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 35-100E@100",
+        "focal": "100mm",
+        "aperture": "f/13",
+        "shutter": "1s",
+        "iso": "50"
+      },
+      "thumb": "images/_thumbs/west/B0000538.jpg"
+    },
+    {
       "src": "images/west/DJI-20251228075547-0061-D.jpg",
       "title": "DJI-20251228075547-0061-D",
       "collection": "west",
@@ -105,24 +123,6 @@
       "thumb": "images/_thumbs/west/B0000870.jpg"
     },
     {
-      "src": "images/west/B0000538.jpg",
-      "title": "B0000538",
-      "collection": "west",
-      "location": "",
-      "date": "2025-12-25",
-      "width": 1600,
-      "height": 2000,
-      "exif": {
-        "camera": "Hasselblad X2D II 100C",
-        "lens": "XCD 35-100E@100",
-        "focal": "100mm",
-        "aperture": "f/13",
-        "shutter": "1s",
-        "iso": "50"
-      },
-      "thumb": "images/_thumbs/west/B0000538.jpg"
-    },
-    {
       "src": "images/west/DJI-20251223170556-0012-D.jpg",
       "title": "DJI-20251223170556-0012-D",
       "collection": "west",
@@ -138,23 +138,6 @@
         "iso": "120"
       },
       "thumb": "images/_thumbs/west/DJI-20251223170556-0012-D.jpg"
-    },
-    {
-      "src": "images/west/DJI-20251223170618-0014-D.jpg",
-      "title": "DJI-20251223170618-0014-D",
-      "collection": "west",
-      "location": "",
-      "date": "2025-12-23",
-      "width": 2000,
-      "height": 1499,
-      "exif": {
-        "camera": "DJI FC4382",
-        "focal": "19mm",
-        "aperture": "f/2.8",
-        "shutter": "1/160s",
-        "iso": "150"
-      },
-      "thumb": "images/_thumbs/west/DJI-20251223170618-0014-D.jpg"
     },
     {
       "src": "images/west/DJI-20251223171450-0023-D.jpg",

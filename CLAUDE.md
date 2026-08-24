@@ -98,6 +98,16 @@ Rows are flush at any window width because exactly one cell per row (the
 anchor) carries an `aspect-ratio` and every other cell stretches to the height
 it sets. There is no measurement and no resize handler; don't add one.
 
+Columns use `flex: <share> 1 0` — grow from a zero basis, **not** a percentage
+basis. Shares sum to 100, so percentages plus the gap would overflow the row
+by one gutter and leave a ragged right edge.
+
+Templates carry an optional `pri`, and `pickBlock()` prefers the highest that
+fits, using the rotation only to break ties. Upright-led blocks are `pri: 2`
+so a portrait gets the dominant cell rather than being squeezed beside a
+landscape; the square-cropping block is `pri: -1` because it discards the most
+of a photograph.
+
 The opener is the photograph flagged `"featured": true` in `photos.json`,
 falling back to the first. It is never cropped.
 
