@@ -369,6 +369,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 </div>
 
 <script src="../../assets/site.js"></script>
+<script src="../../assets/edit.js"></script>
 </body>
 </html>
 """

@@ -37,18 +37,18 @@
 
   <div class="wrap-wide about-body">
     <aside class="about-rail">
-      <h1 class="about-title">About</h1>
-      <p class="about-name">Newton Liu</p>
-      <nav class="about-jump">
+      <h1 class="about-title" data-edit="about.title">About</h1>
+      <p class="about-name" data-edit="about.name">Newton Liu</p>
+      <nav class="about-jump" data-jump-from=".about-prose">
         <a href="#how-i-work">How I work</a>
         <a href="#gear">Gear</a>
         <a href="contact.html">Contact</a>
       </nav>
     </aside>
 
-    <!-- EDIT ME: all of the text on this page is placeholder. -->
-    <div class="about-prose">
-      <p class="lede">
+    <div class="about-prose" data-edit="about.prose" data-edit-rich
+         data-edit-hint="Write the page">
+      <p>
         Placeholder — write the version of this you'd actually want a stranger to read.
       </p>
 
@@ -85,5 +85,6 @@
 </footer>
 
 <script src="assets/site.js"></script>
+<script src="assets/edit.js"></script>
 </body>
 </html>

@@ -40,18 +40,17 @@
     <div class="hero-media" id="hero-media"><!-- filled from the featured photo --></div>
     <div class="hero-scrim"></div>
     <div class="wrap hero-inner">
-      <h1 class="hero-title">Birds, wildlife,<br>and the places they live.</h1>
-      <p class="hero-sub">
-        <!-- EDIT ME -->
+      <h1 class="hero-title" data-edit="home.heroTitle" data-edit-lines>Birds, wildlife,<br>and the places they live.</h1>
+      <p class="hero-sub" data-edit="home.heroSub" data-edit-hint="Add a line under the title">
         Field photography from the Galápagos to the eastern Himalaya.
       </p>
-      <a class="hero-cta" href="#collections">See the work</a>
+      <a class="hero-cta" href="#collections" data-edit="home.heroCta">See the work</a>
     </div>
   </section>
 
   <section id="collections" class="collections">
     <div class="wrap">
-      <h2 class="section-title">Collections</h2>
+      <h2 class="section-title" data-edit="home.collectionsTitle">Collections</h2>
       <div id="collection-grid" class="collection-grid">
         <p class="grid-status">Loading…</p>
       </div>
@@ -60,14 +59,13 @@
 
   <section class="about-teaser">
     <div class="wrap">
-      <h2 class="section-title">About</h2>
-      <p class="lede">
-        <!-- EDIT ME -->
+      <h2 class="section-title" data-edit="home.aboutTitle">About</h2>
+      <p class="lede" data-edit="home.aboutTeaser">
         I photograph birds and wildlife in the field — unbaited, uncalled, and
         usually before sunrise. Every frame here is a wild animal behaving as
         it would have without me.
       </p>
-      <a class="text-link" href="about.html">More about the work &rarr;</a>
+      <a class="text-link" href="about.html" data-edit="home.aboutLink">More about the work &rarr;</a>
     </div>
   </section>
 
@@ -84,5 +82,6 @@
 </footer>
 
 <script src="assets/site.js"></script>
+<script src="assets/edit.js"></script>
 </body>
 </html>

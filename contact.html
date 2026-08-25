@@ -30,17 +30,17 @@
        opening on the same photograph would just look like a mistake. -->
   <div class="wrap-wide about-body is-bare">
     <aside class="about-rail">
-      <h1 class="about-title">Contact</h1>
-      <p class="about-name">Newton Liu</p>
-      <nav class="about-jump">
+      <h1 class="about-title" data-edit="contact.title">Contact</h1>
+      <p class="about-name" data-edit="contact.name">Newton Liu</p>
+      <nav class="about-jump" data-jump-from=".about-prose">
         <a href="#prints">Prints</a>
         <a href="about.html">About</a>
       </nav>
     </aside>
 
-    <!-- EDIT ME: swap in the address and handles you actually want public. -->
-    <div class="about-prose">
-      <p class="lede">
+    <div class="about-prose" data-edit="contact.prose" data-edit-rich
+         data-edit-hint="Write the page">
+      <p>
         Prints, licensing, or to tell me I've misidentified something.
       </p>
 
@@ -70,5 +70,6 @@
 </footer>
 
 <script src="assets/site.js"></script>
+<script src="assets/edit.js"></script>
 </body>
 </html>
