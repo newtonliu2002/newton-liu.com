@@ -48,7 +48,12 @@ PAGES_DIR = os.path.join(ROOT, "collections")
 
 RASTER_EXT = (".jpg", ".jpeg", ".png", ".webp")
 EXTENSIONS = RASTER_EXT + (".svg",)
-THUMB_LONG_EDGE = 1200
+# The originals are large enough for a 5K display, which is far more than a
+# phone should ever download. So every photograph is also written out at these
+# long edges, and the browser picks one from a srcset. Add a width here and the
+# next build fills it in; the original is always offered as the largest.
+VARIANT_LONG_EDGES = (800, 1600, 2400)
+VARIANT_QUALITY = 85
 
 # Fields a human may edit; never overwritten once set.
 AUTHORED_FIELDS = ("title", "location", "date", "caption", "collection", "featured")
@@ -271,22 +276,48 @@ def parse_filename(stem):
     return title.strip(), location, date
 
 
-def make_thumb(src_abs, rel_path):
-    """Downscale with macOS `sips`. Returns a repo-relative path, or None."""
-    if not shutil.which("sips") or src_abs.lower().endswith(".svg"):
-        return None
-    thumb_abs = os.path.join(THUMB_DIR, rel_path)
-    os.makedirs(os.path.dirname(thumb_abs), exist_ok=True)
+def make_variants(src_abs, rel_path, rel_src, width, height):
+    """Write the smaller widths of one photograph and describe them all.
 
-    if (os.path.exists(thumb_abs)
-            and os.path.getmtime(thumb_abs) >= os.path.getmtime(src_abs)):
-        return os.path.relpath(thumb_abs, ROOT).replace(os.sep, "/")
-    try:
-        subprocess.run(["sips", "-Z", str(THUMB_LONG_EDGE), src_abs, "--out", thumb_abs],
-                       check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    except (subprocess.CalledProcessError, OSError):
-        return None
-    return os.path.relpath(thumb_abs, ROOT).replace(os.sep, "/")
+    Returns a list of {"w": <real pixel width>, "src": <repo path>}, smallest
+    first, with the original last. `w` is the true width of that file, not the
+    long edge, because an upright resized to a 1600px long edge is 1280 wide
+    and a srcset descriptor that lied about it would make the browser choose
+    badly.
+    """
+    out = []
+    if not shutil.which("sips") or src_abs.lower().endswith(".svg"):
+        return [{"w": width, "src": rel_src}] if width else []
+
+    long_edge = max(width, height)
+    for edge in VARIANT_LONG_EDGES:
+        if not long_edge or edge >= long_edge:
+            continue                      # never upscale — the original is enough
+        rel_out = "{}/{}".format(edge, rel_path)
+        abs_out = os.path.join(THUMB_DIR, rel_out)
+        os.makedirs(os.path.dirname(abs_out), exist_ok=True)
+
+        if not (os.path.exists(abs_out)
+                and os.path.getmtime(abs_out) >= os.path.getmtime(src_abs)):
+            try:
+                subprocess.run(
+                    ["sips", "-Z", str(edge),
+                     "--setProperty", "format", "jpeg",
+                     "--setProperty", "formatOptions", str(VARIANT_QUALITY),
+                     src_abs, "--out", abs_out],
+                    check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            except (subprocess.CalledProcessError, OSError):
+                continue
+
+        real = read_size(abs_out)
+        if not real:
+            continue
+        out.append({"w": real[0],
+                    "src": os.path.relpath(abs_out, ROOT).replace(os.sep, "/")})
+
+    if width:
+        out.append({"w": width, "src": rel_src})
+    return out
 
 
 # --------------------------------------------------------------------------
@@ -457,9 +488,14 @@ def collect(make_thumbs=True):
                 "exif": format_exif(raw_exif),
             }
             if make_thumbs:
-                thumb = make_thumb(abs_path, "{}/{}".format(slug, name))
-                if thumb:
-                    entry["thumb"] = thumb
+                variants = make_variants(abs_path, "{}/{}".format(slug, name),
+                                         rel, width, height)
+                if len(variants) > 1:
+                    entry["variants"] = variants
+                    # `thumb` stays as the one modest-sized file to fall back on
+                    # when a srcset isn't wanted — collection covers use it, and
+                    # so does any browser that ignores srcset.
+                    entry["thumb"] = variants[min(1, len(variants) - 2)]["src"]
 
             for field in AUTHORED_FIELDS:               # hand edits win
                 if existing.get(rel, {}).get(field):

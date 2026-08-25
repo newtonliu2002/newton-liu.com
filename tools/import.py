@@ -8,8 +8,13 @@
 Why this exists: full-resolution masters must never be committed. Git keeps
 every version forever and the repo has a 1 GB soft limit, so a single 200 MB
 trip folder is a permanent tax. This resizes to a long edge that still looks
-sharp on a retina display (2000px by default) and leaves your masters alone —
+sharp on a retina display (4000px by default) and leaves your masters alone —
 the source folder is only ever read.
+
+4000px is chosen so that even a full-width photograph on a 5K display is drawn
+from real pixels rather than invented ones. It is deliberately generous: the
+site never serves these files to a phone, because build.py derives smaller
+widths from them and the browser picks. See "Sizes on the page" in CLAUDE.md.
 
 It also refuses to import a photograph carrying GPS coordinates unless you
 pass --strip-exif or --allow-gps. Precise locations for nests, roosts and
@@ -32,8 +37,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IMAGE_DIR = os.path.join(ROOT, "images")
 
 SOURCE_EXT = (".jpg", ".jpeg", ".png", ".tif", ".tiff", ".heic")
-DEFAULT_LONG_EDGE = 2000
-DEFAULT_QUALITY = 80
+DEFAULT_LONG_EDGE = 4000
+DEFAULT_QUALITY = 85
 
 
 def has_gps(path):

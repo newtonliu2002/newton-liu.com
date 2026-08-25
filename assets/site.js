@@ -63,6 +63,61 @@
   // Photo paths in the manifest are root-relative; make them page-relative.
   function url(src) { return BASE + src; }
 
+  // ---- Responsive images -------------------------------------------------
+  // build.py writes a ladder of widths for every photograph. A `srcset` lets
+  // the browser choose one, but only if `sizes` tells it how wide the slot
+  // will be: with no `sizes` it assumes the full viewport and fetches the
+  // largest file every time, on a phone as readily as on a 5K display. The
+  // originals are 4000px, so getting this wrong is a 2 MB mistake per
+  // photograph. Every caller below therefore states its own width.
+
+  function srcsetOf(photo) {
+    if (!photo.variants || photo.variants.length < 2) return "";
+    return photo.variants.map(function (v) {
+      return url(v.src) + " " + v.w + "w";
+    }).join(", ");
+  }
+
+  // Order matters and is easy to get wrong, so it lives here rather than at
+  // the call sites: assigning `src` first starts a fetch immediately and the
+  // browser keeps that file, silently ignoring the srcset added afterwards.
+  // `sizes` before `srcset` before `src`, always. This function is the only
+  // place a photograph's src is assigned.
+  function responsive(img, photo, sizes, fallback) {
+    var set = srcsetOf(photo);
+    if (set) {
+      img.sizes = sizes;
+      img.srcset = set;
+    }
+    img.src = url(fallback || photo.src);
+    return img;
+  }
+
+  // A tile's width as a share of the packed grid — which is the whole page
+  // below 1000px and the 62% right-hand column above it (.book-body in the
+  // CSS), capped once --wrap-wide stops growing at 108rem.
+  function tileSizes(share) {
+    return "(max-width: 1000px) " + Math.round(share * 100) + "vw, " +
+           "(min-width: 1800px) " + Math.round(share * 1042) + "px, " +
+           Math.round(share * 62) + "vw";
+  }
+
+  // Height-capped slots (the opener, the lightbox) are limited by the window's
+  // height, not its width, so their width follows from the photograph's ratio.
+  function cappedSizes(photo, vh) {
+    return "min(100vw, " + Math.round(vh * aspectOf(photo)) + "vh)";
+  }
+
+  function pickForWidth(photo, cssWidth) {
+    var want = cssWidth * (window.devicePixelRatio || 1);
+    if (!photo.variants || !photo.variants.length) return photo.src;
+    var best = photo.variants[photo.variants.length - 1];
+    for (var i = 0; i < photo.variants.length; i++) {
+      if (photo.variants[i].w >= want) { best = photo.variants[i]; break; }
+    }
+    return best.src;
+  }
+
   function formatDate(value) {
     if (!value) return "";
     var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
@@ -140,7 +195,10 @@
     var hero = photos.filter(function (p) { return p.featured; })[0] || photos[0];
     var heroMedia = document.getElementById("hero-media");
     if (hero && heroMedia) {
-      heroMedia.style.backgroundImage = "url('" + url(hero.src) + "')";
+      // A background-image can't carry a srcset, so pick the width here. The
+      // hero is set once and never resized, so there is no handler to add.
+      heroMedia.style.backgroundImage =
+        "url('" + url(pickForWidth(hero, window.innerWidth)) + "')";
     }
 
     var byCollection = {};
@@ -160,7 +218,10 @@
 
       if (cover) {
         var img = el("img");
-        img.src = url(cover.thumb || cover.src);
+        // Cards are a 20rem-minimum auto-fill grid inside --wrap, so they land
+        // near 380px on a desktop and go full width on a phone.
+        responsive(img, cover, "(max-width: 700px) 100vw, 380px",
+                   cover.thumb || cover.src);
         img.alt = "";                    // decorative; the title carries meaning
         img.loading = "lazy";
         img.decoding = "async";
@@ -318,7 +379,7 @@
 
   // One thumbnail. `index` is its position in the collection, so the lightbox
   // arrows keep walking the collection's own order.
-  function makeTile(photo, index, total) {
+  function makeTile(photo, index, total, sizes) {
     var tile = el("button", "tile");
     tile.type = "button";
     tile.setAttribute("aria-label", CAPTIONS.grid.title && photo.title
@@ -326,7 +387,7 @@
       : "View photograph " + (index + 1) + " of " + total + " larger");
 
     var img = el("img");
-    img.src = url(photo.thumb || photo.src);
+    responsive(img, photo, sizes || tileSizes(1), photo.thumb || photo.src);
     img.alt = altFor(photo);
     img.loading = index < 8 ? "eager" : "lazy";
     img.decoding = "async";
@@ -371,13 +432,15 @@
     for (var n = 0; n < photos.length; n++) { if (photos[n].featured) { at = n; break; } }
     var photo = photos[at];
 
+    var upright = aspectOf(photo) <= 0.95;
     var img = el("img");
-    img.src = url(photo.src);
+    // 76vh, or 84vh upright — the max-height on .book-opener img in the CSS.
+    responsive(img, photo, cappedSizes(photo, upright ? 84 : 76));
     img.alt = altFor(photo);
     img.decoding = "async";
 
     slot.textContent = "";
-    slot.classList.toggle("is-upright", aspectOf(photo) <= 0.95);
+    slot.classList.toggle("is-upright", upright);
     slot.appendChild(img);
     slot.addEventListener("click", function () { open(at); });
     return at;
@@ -411,7 +474,9 @@
         var lone = rest[cursor];
         var col = el("div", "book-col");
         col.style.flex = "0 0 " + (famOf(lone.photo) === "P" ? 34 : 72) + "%";
-        var soloTile = makeTile(lone.photo, lone.at, photos.length);
+        var soloShare = famOf(lone.photo) === "P" ? 0.34 : 0.72;   // the flex below
+        var soloTile = makeTile(lone.photo, lone.at, photos.length,
+                                tileSizes(soloShare));
         soloTile.classList.add("is-natural");
         soloTile.style.setProperty("--cell-ar", aspectOf(lone.photo).toFixed(4));
         col.appendChild(soloTile);
@@ -429,7 +494,8 @@
         col.style.flex = spec.w + " 1 0";
         for (var n = 0; n < spec.take; n++) {
           var item = rest[cursor++];
-          var tile = makeTile(item.photo, item.at, photos.length);
+          var tile = makeTile(item.photo, item.at, photos.length,
+                              tileSizes(spec.w / 100));
           if (spec.ar) {
             tile.classList.add("is-anchor");
             tile.style.setProperty("--cell-ar", String(spec.ar));
@@ -450,7 +516,9 @@
     index = (i + shown.length) % shown.length;       // wrap at both ends
 
     var photo = shown[index];
-    lbImage.src = url(photo.src);
+    // .lb-image is capped at roughly 80vh once the caption is allowed for.
+    lbImage.removeAttribute("srcset");        // or the old one races the new
+    responsive(lbImage, photo, cappedSizes(photo, 80));
     lbImage.alt = altFor(photo);
     lbTitle.textContent = (CAPTIONS.lightbox.title && photo.title) || "";
     lbMeta.textContent = metaLine(photo);
@@ -464,7 +532,10 @@
     // Warm the neighbours so arrowing through feels instant.
     [index + 1, index - 1].forEach(function (n) {
       var next = shown[(n + shown.length) % shown.length];
-      if (next) { var pre = new Image(); pre.src = url(next.src); }
+      // Warm the same file the lightbox will actually ask for — preloading
+      // the 4000px original when it will display the 2400px one downloads
+      // both.
+      if (next) responsive(new Image(), next, cappedSizes(next, 80));
     });
   }
 

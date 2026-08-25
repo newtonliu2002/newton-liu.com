@@ -6,8 +6,8 @@
       "collection": "west",
       "location": "",
       "date": "2025-12-28",
-      "width": 2000,
-      "height": 1123,
+      "width": 4000,
+      "height": 2247,
       "exif": {
         "camera": "Hasselblad L2D-20c",
         "focal": "12mm",
@@ -15,7 +15,25 @@
         "shutter": "1/240s",
         "iso": "100"
       },
-      "thumb": "images/_thumbs/west/DJI-20251228074312-0042-D.jpg",
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west/DJI-20251228074312-0042-D.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west/DJI-20251228074312-0042-D.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west/DJI-20251228074312-0042-D.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west/DJI-20251228074312-0042-D.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west/DJI-20251228074312-0042-D.jpg",
       "featured": true
     },
     {
@@ -24,8 +42,8 @@
       "collection": "west",
       "location": "",
       "date": "2025-12-28",
-      "width": 2000,
-      "height": 1123,
+      "width": 4000,
+      "height": 2247,
       "exif": {
         "camera": "Hasselblad L2D-20c",
         "focal": "12mm",
@@ -33,7 +51,25 @@
         "shutter": "1/200s",
         "iso": "100"
       },
-      "thumb": "images/_thumbs/west/DJI-20251228074816-0049-D.jpg"
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west/DJI-20251228074816-0049-D.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west/DJI-20251228074816-0049-D.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west/DJI-20251228074816-0049-D.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west/DJI-20251228074816-0049-D.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west/DJI-20251228074816-0049-D.jpg"
     },
     {
       "src": "images/west/DJI-20251228080241-0076-D.jpg",
@@ -41,8 +77,8 @@
       "collection": "west",
       "location": "",
       "date": "2025-12-28",
-      "width": 2000,
-      "height": 1123,
+      "width": 4000,
+      "height": 2246,
       "exif": {
         "camera": "DJI FC4382",
         "focal": "19mm",
@@ -50,7 +86,25 @@
         "shutter": "1/500s",
         "iso": "100"
       },
-      "thumb": "images/_thumbs/west/DJI-20251228080241-0076-D.jpg"
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west/DJI-20251228080241-0076-D.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west/DJI-20251228080241-0076-D.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west/DJI-20251228080241-0076-D.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west/DJI-20251228080241-0076-D.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west/DJI-20251228080241-0076-D.jpg"
     },
     {
       "src": "images/west/DJI-20251228075954-0067-D.jpg",
@@ -58,8 +112,8 @@
       "collection": "west",
       "location": "",
       "date": "2025-12-28",
-      "width": 2000,
-      "height": 1123,
+      "width": 4000,
+      "height": 2246,
       "exif": {
         "camera": "DJI FC4382",
         "focal": "19mm",
@@ -67,7 +121,25 @@
         "shutter": "1/500s",
         "iso": "100"
       },
-      "thumb": "images/_thumbs/west/DJI-20251228075954-0067-D.jpg"
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west/DJI-20251228075954-0067-D.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west/DJI-20251228075954-0067-D.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west/DJI-20251228075954-0067-D.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west/DJI-20251228075954-0067-D.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west/DJI-20251228075954-0067-D.jpg"
     },
     {
       "src": "images/west/B0000538.jpg",
@@ -75,8 +147,8 @@
       "collection": "west",
       "location": "",
       "date": "2025-12-25",
-      "width": 1600,
-      "height": 2000,
+      "width": 3200,
+      "height": 4000,
       "exif": {
         "camera": "Hasselblad X2D II 100C",
         "lens": "XCD 35-100E@100",
@@ -85,7 +157,25 @@
         "shutter": "1s",
         "iso": "50"
       },
-      "thumb": "images/_thumbs/west/B0000538.jpg"
+      "variants": [
+        {
+          "w": 640,
+          "src": "images/_thumbs/800/west/B0000538.jpg"
+        },
+        {
+          "w": 1280,
+          "src": "images/_thumbs/1600/west/B0000538.jpg"
+        },
+        {
+          "w": 1920,
+          "src": "images/_thumbs/2400/west/B0000538.jpg"
+        },
+        {
+          "w": 3200,
+          "src": "images/west/B0000538.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west/B0000538.jpg"
     },
     {
       "src": "images/west/B0000870.jpg",
@@ -93,8 +183,8 @@
       "collection": "west",
       "location": "",
       "date": "2025-12-28",
-      "width": 2000,
-      "height": 1500,
+      "width": 4000,
+      "height": 3000,
       "exif": {
         "camera": "Hasselblad X2D II 100C",
         "lens": "XCD 35-100E@35",
@@ -103,7 +193,25 @@
         "shutter": "3s",
         "iso": "400"
       },
-      "thumb": "images/_thumbs/west/B0000870.jpg"
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west/B0000870.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west/B0000870.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west/B0000870.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west/B0000870.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west/B0000870.jpg"
     },
     {
       "src": "images/west/DJI-20251223171450-0023-D.jpg",
@@ -111,8 +219,8 @@
       "collection": "west",
       "location": "",
       "date": "2025-12-23",
-      "width": 2000,
-      "height": 1123,
+      "width": 4000,
+      "height": 2246,
       "exif": {
         "camera": "DJI FC4382",
         "focal": "19mm",
@@ -120,7 +228,25 @@
         "shutter": "1/60s",
         "iso": "150"
       },
-      "thumb": "images/_thumbs/west/DJI-20251223171450-0023-D.jpg"
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west/DJI-20251223171450-0023-D.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west/DJI-20251223171450-0023-D.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west/DJI-20251223171450-0023-D.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west/DJI-20251223171450-0023-D.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west/DJI-20251223171450-0023-D.jpg"
     },
     {
       "src": "images/west/DJI-20251223170556-0012-D.jpg",
@@ -128,8 +254,8 @@
       "collection": "west",
       "location": "",
       "date": "2025-12-23",
-      "width": 2000,
-      "height": 741,
+      "width": 4000,
+      "height": 1481,
       "exif": {
         "camera": "Hasselblad L2D-20c",
         "focal": "12mm",
@@ -137,7 +263,25 @@
         "shutter": "1/80s",
         "iso": "120"
       },
-      "thumb": "images/_thumbs/west/DJI-20251223170556-0012-D.jpg"
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west/DJI-20251223170556-0012-D.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west/DJI-20251223170556-0012-D.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west/DJI-20251223170556-0012-D.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west/DJI-20251223170556-0012-D.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west/DJI-20251223170556-0012-D.jpg"
     },
     {
       "src": "images/west/DJI-20251224080854-0037-D.jpg",
@@ -145,8 +289,8 @@
       "collection": "west",
       "location": "",
       "date": "2025-12-24",
-      "width": 2000,
-      "height": 1123,
+      "width": 4000,
+      "height": 2247,
       "exif": {
         "camera": "Hasselblad L2D-20c",
         "focal": "12mm",
@@ -154,7 +298,25 @@
         "shutter": "1/30s",
         "iso": "200"
       },
-      "thumb": "images/_thumbs/west/DJI-20251224080854-0037-D.jpg"
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west/DJI-20251224080854-0037-D.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west/DJI-20251224080854-0037-D.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west/DJI-20251224080854-0037-D.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west/DJI-20251224080854-0037-D.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west/DJI-20251224080854-0037-D.jpg"
     },
     {
       "src": "images/west/B0000090.jpg",
@@ -162,8 +324,8 @@
       "collection": "west",
       "location": "",
       "date": "2025-12-15",
-      "width": 2000,
-      "height": 1500,
+      "width": 4000,
+      "height": 3000,
       "exif": {
         "camera": "Hasselblad X2D II 100C",
         "lens": "XCD 35-100E@100",
@@ -172,7 +334,25 @@
         "shutter": "1/45s",
         "iso": "200"
       },
-      "thumb": "images/_thumbs/west/B0000090.jpg"
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west/B0000090.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west/B0000090.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west/B0000090.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west/B0000090.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west/B0000090.jpg"
     },
     {
       "src": "images/west/0Z9A0369.jpg",
@@ -180,8 +360,8 @@
       "collection": "west",
       "location": "",
       "date": "2025-12-17",
-      "width": 1600,
-      "height": 2000,
+      "width": 3199,
+      "height": 4000,
       "exif": {
         "camera": "Canon EOS C50",
         "lens": "RF70-200mm F2.8 L IS USM",
@@ -190,7 +370,25 @@
         "shutter": "1/125s",
         "iso": "320"
       },
-      "thumb": "images/_thumbs/west/0Z9A0369.jpg"
+      "variants": [
+        {
+          "w": 639,
+          "src": "images/_thumbs/800/west/0Z9A0369.jpg"
+        },
+        {
+          "w": 1279,
+          "src": "images/_thumbs/1600/west/0Z9A0369.jpg"
+        },
+        {
+          "w": 1919,
+          "src": "images/_thumbs/2400/west/0Z9A0369.jpg"
+        },
+        {
+          "w": 3199,
+          "src": "images/west/0Z9A0369.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west/0Z9A0369.jpg"
     },
     {
       "src": "images/west/0Z9A0522.jpg",
@@ -198,8 +396,8 @@
       "collection": "west",
       "location": "",
       "date": "2025-12-17",
-      "width": 1600,
-      "height": 2000,
+      "width": 3200,
+      "height": 4000,
       "exif": {
         "camera": "Canon EOS C50",
         "lens": "RF70-200mm F2.8 L IS USM",
@@ -208,7 +406,25 @@
         "shutter": "1/125s",
         "iso": "320"
       },
-      "thumb": "images/_thumbs/west/0Z9A0522.jpg"
+      "variants": [
+        {
+          "w": 640,
+          "src": "images/_thumbs/800/west/0Z9A0522.jpg"
+        },
+        {
+          "w": 1280,
+          "src": "images/_thumbs/1600/west/0Z9A0522.jpg"
+        },
+        {
+          "w": 1920,
+          "src": "images/_thumbs/2400/west/0Z9A0522.jpg"
+        },
+        {
+          "w": 3200,
+          "src": "images/west/0Z9A0522.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west/0Z9A0522.jpg"
     },
     {
       "src": "images/west/U2A7753.jpg",
@@ -216,8 +432,8 @@
       "collection": "west",
       "location": "",
       "date": "2025-12-18",
-      "width": 2000,
-      "height": 1334,
+      "width": 4000,
+      "height": 2668,
       "exif": {
         "camera": "Canon EOS R5m2",
         "lens": "RF100-500mm F4.5-7.1 L IS USM",
@@ -226,7 +442,25 @@
         "shutter": "1/200s",
         "iso": "500"
       },
-      "thumb": "images/_thumbs/west/U2A7753.jpg"
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west/U2A7753.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west/U2A7753.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west/U2A7753.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west/U2A7753.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west/U2A7753.jpg"
     },
     {
       "src": "images/west/U2A6934.jpg",
@@ -234,8 +468,8 @@
       "collection": "west",
       "location": "",
       "date": "2025-12-17",
-      "width": 2000,
-      "height": 1334,
+      "width": 4000,
+      "height": 2667,
       "exif": {
         "camera": "Canon EOS R5m2",
         "lens": "RF100-500mm F4.5-7.1 L IS USM",
@@ -244,7 +478,25 @@
         "shutter": "1/640s",
         "iso": "1600"
       },
-      "thumb": "images/_thumbs/west/U2A6934.jpg"
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west/U2A6934.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west/U2A6934.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west/U2A6934.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west/U2A6934.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west/U2A6934.jpg"
     },
     {
       "src": "images/west/U2A8046.jpg",
@@ -252,8 +504,8 @@
       "collection": "west",
       "location": "",
       "date": "2025-12-18",
-      "width": 1600,
-      "height": 2000,
+      "width": 3200,
+      "height": 4000,
       "exif": {
         "camera": "Canon EOS R5m2",
         "lens": "RF100-500mm F4.5-7.1 L IS USM",
@@ -262,7 +514,25 @@
         "shutter": "1/125s",
         "iso": "250"
       },
-      "thumb": "images/_thumbs/west/U2A8046.jpg"
+      "variants": [
+        {
+          "w": 640,
+          "src": "images/_thumbs/800/west/U2A8046.jpg"
+        },
+        {
+          "w": 1280,
+          "src": "images/_thumbs/1600/west/U2A8046.jpg"
+        },
+        {
+          "w": 1920,
+          "src": "images/_thumbs/2400/west/U2A8046.jpg"
+        },
+        {
+          "w": 3200,
+          "src": "images/west/U2A8046.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west/U2A8046.jpg"
     },
     {
       "src": "images/west/U2A7585.jpg",
@@ -270,8 +540,8 @@
       "collection": "west",
       "location": "",
       "date": "2025-12-18",
-      "width": 1600,
-      "height": 2000,
+      "width": 3199,
+      "height": 4000,
       "exif": {
         "camera": "Canon EOS R5m2",
         "lens": "RF100-500mm F4.5-7.1 L IS USM",
@@ -280,7 +550,25 @@
         "shutter": "1/320s",
         "iso": "2000"
       },
-      "thumb": "images/_thumbs/west/U2A7585.jpg"
+      "variants": [
+        {
+          "w": 639,
+          "src": "images/_thumbs/800/west/U2A7585.jpg"
+        },
+        {
+          "w": 1279,
+          "src": "images/_thumbs/1600/west/U2A7585.jpg"
+        },
+        {
+          "w": 1919,
+          "src": "images/_thumbs/2400/west/U2A7585.jpg"
+        },
+        {
+          "w": 3199,
+          "src": "images/west/U2A7585.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west/U2A7585.jpg"
     }
   ]
 }

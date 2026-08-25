@@ -30,9 +30,13 @@
        than coming from photos.json — it is page furniture, not a collection
        entry. Swap the src for a portrait when there is one, or delete this
        whole div. If you ever remove this file from images/west/, change it
-       here too; nothing checks. -->
+       here too; nothing checks — and the srcset and width/height below go
+       stale the same way. data/photos.json holds the current values. -->
   <div class="wrap-wide about-band">
-    <img src="images/west/DJI-20251223170556-0012-D.jpg" alt="" width="2000" height="741" decoding="async">
+    <img src="images/west/DJI-20251223170556-0012-D.jpg"
+         srcset="images/_thumbs/800/west/DJI-20251223170556-0012-D.jpg 800w, images/_thumbs/1600/west/DJI-20251223170556-0012-D.jpg 1600w, images/_thumbs/2400/west/DJI-20251223170556-0012-D.jpg 2400w, images/west/DJI-20251223170556-0012-D.jpg 4000w"
+         sizes="min(100vw, 119vh)"
+         alt="" width="4000" height="1481" decoding="async">
   </div>
 
   <div class="wrap-wide about-body">

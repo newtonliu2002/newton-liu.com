@@ -30,7 +30,7 @@ data/text.json              every word on the site that isn't a photograph's;
                             overrides the copy written in the HTML
 tools/build.py              scans images/, writes photos.json, makes thumbs
 images/<slug>/*.jpg         the photographs, one folder per collection
-images/_thumbs/             generated derivatives (committed — Pages needs them)
+images/_thumbs/<edge>/      generated smaller widths (committed — Pages needs them)
 ```
 
 Folders under `images/` starting with `_` are skipped by the scanner.
@@ -117,6 +117,54 @@ The opener is the photograph flagged `"featured": true` in `photos.json`,
 falling back to the first. It is never cropped.
 
 `--book-gap` on `.grid.book` sets the gutter.
+
+## Sizes on the page
+
+Originals are imported at a **4000px long edge, JPEG quality 85**, which is
+enough that a full-width photograph on a 5K display is drawn from real pixels.
+That is far more than a phone should ever download, so `build.py` also writes
+each photograph out at the long edges in `VARIANT_LONG_EDGES` — 800, 1600,
+2400 — under `images/_thumbs/<edge>/<slug>/`, and records the whole ladder as
+`variants` on the photograph in `photos.json`. The original is always offered
+as the largest rung. Nothing is ever upscaled: a variant wider than its source
+is skipped.
+
+`variants[].w` is the **real pixel width of that file**, not the long edge — an
+upright at a 1600px long edge is 1280 wide, and a `w` descriptor that lied
+about it would make the browser choose badly.
+
+In `site.js`, **`responsive()` is the only place a photograph's `src` is
+assigned.** It exists because the order is easy to get wrong and fails
+silently: assigning `src` first starts a fetch immediately, and the browser
+keeps that file and ignores a `srcset` added afterwards. `sizes`, then
+`srcset`, then `src`.
+
+**Every caller must state its own `sizes`.** With no `sizes` the browser
+assumes the slot is the full viewport and takes the largest rung — the 4000px
+original, on a phone, for a thumbnail. Two helpers cover the cases:
+
+- `tileSizes(share)` — `share` is the tile's fraction of the packed grid,
+  which is the whole page below 1000px and the 62% right-hand column above it
+  (`.book-body`), capped once `--wrap-wide` stops growing at 108rem.
+  Callers pass `spec.w / 100` from the block template.
+- `cappedSizes(photo, vh)` — for slots limited by window *height* rather than
+  width (the opener at 76/84vh, the lightbox at ~80vh). Their width follows
+  from the photograph's own ratio, so the hint is `min(100vw, <vh×ratio>vh)`.
+
+If a `sizes` hint drifts out of step with the CSS, nothing breaks visibly —
+the browser just fetches a file that is too small (soft) or too large (slow).
+Change one and check the other.
+
+Two things are outside this system and must be maintained by hand: the **hero**
+on the home page is a CSS `background-image`, which cannot carry a srcset, so
+`pickForWidth()` chooses a rung once at load; and the **About band** is written
+directly into `about.html`, srcset, `width` and `height` included.
+
+A note on the budget: at 4000px a full ~600-photograph migration comes to
+roughly 1.3 GB, past GitHub's 1 GB soft limit, and Git keeps every version of
+every binary forever. The West trip is nowhere near it. Before the bulk
+migration the images will need to live outside the repo (Cloudflare R2 or
+similar) — decided then, not now.
 
 ## Prose pages (About, Contact)
 
@@ -225,7 +273,7 @@ python3 -m http.server 8000     # preview at localhost:8000
 git add -A && git commit -m "Add Yunnan 2025" && git push
 ```
 
-`import.py` resizes to a 2000px long edge (~23x smaller), reads only from the
+`import.py` resizes to a 4000px long edge, reads only from the
 source folder, and **refuses to import anything carrying GPS coordinates**
 unless you pass `--strip-exif` or `--allow-gps`. Use `--dry-run` first when
 unsure. It is the reason masters never end up in the repo — always import
