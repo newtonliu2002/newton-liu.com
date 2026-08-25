@@ -37,6 +37,16 @@
 
   /* ---- Layout ------------------------------------------------------- */
   --masthead-h: 4.25rem;  /* sticky bar; anything that pins below it uses this */
+
+  /* How tall a collection's opening photograph is allowed to be. It is capped
+     by height rather than width, so raising these widens it too. The ceiling
+     is the window minus the sticky masthead and the padding above and below,
+     which on a short laptop window is about 90vh — go past that and the
+     photograph runs under the fold and has to be scrolled to be seen whole.
+     `cappedSizes()` in site.js repeats these numbers to size its srcset; if
+     you change one, change the other. */
+  --opener-h:         86vh;
+  --opener-h-upright: 88vh;
   --wrap:      74rem;   /* prose + cards */
   --wrap-wide: 108rem;  /* photo grids get more room */
   --gutter:    clamp(1.25rem, 4vw, 2.5rem);
@@ -538,10 +548,15 @@ body.lb-open { overflow: hidden; }
 
 /* --- opener: full page, centred, never cropped ------------------------- */
 
+/* Shares the gallery's measure rather than running to the window edges: the
+   opener is height-capped, so on a tall window it would otherwise grow wide
+   enough to go full-bleed and lose the margins every other block keeps. */
 .book-lead {
   display: flex;
   justify-content: center;
-  padding: 2vh 0 clamp(26px, 4.5vw, 72px);
+  max-width: var(--wrap-wide);
+  margin-inline: auto;
+  padding: 2vh clamp(0.5rem, 2vw, 1.5rem) clamp(26px, 4.5vw, 72px);
 }
 
 .book-opener {
@@ -557,10 +572,10 @@ body.lb-open { overflow: hidden; }
   width: auto;
   height: auto;
   max-width: 100%;
-  max-height: 76vh;
+  max-height: var(--opener-h);
 }
 
-.book-opener.is-upright img { max-height: 84vh; }
+.book-opener.is-upright img { max-height: var(--opener-h-upright); }
 
 /* --- body: text column left, photographs right ------------------------ */
 

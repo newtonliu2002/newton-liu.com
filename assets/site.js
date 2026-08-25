@@ -434,8 +434,10 @@
 
     var upright = aspectOf(photo) <= 0.95;
     var img = el("img");
-    // 76vh, or 84vh upright — the max-height on .book-opener img in the CSS.
-    responsive(img, photo, cappedSizes(photo, upright ? 84 : 76));
+    // --opener-h / --opener-h-upright in the CSS. Repeated here rather than
+    // read from the stylesheet, because a custom property holding a length
+    // comes back as its unresolved text, not pixels.
+    responsive(img, photo, cappedSizes(photo, upright ? 88 : 86));
     img.alt = altFor(photo);
     img.decoding = "async";
 
