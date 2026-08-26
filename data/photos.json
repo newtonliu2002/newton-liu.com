@@ -569,6 +569,1482 @@
         }
       ],
       "thumb": "images/_thumbs/1600/west/U2A7585.jpg"
+    },
+    {
+      "src": "images/alaska/BU2A9705.jpg",
+      "title": "BU2A9705",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-07-22",
+      "width": 4000,
+      "height": 1481,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF200-400mm f/4L IS USM",
+        "focal": "200mm",
+        "aperture": "f/4",
+        "shutter": "1/2000s",
+        "iso": "200"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/BU2A9705.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/BU2A9705.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/BU2A9705.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/BU2A9705.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/BU2A9705.jpg"
+    },
+    {
+      "src": "images/alaska/BU2A9206.jpg",
+      "title": "BU2A9206",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-07-22",
+      "width": 2668,
+      "height": 4000,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF200-400mm f/4L IS USM EXT",
+        "focal": "280mm",
+        "aperture": "f/5.6",
+        "shutter": "1/1250s",
+        "iso": "200"
+      },
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/alaska/BU2A9206.jpg"
+        },
+        {
+          "w": 1067,
+          "src": "images/_thumbs/1600/alaska/BU2A9206.jpg"
+        },
+        {
+          "w": 1601,
+          "src": "images/_thumbs/2400/alaska/BU2A9206.jpg"
+        },
+        {
+          "w": 2668,
+          "src": "images/alaska/BU2A9206.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/BU2A9206.jpg"
+    },
+    {
+      "src": "images/alaska/BU2A8828.jpg",
+      "title": "BU2A8828",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-07-22",
+      "width": 2668,
+      "height": 4000,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF200-400mm f/4L IS USM",
+        "focal": "386mm",
+        "aperture": "f/4",
+        "shutter": "1/2500s",
+        "iso": "200"
+      },
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/alaska/BU2A8828.jpg"
+        },
+        {
+          "w": 1067,
+          "src": "images/_thumbs/1600/alaska/BU2A8828.jpg"
+        },
+        {
+          "w": 1601,
+          "src": "images/_thumbs/2400/alaska/BU2A8828.jpg"
+        },
+        {
+          "w": 2668,
+          "src": "images/alaska/BU2A8828.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/BU2A8828.jpg"
+    },
+    {
+      "src": "images/alaska/BU2A8430.jpg",
+      "title": "BU2A8430",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-07-22",
+      "width": 4000,
+      "height": 2667,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF200-400mm f/4L IS USM",
+        "focal": "400mm",
+        "aperture": "f/4",
+        "shutter": "1/4000s",
+        "iso": "320"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/BU2A8430.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/BU2A8430.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/BU2A8430.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/BU2A8430.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/BU2A8430.jpg"
+    },
+    {
+      "src": "images/alaska/BU2A8354.jpg",
+      "title": "BU2A8354",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-07-22",
+      "width": 2668,
+      "height": 4000,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF200-400mm f/4L IS USM",
+        "focal": "200mm",
+        "aperture": "f/4",
+        "shutter": "1/3200s",
+        "iso": "500"
+      },
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/alaska/BU2A8354.jpg"
+        },
+        {
+          "w": 1067,
+          "src": "images/_thumbs/1600/alaska/BU2A8354.jpg"
+        },
+        {
+          "w": 1601,
+          "src": "images/_thumbs/2400/alaska/BU2A8354.jpg"
+        },
+        {
+          "w": 2668,
+          "src": "images/alaska/BU2A8354.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/BU2A8354.jpg"
+    },
+    {
+      "src": "images/alaska/BU2A8349.jpg",
+      "title": "BU2A8349",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-07-22",
+      "width": 2668,
+      "height": 4000,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF200-400mm f/4L IS USM",
+        "focal": "400mm",
+        "aperture": "f/4",
+        "shutter": "1/3200s",
+        "iso": "500"
+      },
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/alaska/BU2A8349.jpg"
+        },
+        {
+          "w": 1067,
+          "src": "images/_thumbs/1600/alaska/BU2A8349.jpg"
+        },
+        {
+          "w": 1601,
+          "src": "images/_thumbs/2400/alaska/BU2A8349.jpg"
+        },
+        {
+          "w": 2668,
+          "src": "images/alaska/BU2A8349.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/BU2A8349.jpg"
+    },
+    {
+      "src": "images/alaska/BU2A7646.jpg",
+      "title": "BU2A7646",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-07-22",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF200-400mm f/4L IS USM",
+        "focal": "400mm",
+        "aperture": "f/4",
+        "shutter": "1/2500s",
+        "iso": "400"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/BU2A7646.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/BU2A7646.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/BU2A7646.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/BU2A7646.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/BU2A7646.jpg"
+    },
+    {
+      "src": "images/alaska/BU2A6918.jpg",
+      "title": "BU2A6918",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-07-22",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF200-400mm f/4L IS USM EXT",
+        "focal": "560mm",
+        "aperture": "f/5.6",
+        "shutter": "1/2000s",
+        "iso": "1000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/BU2A6918.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/BU2A6918.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/BU2A6918.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/BU2A6918.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/BU2A6918.jpg"
+    },
+    {
+      "src": "images/alaska/BU2A6298.jpg",
+      "title": "BU2A6298",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-07-22",
+      "width": 4000,
+      "height": 1481,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF200-400mm f/4L IS USM EXT",
+        "focal": "560mm",
+        "aperture": "f/5.6",
+        "shutter": "1/1250s",
+        "iso": "640"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/BU2A6298.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/BU2A6298.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/BU2A6298.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/BU2A6298.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/BU2A6298.jpg"
+    },
+    {
+      "src": "images/alaska/B0003302.jpg",
+      "title": "B0003302",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-07-22",
+      "width": 4000,
+      "height": 1481,
+      "exif": {
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 20-35E@29",
+        "focal": "29mm",
+        "aperture": "f/4",
+        "shutter": "1/350s",
+        "iso": "50"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/B0003302.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/B0003302.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/B0003302.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/B0003302.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/B0003302.jpg"
+    },
+    {
+      "src": "images/alaska/B0003281.jpg",
+      "title": "B0003281",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-07-22",
+      "width": 4000,
+      "height": 1481,
+      "exif": {
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 20-35E@22",
+        "focal": "22mm",
+        "aperture": "f/4.8",
+        "shutter": "1/180s",
+        "iso": "50"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/B0003281.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/B0003281.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/B0003281.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/B0003281.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/B0003281.jpg"
+    },
+    {
+      "src": "images/alaska/BU2A6257.jpg",
+      "title": "BU2A6257",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-07-21",
+      "width": 2668,
+      "height": 4000,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF200-400mm f/4L IS USM",
+        "focal": "200mm",
+        "aperture": "f/4",
+        "shutter": "1/6400s",
+        "iso": "200"
+      },
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/alaska/BU2A6257.jpg"
+        },
+        {
+          "w": 1067,
+          "src": "images/_thumbs/1600/alaska/BU2A6257.jpg"
+        },
+        {
+          "w": 1601,
+          "src": "images/_thumbs/2400/alaska/BU2A6257.jpg"
+        },
+        {
+          "w": 2668,
+          "src": "images/alaska/BU2A6257.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/BU2A6257.jpg"
+    },
+    {
+      "src": "images/alaska/BU2A5973.jpg",
+      "title": "BU2A5973",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-07-21",
+      "width": 2667,
+      "height": 4000,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF200-400mm f/4L IS USM EXT",
+        "focal": "560mm",
+        "aperture": "f/5.6",
+        "shutter": "1/800s",
+        "iso": "500"
+      },
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/alaska/BU2A5973.jpg"
+        },
+        {
+          "w": 1067,
+          "src": "images/_thumbs/1600/alaska/BU2A5973.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/2400/alaska/BU2A5973.jpg"
+        },
+        {
+          "w": 2667,
+          "src": "images/alaska/BU2A5973.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/BU2A5973.jpg"
+    },
+    {
+      "src": "images/alaska/U2A6259.jpg",
+      "title": "U2A6259",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-07-14",
+      "width": 4000,
+      "height": 1481,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF200-400mm f/4L IS USM EXT",
+        "focal": "533mm",
+        "aperture": "f/6.3",
+        "shutter": "1/2500s",
+        "iso": "400"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/U2A6259.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/U2A6259.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/U2A6259.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/U2A6259.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/U2A6259.jpg"
+    },
+    {
+      "src": "images/alaska/B0003196.jpg",
+      "title": "B0003196",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-07-06",
+      "width": 4000,
+      "height": 1477,
+      "exif": {
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 20-35E@20",
+        "focal": "20mm",
+        "aperture": "f/9.5",
+        "shutter": "1/90s",
+        "iso": "50"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/B0003196.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/B0003196.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/B0003196.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/B0003196.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/B0003196.jpg"
+    },
+    {
+      "src": "images/alaska/U2A5499.jpg",
+      "title": "U2A5499",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-07-05",
+      "width": 4000,
+      "height": 2667,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/5.6",
+        "shutter": "1/1000s",
+        "iso": "500"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/U2A5499.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/U2A5499.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/U2A5499.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/U2A5499.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/U2A5499.jpg"
+    },
+    {
+      "src": "images/alaska/B0003079.jpg",
+      "title": "B0003079",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-06-25",
+      "width": 4000,
+      "height": 1477,
+      "exif": {
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 35-100E@65",
+        "focal": "65mm",
+        "aperture": "f/8",
+        "shutter": "1/500s",
+        "iso": "50"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/B0003079.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/B0003079.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/B0003079.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/B0003079.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/B0003079.jpg"
+    },
+    {
+      "src": "images/alaska/AU2A4490.jpg",
+      "title": "AU2A4490",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-06-25",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/10000s",
+        "iso": "200"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/AU2A4490.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/AU2A4490.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/AU2A4490.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/AU2A4490.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/AU2A4490.jpg"
+    },
+    {
+      "src": "images/alaska/AU2A4187.jpg",
+      "title": "AU2A4187",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-06-25",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "343mm",
+        "aperture": "f/7.1",
+        "shutter": "1/3200s",
+        "iso": "250"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/AU2A4187.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/AU2A4187.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/AU2A4187.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/AU2A4187.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/AU2A4187.jpg"
+    },
+    {
+      "src": "images/alaska/BU2A9247.jpg",
+      "title": "BU2A9247",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-06-24",
+      "width": 4000,
+      "height": 1481,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/1000s",
+        "iso": "400"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/BU2A9247.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/BU2A9247.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/BU2A9247.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/BU2A9247.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/BU2A9247.jpg"
+    },
+    {
+      "src": "images/alaska/B0003018.jpg",
+      "title": "B0003018",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-06-24",
+      "width": 4000,
+      "height": 1477,
+      "exif": {
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 35-100E@100",
+        "focal": "100mm",
+        "aperture": "f/11",
+        "shutter": "1/125s",
+        "iso": "50"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/B0003018.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/B0003018.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/B0003018.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/B0003018.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/B0003018.jpg"
+    },
+    {
+      "src": "images/alaska/B0002996.jpg",
+      "title": "B0002996",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-06-24",
+      "width": 3000,
+      "height": 4000,
+      "exif": {
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 35-100E@100",
+        "focal": "100mm",
+        "aperture": "f/9.5",
+        "shutter": "1/90s",
+        "iso": "50"
+      },
+      "variants": [
+        {
+          "w": 600,
+          "src": "images/_thumbs/800/alaska/B0002996.jpg"
+        },
+        {
+          "w": 1200,
+          "src": "images/_thumbs/1600/alaska/B0002996.jpg"
+        },
+        {
+          "w": 1800,
+          "src": "images/_thumbs/2400/alaska/B0002996.jpg"
+        },
+        {
+          "w": 3000,
+          "src": "images/alaska/B0002996.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/B0002996.jpg"
+    },
+    {
+      "src": "images/alaska/AU2A2403.jpg",
+      "title": "AU2A2403",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-06-24",
+      "width": 2667,
+      "height": 4000,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/2000s",
+        "iso": "200"
+      },
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/alaska/AU2A2403.jpg"
+        },
+        {
+          "w": 1067,
+          "src": "images/_thumbs/1600/alaska/AU2A2403.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/2400/alaska/AU2A2403.jpg"
+        },
+        {
+          "w": 2667,
+          "src": "images/alaska/AU2A2403.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/AU2A2403.jpg"
+    },
+    {
+      "src": "images/alaska/AU2A2186.jpg",
+      "title": "AU2A2186",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-06-24",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "223mm",
+        "aperture": "f/11",
+        "shutter": "1/800s",
+        "iso": "200"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/AU2A2186.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/AU2A2186.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/AU2A2186.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/AU2A2186.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/AU2A2186.jpg"
+    },
+    {
+      "src": "images/alaska/BU2A8206.jpg",
+      "title": "BU2A8206",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-06-17",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/5",
+        "shutter": "1/6400s",
+        "iso": "200"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/BU2A8206.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/BU2A8206.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/BU2A8206.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/BU2A8206.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/BU2A8206.jpg"
+    },
+    {
+      "src": "images/alaska/BU2A7015.jpg",
+      "title": "BU2A7015",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-06-16",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/5.6",
+        "shutter": "1/5000s",
+        "iso": "500"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/BU2A7015.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/BU2A7015.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/BU2A7015.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/BU2A7015.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/BU2A7015.jpg"
+    },
+    {
+      "src": "images/alaska/BU2A6027.jpg",
+      "title": "BU2A6027",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-06-15",
+      "width": 4000,
+      "height": 1481,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/5.6",
+        "shutter": "1/4000s",
+        "iso": "800"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/BU2A6027.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/BU2A6027.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/BU2A6027.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/BU2A6027.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/BU2A6027.jpg"
+    },
+    {
+      "src": "images/alaska/B0002674.jpg",
+      "title": "B0002674",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-06-12",
+      "width": 4000,
+      "height": 1477,
+      "exif": {
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 35-100E@35",
+        "focal": "35mm",
+        "aperture": "f/16",
+        "shutter": "1/45s",
+        "iso": "50"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/B0002674.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/B0002674.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/B0002674.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/B0002674.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/B0002674.jpg"
+    },
+    {
+      "src": "images/alaska/B0002517.jpg",
+      "title": "B0002517",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-06-12",
+      "width": 3000,
+      "height": 4000,
+      "exif": {
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 35-100E@100",
+        "focal": "100mm",
+        "aperture": "f/4",
+        "shutter": "1/750s",
+        "iso": "50"
+      },
+      "variants": [
+        {
+          "w": 600,
+          "src": "images/_thumbs/800/alaska/B0002517.jpg"
+        },
+        {
+          "w": 1200,
+          "src": "images/_thumbs/1600/alaska/B0002517.jpg"
+        },
+        {
+          "w": 1800,
+          "src": "images/_thumbs/2400/alaska/B0002517.jpg"
+        },
+        {
+          "w": 3000,
+          "src": "images/alaska/B0002517.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/B0002517.jpg"
+    },
+    {
+      "src": "images/alaska/B0002480.jpg",
+      "title": "B0002480",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-06-09",
+      "width": 4000,
+      "height": 3000,
+      "exif": {
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 35-100E@100",
+        "focal": "100mm",
+        "aperture": "f/4.8",
+        "shutter": "1/1000s",
+        "iso": "50"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/B0002480.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/B0002480.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/B0002480.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/B0002480.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/B0002480.jpg"
+    },
+    {
+      "src": "images/alaska/B0002429.jpg",
+      "title": "B0002429",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-06-09",
+      "width": 4000,
+      "height": 3000,
+      "exif": {
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 35-100E@35",
+        "focal": "35mm",
+        "aperture": "f/4",
+        "shutter": "1/3s",
+        "iso": "400"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/B0002429.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/B0002429.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/B0002429.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/B0002429.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/B0002429.jpg"
+    },
+    {
+      "src": "images/alaska/B0002400.jpg",
+      "title": "B0002400",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-06-09",
+      "width": 4000,
+      "height": 3000,
+      "exif": {
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 35-100E@35",
+        "focal": "35mm",
+        "aperture": "f/4",
+        "shutter": "1/4s",
+        "iso": "400"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/B0002400.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/B0002400.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/B0002400.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/B0002400.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/B0002400.jpg"
+    },
+    {
+      "src": "images/alaska/B0002383.jpg",
+      "title": "B0002383",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-06-09",
+      "width": 4000,
+      "height": 3000,
+      "exif": {
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 35-100E@90",
+        "focal": "90mm",
+        "aperture": "f/4",
+        "shutter": "1/8s",
+        "iso": "400"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/B0002383.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/B0002383.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/B0002383.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/B0002383.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/B0002383.jpg"
+    },
+    {
+      "src": "images/alaska/B0002198.jpg",
+      "title": "B0002198",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-06-07",
+      "width": 3000,
+      "height": 4000,
+      "exif": {
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 35-100E@100",
+        "focal": "100mm",
+        "aperture": "f/6.8",
+        "shutter": "1/90s",
+        "iso": "200"
+      },
+      "variants": [
+        {
+          "w": 600,
+          "src": "images/_thumbs/800/alaska/B0002198.jpg"
+        },
+        {
+          "w": 1200,
+          "src": "images/_thumbs/1600/alaska/B0002198.jpg"
+        },
+        {
+          "w": 1800,
+          "src": "images/_thumbs/2400/alaska/B0002198.jpg"
+        },
+        {
+          "w": 3000,
+          "src": "images/alaska/B0002198.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/B0002198.jpg"
+    },
+    {
+      "src": "images/alaska/B0002135.jpg",
+      "title": "B0002135",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-06-06",
+      "width": 4000,
+      "height": 3272,
+      "exif": {
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 35-100E@60",
+        "focal": "60mm",
+        "aperture": "f/4",
+        "shutter": "1/2000s",
+        "iso": "50"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/B0002135.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/B0002135.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/B0002135.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/B0002135.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/B0002135.jpg"
+    },
+    {
+      "src": "images/alaska/U2A1353.jpg",
+      "title": "U2A1353",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-06-02",
+      "width": 4000,
+      "height": 1481,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/1000s",
+        "iso": "400"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/U2A1353.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/U2A1353.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/U2A1353.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/U2A1353.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/U2A1353.jpg"
+    },
+    {
+      "src": "images/alaska/B0002021.jpg",
+      "title": "B0002021",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-05-31",
+      "width": 3000,
+      "height": 4000,
+      "exif": {
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 35-100E@100",
+        "focal": "100mm",
+        "aperture": "f/9.5",
+        "shutter": "1/60s",
+        "iso": "50"
+      },
+      "variants": [
+        {
+          "w": 600,
+          "src": "images/_thumbs/800/alaska/B0002021.jpg"
+        },
+        {
+          "w": 1200,
+          "src": "images/_thumbs/1600/alaska/B0002021.jpg"
+        },
+        {
+          "w": 1800,
+          "src": "images/_thumbs/2400/alaska/B0002021.jpg"
+        },
+        {
+          "w": 3000,
+          "src": "images/alaska/B0002021.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/B0002021.jpg"
+    },
+    {
+      "src": "images/alaska/B0002003.jpg",
+      "title": "B0002003",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-05-31",
+      "width": 3000,
+      "height": 4000,
+      "exif": {
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 35-100E@35",
+        "focal": "35mm",
+        "aperture": "f/8",
+        "shutter": "1/60s",
+        "iso": "50"
+      },
+      "variants": [
+        {
+          "w": 600,
+          "src": "images/_thumbs/800/alaska/B0002003.jpg"
+        },
+        {
+          "w": 1200,
+          "src": "images/_thumbs/1600/alaska/B0002003.jpg"
+        },
+        {
+          "w": 1800,
+          "src": "images/_thumbs/2400/alaska/B0002003.jpg"
+        },
+        {
+          "w": 3000,
+          "src": "images/alaska/B0002003.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/B0002003.jpg"
+    },
+    {
+      "src": "images/alaska/U2A9270.jpg",
+      "title": "U2A9270",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-05-25",
+      "width": 2667,
+      "height": 4000,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/2000s",
+        "iso": "200"
+      },
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/alaska/U2A9270.jpg"
+        },
+        {
+          "w": 1067,
+          "src": "images/_thumbs/1600/alaska/U2A9270.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/2400/alaska/U2A9270.jpg"
+        },
+        {
+          "w": 2667,
+          "src": "images/alaska/U2A9270.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/U2A9270.jpg"
+    },
+    {
+      "src": "images/alaska/B0001478.jpg",
+      "title": "B0001478",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-05-25",
+      "width": 3000,
+      "height": 4000,
+      "exif": {
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 35-100E@65",
+        "focal": "65mm",
+        "aperture": "f/5.6",
+        "shutter": "1/45s",
+        "iso": "50"
+      },
+      "variants": [
+        {
+          "w": 600,
+          "src": "images/_thumbs/800/alaska/B0001478.jpg"
+        },
+        {
+          "w": 1200,
+          "src": "images/_thumbs/1600/alaska/B0001478.jpg"
+        },
+        {
+          "w": 1800,
+          "src": "images/_thumbs/2400/alaska/B0001478.jpg"
+        },
+        {
+          "w": 3000,
+          "src": "images/alaska/B0001478.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/B0001478.jpg"
+    },
+    {
+      "src": "images/alaska/B0001312.jpg",
+      "title": "B0001312",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-05-25",
+      "width": 3000,
+      "height": 4000,
+      "exif": {
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 35-100E@100",
+        "focal": "100mm",
+        "aperture": "f/4",
+        "shutter": "1/750s",
+        "iso": "50"
+      },
+      "variants": [
+        {
+          "w": 600,
+          "src": "images/_thumbs/800/alaska/B0001312.jpg"
+        },
+        {
+          "w": 1200,
+          "src": "images/_thumbs/1600/alaska/B0001312.jpg"
+        },
+        {
+          "w": 1800,
+          "src": "images/_thumbs/2400/alaska/B0001312.jpg"
+        },
+        {
+          "w": 3000,
+          "src": "images/alaska/B0001312.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/B0001312.jpg"
     }
   ]
 }

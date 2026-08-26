@@ -548,14 +548,14 @@ body.lb-open { overflow: hidden; }
 
 /* --- opener: full page, centred, never cropped ------------------------- */
 
-/* Shares the gallery's measure rather than running to the window edges: the
-   opener is height-capped, so on a tall window it would otherwise grow wide
-   enough to go full-bleed and lose the margins every other block keeps. */
+/* The element already carries .wrap-wide, so it is measured and centred there.
+   The inline padding is repeated rather than left to that class because this
+   shorthand would otherwise reset it to zero — which let the opener, once its
+   height cap was raised, grow wide enough to reach the window edges and lose
+   the margins every other block on the page keeps. */
 .book-lead {
   display: flex;
   justify-content: center;
-  max-width: var(--wrap-wide);
-  margin-inline: auto;
   padding: 2vh clamp(0.5rem, 2vw, 1.5rem) clamp(26px, 4.5vw, 72px);
 }
 
