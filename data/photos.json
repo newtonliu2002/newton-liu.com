@@ -1039,6 +1039,42 @@
       "thumb": "images/_thumbs/1600/alaska/U2A1353.jpg"
     },
     {
+      "src": "images/alaska/B0002135.jpg",
+      "title": "B0002135",
+      "collection": "alaska",
+      "location": "",
+      "date": "2026-06-06",
+      "width": 4000,
+      "height": 3272,
+      "exif": {
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 35-100E@60",
+        "focal": "60mm",
+        "aperture": "f/4",
+        "shutter": "1/2000s",
+        "iso": "50"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alaska/B0002135.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alaska/B0002135.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alaska/B0002135.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alaska/B0002135.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alaska/B0002135.jpg"
+    },
+    {
       "src": "images/alaska/BU2A8206.jpg",
       "title": "BU2A8206",
       "collection": "alaska",
@@ -1685,42 +1721,6 @@
         }
       ],
       "thumb": "images/_thumbs/1600/alaska/B0002517.jpg"
-    },
-    {
-      "src": "images/alaska/B0002135.jpg",
-      "title": "B0002135",
-      "collection": "alaska",
-      "location": "",
-      "date": "2026-06-06",
-      "width": 4000,
-      "height": 3272,
-      "exif": {
-        "camera": "Hasselblad X2D II 100C",
-        "lens": "XCD 35-100E@60",
-        "focal": "60mm",
-        "aperture": "f/4",
-        "shutter": "1/2000s",
-        "iso": "50"
-      },
-      "variants": [
-        {
-          "w": 800,
-          "src": "images/_thumbs/800/alaska/B0002135.jpg"
-        },
-        {
-          "w": 1600,
-          "src": "images/_thumbs/1600/alaska/B0002135.jpg"
-        },
-        {
-          "w": 2400,
-          "src": "images/_thumbs/2400/alaska/B0002135.jpg"
-        },
-        {
-          "w": 4000,
-          "src": "images/alaska/B0002135.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/alaska/B0002135.jpg"
     },
     {
       "src": "images/alaska/B0002674.jpg",
