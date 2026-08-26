@@ -291,84 +291,123 @@
 
   function cellFits(need, photo) {
     var f = famOf(photo);
-    return need === "S" ? f !== "W" : need === f;
+    return need === "*" ? f !== "W" : need === f;   // "*" crops to a square
   }
 
-  // w: share of the row's width. ar: aspect-ratio, on the anchor cell only.
-  // pri: tried first when several templates fit. Higher wins.
-  var BLOCKS = [
-    // Uprights are rarer than landscapes and suffer most from being squeezed,
-    // so a block led by one is preferred and gives it the dominant cell: full
-    // row height at nearly half the width, with two landscapes stacked beside.
-    { pri: 2, need: ["P", "L", "L"],
-      cols: [{ w: 46, ar: 0.78, take: 1 }, { w: 54, take: 2 }] },
-    { pri: 2, need: ["L", "L", "P"],
-      cols: [{ w: 54, take: 2 }, { w: 46, ar: 0.78, take: 1 }] },
+  /* Row templates.
 
-    { need: ["L", "L", "L"],                       // big left, two stacked right
-      cols: [{ w: 62, ar: 1.45, take: 1 }, { w: 38, take: 2 }] },
-    { need: ["L", "L"],                            // unequal pair
-      cols: [{ w: 56, ar: 1.62, take: 1 }, { w: 44, take: 1 }] },
-    { need: ["L", "L", "L"],                       // three across
-      cols: [{ w: 34, ar: 1.42, take: 1 }, { w: 33, take: 1 }, { w: 33, take: 1 }] },
-    { need: ["L", "L", "L"],                       // two stacked left, big right
-      cols: [{ w: 38, take: 2 }, { w: 62, ar: 1.45, take: 1 }] },
-    { need: ["L", "P"],                            // landscape, upright beside it
-      cols: [{ w: 66, take: 1 }, { w: 34, ar: 0.76, take: 1 }] },
-    { need: ["P", "L"],
-      cols: [{ w: 34, ar: 0.76, take: 1 }, { w: 66, take: 1 }] },
-    { need: ["P", "P"],                            // two uprights
-      cols: [{ w: 50, ar: 0.78, take: 1 }, { w: 50, take: 1 }] },
+     `need` is the family pattern the row wants, one letter per photograph in
+     manifest order. `cols` are the columns it splits into and `take` is how
+     many photographs stack in each. Exactly one column carries either `ar`,
+     which anchors the row's height while the rest stretch to it, or `nat`,
+     which keeps that photograph's own ratio instead of cropping it.
 
-    // Square-cropping discards the most of a photograph, so it's the last
-    // arrangement tried rather than one of the first.
-    { pri: -1, need: ["S", "S"],
-      cols: [{ w: 50, ar: 1, take: 1 }, { w: 50, take: 1 }] }
+     Every template fills the width of the grid, whether it holds one
+     photograph or three, so the right-hand edge of the page runs straight the
+     whole way down. Don't add one that doesn't. */
+  var TEMPLATES = {
+    // A panorama alone, uncropped, the full width of the grid. Nothing
+    // narrower earns its own row.
+    W:    { need: "W",   cols: [{ w: 100, nat: true, take: 1 }] },
+
+    // Two panoramas stacked beside one upright. At 66/34 the stacked pair
+    // lands at about 2.66 — which is what an xPan frame already is — so the
+    // row holds three photographs and crops none of them.
+    WWP:  { need: "WWP", cols: [{ w: 66, take: 2 }, { w: 34, ar: 0.667, take: 1 }] },
+    PWW:  { need: "PWW", cols: [{ w: 34, ar: 0.667, take: 1 }, { w: 66, take: 2 }] },
+
+    // 0.74 sits between the two upright shapes in the collection: a 2:3 frame
+    // keeps 90% of itself and a 3:4 keeps 99%.
+    PP:   { need: "PP",  cols: [{ w: 50, ar: 0.74, take: 1 }, { w: 50, take: 1 }] },
+    PPP:  { need: "PPP", cols: [{ w: 34, ar: 0.72, take: 1 }, { w: 33, take: 1 }, { w: 33, take: 1 }] },
+    LP:   { need: "LP",  cols: [{ w: 66, take: 1 }, { w: 34, ar: 0.74, take: 1 }] },
+    PL:   { need: "PL",  cols: [{ w: 34, ar: 0.74, take: 1 }, { w: 66, take: 1 }] },
+
+    // LLe splits evenly and keeps both frames whole; LL is the unequal pair,
+    // which crops the second one and is only worth it for variety.
+    LLe:  { need: "LL",  cols: [{ w: 50, ar: 1.50, take: 1 }, { w: 50, take: 1 }] },
+    LL:   { need: "LL",  cols: [{ w: 56, ar: 1.62, take: 1 }, { w: 44, take: 1 }] },
+
+    // 68/32 rather than 62/38: it leaves the hero its own 3:2 and still lands
+    // the two stacked beside it at about 1.45, instead of squeezing them to 1.8.
+    LLL:  { need: "LLL", cols: [{ w: 68, ar: 1.50, take: 1 }, { w: 32, take: 2 }] },
+    LLLr: { need: "LLL", cols: [{ w: 32, take: 2 }, { w: 68, ar: 1.50, take: 1 }] },
+    LLL3: { need: "LLL", cols: [{ w: 34, ar: 1.42, take: 1 }, { w: 33, take: 1 }, { w: 33, take: 1 }] },
+    LLL4: { need: "LLL", cols: [{ w: 34, ar: 1.33, take: 1 }, { w: 33, take: 1 }, { w: 33, take: 1 }] },
+
+    // 52/48, again so the pair stacked beside the upright keeps a landscape
+    // shape rather than being cropped into strips.
+    PLL:  { need: "PLL", cols: [{ w: 52, ar: 0.74, take: 1 }, { w: 48, take: 2 }] },
+    LLP:  { need: "LLP", cols: [{ w: 48, take: 2 }, { w: 52, ar: 0.74, take: 1 }] },
+
+    // Square-cropping discards the most of a photograph, so these are the last
+    // arrangements tried rather than the first. "*" means either orientation.
+    SS:   { need: "**",  cols: [{ w: 50, ar: 1, take: 1 }, { w: 50, take: 1 }] },
+    SSS:  { need: "***", cols: [{ w: 34, ar: 1, take: 1 }, { w: 33, take: 1 }, { w: 33, take: 1 }] }
+  };
+
+  // What the packer tries when a collection has no plan of its own, best first.
+  // A block led by an upright wins ties: uprights are rarer than landscapes and
+  // suffer most from being squeezed.
+  var AUTO = [
+    { name: "PLL", pri: 2 }, { name: "LLP", pri: 2 },
+    { name: "WWP" }, { name: "PWW" }, { name: "W", pri: -1 },
+    { name: "LLL" }, { name: "LLe" }, { name: "LLL3" }, { name: "LLLr" },
+    { name: "LP" }, { name: "PL" }, { name: "PP" }, { name: "PPP" },
+    { name: "SS", pri: -1 }
   ];
 
-  var WIDE = { need: ["W"], cols: [{ w: 100, ar: 2.45, take: 1 }] };
+  function fits(tpl, photos, i) {
+    if (!tpl || i + tpl.need.length > photos.length) return false;
+    for (var j = 0; j < tpl.need.length; j++) {
+      if (!cellFits(tpl.need.charAt(j), photos[i + j])) return false;
+    }
+    return true;
+  }
 
   // Best-fitting template at this position, or null. `k` rotates the search so
   // that among equally-suited templates the same one doesn't repeat.
-  function pickBlock(photos, i, left, k) {
+  function pickBlock(photos, i, k) {
     var best = null, bestScore = -Infinity;
 
-    for (var n = 0; n < BLOCKS.length; n++) {
-      var at = (k + n) % BLOCKS.length;
-      var cand = BLOCKS[at];
-      if (cand.need.length > left) continue;
-
-      var ok = true;
-      for (var j = 0; j < cand.need.length; j++) {
-        if (!cellFits(cand.need[j], photos[i + j])) { ok = false; break; }
-      }
-      if (!ok) continue;
+    for (var n = 0; n < AUTO.length; n++) {
+      var at = (k + n) % AUTO.length;
+      var cand = TEMPLATES[AUTO[at].name];
+      if (!fits(cand, photos, i)) continue;
 
       // Priority dominates; the rotation only breaks ties between equals.
-      var score = (cand.pri || 0) * 100 - n;
+      var score = (AUTO[at].pri || 0) * 100 - n;
       if (score > bestScore) { bestScore = score; best = { block: cand, at: at }; }
     }
     return best;
   }
 
-  function composeBlocks(photos) {
-    var out = [];
-    var i = 0, k = 0, guard = 0;
+  /* A collection may carry an explicit running order in data/collections.json:
+     `"layout": ["PP", "LLL4", "W", ...]`, one template name per row, applied to
+     the photographs in manifest order once the opener has been lifted out. That
+     is how a gallery gets an arrangement that was designed rather than
+     improvised.
+
+     The plan is a suggestion, never a requirement. The moment a row asks for a
+     shape the photographs no longer have — because one was added, removed or
+     moved — the plan is abandoned from that row on and the packer takes over.
+     So a stale plan degrades to an automatic layout instead of a broken page. */
+  function composeBlocks(photos, layout) {
+    var out = [], i = 0, k = 0, guard = 0;
+
+    for (var n = 0; layout && n < layout.length; n++) {
+      var planned = TEMPLATES[layout[n]];
+      if (!fits(planned, photos, i)) break;
+      out.push({ block: planned, from: i });
+      i += planned.need.length;
+    }
 
     while (i < photos.length && guard++ < 500) {
-      var left = photos.length - i;
-      var block = null;
-
-      if (famOf(photos[i]) === "W") {
-        block = WIDE;
-      } else {
-        var hit = pickBlock(photos, i, left, k);
-        if (hit) { block = hit.block; k = (hit.at + 1) % BLOCKS.length; }
-      }
-
-      if (block) {
-        out.push({ block: block, from: i });
-        i += block.need.length;
+      var hit = pickBlock(photos, i, k);
+      if (hit) {
+        out.push({ block: hit.block, from: i });
+        i += hit.block.need.length;
+        k = (hit.at + 1) % AUTO.length;
       } else {
         out.push({ block: null, from: i });        // runs alone, uncropped
         i += 1;
@@ -448,7 +487,7 @@
     return at;
   }
 
-  function renderGrid(photos) {
+  function renderGrid(photos, layout) {
     var grid = document.getElementById("grid");
     var lead = document.querySelector(".book-lead");
 
@@ -468,21 +507,23 @@
     grid.textContent = "";
     var frag = document.createDocumentFragment();
 
-    composeBlocks(rest.map(function (r) { return r.photo; })).forEach(function (step) {
+    composeBlocks(rest.map(function (r) { return r.photo; }), layout)
+      .forEach(function (step) {
       var row = el("div", "book-row");
       var cursor = step.from;
 
       if (!step.block) {
         var lone = rest[cursor];
+        var upright = famOf(lone.photo) === "P";
         var col = el("div", "book-col");
-        col.style.flex = "0 0 " + (famOf(lone.photo) === "P" ? 34 : 72) + "%";
-        var soloShare = famOf(lone.photo) === "P" ? 0.34 : 0.72;   // the flex below
+        col.style.flex = "0 0 " + (upright ? 34 : 100) + "%";
+        var soloShare = upright ? 0.34 : 1;                        // the flex above
         var soloTile = makeTile(lone.photo, lone.at, photos.length,
                                 tileSizes(soloShare));
         soloTile.classList.add("is-natural");
         soloTile.style.setProperty("--cell-ar", aspectOf(lone.photo).toFixed(4));
         col.appendChild(soloTile);
-        row.className = "book-row is-solo";
+        if (upright) row.className = "book-row is-solo";
         row.appendChild(col);
         frag.appendChild(row);      // must go in the fragment like every other
         return;                     // row, or it jumps ahead of all of them
@@ -498,7 +539,10 @@
           var item = rest[cursor++];
           var tile = makeTile(item.photo, item.at, photos.length,
                               tileSizes(spec.w / 100));
-          if (spec.ar) {
+          if (spec.nat) {
+            tile.classList.add("is-natural");
+            tile.style.setProperty("--cell-ar", aspectOf(item.photo).toFixed(4));
+          } else if (spec.ar) {
             tile.classList.add("is-anchor");
             tile.style.setProperty("--cell-ar", String(spec.ar));
           }
@@ -627,7 +671,7 @@
     shown = photos.filter(function (p) { return p.collection === slug; });
 
     if (dateEl) dateEl.textContent = meta.date || collectionDate(shown);
-    renderGrid(shown);
+    renderGrid(shown, meta.layout);
     wireLightbox();
   }
 

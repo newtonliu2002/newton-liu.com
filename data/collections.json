@@ -53,7 +53,30 @@
       "slug": "alaska",
       "title": "Alaska",
       "subtitle": "",
-      "blurb": ""
+      "blurb": "",
+      "layout": [
+        "PP",
+        "LLL4",
+        "W",
+        "LLe",
+        "W",
+        "LLe",
+        "W",
+        "LLe",
+        "W",
+        "PP",
+        "LP",
+        "PP",
+        "PL",
+        "W",
+        "WWP",
+        "W",
+        "WWP",
+        "W",
+        "LLP",
+        "PL",
+        "PP"
+      ]
     },
     {
       "slug": "west",

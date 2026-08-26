@@ -85,19 +85,41 @@ Collection pages open with an uncropped full-width photograph, then a text rail
 on the left and packed photo blocks on the right.
 
 `composeBlocks()` in `site.js` walks the collection **in the order photos.json
-gives it** and, at each position, picks the first block template whose cells
-match the orientations coming up. So sequence is controlled entirely by the
-manifest order — the layout only decides arrangement, never order.
+gives it**. Sequence is controlled entirely by the manifest order — the layout
+only decides arrangement, never order.
+
+Arrangement comes from one of two places:
+
+- **An explicit plan.** A collection may carry `"layout"` in
+  `data/collections.json`: an array of template names, one per row, applied to
+  the photographs in manifest order once the opener has been lifted out. Alaska
+  has one. This is how a gallery gets an arrangement that was designed rather
+  than improvised.
+- **The packer.** With no plan — or once a plan runs out — `pickBlock()` takes
+  each position and picks the best template whose cells match the orientations
+  coming up.
+
+A plan is a suggestion, never a requirement. The moment a row asks for a shape
+the photographs no longer have, because one was added, removed or moved, the
+plan is abandoned **from that row on** and the packer finishes the page. So a
+stale plan quietly degrades to an automatic layout instead of breaking. If you
+reorder a collection that has a plan, expect to rewrite the plan with it.
 
 **Reorder a gallery by reordering `data/photos.json`.** `build.py` preserves
 the position of anything already in the manifest and appends newly imported
 photographs at the end (newest first) to be placed by hand. It does not
 re-sort, because that would silently undo an arrangement.
 
-Photographs are classified from `width`/`height`: `W` panorama (ratio ≥ 2.2)
-gets its own full-width band, `P` upright (≤ 0.92), `L` landscape between. A
-cell marked `S` takes either and crops it square. **Cropping never crosses the
+Photographs are classified from `width`/`height`: `W` panorama (ratio ≥ 2.2),
+`P` upright (≤ 0.92), `L` landscape between. A cell marked `*` takes either an
+upright or a landscape and crops it square. **Cropping never crosses the
 divide** — a landscape never becomes an upright.
+
+**Every template fills the width of the grid**, whether it holds one photograph
+or three, so the right-hand edge of the page runs straight the whole way down.
+Don't add one that doesn't. A column may carry `nat` instead of `ar`, keeping
+that photograph's own ratio rather than cropping it — that is what lets a
+panorama run full width at its real 2.70 rather than being trimmed to fit.
 
 Rows are flush at any window width because exactly one cell per row (the
 anchor) carries an `aspect-ratio` and every other cell stretches to the height
@@ -114,7 +136,13 @@ landscape; the square-cropping block is `pri: -1` because it discards the most
 of a photograph.
 
 The opener is the photograph flagged `"featured": true` in `photos.json`,
-falling back to the first. It is never cropped.
+falling back to the first. It is never cropped. Note that `featured` is also
+what the home page picks its hero from, so a collection usually wants to be
+first in the manifest rather than flagged.
+
+The one place a row can be narrower than the grid is the fallback for a lone
+upright the packer couldn't pair off: full width would make it taller than the
+window, so it stays centred at 34%. A plan should avoid ever leaving one.
 
 `--book-gap` on `.grid.book` sets the gutter.
 
