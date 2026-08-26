@@ -306,9 +306,13 @@
      photograph or three, so the right-hand edge of the page runs straight the
      whole way down. Don't add one that doesn't. */
   var TEMPLATES = {
-    // A panorama alone, uncropped, the full width of the grid. Nothing
-    // narrower earns its own row.
+    // A photograph alone, uncropped, the full width of the grid. A panorama
+    // has nowhere else to go, so the packer reaches for W on its own; L is the
+    // biggest a single frame can be shown here and is never chosen
+    // automatically — giving one photograph a whole row is an editorial call,
+    // so it only happens when a plan asks for it.
     W:    { need: "W",   cols: [{ w: 100, nat: true, take: 1 }] },
+    L:    { need: "L",   cols: [{ w: 100, nat: true, take: 1 }] },
 
     // Two panoramas stacked beside one upright. At 66/34 the stacked pair
     // lands at about 2.66 — which is what an xPan frame already is — so the
