@@ -3163,6 +3163,42 @@
       "thumb": "images/_thumbs/1600/florida/05A6776.jpg"
     },
     {
+      "src": "images/west-winter/ZL-5576.jpg",
+      "title": "ZL-5576",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2024-01-04",
+      "width": 4000,
+      "height": 2667,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF24-70mm F2.8 L IS USM",
+        "focal": "31mm",
+        "aperture": "f/14",
+        "shutter": "1/40s",
+        "iso": "500"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west-winter/ZL-5576.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west-winter/ZL-5576.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west-winter/ZL-5576.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west-winter/ZL-5576.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/ZL-5576.jpg"
+    },
+    {
       "src": "images/west-winter/05A3685.jpg",
       "title": "05A3685",
       "collection": "west-winter",
@@ -3557,42 +3593,6 @@
         }
       ],
       "thumb": "images/_thumbs/1600/west-winter/05A1837.jpg"
-    },
-    {
-      "src": "images/west-winter/ZL-5576.jpg",
-      "title": "ZL-5576",
-      "collection": "west-winter",
-      "location": "",
-      "date": "2024-01-04",
-      "width": 4000,
-      "height": 2667,
-      "exif": {
-        "camera": "Canon EOS R6m2",
-        "lens": "RF24-70mm F2.8 L IS USM",
-        "focal": "31mm",
-        "aperture": "f/14",
-        "shutter": "1/40s",
-        "iso": "500"
-      },
-      "variants": [
-        {
-          "w": 800,
-          "src": "images/_thumbs/800/west-winter/ZL-5576.jpg"
-        },
-        {
-          "w": 1600,
-          "src": "images/_thumbs/1600/west-winter/ZL-5576.jpg"
-        },
-        {
-          "w": 2400,
-          "src": "images/_thumbs/2400/west-winter/ZL-5576.jpg"
-        },
-        {
-          "w": 4000,
-          "src": "images/west-winter/ZL-5576.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/west-winter/ZL-5576.jpg"
     },
     {
       "src": "images/west-winter/ZL-5418.jpg",
