@@ -2009,6 +2009,1194 @@
         }
       ],
       "thumb": "images/_thumbs/1600/alaska/B0001478.jpg"
+    },
+    {
+      "src": "images/west/05A3685.jpg",
+      "title": "05A3685",
+      "collection": "west",
+      "location": "",
+      "date": "2024-01-14",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/400s",
+        "iso": "2000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west/05A3685.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west/05A3685.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west/05A3685.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west/05A3685.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west/05A3685.jpg"
+    },
+    {
+      "src": "images/florida/I05A0009.jpg",
+      "title": "I05A0009",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-26",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/640s",
+        "iso": "800"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/I05A0009.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/I05A0009.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/I05A0009.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/I05A0009.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/I05A0009.jpg"
+    },
+    {
+      "src": "images/florida/G05A9496.jpg",
+      "title": "G05A9496",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-26",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "343mm",
+        "aperture": "f/5.6",
+        "shutter": "1/160s",
+        "iso": "1250"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/G05A9496.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/G05A9496.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/G05A9496.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/G05A9496.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/G05A9496.jpg"
+    },
+    {
+      "src": "images/florida/G05A9424.jpg",
+      "title": "G05A9424",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-26",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/160s",
+        "iso": "500"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/G05A9424.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/G05A9424.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/G05A9424.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/G05A9424.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/G05A9424.jpg"
+    },
+    {
+      "src": "images/florida/E05A7372.jpg",
+      "title": "E05A7372",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-25",
+      "width": 4000,
+      "height": 1477,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "176mm",
+        "aperture": "f/7.1",
+        "shutter": "1/1600s",
+        "iso": "3200"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/E05A7372.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/E05A7372.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/E05A7372.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/E05A7372.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/E05A7372.jpg"
+    },
+    {
+      "src": "images/florida/E05A7351.jpg",
+      "title": "E05A7351",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-25",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/1600s",
+        "iso": "3200"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/E05A7351.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/E05A7351.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/E05A7351.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/E05A7351.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/E05A7351.jpg"
+    },
+    {
+      "src": "images/florida/E05A7152.jpg",
+      "title": "E05A7152",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-25",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "472mm",
+        "aperture": "f/7.1",
+        "shutter": "1/1600s",
+        "iso": "4000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/E05A7152.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/E05A7152.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/E05A7152.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/E05A7152.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/E05A7152.jpg"
+    },
+    {
+      "src": "images/florida/E05A7130.jpg",
+      "title": "E05A7130",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-25",
+      "width": 4000,
+      "height": 2000,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "106mm",
+        "aperture": "f/7.1",
+        "shutter": "1/2500s",
+        "iso": "3200"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/E05A7130.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/E05A7130.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/E05A7130.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/E05A7130.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/E05A7130.jpg"
+    },
+    {
+      "src": "images/florida/E05A7084.jpg",
+      "title": "E05A7084",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-25",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "270mm",
+        "aperture": "f/7.1",
+        "shutter": "1/2500s",
+        "iso": "3200"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/E05A7084.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/E05A7084.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/E05A7084.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/E05A7084.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/E05A7084.jpg"
+    },
+    {
+      "src": "images/florida/E05A6204.jpg",
+      "title": "E05A6204",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-25",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/3200s",
+        "iso": "3200"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/E05A6204.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/E05A6204.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/E05A6204.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/E05A6204.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/E05A6204.jpg"
+    },
+    {
+      "src": "images/florida/E05A6133.jpg",
+      "title": "E05A6133",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-25",
+      "width": 4000,
+      "height": 2858,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "472mm",
+        "aperture": "f/7.1",
+        "shutter": "1/3200s",
+        "iso": "3200"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/E05A6133.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/E05A6133.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/E05A6133.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/E05A6133.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/E05A6133.jpg"
+    },
+    {
+      "src": "images/florida/E05A5602.jpg",
+      "title": "E05A5602",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-25",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "151mm",
+        "aperture": "f/5.6",
+        "shutter": "1/2000s",
+        "iso": "500"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/E05A5602.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/E05A5602.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/E05A5602.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/E05A5602.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/E05A5602.jpg"
+    },
+    {
+      "src": "images/florida/E05A4915.jpg",
+      "title": "E05A4915",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-25",
+      "width": 4000,
+      "height": 2607,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "343mm",
+        "aperture": "f/5.6",
+        "shutter": "1/2500s",
+        "iso": "1250"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/E05A4915.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/E05A4915.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/E05A4915.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/E05A4915.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/E05A4915.jpg"
+    },
+    {
+      "src": "images/florida/E05A4847.jpg",
+      "title": "E05A4847",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-25",
+      "width": 2668,
+      "height": 4000,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "343mm",
+        "aperture": "f/5.6",
+        "shutter": "1/2500s",
+        "iso": "1000"
+      },
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/florida/E05A4847.jpg"
+        },
+        {
+          "w": 1067,
+          "src": "images/_thumbs/1600/florida/E05A4847.jpg"
+        },
+        {
+          "w": 1601,
+          "src": "images/_thumbs/2400/florida/E05A4847.jpg"
+        },
+        {
+          "w": 2668,
+          "src": "images/florida/E05A4847.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/E05A4847.jpg"
+    },
+    {
+      "src": "images/florida/E05A4607.jpg",
+      "title": "E05A4607",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-25",
+      "width": 4000,
+      "height": 2674,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/2000s",
+        "iso": "1600"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/E05A4607.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/E05A4607.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/E05A4607.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/E05A4607.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/E05A4607.jpg"
+    },
+    {
+      "src": "images/florida/E05A45422.jpg",
+      "title": "E05A45422",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-25",
+      "width": 4000,
+      "height": 2590,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/3200s",
+        "iso": "1600"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/E05A45422.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/E05A45422.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/E05A45422.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/E05A45422.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/E05A45422.jpg"
+    },
+    {
+      "src": "images/florida/E05A4473.jpg",
+      "title": "E05A4473",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-25",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/3200s",
+        "iso": "1600"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/E05A4473.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/E05A4473.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/E05A4473.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/E05A4473.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/E05A4473.jpg"
+    },
+    {
+      "src": "images/florida/E05A4422.jpg",
+      "title": "E05A4422",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-25",
+      "width": 4000,
+      "height": 2742,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/3200s",
+        "iso": "1250"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/E05A4422.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/E05A4422.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/E05A4422.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/E05A4422.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/E05A4422.jpg"
+    },
+    {
+      "src": "images/florida/E05A4303.jpg",
+      "title": "E05A4303",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-25",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/3200s",
+        "iso": "1600"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/E05A4303.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/E05A4303.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/E05A4303.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/E05A4303.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/E05A4303.jpg"
+    },
+    {
+      "src": "images/florida/E05A4156.jpg",
+      "title": "E05A4156",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-25",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/3200s",
+        "iso": "1250"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/E05A4156.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/E05A4156.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/E05A4156.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/E05A4156.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/E05A4156.jpg"
+    },
+    {
+      "src": "images/florida/D05A8954.jpg",
+      "title": "D05A8954",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-25",
+      "width": 2668,
+      "height": 4000,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "400mm",
+        "aperture": "f/6.3",
+        "shutter": "1/400s",
+        "iso": "4000"
+      },
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/florida/D05A8954.jpg"
+        },
+        {
+          "w": 1067,
+          "src": "images/_thumbs/1600/florida/D05A8954.jpg"
+        },
+        {
+          "w": 1601,
+          "src": "images/_thumbs/2400/florida/D05A8954.jpg"
+        },
+        {
+          "w": 2668,
+          "src": "images/florida/D05A8954.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/D05A8954.jpg"
+    },
+    {
+      "src": "images/florida/D05A8136.jpg",
+      "title": "D05A8136",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-25",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/400s",
+        "iso": "2000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/D05A8136.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/D05A8136.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/D05A8136.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/D05A8136.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/D05A8136.jpg"
+    },
+    {
+      "src": "images/florida/C05A1452.jpg",
+      "title": "C05A1452",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-23",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/800s",
+        "iso": "1000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/C05A1452.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/C05A1452.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/C05A1452.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/C05A1452.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/C05A1452.jpg"
+    },
+    {
+      "src": "images/florida/C05A0580.jpg",
+      "title": "C05A0580",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-23",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/5000s",
+        "iso": "1250"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/C05A0580.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/C05A0580.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/C05A0580.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/C05A0580.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/C05A0580.jpg"
+    },
+    {
+      "src": "images/florida/05A9810-2.jpg",
+      "title": "05A9810-2",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-23",
+      "width": 4000,
+      "height": 2667,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/6400s",
+        "iso": "320"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/05A9810-2.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/05A9810-2.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/05A9810-2.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/05A9810-2.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/05A9810-2.jpg"
+    },
+    {
+      "src": "images/florida/05A9756-2.jpg",
+      "title": "05A9756-2",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-23",
+      "width": 4000,
+      "height": 2667,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/6400s",
+        "iso": "320"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/05A9756-2.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/05A9756-2.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/05A9756-2.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/05A9756-2.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/05A9756-2.jpg"
+    },
+    {
+      "src": "images/florida/ZL-1674.jpg",
+      "title": "ZL-1674",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-22",
+      "width": 4000,
+      "height": 1477,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF70-200mm F2.8 L IS USM",
+        "focal": "187mm",
+        "aperture": "f/4",
+        "shutter": "1/3200s",
+        "iso": "200"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/ZL-1674.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/ZL-1674.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/ZL-1674.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/ZL-1674.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/ZL-1674.jpg"
+    },
+    {
+      "src": "images/florida/05A6888-2.jpg",
+      "title": "05A6888-2",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-22",
+      "width": 4000,
+      "height": 1477,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/5000s",
+        "iso": "640"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/05A6888-2.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/05A6888-2.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/05A6888-2.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/05A6888-2.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/05A6888-2.jpg"
+    },
+    {
+      "src": "images/florida/05A6867-2.jpg",
+      "title": "05A6867-2",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-22",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/5000s",
+        "iso": "640"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/05A6867-2.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/05A6867-2.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/05A6867-2.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/05A6867-2.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/05A6867-2.jpg"
+    },
+    {
+      "src": "images/florida/05A5711.jpg",
+      "title": "05A5711",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-22",
+      "width": 4000,
+      "height": 1477,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "123mm",
+        "aperture": "f/4.5",
+        "shutter": "1/5000s",
+        "iso": "640"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/05A5711.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/05A5711.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/05A5711.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/05A5711.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/05A5711.jpg"
+    },
+    {
+      "src": "images/florida/05A8842.jpg",
+      "title": "05A8842",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-19",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/3200s",
+        "iso": "640"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/05A8842.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/05A8842.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/05A8842.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/05A8842.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/05A8842.jpg"
+    },
+    {
+      "src": "images/florida/05A8599.jpg",
+      "title": "05A8599",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-19",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/3200s",
+        "iso": "1000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/05A8599.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/05A8599.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/05A8599.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/05A8599.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/05A8599.jpg"
+    },
+    {
+      "src": "images/florida/05A6776.jpg",
+      "title": "05A6776",
+      "collection": "florida",
+      "location": "",
+      "date": "2023-11-18",
+      "width": 4000,
+      "height": 2667,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "472mm",
+        "aperture": "f/7.1",
+        "shutter": "1/2500s",
+        "iso": "1250"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/florida/05A6776.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/florida/05A6776.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/florida/05A6776.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/florida/05A6776.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/florida/05A6776.jpg"
     }
   ]
 }
