@@ -2011,42 +2011,6 @@
       "thumb": "images/_thumbs/1600/alaska/B0001478.jpg"
     },
     {
-      "src": "images/west/05A3685.jpg",
-      "title": "05A3685",
-      "collection": "west",
-      "location": "",
-      "date": "2024-01-14",
-      "width": 4000,
-      "height": 2668,
-      "exif": {
-        "camera": "Canon EOS R5",
-        "lens": "RF100-500mm F4.5-7.1 L IS USM",
-        "focal": "500mm",
-        "aperture": "f/7.1",
-        "shutter": "1/400s",
-        "iso": "2000"
-      },
-      "variants": [
-        {
-          "w": 800,
-          "src": "images/_thumbs/800/west/05A3685.jpg"
-        },
-        {
-          "w": 1600,
-          "src": "images/_thumbs/1600/west/05A3685.jpg"
-        },
-        {
-          "w": 2400,
-          "src": "images/_thumbs/2400/west/05A3685.jpg"
-        },
-        {
-          "w": 4000,
-          "src": "images/west/05A3685.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/west/05A3685.jpg"
-    },
-    {
       "src": "images/florida/I05A0009.jpg",
       "title": "I05A0009",
       "collection": "florida",
@@ -3197,6 +3161,906 @@
         }
       ],
       "thumb": "images/_thumbs/1600/florida/05A6776.jpg"
+    },
+    {
+      "src": "images/west-winter/05A3685.jpg",
+      "title": "05A3685",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2024-01-14",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/400s",
+        "iso": "2000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west-winter/05A3685.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west-winter/05A3685.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west-winter/05A3685.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west-winter/05A3685.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/05A3685.jpg"
+    },
+    {
+      "src": "images/west-winter/05A3651.jpg",
+      "title": "05A3651",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2024-01-14",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/400s",
+        "iso": "2000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west-winter/05A3651.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west-winter/05A3651.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west-winter/05A3651.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west-winter/05A3651.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/05A3651.jpg"
+    },
+    {
+      "src": "images/west-winter/05A3643.jpg",
+      "title": "05A3643",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2024-01-14",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/500s",
+        "iso": "2000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west-winter/05A3643.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west-winter/05A3643.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west-winter/05A3643.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west-winter/05A3643.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/05A3643.jpg"
+    },
+    {
+      "src": "images/west-winter/05A2596.jpg",
+      "title": "05A2596",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2024-01-13",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/1000s",
+        "iso": "250"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west-winter/05A2596.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west-winter/05A2596.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west-winter/05A2596.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west-winter/05A2596.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/05A2596.jpg"
+    },
+    {
+      "src": "images/west-winter/05A2448.jpg",
+      "title": "05A2448",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2024-01-13",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/1000s",
+        "iso": "1000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west-winter/05A2448.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west-winter/05A2448.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west-winter/05A2448.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west-winter/05A2448.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/05A2448.jpg"
+    },
+    {
+      "src": "images/west-winter/ZL-5947.jpg",
+      "title": "ZL-5947",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2024-01-12",
+      "width": 4000,
+      "height": 1477,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF24-70mm F2.8 L IS USM",
+        "focal": "34mm",
+        "aperture": "f/11",
+        "shutter": "1/1250s",
+        "iso": "800"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west-winter/ZL-5947.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west-winter/ZL-5947.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west-winter/ZL-5947.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west-winter/ZL-5947.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/ZL-5947.jpg"
+    },
+    {
+      "src": "images/west-winter/05A2197.jpg",
+      "title": "05A2197",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2024-01-07",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "428mm",
+        "aperture": "f/6.3",
+        "shutter": "1/800s",
+        "iso": "125"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west-winter/05A2197.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west-winter/05A2197.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west-winter/05A2197.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west-winter/05A2197.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/05A2197.jpg"
+    },
+    {
+      "src": "images/west-winter/05A2016.jpg",
+      "title": "05A2016",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2024-01-06",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "254mm",
+        "aperture": "f/6.3",
+        "shutter": "1/800s",
+        "iso": "800"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west-winter/05A2016.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west-winter/05A2016.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west-winter/05A2016.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west-winter/05A2016.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/05A2016.jpg"
+    },
+    {
+      "src": "images/west-winter/05A1955.jpg",
+      "title": "05A1955",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2024-01-06",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/800s",
+        "iso": "800"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west-winter/05A1955.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west-winter/05A1955.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west-winter/05A1955.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west-winter/05A1955.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/05A1955.jpg"
+    },
+    {
+      "src": "images/west-winter/05A1862.jpg",
+      "title": "05A1862",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2024-01-06",
+      "width": 4000,
+      "height": 1477,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "100mm",
+        "aperture": "f/4.5",
+        "shutter": "1/800s",
+        "iso": "125"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west-winter/05A1862.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west-winter/05A1862.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west-winter/05A1862.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west-winter/05A1862.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/05A1862.jpg"
+    },
+    {
+      "src": "images/west-winter/05A1837.jpg",
+      "title": "05A1837",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2024-01-06",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/800s",
+        "iso": "1250"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west-winter/05A1837.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west-winter/05A1837.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west-winter/05A1837.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west-winter/05A1837.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/05A1837.jpg"
+    },
+    {
+      "src": "images/west-winter/ZL-5576.jpg",
+      "title": "ZL-5576",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2024-01-04",
+      "width": 4000,
+      "height": 2667,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF24-70mm F2.8 L IS USM",
+        "focal": "31mm",
+        "aperture": "f/14",
+        "shutter": "1/40s",
+        "iso": "500"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west-winter/ZL-5576.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west-winter/ZL-5576.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west-winter/ZL-5576.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west-winter/ZL-5576.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/ZL-5576.jpg"
+    },
+    {
+      "src": "images/west-winter/ZL-5418.jpg",
+      "title": "ZL-5418",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2024-01-04",
+      "width": 4000,
+      "height": 2666,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF24-70mm F2.8 L IS USM",
+        "focal": "29mm",
+        "aperture": "f/14",
+        "shutter": "1/40s",
+        "iso": "500"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west-winter/ZL-5418.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west-winter/ZL-5418.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west-winter/ZL-5418.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west-winter/ZL-5418.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/ZL-5418.jpg"
+    },
+    {
+      "src": "images/west-winter/ZL-5393.jpg",
+      "title": "ZL-5393",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2024-01-04",
+      "width": 2666,
+      "height": 4000,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF24-70mm F2.8 L IS USM",
+        "focal": "24mm",
+        "aperture": "f/14",
+        "shutter": "1/40s",
+        "iso": "500"
+      },
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/west-winter/ZL-5393.jpg"
+        },
+        {
+          "w": 1066,
+          "src": "images/_thumbs/1600/west-winter/ZL-5393.jpg"
+        },
+        {
+          "w": 1599,
+          "src": "images/_thumbs/2400/west-winter/ZL-5393.jpg"
+        },
+        {
+          "w": 2666,
+          "src": "images/west-winter/ZL-5393.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/ZL-5393.jpg"
+    },
+    {
+      "src": "images/west-winter/ZL-5348.jpg",
+      "title": "ZL-5348",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2024-01-04",
+      "width": 4000,
+      "height": 2667,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF24-70mm F2.8 L IS USM",
+        "focal": "24mm",
+        "aperture": "f/14",
+        "shutter": "1/40s",
+        "iso": "320"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west-winter/ZL-5348.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west-winter/ZL-5348.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west-winter/ZL-5348.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west-winter/ZL-5348.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/ZL-5348.jpg"
+    },
+    {
+      "src": "images/west-winter/ZL-5153.jpg",
+      "title": "ZL-5153",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2024-01-04",
+      "width": 4000,
+      "height": 2666,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF24-70mm F2.8 L IS USM",
+        "focal": "70mm",
+        "aperture": "f/16",
+        "shutter": "1/40s",
+        "iso": "400"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west-winter/ZL-5153.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west-winter/ZL-5153.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west-winter/ZL-5153.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west-winter/ZL-5153.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/ZL-5153.jpg"
+    },
+    {
+      "src": "images/west-winter/ZL-5124.jpg",
+      "title": "ZL-5124",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2024-01-04",
+      "width": 4000,
+      "height": 2667,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF24-70mm F2.8 L IS USM",
+        "focal": "70mm",
+        "aperture": "f/16",
+        "shutter": "1/40s",
+        "iso": "250"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west-winter/ZL-5124.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west-winter/ZL-5124.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west-winter/ZL-5124.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west-winter/ZL-5124.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/ZL-5124.jpg"
+    },
+    {
+      "src": "images/west-winter/ZL-4944.jpg",
+      "title": "ZL-4944",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2024-01-03",
+      "width": 2667,
+      "height": 4000,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF24-70mm F2.8 L IS USM",
+        "focal": "70mm",
+        "aperture": "f/22",
+        "shutter": "1/50s",
+        "iso": "640"
+      },
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/west-winter/ZL-4944.jpg"
+        },
+        {
+          "w": 1067,
+          "src": "images/_thumbs/1600/west-winter/ZL-4944.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/2400/west-winter/ZL-4944.jpg"
+        },
+        {
+          "w": 2667,
+          "src": "images/west-winter/ZL-4944.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/ZL-4944.jpg"
+    },
+    {
+      "src": "images/west-winter/ZL-4797.jpg",
+      "title": "ZL-4797",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2024-01-01",
+      "width": 4000,
+      "height": 1481,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF24-70mm F2.8 L IS USM",
+        "focal": "24mm",
+        "aperture": "f/22",
+        "shutter": "1/100s",
+        "iso": "500"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west-winter/ZL-4797.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west-winter/ZL-4797.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west-winter/ZL-4797.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west-winter/ZL-4797.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/ZL-4797.jpg"
+    },
+    {
+      "src": "images/west-winter/05A1271.jpg",
+      "title": "05A1271",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2024-01-01",
+      "width": 4000,
+      "height": 4000,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/800s",
+        "iso": "5000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west-winter/05A1271.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west-winter/05A1271.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west-winter/05A1271.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west-winter/05A1271.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/05A1271.jpg"
+    },
+    {
+      "src": "images/west-winter/05A0762.jpg",
+      "title": "05A0762",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2024-01-01",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/2500s",
+        "iso": "1600"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west-winter/05A0762.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west-winter/05A0762.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west-winter/05A0762.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west-winter/05A0762.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/05A0762.jpg"
+    },
+    {
+      "src": "images/west-winter/05A0702.jpg",
+      "title": "05A0702",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2024-01-01",
+      "width": 2668,
+      "height": 4000,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "100mm",
+        "aperture": "f/32",
+        "shutter": "1/60s",
+        "iso": "1250"
+      },
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/west-winter/05A0702.jpg"
+        },
+        {
+          "w": 1067,
+          "src": "images/_thumbs/1600/west-winter/05A0702.jpg"
+        },
+        {
+          "w": 1601,
+          "src": "images/_thumbs/2400/west-winter/05A0702.jpg"
+        },
+        {
+          "w": 2668,
+          "src": "images/west-winter/05A0702.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/05A0702.jpg"
+    },
+    {
+      "src": "images/west-winter/05A0319.jpg",
+      "title": "05A0319",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2023-12-31",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF24-70mm F2.8 L IS USM",
+        "focal": "36mm",
+        "aperture": "f/22",
+        "shutter": "1/160s",
+        "iso": "250"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west-winter/05A0319.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west-winter/05A0319.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west-winter/05A0319.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west-winter/05A0319.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/05A0319.jpg"
+    },
+    {
+      "src": "images/west-winter/05A0120.jpg",
+      "title": "05A0120",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2023-12-31",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF24-70mm F2.8 L IS USM",
+        "focal": "50mm",
+        "aperture": "f/22",
+        "shutter": "1/160s",
+        "iso": "320"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west-winter/05A0120.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west-winter/05A0120.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west-winter/05A0120.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west-winter/05A0120.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/05A0120.jpg"
+    },
+    {
+      "src": "images/west-winter/05A9934.jpg",
+      "title": "05A9934",
+      "collection": "west-winter",
+      "location": "",
+      "date": "2023-12-27",
+      "width": 4000,
+      "height": 2667,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/320s",
+        "iso": "1600"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/west-winter/05A9934.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/west-winter/05A9934.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/west-winter/05A9934.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/west-winter/05A9934.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/west-winter/05A9934.jpg"
     }
   ]
 }
