@@ -95,7 +95,24 @@
       "slug": "florida",
       "title": "Florida",
       "subtitle": "",
-      "blurb": ""
+      "blurb": "",
+      "layout": [
+        "LLL",
+        "LP",
+        "LLLr",
+        "LLL3",
+        "W",
+        "LL",
+        "L",
+        "W",
+        "LLL3",
+        "L",
+        "LLL3",
+        "LLL",
+        "W",
+        "LLe",
+        "LP"
+      ]
     },
     {
       "slug": "elsewhere",

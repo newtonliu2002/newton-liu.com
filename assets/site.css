@@ -548,15 +548,17 @@ body.lb-open { overflow: hidden; }
 
 /* --- opener: full page, centred, never cropped ------------------------- */
 
-/* The element already carries .wrap-wide, so it is measured and centred there.
-   The inline padding is repeated rather than left to that class because this
-   shorthand would otherwise reset it to zero — which let the opener, once its
-   height cap was raised, grow wide enough to reach the window edges and lose
-   the margins every other block on the page keeps. */
+/* Full bleed. The element carries .wrap-wide, which would centre it inside
+   108rem and hold it off the window edges; both are overridden here, and this
+   rule wins on source order rather than specificity, so it has to stay below
+   .wrap-wide in the file. A frame too tall to span the window at its height
+   cap is still centred and still uncropped — the bleed is what the width
+   allows, never a crop. */
 .book-lead {
   display: flex;
   justify-content: center;
-  padding: 2vh clamp(0.5rem, 2vw, 1.5rem) clamp(26px, 4.5vw, 72px);
+  max-width: none;
+  padding: 0 0 clamp(26px, 4.5vw, 72px);
 }
 
 .book-opener {
