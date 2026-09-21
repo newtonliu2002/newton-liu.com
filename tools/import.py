@@ -116,10 +116,21 @@ def slugify(stem):
     return stem or "photo"
 
 
+def long_edge_of(src):
+    out = subprocess.run(["sips", "-g", "pixelWidth", "-g", "pixelHeight", src],
+                         check=True, capture_output=True, text=True).stdout
+    dims = [int(n) for n in re.findall(r"pixel(?:Width|Height):\s*(\d+)", out)]
+    return max(dims) if dims else 0
+
+
 def resize(src, dst, long_edge, quality):
+    # `sips -Z` scales up as readily as down, so an export smaller than the
+    # long edge would be inflated to it: a bigger file with no more detail.
+    # Only ever shrink; smaller files are just re-encoded at their own size.
+    scale = ["-Z", str(long_edge)] if long_edge_of(src) > long_edge else []
     subprocess.run(
-        ["sips", "-Z", str(long_edge),
-         "--setProperty", "format", "jpeg",
+        ["sips"] + scale +
+        ["--setProperty", "format", "jpeg",
          "--setProperty", "formatOptions", str(quality),
          src, "--out", dst],
         check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,

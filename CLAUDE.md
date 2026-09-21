@@ -301,7 +301,7 @@ python3 -m http.server 8000     # preview at localhost:8000
 git add -A && git commit -m "Add Yunnan 2025" && git push
 ```
 
-`import.py` resizes to a 4000px long edge, reads only from the
+`import.py` resizes to a 4000px long edge (never enlarging a smaller file), reads only from the
 source folder, and **refuses to import anything carrying GPS coordinates**
 unless you pass `--strip-exif` or `--allow-gps`. Use `--dry-run` first when
 unsure. It is the reason masters never end up in the repo — always import
