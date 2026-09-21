@@ -431,6 +431,10 @@
 
     var img = el("img");
     responsive(img, photo, sizes || tileSizes(1), photo.thumb || photo.src);
+    // A cell that crops trims evenly from both ends unless the photograph
+    // says otherwise: `"focus": "center bottom"` in photos.json keeps a long
+    // tail that would otherwise lose its tip.
+    if (photo.focus) img.style.objectPosition = photo.focus;
     img.alt = altFor(photo);
     img.loading = index < 8 ? "eager" : "lazy";
     img.decoding = "async";
@@ -674,7 +678,10 @@
 
     shown = photos.filter(function (p) { return p.collection === slug; });
 
-    if (dateEl) dateEl.textContent = meta.date || collectionDate(shown);
+    // A collection's own "date" overrides the one derived from capture dates;
+    // an empty one ("date": "") hides the line altogether.
+    if (dateEl) dateEl.textContent =
+      typeof meta.date === "string" ? meta.date : collectionDate(shown);
     renderGrid(shown, meta.layout);
     wireLightbox();
   }

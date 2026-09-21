@@ -56,8 +56,10 @@ EXTENSIONS = RASTER_EXT + (".svg",)
 VARIANT_LONG_EDGES = (800, 1600, 2400)
 VARIANT_QUALITY = 85
 
-# Fields a human may edit; never overwritten once set.
-AUTHORED_FIELDS = ("title", "location", "date", "caption", "collection", "featured")
+# Fields a human may edit; never overwritten once set. `focus` is a CSS
+# object-position ("center bottom") for a photograph the grid has to crop.
+AUTHORED_FIELDS = ("title", "location", "date", "caption", "collection", "featured",
+                   "focus")
 
 
 # --------------------------------------------------------------------------

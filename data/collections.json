@@ -20,10 +20,23 @@
       "blurb": ""
     },
     {
-      "slug": "malaysia",
-      "title": "Malaysia",
+      "slug": "sabah",
+      "title": "Sabah, Malaysia",
+      "date": "",
       "subtitle": "",
-      "blurb": ""
+      "blurb": "",
+      "layout": [
+        "PLL",
+        "L",
+        "LLL",
+        "LP",
+        "LLe",
+        "PP",
+        "L",
+        "LLLr",
+        "LLL3",
+        "L"
+      ]
     },
     {
       "slug": "yunnan",

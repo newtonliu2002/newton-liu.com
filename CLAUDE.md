@@ -45,7 +45,8 @@ Dates appear **once per collection**, under the gallery heading ("December
 2025"), never on individual photographs. That line is derived from the capture
 dates in the manifest by `collectionDate()` in `site.js`, so it stays correct
 as photographs are added. Set `"date"` on a collection in
-`data/collections.json` to override it with fixed text.
+`data/collections.json` to override it with fixed text, or to `""` to show no
+date at all (Sabah uses that — its files mostly carry no capture dates).
 
 Two switches at the top of `assets/site.js` control all of this:
 
@@ -114,6 +115,11 @@ Photographs are classified from `width`/`height`: `W` panorama (ratio ≥ 2.2),
 `P` upright (≤ 0.92), `L` landscape between. A cell marked `*` takes either an
 upright or a landscape and crops it square. **Cropping never crosses the
 divide** — a landscape never becomes an upright.
+
+A cropped cell trims evenly from both ends. When that would cut something that
+matters — a long tail's tip in a 2:3 upright squeezed to 0.74 — give the
+photograph `"focus"` in `photos.json`: any CSS `object-position`, such as
+`"center bottom"`. `build.py` preserves it like the other hand-edited fields.
 
 **Every template fills the width of the grid**, whether it holds one photograph
 or three, so the right-hand edge of the page runs straight the whole way down.
