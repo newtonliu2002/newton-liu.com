@@ -561,6 +561,32 @@ body.lb-open { overflow: hidden; }
   padding: 0 0 clamp(26px, 4.5vw, 72px);
 }
 
+/* ...and up behind the masthead, so the photograph starts at the very top of
+   the window with no white band above it. The bar is sticky and therefore in
+   flow, so the opener is pulled back by exactly its height plus its hairline.
+   Below 620px the bar goes static and stacks into two rows, so its height is
+   no longer --masthead-h and the bleed is dropped rather than guessed at. */
+@media (min-width: 621px) {
+  body[data-page="gallery"] .book-lead {
+    margin-top: calc(-1 * (var(--masthead-h) + 1px));
+  }
+
+  /* The bar has always been frosted glass; over white it just reads as white.
+     Letting more of the photograph through is what makes the bleed visible,
+     and 74% is as far as that can go. Measured against the worst pixel under
+     the bar on every opener in the site, it holds the nav at 4.6:1 — the
+     binding case is Florida's dark sky, and anything more transparent drops
+     it under 4.5:1. The wordmark subline is too faint to survive a
+     photograph behind it at any opacity, so here it takes the dimmer ink,
+     which puts it at 4.0:1 — better than the 3.3:1 it has on plain white. */
+  body[data-page="gallery"] .masthead {
+    background: color-mix(in srgb, var(--bg) 74%, transparent);
+    border-bottom-color: transparent;
+  }
+
+  body[data-page="gallery"] .wordmark-sub { color: var(--text-dim); }
+}
+
 .book-opener {
   margin: 0;
   cursor: zoom-in;
