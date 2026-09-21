@@ -5,7 +5,23 @@
       "slug": "galapagos",
       "title": "Galápagos",
       "subtitle": "",
-      "blurb": ""
+      "blurb": "",
+      "opener": "whole",
+      "layout": [
+        "LLLr",
+        "L",
+        "LLe",
+        "L",
+        "LLL",
+        "LP",
+        "LLe",
+        "LLL",
+        "L",
+        "LLLr",
+        "LLe",
+        "LLL",
+        "LLe"
+      ]
     },
     {
       "slug": "peru",
