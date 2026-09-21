@@ -82,7 +82,7 @@ same reason — they're his words to write.
 
 ## The gallery layout (packed grid)
 
-Collection pages open with an uncropped full-width photograph, then a text rail
+Collection pages open with a full-width photograph, then a text rail
 on the left and packed photo blocks on the right.
 
 `composeBlocks()` in `site.js` walks the collection **in the order photos.json
@@ -153,6 +153,13 @@ how Sabah's owl keeps its feet. A panorama never reaches the cap, so it is
 never cut; a 3:2 frame on a wide window loses up to about a fifth of its
 height; a near-square frame would lose far more, so it makes a poor opener.
 An upright opener is not bled: it stays centred, capped at 88vh, uncropped.
+
+A subject that fills its frame top to bottom can't survive that trim — the
+Galápagos pelican runs from 6% to 85% of its height, so one screen would cost
+it either the crown (under the bar) or the bill tip. Give the collection
+`"opener": "whole"` in `collections.json` and its opener is shown entire
+instead: still full width, but at its own height, starting below the bar and
+running past the fold.
 
 The one place a row can be narrower than the grid is the fallback for a lone
 upright the packer couldn't pair off: full width would make it taller than the

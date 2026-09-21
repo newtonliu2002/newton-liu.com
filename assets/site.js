@@ -470,7 +470,8 @@
   }
 
   // The opener: whichever photograph is flagged `featured`, else the first.
-  // Never cropped — it keeps its own ratio and the full width of the page.
+  // A landscape spans the window and is trimmed to its height; an upright is
+  // never cropped. See .book-opener in site.css.
   function renderOpener(photos) {
     var slot = document.querySelector(".book-opener");
     if (!slot) return 0;
@@ -685,6 +686,11 @@
     // an empty one ("date": "") hides the line altogether.
     if (dateEl) dateEl.textContent =
       typeof meta.date === "string" ? meta.date : collectionDate(shown);
+
+    // "opener": "whole" shows the opening photograph entire, below the bar,
+    // rather than trimmed to the window. See .book-lead.is-whole in site.css.
+    var lead = document.querySelector(".book-lead");
+    if (lead) lead.classList.toggle("is-whole", meta.opener === "whole");
     renderGrid(shown, meta.layout);
     wireLightbox();
   }

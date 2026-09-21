@@ -613,6 +613,17 @@ body.lb-open { overflow: hidden; }
   max-height: var(--opener-h-upright);
 }
 
+/* Some landscapes can't be trimmed to one screen: a standing bird that fills
+   its frame from crown to bill would lose one end, and whatever was left at
+   the top would sit under the bar. `"opener": "whole"` in collections.json
+   shows that photograph entire instead: still the width of the window, but
+   at its own height, starting below the bar, and running past the fold. */
+.book-lead.is-whole .book-opener:not(.is-upright) img { max-height: none; }
+
+@media (min-width: 621px) {
+  body[data-page="gallery"] .book-lead.is-whole { margin-top: 0; }
+}
+
 /* --- body: text column left, photographs right ------------------------ */
 
 .book-body {
