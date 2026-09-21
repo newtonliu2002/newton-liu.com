@@ -142,9 +142,17 @@ landscape; the square-cropping block is `pri: -1` because it discards the most
 of a photograph.
 
 The opener is the photograph flagged `"featured": true` in `photos.json`,
-falling back to the first. It is never cropped. Note that `featured` is also
+falling back to the first. Note that `featured` is also
 what the home page picks its hero from, so a collection usually wants to be
 first in the manifest rather than flagged.
+
+A landscape opener is **full bleed**: always the width of the window. Where
+that would make it taller than the window (`--opener-h`, 100vh), it is trimmed
+top and bottom rather than shrunk — around its `focus` if it has one, which is
+how Sabah's owl keeps its feet. A panorama never reaches the cap, so it is
+never cut; a 3:2 frame on a wide window loses up to about a fifth of its
+height; a near-square frame would lose far more, so it makes a poor opener.
+An upright opener is not bled: it stays centred, capped at 88vh, uncropped.
 
 The one place a row can be narrower than the grid is the fallback for a lone
 upright the packer couldn't pair off: full width would make it taller than the
@@ -182,8 +190,9 @@ original, on a phone, for a thumbnail. Two helpers cover the cases:
   (`.book-body`), capped once `--wrap-wide` stops growing at 108rem.
   Callers pass `spec.w / 100` from the block template.
 - `cappedSizes(photo, vh)` — for slots limited by window *height* rather than
-  width (the opener at 76/84vh, the lightbox at ~80vh). Their width follows
+  width (an upright opener at 88vh, the lightbox at ~80vh). Their width follows
   from the photograph's own ratio, so the hint is `min(100vw, <vh×ratio>vh)`.
+  A landscape opener is always the window's width, so it simply says `100vw`.
 
 If a `sizes` hint drifts out of step with the CSS, nothing breaks visibly —
 the browser just fetches a file that is too small (soft) or too large (slow).

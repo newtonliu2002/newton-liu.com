@@ -38,14 +38,14 @@
   /* ---- Layout ------------------------------------------------------- */
   --masthead-h: 4.25rem;  /* sticky bar; anything that pins below it uses this */
 
-  /* How tall a collection's opening photograph is allowed to be. It is capped
-     by height rather than width, so raising these widens it too. The ceiling
-     is the window minus the sticky masthead and the padding above and below,
-     which on a short laptop window is about 90vh — go past that and the
-     photograph runs under the fold and has to be scrolled to be seen whole.
-     `cappedSizes()` in site.js repeats these numbers to size its srcset; if
-     you change one, change the other. */
-  --opener-h:         86vh;
+  /* How tall a collection's opening photograph is allowed to be. A landscape
+     opener always spans the full width of the window, and where that would
+     make it taller than --opener-h it is trimmed top and bottom to fit rather
+     than shrunk — so a panorama is never cut, and a 3:2 frame on a wide
+     window loses a sliver. An upright is capped by height instead: centred,
+     never cropped. `renderOpener()` in site.js repeats the upright number to
+     size its srcset; if you change it, change that too. */
+  --opener-h:         100vh;
   --opener-h-upright: 88vh;
   --wrap:      74rem;   /* prose + cards */
   --wrap-wide: 108rem;  /* photo grids get more room */
@@ -546,14 +546,12 @@ body.lb-open { overflow: hidden; }
    height that cell sets. No measurement, no resize handling.
    ========================================================================== */
 
-/* --- opener: full page, centred, never cropped ------------------------- */
+/* --- opener: the full width of the window ------------------------------ */
 
 /* Full bleed. The element carries .wrap-wide, which would centre it inside
    108rem and hold it off the window edges; both are overridden here, and this
    rule wins on source order rather than specificity, so it has to stay below
-   .wrap-wide in the file. A frame too tall to span the window at its height
-   cap is still centred and still uncropped — the bleed is what the width
-   allows, never a crop. */
+   .wrap-wide in the file. */
 .book-lead {
   display: flex;
   justify-content: center;
@@ -592,18 +590,28 @@ body.lb-open { overflow: hidden; }
   cursor: zoom-in;
   display: flex;
   justify-content: center;
-  max-width: 100%;
+  width: 100%;
 }
 
+/* A landscape opener is always the width of the window. Where that would
+   make it taller than --opener-h, the box stops there and object-fit trims
+   the photograph top and bottom — evenly, or around its `focus` from
+   photos.json. A panorama never reaches the cap, so it is never cut. */
 .book-opener img {
   display: block;
-  width: auto;
+  width: 100%;
   height: auto;
-  max-width: 100%;
   max-height: var(--opener-h);
+  object-fit: cover;
 }
 
-.book-opener.is-upright img { max-height: var(--opener-h-upright); }
+/* An upright spanning the window would be several screens tall, so it keeps
+   its own shape instead: centred, capped by height, uncropped. */
+.book-opener.is-upright img {
+  width: auto;
+  max-width: 100%;
+  max-height: var(--opener-h-upright);
+}
 
 /* --- body: text column left, photographs right ------------------------ */
 

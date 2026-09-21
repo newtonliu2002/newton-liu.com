@@ -4089,7 +4089,8 @@
           "src": "images/sabah/Inde-1.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sabah/Inde-1.jpg"
+      "thumb": "images/_thumbs/1600/sabah/Inde-1.jpg",
+      "focus": "center 70%"
     },
     {
       "src": "images/sabah/2-1.jpg",

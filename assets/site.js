@@ -481,10 +481,13 @@
 
     var upright = aspectOf(photo) <= 0.95;
     var img = el("img");
-    // --opener-h / --opener-h-upright in the CSS. Repeated here rather than
-    // read from the stylesheet, because a custom property holding a length
-    // comes back as its unresolved text, not pixels.
-    responsive(img, photo, cappedSizes(photo, upright ? 88 : 86));
+    // A landscape opener is always the window's width (trimmed to its height,
+    // never shrunk), so it asks for 100vw. An upright is capped at
+    // --opener-h-upright, repeated here rather than read from the stylesheet
+    // because a custom property holding a length comes back as text.
+    responsive(img, photo, upright ? cappedSizes(photo, 88) : "100vw");
+    // Where the trim falls when the window is wider than the photograph.
+    if (photo.focus) img.style.objectPosition = photo.focus;
     img.alt = altFor(photo);
     img.decoding = "async";
 
