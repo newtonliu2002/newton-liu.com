@@ -4063,9 +4063,9 @@
       "thumb": "images/_thumbs/1600/west-winter/05A9934.jpg"
     },
     {
-      "src": "images/sabah/Inde-1.jpg",
+      "src": "images/malaysia/Inde-1.jpg",
       "title": "Inde-1",
-      "collection": "sabah",
+      "collection": "malaysia",
       "location": "",
       "date": "",
       "width": 4000,
@@ -4074,28 +4074,28 @@
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/sabah/Inde-1.jpg"
+          "src": "images/_thumbs/800/malaysia/Inde-1.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/sabah/Inde-1.jpg"
+          "src": "images/_thumbs/1600/malaysia/Inde-1.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/sabah/Inde-1.jpg"
+          "src": "images/_thumbs/2400/malaysia/Inde-1.jpg"
         },
         {
           "w": 4000,
-          "src": "images/sabah/Inde-1.jpg"
+          "src": "images/malaysia/Inde-1.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sabah/Inde-1.jpg",
+      "thumb": "images/_thumbs/1600/malaysia/Inde-1.jpg",
       "focus": "center 70%"
     },
     {
-      "src": "images/sabah/2-1.jpg",
+      "src": "images/malaysia/2-1.jpg",
       "title": "2 1",
-      "collection": "sabah",
+      "collection": "malaysia",
       "location": "",
       "date": "2023-04-12",
       "width": 2535,
@@ -4111,27 +4111,27 @@
       "variants": [
         {
           "w": 533,
-          "src": "images/_thumbs/800/sabah/2-1.jpg"
+          "src": "images/_thumbs/800/malaysia/2-1.jpg"
         },
         {
           "w": 1067,
-          "src": "images/_thumbs/1600/sabah/2-1.jpg"
+          "src": "images/_thumbs/1600/malaysia/2-1.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/2400/sabah/2-1.jpg"
+          "src": "images/_thumbs/2400/malaysia/2-1.jpg"
         },
         {
           "w": 2535,
-          "src": "images/sabah/2-1.jpg"
+          "src": "images/malaysia/2-1.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sabah/2-1.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/2-1.jpg"
     },
     {
-      "src": "images/sabah/Inde-5.jpg",
+      "src": "images/malaysia/Inde-5.jpg",
       "title": "Inde-5",
-      "collection": "sabah",
+      "collection": "malaysia",
       "location": "",
       "date": "",
       "width": 4000,
@@ -4140,27 +4140,27 @@
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/sabah/Inde-5.jpg"
+          "src": "images/_thumbs/800/malaysia/Inde-5.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/sabah/Inde-5.jpg"
+          "src": "images/_thumbs/1600/malaysia/Inde-5.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/sabah/Inde-5.jpg"
+          "src": "images/_thumbs/2400/malaysia/Inde-5.jpg"
         },
         {
           "w": 4000,
-          "src": "images/sabah/Inde-5.jpg"
+          "src": "images/malaysia/Inde-5.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sabah/Inde-5.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/Inde-5.jpg"
     },
     {
-      "src": "images/sabah/12-2.jpg",
+      "src": "images/malaysia/12-2.jpg",
       "title": "12 2",
-      "collection": "sabah",
+      "collection": "malaysia",
       "location": "",
       "date": "",
       "width": 4000,
@@ -4169,27 +4169,27 @@
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/sabah/12-2.jpg"
+          "src": "images/_thumbs/800/malaysia/12-2.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/sabah/12-2.jpg"
+          "src": "images/_thumbs/1600/malaysia/12-2.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/sabah/12-2.jpg"
+          "src": "images/_thumbs/2400/malaysia/12-2.jpg"
         },
         {
           "w": 4000,
-          "src": "images/sabah/12-2.jpg"
+          "src": "images/malaysia/12-2.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sabah/12-2.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/12-2.jpg"
     },
     {
-      "src": "images/sabah/13.jpg",
+      "src": "images/malaysia/13.jpg",
       "title": "13",
-      "collection": "sabah",
+      "collection": "malaysia",
       "location": "",
       "date": "",
       "width": 4000,
@@ -4198,27 +4198,27 @@
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/sabah/13.jpg"
+          "src": "images/_thumbs/800/malaysia/13.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/sabah/13.jpg"
+          "src": "images/_thumbs/1600/malaysia/13.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/sabah/13.jpg"
+          "src": "images/_thumbs/2400/malaysia/13.jpg"
         },
         {
           "w": 4000,
-          "src": "images/sabah/13.jpg"
+          "src": "images/malaysia/13.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sabah/13.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/13.jpg"
     },
     {
-      "src": "images/sabah/8-1.jpg",
+      "src": "images/malaysia/8-1.jpg",
       "title": "8 1",
-      "collection": "sabah",
+      "collection": "malaysia",
       "location": "",
       "date": "",
       "width": 4000,
@@ -4227,27 +4227,27 @@
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/sabah/8-1.jpg"
+          "src": "images/_thumbs/800/malaysia/8-1.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/sabah/8-1.jpg"
+          "src": "images/_thumbs/1600/malaysia/8-1.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/sabah/8-1.jpg"
+          "src": "images/_thumbs/2400/malaysia/8-1.jpg"
         },
         {
           "w": 4000,
-          "src": "images/sabah/8-1.jpg"
+          "src": "images/malaysia/8-1.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sabah/8-1.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/8-1.jpg"
     },
     {
-      "src": "images/sabah/8-2.jpg",
+      "src": "images/malaysia/8-2.jpg",
       "title": "8 2",
-      "collection": "sabah",
+      "collection": "malaysia",
       "location": "",
       "date": "",
       "width": 4000,
@@ -4256,27 +4256,27 @@
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/sabah/8-2.jpg"
+          "src": "images/_thumbs/800/malaysia/8-2.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/sabah/8-2.jpg"
+          "src": "images/_thumbs/1600/malaysia/8-2.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/sabah/8-2.jpg"
+          "src": "images/_thumbs/2400/malaysia/8-2.jpg"
         },
         {
           "w": 4000,
-          "src": "images/sabah/8-2.jpg"
+          "src": "images/malaysia/8-2.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sabah/8-2.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/8-2.jpg"
     },
     {
-      "src": "images/sabah/8-3.jpg",
+      "src": "images/malaysia/8-3.jpg",
       "title": "8 3",
-      "collection": "sabah",
+      "collection": "malaysia",
       "location": "",
       "date": "",
       "width": 4000,
@@ -4285,27 +4285,27 @@
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/sabah/8-3.jpg"
+          "src": "images/_thumbs/800/malaysia/8-3.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/sabah/8-3.jpg"
+          "src": "images/_thumbs/1600/malaysia/8-3.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/sabah/8-3.jpg"
+          "src": "images/_thumbs/2400/malaysia/8-3.jpg"
         },
         {
           "w": 4000,
-          "src": "images/sabah/8-3.jpg"
+          "src": "images/malaysia/8-3.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sabah/8-3.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/8-3.jpg"
     },
     {
-      "src": "images/sabah/12-3.jpg",
+      "src": "images/malaysia/12-3.jpg",
       "title": "12 3",
-      "collection": "sabah",
+      "collection": "malaysia",
       "location": "",
       "date": "",
       "width": 4000,
@@ -4314,27 +4314,27 @@
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/sabah/12-3.jpg"
+          "src": "images/_thumbs/800/malaysia/12-3.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/sabah/12-3.jpg"
+          "src": "images/_thumbs/1600/malaysia/12-3.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/sabah/12-3.jpg"
+          "src": "images/_thumbs/2400/malaysia/12-3.jpg"
         },
         {
           "w": 4000,
-          "src": "images/sabah/12-3.jpg"
+          "src": "images/malaysia/12-3.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sabah/12-3.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/12-3.jpg"
     },
     {
-      "src": "images/sabah/10-2.jpg",
+      "src": "images/malaysia/10-2.jpg",
       "title": "10 2",
-      "collection": "sabah",
+      "collection": "malaysia",
       "location": "",
       "date": "",
       "width": 2034,
@@ -4343,27 +4343,27 @@
       "variants": [
         {
           "w": 533,
-          "src": "images/_thumbs/800/sabah/10-2.jpg"
+          "src": "images/_thumbs/800/malaysia/10-2.jpg"
         },
         {
           "w": 1067,
-          "src": "images/_thumbs/1600/sabah/10-2.jpg"
+          "src": "images/_thumbs/1600/malaysia/10-2.jpg"
         },
         {
           "w": 1601,
-          "src": "images/_thumbs/2400/sabah/10-2.jpg"
+          "src": "images/_thumbs/2400/malaysia/10-2.jpg"
         },
         {
           "w": 2034,
-          "src": "images/sabah/10-2.jpg"
+          "src": "images/malaysia/10-2.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sabah/10-2.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/10-2.jpg"
     },
     {
-      "src": "images/sabah/6-1.jpg",
+      "src": "images/malaysia/6-1.jpg",
       "title": "6 1",
-      "collection": "sabah",
+      "collection": "malaysia",
       "location": "",
       "date": "",
       "width": 4000,
@@ -4372,27 +4372,27 @@
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/sabah/6-1.jpg"
+          "src": "images/_thumbs/800/malaysia/6-1.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/sabah/6-1.jpg"
+          "src": "images/_thumbs/1600/malaysia/6-1.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/sabah/6-1.jpg"
+          "src": "images/_thumbs/2400/malaysia/6-1.jpg"
         },
         {
           "w": 4000,
-          "src": "images/sabah/6-1.jpg"
+          "src": "images/malaysia/6-1.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sabah/6-1.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/6-1.jpg"
     },
     {
-      "src": "images/sabah/6-2.jpg",
+      "src": "images/malaysia/6-2.jpg",
       "title": "6 2",
-      "collection": "sabah",
+      "collection": "malaysia",
       "location": "",
       "date": "",
       "width": 4000,
@@ -4401,27 +4401,27 @@
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/sabah/6-2.jpg"
+          "src": "images/_thumbs/800/malaysia/6-2.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/sabah/6-2.jpg"
+          "src": "images/_thumbs/1600/malaysia/6-2.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/sabah/6-2.jpg"
+          "src": "images/_thumbs/2400/malaysia/6-2.jpg"
         },
         {
           "w": 4000,
-          "src": "images/sabah/6-2.jpg"
+          "src": "images/malaysia/6-2.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sabah/6-2.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/6-2.jpg"
     },
     {
-      "src": "images/sabah/10-1.jpg",
+      "src": "images/malaysia/10-1.jpg",
       "title": "10 1",
-      "collection": "sabah",
+      "collection": "malaysia",
       "location": "",
       "date": "",
       "width": 2668,
@@ -4430,28 +4430,28 @@
       "variants": [
         {
           "w": 533,
-          "src": "images/_thumbs/800/sabah/10-1.jpg"
+          "src": "images/_thumbs/800/malaysia/10-1.jpg"
         },
         {
           "w": 1067,
-          "src": "images/_thumbs/1600/sabah/10-1.jpg"
+          "src": "images/_thumbs/1600/malaysia/10-1.jpg"
         },
         {
           "w": 1601,
-          "src": "images/_thumbs/2400/sabah/10-1.jpg"
+          "src": "images/_thumbs/2400/malaysia/10-1.jpg"
         },
         {
           "w": 2668,
-          "src": "images/sabah/10-1.jpg"
+          "src": "images/malaysia/10-1.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sabah/10-1.jpg",
+      "thumb": "images/_thumbs/1600/malaysia/10-1.jpg",
       "focus": "center bottom"
     },
     {
-      "src": "images/sabah/10-3.jpg",
+      "src": "images/malaysia/10-3.jpg",
       "title": "10 3",
-      "collection": "sabah",
+      "collection": "malaysia",
       "location": "",
       "date": "",
       "width": 2261,
@@ -4460,28 +4460,28 @@
       "variants": [
         {
           "w": 533,
-          "src": "images/_thumbs/800/sabah/10-3.jpg"
+          "src": "images/_thumbs/800/malaysia/10-3.jpg"
         },
         {
           "w": 1066,
-          "src": "images/_thumbs/1600/sabah/10-3.jpg"
+          "src": "images/_thumbs/1600/malaysia/10-3.jpg"
         },
         {
           "w": 1599,
-          "src": "images/_thumbs/2400/sabah/10-3.jpg"
+          "src": "images/_thumbs/2400/malaysia/10-3.jpg"
         },
         {
           "w": 2261,
-          "src": "images/sabah/10-3.jpg"
+          "src": "images/malaysia/10-3.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sabah/10-3.jpg",
+      "thumb": "images/_thumbs/1600/malaysia/10-3.jpg",
       "focus": "center bottom"
     },
     {
-      "src": "images/sabah/Big-3.jpg",
+      "src": "images/malaysia/Big-3.jpg",
       "title": "Big-3",
-      "collection": "sabah",
+      "collection": "malaysia",
       "location": "",
       "date": "",
       "width": 4000,
@@ -4490,27 +4490,27 @@
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/sabah/Big-3.jpg"
+          "src": "images/_thumbs/800/malaysia/Big-3.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/sabah/Big-3.jpg"
+          "src": "images/_thumbs/1600/malaysia/Big-3.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/sabah/Big-3.jpg"
+          "src": "images/_thumbs/2400/malaysia/Big-3.jpg"
         },
         {
           "w": 4000,
-          "src": "images/sabah/Big-3.jpg"
+          "src": "images/malaysia/Big-3.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sabah/Big-3.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/Big-3.jpg"
     },
     {
-      "src": "images/sabah/14-1.jpg",
+      "src": "images/malaysia/14-1.jpg",
       "title": "14 1",
-      "collection": "sabah",
+      "collection": "malaysia",
       "location": "",
       "date": "",
       "width": 4000,
@@ -4519,27 +4519,27 @@
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/sabah/14-1.jpg"
+          "src": "images/_thumbs/800/malaysia/14-1.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/sabah/14-1.jpg"
+          "src": "images/_thumbs/1600/malaysia/14-1.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/sabah/14-1.jpg"
+          "src": "images/_thumbs/2400/malaysia/14-1.jpg"
         },
         {
           "w": 4000,
-          "src": "images/sabah/14-1.jpg"
+          "src": "images/malaysia/14-1.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sabah/14-1.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/14-1.jpg"
     },
     {
-      "src": "images/sabah/14-2.jpg",
+      "src": "images/malaysia/14-2.jpg",
       "title": "14 2",
-      "collection": "sabah",
+      "collection": "malaysia",
       "location": "",
       "date": "",
       "width": 4000,
@@ -4548,27 +4548,27 @@
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/sabah/14-2.jpg"
+          "src": "images/_thumbs/800/malaysia/14-2.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/sabah/14-2.jpg"
+          "src": "images/_thumbs/1600/malaysia/14-2.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/sabah/14-2.jpg"
+          "src": "images/_thumbs/2400/malaysia/14-2.jpg"
         },
         {
           "w": 4000,
-          "src": "images/sabah/14-2.jpg"
+          "src": "images/malaysia/14-2.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sabah/14-2.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/14-2.jpg"
     },
     {
-      "src": "images/sabah/15.jpg",
+      "src": "images/malaysia/15.jpg",
       "title": "15",
-      "collection": "sabah",
+      "collection": "malaysia",
       "location": "",
       "date": "",
       "width": 4000,
@@ -4577,27 +4577,27 @@
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/sabah/15.jpg"
+          "src": "images/_thumbs/800/malaysia/15.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/sabah/15.jpg"
+          "src": "images/_thumbs/1600/malaysia/15.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/sabah/15.jpg"
+          "src": "images/_thumbs/2400/malaysia/15.jpg"
         },
         {
           "w": 4000,
-          "src": "images/sabah/15.jpg"
+          "src": "images/malaysia/15.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sabah/15.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/15.jpg"
     },
     {
-      "src": "images/sabah/7-3.jpg",
+      "src": "images/malaysia/7-3.jpg",
       "title": "7 3",
-      "collection": "sabah",
+      "collection": "malaysia",
       "location": "",
       "date": "",
       "width": 2996,
@@ -4606,27 +4606,27 @@
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/sabah/7-3.jpg"
+          "src": "images/_thumbs/800/malaysia/7-3.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/sabah/7-3.jpg"
+          "src": "images/_thumbs/1600/malaysia/7-3.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/sabah/7-3.jpg"
+          "src": "images/_thumbs/2400/malaysia/7-3.jpg"
         },
         {
           "w": 2996,
-          "src": "images/sabah/7-3.jpg"
+          "src": "images/malaysia/7-3.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sabah/7-3.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/7-3.jpg"
     },
     {
-      "src": "images/sabah/9.jpg",
+      "src": "images/malaysia/9.jpg",
       "title": "9",
-      "collection": "sabah",
+      "collection": "malaysia",
       "location": "",
       "date": "",
       "width": 4000,
@@ -4635,27 +4635,27 @@
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/sabah/9.jpg"
+          "src": "images/_thumbs/800/malaysia/9.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/sabah/9.jpg"
+          "src": "images/_thumbs/1600/malaysia/9.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/sabah/9.jpg"
+          "src": "images/_thumbs/2400/malaysia/9.jpg"
         },
         {
           "w": 4000,
-          "src": "images/sabah/9.jpg"
+          "src": "images/malaysia/9.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sabah/9.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/9.jpg"
     },
     {
-      "src": "images/sabah/11.jpg",
+      "src": "images/malaysia/11.jpg",
       "title": "11",
-      "collection": "sabah",
+      "collection": "malaysia",
       "location": "",
       "date": "",
       "width": 4000,
@@ -4664,27 +4664,27 @@
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/sabah/11.jpg"
+          "src": "images/_thumbs/800/malaysia/11.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/sabah/11.jpg"
+          "src": "images/_thumbs/1600/malaysia/11.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/sabah/11.jpg"
+          "src": "images/_thumbs/2400/malaysia/11.jpg"
         },
         {
           "w": 4000,
-          "src": "images/sabah/11.jpg"
+          "src": "images/malaysia/11.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sabah/11.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/11.jpg"
     },
     {
-      "src": "images/sabah/2022-7.jpg",
+      "src": "images/malaysia/2022-7.jpg",
       "title": "2022 7",
-      "collection": "sabah",
+      "collection": "malaysia",
       "location": "",
       "date": "",
       "width": 4000,
@@ -4693,22 +4693,22 @@
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/sabah/2022-7.jpg"
+          "src": "images/_thumbs/800/malaysia/2022-7.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/sabah/2022-7.jpg"
+          "src": "images/_thumbs/1600/malaysia/2022-7.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/sabah/2022-7.jpg"
+          "src": "images/_thumbs/2400/malaysia/2022-7.jpg"
         },
         {
           "w": 4000,
-          "src": "images/sabah/2022-7.jpg"
+          "src": "images/malaysia/2022-7.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sabah/2022-7.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/2022-7.jpg"
     },
     {
       "src": "images/galapagos/7-1.jpg",

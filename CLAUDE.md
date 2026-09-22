@@ -46,7 +46,7 @@ Dates appear **once per collection**, under the gallery heading ("December
 dates in the manifest by `collectionDate()` in `site.js`, so it stays correct
 as photographs are added. Set `"date"` on a collection in
 `data/collections.json` to override it with fixed text, or to `""` to show no
-date at all (Sabah uses that — its files mostly carry no capture dates).
+date at all (Malaysia uses that — its files mostly carry no capture dates).
 
 Two switches at the top of `assets/site.js` control all of this:
 
@@ -149,7 +149,7 @@ first in the manifest rather than flagged.
 A landscape opener is **full bleed**: always the width of the window. Where
 that would make it taller than the window (`--opener-h`, 100vh), it is trimmed
 top and bottom rather than shrunk — around its `focus` if it has one, which is
-how Sabah's owl keeps its feet. A panorama never reaches the cap, so it is
+how Malaysia's owl keeps its feet. A panorama never reaches the cap, so it is
 never cut; a 3:2 frame on a wide window loses up to about a fifth of its
 height; a near-square frame would lose far more, so it makes a poor opener.
 An upright opener is not bled: it stays centred, capped at 88vh, uncropped.
