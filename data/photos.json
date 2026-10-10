@@ -6383,39 +6383,41 @@
       "thumb": "images/_thumbs/1600/desert-west/DJI-20251228075954-0067-D.jpg"
     },
     {
-      "src": "images/snowy-west/DJI-20251223171450-0023-D.jpg",
-      "title": "DJI-20251223171450-0023-D",
+      "src": "images/snowy-west/ZL-5576.jpg",
+      "title": "ZL-5576",
       "collection": "snowy-west",
       "location": "",
-      "date": "2025-12-23",
+      "date": "2024-01-04",
       "width": 4000,
-      "height": 2246,
+      "height": 2667,
       "exif": {
-        "camera": "DJI FC4382",
-        "focal": "19mm",
-        "aperture": "f/2.8",
-        "shutter": "1/60s",
-        "iso": "150"
+        "camera": "Canon EOS R6m2",
+        "lens": "RF24-70mm F2.8 L IS USM",
+        "focal": "31mm",
+        "aperture": "f/14",
+        "shutter": "1/40s",
+        "iso": "500"
       },
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/snowy-west/DJI-20251223171450-0023-D.jpg"
+          "src": "images/_thumbs/800/snowy-west/ZL-5576.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/snowy-west/DJI-20251223171450-0023-D.jpg"
+          "src": "images/_thumbs/1600/snowy-west/ZL-5576.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/snowy-west/DJI-20251223171450-0023-D.jpg"
+          "src": "images/_thumbs/2400/snowy-west/ZL-5576.jpg"
         },
         {
           "w": 4000,
-          "src": "images/snowy-west/DJI-20251223171450-0023-D.jpg"
+          "src": "images/snowy-west/ZL-5576.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/snowy-west/DJI-20251223171450-0023-D.jpg"
+      "thumb": "images/_thumbs/1600/snowy-west/ZL-5576.jpg",
+      "focus": "center 70%"
     },
     {
       "src": "images/yellowstone/05A2016.jpg",
@@ -7461,40 +7463,39 @@
       "thumb": "images/_thumbs/1600/snowy-west/ZL-5947.jpg"
     },
     {
-      "src": "images/snowy-west/ZL-5576.jpg",
-      "title": "ZL-5576",
+      "src": "images/snowy-west/DJI-20251223171450-0023-D.jpg",
+      "title": "DJI-20251223171450-0023-D",
       "collection": "snowy-west",
       "location": "",
-      "date": "2024-01-04",
+      "date": "2025-12-23",
       "width": 4000,
-      "height": 2667,
+      "height": 2246,
       "exif": {
-        "camera": "Canon EOS R6m2",
-        "lens": "RF24-70mm F2.8 L IS USM",
-        "focal": "31mm",
-        "aperture": "f/14",
-        "shutter": "1/40s",
-        "iso": "500"
+        "camera": "DJI FC4382",
+        "focal": "19mm",
+        "aperture": "f/2.8",
+        "shutter": "1/60s",
+        "iso": "150"
       },
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/snowy-west/ZL-5576.jpg"
+          "src": "images/_thumbs/800/snowy-west/DJI-20251223171450-0023-D.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/snowy-west/ZL-5576.jpg"
+          "src": "images/_thumbs/1600/snowy-west/DJI-20251223171450-0023-D.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/snowy-west/ZL-5576.jpg"
+          "src": "images/_thumbs/2400/snowy-west/DJI-20251223171450-0023-D.jpg"
         },
         {
           "w": 4000,
-          "src": "images/snowy-west/ZL-5576.jpg"
+          "src": "images/snowy-west/DJI-20251223171450-0023-D.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/snowy-west/ZL-5576.jpg"
+      "thumb": "images/_thumbs/1600/snowy-west/DJI-20251223171450-0023-D.jpg"
     }
   ]
 }
