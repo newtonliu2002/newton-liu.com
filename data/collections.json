@@ -116,6 +116,33 @@
       "blurb": ""
     },
     {
+      "slug": "colorado-nebraska",
+      "title": "Colorado & Nebraska",
+      "date": "April 2025",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "L",
+        "PLL",
+        "LLe",
+        "SS",
+        "LLLr",
+        "L",
+        "PP",
+        "L",
+        "LLLr",
+        "LLL",
+        "LLL",
+        "LLLr",
+        "L",
+        "LLLr",
+        "LLe",
+        "LLL",
+        "LL",
+        "SS"
+      ]
+    },
+    {
       "slug": "west-winter",
       "title": "Winter in the West",
       "subtitle": "",
