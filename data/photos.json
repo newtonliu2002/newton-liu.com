@@ -6383,41 +6383,41 @@
       "thumb": "images/_thumbs/1600/desert-west/DJI-20251228075954-0067-D.jpg"
     },
     {
-      "src": "images/snowy-west/ZL-5576.jpg",
-      "title": "ZL-5576",
+      "src": "images/snowy-west/05A0319.jpg",
+      "title": "05A0319",
       "collection": "snowy-west",
       "location": "",
-      "date": "2024-01-04",
+      "date": "2023-12-31",
       "width": 4000,
-      "height": 2667,
+      "height": 2668,
       "exif": {
-        "camera": "Canon EOS R6m2",
+        "camera": "Canon EOS R5",
         "lens": "RF24-70mm F2.8 L IS USM",
-        "focal": "31mm",
-        "aperture": "f/14",
-        "shutter": "1/40s",
-        "iso": "500"
+        "focal": "36mm",
+        "aperture": "f/22",
+        "shutter": "1/160s",
+        "iso": "250"
       },
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/snowy-west/ZL-5576.jpg"
+          "src": "images/_thumbs/800/snowy-west/05A0319.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/snowy-west/ZL-5576.jpg"
+          "src": "images/_thumbs/1600/snowy-west/05A0319.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/snowy-west/ZL-5576.jpg"
+          "src": "images/_thumbs/2400/snowy-west/05A0319.jpg"
         },
         {
           "w": 4000,
-          "src": "images/snowy-west/ZL-5576.jpg"
+          "src": "images/snowy-west/05A0319.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/snowy-west/ZL-5576.jpg",
-      "focus": "center 70%"
+      "thumb": "images/_thumbs/1600/snowy-west/05A0319.jpg",
+      "focus": "center 30%"
     },
     {
       "src": "images/yellowstone/05A2016.jpg",
@@ -6743,40 +6743,40 @@
       "thumb": "images/_thumbs/1600/desert-west/DJI-20251224080854-0037-D.jpg"
     },
     {
-      "src": "images/snowy-west/05A0319.jpg",
-      "title": "05A0319",
+      "src": "images/snowy-west/ZL-5576.jpg",
+      "title": "ZL-5576",
       "collection": "snowy-west",
       "location": "",
-      "date": "2023-12-31",
+      "date": "2024-01-04",
       "width": 4000,
-      "height": 2668,
+      "height": 2667,
       "exif": {
-        "camera": "Canon EOS R5",
+        "camera": "Canon EOS R6m2",
         "lens": "RF24-70mm F2.8 L IS USM",
-        "focal": "36mm",
-        "aperture": "f/22",
-        "shutter": "1/160s",
-        "iso": "250"
+        "focal": "31mm",
+        "aperture": "f/14",
+        "shutter": "1/40s",
+        "iso": "500"
       },
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/snowy-west/05A0319.jpg"
+          "src": "images/_thumbs/800/snowy-west/ZL-5576.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/snowy-west/05A0319.jpg"
+          "src": "images/_thumbs/1600/snowy-west/ZL-5576.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/snowy-west/05A0319.jpg"
+          "src": "images/_thumbs/2400/snowy-west/ZL-5576.jpg"
         },
         {
           "w": 4000,
-          "src": "images/snowy-west/05A0319.jpg"
+          "src": "images/snowy-west/ZL-5576.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/snowy-west/05A0319.jpg"
+      "thumb": "images/_thumbs/1600/snowy-west/ZL-5576.jpg"
     },
     {
       "src": "images/desert-west/B0000870.jpg",
