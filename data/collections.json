@@ -25,6 +25,26 @@
       ]
     },
     {
+      "slug": "ecuador",
+      "title": "Ecuador",
+      "date": "August 2023",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "L",
+        "SS",
+        "PLL",
+        "L",
+        "SS",
+        "LLe",
+        "SS",
+        "L",
+        "SS",
+        "LLP",
+        "L"
+      ]
+    },
+    {
       "slug": "peru",
       "title": "Peru",
       "subtitle": "",

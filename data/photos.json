@@ -7496,6 +7496,615 @@
         }
       ],
       "thumb": "images/_thumbs/1600/snowy-west/DJI-20251223171450-0023-D.jpg"
+    },
+    {
+      "src": "images/ecuador/Ecuador-2.jpg",
+      "title": "Ecuador-2",
+      "collection": "ecuador",
+      "location": "",
+      "date": "",
+      "width": 4000,
+      "height": 2668,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/ecuador/Ecuador-2.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/ecuador/Ecuador-2.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/ecuador/Ecuador-2.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/ecuador/Ecuador-2.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/ecuador/Ecuador-2.jpg"
+    },
+    {
+      "src": "images/ecuador/Ecuador-75.jpg",
+      "title": "Ecuador-75",
+      "collection": "ecuador",
+      "location": "",
+      "date": "",
+      "width": 4000,
+      "height": 2668,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/ecuador/Ecuador-75.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/ecuador/Ecuador-75.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/ecuador/Ecuador-75.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/ecuador/Ecuador-75.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/ecuador/Ecuador-75.jpg"
+    },
+    {
+      "src": "images/ecuador/Ecuador-41.jpg",
+      "title": "Ecuador-41",
+      "collection": "ecuador",
+      "location": "",
+      "date": "",
+      "width": 4000,
+      "height": 2668,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/ecuador/Ecuador-41.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/ecuador/Ecuador-41.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/ecuador/Ecuador-41.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/ecuador/Ecuador-41.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/ecuador/Ecuador-41.jpg"
+    },
+    {
+      "src": "images/ecuador/Ecuador-14.jpg",
+      "title": "Ecuador-14",
+      "collection": "ecuador",
+      "location": "",
+      "date": "",
+      "width": 4000,
+      "height": 2668,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/ecuador/Ecuador-14.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/ecuador/Ecuador-14.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/ecuador/Ecuador-14.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/ecuador/Ecuador-14.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/ecuador/Ecuador-14.jpg"
+    },
+    {
+      "src": "images/ecuador/Ecuador-23.jpg",
+      "title": "Ecuador-23",
+      "collection": "ecuador",
+      "location": "",
+      "date": "",
+      "width": 2668,
+      "height": 4000,
+      "exif": {},
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/ecuador/Ecuador-23.jpg"
+        },
+        {
+          "w": 1067,
+          "src": "images/_thumbs/1600/ecuador/Ecuador-23.jpg"
+        },
+        {
+          "w": 1601,
+          "src": "images/_thumbs/2400/ecuador/Ecuador-23.jpg"
+        },
+        {
+          "w": 2668,
+          "src": "images/ecuador/Ecuador-23.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/ecuador/Ecuador-23.jpg"
+    },
+    {
+      "src": "images/ecuador/Ecuador-43.jpg",
+      "title": "Ecuador-43",
+      "collection": "ecuador",
+      "location": "",
+      "date": "",
+      "width": 4000,
+      "height": 2668,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/ecuador/Ecuador-43.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/ecuador/Ecuador-43.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/ecuador/Ecuador-43.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/ecuador/Ecuador-43.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/ecuador/Ecuador-43.jpg"
+    },
+    {
+      "src": "images/ecuador/Ecuador-11.jpg",
+      "title": "Ecuador-11",
+      "collection": "ecuador",
+      "location": "",
+      "date": "",
+      "width": 4000,
+      "height": 2668,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/ecuador/Ecuador-11.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/ecuador/Ecuador-11.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/ecuador/Ecuador-11.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/ecuador/Ecuador-11.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/ecuador/Ecuador-11.jpg"
+    },
+    {
+      "src": "images/ecuador/Ecuador-12.jpg",
+      "title": "Ecuador-12",
+      "collection": "ecuador",
+      "location": "",
+      "date": "",
+      "width": 4000,
+      "height": 2668,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/ecuador/Ecuador-12.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/ecuador/Ecuador-12.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/ecuador/Ecuador-12.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/ecuador/Ecuador-12.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/ecuador/Ecuador-12.jpg"
+    },
+    {
+      "src": "images/ecuador/Ecuador-59.jpg",
+      "title": "Ecuador-59",
+      "collection": "ecuador",
+      "location": "",
+      "date": "",
+      "width": 4000,
+      "height": 2668,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/ecuador/Ecuador-59.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/ecuador/Ecuador-59.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/ecuador/Ecuador-59.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/ecuador/Ecuador-59.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/ecuador/Ecuador-59.jpg"
+    },
+    {
+      "src": "images/ecuador/Ecuador-74.jpg",
+      "title": "Ecuador-74",
+      "collection": "ecuador",
+      "location": "",
+      "date": "",
+      "width": 4000,
+      "height": 2668,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/ecuador/Ecuador-74.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/ecuador/Ecuador-74.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/ecuador/Ecuador-74.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/ecuador/Ecuador-74.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/ecuador/Ecuador-74.jpg"
+    },
+    {
+      "src": "images/ecuador/Ecuador-48.jpg",
+      "title": "Ecuador-48",
+      "collection": "ecuador",
+      "location": "",
+      "date": "",
+      "width": 4000,
+      "height": 2668,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/ecuador/Ecuador-48.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/ecuador/Ecuador-48.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/ecuador/Ecuador-48.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/ecuador/Ecuador-48.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/ecuador/Ecuador-48.jpg"
+    },
+    {
+      "src": "images/ecuador/Ecuador-76.jpg",
+      "title": "Ecuador-76",
+      "collection": "ecuador",
+      "location": "",
+      "date": "",
+      "width": 4000,
+      "height": 2668,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/ecuador/Ecuador-76.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/ecuador/Ecuador-76.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/ecuador/Ecuador-76.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/ecuador/Ecuador-76.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/ecuador/Ecuador-76.jpg"
+    },
+    {
+      "src": "images/ecuador/Ecuador-8.jpg",
+      "title": "Ecuador-8",
+      "collection": "ecuador",
+      "location": "",
+      "date": "",
+      "width": 4000,
+      "height": 2668,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/ecuador/Ecuador-8.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/ecuador/Ecuador-8.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/ecuador/Ecuador-8.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/ecuador/Ecuador-8.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/ecuador/Ecuador-8.jpg"
+    },
+    {
+      "src": "images/ecuador/Ecuador-79.jpg",
+      "title": "Ecuador-79",
+      "collection": "ecuador",
+      "location": "",
+      "date": "",
+      "width": 4000,
+      "height": 2667,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/ecuador/Ecuador-79.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/ecuador/Ecuador-79.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/ecuador/Ecuador-79.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/ecuador/Ecuador-79.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/ecuador/Ecuador-79.jpg"
+    },
+    {
+      "src": "images/ecuador/Ecuador-44.jpg",
+      "title": "Ecuador-44",
+      "collection": "ecuador",
+      "location": "",
+      "date": "",
+      "width": 4000,
+      "height": 2668,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/ecuador/Ecuador-44.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/ecuador/Ecuador-44.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/ecuador/Ecuador-44.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/ecuador/Ecuador-44.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/ecuador/Ecuador-44.jpg"
+    },
+    {
+      "src": "images/ecuador/Ecuador-19.jpg",
+      "title": "Ecuador-19",
+      "collection": "ecuador",
+      "location": "",
+      "date": "",
+      "width": 4000,
+      "height": 2666,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/ecuador/Ecuador-19.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/ecuador/Ecuador-19.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/ecuador/Ecuador-19.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/ecuador/Ecuador-19.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/ecuador/Ecuador-19.jpg"
+    },
+    {
+      "src": "images/ecuador/Ecuador-71.jpg",
+      "title": "Ecuador-71",
+      "collection": "ecuador",
+      "location": "",
+      "date": "",
+      "width": 4000,
+      "height": 2668,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/ecuador/Ecuador-71.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/ecuador/Ecuador-71.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/ecuador/Ecuador-71.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/ecuador/Ecuador-71.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/ecuador/Ecuador-71.jpg"
+    },
+    {
+      "src": "images/ecuador/Ecuador-72.jpg",
+      "title": "Ecuador-72",
+      "collection": "ecuador",
+      "location": "",
+      "date": "",
+      "width": 4000,
+      "height": 2668,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/ecuador/Ecuador-72.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/ecuador/Ecuador-72.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/ecuador/Ecuador-72.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/ecuador/Ecuador-72.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/ecuador/Ecuador-72.jpg"
+    },
+    {
+      "src": "images/ecuador/Ecuador-24.jpg",
+      "title": "Ecuador-24",
+      "collection": "ecuador",
+      "location": "",
+      "date": "",
+      "width": 4000,
+      "height": 2668,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/ecuador/Ecuador-24.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/ecuador/Ecuador-24.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/ecuador/Ecuador-24.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/ecuador/Ecuador-24.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/ecuador/Ecuador-24.jpg"
+    },
+    {
+      "src": "images/ecuador/Ecuador-78.jpg",
+      "title": "Ecuador-78",
+      "collection": "ecuador",
+      "location": "",
+      "date": "",
+      "width": 2668,
+      "height": 4000,
+      "exif": {},
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/ecuador/Ecuador-78.jpg"
+        },
+        {
+          "w": 1067,
+          "src": "images/_thumbs/1600/ecuador/Ecuador-78.jpg"
+        },
+        {
+          "w": 1601,
+          "src": "images/_thumbs/2400/ecuador/Ecuador-78.jpg"
+        },
+        {
+          "w": 2668,
+          "src": "images/ecuador/Ecuador-78.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/ecuador/Ecuador-78.jpg"
+    },
+    {
+      "src": "images/ecuador/Ecuador-31.jpg",
+      "title": "Ecuador-31",
+      "collection": "ecuador",
+      "location": "",
+      "date": "",
+      "width": 3610,
+      "height": 2408,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/ecuador/Ecuador-31.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/ecuador/Ecuador-31.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/ecuador/Ecuador-31.jpg"
+        },
+        {
+          "w": 3610,
+          "src": "images/ecuador/Ecuador-31.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/ecuador/Ecuador-31.jpg"
     }
   ]
 }
