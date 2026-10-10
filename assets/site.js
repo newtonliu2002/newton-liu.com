@@ -347,7 +347,16 @@
     // Square-cropping discards the most of a photograph, so these are the last
     // arrangements tried rather than the first. "*" means either orientation.
     SS:   { need: "**",  cols: [{ w: 50, ar: 1, take: 1 }, { w: 50, take: 1 }] },
-    SSS:  { need: "***", cols: [{ w: 34, ar: 1, take: 1 }, { w: 33, take: 1 }, { w: 33, take: 1 }] }
+    SSS:  { need: "***", cols: [{ w: 34, ar: 1, take: 1 }, { w: 33, take: 1 }, { w: 33, take: 1 }] },
+
+    // Four frames from one burst, read left to right like a strip of film.
+    // Every cell anchors itself square, so the strip can fold into two by two
+    // on a phone (`.is-seq` in site.css) and still read in order. Only ever
+    // used by a plan; the packer has no way to know which frames belong
+    // together.
+    SSSS: { need: "****", cls: "is-seq", cols: [
+            { w: 25, ar: 1, take: 1 }, { w: 25, ar: 1, take: 1 },
+            { w: 25, ar: 1, take: 1 }, { w: 25, ar: 1, take: 1 }] }
   };
 
   // What the packer tries when a collection has no plan of its own, best first.
@@ -541,6 +550,7 @@
         return;                     // row, or it jumps ahead of all of them
       }
 
+      if (step.block.cls) row.classList.add(step.block.cls);
       step.block.cols.forEach(function (spec) {
         var col = el("div", "book-col");
         // Grow from a zero basis rather than a percentage: the gaps come out

@@ -701,6 +701,15 @@ body.lb-open { overflow: hidden; }
   aspect-ratio: var(--cell-ar);
 }
 
+/* A four-frame sequence (SSSS in site.js). Four across on a phone would make
+   each frame a thumbnail, so below the breakpoint the strip folds into two
+   rows of two, which still reads in order. The !important beats the flex
+   share site.js sets inline on each column. */
+@media (max-width: 620px) {
+  .book-row.is-seq { flex-wrap: wrap; }
+  .book-row.is-seq > .book-col { flex: 0 0 calc((100% - var(--book-gap)) / 2) !important; }
+}
+
 /* ==========================================================================
    Prose pages (About, Contact)
 
