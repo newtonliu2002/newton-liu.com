@@ -2,6 +2,139 @@
   "_comment": "Hand-edited. One entry per gallery. `slug` must match the folder name under images/ and collections/. `subtitle` shows under the title on the home card and gallery page; `blurb` is the paragraph on the gallery page. Both are optional — leave empty and nothing is shown.",
   "collections": [
     {
+      "slug": "alaska",
+      "title": "Alaska",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "LLL",
+        "W",
+        "L",
+        "W",
+        "PP",
+        "W",
+        "LLe",
+        "W",
+        "L",
+        "LLe",
+        "PP",
+        "LP",
+        "PP",
+        "PL",
+        "W",
+        "WWP",
+        "W",
+        "WWP",
+        "W",
+        "LLP",
+        "PL",
+        "PP"
+      ]
+    },
+    {
+      "slug": "west",
+      "title": "The American West",
+      "subtitle": "",
+      "blurb": ""
+    },
+    {
+      "slug": "colorado-nebraska",
+      "title": "Colorado & Nebraska",
+      "date": "April 2025",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "L",
+        "LLLr",
+        "L",
+        "PP",
+        "LLe",
+        "SSSS",
+        "L",
+        "LL",
+        "L",
+        "LLe"
+      ]
+    },
+    {
+      "slug": "desert-west",
+      "title": "The Desert West",
+      "date": "January 2024, December 2025",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "L",
+        "PLLL",
+        "L",
+        "L",
+        "L",
+        "L",
+        "L"
+      ]
+    },
+    {
+      "slug": "yellowstone",
+      "title": "Yellowstone & North Dakota",
+      "date": "January 2024, December 2025",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "L",
+        "W",
+        "LLe",
+        "PL",
+        "LLP"
+      ]
+    },
+    {
+      "slug": "snowy-west",
+      "title": "The Snowy West",
+      "date": "December 2023 – January 2024, December 2025",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "L",
+        "LLL",
+        "PLL",
+        "W",
+        "L",
+        "PP",
+        "LLe",
+        "W",
+        "L",
+        "L"
+      ]
+    },
+    {
+      "slug": "west-winter",
+      "title": "Winter in the West",
+      "subtitle": "",
+      "blurb": ""
+    },
+    {
+      "slug": "florida",
+      "title": "Florida",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "LLL",
+        "LP",
+        "LLLr",
+        "LLL3",
+        "W",
+        "LL",
+        "L",
+        "W",
+        "LLL3",
+        "L",
+        "LLL3",
+        "LLL",
+        "W",
+        "LLe",
+        "LP"
+      ]
+    },
+    {
       "slug": "galapagos",
       "title": "Galápagos",
       "date": "August 2023",
@@ -44,182 +177,6 @@
       ]
     },
     {
-      "slug": "peru",
-      "title": "Peru",
-      "subtitle": "",
-      "blurb": ""
-    },
-    {
-      "slug": "sri-lanka",
-      "title": "Sri Lanka",
-      "subtitle": "",
-      "blurb": ""
-    },
-    {
-      "slug": "malaysia",
-      "title": "Malaysia",
-      "date": "November 2017, March 2023",
-      "subtitle": "",
-      "blurb": "",
-      "layout": [
-        "PLL",
-        "L",
-        "LLL",
-        "LP",
-        "LLe",
-        "PP",
-        "L",
-        "LLLr",
-        "LLL3",
-        "L"
-      ]
-    },
-    {
-      "slug": "yunnan",
-      "title": "Yunnan",
-      "subtitle": "",
-      "blurb": ""
-    },
-    {
-      "slug": "guangxi",
-      "title": "Guangxi",
-      "subtitle": "",
-      "blurb": ""
-    },
-    {
-      "slug": "alaska",
-      "title": "Alaska",
-      "subtitle": "",
-      "blurb": "",
-      "layout": [
-        "LLL",
-        "W",
-        "L",
-        "W",
-        "PP",
-        "W",
-        "LLe",
-        "W",
-        "L",
-        "LLe",
-        "PP",
-        "LP",
-        "PP",
-        "PL",
-        "W",
-        "WWP",
-        "W",
-        "WWP",
-        "W",
-        "LLP",
-        "PL",
-        "PP"
-      ]
-    },
-    {
-      "slug": "desert-west",
-      "title": "The Desert West",
-      "date": "January 2024, December 2025",
-      "subtitle": "",
-      "blurb": "",
-      "layout": [
-        "L",
-        "PLLL",
-        "L",
-        "L",
-        "L",
-        "L",
-        "L"
-      ]
-    },
-    {
-      "slug": "snowy-west",
-      "title": "The Snowy West",
-      "date": "December 2023 – January 2024, December 2025",
-      "subtitle": "",
-      "blurb": "",
-      "layout": [
-        "L",
-        "LLL",
-        "PLL",
-        "W",
-        "L",
-        "PP",
-        "LLe",
-        "W",
-        "L",
-        "L"
-      ]
-    },
-    {
-      "slug": "yellowstone",
-      "title": "Yellowstone & North Dakota",
-      "date": "January 2024, December 2025",
-      "subtitle": "",
-      "blurb": "",
-      "layout": [
-        "L",
-        "W",
-        "LLe",
-        "PL",
-        "LLP"
-      ]
-    },
-    {
-      "slug": "west",
-      "title": "The American West",
-      "subtitle": "",
-      "blurb": ""
-    },
-    {
-      "slug": "colorado-nebraska",
-      "title": "Colorado & Nebraska",
-      "date": "April 2025",
-      "subtitle": "",
-      "blurb": "",
-      "layout": [
-        "L",
-        "LLLr",
-        "L",
-        "PP",
-        "LLe",
-        "SSSS",
-        "L",
-        "LL",
-        "L",
-        "LLe"
-      ]
-    },
-    {
-      "slug": "west-winter",
-      "title": "Winter in the West",
-      "subtitle": "",
-      "blurb": ""
-    },
-    {
-      "slug": "florida",
-      "title": "Florida",
-      "subtitle": "",
-      "blurb": "",
-      "layout": [
-        "LLL",
-        "LP",
-        "LLLr",
-        "LLL3",
-        "W",
-        "LL",
-        "L",
-        "W",
-        "LLL3",
-        "L",
-        "LLL3",
-        "LLL",
-        "W",
-        "LLe",
-        "LP"
-      ]
-    },
-    {
       "slug": "hawaii",
       "title": "Hawai'i",
       "subtitle": "",
@@ -239,10 +196,23 @@
       ]
     },
     {
-      "slug": "elsewhere",
-      "title": "Elsewhere",
+      "slug": "malaysia",
+      "title": "Malaysia",
+      "date": "November 2017, March 2023",
       "subtitle": "",
-      "blurb": ""
+      "blurb": "",
+      "layout": [
+        "PLL",
+        "L",
+        "LLL",
+        "LP",
+        "LLe",
+        "PP",
+        "L",
+        "LLLr",
+        "LLL3",
+        "L"
+      ]
     }
   ]
 }

@@ -45,8 +45,15 @@ Dates appear **once per collection**, under the gallery heading ("December
 2025"), never on individual photographs. That line is derived from the capture
 dates in the manifest by `collectionDate()` in `site.js`, so it stays correct
 as photographs are added. Set `"date"` on a collection in
-`data/collections.json` to override it with fixed text, or to `""` to show no
-date at all (Malaysia uses that — its files mostly carry no capture dates).
+`data/collections.json` to override it with fixed text — Galápagos, Ecuador and
+Malaysia do, since their files carry no capture dates, and so does any page
+that spans separate trips ("January 2024, December 2025"), which the derived
+range would misreport — or to `""` to show no date at all.
+
+The order of `data/collections.json` is the order of the home page: **newest
+trip first, by each collection's earliest date**. A new collection goes in by
+that rule. Only collections with photographs are listed — there are no
+"coming soon" placeholders.
 
 Two switches at the top of `assets/site.js` control all of this:
 
