@@ -7527,35 +7527,6 @@
       "thumb": "images/_thumbs/1600/ecuador/Ecuador-2.jpg"
     },
     {
-      "src": "images/ecuador/Ecuador-75.jpg",
-      "title": "Ecuador-75",
-      "collection": "ecuador",
-      "location": "",
-      "date": "",
-      "width": 4000,
-      "height": 2668,
-      "exif": {},
-      "variants": [
-        {
-          "w": 800,
-          "src": "images/_thumbs/800/ecuador/Ecuador-75.jpg"
-        },
-        {
-          "w": 1600,
-          "src": "images/_thumbs/1600/ecuador/Ecuador-75.jpg"
-        },
-        {
-          "w": 2400,
-          "src": "images/_thumbs/2400/ecuador/Ecuador-75.jpg"
-        },
-        {
-          "w": 4000,
-          "src": "images/ecuador/Ecuador-75.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/ecuador/Ecuador-75.jpg"
-    },
-    {
       "src": "images/ecuador/Ecuador-41.jpg",
       "title": "Ecuador-41",
       "collection": "ecuador",
