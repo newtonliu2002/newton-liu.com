@@ -122,16 +122,16 @@
       "subtitle": "",
       "blurb": "",
       "layout": [
-        "L",
-        "LLLr",
+        "LLe",
         "SSSS",
-        "LP",
+        "L",
+        "LL",
         "L",
         "LLe",
-        "LL",
-        "LLL",
+        "PP",
         "L",
-        "PLL",
+        "LLL",
+        "LLe",
         "L"
       ]
     },

@@ -5583,35 +5583,6 @@
       "thumb": "images/_thumbs/1600/colorado-nebraska/7.jpg"
     },
     {
-      "src": "images/colorado-nebraska/6.jpg",
-      "title": "6",
-      "collection": "colorado-nebraska",
-      "location": "",
-      "date": "",
-      "width": 4000,
-      "height": 2668,
-      "exif": {},
-      "variants": [
-        {
-          "w": 800,
-          "src": "images/_thumbs/800/colorado-nebraska/6.jpg"
-        },
-        {
-          "w": 1600,
-          "src": "images/_thumbs/1600/colorado-nebraska/6.jpg"
-        },
-        {
-          "w": 2400,
-          "src": "images/_thumbs/2400/colorado-nebraska/6.jpg"
-        },
-        {
-          "w": 4000,
-          "src": "images/colorado-nebraska/6.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/colorado-nebraska/6.jpg"
-    },
-    {
       "src": "images/colorado-nebraska/8-3.jpg",
       "title": "8 3",
       "collection": "colorado-nebraska",
@@ -5639,35 +5610,6 @@
         }
       ],
       "thumb": "images/_thumbs/1600/colorado-nebraska/8-3.jpg"
-    },
-    {
-      "src": "images/colorado-nebraska/10-2.jpg",
-      "title": "10 2",
-      "collection": "colorado-nebraska",
-      "location": "",
-      "date": "",
-      "width": 4000,
-      "height": 2667,
-      "exif": {},
-      "variants": [
-        {
-          "w": 800,
-          "src": "images/_thumbs/800/colorado-nebraska/10-2.jpg"
-        },
-        {
-          "w": 1600,
-          "src": "images/_thumbs/1600/colorado-nebraska/10-2.jpg"
-        },
-        {
-          "w": 2400,
-          "src": "images/_thumbs/2400/colorado-nebraska/10-2.jpg"
-        },
-        {
-          "w": 4000,
-          "src": "images/colorado-nebraska/10-2.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/colorado-nebraska/10-2.jpg"
     },
     {
       "src": "images/colorado-nebraska/8-1.jpg",
@@ -5815,91 +5757,33 @@
       "thumb": "images/_thumbs/1600/colorado-nebraska/9-4.jpg"
     },
     {
-      "src": "images/colorado-nebraska/8-2.jpg",
-      "title": "8 2",
+      "src": "images/colorado-nebraska/6.jpg",
+      "title": "6",
       "collection": "colorado-nebraska",
       "location": "",
       "date": "",
       "width": 4000,
-      "height": 2666,
+      "height": 2668,
       "exif": {},
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/colorado-nebraska/8-2.jpg"
+          "src": "images/_thumbs/800/colorado-nebraska/6.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/colorado-nebraska/8-2.jpg"
+          "src": "images/_thumbs/1600/colorado-nebraska/6.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/colorado-nebraska/8-2.jpg"
+          "src": "images/_thumbs/2400/colorado-nebraska/6.jpg"
         },
         {
           "w": 4000,
-          "src": "images/colorado-nebraska/8-2.jpg"
+          "src": "images/colorado-nebraska/6.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/colorado-nebraska/8-2.jpg"
-    },
-    {
-      "src": "images/colorado-nebraska/CO-NE-24.jpg",
-      "title": "CO-NE-24",
-      "collection": "colorado-nebraska",
-      "location": "",
-      "date": "",
-      "width": 2668,
-      "height": 4000,
-      "exif": {},
-      "variants": [
-        {
-          "w": 533,
-          "src": "images/_thumbs/800/colorado-nebraska/CO-NE-24.jpg"
-        },
-        {
-          "w": 1067,
-          "src": "images/_thumbs/1600/colorado-nebraska/CO-NE-24.jpg"
-        },
-        {
-          "w": 1601,
-          "src": "images/_thumbs/2400/colorado-nebraska/CO-NE-24.jpg"
-        },
-        {
-          "w": 2668,
-          "src": "images/colorado-nebraska/CO-NE-24.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/colorado-nebraska/CO-NE-24.jpg"
-    },
-    {
-      "src": "images/colorado-nebraska/12-1.jpg",
-      "title": "12 1",
-      "collection": "colorado-nebraska",
-      "location": "",
-      "date": "",
-      "width": 3363,
-      "height": 2242,
-      "exif": {},
-      "variants": [
-        {
-          "w": 800,
-          "src": "images/_thumbs/800/colorado-nebraska/12-1.jpg"
-        },
-        {
-          "w": 1600,
-          "src": "images/_thumbs/1600/colorado-nebraska/12-1.jpg"
-        },
-        {
-          "w": 2400,
-          "src": "images/_thumbs/2400/colorado-nebraska/12-1.jpg"
-        },
-        {
-          "w": 3363,
-          "src": "images/colorado-nebraska/12-1.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/colorado-nebraska/12-1.jpg"
+      "thumb": "images/_thumbs/1600/colorado-nebraska/6.jpg"
     },
     {
       "src": "images/colorado-nebraska/11-1.jpg",
@@ -5960,6 +5844,35 @@
       "thumb": "images/_thumbs/1600/colorado-nebraska/13.jpg"
     },
     {
+      "src": "images/colorado-nebraska/12-1.jpg",
+      "title": "12 1",
+      "collection": "colorado-nebraska",
+      "location": "",
+      "date": "",
+      "width": 3363,
+      "height": 2242,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/colorado-nebraska/12-1.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/colorado-nebraska/12-1.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/colorado-nebraska/12-1.jpg"
+        },
+        {
+          "w": 3363,
+          "src": "images/colorado-nebraska/12-1.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/colorado-nebraska/12-1.jpg"
+    },
+    {
       "src": "images/colorado-nebraska/2-2.jpg",
       "title": "2 2",
       "collection": "colorado-nebraska",
@@ -6016,6 +5929,93 @@
         }
       ],
       "thumb": "images/_thumbs/1600/colorado-nebraska/14-1.jpg"
+    },
+    {
+      "src": "images/colorado-nebraska/CO-NE-17.jpg",
+      "title": "CO-NE-17",
+      "collection": "colorado-nebraska",
+      "location": "",
+      "date": "",
+      "width": 2668,
+      "height": 4000,
+      "exif": {},
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/colorado-nebraska/CO-NE-17.jpg"
+        },
+        {
+          "w": 1067,
+          "src": "images/_thumbs/1600/colorado-nebraska/CO-NE-17.jpg"
+        },
+        {
+          "w": 1601,
+          "src": "images/_thumbs/2400/colorado-nebraska/CO-NE-17.jpg"
+        },
+        {
+          "w": 2668,
+          "src": "images/colorado-nebraska/CO-NE-17.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/colorado-nebraska/CO-NE-17.jpg"
+    },
+    {
+      "src": "images/colorado-nebraska/CO-NE-24.jpg",
+      "title": "CO-NE-24",
+      "collection": "colorado-nebraska",
+      "location": "",
+      "date": "",
+      "width": 2668,
+      "height": 4000,
+      "exif": {},
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/colorado-nebraska/CO-NE-24.jpg"
+        },
+        {
+          "w": 1067,
+          "src": "images/_thumbs/1600/colorado-nebraska/CO-NE-24.jpg"
+        },
+        {
+          "w": 1601,
+          "src": "images/_thumbs/2400/colorado-nebraska/CO-NE-24.jpg"
+        },
+        {
+          "w": 2668,
+          "src": "images/colorado-nebraska/CO-NE-24.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/colorado-nebraska/CO-NE-24.jpg"
+    },
+    {
+      "src": "images/colorado-nebraska/4-2.jpg",
+      "title": "4 2",
+      "collection": "colorado-nebraska",
+      "location": "",
+      "date": "",
+      "width": 4000,
+      "height": 2668,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/colorado-nebraska/4-2.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/colorado-nebraska/4-2.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/colorado-nebraska/4-2.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/colorado-nebraska/4-2.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/colorado-nebraska/4-2.jpg"
     },
     {
       "src": "images/colorado-nebraska/15.jpg",
@@ -6105,62 +6105,33 @@
       "thumb": "images/_thumbs/1600/colorado-nebraska/3-2.jpg"
     },
     {
-      "src": "images/colorado-nebraska/4-2.jpg",
-      "title": "4 2",
+      "src": "images/colorado-nebraska/5.jpg",
+      "title": "5",
       "collection": "colorado-nebraska",
       "location": "",
       "date": "",
       "width": 4000,
-      "height": 2668,
+      "height": 2667,
       "exif": {},
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/colorado-nebraska/4-2.jpg"
+          "src": "images/_thumbs/800/colorado-nebraska/5.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/colorado-nebraska/4-2.jpg"
+          "src": "images/_thumbs/1600/colorado-nebraska/5.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/colorado-nebraska/4-2.jpg"
+          "src": "images/_thumbs/2400/colorado-nebraska/5.jpg"
         },
         {
           "w": 4000,
-          "src": "images/colorado-nebraska/4-2.jpg"
+          "src": "images/colorado-nebraska/5.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/colorado-nebraska/4-2.jpg"
-    },
-    {
-      "src": "images/colorado-nebraska/CO-NE-17.jpg",
-      "title": "CO-NE-17",
-      "collection": "colorado-nebraska",
-      "location": "",
-      "date": "",
-      "width": 2668,
-      "height": 4000,
-      "exif": {},
-      "variants": [
-        {
-          "w": 533,
-          "src": "images/_thumbs/800/colorado-nebraska/CO-NE-17.jpg"
-        },
-        {
-          "w": 1067,
-          "src": "images/_thumbs/1600/colorado-nebraska/CO-NE-17.jpg"
-        },
-        {
-          "w": 1601,
-          "src": "images/_thumbs/2400/colorado-nebraska/CO-NE-17.jpg"
-        },
-        {
-          "w": 2668,
-          "src": "images/colorado-nebraska/CO-NE-17.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/colorado-nebraska/CO-NE-17.jpg"
+      "thumb": "images/_thumbs/1600/colorado-nebraska/5.jpg"
     },
     {
       "src": "images/colorado-nebraska/3-3.jpg",
@@ -6190,35 +6161,6 @@
         }
       ],
       "thumb": "images/_thumbs/1600/colorado-nebraska/3-3.jpg"
-    },
-    {
-      "src": "images/colorado-nebraska/5.jpg",
-      "title": "5",
-      "collection": "colorado-nebraska",
-      "location": "",
-      "date": "",
-      "width": 4000,
-      "height": 2667,
-      "exif": {},
-      "variants": [
-        {
-          "w": 800,
-          "src": "images/_thumbs/800/colorado-nebraska/5.jpg"
-        },
-        {
-          "w": 1600,
-          "src": "images/_thumbs/1600/colorado-nebraska/5.jpg"
-        },
-        {
-          "w": 2400,
-          "src": "images/_thumbs/2400/colorado-nebraska/5.jpg"
-        },
-        {
-          "w": 4000,
-          "src": "images/colorado-nebraska/5.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/colorado-nebraska/5.jpg"
     },
     {
       "src": "images/colorado-nebraska/1.jpg",
