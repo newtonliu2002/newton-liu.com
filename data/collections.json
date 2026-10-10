@@ -88,12 +88,6 @@
       "blurb": ""
     },
     {
-      "slug": "hawaii",
-      "title": "Hawai'i",
-      "subtitle": "",
-      "blurb": ""
-    },
-    {
       "slug": "alaska",
       "title": "Alaska",
       "subtitle": "",
@@ -224,6 +218,25 @@
         "W",
         "LLe",
         "LP"
+      ]
+    },
+    {
+      "slug": "hawaii",
+      "title": "Hawai'i",
+      "subtitle": "",
+      "blurb": "",
+      "date": "February – March 2023, July 2023",
+      "layout": [
+        "L",
+        "PLL",
+        "SS",
+        "L",
+        "PP",
+        "SS",
+        "L",
+        "LP",
+        "L",
+        "PLL"
       ]
     },
     {
