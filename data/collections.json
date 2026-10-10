@@ -74,12 +74,6 @@
       "blurb": ""
     },
     {
-      "slug": "yellowstone",
-      "title": "Yellowstone",
-      "subtitle": "",
-      "blurb": ""
-    },
-    {
       "slug": "alaska",
       "title": "Alaska",
       "subtitle": "",
@@ -106,6 +100,50 @@
         "W",
         "LLP",
         "PL",
+        "PP"
+      ]
+    },
+    {
+      "slug": "desert-west",
+      "title": "The Desert West",
+      "date": "January 2024, December 2025",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "LLLr",
+        "PLL",
+        "LLe",
+        "LLe"
+      ]
+    },
+    {
+      "slug": "snowy-west",
+      "title": "The Snowy West",
+      "date": "December 2023 – January 2024, December 2025",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "LLL",
+        "PLL",
+        "W",
+        "LLe",
+        "PP",
+        "LLLr",
+        "W",
+        "L"
+      ]
+    },
+    {
+      "slug": "yellowstone",
+      "title": "Yellowstone & North Dakota",
+      "date": "January 2024, December 2025",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "W",
+        "LLe",
+        "PL",
+        "LLLr",
         "PP"
       ]
     },
