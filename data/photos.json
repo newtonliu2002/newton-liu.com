@@ -6418,6 +6418,43 @@
       "thumb": "images/_thumbs/1600/snowy-west/DJI-20251223171450-0023-D.jpg"
     },
     {
+      "src": "images/yellowstone/05A2016.jpg",
+      "title": "05A2016",
+      "collection": "yellowstone",
+      "location": "",
+      "date": "2024-01-06",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "254mm",
+        "aperture": "f/6.3",
+        "shutter": "1/800s",
+        "iso": "800"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/yellowstone/05A2016.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/yellowstone/05A2016.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/yellowstone/05A2016.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/yellowstone/05A2016.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/yellowstone/05A2016.jpg",
+      "focus": "center bottom"
+    },
+    {
       "src": "images/yellowstone/U2A7753.jpg",
       "title": "U2A7753",
       "collection": "yellowstone",
@@ -6596,42 +6633,6 @@
         }
       ],
       "thumb": "images/_thumbs/1600/yellowstone/0Z9A0522.jpg"
-    },
-    {
-      "src": "images/yellowstone/B0000090.jpg",
-      "title": "B0000090",
-      "collection": "yellowstone",
-      "location": "",
-      "date": "2025-12-15",
-      "width": 4000,
-      "height": 3000,
-      "exif": {
-        "camera": "Hasselblad X2D II 100C",
-        "lens": "XCD 35-100E@100",
-        "focal": "100mm",
-        "aperture": "f/4",
-        "shutter": "1/45s",
-        "iso": "200"
-      },
-      "variants": [
-        {
-          "w": 800,
-          "src": "images/_thumbs/800/yellowstone/B0000090.jpg"
-        },
-        {
-          "w": 1600,
-          "src": "images/_thumbs/1600/yellowstone/B0000090.jpg"
-        },
-        {
-          "w": 2400,
-          "src": "images/_thumbs/2400/yellowstone/B0000090.jpg"
-        },
-        {
-          "w": 4000,
-          "src": "images/yellowstone/B0000090.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/yellowstone/B0000090.jpg"
     },
     {
       "src": "images/desert-west/05A3651.jpg",
@@ -6848,76 +6849,40 @@
       "thumb": "images/_thumbs/1600/snowy-west/05A9934.jpg"
     },
     {
-      "src": "images/yellowstone/U2A6934.jpg",
-      "title": "U2A6934",
+      "src": "images/yellowstone/B0000090.jpg",
+      "title": "B0000090",
       "collection": "yellowstone",
       "location": "",
-      "date": "2025-12-17",
+      "date": "2025-12-15",
       "width": 4000,
-      "height": 2667,
+      "height": 3000,
       "exif": {
-        "camera": "Canon EOS R5m2",
-        "lens": "RF100-500mm F4.5-7.1 L IS USM",
-        "focal": "500mm",
-        "aperture": "f/7.1",
-        "shutter": "1/640s",
-        "iso": "1600"
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 35-100E@100",
+        "focal": "100mm",
+        "aperture": "f/4",
+        "shutter": "1/45s",
+        "iso": "200"
       },
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/yellowstone/U2A6934.jpg"
+          "src": "images/_thumbs/800/yellowstone/B0000090.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/yellowstone/U2A6934.jpg"
+          "src": "images/_thumbs/1600/yellowstone/B0000090.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/yellowstone/U2A6934.jpg"
+          "src": "images/_thumbs/2400/yellowstone/B0000090.jpg"
         },
         {
           "w": 4000,
-          "src": "images/yellowstone/U2A6934.jpg"
+          "src": "images/yellowstone/B0000090.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/yellowstone/U2A6934.jpg"
-    },
-    {
-      "src": "images/yellowstone/05A2016.jpg",
-      "title": "05A2016",
-      "collection": "yellowstone",
-      "location": "",
-      "date": "2024-01-06",
-      "width": 4000,
-      "height": 2668,
-      "exif": {
-        "camera": "Canon EOS R5",
-        "lens": "RF100-500mm F4.5-7.1 L IS USM",
-        "focal": "254mm",
-        "aperture": "f/6.3",
-        "shutter": "1/800s",
-        "iso": "800"
-      },
-      "variants": [
-        {
-          "w": 800,
-          "src": "images/_thumbs/800/yellowstone/05A2016.jpg"
-        },
-        {
-          "w": 1600,
-          "src": "images/_thumbs/1600/yellowstone/05A2016.jpg"
-        },
-        {
-          "w": 2400,
-          "src": "images/_thumbs/2400/yellowstone/05A2016.jpg"
-        },
-        {
-          "w": 4000,
-          "src": "images/yellowstone/05A2016.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/yellowstone/05A2016.jpg"
+      "thumb": "images/_thumbs/1600/yellowstone/B0000090.jpg"
     },
     {
       "src": "images/yellowstone/05A2197.jpg",
@@ -6954,6 +6919,42 @@
         }
       ],
       "thumb": "images/_thumbs/1600/yellowstone/05A2197.jpg"
+    },
+    {
+      "src": "images/yellowstone/U2A6934.jpg",
+      "title": "U2A6934",
+      "collection": "yellowstone",
+      "location": "",
+      "date": "2025-12-17",
+      "width": 4000,
+      "height": 2667,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/640s",
+        "iso": "1600"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/yellowstone/U2A6934.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/yellowstone/U2A6934.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/yellowstone/U2A6934.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/yellowstone/U2A6934.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/yellowstone/U2A6934.jpg"
     },
     {
       "src": "images/yellowstone/U2A7585.jpg",
