@@ -6527,42 +6527,6 @@
       "thumb": "images/_thumbs/1600/yellowstone/05A1862.jpg"
     },
     {
-      "src": "images/yellowstone/05A1837.jpg",
-      "title": "05A1837",
-      "collection": "yellowstone",
-      "location": "",
-      "date": "2024-01-06",
-      "width": 4000,
-      "height": 2668,
-      "exif": {
-        "camera": "Canon EOS R5",
-        "lens": "RF100-500mm F4.5-7.1 L IS USM",
-        "focal": "500mm",
-        "aperture": "f/7.1",
-        "shutter": "1/800s",
-        "iso": "1250"
-      },
-      "variants": [
-        {
-          "w": 800,
-          "src": "images/_thumbs/800/yellowstone/05A1837.jpg"
-        },
-        {
-          "w": 1600,
-          "src": "images/_thumbs/1600/yellowstone/05A1837.jpg"
-        },
-        {
-          "w": 2400,
-          "src": "images/_thumbs/2400/yellowstone/05A1837.jpg"
-        },
-        {
-          "w": 4000,
-          "src": "images/yellowstone/05A1837.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/yellowstone/05A1837.jpg"
-    },
-    {
       "src": "images/yellowstone/05A1955.jpg",
       "title": "05A1955",
       "collection": "yellowstone",
@@ -6597,6 +6561,42 @@
         }
       ],
       "thumb": "images/_thumbs/1600/yellowstone/05A1955.jpg"
+    },
+    {
+      "src": "images/yellowstone/05A2197.jpg",
+      "title": "05A2197",
+      "collection": "yellowstone",
+      "location": "",
+      "date": "2024-01-07",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "428mm",
+        "aperture": "f/6.3",
+        "shutter": "1/800s",
+        "iso": "125"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/yellowstone/05A2197.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/yellowstone/05A2197.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/yellowstone/05A2197.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/yellowstone/05A2197.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/yellowstone/05A2197.jpg"
     },
     {
       "src": "images/yellowstone/0Z9A0522.jpg",
@@ -6885,40 +6885,40 @@
       "thumb": "images/_thumbs/1600/yellowstone/B0000090.jpg"
     },
     {
-      "src": "images/yellowstone/05A2197.jpg",
-      "title": "05A2197",
+      "src": "images/yellowstone/05A1837.jpg",
+      "title": "05A1837",
       "collection": "yellowstone",
       "location": "",
-      "date": "2024-01-07",
+      "date": "2024-01-06",
       "width": 4000,
       "height": 2668,
       "exif": {
         "camera": "Canon EOS R5",
         "lens": "RF100-500mm F4.5-7.1 L IS USM",
-        "focal": "428mm",
-        "aperture": "f/6.3",
+        "focal": "500mm",
+        "aperture": "f/7.1",
         "shutter": "1/800s",
-        "iso": "125"
+        "iso": "1250"
       },
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/yellowstone/05A2197.jpg"
+          "src": "images/_thumbs/800/yellowstone/05A1837.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/yellowstone/05A2197.jpg"
+          "src": "images/_thumbs/1600/yellowstone/05A1837.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/yellowstone/05A2197.jpg"
+          "src": "images/_thumbs/2400/yellowstone/05A1837.jpg"
         },
         {
           "w": 4000,
-          "src": "images/yellowstone/05A2197.jpg"
+          "src": "images/yellowstone/05A1837.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/yellowstone/05A2197.jpg"
+      "thumb": "images/_thumbs/1600/yellowstone/05A1837.jpg"
     },
     {
       "src": "images/yellowstone/U2A6934.jpg",
@@ -6991,42 +6991,6 @@
         }
       ],
       "thumb": "images/_thumbs/1600/yellowstone/U2A7585.jpg"
-    },
-    {
-      "src": "images/yellowstone/U2A8046.jpg",
-      "title": "U2A8046",
-      "collection": "yellowstone",
-      "location": "",
-      "date": "2025-12-18",
-      "width": 3200,
-      "height": 4000,
-      "exif": {
-        "camera": "Canon EOS R5m2",
-        "lens": "RF100-500mm F4.5-7.1 L IS USM",
-        "focal": "400mm",
-        "aperture": "f/6.3",
-        "shutter": "1/125s",
-        "iso": "250"
-      },
-      "variants": [
-        {
-          "w": 640,
-          "src": "images/_thumbs/800/yellowstone/U2A8046.jpg"
-        },
-        {
-          "w": 1280,
-          "src": "images/_thumbs/1600/yellowstone/U2A8046.jpg"
-        },
-        {
-          "w": 1920,
-          "src": "images/_thumbs/2400/yellowstone/U2A8046.jpg"
-        },
-        {
-          "w": 3200,
-          "src": "images/yellowstone/U2A8046.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/yellowstone/U2A8046.jpg"
     },
     {
       "src": "images/snowy-west/05A0319.jpg",
