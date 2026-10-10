@@ -8107,8 +8107,8 @@
       "thumb": "images/_thumbs/1600/hawaii/1.jpg"
     },
     {
-      "src": "images/hawaii/3.jpg",
-      "title": "3",
+      "src": "images/hawaii/15.jpg",
+      "title": "15",
       "collection": "hawaii",
       "location": "",
       "date": "",
@@ -8118,22 +8118,22 @@
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/hawaii/3.jpg"
+          "src": "images/_thumbs/800/hawaii/15.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/hawaii/3.jpg"
+          "src": "images/_thumbs/1600/hawaii/15.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/hawaii/3.jpg"
+          "src": "images/_thumbs/2400/hawaii/15.jpg"
         },
         {
           "w": 4000,
-          "src": "images/hawaii/3.jpg"
+          "src": "images/hawaii/15.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/hawaii/3.jpg"
+      "thumb": "images/_thumbs/1600/hawaii/15.jpg"
     },
     {
       "src": "images/hawaii/2-2.jpg",
@@ -8282,8 +8282,8 @@
       "focus": "80% center"
     },
     {
-      "src": "images/hawaii/15.jpg",
-      "title": "15",
+      "src": "images/hawaii/3.jpg",
+      "title": "3",
       "collection": "hawaii",
       "location": "",
       "date": "",
@@ -8293,22 +8293,22 @@
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/hawaii/15.jpg"
+          "src": "images/_thumbs/800/hawaii/3.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/hawaii/15.jpg"
+          "src": "images/_thumbs/1600/hawaii/3.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/hawaii/15.jpg"
+          "src": "images/_thumbs/2400/hawaii/3.jpg"
         },
         {
           "w": 4000,
-          "src": "images/hawaii/15.jpg"
+          "src": "images/hawaii/3.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/hawaii/15.jpg"
+      "thumb": "images/_thumbs/1600/hawaii/3.jpg"
     },
     {
       "src": "images/hawaii/11-1.jpg",
