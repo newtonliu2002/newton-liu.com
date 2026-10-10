@@ -126,13 +126,15 @@
       "subtitle": "",
       "blurb": "",
       "layout": [
+        "L",
         "LLL",
         "PLL",
         "W",
-        "LLe",
+        "L",
         "PP",
-        "LLLr",
+        "LLe",
         "W",
+        "L",
         "L"
       ]
     },
