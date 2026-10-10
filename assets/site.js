@@ -96,8 +96,10 @@
   // A tile's width as a share of the packed grid — which is the whole page
   // below 1000px and the 62% right-hand column above it (.book-body in the
   // CSS), capped once --wrap-wide stops growing at 108rem.
-  function tileSizes(share) {
-    return "(max-width: 1000px) " + Math.round(share * 100) + "vw, " +
+  // `phone` is the share below 620px, for a row that folds there (PLLL).
+  function tileSizes(share, phone) {
+    return (phone ? "(max-width: 620px) " + Math.round(phone * 100) + "vw, " : "") +
+           "(max-width: 1000px) " + Math.round(share * 100) + "vw, " +
            "(min-width: 1800px) " + Math.round(share * 1042) + "px, " +
            Math.round(share * 62) + "vw";
   }
@@ -344,6 +346,15 @@
     PLL:  { need: "PLL", cols: [{ w: 52, ar: 0.74, take: 1 }, { w: 48, take: 2 }] },
     LLP:  { need: "LLP", cols: [{ w: 48, take: 2 }, { w: 52, ar: 0.74, take: 1 }] },
 
+    // A collection's one great upright, as big as the grid allows: 64% wide
+    // and uncropped, with three landscapes stacked beside it at about 3:2. A
+    // 4:5 frame comes out around 825px tall on a laptop, just under the bar,
+    // so it is seen whole. On a phone 64% would be a thumbnail, so the row
+    // folds (`.is-feature` in site.css): the upright full width, the three
+    // below it. Only ever used by a plan — picking the jewel is editorial.
+    PLLL: { need: "PLLL", cls: "is-feature", cols: [
+            { w: 64, nat: true, take: 1, ph: 1 }, { w: 36, take: 3, ph: 1 }] },
+
     // Square-cropping discards the most of a photograph, so these are the last
     // arrangements tried rather than the first. "*" means either orientation.
     SS:   { need: "**",  cols: [{ w: 50, ar: 1, take: 1 }, { w: 50, take: 1 }] },
@@ -560,7 +571,7 @@
         for (var n = 0; n < spec.take; n++) {
           var item = rest[cursor++];
           var tile = makeTile(item.photo, item.at, photos.length,
-                              tileSizes(spec.w / 100));
+                              tileSizes(spec.w / 100, spec.ph));
           if (spec.nat) {
             tile.classList.add("is-natural");
             tile.style.setProperty("--cell-ar", aspectOf(item.photo).toFixed(4));

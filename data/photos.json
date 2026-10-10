@@ -6169,76 +6169,6 @@
       "thumb": "images/_thumbs/1600/desert-west/DJI-20251228074312-0042-D.jpg"
     },
     {
-      "src": "images/desert-west/DJI-20251228074816-0049-D.jpg",
-      "title": "DJI-20251228074816-0049-D",
-      "collection": "desert-west",
-      "location": "",
-      "date": "2025-12-28",
-      "width": 4000,
-      "height": 2247,
-      "exif": {
-        "camera": "Hasselblad L2D-20c",
-        "focal": "12mm",
-        "aperture": "f/3.5",
-        "shutter": "1/200s",
-        "iso": "100"
-      },
-      "variants": [
-        {
-          "w": 800,
-          "src": "images/_thumbs/800/desert-west/DJI-20251228074816-0049-D.jpg"
-        },
-        {
-          "w": 1600,
-          "src": "images/_thumbs/1600/desert-west/DJI-20251228074816-0049-D.jpg"
-        },
-        {
-          "w": 2400,
-          "src": "images/_thumbs/2400/desert-west/DJI-20251228074816-0049-D.jpg"
-        },
-        {
-          "w": 4000,
-          "src": "images/desert-west/DJI-20251228074816-0049-D.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/desert-west/DJI-20251228074816-0049-D.jpg"
-    },
-    {
-      "src": "images/desert-west/DJI-20251224080854-0037-D.jpg",
-      "title": "DJI-20251224080854-0037-D",
-      "collection": "desert-west",
-      "location": "",
-      "date": "2025-12-24",
-      "width": 4000,
-      "height": 2247,
-      "exif": {
-        "camera": "Hasselblad L2D-20c",
-        "focal": "12mm",
-        "aperture": "f/2.8",
-        "shutter": "1/30s",
-        "iso": "200"
-      },
-      "variants": [
-        {
-          "w": 800,
-          "src": "images/_thumbs/800/desert-west/DJI-20251224080854-0037-D.jpg"
-        },
-        {
-          "w": 1600,
-          "src": "images/_thumbs/1600/desert-west/DJI-20251224080854-0037-D.jpg"
-        },
-        {
-          "w": 2400,
-          "src": "images/_thumbs/2400/desert-west/DJI-20251224080854-0037-D.jpg"
-        },
-        {
-          "w": 4000,
-          "src": "images/desert-west/DJI-20251224080854-0037-D.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/desert-west/DJI-20251224080854-0037-D.jpg"
-    },
-    {
       "src": "images/desert-west/DJI-20251228080241-0076-D.jpg",
       "title": "DJI-20251228080241-0076-D",
       "collection": "desert-west",
@@ -6310,42 +6240,6 @@
       "thumb": "images/_thumbs/1600/desert-west/B0000538.jpg"
     },
     {
-      "src": "images/desert-west/B0000870.jpg",
-      "title": "B0000870",
-      "collection": "desert-west",
-      "location": "",
-      "date": "2025-12-28",
-      "width": 4000,
-      "height": 3000,
-      "exif": {
-        "camera": "Hasselblad X2D II 100C",
-        "lens": "XCD 35-100E@35",
-        "focal": "35mm",
-        "aperture": "f/3.4",
-        "shutter": "3s",
-        "iso": "400"
-      },
-      "variants": [
-        {
-          "w": 800,
-          "src": "images/_thumbs/800/desert-west/B0000870.jpg"
-        },
-        {
-          "w": 1600,
-          "src": "images/_thumbs/1600/desert-west/B0000870.jpg"
-        },
-        {
-          "w": 2400,
-          "src": "images/_thumbs/2400/desert-west/B0000870.jpg"
-        },
-        {
-          "w": 4000,
-          "src": "images/desert-west/B0000870.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/desert-west/B0000870.jpg"
-    },
-    {
       "src": "images/desert-west/05A3643.jpg",
       "title": "05A3643",
       "collection": "desert-west",
@@ -6380,6 +6274,113 @@
         }
       ],
       "thumb": "images/_thumbs/1600/desert-west/05A3643.jpg"
+    },
+    {
+      "src": "images/desert-west/05A2448.jpg",
+      "title": "05A2448",
+      "collection": "desert-west",
+      "location": "",
+      "date": "2024-01-13",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/1000s",
+        "iso": "1000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/desert-west/05A2448.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/desert-west/05A2448.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/desert-west/05A2448.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/desert-west/05A2448.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/desert-west/05A2448.jpg"
+    },
+    {
+      "src": "images/desert-west/05A3685.jpg",
+      "title": "05A3685",
+      "collection": "desert-west",
+      "location": "",
+      "date": "2024-01-14",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/400s",
+        "iso": "2000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/desert-west/05A3685.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/desert-west/05A3685.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/desert-west/05A3685.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/desert-west/05A3685.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/desert-west/05A3685.jpg"
+    },
+    {
+      "src": "images/desert-west/DJI-20251224080854-0037-D.jpg",
+      "title": "DJI-20251224080854-0037-D",
+      "collection": "desert-west",
+      "location": "",
+      "date": "2025-12-24",
+      "width": 4000,
+      "height": 2247,
+      "exif": {
+        "camera": "Hasselblad L2D-20c",
+        "focal": "12mm",
+        "aperture": "f/2.8",
+        "shutter": "1/30s",
+        "iso": "200"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/desert-west/DJI-20251224080854-0037-D.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/desert-west/DJI-20251224080854-0037-D.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/desert-west/DJI-20251224080854-0037-D.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/desert-west/DJI-20251224080854-0037-D.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/desert-west/DJI-20251224080854-0037-D.jpg"
     },
     {
       "src": "images/snowy-west/DJI-20251223171450-0023-D.jpg",
@@ -6633,75 +6634,40 @@
       "thumb": "images/_thumbs/1600/yellowstone/B0000090.jpg"
     },
     {
-      "src": "images/desert-west/05A2448.jpg",
-      "title": "05A2448",
-      "collection": "desert-west",
-      "location": "",
-      "date": "2024-01-13",
-      "width": 4000,
-      "height": 2668,
-      "exif": {
-        "camera": "Canon EOS R5",
-        "lens": "RF100-500mm F4.5-7.1 L IS USM",
-        "focal": "500mm",
-        "aperture": "f/7.1",
-        "shutter": "1/1000s",
-        "iso": "1000"
-      },
-      "variants": [
-        {
-          "w": 800,
-          "src": "images/_thumbs/800/desert-west/05A2448.jpg"
-        },
-        {
-          "w": 1600,
-          "src": "images/_thumbs/1600/desert-west/05A2448.jpg"
-        },
-        {
-          "w": 2400,
-          "src": "images/_thumbs/2400/desert-west/05A2448.jpg"
-        },
-        {
-          "w": 4000,
-          "src": "images/desert-west/05A2448.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/desert-west/05A2448.jpg"
-    },
-    {
-      "src": "images/desert-west/DJI-20251228075954-0067-D.jpg",
-      "title": "DJI-20251228075954-0067-D",
+      "src": "images/desert-west/B0000870.jpg",
+      "title": "B0000870",
       "collection": "desert-west",
       "location": "",
       "date": "2025-12-28",
       "width": 4000,
-      "height": 2246,
+      "height": 3000,
       "exif": {
-        "camera": "DJI FC4382",
-        "focal": "19mm",
-        "aperture": "f/2.8",
-        "shutter": "1/500s",
-        "iso": "100"
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 35-100E@35",
+        "focal": "35mm",
+        "aperture": "f/3.4",
+        "shutter": "3s",
+        "iso": "400"
       },
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/desert-west/DJI-20251228075954-0067-D.jpg"
+          "src": "images/_thumbs/800/desert-west/B0000870.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/desert-west/DJI-20251228075954-0067-D.jpg"
+          "src": "images/_thumbs/1600/desert-west/B0000870.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/desert-west/DJI-20251228075954-0067-D.jpg"
+          "src": "images/_thumbs/2400/desert-west/B0000870.jpg"
         },
         {
           "w": 4000,
-          "src": "images/desert-west/DJI-20251228075954-0067-D.jpg"
+          "src": "images/desert-west/B0000870.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/desert-west/DJI-20251228075954-0067-D.jpg"
+      "thumb": "images/_thumbs/1600/desert-west/B0000870.jpg"
     },
     {
       "src": "images/desert-west/05A3651.jpg",
@@ -6740,6 +6706,41 @@
       "thumb": "images/_thumbs/1600/desert-west/05A3651.jpg"
     },
     {
+      "src": "images/desert-west/DJI-20251228074816-0049-D.jpg",
+      "title": "DJI-20251228074816-0049-D",
+      "collection": "desert-west",
+      "location": "",
+      "date": "2025-12-28",
+      "width": 4000,
+      "height": 2247,
+      "exif": {
+        "camera": "Hasselblad L2D-20c",
+        "focal": "12mm",
+        "aperture": "f/3.5",
+        "shutter": "1/200s",
+        "iso": "100"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/desert-west/DJI-20251228074816-0049-D.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/desert-west/DJI-20251228074816-0049-D.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/desert-west/DJI-20251228074816-0049-D.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/desert-west/DJI-20251228074816-0049-D.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/desert-west/DJI-20251228074816-0049-D.jpg"
+    },
+    {
       "src": "images/snowy-west/05A0120.jpg",
       "title": "05A0120",
       "collection": "snowy-west",
@@ -6776,40 +6777,39 @@
       "thumb": "images/_thumbs/1600/snowy-west/05A0120.jpg"
     },
     {
-      "src": "images/desert-west/05A3685.jpg",
-      "title": "05A3685",
+      "src": "images/desert-west/DJI-20251228075954-0067-D.jpg",
+      "title": "DJI-20251228075954-0067-D",
       "collection": "desert-west",
       "location": "",
-      "date": "2024-01-14",
+      "date": "2025-12-28",
       "width": 4000,
-      "height": 2668,
+      "height": 2246,
       "exif": {
-        "camera": "Canon EOS R5",
-        "lens": "RF100-500mm F4.5-7.1 L IS USM",
-        "focal": "500mm",
-        "aperture": "f/7.1",
-        "shutter": "1/400s",
-        "iso": "2000"
+        "camera": "DJI FC4382",
+        "focal": "19mm",
+        "aperture": "f/2.8",
+        "shutter": "1/500s",
+        "iso": "100"
       },
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/desert-west/05A3685.jpg"
+          "src": "images/_thumbs/800/desert-west/DJI-20251228075954-0067-D.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/desert-west/05A3685.jpg"
+          "src": "images/_thumbs/1600/desert-west/DJI-20251228075954-0067-D.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/desert-west/05A3685.jpg"
+          "src": "images/_thumbs/2400/desert-west/DJI-20251228075954-0067-D.jpg"
         },
         {
           "w": 4000,
-          "src": "images/desert-west/05A3685.jpg"
+          "src": "images/desert-west/DJI-20251228075954-0067-D.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/desert-west/05A3685.jpg"
+      "thumb": "images/_thumbs/1600/desert-west/DJI-20251228075954-0067-D.jpg"
     },
     {
       "src": "images/snowy-west/05A9934.jpg",

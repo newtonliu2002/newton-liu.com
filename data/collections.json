@@ -110,10 +110,13 @@
       "subtitle": "",
       "blurb": "",
       "layout": [
-        "LLLr",
-        "PLL",
-        "LLe",
-        "LLe"
+        "L",
+        "PLLL",
+        "L",
+        "L",
+        "L",
+        "L",
+        "L"
       ]
     },
     {

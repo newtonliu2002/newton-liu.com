@@ -123,14 +123,19 @@ photograph `"focus"` in `photos.json`: any CSS `object-position`, such as
 
 **Every template fills the width of the grid**, whether it holds one photograph
 or three, so the right-hand edge of the page runs straight the whole way down.
+Don't add one that doesn't. A column may carry `nat` instead of `ar`, keeping
+that photograph's own ratio rather than cropping it — that is what lets a
+panorama run full width at its real 2.70 rather than being trimmed to fit.
 
 `SSSS` is the one template meant for a run of frames rather than a mix: four
 squares across, read left to right as a sequence (Colorado & Nebraska's
 sage-grouse display). The packer never picks it — put it in a plan — and on a
 phone it folds into two rows of two.
-Don't add one that doesn't. A column may carry `nat` instead of `ar`, keeping
-that photograph's own ratio rather than cropping it — that is what lets a
-panorama run full width at its real 2.70 rather than being trimmed to fit.
+
+`PLLL` is for a collection's one great upright (The Desert West's Arches
+frame): 64% wide and uncropped, three landscapes stacked beside it. That is as
+big as an upright can be and still be seen whole on a laptop. Plan only; on a
+phone it folds to the upright at full width with the three below.
 
 Rows are flush at any window width because exactly one cell per row (the
 anchor) carries an `aspect-ratio` and every other cell stretches to the height

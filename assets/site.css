@@ -710,6 +710,18 @@ body.lb-open { overflow: hidden; }
   .book-row.is-seq > .book-col { flex: 0 0 calc((100% - var(--book-gap)) / 2) !important; }
 }
 
+/* A collection's featured upright (PLLL in site.js). At 64% of a phone the
+   upright would be a thumbnail, so below the breakpoint the row folds into a
+   column: the upright full width at its own ratio, then the three landscapes,
+   each given a 3:2 box since they no longer have its height to stretch to.
+   The !important again beats the inline flex share, whose zero basis would
+   collapse each column to nothing once they stack. */
+@media (max-width: 620px) {
+  .book-row.is-feature { flex-direction: column; }
+  .book-row.is-feature > .book-col { flex: 0 0 auto !important; }
+  .book-row.is-feature .tile:not(.is-natural) { flex: 0 0 auto; aspect-ratio: 3 / 2; }
+}
+
 /* ==========================================================================
    Prose pages (About, Contact)
 
