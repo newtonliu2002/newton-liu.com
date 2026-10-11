@@ -50,7 +50,7 @@ Malaysia do, since their files carry no capture dates, and so does any page
 that spans separate trips ("January 2024, December 2025"), which the derived
 range would misreport — or to `""` to show no date at all.
 
-The order of `data/collections.json` is the order of the home page: **newest
+The order of `data/collections.json` is the order of the home page: **oldest
 trip first, by each collection's earliest date**. A new collection goes in by
 that rule. Only collections with photographs are listed — there are no
 "coming soon" placeholders.

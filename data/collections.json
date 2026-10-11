@@ -2,136 +2,41 @@
   "_comment": "Hand-edited. One entry per gallery. `slug` must match the folder name under images/ and collections/. `subtitle` shows under the title on the home card and gallery page; `blurb` is the paragraph on the gallery page. Both are optional — leave empty and nothing is shown.",
   "collections": [
     {
-      "slug": "alaska",
-      "title": "Alaska",
+      "slug": "malaysia",
+      "title": "Malaysia",
+      "date": "November 2017, March 2023",
       "subtitle": "",
       "blurb": "",
       "layout": [
-        "LLL",
-        "W",
-        "L",
-        "W",
-        "PP",
-        "W",
-        "LLe",
-        "W",
-        "L",
-        "LLe",
-        "PP",
-        "LP",
-        "PP",
-        "PL",
-        "W",
-        "WWP",
-        "W",
-        "WWP",
-        "W",
-        "LLP",
-        "PL",
-        "PP"
-      ]
-    },
-    {
-      "slug": "west",
-      "title": "The American West",
-      "subtitle": "",
-      "blurb": ""
-    },
-    {
-      "slug": "colorado-nebraska",
-      "title": "Colorado & Nebraska",
-      "date": "April 2025",
-      "subtitle": "",
-      "blurb": "",
-      "layout": [
-        "L",
-        "LLLr",
-        "L",
-        "PP",
-        "LLe",
-        "SSSS",
-        "L",
-        "LL",
-        "L",
-        "LLe"
-      ]
-    },
-    {
-      "slug": "desert-west",
-      "title": "The Desert West",
-      "date": "January 2024, December 2025",
-      "subtitle": "",
-      "blurb": "",
-      "layout": [
-        "L",
-        "PLLL",
-        "L",
-        "L",
-        "L",
-        "L",
-        "L"
-      ]
-    },
-    {
-      "slug": "yellowstone",
-      "title": "Yellowstone & North Dakota",
-      "date": "January 2024, December 2025",
-      "subtitle": "",
-      "blurb": "",
-      "layout": [
-        "L",
-        "W",
-        "LLe",
-        "PL",
-        "LLP"
-      ]
-    },
-    {
-      "slug": "snowy-west",
-      "title": "The Snowy West",
-      "date": "December 2023 – January 2024, December 2025",
-      "subtitle": "",
-      "blurb": "",
-      "layout": [
-        "L",
-        "LLL",
         "PLL",
-        "W",
         "L",
-        "PP",
+        "LLL",
+        "LP",
         "LLe",
-        "W",
+        "PP",
         "L",
+        "LLLr",
+        "LLL3",
         "L"
       ]
     },
     {
-      "slug": "west-winter",
-      "title": "Winter in the West",
-      "subtitle": "",
-      "blurb": ""
-    },
-    {
-      "slug": "florida",
-      "title": "Florida",
+      "slug": "hawaii",
+      "title": "Hawai'i",
       "subtitle": "",
       "blurb": "",
+      "date": "February – March 2023, July 2023",
       "layout": [
-        "LLL",
+        "L",
+        "PLL",
+        "SS",
+        "L",
+        "PP",
+        "SS",
+        "L",
         "LP",
-        "LLLr",
-        "LLL3",
-        "W",
-        "LL",
         "L",
-        "W",
-        "LLL3",
-        "L",
-        "LLL3",
-        "LLL",
-        "W",
-        "LLe",
-        "LP"
+        "PLL"
       ]
     },
     {
@@ -177,41 +82,136 @@
       ]
     },
     {
-      "slug": "hawaii",
-      "title": "Hawai'i",
+      "slug": "florida",
+      "title": "Florida",
       "subtitle": "",
       "blurb": "",
-      "date": "February – March 2023, July 2023",
       "layout": [
-        "L",
-        "PLL",
-        "SS",
-        "L",
-        "PP",
-        "SS",
-        "L",
+        "LLL",
         "LP",
+        "LLLr",
+        "LLL3",
+        "W",
+        "LL",
         "L",
-        "PLL"
+        "W",
+        "LLL3",
+        "L",
+        "LLL3",
+        "LLL",
+        "W",
+        "LLe",
+        "LP"
       ]
     },
     {
-      "slug": "malaysia",
-      "title": "Malaysia",
-      "date": "November 2017, March 2023",
+      "slug": "snowy-west",
+      "title": "The Snowy West",
+      "date": "December 2023 – January 2024, December 2025",
       "subtitle": "",
       "blurb": "",
       "layout": [
-        "PLL",
         "L",
         "LLL",
-        "LP",
-        "LLe",
+        "PLL",
+        "W",
+        "L",
         "PP",
+        "LLe",
+        "W",
+        "L",
+        "L"
+      ]
+    },
+    {
+      "slug": "west-winter",
+      "title": "Winter in the West",
+      "subtitle": "",
+      "blurb": ""
+    },
+    {
+      "slug": "yellowstone",
+      "title": "Yellowstone & North Dakota",
+      "date": "January 2024, December 2025",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "L",
+        "W",
+        "LLe",
+        "PL",
+        "LLP"
+      ]
+    },
+    {
+      "slug": "desert-west",
+      "title": "The Desert West",
+      "date": "January 2024, December 2025",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "L",
+        "PLLL",
+        "L",
+        "L",
+        "L",
+        "L",
+        "L"
+      ]
+    },
+    {
+      "slug": "colorado-nebraska",
+      "title": "Colorado & Nebraska",
+      "date": "April 2025",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
         "L",
         "LLLr",
-        "LLL3",
-        "L"
+        "L",
+        "PP",
+        "LLe",
+        "SSSS",
+        "L",
+        "LL",
+        "L",
+        "LLe"
+      ]
+    },
+    {
+      "slug": "west",
+      "title": "The American West",
+      "subtitle": "",
+      "blurb": ""
+    },
+    {
+      "slug": "alaska",
+      "title": "Alaska",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "LLL",
+        "W",
+        "L",
+        "W",
+        "PP",
+        "W",
+        "LLe",
+        "W",
+        "L",
+        "LLe",
+        "PP",
+        "LP",
+        "PP",
+        "PL",
+        "W",
+        "WWP",
+        "W",
+        "WWP",
+        "W",
+        "LLP",
+        "PL",
+        "PP"
       ]
     }
   ]
