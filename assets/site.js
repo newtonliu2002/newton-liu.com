@@ -355,6 +355,17 @@
     PLLL: { need: "PLLL", cls: "is-feature", cols: [
             { w: 64, nat: true, take: 1, ph: 1 }, { w: 36, take: 3, ph: 1 }] },
 
+    // Nothing cropped, for a collection shot as 4:5 uprights and 3:2
+    // landscapes (Yunnan). The landscapes anchor at their own ratio and the
+    // upright stretches beside them; the widths are solved so that stretch
+    // lands on 4:5 at laptop size, so on a phone only the upright gives a
+    // percent or two. Plan only.
+    PLLn: { need: "PLL", cols: [{ w: 52, take: 1 }, { w: 48, nat: true, take: 2 }] },
+    LLPn: { need: "LLP", cols: [{ w: 48, nat: true, take: 2 }, { w: 52, take: 1 }] },
+    LPn:  { need: "LP",  cols: [{ w: 65.2, nat: true, take: 1 }, { w: 34.8, take: 1 }] },
+    PLn:  { need: "PL",  cols: [{ w: 34.8, take: 1 }, { w: 65.2, nat: true, take: 1 }] },
+    PPn:  { need: "PP",  cols: [{ w: 50, nat: true, take: 1 }, { w: 50, take: 1 }] },
+
     // Square-cropping discards the most of a photograph, so these are the last
     // arrangements tried rather than the first. "*" means either orientation.
     SS:   { need: "**",  cols: [{ w: 50, ar: 1, take: 1 }, { w: 50, take: 1 }] },
