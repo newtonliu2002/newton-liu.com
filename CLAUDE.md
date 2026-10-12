@@ -245,9 +245,10 @@ page needs when it has no band — Contact uses it, because two pages opening on
 the same photograph looks like a mistake.
 
 The About band is **the one photograph hand-written into HTML**. It is page
-furniture, not a collection entry, so it is deliberately outside `photos.json`
-— but nothing checks that the file still exists, so if that frame is ever
-deleted from `images/west/`, change the `src` too.
+furniture, not a collection entry, so it is deliberately outside `photos.json`:
+the file and its 800/1600/2400 widths live in `images/_about/`, which the
+build skips. Nothing checks that they still exist, so if they are moved or
+renamed, change the `src` and `srcset` in `about.html` too.
 
 The older `.prose`/`.prose h1` rules are still in `site.css` but nothing uses
 them now. They're the fallback if a plain text page is ever wanted.
