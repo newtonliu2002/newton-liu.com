@@ -154,6 +154,29 @@
       ]
     },
     {
+      "slug": "arizona",
+      "title": "Arizona",
+      "date": "January 2025",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "L",
+        "PLL",
+        "L",
+        "SSSS",
+        "LLe",
+        "L",
+        "PP",
+        "L",
+        "SS",
+        "L",
+        "LP",
+        "SS",
+        "L",
+        "L"
+      ]
+    },
+    {
       "slug": "colorado-nebraska",
       "title": "Colorado & Nebraska",
       "date": "April 2025",
