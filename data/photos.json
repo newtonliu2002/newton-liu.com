@@ -7161,6 +7161,35 @@
       "thumb": "images/_thumbs/1600/hawaii/8.jpg"
     },
     {
+      "src": "images/arizona/Arizona-40.jpg",
+      "title": "Arizona-40",
+      "collection": "arizona",
+      "location": "",
+      "date": "",
+      "width": 4000,
+      "height": 2668,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/arizona/Arizona-40.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/arizona/Arizona-40.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/arizona/Arizona-40.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/arizona/Arizona-40.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/arizona/Arizona-40.jpg"
+    },
+    {
       "src": "images/arizona/Arizona-8.jpg",
       "title": "Arizona-8",
       "collection": "arizona",
@@ -7594,35 +7623,6 @@
         }
       ],
       "thumb": "images/_thumbs/1600/arizona/Arizona-41.jpg"
-    },
-    {
-      "src": "images/arizona/Arizona-40.jpg",
-      "title": "Arizona-40",
-      "collection": "arizona",
-      "location": "",
-      "date": "",
-      "width": 4000,
-      "height": 2668,
-      "exif": {},
-      "variants": [
-        {
-          "w": 800,
-          "src": "images/_thumbs/800/arizona/Arizona-40.jpg"
-        },
-        {
-          "w": 1600,
-          "src": "images/_thumbs/1600/arizona/Arizona-40.jpg"
-        },
-        {
-          "w": 2400,
-          "src": "images/_thumbs/2400/arizona/Arizona-40.jpg"
-        },
-        {
-          "w": 4000,
-          "src": "images/arizona/Arizona-40.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/arizona/Arizona-40.jpg"
     },
     {
       "src": "images/arizona/Arizona-31.jpg",
