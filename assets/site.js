@@ -190,6 +190,39 @@
     n.textContent = String(new Date().getFullYear());
   });
 
+  /* ---------- white / gray ground -------------------------------------- */
+
+  // The <head> of every page applies a saved "dark" before the first paint;
+  // this adds the switch to the nav and remembers the visitor's choice.
+  // White is the default. Storage can be blocked (private windows), so every
+  // read and write is guarded and the switch still works for the visit.
+  (function themeToggle() {
+    var nav = document.querySelector(".nav");
+    if (!nav) return;
+    var root = document.documentElement;
+    var meta = document.querySelector('meta[name="theme-color"]');
+    var btn = el("button", "theme-toggle");
+    btn.type = "button";
+    btn.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true">' +
+      '<circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+      '<path d="M8 1.5a6.5 6.5 0 0 0 0 13z" fill="currentColor"/></svg>';
+    function sync() {
+      var dark = root.dataset.theme === "dark";
+      btn.setAttribute("aria-pressed", dark ? "true" : "false");
+      btn.setAttribute("aria-label", dark ? "White background" : "Gray background");
+      btn.title = dark ? "White background" : "Gray background";
+      if (meta) meta.content = dark ? "#2f2f30" : "#ffffff";
+    }
+    btn.addEventListener("click", function () {
+      var dark = root.dataset.theme !== "dark";
+      if (dark) root.dataset.theme = "dark"; else delete root.dataset.theme;
+      try { localStorage.setItem("theme", dark ? "dark" : "light"); } catch (e) {}
+      sync();
+    });
+    sync();
+    nav.appendChild(btn);
+  })();
+
   /* ---------- home ---------------------------------------------------- */
 
   function renderHome(collections, photos) {

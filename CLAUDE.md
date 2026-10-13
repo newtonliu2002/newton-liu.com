@@ -353,6 +353,15 @@ saving needs the token, and they don't have it.
 - **All design tokens live in the `:root` block** at the top of
   `assets/site.css`. Restyling should mostly mean editing that block. If a
   colour or size is hard-coded further down the file, that is a bug worth fixing.
+- **Two grounds: white (default) and gray.** The disc at the end of the nav
+  (added by site.js) switches to the gray palette in `:root[data-theme="dark"]`
+  and remembers the choice per visitor in localStorage. White stays the
+  default whatever the visitor's system setting; Newton asked for a toggle, not
+  automatic dark mode. A colour token added to `:root` needs a gray value
+  there too. Every page's `<head>` carries a one-line script that applies a
+  saved gray before the first paint (no white flash); the collection pages get
+  it from `PAGE_TEMPLATE` in build.py, where its braces are doubled for
+  `.format()`.
 - **Vanilla JS, no libraries.** ES5-ish syntax, no transpiling.
 - **Filenames encode metadata**: `Title_Location_YYYY-MM-DD.jpg`. The build
   script parses these and falls back to EXIF for the date.

@@ -22,6 +22,8 @@
   --text-faint:    #8a8d94;
   --accent:        #9a6a1e;   /* low sun, darkened to hold up on white */
   --on-accent:     #ffffff;
+  --lightbox-bg:   rgba(255,255,255,0.985);
+  --bar:           #16171b;   /* the editing bar; dark in both themes */
 
   /* ---- Type --------------------------------------------------------- */
   --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
@@ -56,6 +58,24 @@
   --radius: 2px;     /* photographs are nearly square-cornered on purpose */
 
   --ease: cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+/* The gray ground, switched on by the toggle in the masthead (site.js) and
+   remembered per visitor. White stays the default whatever the visitor's
+   system setting. A small script in each page's <head> sets data-theme
+   before the first paint so a gray visit never flashes white. A neutral
+   mid-dark gray, not black, so it shifts no photograph's colour. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg:            #2f2f30;
+  --bg-raised:     #3a3a3b;
+  --hairline:      #48484a;
+  --text:          #ededeb;
+  --text-dim:      #b9babd;
+  --text-faint:    #94969a;
+  --accent:        #d4a453;   /* the same low sun, lifted to hold up on gray */
+  --on-accent:     #16171b;
+  --lightbox-bg:   rgba(47,47,48,0.985);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -172,6 +192,21 @@ a   { color: inherit; }
 .nav a:hover, .nav a[aria-current="page"] {
   color: var(--text); border-bottom-color: var(--accent);
 }
+
+/* White / gray switch, added to the nav by site.js. A disc half filled
+   with ink; the filled half follows the ground. */
+.theme-toggle {
+  appearance: none; background: none; border: 0; cursor: pointer;
+  /* a finger-sized target around the small disc, without moving it */
+  padding: 0.7rem; margin: -0.7rem;
+  color: var(--text-dim);
+  display: inline-flex; align-items: center;
+  transition: color 0.2s var(--ease);
+}
+.theme-toggle:hover { color: var(--text); }
+.theme-toggle svg { width: 0.95rem; height: 0.95rem; display: block; }
+
+body { transition: background-color 0.25s var(--ease), color 0.25s var(--ease); }
 
 /* ---------- Hero ------------------------------------------------------- */
 
@@ -456,7 +491,7 @@ a   { color: inherit; }
 
 .lightbox {
   position: fixed; inset: 0; z-index: 100;
-  background: rgba(255,255,255,0.985);
+  background: var(--lightbox-bg);
   display: grid; place-items: center;
   padding: clamp(1rem, 4vw, 3rem);
   animation: fade-in 0.22s ease;
@@ -884,7 +919,7 @@ body.lb-open { overflow: hidden; }
   align-items: center;
   gap: 1rem;
   padding: 0 var(--gutter);
-  background: var(--text);
+  background: var(--bar);
   color: #fff;
 }
 
@@ -975,7 +1010,7 @@ body.is-editing .masthead { top: var(--nl-bar-h); }
   display: none;
   gap: 1px;
   padding: 2px;
-  background: var(--text);
+  background: var(--bar);
   border-radius: var(--radius);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
 }

@@ -4,7 +4,7 @@
 Usage
 -----
     python3 tools/build.py              # scan, make thumbnails, write manifest
-    python3 tools/build.py --no-thumbs
+    python3 tools/build.py --no-thumbs  # quick check only: drops every photo's variants; never commit its photos.json
     python3 tools/build.py --force      # allow writing an empty manifest
 
 Organising photographs
@@ -335,6 +335,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 <title>{title} — Newton Liu Photography</title>
 <meta name="description" content="{title} — photographs by Newton Liu.">
 <meta name="theme-color" content="#ffffff">
+<script>try{{if(localStorage.getItem("theme")==="dark"){{document.documentElement.dataset.theme="dark";document.querySelector('meta[name="theme-color"]').content="#2f2f30"}}}}catch(e){{}}</script>
 <link rel="stylesheet" href="../../assets/site.css?v={v_css}">
 </head>
 
@@ -571,7 +572,7 @@ def collect(make_thumbs=True):
 
 def main():
     ap = argparse.ArgumentParser(description="Rebuild data/photos.json from images/")
-    ap.add_argument("--no-thumbs", action="store_true", help="skip thumbnail generation")
+    ap.add_argument("--no-thumbs", action="store_true", help="skip thumbnails (also drops variants from photos.json; do not commit)")
     ap.add_argument("--force", action="store_true", help="write even if no photos found")
     args = ap.parse_args()
 
