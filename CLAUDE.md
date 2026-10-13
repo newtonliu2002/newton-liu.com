@@ -84,8 +84,11 @@ Related: the photographs keep their **original camera filenames**
 them. The `Title_Location_Date.jpg` convention that `build.py` parses is
 available if Newton ever wants it, but it is his to use, not yours.
 
-Collection `subtitle` and `blurb` in `data/collections.json` are empty for the
-same reason — they're his words to write.
+Collection `subtitle` and `blurb` in `data/collections.json` start empty for the
+same reason — they're his words to write. When he sends one, put it in as he
+wrote it: fix only plain typos, and tell him each change. A blurb can have
+several paragraphs; separate them with a blank line (`\n\n`), which the page
+shows as the gap (`white-space: pre-line`) and edit mode keeps on save.
 
 ## The gallery layout (packed grid)
 

@@ -265,6 +265,8 @@
       if (!node) return;
       node.setAttribute("data-edit", "collection." + SLUG + "." + row[1]);
       node.setAttribute("data-edit-hint", row[2]);
+      // A blurb's blank lines are its paragraph breaks; keep them on save.
+      if (row[1] === "blurb") node.setAttribute("data-edit-lines", "");
       // site.js may not have run yet; seed from the file so the baseline and
       // the visible text agree either way.
       node.textContent = meta[row[1]] || "";

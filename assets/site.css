@@ -370,7 +370,9 @@ body { transition: background-color 0.25s var(--ease), color 0.25s var(--ease); 
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
-.gallery-blurb { max-width: var(--measure); color: var(--text-dim); margin: 0; }
+/* A blurb can run to several paragraphs: collections.json separates them with
+   a blank line ("\n\n"), and pre-line shows that line as the gap. */
+.gallery-blurb { max-width: var(--measure); color: var(--text-dim); margin: 0; white-space: pre-line; }
 
 /* All optional — collapse rather than leaving a gap. */
 .gallery-date:empty, .gallery-sub:empty, .gallery-blurb:empty { display: none; }
