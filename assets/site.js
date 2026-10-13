@@ -186,6 +186,11 @@
     container.appendChild(p);
   }
 
+  // Shared with assets/globe.js so the landing resolves photograph URLs and
+  // picks image sizes exactly as the galleries do (and follows the R2 switch).
+  window.NLSite = { url: url, responsive: responsive, collectionDate: collectionDate,
+                    aspectOf: aspectOf, getJSON: getJSON };
+
   Array.prototype.forEach.call(document.querySelectorAll("[data-year]"), function (n) {
     n.textContent = String(new Date().getFullYear());
   });
@@ -194,7 +199,7 @@
 
   // The <head> of every page applies a saved "dark" before the first paint;
   // this adds the switch to the nav and remembers the visitor's choice.
-  // White is the default. Storage can be blocked (private windows), so every
+  // Black (#121212) is the default. Storage can be blocked (private windows), so every
   // read and write is guarded and the switch still works for the visit.
   (function themeToggle() {
     var nav = document.querySelector(".nav");
@@ -209,9 +214,9 @@
     function sync() {
       var dark = root.dataset.theme === "dark";
       btn.setAttribute("aria-pressed", dark ? "true" : "false");
-      btn.setAttribute("aria-label", dark ? "White background" : "Gray background");
-      btn.title = dark ? "White background" : "Gray background";
-      if (meta) meta.content = dark ? "#2f2f30" : "#ffffff";
+      btn.setAttribute("aria-label", dark ? "Black background" : "Gray background");
+      btn.title = dark ? "Black background" : "Gray background";
+      if (meta) meta.content = dark ? "#2f2f30" : "#121212";
     }
     btn.addEventListener("click", function () {
       var dark = root.dataset.theme !== "dark";

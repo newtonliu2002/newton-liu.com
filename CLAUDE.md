@@ -16,14 +16,17 @@ Adding 200 photos should change zero lines of HTML.
 ## Layout
 
 ```
-index.html                  landing page — hero + collection grid
+index.html                  landing page — the globe and the collections list
+work.html                   the same collections as a grid of covers ("Index")
 about.html, contact.html    prose pages
 collections/<slug>/index.html   one stub per collection (generated; ~15 lines)
 assets/site.css             ALL styling — design tokens in :root at the top
 assets/site.js              renders the grid, the collection cards, the lightbox
+assets/globe.css, globe.js  the globe landing only (see "The globe" below)
 assets/edit.js              the words layer — applies data/text.json, and
                             turns the page editable when the URL says ?edit
 data/collections.json       hand-edited: trip titles, blurbs, order, covers
+data/places.json            hand-edited: where each collection sits on the globe
 data/photos.json            GENERATED — do not hand-edit structure, but
                             hand-edited text fields are preserved on rebuild
 data/text.json              every word on the site that isn't a photograph's;
@@ -34,6 +37,66 @@ images/_thumbs/<edge>/      generated smaller widths (committed — Pages needs 
 ```
 
 Folders under `images/` starting with `_` are skipped by the scanner.
+
+## The globe (landing page)
+
+The home page is a dark globe that turns slowly, with a pin wherever a
+collection was photographed and the list of collections on the left (below
+the globe on a phone). Pointing at a row or a pin lights that collection;
+clicking flies there, lifts the terrain, and opens a card with the
+collection's opening photograph and a link into the gallery. A second click
+on the same row, or the card, opens the gallery. Keyboard and screen-reader
+users get the rows as plain links. `work.html` ("Index") shows the same
+collections as a grid of covers, rendered by site.js's `renderHome`.
+
+**Adding a collection to the globe is one entry in `data/places.json`**,
+keyed by the collection's slug, after the usual collections.json entry:
+
+```json
+"peru": {
+  "status": "draft",
+  "where": "",
+  "pins": [
+    { "name": "Lima", "lat": -12.05, "lng": -77.04 },
+    { "name": "Sacred Valley", "lat": -13.31, "lng": -72.12 }
+  ]
+}
+```
+
+- **Region level only.** A pin is a national park, island, reserve, valley
+  or town a visitor would recognise, at that public place's usual centre.
+  Never a photograph's own GPS position, and never a nest, roost, lek or hide.
+- `pins` are in route order: they set the line drawn between them, and the
+  first is the one the globe turns to. One pin per place; a collection that
+  covers several places (The Canadian West) gets several, and they light up,
+  fly and frame together.
+- `where` is the short line under the title in the list and the card; `""`
+  hides it. `zoom` (optional, single-pin only) sets how close the camera
+  arrives. `sensitive: true` keeps it back at zoom 7 (the sage-grouse leks).
+- `status` is `"draft"` until Newton has confirmed the row.
+- A collection with no entry is still listed; it just has no pin.
+
+Overlapping pins of different collections merge on screen into one ringed
+pin; clicking it zooms in until they separate. At the overview only each
+collection's first pin shows, so the globe stays calm as collections are
+added.
+
+**The map is the site's one outside library**, on the landing page only:
+MapLibre GL JS (pinned, loaded from jsDelivr as a module in index.html),
+with free, keyless map data from OpenFreeMap (coastlines, borders, park
+outlines) and Mapterhorn (elevation for the relief and 3D terrain). The map
+style is written in globe.js (`buildStyle()`), not loaded, so it stays
+greyscale and English-only. **Their credit line is required by their
+licences and must stay visible** — restyle it, never hide it. If the
+library or the data fail to load, or the device has no WebGL2, the list
+still works on its own; under Save-Data the globe waits for "Load globe".
+
+globe.js reads photographs only through `window.NLSite` (exported by
+site.js: `url`, `responsive`, `collectionDate`, `aspectOf`, `getJSON`), so
+the landing resolves image URLs exactly as the galleries do. No photograph
+is requested until a row or pin is pointed at. Every label globe.js puts on
+the page is in `LABELS` at its top; the numbers (spin speed, zooms, timings)
+and switches (`STARS`, `TERRAIN_3D`) are just below it.
 
 ## What's shown under a photograph
 
@@ -356,16 +419,17 @@ saving needs the token, and they don't have it.
 - **All design tokens live in the `:root` block** at the top of
   `assets/site.css`. Restyling should mostly mean editing that block. If a
   colour or size is hard-coded further down the file, that is a bug worth fixing.
-- **Two grounds: white (default) and gray.** The disc at the end of the nav
-  (added by site.js) switches to the gray palette in `:root[data-theme="dark"]`
-  and remembers the choice per visitor in localStorage. White stays the
-  default whatever the visitor's system setting; Newton asked for a toggle, not
-  automatic dark mode. A colour token added to `:root` needs a gray value
+- **Two grounds: black (default) and gray.** The square at the end of the
+  nav (added by site.js) switches to the gray palette in
+  `:root[data-theme="dark"]` and remembers the choice per visitor in
+  localStorage; "dark" in the code means gray. White was retired with the
+  globe. The landing itself is always the near-black of space. A colour token added to `:root` needs a gray value
   there too. Every page's `<head>` carries a one-line script that applies a
   saved gray before the first paint (no white flash); the collection pages get
   it from `PAGE_TEMPLATE` in build.py, where its braces are doubled for
   `.format()`.
-- **Vanilla JS, no libraries.** ES5-ish syntax, no transpiling.
+- **Vanilla JS, no libraries** — except MapLibre on the globe page (see
+  "The globe"). ES5-ish syntax, no transpiling.
 - **Filenames encode metadata**: `Title_Location_YYYY-MM-DD.jpg`. The build
   script parses these and falls back to EXIF for the date.
 

@@ -1,0 +1,394 @@
+/* ==========================================================================
+   newton-liu.com — the globe landing (index.html), on top of site.css.
+
+   Only g-* classes, plus the four site pieces the landing reshapes
+   (.masthead, .masthead-inner, .footer, .theme-toggle), always under
+   body[data-page="globe"]. Colours, type and motion are site.css tokens.
+   The bare numbers are geometry globe.js repeats (the 312px panel
+   allowance; the free area's 64px top and 108px bottom): change one, check
+   the other.
+
+   "App" layout (≥1024 wide, ≥620 tall): nothing scrolls, the globe fills
+   the window, the panel floats on the left. "Stacked" (anything smaller):
+   the globe is a sticky stage and the list scrolls up beneath it.
+   ========================================================================== */
+
+body[data-page="globe"] { background: var(--space); --F: calc(var(--edge) + 312px); --stage-h: min(56vh, 560px); }
+@supports (height: 1svh) { body[data-page="globe"] { --stage-h: min(56svh, 560px); } }
+@media (max-height: 519px) { body[data-page="globe"] { --stage-h: 100vh; } }
+@supports (height: 1svh) { @media (max-height: 519px) { body[data-page="globe"] { --stage-h: 100svh; } } }
+/* Sideways in ?edit, the stage scrolls in below the edit bar, so it is that much shorter. */
+@media (max-height: 519px) { body.is-editing[data-page="globe"] { --stage-h: calc(100vh - var(--nl-bar-h, 46px)); } }
+@supports (height: 1svh) { @media (max-height: 519px) { body.is-editing[data-page="globe"] { --stage-h: calc(100svh - var(--nl-bar-h, 46px)); } } }
+/* The landing is always --space, so no ground toggle; its slot and the
+   bar's 1px rule are kept (unseen) so the nav sits exactly where it does on
+   every other page. */
+body[data-page="globe"] .theme-toggle { visibility: hidden; pointer-events: none; }
+body[data-page="globe"] .masthead { position: static; background: var(--space); border-bottom-color: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.g-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Shared: the mono labels, and the glass surfaces. */
+.g-readout, .g-pin-label, .g-plate-where, .g-card-where, .g-card-date, .g-card-go, .g-list-title,
+.g-index-link, .g-list-status, .g-row-where, .g-row-year, .g-fallback p, .g-load,
+.g-stage .maplibregl-ctrl-attrib, .g-stage .maplibregl-cooperative-gesture-screen {
+  margin: 0; font: 400 var(--t-label)/16px var(--mono); letter-spacing: .14em; text-transform: uppercase;
+}
+.g-card, .g-plate, .g-console {
+  background-color: var(--panel); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border: 1px solid var(--hairline);
+}
+
+/* ---------- Stage -------------------------------------------------------
+   --cx/--cy/--d: the overview globe's centre and diameter, as globe.js
+   works them out, so the ring sits where the globe will land before any of
+   the map has arrived. */
+
+.g-stage {
+  position: sticky; top: 0; z-index: 5; height: var(--stage-h); overflow: hidden; background: var(--space);
+  --cx: 50%; --cy: calc(16px + (var(--stage-h) - 88px) / 2); --d: calc(.96 * min(100% - 32px, var(--stage-h) - 88px));
+}
+.g-stars, .g-map, .g-wire { position: absolute; inset: 0; width: 100%; height: 100%; }
+.g-map { opacity: 0; transition: opacity .6s var(--ease); }
+.g-stage.is-ready .g-map { opacity: 1; }
+.g-ring {
+  position: absolute; left: var(--cx); top: var(--cy); width: var(--d); aspect-ratio: 1; border-radius: 50%;
+  transform: translate(-50%, -50%); pointer-events: none;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.1), 0 0 120px rgba(255,255,255,.04);
+}
+.g-wire { z-index: 2; overflow: visible; pointer-events: none; }
+.g-wire line { stroke: rgba(255,255,255,.28); }
+.g-wire rect { fill: var(--bracket); }
+.g-wire :not(.is-on) { display: none; }
+
+/* ---------- Pins: camera focus points -----------------------------------
+   A crosshair (1px arms round a 4px gap, a 2px dot) in a 15px box, in a
+   28px hit area. MapLibre owns the root's position and transform, so the
+   drawing lives in children placed round --c, the hit area's centre.
+   Active is autofocus acquisition: amber brackets close in, the dot turns
+   amber, a slow ring pulses. Only the active pin pulses. */
+
+.g-pin { width: 28px; height: 28px; cursor: pointer; --c: 13.5px; }
+@media (pointer: coarse) { .g-pin { width: 44px; height: 44px; --c: 21.5px; } }
+.g-pin i { position: absolute; display: block; pointer-events: none; }
+.g-pin-in { inset: 0; transition: opacity var(--d-base) var(--ease); }
+.g-pin-x {
+  left: calc(var(--c) - 7.5px); top: calc(var(--c) - 7.5px); width: 15px; height: 15px;
+  --k: rgba(242,242,242,.85); --dot: var(--k); --a: 3.5px;
+  background: linear-gradient(var(--k) 0 0) 7px calc(5.5px - var(--a)) / 1px var(--a),
+    linear-gradient(var(--k) 0 0) 7px 9.5px / 1px var(--a), linear-gradient(var(--k) 0 0) calc(5.5px - var(--a)) 7px / var(--a) 1px,
+    linear-gradient(var(--k) 0 0) 9.5px 7px / var(--a) 1px, linear-gradient(var(--dot) 0 0) 6.5px 6.5px / 2px 2px;
+  background-repeat: no-repeat;
+}
+.g-pin.is-visited .g-pin-x { --k: rgba(242,242,242,.45); --dot: transparent; }
+.g-pin:hover .g-pin-x, .g-pin.is-lit .g-pin-x, .g-pin.is-active .g-pin-x { --k: #fff; --a: 5px; }
+.g-pin.is-active .g-pin-x { --dot: var(--accent); }
+.g-pin.is-dim .g-pin-in { opacity: .35; }
+.g-pin.is-off { pointer-events: none; }
+.g-pin.is-off .g-pin-in { opacity: 0; }
+.g-pin.is-lit { z-index: 1; }
+.g-pin.is-active { z-index: 2; }
+.g-pin.is-hover { z-index: 3; }      /* the pin under the pointer stays on top of the siblings it reveals */
+.maplibregl-marker.maplibregl-marker-covered { visibility: hidden; pointer-events: none; }
+.g-pin.is-stack .g-pin-in::after {      /* several collections here: the crosshair in a circle */
+  content: ""; position: absolute; left: calc(var(--c) - 7.5px); top: calc(var(--c) - 7.5px);
+  width: 15px; height: 15px; border: 1px solid rgba(242,242,242,.6); border-radius: 50%;
+}
+.g-pin-ring {
+  left: var(--c); top: var(--c); width: 9px; height: 9px; border: 1px solid var(--accent); border-radius: 50%;
+  opacity: 0; transform: translate(-50%, -50%);
+}
+.g-pin.is-active .g-pin-ring { animation: g-pulse 4s .3s var(--ease-out) infinite; }
+@keyframes g-pulse { 0% { width: 9px; height: 9px; opacity: .5; } 40%, 100% { width: 36px; height: 36px; opacity: 0; } }
+
+/* Corner brackets, site.css's .bk drawing at pin scale (and the card's). */
+.g-pin-af, .g-card::after {
+  --l: 6px; --w: 1.5px; --bc: var(--accent);
+  background: linear-gradient(var(--bc) 0 0) 0 0 / var(--l) var(--w), linear-gradient(var(--bc) 0 0) 0 0 / var(--w) var(--l),
+    linear-gradient(var(--bc) 0 0) 100% 0 / var(--l) var(--w), linear-gradient(var(--bc) 0 0) 100% 0 / var(--w) var(--l),
+    linear-gradient(var(--bc) 0 0) 0 100% / var(--l) var(--w), linear-gradient(var(--bc) 0 0) 0 100% / var(--w) var(--l),
+    linear-gradient(var(--bc) 0 0) 100% 100% / var(--l) var(--w), linear-gradient(var(--bc) 0 0) 100% 100% / var(--w) var(--l);
+  background-repeat: no-repeat;
+}
+.g-pin-af { left: calc(var(--c) - 10px); top: calc(var(--c) - 10px); width: 20px; height: 20px; opacity: 0; }
+.g-pin.is-active .g-pin-af { opacity: 1; animation: g-af var(--d-base) var(--ease-out) both; }
+@keyframes g-af { from { left: calc(var(--c) - 18px); top: calc(var(--c) - 18px); width: 36px; height: 36px; opacity: 0; } }
+
+/* Intro: each pin scales in with one soft white ring. */
+.g-stage:not(.has-pins) .g-pin { visibility: hidden; }
+.g-pin.is-intro .g-pin-in { animation-delay: inherit; }
+.g-pin.is-intro .g-pin-x { animation: g-in var(--d-base) var(--ease-out) both; animation-delay: inherit; }
+.g-pin.is-intro .g-pin-ring { border-color: rgba(255,255,255,.55); animation: g-pulse 1.8s var(--ease-out) forwards; animation-delay: inherit; }
+@keyframes g-in { from { transform: scale(.6); opacity: 0; } }
+
+.g-pin-label {
+  left: calc(var(--c) + 16px); top: var(--c); transform: translateY(-50%); padding: 2px 6px; font-style: normal;
+  white-space: nowrap; background: rgba(5,5,5,.7); color: var(--text-dim);
+  visibility: hidden; opacity: 0; transition: opacity var(--d-base) var(--ease);
+}
+.g-pin.has-label .g-pin-label { visibility: visible; opacity: 1; }
+.g-pin.is-left .g-pin-label { left: auto; right: calc(100% - var(--c) + 16px); }
+.g-pin.is-up .g-pin-label, .g-pin.is-down .g-pin-label { left: calc(var(--c) + var(--dx, 0px)); transform: translate(-50%, -50%); }
+.g-pin.is-up .g-pin-label { top: calc(var(--c) - 22px); }
+.g-pin.is-down .g-pin-label { top: calc(var(--c) + 22px); }
+
+/* ---------- Plate: the hover preview (app layout, fine pointers) ------- */
+
+.g-plate {
+  position: absolute; left: 0; top: 0; z-index: 3; width: 200px; padding-bottom: 10px; pointer-events: none;
+  opacity: 0; clip-path: inset(0 0 100% 0); transition: opacity var(--d-fast) var(--ease), clip-path 0s var(--d-fast);
+}
+.g-plate.is-on { opacity: 1; clip-path: inset(0); transition: opacity .28s var(--ease-out), clip-path .28s var(--ease-out); }
+.g-plate img { display: block; width: 100%; height: auto; background: var(--bg-raised); }
+.g-plate p { margin: 0; padding: 0 10px; }
+.g-plate p:first-of-type { padding-top: 8px; }
+.g-plate-title { font: 500 13px/18px var(--sans); color: var(--text); }
+.g-plate-where { letter-spacing: .12em; color: var(--text-faint); }
+.g-plate.is-text { width: max-content; max-width: 240px; }      /* a stack: titles only, set apart */
+.g-plate.is-text .g-plate-title + .g-plate-title { margin: 6px 10px 0; padding: 6px 0 0; border-top: 1px solid var(--hairline-soft); }
+
+/* ---------- Card ---------------------------------------------------------
+   Presentation only (aria-hidden, nothing focusable): the list is the
+   accessible way to the same thing. The opener whole, never cropped. */
+
+.g-card {
+  position: absolute; z-index: 5; opacity: 0; visibility: hidden; transform: translateX(12px);
+  transition: opacity .22s var(--ease), transform .22s var(--ease), visibility 0s .22s;
+}
+.g-card.is-open { opacity: 1; visibility: visible; transform: none; transition: opacity var(--d-slow) var(--ease-out), transform var(--d-slow) var(--ease-out); }
+.g-card.is-leaving { transform: translateY(8px); }
+.g-card.is-quick { transition-duration: .16s; }
+.g-card::after { content: ""; position: absolute; inset: -1px; pointer-events: none; --l: var(--bk-len); --w: 1px; --bc: rgba(255,255,255,.55); }
+.g-card p { margin: 0; }
+.g-card-media { display: block; background: var(--bg-raised); }
+.g-card-media img { display: block; width: 100%; height: auto; object-fit: contain; opacity: 0; transition: opacity .4s var(--ease); }
+.g-card-media img.is-loaded { opacity: 1; }
+.g-card-title { font: 500 28px/1.1 var(--sans); letter-spacing: -.015em; color: var(--text); }
+.g-card .g-card-where { margin-top: 10px; color: var(--text-dim); }
+.g-card .g-card-date { margin-top: 4px; color: var(--text-faint); }
+.g-card .g-card-sub { margin-top: 12px; font: 400 15px/1.5 var(--sans); color: var(--text-dim); }
+.g-card-actions { display: flex; gap: 8px; margin-top: 20px; }
+.g-card-go {
+  flex: 1; display: flex; align-items: center; justify-content: space-between; height: 44px; padding: 0 16px;
+  border: 1px solid var(--hairline-strong); color: var(--text); text-decoration: none; letter-spacing: .16em; white-space: nowrap;
+}
+.g-card-go::after { --bk-c: var(--accent); }
+.g-card-go-arrow { transition: transform var(--d-fast) var(--ease); }
+.g-card button {
+  flex: none; width: 44px; height: 44px; padding: 0 0 3px; border: 1px solid var(--hairline-strong); background: none;
+  color: var(--text-dim); font: 300 22px/1 var(--sans); cursor: pointer;
+}
+.g-card-go, .g-card button, .g-btn { transition: color var(--d-fast) var(--ease), background-color var(--d-fast) var(--ease); }
+@media (hover: hover) {
+  .g-card-go:hover, .g-card button:hover, .g-btn:hover { color: var(--text); background-color: var(--wash); }
+  .g-card-go:hover .g-card-go-arrow { transform: translateX(4px); }
+  .g-row:hover { background-color: rgba(255,255,255,.04); }
+  .g-row:hover .g-row-mark { --k: #fff; }
+}
+.g-card button.is-end { opacity: .3; pointer-events: none; }
+.g-card-progress { position: absolute; left: 0; right: 0; bottom: -1px; z-index: 1; height: 1px; background: var(--accent); transform-origin: 0; transform: scaleX(0); opacity: 0; }
+.g-card.is-touring .g-card-progress { opacity: 1; }
+
+/* ---------- Console: tour · readout · overview · pause ------------------ */
+
+.g-console { position: absolute; left: 16px; right: 16px; bottom: 12px; z-index: 4; display: flex; transition: opacity var(--d-base) var(--ease); }
+.g-stage:not(.is-ready):not(.is-deferred):not(.is-failed) .g-console { opacity: 0; visibility: hidden; }   /* in with the globe, not before */
+.g-btn { flex: none; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; background: none; color: var(--text-dim); cursor: pointer; }
+.g-btn:focus-visible { outline-offset: -2px; }
+.g-btn + .g-readout, .g-readout + .g-btn, .g-btn + .g-btn { border-left: 1px solid var(--hairline); }
+.g-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.25; }
+.g-btn .g-on, .g-btn[aria-pressed="true"] .g-off { display: none; }
+.g-btn[aria-pressed="true"] .g-on { display: block; }
+.g-tour[aria-pressed="true"] { color: var(--accent); }
+.g-readout {
+  flex: 1; min-width: 0; padding: 0 14px; line-height: 44px; text-align: center; font-variant-numeric: tabular-nums;
+  color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.g-readout b { font-weight: inherit; color: var(--accent); }
+body.is-editing .g-tour { display: none; }
+body.is-editing .g-tour + .g-readout { border: 0; }
+
+/* ---------- Failure and Save-Data -------------------------------------- */
+
+.g-fallback { position: absolute; left: var(--cx); top: var(--cy); z-index: 3; width: max-content; max-width: 80%; transform: translate(-50%, -50%); text-align: center; }
+.g-fallback p { margin-bottom: 12px; letter-spacing: 0; text-transform: none; color: var(--text-faint); }
+.g-load { height: 44px; padding: 0 20px; border: 1px solid var(--hairline-strong); background: none; color: var(--text); letter-spacing: .16em; cursor: pointer; }
+.g-stage.is-failed .g-console, .g-stage.is-failed .g-map, .g-stage.is-failed .g-card, .g-stage.is-deferred .g-fallback p { display: none; }
+.g-stage.is-deferred .g-btn { visibility: hidden; }
+
+/* ---------- Attribution: always shown, never collapsed -----------------
+   On a dark backing, so no map label or relief can print through it (over
+   open space the backing is the space colour, so it doesn't show). */
+
+.g-stage .maplibregl-ctrl-attrib {
+  margin: 0 !important; padding: 2px 8px; letter-spacing: 0; text-transform: none; color: var(--text-faint);
+  background: rgba(5,5,5,.78); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.g-stage .maplibregl-ctrl-attrib a { color: inherit; text-decoration: none; white-space: nowrap; }
+.g-stage .maplibregl-ctrl-attrib a:hover { color: var(--text-dim); text-decoration: underline; }
+.g-stage .maplibregl-cooperative-gesture-screen { background: var(--panel); color: var(--text); }
+
+/* ---------- Panel: tagline and the list -------------------------------- */
+
+.g-intro { margin: 0; font: 400 22px/1.3 var(--sans); letter-spacing: -.01em; color: var(--text); white-space: pre-line; }
+.g-list-head { display: flex; align-items: center; justify-content: space-between; }
+.g-list-title { letter-spacing: .16em; color: var(--text-faint); }
+.g-index-link { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; color: var(--text-dim); text-decoration: none; transition: color var(--d-fast) var(--ease); }
+.g-index-link:hover { color: var(--text); }
+.g-list { list-style: none; margin: 0; padding: 0; }
+.g-list li { border-top: 1px solid var(--hairline-soft); }
+.g-list.is-new li { animation: g-fade .16s var(--ease) both; }
+@keyframes g-fade { from { opacity: 0; } }
+.g-list-status { padding: 14px 20px; color: var(--text-faint); }
+
+.g-row {
+  position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; align-content: center;
+  min-height: 44px; padding: 10px 16px 10px 36px; color: var(--text); text-decoration: none;
+  transition: background-color var(--d-fast) var(--ease);
+}
+.g-row.is-lit { background-color: rgba(255,255,255,.04); }
+.g-row:focus-visible { outline-offset: -2px; }
+.g-row-mark {     /* a small crosshair, mirroring the pin */
+  position: absolute; left: 16px; top: 16px; width: 9px; height: 9px; --k: #5a5a58; --dot: var(--k);
+  background: linear-gradient(var(--k) 0 0) 4px 0 / 1px 3px, linear-gradient(var(--k) 0 0) 4px 6px / 1px 3px,
+    linear-gradient(var(--k) 0 0) 0 4px / 3px 1px, linear-gradient(var(--k) 0 0) 6px 4px / 3px 1px,
+    linear-gradient(var(--dot) 0 0) 4px 4px / 1px 1px;
+  background-repeat: no-repeat;
+}
+.g-row.is-one .g-row-mark { top: calc(50% - 4.5px); }
+.g-row.is-visited .g-row-mark { --dot: transparent; }
+.g-row.is-lit .g-row-mark { --k: #fff; }
+.g-row[aria-current="true"] { background-color: rgba(212,164,83,.08); box-shadow: inset 2px 0 0 var(--accent); }
+.g-row[aria-current="true"] .g-row-mark { --k: var(--accent); --dot: var(--accent); }
+.g-row[aria-current="true"] .g-row-title { color: #fff; }
+.g-row.is-recent { animation: g-recent 2.4s var(--ease) both; }
+@keyframes g-recent { from { box-shadow: inset 2px 0 0 var(--accent); } to { box-shadow: inset 2px 0 0 transparent; } }
+.g-row-title { font: 500 var(--t-row)/20px var(--sans); }
+.g-row-where { grid-column: 1; letter-spacing: .12em; color: var(--text-faint); text-wrap: balance; }   /* wraps, never cut */
+.g-row-year { grid-column: 2; grid-row: 1; line-height: 20px; letter-spacing: 0; color: var(--text-faint); font-variant-numeric: tabular-nums; }
+
+/* ==========================================================================
+   App layout: the globe fills the window, nothing scrolls
+   ========================================================================== */
+
+@media (min-width: 1024px) and (min-height: 620px) {
+  body[data-page="globe"] { height: 100%; overflow: hidden; }
+  body[data-page="globe"] .masthead { position: fixed; inset: 0 0 auto; z-index: var(--z-masthead); background: transparent; pointer-events: none; }
+  body[data-page="globe"] .masthead a, body[data-page="globe"] .masthead button { pointer-events: auto; }
+  body[data-page="globe"] .masthead-inner { min-height: 64px; }
+  body.is-editing[data-page="globe"] .masthead { top: var(--nl-bar-h); }
+  .g-stage {
+    position: fixed; inset: 0; z-index: 0; height: auto;
+    --cx: calc(var(--F) + (100% - var(--F) - var(--edge)) / 2); --cy: calc(64px + (100% - 172px) / 2);
+    --d: calc(.8 * min(100% - var(--F) - var(--edge), 100vh - 172px));
+  }
+  .g-stage::after {      /* keeps the header legible over a map that has flown in close */
+    content: ""; position: absolute; inset: 0 0 auto; z-index: 1; height: 128px; pointer-events: none;
+    background: linear-gradient(rgba(5,5,5,.94), rgba(5,5,5,.88) 56px, rgba(5,5,5,0));
+  }
+
+  .g-panel {
+    position: fixed; left: var(--edge); top: 80px; bottom: 24px; z-index: var(--z-panel); width: 288px;
+    display: flex; flex-direction: column; padding-bottom: 52px;
+    background-color: var(--panel); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border: 1px solid var(--hairline);
+  }
+  body.is-editing .g-panel { top: calc(80px + var(--nl-bar-h)); }
+  .g-intro { padding: 20px 20px 16px; font-size: var(--t-lede); border-bottom: 1px solid var(--hairline); }
+  .g-atlas { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  .g-list-head { flex: none; padding: 0 16px 0 20px; }
+  .g-index-link { min-height: 40px; }
+  .g-row { min-height: 56px; }      /* one even rhythm, with or without a where line */
+  .g-list { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--hairline-strong) transparent; }
+  .g-list.is-overflowing { -webkit-mask-image: linear-gradient(var(--mask-solid) calc(100% - 24px), transparent); mask-image: linear-gradient(var(--mask-solid) calc(100% - 24px), transparent); }
+
+  body[data-page="globe"] .footer {
+    position: fixed; left: calc(var(--edge) + 1px); bottom: 25px; z-index: calc(var(--z-panel) + 1); width: 286px; min-height: 52px;
+    display: flex; align-items: center; margin: 0; padding: 0 20px; border-top: 1px solid var(--hairline);
+  }
+  body[data-page="globe"] .footer .wrap { padding: 0; }
+  body[data-page="globe"] .footer p { font: 400 var(--t-label)/16px var(--mono); text-wrap: balance; }
+  body[data-page="globe"] .footer .footer-links { display: none; }
+
+  .g-console { left: var(--cx); right: auto; bottom: 48px; width: clamp(420px, 40vw, 600px); transform: translateX(-50%); }
+  /* One button left of the readout, two right of it: 44px more padding on
+     the left centres its text on the console, and so on the globe's axis
+     (88px when ?edit hides the Tour button). */
+  .g-readout { padding-left: 58px; }
+  body.is-editing .g-readout { padding-left: 102px; }
+  .g-card { right: var(--edge); top: calc(50% - 14px); translate: 0 -50%; width: clamp(360px, 34vw, 520px); max-height: calc(100% - 188px); }
+  .g-card-media img { max-height: calc(100vh - 384px); }
+  .g-card-body { padding: 20px 24px 24px; }
+  .g-stage .maplibregl-ctrl-bottom-right { right: var(--edge); bottom: 12px; }
+}
+@media (min-width: 1024px) and (min-height: 620px) and (pointer: coarse) { .g-index-link { min-height: 44px; } }
+@media (min-width: 1024px) and (max-width: 1235px) and (min-height: 620px) {   /* the card at its narrowest */
+  .g-card-body { padding: 20px; }
+  .g-card-go { padding: 0 12px; letter-spacing: .12em; }
+}
+
+/* ==========================================================================
+   Stacked layout: a sticky stage over a scrolling list
+   ========================================================================== */
+
+@media not all and (min-width: 1024px) and (min-height: 620px) {
+  .g-panel { padding: 0 var(--edge); background: var(--space); }
+  .g-intro { padding: 24px 0 16px; }
+  .g-list { margin: 0 calc(-1 * var(--edge)); }
+  .g-list-status { padding-inline: var(--edge); }
+  .g-row { min-height: 56px; padding: 12px var(--edge) 12px calc(var(--edge) + 20px); }
+  .g-row-mark { left: var(--edge); top: 18px; }
+  #collections { scroll-margin-top: var(--stage-h); }
+  body.is-editing .g-stage { scroll-margin-top: var(--nl-bar-h); }    /* scrolled into view below the ?edit bar */
+
+  .g-plate { display: none; }
+  /* The console makes way for the card, except during the tour (its Stop
+     is there) and while one of its buttons has focus; then the card sits
+     above it instead. */
+  .g-stage.has-card:not(.is-touring) .g-console { opacity: 0; visibility: hidden; transition: opacity var(--d-fast) var(--ease), visibility 0s var(--d-fast); }
+  .g-stage.has-card .g-console:focus-within { opacity: 1; visibility: visible; transition: none; }
+  .g-stage.is-touring .g-card, .g-stage.has-card:has(.g-console:focus-within) .g-card { bottom: 64px; }
+
+  /* The card leads with the photograph: whole, the card's full width, below
+     it the title, date and the way in. Tapping it anywhere but × opens the
+     gallery. */
+  .g-card { left: 16px; right: 16px; bottom: 12px; max-width: 440px; margin: 0 auto; cursor: pointer; }
+  .g-card-media img { max-height: max(96px, min(30svh, 210px, var(--stage-h) - 320px)); }   /* and leave the map a band to show the place in */
+  .g-card-body { position: relative; padding: 10px 48px 12px 12px; }
+  .g-card-title { font-size: 16px; line-height: 1.25; letter-spacing: -.005em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .g-card .g-card-where, .g-card .g-card-sub, .g-card-prev, .g-card-next { display: none; }
+  .g-card .g-card-date { margin-top: 2px; }
+  .g-card-actions { margin-top: 6px; }
+  .g-card-go { flex: none; gap: 8px; height: auto; padding: 0; border: 0; justify-content: flex-start; }
+  .g-card-go::after { display: none; }
+  .g-card .g-card-close { position: absolute; top: 0; right: 0; border: 0; }
+
+  /* Two lines at most, in the sans so they fit, each credit kept whole. */
+  .g-stage .maplibregl-ctrl-top-right { right: 16px; top: 8px; max-width: 72%; text-align: right; }
+  .g-stage .maplibregl-ctrl-attrib { font-family: var(--sans); }
+
+  /* The rows and footer links scroll up under the sticky globe: a row that
+     takes focus stops just below it, never behind it. The where line has
+     room to wrap here. */
+  @media (min-height: 520px) {
+    body.is-editing .g-stage { top: var(--nl-bar-h); }
+    .g-row, .g-index-link, .g-intro, .g-list-title, body[data-page="globe"] .footer a { scroll-margin-top: calc(var(--stage-h) + 8px); }
+    body.is-editing .g-row, body.is-editing .g-index-link, body.is-editing .g-intro, body.is-editing .g-list-title,
+    body.is-editing[data-page="globe"] .footer a { scroll-margin-top: calc(var(--stage-h) + var(--nl-bar-h) + 8px); }
+    body.is-editing #collections { scroll-margin-top: calc(var(--stage-h) + var(--nl-bar-h)); }
+  }
+}
+/* A phone held sideways: the stage is the whole screen and doesn't stick,
+   and the card goes back to a photograph beside its title. */
+@media (max-height: 519px) {
+  .g-stage { position: relative; }
+  .g-card { display: grid; grid-template-columns: 168px minmax(0, 1fr); align-items: center; max-width: 520px; }
+  .g-card-media { height: 112px; }
+  .g-card-media img { height: 100%; max-height: none; }
+}
+
+/* Reduced motion: final states, and a short fade for the card. */
+@media (prefers-reduced-motion: reduce) {
+  body[data-page="globe"] .g-card { transform: none !important; transition: opacity .15s !important, visibility 0s .15s !important; }
+  body[data-page="globe"] .g-card.is-open { transition: opacity .15s !important; }
+  .g-pin * { animation: none !important; }
+}
+@media (forced-colors: active) { .g-pin-x, .g-pin-af, .g-row-mark { forced-color-adjust: none; } }

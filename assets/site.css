@@ -1,81 +1,157 @@
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap");
 /* ==========================================================================
    newton-liu.com
 
-   ALL styling lives in this file. Every design decision that you might
+   ALL styling lives in this file (the globe landing adds globe.css on top,
+   for its own g-* classes only). Every design decision that you might
    plausibly want to change is a custom property in the :root block below —
    restyling the site should mostly mean editing that block and nothing else.
    If you find yourself hunting for a hard-coded colour further down, that's a
    bug: lift it up here.
+
+   The @import above has to stay the very first line: it is how the generated
+   collection pages get the typefaces without any change to their <head>.
    ========================================================================== */
 
 :root {
-  /* ---- Colour -------------------------------------------------------
-     Light ground. Photographs carry all the colour on the page, so every
-     surface here is neutral and the accent is used sparingly.
-     (The previous dark palette is in git history if it's ever wanted back —
-     it was only ever these eight values.) */
-  --bg:            #ffffff;   /* page */
-  --bg-raised:     #f2f1ee;   /* cards, image wells before load */
-  --hairline:      #e3e1dc;
-  --text:          #16171b;
-  --text-dim:      #5a5d64;
-  --text-faint:    #8a8d94;
-  --accent:        #9a6a1e;   /* low sun, darkened to hold up on white */
-  --on-accent:     #ffffff;
-  --lightbox-bg:   rgba(255,255,255,0.985);
-  --bar:           #16171b;   /* the editing bar; dark in both themes */
+  color-scheme: dark;
 
-  /* ---- Type --------------------------------------------------------- */
-  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
-  --sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  /* ---- Grounds -------------------------------------------------------
+     Night (#121212) is the default ground. Photographs carry all the colour
+     on the page, so every surface here is neutral, and the one colour, the
+     amber "low sun", is kept for what is active, current, focused or in
+     progress. The landing page sits on --space, a shade deeper still. */
+  --space:        #050505;            /* landing page and the space around the globe */
+  --bg:           #121212;            /* "Night": galleries, prose, Work. The default ground */
+  --bg-raised:    #1c1c1c;            /* image wells before load, inputs */
+  --panel:        rgba(10,10,10,.80); /* glass: landing panel, console, card, plate (+ blur 12px) */
+  --panel-solid:  #0c0c0c;            /* glass replacement: no backdrop-filter or reduced transparency */
+  --glass:        color-mix(in srgb, var(--bg) 88%, transparent);  /* the masthead's frosted bar */
+  --lightbox-bg:  rgba(12,12,12,.985);
+  --bar:          #000000;            /* ?edit bar */
 
-  --step--1: clamp(0.78rem, 0.76rem + 0.1vw, 0.84rem);
-  --step-0:  clamp(1rem, 0.97rem + 0.15vw, 1.08rem);
-  --step-1:  clamp(1.25rem, 1.15rem + 0.5vw, 1.6rem);
-  --step-2:  clamp(1.6rem, 1.35rem + 1.2vw, 2.4rem);
-  --step-3:  clamp(2.1rem, 1.5rem + 3vw, 4.2rem);
+  /* ---- Lines ---------------------------------------------------------
+     White at low alpha rather than greys, so one value holds on both
+     grounds. */
+  --hairline:        rgba(255,255,255,.12);
+  --hairline-soft:   rgba(255,255,255,.06);  /* between list rows */
+  --hairline-strong: rgba(255,255,255,.28);  /* outlined buttons */
+  --bracket:         rgba(255,255,255,.70);  /* the "in focus" corner brackets */
+  --tile-edge:       rgba(255,255,255,.18);  /* hairline inside a hovered photograph */
+  --edit-dash:       rgba(255,255,255,.30);  /* ?edit: the outline round a typeable slot */
+  --wash:            rgba(255,255,255,.06);  /* hover fill on an outlined button */
 
-  --measure: 36rem;
+  /* ---- Ink (contrast on #121212 / #050505) ---------------------------- */
+  --text:       #ededea;   /* 16.0 / 17.4 */
+  --text-body:  #cfcfcb;   /* prose */
+  --text-dim:   #a8a8a5;   /* 7.9 / 8.6 */
+  --text-faint: #8a8a87;   /* 5.4 / 5.9. The floor for any text */
+  --accent:       #d4a453; /* his "low sun": active, current, focus, progress only. 8.2:1 */
+  --accent-hover: #e0b566;
+  --on-accent:    #121212;
+  --warn:         #ffb4a2; /* ?edit: a save that failed */
+  --mask-solid:   #000;    /* masks read alpha only; any opaque colour would do */
 
-  /* ---- Layout ------------------------------------------------------- */
-  --masthead-h: 4.25rem;  /* sticky bar; anything that pins below it uses this */
+  /* ---- Type ------------------------------------------------------------
+     Geist for everything read; Geist Mono, uppercase and tracked, for every
+     label, date and number. Nothing on the site is set smaller than 11px. */
+  --sans:  "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono:  "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --serif: var(--sans);   /* legacy name; no serif remains */
+  --t-label: 11px;  /* mono, uppercase, .14–.24em, line-height 16px: the absolute minimum anywhere */
+  --t-meta:  12px;  /* mono: EXIF, numbers, tabular-nums */
+  --t-ui:    13px;  /* nav, buttons */
+  --t-row:   14px;  /* list titles */
+  --t-body:  16px;  /* line-height 1.7 */
+  --t-lede:  20px;  /* line-height 1.4 */
+  --t-h3:    22px;
+  --t-h2:    clamp(28px, 1.2vw + 16px, 40px);
+  --t-h1:    clamp(36px, 2.4vw + 16px, 60px);
+  --step--1: 13px; --step-0: 16px; --step-1: 20px; --step-2: 28px; --step-3: var(--t-h1); /* legacy */
 
-  /* How tall a collection's opening photograph is allowed to be. A landscape
+  /* ---- Space and shape ------------------------------------------------ */
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:64px; --s9:96px;
+  --edge: 16px;          /* page side margin of the window-level bars: 24px ≥621, 32px ≥1280 */
+  --masthead-h: 3.5rem;  /* 4rem ≥621; the opener pull-up and the prose rail read this */
+  --radius: 0;           /* everywhere, photographs included */
+  --bk-len: 8px;         /* arm length of the corner brackets */
+  --nl-bar-h: 2.9rem;    /* ?edit bar; the page moves down by this */
+  /* What lines text in a .wrap-wide page (gallery rail, prose) up with the
+     wordmark: the bars sit at --edge, the photographs at .wrap-wide's own
+     padding, and this is the difference. Text only — never the photographs. */
+  --rail-inset: max(0px, calc(var(--edge) - clamp(0.5rem, 2vw, 1.5rem)));
+
+  /* ---- Layout ----------------------------------------------------------
+     These are mirrored by the `sizes` hints in site.js (tileSizes,
+     cappedSizes, the card's 380px), so they are not restyling knobs: change
+     one and check the other.
+
+     How tall a collection's opening photograph is allowed to be. A landscape
      opener always spans the full width of the window, and where that would
      make it taller than --opener-h it is trimmed top and bottom to fit rather
      than shrunk — so a panorama is never cut, and a 3:2 frame on a wide
      window loses a sliver. An upright is capped by height instead: centred,
      never cropped. `renderOpener()` in site.js repeats the upright number to
      size its srcset; if you change it, change that too. */
+  --measure: 36rem;
   --opener-h:         100vh;
   --opener-h-upright: 88vh;
   --wrap:      74rem;   /* prose + cards */
   --wrap-wide: 108rem;  /* photo grids get more room */
-  --gutter:    clamp(1.25rem, 4vw, 2.5rem);
+  --gutter:    clamp(1.25rem, 4vw, 2.5rem);   /* legacy; .wrap now uses --edge */
+  --row-h:  300px;   /* target height of a justified (legacy) gallery row */
+  --gap:    10px;    /* between photographs in the legacy grid */
 
-  --row-h:  300px;   /* target height of a justified gallery row */
-  --gap:    10px;    /* between photographs */
-  --radius: 2px;     /* photographs are nearly square-cornered on purpose */
+  /* ---- Motion ----------------------------------------------------------- */
+  --ease:     cubic-bezier(.2,.7,.3,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --ease-io:  cubic-bezier(.65,0,.35,1);
+  --d-fast: 120ms; --d-base: 240ms; --d-slow: 420ms;
 
-  --ease: cubic-bezier(0.2, 0.7, 0.3, 1);
+  /* ---- Layers ----------------------------------------------------------- */
+  --z-panel: 10; --z-card: 20; --z-masthead: 50; --z-lightbox: 100; --z-skip: 200; --z-bar: 300;
+}
+@media (min-width: 621px)  { :root { --edge: 24px; --masthead-h: 4rem; } }
+@media (min-width: 1280px) { :root { --edge: 32px; } }
+/* Legacy justified grid only; the packed gallery ignores both. */
+@media (max-width: 900px)  { :root { --row-h: 210px; --gap: 8px; } }
+@media (max-width: 620px)  { :root { --row-h: 148px; --gap: 5px; } }
+
+/* "Gray": the second ground, switched on by the square at the end of the nav
+   (site.js) and remembered per visitor. Night stays the default whatever the
+   visitor's system setting. A small script in each page's <head> sets
+   data-theme before the first paint so a gray visit never flashes black. A
+   neutral mid-dark gray, so it shifts no photograph's colour. The name
+   "dark" is kept because that script and saved settings use it. Tokens not
+   repeated here (the white-alpha lines, the accent) hold on both grounds. */
+:root[data-theme="dark"] {
+  --bg: #2f2f30; --bg-raised: #3a3a3b; --panel: rgba(47,47,48,.86); --panel-solid: #2f2f30;
+  --hairline: rgba(255,255,255,.14); --hairline-soft: rgba(255,255,255,.08);
+  --text-body: #dcdcd8; --text-dim: #c4c4c1; --text-faint: #a3a3a0;  /* 7.5 / 5.3 on #2f2f30 */
+  --lightbox-bg: rgba(47,47,48,.985);
 }
 
-/* The gray ground, switched on by the toggle in the masthead (site.js) and
-   remembered per visitor. White stays the default whatever the visitor's
-   system setting. A small script in each page's <head> sets data-theme
-   before the first paint so a gray visit never flashes white. A neutral
-   mid-dark gray, not black, so it shifts no photograph's colour. */
-:root[data-theme="dark"] {
-  color-scheme: dark;
-  --bg:            #2f2f30;
-  --bg-raised:     #3a3a3b;
-  --hairline:      #48484a;
-  --text:          #ededeb;
-  --text-dim:      #b9babd;
-  --text-faint:    #94969a;
-  --accent:        #d4a453;   /* the same low sun, lifted to hold up on gray */
-  --on-accent:     #16171b;
-  --lightbox-bg:   rgba(47,47,48,0.985);
+/* A Work card's bracket colour, registered so that it can fade in. */
+@property --card-bk { syntax: "<color>"; inherits: true; initial-value: transparent; }
+
+/* The visitor's own settings, still as tokens. */
+@media (prefers-contrast: more) {
+  :root, :root[data-theme="dark"] { --hairline: rgba(255,255,255,.30); --text-faint: #b0b0ad; }
+}
+/* Glass becomes solid when asked for, or when the browser can't blur. */
+@media (prefers-reduced-transparency: reduce) {
+  :root { --panel: var(--panel-solid); --glass: var(--bg); }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root { --panel: var(--panel-solid); --glass: var(--bg); }
+}
+/* Paper is white whatever the ground on screen. */
+@media print {
+  :root, :root[data-theme="dark"] {
+    color-scheme: light;
+    --bg: #fff; --bg-raised: #fff; --text: #000; --text-body: #000;
+    --text-dim: #333; --text-faint: #555; --hairline: #ccc;
+  }
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -90,10 +166,18 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--sans);
-  font-size: var(--step-0);
+  font-size: var(--t-body);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  transition: background-color .25s var(--ease), color .25s var(--ease);
+}
+/* A column, so the footer's margin-top: auto keeps it at the foot of the
+   window on a short page (Contact). The landing lays itself out. */
+body:not([data-page="globe"]) {
+  display: flex; flex-direction: column;
+  min-height: 100vh;
 }
 
 img { display: block; max-width: 100%; }
@@ -101,13 +185,51 @@ a   { color: inherit; }
 
 ::selection { background: var(--accent); color: var(--on-accent); }
 
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+/* One focus ring everywhere: amber, square, just clear of the thing. */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .skip-link {
-  position: absolute; left: -9999px; top: 0; z-index: 200;
-  background: var(--accent); color: var(--on-accent); padding: 0.6rem 1rem;
+  position: absolute; left: -9999px; top: 0; z-index: var(--z-skip);
+  padding: 14px var(--s4);
+  font: 500 var(--t-label)/16px var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  background: var(--accent); color: var(--on-accent); text-decoration: none;
 }
 .skip-link:focus { left: 0; }
+
+/* ---------- Brackets: "in focus" --------------------------------------
+   Four camera-style corner brackets, drawn as eight 1px background strips so
+   they cost no extra elements. They mean one thing — this is in focus — and
+   so appear only on: the globe's card and active pin, a gallery photograph
+   or Work card under the pointer or keyboard, and a button under the pointer.
+   Never on the header, panels or console.
+
+   .bk draws them on the element itself; such an element must set its surface
+   with background-color, never the `background` shorthand, or the brackets
+   are wiped out. .bk-hover draws them on ::after and fades them in on hover
+   and focus. Set --bk-c on the element (or an ancestor) to recolour them,
+   --bk-len for the arm length, --bk-inset to pull them in. */
+.bk, .bk-hover::after,
+.grid.book .tile::after, .collection-card img,
+.lb-close::after, .lb-nav::after {
+  --bk-ink: var(--bk-c, var(--bracket));
+  background-image:
+    linear-gradient(var(--bk-ink), var(--bk-ink)), linear-gradient(var(--bk-ink), var(--bk-ink)),
+    linear-gradient(var(--bk-ink), var(--bk-ink)), linear-gradient(var(--bk-ink), var(--bk-ink)),
+    linear-gradient(var(--bk-ink), var(--bk-ink)), linear-gradient(var(--bk-ink), var(--bk-ink)),
+    linear-gradient(var(--bk-ink), var(--bk-ink)), linear-gradient(var(--bk-ink), var(--bk-ink));
+  background-repeat: no-repeat;
+  background-size: var(--bk-len) 1px, 1px var(--bk-len), var(--bk-len) 1px, 1px var(--bk-len),
+                   var(--bk-len) 1px, 1px var(--bk-len), var(--bk-len) 1px, 1px var(--bk-len);
+  background-position: 0 0, 0 0, 100% 0, 100% 0, 0 100%, 0 100%, 100% 100%, 100% 100%;
+}
+.bk-hover { position: relative; }
+.bk-hover::after,
+.grid.book .tile::after,
+.lb-close::after, .lb-nav::after {
+  content: ""; position: absolute; inset: var(--bk-inset, 0); pointer-events: none;
+  opacity: 0; transition: opacity var(--d-fast) var(--ease);
+}
+.bk-hover:hover::after, .bk-hover:focus-visible::after { opacity: 1; }
 
 /* ---------- Containers ------------------------------------------------ */
 
@@ -115,7 +237,7 @@ a   { color: inherit; }
   width: 100%;
   max-width: var(--wrap);
   margin-inline: auto;
-  padding-inline: var(--gutter);
+  padding-inline: var(--edge);   /* on a narrow window, flush with the masthead */
 }
 .wrap-wide {
   width: 100%;
@@ -124,270 +246,369 @@ a   { color: inherit; }
   padding-inline: clamp(0.5rem, 2vw, 1.5rem);
 }
 
+/* ---------- Labels, ledes, text links --------------------------------- */
+
 .section-title {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: var(--step--1);
-  letter-spacing: 0.22em;
+  font: 400 var(--t-label)/16px var(--mono);
+  letter-spacing: .16em;
   text-transform: uppercase;
   color: var(--text-faint);
-  margin: 0 0 2rem;
+  margin: 0 0 var(--s5);
 }
 
 .lede {
-  font-size: var(--step-1);
-  line-height: 1.5;
+  font: 400 var(--t-lede)/1.5 var(--sans);
   max-width: var(--measure);
-  color: var(--text-dim);
-  margin: 0 0 1.5rem;
+  color: var(--text);
+  margin: 0 0 var(--s5);
+  text-wrap: pretty;
 }
 
+/* A 44px target round one line of small capitals; the negative margins hand
+   the extra height back, so the line sits where a 28px link would. */
 .text-link {
-  text-decoration: none;
-  font-size: var(--step--1);
-  letter-spacing: 0.08em;
+  display: inline-flex; align-items: center;
+  min-height: 44px; margin-block: -6px -10px;
+  font: 400 var(--t-label)/16px var(--mono);
+  letter-spacing: .14em;
   text-transform: uppercase;
-  color: var(--accent);
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s var(--ease);
+  color: var(--text);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--hairline-strong);
+  text-underline-offset: 7px;
+  transition: text-decoration-color var(--d-fast) var(--ease);
 }
-.text-link:hover { border-bottom-color: var(--accent); }
+.text-link:hover { text-decoration-color: var(--accent); }
 
 /* ---------- Masthead --------------------------------------------------- */
 
+/* A window-level bar: wordmark at the left edge, nav at the right, the same
+   on every page (the landing included), so it never jumps between pages. It
+   is exactly --masthead-h plus its 1px hairline; the gallery opener pulls up
+   behind it by that sum, so nothing inside may make it taller. */
 .masthead {
-  position: sticky; top: 0; z-index: 50;
-  background: color-mix(in srgb, var(--bg) 82%, transparent);
-  backdrop-filter: saturate(150%) blur(14px);
-  -webkit-backdrop-filter: saturate(150%) blur(14px);
+  position: sticky; top: 0; z-index: var(--z-masthead);
+  background: var(--glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--hairline);
 }
+.masthead .wrap { max-width: none; padding-inline: var(--edge); }
 
 .masthead-inner {
   display: flex; align-items: center; justify-content: space-between;
-  gap: 1.5rem; min-height: var(--masthead-h);
+  gap: var(--s5); min-height: var(--masthead-h);
 }
 
-.wordmark { text-decoration: none; display: grid; gap: 0.1rem; }
+.wordmark {
+  display: grid; gap: 2px; align-content: center;
+  min-height: 44px;
+  text-decoration: none; color: var(--text);
+}
 .wordmark-name {
-  font-family: var(--serif);
-  font-size: var(--step-1);
-  line-height: 1.1;
-  letter-spacing: 0.005em;
+  font: 600 15px/1.15 var(--sans);
+  letter-spacing: -.005em;
 }
 .wordmark-sub {
-  font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase;
-  color: var(--text-faint);
+  font: 400 var(--t-label)/1.3 var(--mono);
+  letter-spacing: .24em; text-transform: uppercase;
+  color: var(--text-dim);
 }
 
+/* The nav follows Newton's own drawing: spaced capitals, no rule under the
+   current page. The current page is marked instead by a small amber square
+   before it, set outside the label so nothing shifts from page to page. */
 .nav {
-  display: flex; gap: clamp(1rem, 3vw, 2rem);
-  font-size: var(--step--1); letter-spacing: 0.14em; text-transform: uppercase;
+  display: flex; align-items: center; gap: var(--s6);
 }
 .nav a {
-  text-decoration: none; color: var(--text-dim);
-  padding-block: 0.3rem; border-bottom: 1px solid transparent;
-  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+  position: relative;
+  display: inline-flex; align-items: center;
+  padding: 15.5px 8px;                /* 13 + 31 = a 44px target, and room for the focus ring */
+  margin-inline: -8px;                /* ...handed back, so the gaps stay as set */
+  font: 400 var(--t-ui)/13px var(--sans);
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--text-dim); text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--d-fast) var(--ease);
 }
-.nav a:hover, .nav a[aria-current="page"] {
-  color: var(--text); border-bottom-color: var(--accent);
+.nav a:hover, .nav a[aria-current="page"] { color: var(--text); }
+/* A 4×4 square made of borders, not a fill, so forced-colours mode keeps it. */
+.nav a[aria-current="page"]::before {
+  content: "";
+  position: absolute; right: 100%; top: 50%;
+  margin: -2px 0 0 0;                 /* 8px of the link's own padding sits between */
+  border: 2px solid var(--accent);
 }
 
-/* White / gray switch, added to the nav by site.js. A disc half filled
-   with ink; the filled half follows the ground. */
+/* Night / gray switch, added to the end of the nav by site.js. Its svg disc
+   is replaced by a small square, half filled: the filled half moves across
+   when the gray ground is on. A finger-sized target around it, without
+   moving it. */
 .theme-toggle {
+  position: relative; flex: none;
   appearance: none; background: none; border: 0; cursor: pointer;
-  /* a finger-sized target around the small disc, without moving it */
-  padding: 0.7rem; margin: -0.7rem;
+  width: 44px; height: 44px; padding: 0; margin: -15px;
   color: var(--text-dim);
-  display: inline-flex; align-items: center;
-  transition: color 0.2s var(--ease);
+  transition: color var(--d-fast) var(--ease);
 }
 .theme-toggle:hover { color: var(--text); }
-.theme-toggle svg { width: 0.95rem; height: 0.95rem; display: block; }
+.theme-toggle svg { display: none; }
+.theme-toggle::before, .theme-toggle::after {
+  content: ""; position: absolute; top: 15px; left: 15px; height: 14px;
+}
+.theme-toggle::before { width: 14px; border: 1.5px solid currentColor; }
+.theme-toggle::after  { width: 0; border-left: 7px solid currentColor; }
+.theme-toggle[aria-pressed="true"]::after { left: 22px; }
 
-body { transition: background-color 0.25s var(--ease), color 0.25s var(--ease); }
-
-/* ---------- Hero ------------------------------------------------------- */
-
-.hero {
-  position: relative;
-  min-height: min(82vh, 780px);
-  display: flex; align-items: flex-end;
-  padding-block: clamp(4rem, 12vh, 9rem) clamp(3rem, 8vh, 5rem);
-  overflow: hidden;
-  background: var(--bg-raised);
+@media (max-width: 1023px) {
+  .nav { gap: var(--s5); }
 }
 
-/* Filled by site.js with the featured photograph. */
-.hero-media {
-  position: absolute; inset: 0;
-  background-size: cover; background-position: center;
-  transform: scale(1.04);
-  animation: hero-settle 14s var(--ease) forwards;
-}
-@keyframes hero-settle { to { transform: scale(1); } }
-
-/* The hero sets type over a photograph, so it stays light-on-dark even though
-   the page around it is white. The scrim only darkens where the words sit. */
-.hero-scrim {
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(to top, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.26) 44%, rgba(0,0,0,0.04) 80%);
+/* Five or more nav items no longer fit beside the wordmark below 1024px: the
+   nav wraps to its own full-width row and the bar stops being sticky, which
+   means it is no longer one --masthead-h tall, so the gallery opener stops
+   pulling up behind it. Does nothing with today's three items. */
+@media (min-width: 621px) and (max-width: 1023px) {
+  .masthead:has(.nav > a:nth-of-type(5)) { position: static; }
+  .masthead-inner:has(.nav > a:nth-of-type(5)) { flex-wrap: wrap; row-gap: 0; padding-top: var(--s1); }
+  .masthead-inner:has(.nav > a:nth-of-type(5)) .nav { flex-basis: 100%; }
+  body:has(.nav > a:nth-of-type(5))[data-page="gallery"] .book-lead { margin-top: 0; }
 }
 
-.hero-inner { position: relative; }
-
-.hero-title {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: var(--step-3);
-  line-height: 1.06;
-  letter-spacing: -0.015em;
-  margin: 0 0 1.1rem;
-  text-wrap: balance;
-  color: #fff;
-  text-shadow: 0 2px 40px rgba(0,0,0,0.6);
+/* Phones: two static rows, wordmark then nav. The nav row runs to the
+   window's edges and scrolls sideways once it outgrows them (fading at the
+   right from the fourth item on, as the cue), so every page stays one tap
+   away without a menu button. The opener rules below drop the pull-up at
+   this width for the same reason. */
+@media (max-width: 620px) {
+  .masthead { position: static; }
+  .masthead-inner {
+    flex-direction: column; align-items: stretch; gap: 0;
+    min-height: 0; padding-block: var(--s1) 0;
+  }
+  .wordmark { align-self: flex-start; }
+  .nav {
+    gap: 22px;
+    overflow-x: auto; scrollbar-width: none;
+    margin-inline: calc(-1 * var(--edge));
+    padding-inline: var(--edge);
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav:has(> a:nth-of-type(4)) {
+    -webkit-mask-image: linear-gradient(to right, var(--mask-solid) calc(100% - 24px), transparent);
+            mask-image: linear-gradient(to right, var(--mask-solid) calc(100% - 24px), transparent);
+  }
+  /* The scrolling row would clip a ring drawn outside the link, so here it
+     is drawn just inside, clear of the letters thanks to the padding. */
+  .nav a:focus-visible, .theme-toggle:focus-visible { outline-offset: -2px; }
+  .nav a[aria-current="page"]::before { position: static; margin: -1px 8px 0 0; }
+  .theme-toggle { margin-left: auto; }
 }
 
-.hero-sub {
-  margin: 0 0 2rem;
-  max-width: 30rem;
-  color: rgba(255,255,255,0.86);
-  font-size: var(--step-1);
-  text-shadow: 0 1px 20px rgba(0,0,0,0.7);
+/* ---------- Work index (work.html) -------------------------------------
+   The collection cards from site.js's renderHome, as a contact sheet: every
+   cover whole, in a 3:2 slot (the camera's own frame), sitting on a shared
+   baseline so a panorama lines up with the rest. */
+
+.collections { padding-block: 0 var(--s8); }
+
+.work-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  flex-wrap: wrap; gap: var(--s2) var(--s5);
+  padding-top: var(--s8);
+  margin-bottom: var(--s4);
+}
+.work-head .section-title {
+  margin: 0;
+  font: 500 var(--t-h2)/1.1 var(--sans);
+  letter-spacing: -.015em;
+  text-transform: none;
+  color: var(--text);
 }
 
-.hero-cta {
-  display: inline-block;
-  text-decoration: none;
-  font-size: var(--step--1);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  padding: 0.85rem 1.6rem;
-  color: #fff;
-  border: 1px solid rgba(255,255,255,0.7);
-  transition: background-color 0.25s var(--ease), color 0.25s var(--ease),
-              border-color 0.25s var(--ease);
+/* Globe · Index: the current view takes the same amber square as the nav. */
+.view-switch {
+  display: flex; align-items: center; gap: var(--s6);
+  margin: 0;
+  font: 400 var(--t-label)/16px var(--mono);
+  letter-spacing: .14em; text-transform: uppercase;
 }
-.hero-cta:hover {
-  background: #fff; color: #111; border-color: #fff;
+.view-switch a, .view-switch [aria-current] {
+  display: inline-flex; align-items: center; min-height: 44px;
+}
+.view-switch a {
+  min-width: 44px;                    /* "Globe" alone is narrower than a finger */
+  color: var(--text-faint); text-decoration: none;
+  transition: color var(--d-fast) var(--ease);
+}
+.view-switch a:hover { color: var(--text); }
+.view-switch [aria-current] { color: var(--text); }
+.view-switch [aria-current]::before {
+  content: ""; margin: -1px 8px 0 0; border: 2px solid var(--accent);
 }
 
-/* ---------- Collection cards -------------------------------------------- */
+.work-lede {
+  font: 400 var(--t-body)/1.6 var(--sans);
+  color: var(--text-dim);
+  margin: 0 0 40px;
+}
 
-.collections { padding-block: clamp(3.5rem, 9vw, 6.5rem); }
-
+/* About 352px a card at full width (three across), which is what the
+   card's 380px `sizes` hint in site.js assumes. */
 .collection-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
-  gap: clamp(1rem, 2.5vw, 1.75rem);
+  grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
+  gap: 40px 24px;
+  container-type: inline-size;
 }
 
 .collection-card {
   position: relative;
   display: block;
   text-decoration: none;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  border-radius: var(--radius);
-  background: var(--bg-raised);
-  isolation: isolate;
+  color: var(--text);
 }
+.collection-card:focus-visible { outline-offset: 10px; }
 
 .collection-card img {
-  width: 100%; height: 100%; object-fit: cover;
-  transition: transform 0.8s var(--ease), opacity 0.5s ease;
-}
-.collection-card:hover img,
-.collection-card:focus-visible img { transform: scale(1.05); }
-
-.collection-card::after {
-  content: "";
-  position: absolute; inset: 0; z-index: 1;
-  background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.15) 55%, rgba(0,0,0,0.05) 100%);
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: contain;
+  object-position: 50% 100%;
+  background-color: transparent;
+  --bk-len: 14px;
+  --bk-c: var(--card-bk);              /* transparent until hovered (see @property) */
+  transition: opacity .5s var(--ease), --card-bk var(--d-fast) var(--ease);
 }
 
-/* Card text sits on the dark gradient over a photograph, so it stays light
-   even on a white page. Empty cards have no gradient — see .is-empty below. */
-.card-body {
-  position: absolute; inset: auto 0 0 0; z-index: 2;
-  padding: 1.4rem 1.5rem;
-  color: #fff;
+/* Where the browser can measure a card (container queries), the 3:2 slot
+   becomes a grid row of exactly card-width / 1.5, and the photograph sits
+   at the bottom of it at its own shape, so the brackets can hug the
+   photograph itself rather than an empty slot: they are drawn in a 6px
+   ring of padding round it, which the negative margins hand back so the
+   photograph still lines up with the title. The --card-w steps repeat the
+   auto-fill above: n columns once the grid is n × 340px + gaps wide. An
+   upright cover (none today) is contained, centred, in the full-width row.
+   Older browsers keep the plain 3:2 box and go without the brackets. */
+@supports (container-type: inline-size) {
+  .collection-card {
+    --card-w: 100cqw;
+    display: grid;
+    grid-template-rows: calc(var(--card-w) / 1.5) auto;
+  }
+  @container (min-width: 704px)  { .collection-card { --card-w: calc((100cqw - 24px) / 2); } }
+  @container (min-width: 1068px) { .collection-card { --card-w: calc((100cqw - 48px) / 3); } }
+  @container (min-width: 1432px) { .collection-card { --card-w: calc((100cqw - 72px) / 4); } }
+  .collection-card img {
+    align-self: end;
+    box-sizing: content-box;
+    height: auto; max-height: 100%;
+    aspect-ratio: auto;
+    padding: 6px; margin: 0 -6px -6px;
+  }
+  .collection-card:hover img,
+  .collection-card:focus-visible img { --card-bk: var(--bracket); }
+
+  /* One card across (phones): there is no row to share a baseline with, so
+     the slot shrinks to the photograph, and a panorama no longer leaves a
+     hole above it. Until the file arrives the slot holds a 3:2 box (the
+     `auto 3 / 2`), so lazy loading still sees each card where it will be.
+     The cap holds an upright (none today) to a 3:2 height, contained, as
+     on wider pages. */
+  @container (width < 704px) {
+    .collection-card { grid-template-rows: auto auto; }
+    .collection-card img {
+      aspect-ratio: auto 3 / 2;
+      max-height: calc(var(--card-w) / 1.5);
+      margin-top: -6px;
+    }
+  }
 }
+
+.card-body { padding: var(--s3) 0 0; }
 .card-title {
-  font-family: var(--serif);
-  font-size: var(--step-2);
-  line-height: 1.1;
   margin: 0;
+  font: 500 18px/1.3 var(--sans);
+  letter-spacing: -.005em;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+  transition: text-decoration-color var(--d-fast) var(--ease);
 }
+.collection-card:hover .card-title,
+.collection-card:focus-visible .card-title { text-decoration-color: currentColor; }
 .card-sub {
-  margin: 0.2rem 0 0;
-  font-size: var(--step--1);
-  color: rgba(255,255,255,0.72);
+  margin: var(--s1) 0 0;
+  font: 400 var(--t-label)/16px var(--mono);
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-faint);
 }
-/* An empty collection shouldn't look broken — it looks *pending*. */
-.collection-card.is-empty { border: 1px dashed var(--hairline); }
-.collection-card.is-empty::after { background: none; }
-/* No gradient behind it, so this one follows the page, not the photograph. */
-.collection-card.is-empty .card-body { color: var(--text-dim); }
-.collection-card.is-empty .card-title,
-.collection-card.is-empty .card-sub { color: var(--text-dim); }
+/* An empty collection shouldn't look broken — it looks *pending*. (None is
+   listed today; the rule is a backstop.) */
+.collection-card.is-empty::before {
+  content: ""; display: block; aspect-ratio: 3 / 2;
+  border: 1px dashed var(--hairline-strong);
+}
+.collection-card.is-empty .card-title { color: var(--text-dim); }
 
-/* ---------- About teaser ------------------------------------------------ */
+/* ---------- About teaser (end of the Work page) ------------------------ */
 
 .about-teaser {
-  padding-block: clamp(3rem, 7vw, 5rem);
+  padding-block: var(--s8);
   border-top: 1px solid var(--hairline);
 }
 
-/* ---------- Gallery page ------------------------------------------------ */
-
-.gallery-head {
-  padding-block: clamp(3rem, 8vw, 5.5rem) clamp(1.75rem, 4vw, 2.75rem);
-}
-.gallery-title {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: var(--step-3);
-  line-height: 1.05;
-  margin: 0 0 0.5rem;
-  letter-spacing: -0.015em;
-}
-/* One date for the whole collection, sitting under its title. */
-.gallery-date {
-  margin: 0.35rem 0 1.25rem;
-  color: var(--text-faint);
-  font-size: var(--step--1);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-.gallery-sub {
-  margin: 0 0 1.25rem;
-  color: var(--accent);
-  font-size: var(--step--1);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-/* A blurb can run to several paragraphs: collections.json separates them with
-   a blank line ("\n\n"), and pre-line shows that line as the gap. */
-.gallery-blurb { max-width: var(--measure); color: var(--text-dim); margin: 0; white-space: pre-line; }
-
-/* All optional — collapse rather than leaving a gap. */
-.gallery-date:empty, .gallery-sub:empty, .gallery-blurb:empty { display: none; }
+/* ---------- Gallery page: the rail ------------------------------------ */
 
 .back-link {
-  display: inline-block;
-  margin-bottom: 1.5rem;
-  font-size: var(--step--1);
-  letter-spacing: 0.12em;
+  display: block; width: fit-content;
+  padding-block: 14px; margin-block: -14px;   /* a 44px target that takes one line */
+  font: 400 var(--t-label)/16px var(--mono);
+  letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--text-faint);
   text-decoration: none;
-  transition: color 0.2s var(--ease);
+  transition: color var(--d-fast) var(--ease);
 }
 .back-link:hover { color: var(--text); }
+
+.gallery-title {
+  font: 500 var(--t-h1)/1.05 var(--sans);
+  letter-spacing: -.02em;
+  margin: var(--s4) 0 var(--s3);
+  text-wrap: balance;
+}
+/* One date for the whole collection, sitting under its title. */
+.gallery-date {
+  margin: 0 0 var(--s2);
+  font: 400 var(--t-label)/16px var(--mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.gallery-sub {
+  margin: 0 0 var(--s2);
+  font: 400 var(--t-label)/16px var(--mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+/* A blurb can run to several paragraphs: collections.json separates them with
+   a blank line ("\n\n"), and pre-line shows that line as the gap. */
+.gallery-blurb {
+  max-width: 34rem;
+  margin: var(--s5) 0 0;
+  font: 400 var(--t-body)/1.7 var(--sans);
+  color: var(--text-dim);
+  white-space: pre-line;
+}
+
+/* All optional — collapse rather than leaving a gap. */
+.gallery-date:empty, .gallery-sub:empty, .gallery-blurb:empty { display: none; }
 
 /* Justified rows via flexbox.
    Each tile carries its aspect ratio in --ar, set inline from photos.json:
@@ -395,14 +616,18 @@ body { transition: background-color 0.25s var(--ease), color 0.25s var(--ease); 
      flex-grow  = ar          → every tile in a row scales by the same factor,
                                 so their heights stay equal
      aspect-ratio = ar        → height follows from the final width
-   The ::after soaks up leftover grow so a lone last photo isn't stretched. */
+   The ::after soaks up leftover grow so a lone last photo isn't stretched.
+   The packed gallery (.grid.book, below) overrides most of this, but the
+   base .tile still gives it its box rules, so treat it as live. */
 
 .grid { display: flex; flex-wrap: wrap; gap: var(--gap); }
 .grid::after { content: ""; flex-grow: 1e6; }
 
 .grid-status {
   width: 100%; text-align: center; padding: 4rem 1rem;
-  color: var(--text-faint); font-size: var(--step--1);
+  font: 400 var(--t-label)/16px var(--mono);
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-faint);
 }
 
 .tile {
@@ -420,83 +645,97 @@ body { transition: background-color 0.25s var(--ease), color 0.25s var(--ease); 
   cursor: zoom-in;
 }
 
+/* No zoom on hover: the photograph holds still and the brackets come up. */
 .tile img {
   width: 100%; height: 100%; object-fit: cover;
-  transition: transform 0.7s var(--ease), opacity 0.5s ease;
+  transition: opacity 0.5s ease;
 }
 .tile img[data-loaded="false"] { opacity: 0; }
-.tile:hover img, .tile:focus-visible img { transform: scale(1.04); }
 
+/* The hover caption behind CAPTIONS.grid in site.js. Both switches are off,
+   so nothing is ever printed on a photograph; this stays so that flipping one
+   still works as CLAUDE.md describes. */
 .tile-label {
   position: absolute; inset: auto 0 0 0;
-  padding: 3rem 1rem 0.85rem;
-  background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0));
-  color: #fff; text-align: left;
-  opacity: 0; transform: translateY(6px);
-  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+  padding: var(--s7) var(--s4) var(--s3);
+  background: linear-gradient(to top, var(--panel-solid), transparent);
+  color: var(--text); text-align: left;
+  opacity: 0; transition: opacity var(--d-base) var(--ease);
   pointer-events: none;
 }
-.tile:hover .tile-label, .tile:focus-visible .tile-label {
-  opacity: 1; transform: none;
-}
-.tile-title {
-  display: block; font-family: var(--serif); font-size: var(--step-0);
-  line-height: 1.25;
-}
+.tile:hover .tile-label, .tile:focus-visible .tile-label { opacity: 1; }
+.tile-title { display: block; font: 500 var(--t-row)/1.3 var(--sans); }
 .tile-place {
-  display: block; font-size: 0.7rem; letter-spacing: 0.08em;
-  color: rgba(255,255,255,0.7); margin-top: 0.1rem;
+  display: block; margin-top: 2px; color: var(--text-dim);
+  font: 400 var(--t-label)/16px var(--mono); letter-spacing: .14em; text-transform: uppercase;
 }
 
-/* ---------- Prose pages -------------------------------------------------- */
+/* ---------- Prose pages (legacy) ------------------------------------------
+   Nothing uses .prose now; it is the fallback if a plain text page is ever
+   wanted. .contact-list is live, inside Contact's prose. */
 
 .prose { padding-block: clamp(3rem, 8vw, 5.5rem); }
 .prose h1 {
-  font-family: var(--serif); font-weight: 400;
-  font-size: var(--step-3); line-height: 1.05;
-  margin: 0 0 1.5rem; letter-spacing: -0.015em;
+  font: 500 var(--t-h1)/1.05 var(--sans);
+  margin: 0 0 1.5rem; letter-spacing: -.02em;
 }
 .prose h2 {
-  font-family: var(--serif); font-weight: 400;
-  font-size: var(--step-2); margin: 2.5rem 0 0.75rem;
+  font: 500 var(--t-h3)/1.25 var(--sans);
+  margin: 2.5rem 0 0.75rem;
 }
-.prose p { max-width: var(--measure); color: var(--text-dim); margin: 0 0 1.15rem; }
-.prose a { color: var(--text); text-decoration-color: var(--accent); text-underline-offset: 4px; }
+.prose p { max-width: var(--measure); color: var(--text-body); margin: 0 0 1.15rem; }
+.prose a { color: var(--text); text-decoration-color: var(--hairline-strong); text-underline-offset: 4px; }
 
+/* Rows a full finger tall, with a hairline between each. */
 .contact-list {
-  list-style: none; margin: 1.5rem 0 0; padding: 0;
-  display: flex; flex-wrap: wrap; gap: 1.5rem;
+  list-style: none; margin: var(--s5) 0 0; padding: 0;
 }
+.contact-list li {
+  display: flex; align-items: center;
+  min-height: 48px;
+}
+.contact-list li + li { border-top: 1px solid var(--hairline); }
 .contact-list a {
-  color: var(--text); text-decoration: none;
-  border-bottom: 1px solid var(--accent); padding-bottom: 2px;
+  display: inline-flex; align-items: center;
+  min-height: 44px; min-width: 44px;  /* the row's height, not just the line's */
 }
-.contact-list a:hover { color: var(--accent); }
 
 /* ---------- Footer -------------------------------------------------------- */
 
 .footer {
   border-top: 1px solid var(--hairline);
-  padding-block: 2.5rem 3.5rem;
+  padding-block: var(--s6) var(--s7);
   margin-top: auto;
 }
+.footer .wrap { max-width: none; padding-inline: var(--edge); }   /* aligned with the masthead */
 .footer-inner {
-  display: flex; flex-wrap: wrap; gap: 1rem;
-  align-items: baseline; justify-content: space-between;
+  display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5);
+  align-items: center; justify-content: space-between;
 }
-.footer p { margin: 0; color: var(--text-faint); font-size: var(--step--1); }
-.footer-links { display: flex; gap: 1.25rem; }
-.footer-links a { text-decoration: none; }
+.footer p { margin: 0; color: var(--text-faint); font: 400 var(--t-ui)/1.5 var(--sans); }
+.footer .footer-links { display: flex; gap: var(--s5); }
+.footer-links a {
+  display: inline-flex; align-items: center; min-height: 44px; min-width: 44px;
+  font: 400 var(--t-label)/16px var(--mono);
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-faint); text-decoration: none;
+  transition: color var(--d-fast) var(--ease);
+}
 .footer-links a:hover { color: var(--text); }
 
 /* ---------- Lightbox ------------------------------------------------------ */
 
 .lightbox {
-  position: fixed; inset: 0; z-index: 100;
+  position: fixed; inset: 0; z-index: var(--z-lightbox);
   background: var(--lightbox-bg);
   display: grid; place-items: center;
-  padding: clamp(1rem, 4vw, 3rem);
-  animation: fade-in 0.22s ease;
+  /* The margin round the photograph, and how far a 48px arrow at the
+     window's edge would reach past it onto the photograph (none from
+     1200px up, where the margin is a full 3rem). */
+  --lb-pad: clamp(1rem, 4vw, 3rem);
+  --lb-over: max(0px, 48px - var(--lb-pad));
+  padding: var(--lb-pad);
+  animation: fade-in var(--d-base) var(--ease);
 }
 .lightbox[hidden] { display: none; }
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
@@ -512,13 +751,18 @@ body { transition: background-color 0.25s var(--ease), color 0.25s var(--ease); 
 }
 .lb-caption { text-align: center; max-width: 46rem; }
 .lb-title {
-  font-family: var(--serif); font-weight: 400;
-  font-size: var(--step-1); margin: 0 0 0.25rem;
+  font: 500 var(--t-lede)/1.3 var(--sans);
+  margin: 0 0 0.25rem;
 }
-.lb-meta { margin: 0; color: var(--text-dim); font-size: var(--step--1); }
+.lb-meta {
+  margin: 0; color: var(--text-dim);
+  font: 400 var(--t-meta)/1.5 var(--mono); letter-spacing: .02em;
+}
+/* The one line of text the site ever prints with a photograph. */
 .lb-exif {
   margin: 0.4rem 0 0; color: var(--text-faint);
-  font-size: 0.72rem; letter-spacing: 0.06em;
+  font: 400 var(--t-meta)/1.5 var(--mono);
+  letter-spacing: .02em;
   font-variant-numeric: tabular-nums;
 }
 .lb-title:empty, .lb-meta:empty, .lb-exif:empty { display: none; }
@@ -527,39 +771,61 @@ body { transition: background-color 0.25s var(--ease), color 0.25s var(--ease); 
 .lightbox.is-bare .lb-figure { gap: 0; }
 .lightbox.is-bare .lb-image { max-height: calc(100vh - 5rem); }
 
+/* Square controls on the dark: close outlined, the arrows bare until the
+   pointer finds them. All three bring up the brackets on hover. */
 .lb-close, .lb-nav {
-  position: absolute; appearance: none; background: none; border: 0;
-  color: var(--text-faint); cursor: pointer; line-height: 1;
-  transition: color 0.18s var(--ease);
+  position: absolute;
+  display: grid; place-items: center;
+  padding: 0;
+  appearance: none; background: none; border: 0; border-radius: 0;
+  color: var(--text-dim); cursor: pointer;
+  font-family: var(--sans); font-weight: 300; line-height: 1;
+  transition: color var(--d-fast) var(--ease), background-color var(--d-fast) var(--ease);
 }
 .lb-close:hover, .lb-nav:hover { color: var(--text); }
-.lb-close { top: 0.75rem; right: 1rem; font-size: 2.4rem; padding: 0.25rem 0.6rem; }
-.lb-nav   { top: 50%; transform: translateY(-50%); font-size: 3.25rem; padding: 0.5rem 1rem; }
-.lb-prev  { left: 0.25rem; }
-.lb-next  { right: 0.25rem; }
+.lb-close:hover::after, .lb-nav:hover::after { opacity: 1; }
+/* On hover the close button's square draws back to its corners. */
+.lb-close {
+  top: var(--s4); right: var(--s4);
+  width: 44px; height: 44px;
+  border: 1px solid var(--hairline-strong);
+  font-size: 26px;
+  padding-bottom: 2px;               /* optical: × sits low in the em */
+  --bk-inset: -1px;
+}
+.lb-close:hover { border-color: transparent; }
+.lb-nav {
+  top: 50%; transform: translateY(-50%);
+  width: 48px; height: 48px;
+  border: 1px solid transparent;     /* invisible, except in forced colours */
+  font-size: 40px;
+  padding-bottom: 5px;               /* optical: the chevrons sit low in the em */
+}
+/* Flush with the window's edges, so the arrows stand in the lightbox's side
+   margin. Where that margin is narrower than the arrow, the glyph and its
+   brackets keep to the margin and only the invisible rest of the target
+   reaches over the photograph: nothing is drawn on it. */
+.lb-prev  { left: 0;  padding-right: var(--lb-over); --bk-inset: 0 var(--lb-over) 0 0; }
+.lb-next  { right: 0; padding-left:  var(--lb-over); --bk-inset: 0 0 0 var(--lb-over); }
 
 body.lb-open { overflow: hidden; }
 
 /* ---------- Responsive ---------------------------------------------------- */
 
-@media (max-width: 900px) {
-  :root { --row-h: 210px; --gap: 8px; }
-  .hero { min-height: 68vh; }
+/* On a phone the arrows move to the bottom corners, under the thumb. So they
+   do on any window narrower than 6:5 below 1200px: there the side margin
+   (4vw) is thinner than an arrow and a 3:2 photograph fills the width, but
+   the caption's allowance leaves room underneath. */
+@media (max-width: 620px), (max-width: 1199px) and (max-aspect-ratio: 6 / 5) {
+  .lb-nav { top: auto; bottom: var(--s4); transform: none; padding-inline: 0; --bk-inset: 0; }
+  .lb-prev { left: var(--s4); }
+  .lb-next { right: var(--s4); }
 }
 
 @media (max-width: 620px) {
-  :root { --row-h: 148px; --gap: 5px; }
-
-  .masthead { position: static; }
-  .masthead-inner { flex-direction: column; align-items: flex-start; gap: 0.6rem; padding-block: 0.9rem; }
-
-  /* Hover captions are meaningless on touch — the lightbox carries them. */
-  .tile-label { display: none; }
-
-  .lb-nav { font-size: 2.4rem; padding: 0.4rem 0.5rem; }
   .lb-image { max-height: calc(100vh - 15rem); }
 
-  .footer-inner { flex-direction: column; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -568,19 +834,22 @@ body.lb-open { overflow: hidden; }
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
-  .tile:hover img, .collection-card:hover img { transform: none; }
 }
 
 @media print {
-  .masthead, .lightbox, .footer, .hero-cta { display: none !important; }
-  body { background: #fff; color: #000; }
+  .masthead, .lightbox, .footer { display: none !important; }
+  body { background: var(--bg); color: var(--text); }
 }
 /* ==========================================================================
-   Packed-grid gallery. Append to assets/site.css.
+   Packed-grid gallery.
 
    Rows are flush at every window width because exactly one cell per row
    carries an aspect-ratio (the anchor) and every other cell stretches to the
    height that cell sets. No measurement, no resize handling.
+
+   Every rule in this section that sets a size, a share or a breakpoint is
+   mirrored by a `sizes` hint in site.js; the skin (colours, brackets) is
+   the only part that is free to change.
    ========================================================================== */
 
 /* --- opener: the full width of the window ------------------------------ */
@@ -597,7 +866,7 @@ body.lb-open { overflow: hidden; }
 }
 
 /* ...and up behind the masthead, so the photograph starts at the very top of
-   the window with no white band above it. The bar is sticky and therefore in
+   the window with no band above it. The bar is sticky and therefore in
    flow, so the opener is pulled back by exactly its height plus its hairline.
    Below 620px the bar goes static and stacks into two rows, so its height is
    no longer --masthead-h and the bleed is dropped rather than guessed at. */
@@ -606,20 +875,13 @@ body.lb-open { overflow: hidden; }
     margin-top: calc(-1 * (var(--masthead-h) + 1px));
   }
 
-  /* The bar has always been frosted glass; over white it just reads as white.
-     Letting more of the photograph through is what makes the bleed visible,
-     and 74% is as far as that can go. Measured against the worst pixel under
-     the bar on every opener in the site, it holds the nav at 4.6:1 — the
-     binding case is Florida's dark sky, and anything more transparent drops
-     it under 4.5:1. The wordmark subline is too faint to survive a
-     photograph behind it at any opacity, so here it takes the dimmer ink,
-     which puts it at 4.0:1 — better than the 3.3:1 it has on plain white. */
+  /* Over a photograph the bar is the same frosted glass as everywhere else,
+     88% ground, with its hairline made transparent so no rule crosses the
+     opener. With light ink the worst case is a white sky under the bar;
+     measured there, the dim nav still holds 5.7:1. */
   body[data-page="gallery"] .masthead {
-    background: color-mix(in srgb, var(--bg) 74%, transparent);
     border-bottom-color: transparent;
   }
-
-  body[data-page="gallery"] .wordmark-sub { color: var(--text-dim); }
 }
 
 .book-opener {
@@ -670,8 +932,7 @@ body.lb-open { overflow: hidden; }
   align-items: start;
 }
 
-.book-rail { text-align: left; }
-.book-rail .gallery-title { margin-top: 0; }
+.book-rail { text-align: left; padding-inline: var(--rail-inset); }
 
 @media (max-width: 1000px) {
   .book-body { display: block; }
@@ -703,7 +964,8 @@ body.lb-open { overflow: hidden; }
 }
 
 /* Cells crop to fill, so a landscape can become a squarer landscape and an
-   upright a squarer upright — never one into the other. */
+   upright a squarer upright — never one into the other. Each cell is a
+   --bg-raised well until its photograph has loaded. */
 .grid.book .tile {
   position: relative;
   display: block;
@@ -713,7 +975,7 @@ body.lb-open { overflow: hidden; }
   padding: 0;
   border: 0;
   margin: 0;
-  background: none;
+  background: var(--bg-raised);
   overflow: hidden;
   cursor: zoom-in;
   aspect-ratio: auto;
@@ -737,6 +999,15 @@ body.lb-open { overflow: hidden; }
   flex: 0 0 auto;
   aspect-ratio: var(--cell-ar);
 }
+
+/* Under the pointer or keyboard a photograph is "in focus": a hairline
+   inside its edge and the corner brackets 8px in. Nothing is ever printed
+   on it. Focus adds the amber ring outside, like everywhere else. */
+.grid.book .tile { --bk-len: 14px; --bk-inset: 8px; }
+.grid.book .tile:hover { outline: 1px solid var(--tile-edge); outline-offset: -1px; }
+.grid.book .tile:hover::after,
+.grid.book .tile:focus-visible::after { opacity: 1; }
+.grid.book .tile:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 /* A four-frame sequence (SSSS in site.js). Four across on a phone would make
    each frame a thumbnail, so below the breakpoint the strip folds into two
@@ -763,14 +1034,12 @@ body.lb-open { overflow: hidden; }
    Prose pages (About, Contact)
 
    The gallery's vocabulary applied to text: a left rail against a right-hand
-   column, tiny letterspaced labels, hairline rules between sections. The
+   column, small tracked mono labels, hairline rules between sections. The
    photograph is a quiet band rather than an opener — this page is text, and
    the photographs are not the subject.
-
-   Colours come from :root, not from this block. The handoff this came from
-   assumed a #fafafa page; the site is white.
    ========================================================================== */
 
+/* The band's 44vh is mirrored by the sizes hint written into about.html. */
 .about-band {
   display: flex;
   justify-content: center;
@@ -785,6 +1054,7 @@ body.lb-open { overflow: hidden; }
 }
 
 .about-body {
+  padding-inline: max(var(--edge), clamp(0.5rem, 2vw, 1.5rem));   /* text aligned with the masthead */
   display: grid;
   grid-template-columns: minmax(200px, 1fr) 62%;
   column-gap: 3%;
@@ -795,29 +1065,23 @@ body.lb-open { overflow: hidden; }
 /* No band above it, so it has to make its own headroom. */
 .about-body.is-bare { padding-top: clamp(3rem, 8vw, 5.5rem); }
 
-.about-body .contact-list { margin-bottom: 1rem; }
-
 .about-rail {
   position: sticky;
   top: calc(var(--masthead-h) + 2rem);
   text-align: left;
-  padding-top: 0.25rem;
 }
 
 .about-title {
   margin: 0;
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: var(--step--1);
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
+  font: 500 var(--t-h2)/1.1 var(--sans);
+  letter-spacing: -.015em;
   color: var(--text);
 }
 
 .about-name {
-  margin: 1rem 0 0;
-  font-size: 0.62rem;
-  letter-spacing: 0.26em;
+  margin: var(--s3) 0 0;
+  font: 400 var(--t-label)/16px var(--mono);
+  letter-spacing: .18em;
   text-transform: uppercase;
   color: var(--text-faint);
 }
@@ -825,77 +1089,97 @@ body.lb-open { overflow: hidden; }
 .about-jump {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-  margin-top: 2.1rem;
+  max-width: 15rem;
+  margin-top: var(--s6);
+  border-top: 1px solid var(--hairline-soft);
 }
 
 .about-jump a {
-  font-size: 0.62rem;
-  letter-spacing: 0.2em;
+  display: flex; align-items: center;
+  min-height: 32px;
+  font: 400 var(--t-label)/16px var(--mono);
+  letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--text-faint);
   text-decoration: none;
-  transition: color 0.2s var(--ease);
+  border-bottom: 1px solid var(--hairline-soft);
+  transition: color var(--d-fast) var(--ease);
 }
 .about-jump a:hover { color: var(--text); }
 
 .about-prose {
   min-width: 0;
   max-width: 62ch;
+  font: 400 var(--t-body)/1.7 var(--sans);
+  color: var(--text-body);
 }
 
 /* The opening paragraph, whichever one it is — a position rather than a
    class, so that rewriting the page in edit mode can't lose the lede by
    deleting the paragraph that happened to be carrying it. */
 .about-prose > p:first-child {
-  margin: 0 0 3.5em;
-  max-width: none;
-  font-size: var(--step-1);
-  line-height: 1.62;
+  margin: 0 0 var(--s7);
+  font-size: var(--t-lede);
+  line-height: 1.4;
+  letter-spacing: -.005em;
   color: var(--text);
   text-wrap: pretty;
 }
 
 .about-prose p {
   margin: 0 0 1.5em;
-  max-width: none;
-  font-size: var(--step-0);
-  line-height: 1.78;
-  color: var(--text-dim);
   text-wrap: pretty;
 }
 
-/* Section headings are ruled small caps, not display type — the rail already
-   carries the page's voice. */
+/* Section headings are ruled mono labels, not display type — the rail
+   already carries the page's voice. */
 .about-prose h2 {
-  margin: 4em 0 1.15em;
-  padding-top: 1.1em;
+  margin: var(--s7) 0 var(--s4);
+  padding-top: var(--s5);
   border-top: 1px solid var(--hairline);
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: 0.68rem;
-  letter-spacing: 0.3em;
+  font: 400 var(--t-label)/16px var(--mono);
+  letter-spacing: .16em;
   text-transform: uppercase;
-  color: var(--text);
+  color: var(--text-faint);
   scroll-margin-top: calc(var(--masthead-h) + 2rem);
+}
+.about-prose h3 {
+  margin: var(--s6) 0 var(--s2);
+  font: 500 18px/1.35 var(--sans);
+  color: var(--text);
+}
+.about-prose ul:not(.contact-list), .about-prose ol { margin: 0 0 1.5em; padding-left: 1.2em; }
+.about-prose blockquote {
+  margin: 0 0 1.5em; padding-left: var(--s4);
+  border-left: 1px solid var(--hairline-strong);
+  color: var(--text-dim);
 }
 
 .about-prose > *:first-child { margin-top: 0; }
 
-.about-prose a {
+.about-prose a, .contact-list a {
   color: var(--text);
-  text-decoration-color: var(--accent);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--hairline-strong);
   text-underline-offset: 4px;
+  transition: text-decoration-color var(--d-fast) var(--ease);
 }
+.about-prose a:hover, .contact-list a:hover { text-decoration-color: var(--accent); }
 
-/* Reuses .contact-list from the old prose rules, minus its top margin — the
-   rhythm here is set by the h2 above it. */
-.about-prose .contact-list { margin-top: 0; }
+/* Reuses .contact-list from the old prose rules; the rhythm here is set by
+   the paragraph above it. */
+.about-prose .contact-list { margin: 0 0 var(--s4); }
 
 @media (max-width: 1000px) {
   .about-body { display: block; }
   .about-rail { position: static; margin-bottom: 3.5vh; }
-  .about-jump { flex-direction: row; gap: 1.25rem; margin-top: 1.1rem; }
+  .about-jump { flex-direction: row; flex-wrap: wrap; column-gap: var(--s5); max-width: none; margin-top: var(--s3); border-top: 0; }
+  .about-jump a { min-height: 44px; min-width: 44px; border-bottom: 0; }
+}
+/* The rail's 32px rows are for a mouse; a finger gets 44 at any width. */
+@media (pointer: coarse) {
+  .about-jump a { min-height: 44px; }
 }
 
 /* ==========================================================================
@@ -906,68 +1190,73 @@ body.lb-open { overflow: hidden; }
 
    Deliberately plain: it is scaffolding around the page, and it should not
    be mistaken for part of the design while you're looking past it at the
-   words. The one place it borrows from the site is the small letterspaced
-   caps, so the bar doesn't read as a browser dialog.
+   words. The one place it borrows from the site is the mono labels, so the
+   bar doesn't read as a browser dialog. Black in both grounds, with an
+   amber rule, so it never melts into the page.
    ========================================================================== */
-
-:root { --nl-bar-h: 2.9rem; }
 
 .nl-bar {
   position: fixed;
   inset: 0 0 auto 0;
-  z-index: 200;
+  z-index: var(--z-bar);
   height: var(--nl-bar-h);
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 0 var(--gutter);
+  gap: var(--s4);
+  padding: 0 var(--edge);
   background: var(--bar);
-  color: #fff;
+  border-bottom: 1px solid var(--accent);
+  color: var(--text);
 }
 
 .nl-bar-label {
-  font-size: 0.62rem;
-  letter-spacing: 0.26em;
+  font: 500 var(--t-label)/16px var(--mono);
+  letter-spacing: .2em;
   text-transform: uppercase;
-  opacity: 0.75;
+  color: var(--accent);
   flex: none;
 }
 
 .nl-bar-hint {
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.72);
+  font: 400 var(--t-ui)/1.4 var(--sans);
+  color: var(--text-dim);
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.nl-bar-hint.is-bad { color: #ffb4a2; }
+.nl-bar-hint.is-bad { color: var(--warn); }
 
-.nl-bar-actions { margin-left: auto; display: flex; gap: 0.5rem; flex: none; }
+.nl-bar-actions { margin-left: auto; display: flex; gap: var(--s2); flex: none; }
 
 .nl-btn {
-  font: inherit;
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  font: 400 var(--t-label)/16px var(--mono);
+  letter-spacing: .14em;
   text-transform: uppercase;
-  padding: 0.42rem 0.9rem;
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  border-radius: var(--radius);
+  padding: 7px 14px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 0;
   background: transparent;
-  color: #fff;
+  color: var(--text);
   cursor: pointer;
-  transition: background 0.15s var(--ease), opacity 0.15s var(--ease);
+  transition: background-color var(--d-fast) var(--ease), border-color var(--d-fast) var(--ease),
+              opacity var(--d-fast) var(--ease);
 }
-.nl-btn:hover { background: rgba(255, 255, 255, 0.12); }
-.nl-btn-go { background: var(--accent); border-color: var(--accent); }
-.nl-btn-go:hover { background: #b07d29; }
-.nl-btn:disabled { opacity: 0.4; cursor: default; background: transparent; border-color: rgba(255, 255, 255, 0.2); }
-.nl-btn-quiet { padding-inline: 0.6rem; }
+.nl-btn:hover { background: var(--wash); }
+.nl-btn-go { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.nl-btn-go:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.nl-btn:disabled {
+  opacity: 0.4; cursor: default;
+  background: transparent; border-color: var(--hairline-strong); color: var(--text);
+}
+.nl-btn-quiet { padding-inline: 10px; font-size: 15px; }
 
-/* The bar sits above everything, so the sticky masthead moves down to meet
-   it rather than sliding underneath. */
+/* The bar sits above everything, so the sticky masthead (and the prose
+   rail pinned under it) moves down to meet it rather than sliding
+   underneath. */
 body.is-editing { padding-top: var(--nl-bar-h); }
 body.is-editing .masthead { top: var(--nl-bar-h); }
+body.is-editing .about-rail { top: calc(var(--nl-bar-h) + var(--masthead-h) + 2rem); }
 
 /* A slot marked data-edit-lines keeps the line breaks typed into it. The hero
    title is the one that needs this: its break is a deliberate one, and editing
@@ -978,15 +1267,15 @@ body.is-editing .masthead { top: var(--nl-bar-h); }
 /* ---- the editable regions themselves ---------------------------------- */
 
 .is-editing [data-edit] {
-  outline: 1px dashed var(--hairline);
+  outline: 1px dashed var(--edit-dash);
   outline-offset: 6px;
-  border-radius: var(--radius);
-  transition: outline-color 0.15s var(--ease);
+  border-radius: 0;
+  transition: outline-color var(--d-fast) var(--ease);
   cursor: text;
 }
 .is-editing [data-edit]:hover { outline-color: var(--text-faint); }
 .is-editing [data-edit]:focus {
-  outline: 2px solid var(--accent);
+  outline: 1px solid var(--accent);
   outline-offset: 6px;
 }
 
@@ -1008,73 +1297,88 @@ body.is-editing .masthead { top: var(--nl-bar-h); }
 
 .nl-format {
   position: absolute;
-  z-index: 210;
+  z-index: calc(var(--z-bar) + 10);
   display: none;
   gap: 1px;
   padding: 2px;
   background: var(--bar);
-  border-radius: var(--radius);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+  border: 1px solid var(--hairline-strong);
+  border-radius: 0;
 }
 .nl-format.is-on { display: flex; }
 
 .nl-fmt {
-  font: inherit;
-  font-size: 0.8rem;
+  font: 400 var(--t-ui)/1 var(--sans);
   min-width: 2rem;
-  padding: 0.3rem 0.45rem;
+  padding: 0.4rem 0.45rem;
   border: 0;
   background: transparent;
-  color: #fff;
+  color: var(--text);
   cursor: pointer;
-  border-radius: 1px;
+  border-radius: 0;
 }
-.nl-fmt:hover { background: rgba(255, 255, 255, 0.16); }
+.nl-fmt:hover { background: var(--wash); }
 
 /* ---- settings panel ---------------------------------------------------- */
 
 .nl-settings {
   position: fixed;
-  z-index: 210;
+  z-index: calc(var(--z-bar) + 10);
   top: calc(var(--nl-bar-h) + 0.75rem);
-  right: var(--gutter);
-  width: min(28rem, calc(100vw - 2 * var(--gutter)));
-  padding: 1.5rem;
-  background: var(--bg);
+  right: var(--edge);
+  width: min(28rem, calc(100vw - 2 * var(--edge)));
+  padding: var(--s5);
+  background: var(--panel-solid);
   border: 1px solid var(--hairline);
-  border-radius: var(--radius);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.16);
+  border-radius: 0;
 }
 .nl-settings[hidden] { display: none; }
 
 .nl-settings h2 {
-  margin: 0 0 0.9rem;
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: 0.68rem;
-  letter-spacing: 0.3em;
+  margin: 0 0 var(--s3);
+  font: 400 var(--t-label)/16px var(--mono);
+  letter-spacing: .16em;
   text-transform: uppercase;
+  color: var(--text-faint);
 }
-.nl-settings p { margin: 0 0 1rem; font-size: 0.85rem; line-height: 1.6; color: var(--text-dim); }
-.nl-settings .nl-fine { font-size: 0.76rem; color: var(--text-faint); }
+.nl-settings p { margin: 0 0 var(--s4); font: 400 var(--t-ui)/1.6 var(--sans); color: var(--text-dim); }
+.nl-settings .nl-fine { font-size: var(--t-meta); color: var(--text-faint); }
 
 .nl-settings input {
   width: 100%;
-  font: inherit;
-  font-size: 0.85rem;
-  padding: 0.55rem 0.7rem;
-  margin-bottom: 0.9rem;
+  font: 400 var(--t-meta)/1.4 var(--mono);
+  padding: 10px 12px;
+  margin-bottom: var(--s4);
   border: 1px solid var(--hairline);
-  border-radius: var(--radius);
+  border-radius: 0;
   background: var(--bg-raised);
   color: var(--text);
 }
 
-.nl-settings-row { display: flex; gap: 0.5rem; }
-.nl-settings .nl-btn { color: var(--text); border-color: var(--hairline); }
-.nl-settings .nl-btn:hover { background: var(--bg-raised); }
-.nl-settings .nl-btn-go { color: var(--on-accent); border-color: var(--accent); }
+.nl-settings-row { display: flex; gap: var(--s2); }
 
 @media (max-width: 640px) {
   .nl-bar-hint { display: none; }
 }
+
+/* ==========================================================================
+   Forced colours (Windows High Contrast and the like): the system palette
+   takes over. Outlines stay; the brackets, which are background images,
+   go, since they would keep their own colours.
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  .bk, .bk-hover::after,
+  .grid.book .tile::after, .collection-card img,
+  .lb-close::after, .lb-nav::after { background-image: none; }
+}
+
+/* ==========================================================================
+   No page transitions. A cross-document view transition (`@view-transition
+   { navigation: auto }`) can't live in this file: Chrome settles whether
+   the arriving page takes part when it reaches <body>, and on a normal load
+   this stylesheet is still on its way then, so the fade was skipped and the
+   console logged an InvalidStateError on most clicks between pages. To have
+   the fade, put that rule in an inline <style> in the <head> of every page
+   (PAGE_TEMPLATE in tools/build.py included), not here.
+   ========================================================================== */

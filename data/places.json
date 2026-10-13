@@ -1,0 +1,144 @@
+{
+  "_comment": "Hand-edited. Where each collection sits on the globe, keyed by the slug in collections.json. Region level only: a national park, island, reserve, valley or town that a visitor would recognise, at that public place's usual centre point. Never a photograph's own GPS position, and never a nest, roost, lek or hide. `where` is the short line under the title in the list and the card (\"\" hides it). `pins` are in route order, which sets the dashed line between them; the first pin is the one the globe turns to. Optional `zoom` sets how close a single-pin collection arrives. `sensitive: true` keeps the camera back (never closer than zoom 7) for collections of lekking or nesting species. `status` is \"draft\" until Newton has confirmed the row. A collection with no entry here is still listed; it simply has no pin. To add a collection: add its entry to collections.json as usual, then add one entry here.",
+  "places": {
+    "malaysia": {
+      "status": "draft",
+      "where": "Sabah, Borneo",
+      "pins": [
+        { "name": "Central Sabah", "lat": 5.63, "lng": 117.12 },
+        { "name": "Kinabatangan River", "lat": 5.52, "lng": 118.28 }
+      ]
+    },
+    "hawaii": {
+      "status": "draft",
+      "where": "Kaua'i · Hawai'i Island",
+      "pins": [
+        { "name": "Kaua'i", "lat": 22.07, "lng": -159.50 },
+        { "name": "Maunakea", "lat": 19.76, "lng": -155.46 }
+      ]
+    },
+    "galapagos": {
+      "status": "draft",
+      "where": "Ecuador",
+      "pins": [
+        { "name": "Santa Cruz Island", "lat": -0.74, "lng": -90.31 },
+        { "name": "Isabela Island", "lat": -0.83, "lng": -91.13 }
+      ]
+    },
+    "ecuador": {
+      "status": "draft",
+      "where": "",
+      "zoom": 8,
+      "pins": [
+        { "name": "Mindo Cloud Forest", "lat": -0.05, "lng": -78.77 }
+      ]
+    },
+    "florida": {
+      "status": "draft",
+      "where": "",
+      "zoom": 7.4,
+      "pins": [
+        { "name": "Gulf Coast", "lat": 27.34, "lng": -82.53 }
+      ]
+    },
+    "snowy-west": {
+      "status": "draft",
+      "where": "Oregon · Washington · Montana · Colorado · Idaho",
+      "pins": [
+        { "name": "Crater Lake", "lat": 42.91, "lng": -122.14 },
+        { "name": "Mount Rainier", "lat": 46.79, "lng": -121.74 },
+        { "name": "Skagit Valley", "lat": 48.40, "lng": -122.41 },
+        { "name": "Glacier National Park", "lat": 48.70, "lng": -113.72 },
+        { "name": "Sawtooth Mountains", "lat": 44.22, "lng": -114.94 },
+        { "name": "Black Canyon of the Gunnison", "lat": 38.57, "lng": -107.72 },
+        { "name": "Mesa Verde", "lat": 37.18, "lng": -108.49 }
+      ]
+    },
+    "yellowstone": {
+      "status": "draft",
+      "where": "Wyoming · North Dakota",
+      "pins": [
+        { "name": "Yellowstone National Park", "lat": 44.60, "lng": -110.50 },
+        { "name": "Theodore Roosevelt National Park", "lat": 46.97, "lng": -103.45 }
+      ]
+    },
+    "desert-west": {
+      "status": "draft",
+      "where": "New Mexico · Utah · Idaho",
+      "pins": [
+        { "name": "Shiprock", "lat": 36.69, "lng": -108.84 },
+        { "name": "Bosque del Apache", "lat": 33.80, "lng": -106.89 },
+        { "name": "Arches", "lat": 38.68, "lng": -109.57 },
+        { "name": "Craters of the Moon", "lat": 43.42, "lng": -113.52 }
+      ]
+    },
+    "alberta-bc-yukon": {
+      "status": "draft",
+      "where": "Alberta · British Columbia · Yukon",
+      "pins": [
+        { "name": "Banff", "lat": 51.50, "lng": -116.00 },
+        { "name": "Jasper", "lat": 52.80, "lng": -117.90 },
+        { "name": "Muncho Lake", "lat": 58.94, "lng": -125.77 },
+        { "name": "Whitehorse", "lat": 60.72, "lng": -135.06 },
+        { "name": "Kluane", "lat": 60.62, "lng": -138.33 }
+      ]
+    },
+    "peru": {
+      "status": "draft",
+      "where": "",
+      "pins": [
+        { "name": "Lima", "lat": -12.05, "lng": -77.04 },
+        { "name": "Sacred Valley", "lat": -13.31, "lng": -72.12 },
+        { "name": "Tambopata", "lat": -12.92, "lng": -69.28 }
+      ]
+    },
+    "sri-lanka": {
+      "status": "draft",
+      "where": "",
+      "pins": [
+        { "name": "Sinharaja Forest Reserve", "lat": 6.42, "lng": 80.50 },
+        { "name": "Yala National Park", "lat": 6.55, "lng": 81.50 }
+      ]
+    },
+    "yunnan": {
+      "status": "draft",
+      "where": "China",
+      "pins": [
+        { "name": "Baima Snow Mountain", "lat": 28.33, "lng": 99.08 },
+        { "name": "Gaoligong Mountains", "lat": 25.30, "lng": 98.80 }
+      ]
+    },
+    "arizona": {
+      "status": "draft",
+      "where": "",
+      "pins": [
+        { "name": "Sedona", "lat": 34.87, "lng": -111.76 },
+        { "name": "Santa Cruz Flats", "lat": 32.72, "lng": -111.60 }
+      ]
+    },
+    "colorado-nebraska": {
+      "status": "draft",
+      "where": "",
+      "sensitive": true,
+      "pins": [
+        { "name": "Ouray", "lat": 38.02, "lng": -107.67 },
+        { "name": "Craig", "lat": 40.52, "lng": -107.55 },
+        { "name": "North Park", "lat": 40.73, "lng": -106.28 },
+        { "name": "Loveland Pass", "lat": 39.66, "lng": -105.88 },
+        { "name": "Akron", "lat": 40.16, "lng": -103.21 }
+      ]
+    },
+    "alaska": {
+      "status": "draft",
+      "where": "",
+      "pins": [
+        { "name": "Glacier Bay", "lat": 58.50, "lng": -137.00 },
+        { "name": "Juneau", "lat": 58.30, "lng": -134.42 },
+        { "name": "Kenai Fjords", "lat": 59.92, "lng": -149.99 },
+        { "name": "Katmai", "lat": 58.50, "lng": -155.00 },
+        { "name": "Denali", "lat": 63.43, "lng": -150.32 },
+        { "name": "Utqiagvik", "lat": 71.29, "lng": -156.79 }
+      ]
+    }
+  }
+}
