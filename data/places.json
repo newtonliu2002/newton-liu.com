@@ -157,11 +157,17 @@
       "where": "",
       "sensitive": true,
       "pins": [
-        { "name": "Ouray", "lat": 38.02, "lng": -107.67 },
         { "name": "Craig", "lat": 40.52, "lng": -107.55 },
-        { "name": "North Park", "lat": 40.73, "lng": -106.28 },
         { "name": "Loveland Pass", "lat": 39.66, "lng": -105.88 },
-        { "name": "Akron", "lat": 40.16, "lng": -103.21 }
+        { "name": "North Park", "lat": 40.73, "lng": -106.28 },
+        { "name": "Nebraska National Forest", "lat": 41.90, "lng": -100.27 },
+        { "name": "Platte River", "lat": 40.70, "lng": -99.08 },
+        { "name": "Pawnee National Grassland", "lat": 40.68, "lng": -104.05 },
+        { "name": "Akron", "lat": 40.16, "lng": -103.21 },
+        { "name": "Great Sand Dunes National Park", "lat": 37.79, "lng": -105.61 },
+        { "name": "Ouray", "lat": 38.02, "lng": -107.67 },
+        { "name": "Black Canyon of the Gunnison", "lat": 38.57, "lng": -107.72 },
+        { "name": "Gunnison", "lat": 38.54, "lng": -106.93 }
       ]
     },
     "alaska": {

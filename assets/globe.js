@@ -1142,7 +1142,7 @@
     if (tour) dwell = 0;
   }
 
-  // Esc or ×: the card goes, the camera stays where it is.
+  // The card goes; the camera stays where it is (overview() then flies home).
   function closeCard() {
     if (!active) return;
     flight++;                               // first, so stopping a flight doesn't count as arriving
@@ -1179,8 +1179,9 @@
     }, 0);
   }
 
-  // Esc, × or a click on the map: the card goes and the camera stays — unless
-  // it is already out at globe zoom, where it settles into the overview.
+  // A click on the map: the card goes and the camera stays — unless it is
+  // already out at globe zoom, where it settles into the overview. Esc and ×
+  // go further: straight back out to the turning globe (overview()).
   function dismiss() { closeCard(); tidy(); }
 
   function step(d) {
@@ -1591,7 +1592,7 @@
 
   $(".g-card-prev").addEventListener("click", function (e) { e.stopPropagation(); step(-1); });
   $(".g-card-next").addEventListener("click", function (e) { e.stopPropagation(); step(1); });
-  $(".g-card-close").addEventListener("click", function (e) { e.stopPropagation(); dismiss(); });
+  $(".g-card-close").addEventListener("click", function (e) { e.stopPropagation(); overview(); });
   card.addEventListener("click", function (e) {            // a phone: the whole card is the link
     if (!L.app && active && !e.target.closest("a")) location.href = bySlug[active].href;
   });
@@ -1602,6 +1603,7 @@
   [[card, "card"], [consoleEl, "console"]].forEach(function (pair) {
     pair[0].addEventListener("pointerenter", function (e) {
       if (e.pointerType === "touch") return;
+      if (pair[1] === "card" && !cardShown) return;   // fading out after ×: it holds nothing
       hold(pair[1], true);
       if (pair[1] === "card") cardHover = true;
     });
@@ -1627,7 +1629,7 @@
     if (tour && e.key !== "Tab" && e.key !== "Shift" && !tourBtn.contains(e.target) && !groundSwitch(e.target)) endTour(false);
     if (!ready) return;
     if (e.key === "Escape") {
-      if (active) dismiss();
+      if (active) overview();
       else if (state !== "returning" && (state === "free" || !inOverview() || !level())) overview();
       return;
     }
