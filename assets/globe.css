@@ -67,7 +67,7 @@ body[data-page="globe"] .masthead { position: static; background: var(--space); 
 
 /* Shared: the mono labels, and the glass surfaces. */
 .g-readout, .g-pin-label, .g-plate-where, .g-card-where, .g-card-date, .g-card-go, .g-list-title,
-.g-index-link, .g-list-status, .g-row-where, .g-row-year, .g-fallback p, .g-load,
+.g-index-link, .g-list-status, .g-row-where, .g-fallback p, .g-load,
 .g-stage .maplibregl-ctrl-attrib, .g-stage .maplibregl-cooperative-gesture-screen {
   margin: 0; font: 400 var(--t-label)/16px var(--mono); letter-spacing: .14em; text-transform: uppercase;
 }
@@ -279,7 +279,7 @@ body.is-editing .g-tour + .g-readout { border: 0; }
 .g-list-status { padding: 14px 20px; color: var(--text-faint); }
 
 .g-row {
-  position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; align-content: center;
+  position: relative; display: grid; grid-template-columns: minmax(0, 1fr); align-content: center;
   min-height: 44px; padding: 10px 16px 10px 36px; color: var(--text); text-decoration: none;
   transition: background-color var(--d-fast) var(--ease);
 }
@@ -302,7 +302,6 @@ body.is-editing .g-tour + .g-readout { border: 0; }
 @keyframes g-recent { from { box-shadow: inset 2px 0 0 var(--accent); } to { box-shadow: inset 2px 0 0 transparent; } }
 .g-row-title { font: 500 var(--t-row)/20px var(--sans); }
 .g-row-where { grid-column: 1; letter-spacing: .12em; color: var(--text-faint); text-wrap: balance; }   /* wraps, never cut */
-.g-row-year { grid-column: 2; grid-row: 1; line-height: 20px; letter-spacing: 0; color: var(--text-faint); font-variant-numeric: tabular-nums; }
 
 /* ==========================================================================
    App layout: the globe fills the window, nothing scrolls

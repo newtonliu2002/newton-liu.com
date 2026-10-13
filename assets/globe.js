@@ -324,10 +324,9 @@
       var shots = byCol[c.slug] || [], pl = places[c.slug] || {};
       var opener = shots.filter(function (p) { return p.featured; })[0] || shots[0] || null;
       var derived = NL && shots.length ? NL.collectionDate(shots) : "";
-      var date = typeof c.date === "string" ? c.date : derived;   // "" hides it, year and all
-      var year = /\d{4}/.exec(date) || [""];
+      var date = typeof c.date === "string" ? c.date : derived;   // "" hides it
       var col = {
-        slug: c.slug, title: c.title || c.slug, sub: c.subtitle || "", date: date, year: year[0],
+        slug: c.slug, title: c.title || c.slug, sub: c.subtitle || "", date: date,
         where: pl.where || "", zoom: pl.zoom, sensitive: !!pl.sensitive, i: i, opener: opener,
         href: BASE + "collections/" + c.slug + "/", pins: []
       };
@@ -347,7 +346,6 @@
 
   function renderList() {
     listEl.textContent = "";
-    var lastYear = "";
     cols.forEach(function (c) {
       var li = el("li"), a = el("a", "g-row");
       a.href = c.href;
@@ -355,8 +353,6 @@
       a.appendChild(el("span", "g-row-mark")).setAttribute("aria-hidden", "true");
       a.appendChild(el("span", "g-row-title", c.title));
       if (c.where) a.appendChild(el("span", "g-row-where", c.where));
-      if (c.year && c.year !== lastYear) a.appendChild(el("span", "g-row-year", c.year)).setAttribute("aria-hidden", "true");
-      if (c.year) lastYear = c.year;
       if (visited[c.slug]) a.classList.add("is-visited");
       if (!c.where) a.classList.add("is-one");
       c.row = a;
