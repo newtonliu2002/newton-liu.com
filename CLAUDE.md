@@ -162,6 +162,15 @@ one height at any window width, phone included. Their `need` is `?`, which
 takes any shape. Plan only. `aspectOf()` clamps ratios to 0.3–4 so that a
 vertical xPan is not squeezed; at the old 0.4 floor it was cropped by 8%.
 
+**Saved layouts.** When Newton wants a way back to a gallery's arrangement
+before it is redone, tag the commit that has it: `<slug>-layout-<n>`, annotated,
+pushed. A layout is two things: the collection's order in `data/photos.json`
+and its entry (`layout`, `opener`) in `data/collections.json`. To restore one,
+copy just those from the tag, e.g. `git show alberta-bc-yukon-layout-1:data/photos.json`,
+and leave every other collection as it is now. A photograph added or removed
+since then has to be placed by hand. Saved so far:
+`alberta-bc-yukon-layout-1` (the first arrangement, with small vertical xPans).
+
 Rows are flush at any window width because exactly one cell per row (the
 anchor) carries an `aspect-ratio` and every other cell stretches to the height
 it sets. There is no measurement and no resize handler; don't add one.

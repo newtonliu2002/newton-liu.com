@@ -9724,40 +9724,40 @@
       "thumb": "images/_thumbs/1600/alberta-bc-yukon/B0003236.jpg"
     },
     {
-      "src": "images/alberta-bc-yukon/ZL-7451.jpg",
-      "title": "ZL-7451",
+      "src": "images/alberta-bc-yukon/05A9128.jpg",
+      "title": "05A9128",
       "collection": "alberta-bc-yukon",
       "location": "",
-      "date": "2024-05-08",
-      "width": 4000,
-      "height": 2666,
+      "date": "2024-05-09",
+      "width": 1476,
+      "height": 4000,
       "exif": {
-        "camera": "Canon EOS R6m2",
-        "lens": "RF70-200mm F2.8 L IS USM",
-        "focal": "153mm",
-        "aperture": "f/4.5",
-        "shutter": "1/1600s",
-        "iso": "800"
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "223mm",
+        "aperture": "f/5",
+        "shutter": "1/5000s",
+        "iso": "640"
       },
       "variants": [
         {
-          "w": 800,
-          "src": "images/_thumbs/800/alberta-bc-yukon/ZL-7451.jpg"
+          "w": 295,
+          "src": "images/_thumbs/800/alberta-bc-yukon/05A9128.jpg"
         },
         {
-          "w": 1600,
-          "src": "images/_thumbs/1600/alberta-bc-yukon/ZL-7451.jpg"
+          "w": 590,
+          "src": "images/_thumbs/1600/alberta-bc-yukon/05A9128.jpg"
         },
         {
-          "w": 2400,
-          "src": "images/_thumbs/2400/alberta-bc-yukon/ZL-7451.jpg"
+          "w": 885,
+          "src": "images/_thumbs/2400/alberta-bc-yukon/05A9128.jpg"
         },
         {
-          "w": 4000,
-          "src": "images/alberta-bc-yukon/ZL-7451.jpg"
+          "w": 1476,
+          "src": "images/alberta-bc-yukon/05A9128.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/alberta-bc-yukon/ZL-7451.jpg"
+      "thumb": "images/_thumbs/1600/alberta-bc-yukon/05A9128.jpg"
     },
     {
       "src": "images/alberta-bc-yukon/ZL-6632.jpg",
@@ -9796,6 +9796,42 @@
       "thumb": "images/_thumbs/1600/alberta-bc-yukon/ZL-6632.jpg"
     },
     {
+      "src": "images/alberta-bc-yukon/05A9072.jpg",
+      "title": "05A9072",
+      "collection": "alberta-bc-yukon",
+      "location": "",
+      "date": "2024-05-09",
+      "width": 1430,
+      "height": 3873,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/5000s",
+        "iso": "1250"
+      },
+      "variants": [
+        {
+          "w": 295,
+          "src": "images/_thumbs/800/alberta-bc-yukon/05A9072.jpg"
+        },
+        {
+          "w": 590,
+          "src": "images/_thumbs/1600/alberta-bc-yukon/05A9072.jpg"
+        },
+        {
+          "w": 886,
+          "src": "images/_thumbs/2400/alberta-bc-yukon/05A9072.jpg"
+        },
+        {
+          "w": 1430,
+          "src": "images/alberta-bc-yukon/05A9072.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alberta-bc-yukon/05A9072.jpg"
+    },
+    {
       "src": "images/alberta-bc-yukon/ZL-0781.jpg",
       "title": "ZL-0781",
       "collection": "alberta-bc-yukon",
@@ -9832,44 +9868,116 @@
       "thumb": "images/_thumbs/1600/alberta-bc-yukon/ZL-0781.jpg"
     },
     {
-      "src": "images/alberta-bc-yukon/05A9128.jpg",
-      "title": "05A9128",
+      "src": "images/alberta-bc-yukon/05A8628.jpg",
+      "title": "05A8628",
       "collection": "alberta-bc-yukon",
       "location": "",
       "date": "2024-05-09",
-      "width": 1476,
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/1250s",
+        "iso": "1600"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/alberta-bc-yukon/05A8628.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/alberta-bc-yukon/05A8628.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/alberta-bc-yukon/05A8628.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/alberta-bc-yukon/05A8628.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alberta-bc-yukon/05A8628.jpg"
+    },
+    {
+      "src": "images/alberta-bc-yukon/U2A9270.jpg",
+      "title": "U2A9270",
+      "collection": "alberta-bc-yukon",
+      "location": "",
+      "date": "2026-05-25",
+      "width": 2667,
+      "height": 4000,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/2000s",
+        "iso": "200"
+      },
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/alberta-bc-yukon/U2A9270.jpg"
+        },
+        {
+          "w": 1067,
+          "src": "images/_thumbs/1600/alberta-bc-yukon/U2A9270.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/2400/alberta-bc-yukon/U2A9270.jpg"
+        },
+        {
+          "w": 2667,
+          "src": "images/alberta-bc-yukon/U2A9270.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alberta-bc-yukon/U2A9270.jpg"
+    },
+    {
+      "src": "images/alberta-bc-yukon/05A8151.jpg",
+      "title": "05A8151",
+      "collection": "alberta-bc-yukon",
+      "location": "",
+      "date": "2024-05-07",
+      "width": 1477,
       "height": 4000,
       "exif": {
         "camera": "Canon EOS R5",
         "lens": "RF100-500mm F4.5-7.1 L IS USM",
-        "focal": "223mm",
-        "aperture": "f/5",
-        "shutter": "1/5000s",
-        "iso": "640"
+        "focal": "159mm",
+        "aperture": "f/6.3",
+        "shutter": "1/100s",
+        "iso": "250"
       },
       "variants": [
         {
           "w": 295,
-          "src": "images/_thumbs/800/alberta-bc-yukon/05A9128.jpg"
+          "src": "images/_thumbs/800/alberta-bc-yukon/05A8151.jpg"
         },
         {
           "w": 590,
-          "src": "images/_thumbs/1600/alberta-bc-yukon/05A9128.jpg"
+          "src": "images/_thumbs/1600/alberta-bc-yukon/05A8151.jpg"
         },
         {
-          "w": 885,
-          "src": "images/_thumbs/2400/alberta-bc-yukon/05A9128.jpg"
+          "w": 886,
+          "src": "images/_thumbs/2400/alberta-bc-yukon/05A8151.jpg"
         },
         {
-          "w": 1476,
-          "src": "images/alberta-bc-yukon/05A9128.jpg"
+          "w": 1477,
+          "src": "images/alberta-bc-yukon/05A8151.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/alberta-bc-yukon/05A9128.jpg"
+      "thumb": "images/_thumbs/1600/alberta-bc-yukon/05A8151.jpg"
     },
     {
-      "src": "images/alberta-bc-yukon/B0001312.jpg",
-      "title": "B0001312",
+      "src": "images/alberta-bc-yukon/B0001478.jpg",
+      "title": "B0001478",
       "collection": "alberta-bc-yukon",
       "location": "",
       "date": "2026-05-25",
@@ -9877,67 +9985,31 @@
       "height": 4000,
       "exif": {
         "camera": "Hasselblad X2D II 100C",
-        "lens": "XCD 35-100E@100",
-        "focal": "100mm",
-        "aperture": "f/4",
-        "shutter": "1/750s",
+        "lens": "XCD 35-100E@65",
+        "focal": "65mm",
+        "aperture": "f/5.6",
+        "shutter": "1/45s",
         "iso": "50"
       },
       "variants": [
         {
           "w": 600,
-          "src": "images/_thumbs/800/alberta-bc-yukon/B0001312.jpg"
+          "src": "images/_thumbs/800/alberta-bc-yukon/B0001478.jpg"
         },
         {
           "w": 1200,
-          "src": "images/_thumbs/1600/alberta-bc-yukon/B0001312.jpg"
+          "src": "images/_thumbs/1600/alberta-bc-yukon/B0001478.jpg"
         },
         {
           "w": 1800,
-          "src": "images/_thumbs/2400/alberta-bc-yukon/B0001312.jpg"
+          "src": "images/_thumbs/2400/alberta-bc-yukon/B0001478.jpg"
         },
         {
           "w": 3000,
-          "src": "images/alberta-bc-yukon/B0001312.jpg"
+          "src": "images/alberta-bc-yukon/B0001478.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/alberta-bc-yukon/B0001312.jpg"
-    },
-    {
-      "src": "images/alberta-bc-yukon/05A9072.jpg",
-      "title": "05A9072",
-      "collection": "alberta-bc-yukon",
-      "location": "",
-      "date": "2024-05-09",
-      "width": 1430,
-      "height": 3873,
-      "exif": {
-        "camera": "Canon EOS R5",
-        "lens": "RF100-500mm F4.5-7.1 L IS USM",
-        "focal": "500mm",
-        "aperture": "f/7.1",
-        "shutter": "1/5000s",
-        "iso": "1250"
-      },
-      "variants": [
-        {
-          "w": 295,
-          "src": "images/_thumbs/800/alberta-bc-yukon/05A9072.jpg"
-        },
-        {
-          "w": 590,
-          "src": "images/_thumbs/1600/alberta-bc-yukon/05A9072.jpg"
-        },
-        {
-          "w": 886,
-          "src": "images/_thumbs/2400/alberta-bc-yukon/05A9072.jpg"
-        },
-        {
-          "w": 1430,
-          "src": "images/alberta-bc-yukon/05A9072.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/alberta-bc-yukon/05A9072.jpg"
+      "thumb": "images/_thumbs/1600/alberta-bc-yukon/B0001478.jpg"
     },
     {
       "src": "images/alberta-bc-yukon/05A8331.jpg",
@@ -9976,40 +10048,76 @@
       "thumb": "images/_thumbs/1600/alberta-bc-yukon/05A8331.jpg"
     },
     {
-      "src": "images/alberta-bc-yukon/05A8628.jpg",
-      "title": "05A8628",
+      "src": "images/alberta-bc-yukon/05A8122.jpg",
+      "title": "05A8122",
       "collection": "alberta-bc-yukon",
       "location": "",
-      "date": "2024-05-09",
-      "width": 4000,
-      "height": 2668,
+      "date": "2024-05-07",
+      "width": 2668,
+      "height": 4000,
       "exif": {
         "camera": "Canon EOS R5",
         "lens": "RF100-500mm F4.5-7.1 L IS USM",
-        "focal": "500mm",
+        "focal": "100mm",
         "aperture": "f/7.1",
-        "shutter": "1/1250s",
-        "iso": "1600"
+        "shutter": "1/100s",
+        "iso": "250"
       },
       "variants": [
         {
-          "w": 800,
-          "src": "images/_thumbs/800/alberta-bc-yukon/05A8628.jpg"
+          "w": 533,
+          "src": "images/_thumbs/800/alberta-bc-yukon/05A8122.jpg"
         },
         {
-          "w": 1600,
-          "src": "images/_thumbs/1600/alberta-bc-yukon/05A8628.jpg"
+          "w": 1067,
+          "src": "images/_thumbs/1600/alberta-bc-yukon/05A8122.jpg"
         },
         {
-          "w": 2400,
-          "src": "images/_thumbs/2400/alberta-bc-yukon/05A8628.jpg"
+          "w": 1601,
+          "src": "images/_thumbs/2400/alberta-bc-yukon/05A8122.jpg"
         },
         {
-          "w": 4000,
-          "src": "images/alberta-bc-yukon/05A8628.jpg"
+          "w": 2668,
+          "src": "images/alberta-bc-yukon/05A8122.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/alberta-bc-yukon/05A8628.jpg"
+      "thumb": "images/_thumbs/1600/alberta-bc-yukon/05A8122.jpg"
+    },
+    {
+      "src": "images/alberta-bc-yukon/B0001312.jpg",
+      "title": "B0001312",
+      "collection": "alberta-bc-yukon",
+      "location": "",
+      "date": "2026-05-25",
+      "width": 3000,
+      "height": 4000,
+      "exif": {
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 35-100E@100",
+        "focal": "100mm",
+        "aperture": "f/4",
+        "shutter": "1/750s",
+        "iso": "50"
+      },
+      "variants": [
+        {
+          "w": 600,
+          "src": "images/_thumbs/800/alberta-bc-yukon/B0001312.jpg"
+        },
+        {
+          "w": 1200,
+          "src": "images/_thumbs/1600/alberta-bc-yukon/B0001312.jpg"
+        },
+        {
+          "w": 1800,
+          "src": "images/_thumbs/2400/alberta-bc-yukon/B0001312.jpg"
+        },
+        {
+          "w": 3000,
+          "src": "images/alberta-bc-yukon/B0001312.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/alberta-bc-yukon/B0001312.jpg"
     },
     {
       "src": "images/alberta-bc-yukon/ZL-0712.jpg",
@@ -10084,112 +10192,76 @@
       "thumb": "images/_thumbs/1600/alberta-bc-yukon/05A8946.jpg"
     },
     {
-      "src": "images/alberta-bc-yukon/U2A9270.jpg",
-      "title": "U2A9270",
+      "src": "images/alberta-bc-yukon/B0003254.jpg",
+      "title": "B0003254",
       "collection": "alberta-bc-yukon",
       "location": "",
-      "date": "2026-05-25",
-      "width": 2667,
-      "height": 4000,
-      "exif": {
-        "camera": "Canon EOS R5m2",
-        "lens": "RF100-500mm F4.5-7.1 L IS USM",
-        "focal": "500mm",
-        "aperture": "f/7.1",
-        "shutter": "1/2000s",
-        "iso": "200"
-      },
-      "variants": [
-        {
-          "w": 533,
-          "src": "images/_thumbs/800/alberta-bc-yukon/U2A9270.jpg"
-        },
-        {
-          "w": 1067,
-          "src": "images/_thumbs/1600/alberta-bc-yukon/U2A9270.jpg"
-        },
-        {
-          "w": 1600,
-          "src": "images/_thumbs/2400/alberta-bc-yukon/U2A9270.jpg"
-        },
-        {
-          "w": 2667,
-          "src": "images/alberta-bc-yukon/U2A9270.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/alberta-bc-yukon/U2A9270.jpg"
-    },
-    {
-      "src": "images/alberta-bc-yukon/B0001478.jpg",
-      "title": "B0001478",
-      "collection": "alberta-bc-yukon",
-      "location": "",
-      "date": "2026-05-25",
+      "date": "2026-07-08",
       "width": 3000,
       "height": 4000,
       "exif": {
         "camera": "Hasselblad X2D II 100C",
-        "lens": "XCD 35-100E@65",
-        "focal": "65mm",
-        "aperture": "f/5.6",
-        "shutter": "1/45s",
+        "lens": "XCD 20-35E@20",
+        "focal": "20mm",
+        "aperture": "f/9.5",
+        "shutter": "1/3s",
         "iso": "50"
       },
       "variants": [
         {
           "w": 600,
-          "src": "images/_thumbs/800/alberta-bc-yukon/B0001478.jpg"
+          "src": "images/_thumbs/800/alberta-bc-yukon/B0003254.jpg"
         },
         {
           "w": 1200,
-          "src": "images/_thumbs/1600/alberta-bc-yukon/B0001478.jpg"
+          "src": "images/_thumbs/1600/alberta-bc-yukon/B0003254.jpg"
         },
         {
           "w": 1800,
-          "src": "images/_thumbs/2400/alberta-bc-yukon/B0001478.jpg"
+          "src": "images/_thumbs/2400/alberta-bc-yukon/B0003254.jpg"
         },
         {
           "w": 3000,
-          "src": "images/alberta-bc-yukon/B0001478.jpg"
+          "src": "images/alberta-bc-yukon/B0003254.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/alberta-bc-yukon/B0001478.jpg"
+      "thumb": "images/_thumbs/1600/alberta-bc-yukon/B0003254.jpg"
     },
     {
-      "src": "images/alberta-bc-yukon/05A8151.jpg",
-      "title": "05A8151",
+      "src": "images/alberta-bc-yukon/ZL-7317.jpg",
+      "title": "ZL-7317",
       "collection": "alberta-bc-yukon",
       "location": "",
-      "date": "2024-05-07",
+      "date": "2024-05-08",
       "width": 1477,
       "height": 4000,
       "exif": {
-        "camera": "Canon EOS R5",
-        "lens": "RF100-500mm F4.5-7.1 L IS USM",
-        "focal": "159mm",
-        "aperture": "f/6.3",
-        "shutter": "1/100s",
+        "camera": "Canon EOS R6m2",
+        "lens": "RF70-200mm F2.8 L IS USM",
+        "focal": "124mm",
+        "aperture": "f/16",
+        "shutter": "1/200s",
         "iso": "250"
       },
       "variants": [
         {
           "w": 295,
-          "src": "images/_thumbs/800/alberta-bc-yukon/05A8151.jpg"
+          "src": "images/_thumbs/800/alberta-bc-yukon/ZL-7317.jpg"
         },
         {
           "w": 590,
-          "src": "images/_thumbs/1600/alberta-bc-yukon/05A8151.jpg"
+          "src": "images/_thumbs/1600/alberta-bc-yukon/ZL-7317.jpg"
         },
         {
           "w": 886,
-          "src": "images/_thumbs/2400/alberta-bc-yukon/05A8151.jpg"
+          "src": "images/_thumbs/2400/alberta-bc-yukon/ZL-7317.jpg"
         },
         {
           "w": 1477,
-          "src": "images/alberta-bc-yukon/05A8151.jpg"
+          "src": "images/alberta-bc-yukon/ZL-7317.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/alberta-bc-yukon/05A8151.jpg"
+      "thumb": "images/_thumbs/1600/alberta-bc-yukon/ZL-7317.jpg"
     },
     {
       "src": "images/alberta-bc-yukon/ZL-6549.jpg",
@@ -10228,76 +10300,40 @@
       "thumb": "images/_thumbs/1600/alberta-bc-yukon/ZL-6549.jpg"
     },
     {
-      "src": "images/alberta-bc-yukon/05A8122.jpg",
-      "title": "05A8122",
+      "src": "images/alberta-bc-yukon/ZL-6985.jpg",
+      "title": "ZL-6985",
       "collection": "alberta-bc-yukon",
       "location": "",
-      "date": "2024-05-07",
-      "width": 2668,
-      "height": 4000,
+      "date": "2024-05-08",
+      "width": 4000,
+      "height": 2666,
       "exif": {
-        "camera": "Canon EOS R5",
-        "lens": "RF100-500mm F4.5-7.1 L IS USM",
-        "focal": "100mm",
-        "aperture": "f/7.1",
-        "shutter": "1/100s",
-        "iso": "250"
+        "camera": "Canon EOS R6m2",
+        "lens": "RF70-200mm F2.8 L IS USM",
+        "focal": "70mm",
+        "aperture": "f/4.5",
+        "shutter": "1/2000s",
+        "iso": "200"
       },
       "variants": [
         {
-          "w": 533,
-          "src": "images/_thumbs/800/alberta-bc-yukon/05A8122.jpg"
+          "w": 800,
+          "src": "images/_thumbs/800/alberta-bc-yukon/ZL-6985.jpg"
         },
         {
-          "w": 1067,
-          "src": "images/_thumbs/1600/alberta-bc-yukon/05A8122.jpg"
+          "w": 1600,
+          "src": "images/_thumbs/1600/alberta-bc-yukon/ZL-6985.jpg"
         },
         {
-          "w": 1601,
-          "src": "images/_thumbs/2400/alberta-bc-yukon/05A8122.jpg"
+          "w": 2400,
+          "src": "images/_thumbs/2400/alberta-bc-yukon/ZL-6985.jpg"
         },
         {
-          "w": 2668,
-          "src": "images/alberta-bc-yukon/05A8122.jpg"
+          "w": 4000,
+          "src": "images/alberta-bc-yukon/ZL-6985.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/alberta-bc-yukon/05A8122.jpg"
-    },
-    {
-      "src": "images/alberta-bc-yukon/B0003254.jpg",
-      "title": "B0003254",
-      "collection": "alberta-bc-yukon",
-      "location": "",
-      "date": "2026-07-08",
-      "width": 3000,
-      "height": 4000,
-      "exif": {
-        "camera": "Hasselblad X2D II 100C",
-        "lens": "XCD 20-35E@20",
-        "focal": "20mm",
-        "aperture": "f/9.5",
-        "shutter": "1/3s",
-        "iso": "50"
-      },
-      "variants": [
-        {
-          "w": 600,
-          "src": "images/_thumbs/800/alberta-bc-yukon/B0003254.jpg"
-        },
-        {
-          "w": 1200,
-          "src": "images/_thumbs/1600/alberta-bc-yukon/B0003254.jpg"
-        },
-        {
-          "w": 1800,
-          "src": "images/_thumbs/2400/alberta-bc-yukon/B0003254.jpg"
-        },
-        {
-          "w": 3000,
-          "src": "images/alberta-bc-yukon/B0003254.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/alberta-bc-yukon/B0003254.jpg"
+      "thumb": "images/_thumbs/1600/alberta-bc-yukon/ZL-6985.jpg"
     },
     {
       "src": "images/alberta-bc-yukon/ZL-6914.jpg",
@@ -10336,8 +10372,8 @@
       "thumb": "images/_thumbs/1600/alberta-bc-yukon/ZL-6914.jpg"
     },
     {
-      "src": "images/alberta-bc-yukon/ZL-6985.jpg",
-      "title": "ZL-6985",
+      "src": "images/alberta-bc-yukon/ZL-7451.jpg",
+      "title": "ZL-7451",
       "collection": "alberta-bc-yukon",
       "location": "",
       "date": "2024-05-08",
@@ -10346,66 +10382,30 @@
       "exif": {
         "camera": "Canon EOS R6m2",
         "lens": "RF70-200mm F2.8 L IS USM",
-        "focal": "70mm",
+        "focal": "153mm",
         "aperture": "f/4.5",
-        "shutter": "1/2000s",
-        "iso": "200"
+        "shutter": "1/1600s",
+        "iso": "800"
       },
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/alberta-bc-yukon/ZL-6985.jpg"
+          "src": "images/_thumbs/800/alberta-bc-yukon/ZL-7451.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/alberta-bc-yukon/ZL-6985.jpg"
+          "src": "images/_thumbs/1600/alberta-bc-yukon/ZL-7451.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/alberta-bc-yukon/ZL-6985.jpg"
+          "src": "images/_thumbs/2400/alberta-bc-yukon/ZL-7451.jpg"
         },
         {
           "w": 4000,
-          "src": "images/alberta-bc-yukon/ZL-6985.jpg"
+          "src": "images/alberta-bc-yukon/ZL-7451.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/alberta-bc-yukon/ZL-6985.jpg"
-    },
-    {
-      "src": "images/alberta-bc-yukon/ZL-7317.jpg",
-      "title": "ZL-7317",
-      "collection": "alberta-bc-yukon",
-      "location": "",
-      "date": "2024-05-08",
-      "width": 1477,
-      "height": 4000,
-      "exif": {
-        "camera": "Canon EOS R6m2",
-        "lens": "RF70-200mm F2.8 L IS USM",
-        "focal": "124mm",
-        "aperture": "f/16",
-        "shutter": "1/200s",
-        "iso": "250"
-      },
-      "variants": [
-        {
-          "w": 295,
-          "src": "images/_thumbs/800/alberta-bc-yukon/ZL-7317.jpg"
-        },
-        {
-          "w": 590,
-          "src": "images/_thumbs/1600/alberta-bc-yukon/ZL-7317.jpg"
-        },
-        {
-          "w": 886,
-          "src": "images/_thumbs/2400/alberta-bc-yukon/ZL-7317.jpg"
-        },
-        {
-          "w": 1477,
-          "src": "images/alberta-bc-yukon/ZL-7317.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/alberta-bc-yukon/ZL-7317.jpg"
+      "thumb": "images/_thumbs/1600/alberta-bc-yukon/ZL-7451.jpg"
     }
   ]
 }
