@@ -169,7 +169,7 @@ and its entry (`layout`, `opener`) in `data/collections.json`. To restore one,
 copy just those from the tag, e.g. `git show alberta-bc-yukon-layout-1:data/photos.json`,
 and leave every other collection as it is now. A photograph added or removed
 since then has to be placed by hand. Saved so far:
-`alberta-bc-yukon-layout-1` (the first arrangement, with small vertical xPans).
+`alberta-bc-yukon-layout-1` (the first arrangement, with small vertical xPans) and `alberta-bc-yukon-layout-2` (large vertical xPans, opening on the car at the lake).
 
 Rows are flush at any window width because exactly one cell per row (the
 anchor) carries an `aspect-ratio` and every other cell stretches to the height
