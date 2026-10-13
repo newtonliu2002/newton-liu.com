@@ -21,6 +21,32 @@
       ]
     },
     {
+      "slug": "new-england",
+      "title": "New England",
+      "date": "November 2021, December 2022, June 2023",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "LLe",
+        "L",
+        "J2",
+        "L",
+        "J2",
+        "L",
+        "LLe",
+        "L",
+        "J2",
+        "L",
+        "LLe",
+        "L",
+        "J2",
+        "L",
+        "J2",
+        "L",
+        "SS"
+      ]
+    },
+    {
       "slug": "big-bend",
       "title": "Big Bend",
       "date": "May 2022",
@@ -34,6 +60,53 @@
         "J2",
         "L"
       ]
+    },
+    {
+      "slug": "california",
+      "title": "California",
+      "date": "June 2022, January 2023",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "J2",
+        "L",
+        "LLe",
+        "L",
+        "J2",
+        "L",
+        "J2",
+        "L",
+        "J2",
+        "L",
+        "LLe"
+      ],
+      "opener": "whole"
+    },
+    {
+      "slug": "florida",
+      "title": "Florida",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "LLL",
+        "LP",
+        "LLLr",
+        "L",
+        "LLL3",
+        "W",
+        "LL",
+        "L",
+        "W",
+        "LLL3",
+        "L",
+        "LLL3",
+        "LLL",
+        "W",
+        "LLe",
+        "L",
+        "LP"
+      ],
+      "date": "December 2022, November 2023"
     },
     {
       "slug": "hawaii",
@@ -94,29 +167,6 @@
         "SS",
         "LLP",
         "L"
-      ]
-    },
-    {
-      "slug": "florida",
-      "title": "Florida",
-      "subtitle": "",
-      "blurb": "",
-      "layout": [
-        "LLL",
-        "LP",
-        "LLLr",
-        "LLL3",
-        "W",
-        "LL",
-        "L",
-        "W",
-        "LLL3",
-        "L",
-        "LLL3",
-        "LLL",
-        "W",
-        "LLe",
-        "LP"
       ]
     },
     {

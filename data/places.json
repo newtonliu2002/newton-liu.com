@@ -6,7 +6,18 @@
       "where": "Sabah, Borneo",
       "pins": [
         { "name": "Central Sabah", "lat": 5.63, "lng": 117.12 },
-        { "name": "Kinabatangan River", "lat": 5.52, "lng": 118.28 }
+        { "name": "Labuk Bay", "lat": 5.94, "lng": 117.80 },
+        { "name": "Kinabatangan River", "lat": 5.50, "lng": 118.21 },
+        { "name": "Sepilok", "lat": 5.87, "lng": 117.95 }
+      ]
+    },
+    "new-england": {
+      "status": "confirmed",
+      "where": "Massachusetts · New Jersey · Maine",
+      "pins": [
+        { "name": "Parker River National Wildlife Refuge", "lat": 42.75, "lng": -70.80 },
+        { "name": "Cape May", "lat": 38.93, "lng": -74.92 },
+        { "name": "Acadia National Park", "lat": 44.36, "lng": -68.22 }
       ]
     },
     "big-bend": {
@@ -14,6 +25,15 @@
       "where": "Texas",
       "pins": [
         { "name": "Big Bend National Park", "lat": 29.25, "lng": -103.25 }
+      ]
+    },
+    "california": {
+      "status": "confirmed",
+      "where": "",
+      "pins": [
+        { "name": "Monterey", "lat": 36.60, "lng": -121.90 },
+        { "name": "Yosemite National Park", "lat": 37.84, "lng": -119.52 },
+        { "name": "Sequoia & Kings Canyon National Parks", "lat": 36.70, "lng": -118.58 }
       ]
     },
     "hawaii": {
@@ -28,7 +48,7 @@
     },
     "galapagos": {
       "status": "draft",
-      "where": "Ecuador",
+      "where": "",
       "pins": [
         { "name": "Santa Cruz Island", "lat": -0.74, "lng": -90.31 },
         { "name": "Isabela Island", "lat": -0.83, "lng": -91.13 }
@@ -47,7 +67,12 @@
       "where": "",
       "zoom": 7.4,
       "pins": [
-        { "name": "Gulf Coast", "lat": 27.34, "lng": -82.53 }
+        { "name": "Lake Apopka", "lat": 28.62, "lng": -81.61 },
+        { "name": "Merritt Island National Wildlife Refuge", "lat": 28.62, "lng": -80.74 },
+        { "name": "Three Lakes Wildlife Management Area", "lat": 27.91, "lng": -81.16 },
+        { "name": "Everglades National Park", "lat": 25.37, "lng": -80.88 },
+        { "name": "J. N. \"Ding\" Darling National Wildlife Refuge", "lat": 26.48, "lng": -82.14 },
+        { "name": "Fort De Soto Park", "lat": 27.62, "lng": -82.73 }
       ]
     },
     "snowy-west": {
