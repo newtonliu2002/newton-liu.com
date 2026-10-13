@@ -757,42 +757,6 @@
       "thumb": "images/_thumbs/1600/alaska/B0002198.jpg"
     },
     {
-      "src": "images/alaska/U2A9270.jpg",
-      "title": "U2A9270",
-      "collection": "alaska",
-      "location": "",
-      "date": "2026-05-25",
-      "width": 2667,
-      "height": 4000,
-      "exif": {
-        "camera": "Canon EOS R5m2",
-        "lens": "RF100-500mm F4.5-7.1 L IS USM",
-        "focal": "500mm",
-        "aperture": "f/7.1",
-        "shutter": "1/2000s",
-        "iso": "200"
-      },
-      "variants": [
-        {
-          "w": 533,
-          "src": "images/_thumbs/800/alaska/U2A9270.jpg"
-        },
-        {
-          "w": 1067,
-          "src": "images/_thumbs/1600/alaska/U2A9270.jpg"
-        },
-        {
-          "w": 1600,
-          "src": "images/_thumbs/2400/alaska/U2A9270.jpg"
-        },
-        {
-          "w": 2667,
-          "src": "images/alaska/U2A9270.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/alaska/U2A9270.jpg"
-    },
-    {
       "src": "images/alaska/B0002996.jpg",
       "title": "B0002996",
       "collection": "alaska",
@@ -1367,78 +1331,6 @@
         }
       ],
       "thumb": "images/_thumbs/1600/alaska/B0002383.jpg"
-    },
-    {
-      "src": "images/alaska/B0001312.jpg",
-      "title": "B0001312",
-      "collection": "alaska",
-      "location": "",
-      "date": "2026-05-25",
-      "width": 3000,
-      "height": 4000,
-      "exif": {
-        "camera": "Hasselblad X2D II 100C",
-        "lens": "XCD 35-100E@100",
-        "focal": "100mm",
-        "aperture": "f/4",
-        "shutter": "1/750s",
-        "iso": "50"
-      },
-      "variants": [
-        {
-          "w": 600,
-          "src": "images/_thumbs/800/alaska/B0001312.jpg"
-        },
-        {
-          "w": 1200,
-          "src": "images/_thumbs/1600/alaska/B0001312.jpg"
-        },
-        {
-          "w": 1800,
-          "src": "images/_thumbs/2400/alaska/B0001312.jpg"
-        },
-        {
-          "w": 3000,
-          "src": "images/alaska/B0001312.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/alaska/B0001312.jpg"
-    },
-    {
-      "src": "images/alaska/B0001478.jpg",
-      "title": "B0001478",
-      "collection": "alaska",
-      "location": "",
-      "date": "2026-05-25",
-      "width": 3000,
-      "height": 4000,
-      "exif": {
-        "camera": "Hasselblad X2D II 100C",
-        "lens": "XCD 35-100E@65",
-        "focal": "65mm",
-        "aperture": "f/5.6",
-        "shutter": "1/45s",
-        "iso": "50"
-      },
-      "variants": [
-        {
-          "w": 600,
-          "src": "images/_thumbs/800/alaska/B0001478.jpg"
-        },
-        {
-          "w": 1200,
-          "src": "images/_thumbs/1600/alaska/B0001478.jpg"
-        },
-        {
-          "w": 1800,
-          "src": "images/_thumbs/2400/alaska/B0001478.jpg"
-        },
-        {
-          "w": 3000,
-          "src": "images/alaska/B0001478.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/alaska/B0001478.jpg"
     },
     {
       "src": "images/florida/E05A7372.jpg",
