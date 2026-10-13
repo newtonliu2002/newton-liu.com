@@ -48,7 +48,7 @@
   var ARRIVE_ZOOM = 7.8;             // single-pin arrival when places.json gives none
   var SENSITIVE_ZOOM = 7;            // never closer than this for a `sensitive` collection
   var SPIN = 1.5;                    // degrees per second
-  var SPIN_RESUME = 4000, SPIN_RAMP = 1200;
+  var SPIN_RESUME = 1000, SPIN_RAMP = 800;
   var HOVER_DELAY = 120, TURN_DELAY = 450;
   var DWELL = 6000, DWELL_REDUCED = 8000;
   var FAIL_AFTER = 8000;             // no map by then and the list is all there is
@@ -237,7 +237,7 @@
     var w = stage.clientWidth, h = stage.clientHeight, e = edge(), app = query(APP);
     var o = { app: app, w: w, h: h, e: e, F: e + 312 };
     o.pad = app ? { top: 64, right: e, bottom: 108, left: o.F } : { top: 16, right: 16, bottom: 72, left: 16 };
-    var D = (app ? .8 : .96) * Math.min(w - o.pad.left - o.pad.right, h - o.pad.top - o.pad.bottom);
+    var D = (app ? .9 : .96) * Math.min(w - o.pad.left - o.pad.right, h - o.pad.top - o.pad.bottom);
     var lo = -2, hi = 6;
     for (var i = 0; i < 40; i++) {
       var mid = (lo + hi) / 2;
@@ -256,11 +256,31 @@
     var top = card.offsetHeight ? card.offsetTop : L.h - 112, at = geom().attrib;
     return { top: Math.max(16, at ? at[3] + 8 : 0), right: 16, bottom: Math.max(72, L.h - top + 12), left: 16 };
   }
-  function inOverview() { return !!map && !active && map.getZoom() <= L.zO + .6; }
+  // MapLibre draws the globe larger at the same zoom the further from the
+  // equator it looks (globeR), and measures its zoom floor (floorZoom) at
+  // the latitude under the camera, which a tilted camera leaves well behind
+  // the point it looks at. sizeZoom() measures the same way, in the
+  // overview's terms: L.zO is the overview, and as far out as the camera
+  // can go, at any latitude and any tilt.
+  function latShift(lat) { return Math.log(Math.cos(lat * rad) / Math.cos(OVERVIEW_LAT * rad)) / Math.LN2; }
+  function cameraLat() {
+    var lat = map.getCenter().lat, p = map.getPitch() * rad, d = focal(L.h);
+    var th = Math.atan2(d * Math.sin(p), globeR(map.getZoom(), lat) + d * Math.cos(p));
+    var s = Math.sin(lat * rad) * Math.cos(th) - Math.cos(lat * rad) * Math.sin(th) * Math.cos(map.getBearing() * rad);
+    return Math.asin(clamp(s, -1, 1)) / rad;
+  }
+  function sizeZoom() { return map.getZoom() - latShift(cameraLat()); }
+  function inOverview() { return !!map && !active && sizeZoom() <= L.zO + .6; }
   // A camera that already is the overview: globe zoom, level, no relief.
   function level() {
-    return map.getZoom() <= L.zO + .6 && map.getPitch() < .5 && Math.abs(map.getBearing()) < .5 && !map.getTerrain();
+    return sizeZoom() <= L.zO + .6 && map.getPitch() < .5 && Math.abs(map.getBearing()) < .5 && !map.getTerrain();
   }
+  // The overview is as far out as the camera goes. MapLibre's globe reads
+  // its minZoom at the equator and keeps the globe that size at any
+  // latitude, so the floor is the overview's zoom carried to the equator.
+  // Until the style has loaded the map is flat and reads it as it stands,
+  // so until then the floor is the overview's own zoom.
+  function floorZoom() { return ready ? L.zO + latShift(0) : L.zO; }
 
   /* ---------- stars ------------------------------------------------------ */
 
@@ -593,7 +613,7 @@
       map = new ml.Map({
         container: mapEl, style: buildStyle(),
         center: [deep ? lng : lng + 30, OVERVIEW_LAT], zoom: L.zO,
-        minZoom: Math.max(1, L.zO - .4), maxZoom: MAX_ZOOM, maxPitch: 60,
+        minZoom: floorZoom(), maxZoom: MAX_ZOOM, maxPitch: 60,
         pixelRatio: Math.min(window.devicePixelRatio || 1, 2), renderWorldCopies: false,
         attributionControl: false, keyboard: false, doubleClickZoom: false, boxZoom: false,
         dragRotate: false, pitchWithRotate: false, touchPitch: false, cooperativeGestures: COARSE && !L.app,
@@ -639,6 +659,7 @@
     ready = true;
     clearTimeout(failTimer);
     stage.classList.add("is-ready");
+    map.setMinZoom(floorZoom());
     applyPalette();                         // in case the ground changed while the style loaded
     loop();
     if (deep) {
@@ -665,7 +686,7 @@
   function settle() {                      // the intro is over, by whatever route
     if (state !== "intro") return;
     state = "overview";
-    released = now() - SPIN_RESUME + 400;  // the spin ramps up a moment later
+    released = -1e9;                       // the spin takes over from the intro's turn
     if (recent && bySlug[recent].row) {
       bySlug[recent].row.classList.add("is-recent");
       scrollRowIntoView(bySlug[recent]);
@@ -705,7 +726,7 @@
   function tidy() {
     if (!map || !ready || state === "intro" || state === "selecting" || state === "returning") return;
     if (active && state === "arrived" && map.getZoom() >= 4) relief();
-    if (!active && map.getZoom() <= L.zO + .6 && (state === "free" || !level())) overview();
+    if (!active && sizeZoom() <= L.zO + .6 && (state === "free" || !level())) overview();
   }
 
   /* ------------------------------------------------------------------
@@ -780,7 +801,7 @@
 
   function layoutPins() {
     var z = map.getZoom(), c = map.getCenter(), cc = [c.lng, c.lat];
-    var anchorsOnly = z <= L.zO + .6;
+    var anchorsOnly = sizeZoom() <= L.zO + .6;
     var far = z < 5 ? horizon(z, c.lat, L.h) - 3 : 181;
     var R = COARSE ? 22 : 14, kept = [], at = geom().attrib;
     // Never a pin in the header's band (laptop) or on the attribution.
@@ -1331,7 +1352,7 @@
 
   function placeRing() {
     if (state === "intro") return;
-    var z = map.getZoom(), op = map.getPitch() > 2 ? 0 : clamp((L.zO + 1.6 - z) / 1, 0, 1);
+    var z = map.getZoom(), op = map.getPitch() > 2 ? 0 : clamp((L.zO + 1.6 - sizeZoom()) / 1, 0, 1);
     ring.style.opacity = op.toFixed(3);
     if (!op) return;
     var r = silhouette(z, map.getCenter().lat, L.h), pad = map.getPadding();
@@ -1343,8 +1364,8 @@
   /* ------------------------------------------------------------------
      THE SPIN: 1.5°/s by the clock, from the landing on, whenever the
      camera is out at globe zoom with nothing open, pointed at or held and
-     the page in view. It stops at once when touched and ramps back 4 s
-     later, for as long as the visitor leaves it be.
+     the page in view. It stops at once when touched and ramps back a
+     second later, for as long as the visitor leaves it be.
      ------------------------------------------------------------------ */
 
   var spinV = 0, lastFrame = 0, lastSpin = 0, held = {}, released = -1e9;
@@ -1604,7 +1625,7 @@
       L = measure();
       geo = null;
       map.resize();
-      map.setMinZoom(Math.max(1, L.zO - .4));
+      map.setMinZoom(floorZoom());
       if (was.app !== L.app) {
         addAttribution();
         if (COARSE) map.cooperativeGestures[L.app ? "disable" : "enable"]();
