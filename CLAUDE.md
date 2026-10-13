@@ -250,7 +250,7 @@ above). Those commits still track `images/`. Checking one out overwrites the
 local photographs with old versions, and coming back deletes them from disk.
 Read files out of it with `git show` only. A photograph added or removed
 since then has to be placed by hand. Saved so far:
-`alberta-bc-yukon-layout-1` (the first arrangement, with small vertical xPans) and `alberta-bc-yukon-layout-2` (large vertical xPans, opening on the car at the lake); `peru-layout-1` (the first Peru arrangement, before the swimming caiman moved up to lead full width).
+`alberta-bc-yukon-layout-1` (the first arrangement, with small vertical xPans) and `alberta-bc-yukon-layout-2` (large vertical xPans, opening on the car at the lake); `peru-layout-1` (the first Peru arrangement, before the swimming caiman moved up to lead full width); `florida-layout-1` (Florida's November 2023 arrangement, before the two December 2022 cormorant frames were worked in). Tags made after the move to R2 (a223c34) are safe to read from but still restore with `git show`, not checkout.
 
 Rows are flush at any window width because exactly one cell per row (the
 anchor) carries an `aspect-ratio` and every other cell stretches to the height
