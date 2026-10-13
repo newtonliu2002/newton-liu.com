@@ -6,6 +6,7 @@ Usage
     python3 tools/build.py              # scan, make thumbnails, write manifest
     python3 tools/build.py --no-thumbs  # quick check only: drops every photo's variants; never commit its photos.json
     python3 tools/build.py --force      # allow writing an empty manifest
+    python3 tools/build.py --allow-removals  # let photographs whose files are gone leave the manifest
 
 Organising photographs
 ----------------------
@@ -334,7 +335,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title} — Newton Liu Photography</title>
 <meta name="description" content="{title} — photographs by Newton Liu.">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#121212">
 <script>try{{if(localStorage.getItem("theme")==="dark"){{document.documentElement.dataset.theme="dark";document.querySelector('meta[name="theme-color"]').content="#2f2f30"}}}}catch(e){{}}</script>
 <link rel="stylesheet" href="../../assets/site.css?v={v_css}">
 </head>
@@ -429,7 +430,7 @@ def load_collections():
 # pages are hand-written, so their existing stamps are rewritten in place
 # rather than regenerated.
 
-ASSETS = ("site.css", "site.js", "edit.js")
+ASSETS = ("site.css", "site.js", "edit.js", "globe.css", "globe.js")
 
 
 def asset_stamps():
@@ -448,7 +449,7 @@ def asset_stamps():
 def stamp_root_pages(stamps):
     """Refresh ?v= on the hand-written pages. Returns how many changed."""
     changed = 0
-    for page in ("index.html", "about.html", "contact.html"):
+    for page in ("index.html", "work.html", "about.html", "contact.html"):
         path = os.path.join(ROOT, page)
         if not os.path.exists(path):
             continue
@@ -574,6 +575,8 @@ def main():
     ap = argparse.ArgumentParser(description="Rebuild data/photos.json from images/")
     ap.add_argument("--no-thumbs", action="store_true", help="skip thumbnails (also drops variants from photos.json; do not commit)")
     ap.add_argument("--force", action="store_true", help="write even if no photos found")
+    ap.add_argument("--allow-removals", action="store_true",
+                    help="drop photographs whose files are no longer under images/")
     args = ap.parse_args()
 
     collections = load_collections()
@@ -581,10 +584,25 @@ def main():
     roots = stamp_root_pages(stamps)
     pages = write_pages(collections, stamps)
 
+    before = load_existing()
     photos = collect(make_thumbs=not args.no_thumbs)
     if not photos and not args.force:
         print("No photographs found under images/<collection>/.")
         print("Add some, or pass --force to write an empty gallery.")
+        return 1
+
+    # images/ is not in git (the photographs live in Cloudflare R2), so on a
+    # machine where a folder is missing, a collection would quietly leave the
+    # site on the next build. A photograph only leaves the manifest when asked.
+    kept = {p["src"] for p in photos}
+    gone = [src for src in before if src not in kept]
+    if gone and not args.allow_removals:
+        print("{} photograph(s) in data/photos.json have no file under images/, e.g.:".format(len(gone)))
+        for src in gone[:10]:
+            print("  " + src)
+        print("Nothing was written to data/photos.json. If they were removed on purpose, run")
+        print("again with --allow-removals. If images/ is just incomplete on this machine,")
+        print("fetch them back from R2 with: python3 tools/upload.py --download")
         return 1
 
     known = {c.get("slug") for c in collections}

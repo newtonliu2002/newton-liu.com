@@ -227,7 +227,7 @@ def main():
     print("Imported {} file(s){}.".format(
         imported, ", skipped {} already present".format(skipped) if skipped else ""))
     if total_out:
-        print("{:.0f} MB of masters -> {:.1f} MB committed ({:.0f}x smaller).".format(
+        print("{:.0f} MB of masters -> {:.1f} MB imported ({:.0f}x smaller).".format(
             total_in / 1e6, total_out / 1e6, total_in / max(total_out, 1)))
     print("\nNext: python3 tools/build.py")
     return 0

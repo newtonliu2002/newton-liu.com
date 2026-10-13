@@ -2,7 +2,8 @@
 
 Photography portfolio for Newton Liu — birds, wildlife, landscape. Static
 site, no build step, no dependencies. Deployed by pushing to `main`
-(GitHub Pages serves the repo root).
+(GitHub Pages serves the repo root). The photographs themselves are not in git:
+they are served from Cloudflare R2 (see "Where the photographs live").
 
 ## The one rule
 
@@ -32,8 +33,11 @@ data/photos.json            GENERATED — do not hand-edit structure, but
 data/text.json              every word on the site that isn't a photograph's;
                             overrides the copy written in the HTML
 tools/build.py              scans images/, writes photos.json, makes thumbs
-images/<slug>/*.jpg         the photographs, one folder per collection
-images/_thumbs/<edge>/      generated smaller widths (committed — Pages needs them)
+tools/upload.py             puts the photographs in Cloudflare R2, proves they're there
+tools/hooks/                refuse image files in git, and data ahead of R2 (pre-commit, pre-merge-commit)
+images/<slug>/*.jpg         the photographs, one folder per collection  (not in git: R2)
+images/_thumbs/<edge>/      generated smaller widths                    (not in git: R2)
+images/_about/              the About page's images — the one image folder in git
 ```
 
 Folders under `images/` starting with `_` are skipped by the scanner.
@@ -233,7 +237,11 @@ before it is redone, tag the commit that has it: `<slug>-layout-<n>`, annotated,
 pushed. A layout is two things: the collection's order in `data/photos.json`
 and its entry (`layout`, `opener`) in `data/collections.json`. To restore one,
 copy just those from the tag, e.g. `git show alberta-bc-yukon-layout-1:data/photos.json`,
-and leave every other collection as it is now. A photograph added or removed
+and leave every other collection as it is now. **Never `git checkout` or
+`git switch` to a tag or commit from before the move to R2** (all the tags
+above). Those commits still track `images/`. Checking one out overwrites the
+local photographs with old versions, and coming back deletes them from disk.
+Read files out of it with `git show` only. A photograph added or removed
 since then has to be placed by hand. Saved so far:
 `alberta-bc-yukon-layout-1` (the first arrangement, with small vertical xPans) and `alberta-bc-yukon-layout-2` (large vertical xPans, opening on the car at the lake); `peru-layout-1` (the first Peru arrangement, before the swimming caiman moved up to lead full width).
 
@@ -320,11 +328,80 @@ on the home page is a CSS `background-image`, which cannot carry a srcset, so
 `pickForWidth()` chooses a rung once at load; and the **About band** is written
 directly into `about.html`, srcset, `width` and `height` included.
 
-A note on the budget: at 4000px a full ~600-photograph migration comes to
-roughly 1.3 GB, past GitHub's 1 GB soft limit, and Git keeps every version of
-every binary forever. The West trip is nowhere near it. Before the bulk
-migration the images will need to live outside the repo (Cloudflare R2 or
-similar) — decided then, not now.
+A note on the budget: a photograph costs about 2.5 MB with its three smaller
+widths. That is why they left git (next section).
+
+## Where the photographs live
+
+**In Cloudflare R2, not in git.** GitHub Pages refuses a site over 1 GB, and
+the photographs reached that in October 2026 (Peru). Since then:
+
+- **The bucket** is `newton-liu-photos` on Newton's own Cloudflare account
+  (free tier: 10 GB stored, no charge for visitors' downloads; about 1 GB
+  used at the move). Each file's key is its repo path, so
+  `images/peru/EZLE2124.jpg` in the repo is `images/peru/EZLE2124.jpg` in R2.
+- **The address** is the `R2` constant in `assets/site.js`, the one place it is
+  written; `upload.py` reads it from there. It is R2's `pub-….r2.dev` address
+  for now, which Cloudflare rate-limits and labels for development. The plan is
+  a custom domain (`photos.<his domain>`) connected to the bucket in
+  Cloudflare, then that one constant changes. Newton is choosing the domain.
+- **The live site reads R2; the local preview reads `images/` on disk** (any
+  page on localhost/127.0.0.1), so a collection can be arranged before
+  anything is uploaded. To preview against R2 instead, run
+  `localStorage.media = "r2"` in the console, and delete it afterwards.
+- **`images/` is gitignored** except `images/_about/`. The folder on this Mac
+  is the working copy; the masters stay in Lightroom; R2 holds the published
+  copies. Git history before the move still contains the photographs. Never
+  rewrite history to remove them.
+- **`tools/upload.py`** uploads exactly what the site asks for (`data/photos.json`,
+  plus any `cover` in `data/collections.json`) and is missing from R2. "In R2" means R2's ETag equals the local file's MD5.
+  Files that pass are remembered in `.r2-uploaded.json` (gitignored), so
+  re-runs only ask about new or changed files. It runs the GPS check again
+  before anything leaves the machine. `--check` uploads nothing and exits 1 if
+  anything is missing. A file missing from `images/` passes `--check` as long
+  as R2 has it. `--verify` re-asks R2 about everything. `--download` fetches
+  missing files back from R2, which is how a fresh clone or a lost folder gets
+  its `images/` back. Filenames containing `# ? % \` are refused, because
+  wrangler can't store them under the right key; `import.py`'s names never
+  contain them.
+- **Uploads go through `wrangler`** (Cloudflare's CLI, via `npx wrangler@4`),
+  signed in by Newton with `npx wrangler login`. That is a browser OAuth he
+  approves himself. No key or token is ever stored in the repo or handled by
+  you. Only if upload.py says wrangler is *signed out* do you ask him to run
+  that. Any other wrangler error is printed as wrangler gave it; a network
+  problem is not a sign-in problem.
+- **`build.py` won't drop a photograph whose file is missing** unless given
+  `--allow-removals`. Without git holding the files, a missing folder would
+  otherwise silently remove a collection from the site. To remove a
+  photograph on purpose: delete its file from `images/<slug>/`, then run
+  `python3 tools/build.py --allow-removals`. It stays in R2 (see below).
+- **The hooks** in `tools/hooks/` only run where they are enabled, and that
+  setting is per clone: `git config core.hooksPath tools/hooks`. Check it
+  with `git config --get core.hooksPath` before relying on them. Worktrees of
+  this clone share it. `pre-commit` refuses image files outside
+  `images/_about/`, refuses GPS in `images/_about/`, and refuses a staged
+  `data/photos.json` or `data/collections.json` that points at files R2
+  doesn't have (`upload.py --check` on the staged versions).
+  `pre-merge-commit` runs the same checks on a merge. A rebase or
+  cherry-pick runs neither, so run `upload.py --check` after one.
+- **On a new machine or a fresh clone**: `git config core.hooksPath tools/hooks`,
+  then `python3 tools/upload.py --download` to bring back `images/`. Newton
+  runs `npx wrangler login` before the first upload.
+- **Other checkouts and branches from before the move.** The worktree
+  `~/newton-liu-globe` (branch `globe`) was started before the move: there
+  `images/` is still tracked and its CLAUDE.md is the old one. Merging main
+  into such a branch deletes the photographs from *that checkout's disk*.
+  That's expected; git is applying the untracking. Copy them back from
+  this checkout with `cp -Rc ~/newton-liu.com/images/. images/` (an APFS
+  clone: instant, no extra space), or run `upload.py --download` there. Merging such a
+  branch into main is safe once the hook is on (the merge hook refuses any
+  image it would add), but check `git diff main...<branch> --stat -- images`
+  first.
+- **Removed photographs stay in R2.** Nothing deletes from the bucket
+  automatically. They cost nearly nothing; clean up only on Newton's say.
+- Files are served with `Cache-Control: public, max-age=86400`. A photograph
+  re-exported under the same name can show its old version for up to a day to
+  a browser that already has it.
 
 ## Prose pages (About, Contact)
 
@@ -423,26 +500,34 @@ saving needs the token, and they don't have it.
   nav (added by site.js) switches to the gray palette in
   `:root[data-theme="dark"]` and remembers the choice per visitor in
   localStorage; "dark" in the code means gray. White was retired with the
-  globe. The landing itself is always the near-black of space. A colour token added to `:root` needs a gray value
+  globe. The landing itself is always the near-black of space. A colour
+  token added to `:root` needs a gray value
   there too. Every page's `<head>` carries a one-line script that applies a
   saved gray before the first paint (no white flash); the collection pages get
   it from `PAGE_TEMPLATE` in build.py, where its braces are doubled for
   `.format()`.
 - **Vanilla JS, no libraries** — except MapLibre on the globe page (see
   "The globe"). ES5-ish syntax, no transpiling.
-- **Filenames encode metadata**: `Title_Location_YYYY-MM-DD.jpg`. The build
-  script parses these and falls back to EXIF for the date.
+- **Filenames stay as the camera wrote them** (see "What's shown under a
+  photograph"). `build.py` *can* parse `Title_Location_YYYY-MM-DD.jpg` and
+  falls back to EXIF for the date, but that convention is Newton's to use.
 
 ## Adding photographs
 
 ```bash
 # Export from Lightroom at any size — import.py handles the downscaling.
 python3 tools/import.py ~/Desktop/"2025.12 West JPEG" --collection west
-# ...then rename the files to Title_Location_YYYY-MM-DD.jpg, and:
+# A new collection also needs its entry in data/collections.json (slug =
+# the folder name, title, date line, place in the oldest-first order).
 python3 tools/build.py
-python3 -m http.server 8000     # preview at localhost:8000
+python3 tools/serve.py          # preview at localhost:8137 (reads images/ on disk)
+python3 tools/upload.py         # photographs to R2; GPS-checked again
 git add -A && git commit -m "Add Yunnan 2025" && git push
 ```
+
+`git add -A` is safe: `images/` is gitignored, so only the data and pages are
+committed. If the hooks are enabled (see "Where the photographs live"), the
+commit is refused when `upload.py` hasn't been run.
 
 `import.py` resizes to a 4000px long edge (never enlarging a smaller file), reads only from the
 source folder, and **refuses to import anything carrying GPS coordinates**
@@ -460,8 +545,11 @@ rebuild.
 - **Never commit full-resolution originals.** Git keeps them forever, and the
   repo has a 1 GB soft limit. Web-sized exports only; masters stay in
   Lightroom. `.gitignore` blocks RAW and TIFF extensions as a backstop.
+- **Don't commit photographs at all** (except `images/_about/`). They go to
+  R2 through `upload.py`; `.gitignore` and the pre-commit hook back this up.
 - **EXIF GPS is not stripped by this project.** Strip it at export time.
   Precise coordinates for nests, roosts and rarities should not be published.
+  `import.py` and `upload.py` both refuse a file that carries it.
 - **This repo is public.** Everything pushed is permanent and world-readable,
   including anything later deleted.
 

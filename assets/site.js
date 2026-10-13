@@ -60,8 +60,34 @@
     });
   }
 
-  // Photo paths in the manifest are root-relative; make them page-relative.
-  function url(src) { return BASE + src; }
+  // The photographs live in Cloudflare R2, not in this repo (CLAUDE.md,
+  // "Where the photographs live"); the object keys are the repo paths, so
+  // "images/peru/EZLE2124.jpg" is R2 + that. The local preview (tools/serve.py,
+  // which only listens on 127.0.0.1) reads them from images/ on disk instead,
+  // so a collection can be arranged before a single file is uploaded. To check
+  // an upload, preview against R2 by running  localStorage.media = "r2"  in the
+  // console, and delete it afterwards.
+  var R2 = "https://pub-ce9a4b2d164449d8ac95ccbca47549a3.r2.dev/";
+  var MEDIA = (function () {
+    var local = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+    var force = null;
+    try { force = localStorage.getItem("media"); } catch (e) {}
+    return local && force !== "r2" ? BASE : R2;
+  })();
+
+  // Photo paths in the manifest are root-relative. Each segment is encoded:
+  // a space in a filename would otherwise split a srcset entry in two, and an
+  // apostrophe (Swainson's Hawk) would end the hero's CSS url('...') early.
+  // encodeURIComponent leaves ! ' ( ) * alone, so those are done by hand; the
+  // result matches url_for() in tools/upload.py.
+  function encodeSegment(seg) {
+    return encodeURIComponent(seg).replace(/[!'()*]/g, function (c) {
+      return "%" + c.charCodeAt(0).toString(16).toUpperCase();
+    });
+  }
+  function url(src) {
+    return MEDIA + src.split("/").map(encodeSegment).join("/");
+  }
 
   // ---- Responsive images -------------------------------------------------
   // build.py writes a ladder of widths for every photograph. A `srcset` lets
