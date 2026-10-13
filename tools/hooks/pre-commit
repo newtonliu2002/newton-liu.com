@@ -1,0 +1,52 @@
+#!/bin/sh
+# Guards for the photographs (CLAUDE.md, "Where the photographs live").
+# Enabled once per clone with:  git config core.hooksPath tools/hooks
+# pre-merge-commit runs this too, so a merge is checked like a commit.
+#
+# 1. No image files in git, except the About page's own images/_about/.
+#    The photographs live in Cloudflare R2; git keeps every file forever.
+# 2. The About images do go into public history, so no GPS in them.
+# 3. No data/photos.json or data/collections.json pointing at files R2
+#    doesn't have yet: the live site would show them as broken images.
+
+cd "$(git rev-parse --show-toplevel)" || exit 1
+
+staged() {
+  git -c core.quotePath=false diff --cached --name-only --no-renames --diff-filter=ACMRT "$@"
+}
+
+stray=$(staged -- images ':(exclude)images/_about')
+if [ -n "$stray" ]; then
+  echo "pre-commit: image files are staged, but photographs don't go in git:" >&2
+  echo "$stray" | head -10 | sed 's/^/  /' >&2
+  echo "Unstage them (git restore --staged images) and run python3 tools/upload.py." >&2
+  exit 1
+fi
+
+if [ -n "$(staged -- images/_about)" ]; then
+  staged -z -- images/_about | python3 -c '
+import importlib.util, sys
+spec = importlib.util.spec_from_file_location("site_import", "tools/import.py")
+m = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(m)
+bad = [p for p in sys.stdin.read().split("\0") if p and m.has_gps(p)]
+for p in bad:
+    print("pre-commit: carries GPS coordinates, re-export without them: " + p, file=sys.stderr)
+sys.exit(1 if bad else 0)
+' || exit 1
+fi
+
+if git diff --cached --name-only | grep -qxE 'data/(photos|collections)\.json'; then
+  # Check the versions being committed, not whatever is in the working tree.
+  tmp=$(mktemp -d) || exit 1
+  git show :data/photos.json > "$tmp/photos.json" 2>/dev/null
+  git show :data/collections.json > "$tmp/collections.json" 2>/dev/null
+  python3 tools/upload.py --check --manifest "$tmp/photos.json" --collections "$tmp/collections.json"
+  status=$?
+  rm -rf "$tmp"
+  if [ $status -ne 0 ]; then
+    echo "pre-commit: run  python3 tools/upload.py  first, then commit again." >&2
+    exit 1
+  fi
+fi
+exit 0

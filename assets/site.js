@@ -76,9 +76,17 @@
   })();
 
   // Photo paths in the manifest are root-relative. Each segment is encoded:
-  // a space in a filename would otherwise split a srcset entry in two.
+  // a space in a filename would otherwise split a srcset entry in two, and an
+  // apostrophe (Swainson's Hawk) would end the hero's CSS url('...') early.
+  // encodeURIComponent leaves ! ' ( ) * alone, so those are done by hand; the
+  // result matches url_for() in tools/upload.py.
+  function encodeSegment(seg) {
+    return encodeURIComponent(seg).replace(/[!'()*]/g, function (c) {
+      return "%" + c.charCodeAt(0).toString(16).toUpperCase();
+    });
+  }
   function url(src) {
-    return MEDIA + src.split("/").map(encodeURIComponent).join("/");
+    return MEDIA + src.split("/").map(encodeSegment).join("/");
   }
 
   // ---- Responsive images -------------------------------------------------

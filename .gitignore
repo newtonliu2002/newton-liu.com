@@ -20,3 +20,15 @@ _compare/
 
 # Local layout experiments — never committed
 _arrange/
+
+# The photographs live in Cloudflare R2, not in git (CLAUDE.md, "Where the
+# photographs live"). Only the About page's own images stay here.
+/images/*
+!/images/_about/
+
+# wrangler's per-folder cache, and upload.py's record of what R2 already has
+.wrangler/
+.r2-uploaded.json*
+
+# The desktop app's preview settings (local paths)
+.claude/launch.json
