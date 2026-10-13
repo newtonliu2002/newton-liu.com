@@ -299,7 +299,9 @@
     grid.textContent = "";
     collections.forEach(function (c) {
       var shots = byCollection[c.slug] || [];
-      var cover = c.cover ? { src: c.cover } : shots[0];
+      var cover = c.cover
+        ? photos.filter(function (p) { return p.src === c.cover; })[0] || { src: c.cover }
+        : shots[0];
 
       var card = el("a", "collection-card" + (shots.length ? "" : " is-empty"));
       card.href = BASE + "collections/" + c.slug + "/";
@@ -307,9 +309,12 @@
       if (cover) {
         var img = el("img");
         // Cards are a 20rem-minimum auto-fill grid inside --wrap, so they land
-        // near 380px on a desktop and go full width on a phone.
-        responsive(img, cover, "(max-width: 700px) 100vw, 380px",
-                   cover.thumb || cover.src);
+        // near 380px on a desktop and go full width on a phone. A cover wider
+        // than 3:2 is cropped to fill the card, so it is drawn that much
+        // wider than the card: the hint grows with it.
+        var wide = Math.max(1, aspectOf(cover) / 1.5);
+        responsive(img, cover, "(max-width: 700px) " + Math.round(100 * wide) + "vw, " +
+                   Math.round(380 * wide) + "px", cover.thumb || cover.src);
         img.alt = "";                    // decorative; the title carries meaning
         img.loading = "lazy";
         img.decoding = "async";
