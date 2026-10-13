@@ -161,7 +161,9 @@
   function aspectOf(photo) {
     var w = Number(photo.width), h = Number(photo.height);
     if (!w || !h) return 1.5;
-    return Math.max(0.4, Math.min(4, w / h));   // clamp so nothing wrecks a row
+    // Clamp so nothing wrecks a row, but loosely enough that an xPan turned
+    // upright (0.37) keeps its own shape rather than being cropped to fit.
+    return Math.max(0.3, Math.min(4, w / h));
   }
 
   // Screen readers still need something, even when nothing is printed on
@@ -292,6 +294,7 @@
   }
 
   function cellFits(need, photo) {
+    if (need === "?") return true;                  // "?" takes any shape whole
     var f = famOf(photo);
     return need === "*" ? f !== "W" : need === f;   // "*" crops to a square
   }
@@ -365,6 +368,15 @@
     LPn:  { need: "LP",  cols: [{ w: 65.2, nat: true, take: 1 }, { w: 34.8, take: 1 }] },
     PLn:  { need: "PL",  cols: [{ w: 34.8, take: 1 }, { w: 65.2, nat: true, take: 1 }] },
     PPn:  { need: "PP",  cols: [{ w: 50, nat: true, take: 1 }, { w: 50, take: 1 }] },
+
+    // Nothing cropped, whatever the shapes: a vertical xPan beside a 3:4
+    // beside a 3:2 (Alberta, British Columbia, Yukon). The columns carry no
+    // widths; each grows by its photograph's own aspect ratio, so every frame
+    // keeps its ratio and the row comes out one height at any window width.
+    // Plan only.
+    J2:   { need: "??",  just: true, cols: [{ nat: true, take: 1 }, { nat: true, take: 1 }] },
+    J3:   { need: "???", just: true, cols: [{ nat: true, take: 1 }, { nat: true, take: 1 },
+                                            { nat: true, take: 1 }] },
 
     // Square-cropping discards the most of a photograph, so these are the last
     // arrangements tried rather than the first. "*" means either orientation.
@@ -573,16 +585,22 @@
       }
 
       if (step.block.cls) row.classList.add(step.block.cls);
+      // A justified row shares its width out by aspect ratio (see J2).
+      var arSum = 0;
+      if (step.block.just) {
+        for (var j = 0; j < step.block.need.length; j++) arSum += aspectOf(rest[step.from + j].photo);
+      }
       step.block.cols.forEach(function (spec) {
         var col = el("div", "book-col");
+        var w = step.block.just ? aspectOf(rest[cursor].photo) / arSum * 100 : spec.w;
         // Grow from a zero basis rather than a percentage: the gaps come out
         // of the free space first, so the columns still add up to exactly the
         // row's width. Percentages summing to 100 plus a gap overflow it.
-        col.style.flex = spec.w + " 1 0";
+        col.style.flex = w + " 1 0";
         for (var n = 0; n < spec.take; n++) {
           var item = rest[cursor++];
           var tile = makeTile(item.photo, item.at, photos.length,
-                              tileSizes(spec.w / 100, spec.ph));
+                              tileSizes(w / 100, spec.ph));
           if (spec.nat) {
             tile.classList.add("is-natural");
             tile.style.setProperty("--cell-ar", aspectOf(item.photo).toFixed(4));

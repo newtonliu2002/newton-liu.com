@@ -154,6 +154,26 @@
       ]
     },
     {
+      "slug": "alberta-bc-yukon",
+      "title": "Alberta, British Columbia, Yukon",
+      "date": "May 2024, May 2026, July 2026",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "J2",
+        "L",
+        "J3",
+        "L",
+        "J2",
+        "W",
+        "J3",
+        "L",
+        "J3",
+        "J2"
+      ],
+      "opener": "whole"
+    },
+    {
       "slug": "sri-lanka",
       "title": "Sri Lanka",
       "date": "November 2024",

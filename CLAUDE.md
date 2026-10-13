@@ -154,6 +154,14 @@ laptop size; on a phone only the upright gives up a percent or two. Together
 with `L` and `LLe`, which never crop a 3:2 frame, they make a plan with no
 cropped cell. They are plan only, and only exact for 4:5 uprights.
 
+`J2` and `J3` crop nothing whatever the shapes, for a collection that mixes
+vertical xPans (0.37), 2:3, 3:4, 3:2 and 2.7 panoramas (Alberta, British
+Columbia, Yukon). Their columns carry no widths: each grows by its
+photograph's own aspect ratio, so every frame keeps its ratio and the row is
+one height at any window width, phone included. Their `need` is `?`, which
+takes any shape. Plan only. `aspectOf()` clamps ratios to 0.3–4 so that a
+vertical xPan is not squeezed; at the old 0.4 floor it was cropped by 8%.
+
 Rows are flush at any window width because exactly one cell per row (the
 anchor) carries an `aspect-ratio` and every other cell stretches to the height
 it sets. There is no measurement and no resize handler; don't add one.
