@@ -148,9 +148,12 @@
   function arcs(pts) {
     var out = [];
     for (var i = 0; i + 1 < pts.length; i++) {
+      // A long hop is drawn as a great-circle arc in steps of a quarter
+      // degree at most (32 at most); a road path's short steps stay single.
       var u = vec(pts[i]), v = vec(pts[i + 1]), d = angle(pts[i], pts[i + 1]) * rad, s = Math.sin(d);
-      for (var j = i ? 1 : 0; j <= 32; j++) {
-        var t = j / 32, k1 = s ? Math.sin((1 - t) * d) / s : 1 - t, k2 = s ? Math.sin(t * d) / s : t;
+      var steps = Math.max(1, Math.min(32, Math.ceil(d / rad / .25)));
+      for (var j = i ? 1 : 0; j <= steps; j++) {
+        var t = j / steps, k1 = s ? Math.sin((1 - t) * d) / s : 1 - t, k2 = s ? Math.sin(t * d) / s : t;
         var x = k1 * u[0] + k2 * v[0], y = k1 * u[1] + k2 * v[1], z = k1 * u[2] + k2 * v[2];
         out.push([Math.atan2(y, x) / rad, Math.atan2(z, Math.sqrt(x * x + y * y)) / rad]);
       }
@@ -317,18 +320,20 @@
 
   // The opener and the date line follow the gallery's own rules: the
   // `featured` photograph else the first; `date` if set, else derived.
-  function joinData(collections, photos, places) {
+  function joinData(collections, photos, places, routes) {
     var byCol = {};
     photos.forEach(function (p) { (byCol[p.collection] = byCol[p.collection] || []).push(p); });
     collections.forEach(function (c, i) {
-      var shots = byCol[c.slug] || [], pl = places[c.slug] || {};
+      var shots = byCol[c.slug] || [], pl = places[c.slug] || {}, rt = (routes[c.slug] || {}).path;
       var opener = shots.filter(function (p) { return p.featured; })[0] || shots[0] || null;
       var derived = NL && shots.length ? NL.collectionDate(shots) : "";
       var date = typeof c.date === "string" ? c.date : derived;   // "" hides it
       var col = {
         slug: c.slug, title: c.title || c.slug, sub: c.subtitle || "", date: date,
         where: pl.where || "", zoom: pl.zoom, sensitive: !!pl.sensitive, i: i, opener: opener,
-        href: BASE + "collections/" + c.slug + "/", pins: []
+        href: BASE + "collections/" + c.slug + "/", pins: [],
+        // The road it took (data/routes.json), drawn in place of the arcs between pins.
+        route: rt && rt.length > 1 && rt.every(function (q) { return q && typeof q[0] === "number" && typeof q[1] === "number"; }) ? rt : null
       };
       (pl.pins || []).forEach(function (p) {
         if (typeof p.lat === "number" && typeof p.lng === "number") col.pins.push({ name: p.name || "", ll: [p.lng, p.lat] });
@@ -850,7 +855,7 @@
   }
   // Right of the pin, else left, above or below; never over the card, the console, the
   // attribution, the header, another pin of the collection, the tether
-  // between them, or another label. The pin with the fewest free places
+  // between them (straight hops only; see below), or another label. The pin with the fewest free places
   // chooses first, so one label's flip can't push out a neighbour's, and a
   // label keeps its side while that side stays free.
   var SIDES = { "1": "", "-1": "is-left", "2": "is-up", "-2": "is-down" };
@@ -863,7 +868,9 @@
         var p = q.p, n = c.pins[i + 1] && c.pins[i + 1].p;
         if (!p.show || !p.xy) return;
         boxes.push([p.xy.x - 9, p.xy.y - 9, p.xy.x + 9, p.xy.y + 9, p]);
-        if (n && n.show && n.xy) segs.push([p.xy.x, p.xy.y, n.xy.x, n.xy.y]);
+        // The straight hop to the next pin, unless a road is drawn instead (a
+        // label's dark ground may sit over a road; it has nowhere else to go).
+        if (!c.route && n && n.show && n.xy) segs.push([p.xy.x, p.xy.y, n.xy.x, n.xy.y]);
         if (!p.lw) p.lw = p.el.querySelector(".g-pin-label").offsetWidth;
         // Above and below, a label may slide sideways to stay on screen.
         var x = p.xy.x, y = p.xy.y, w = p.lw / 2 + 2, x0 = clamp(x - w, minX, Math.max(minX, maxX - 2 * w)), dx = Math.round(x0 + w - x);
@@ -914,11 +921,18 @@
 
   /* ---------- tether and trail -------------------------------------------- */
 
+  // The line through a collection's places: its road if it has one, else
+  // arcs from pin to pin in route order; none for a single pin.
+  function tetherOf(c) {
+    if (c.route) return c.route;
+    return c.pins.length > 1 ? c.pins.map(function (p) { return p.ll; }) : null;
+  }
+
   function setTether() {
     if (!ready) return;
     var g = [];
-    if (active && bySlug[active].pins.length > 1) g.push({ o: .45, pts: bySlug[active].pins.map(function (p) { return p.ll; }) });
-    if (lit && lit !== active && bySlug[lit].pins.length > 1) g.push({ o: .3, pts: bySlug[lit].pins.map(function (p) { return p.ll; }) });
+    if (active && tetherOf(bySlug[active])) g.push({ o: .45, pts: tetherOf(bySlug[active]) });
+    if (lit && lit !== active && tetherOf(bySlug[lit])) g.push({ o: .3, pts: tetherOf(bySlug[lit]) });
     map.getSource("g-tether").setData(lines(g));
   }
 
@@ -1054,6 +1068,7 @@
     // for a camera without padding, the flight aims at the pins' middle.
     var b = new ml.LngLatBounds(), keep = map.getPadding();
     c.pins.forEach(function (p) { b.extend(p.ll); });
+    (c.route || []).forEach(function (q) { b.extend(q); });   // a road can run past its last pin
     map.setPadding({ top: 0, right: 0, bottom: 0, left: 0 });
     var cam = map.cameraForBounds(b, { padding: pad });
     map.setPadding(keep);
@@ -1675,9 +1690,11 @@
   Promise.all([
     getJSON("data/collections.json"),
     getJSON("data/photos.json").catch(function () { return {}; }),
-    getJSON("data/places.json").catch(function () { return {}; })
+    getJSON("data/places.json").catch(function () { return {}; }),
+    getJSON("data/routes.json").catch(function () { return {}; })
   ]).then(function (r) {
-    joinData((r[0] && r[0].collections) || [], (r[1] && r[1].photos) || [], (r[2] && r[2].places) || {});
+    joinData((r[0] && r[0].collections) || [], (r[1] && r[1].photos) || [], (r[2] && r[2].places) || {},
+             (r[3] && r[3].routes) || {});
     var hash = location.hash.slice(1);
     try { hash = decodeURIComponent(hash); } catch (e) {}      // a malformed escape is just an unknown hash
     if (has(hash)) deep = hash;

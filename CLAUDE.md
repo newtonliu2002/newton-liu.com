@@ -80,6 +80,16 @@ keyed by the collection's slug, after the usual collections.json entry:
   arrives. `sensitive: true` keeps it back at zoom 7 (the sage-grouse leks).
 - `status` is `"draft"` until Newton has confirmed the row.
 - A collection with no entry is still listed; it just has no pin.
+- **Roads (optional): `data/routes.json`.** A collection whose line should
+  follow the roads Newton drove (The Canadian West: the Alaska and
+  Stewart–Cassiar Highways) has `waypoints` there ([lat, lng], driving order,
+  passing through its pins in places.json order), and
+  `python3 tools/route.py <slug>` writes its `path` from the free OSRM router
+  (OpenStreetMap roads, simplified to about 1 km). The globe draws that path
+  in place of the arcs between pins and frames it on arrival; labels may sit
+  over it. Pins on a traced route sit on the road, at the park's visitor hub
+  or the town, so the line runs through them. Re-run the tool after moving a
+  waypoint; a collection without an entry keeps its arcs.
 
 Overlapping pins of different collections merge on screen into one ringed
 pin; clicking it zooms in until they separate. At the overview only each

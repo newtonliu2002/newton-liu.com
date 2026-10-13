@@ -71,7 +71,7 @@
         { "name": "Merritt Island National Wildlife Refuge", "lat": 28.62, "lng": -80.74 },
         { "name": "Three Lakes Wildlife Management Area", "lat": 27.91, "lng": -81.16 },
         { "name": "Everglades National Park", "lat": 25.37, "lng": -80.88 },
-        { "name": "J. N. \"Ding\" Darling National Wildlife Refuge", "lat": 26.48, "lng": -82.14 },
+        { "name": "Sanibel & Fort Myers", "lat": 26.50, "lng": -82.05 },
         { "name": "Fort De Soto Park", "lat": 27.62, "lng": -82.73 }
       ]
     },
@@ -110,11 +110,13 @@
       "status": "draft",
       "where": "Alberta · British Columbia · Yukon",
       "pins": [
-        { "name": "Banff", "lat": 51.50, "lng": -116.00 },
-        { "name": "Jasper", "lat": 52.80, "lng": -117.90 },
-        { "name": "Muncho Lake", "lat": 58.94, "lng": -125.77 },
-        { "name": "Whitehorse", "lat": 60.72, "lng": -135.06 },
-        { "name": "Kluane", "lat": 60.62, "lng": -138.33 }
+        { "name": "Waterton Lakes National Park", "lat": 49.05, "lng": -113.91 },
+        { "name": "Banff National Park", "lat": 51.18, "lng": -115.57 },
+        { "name": "Jasper National Park", "lat": 52.88, "lng": -118.08 },
+        { "name": "Alaska Highway", "lat": 58.93, "lng": -125.77 },
+        { "name": "Kluane National Park", "lat": 61.01, "lng": -138.52 },
+        { "name": "Stewart–Cassiar Highway", "lat": 58.44, "lng": -129.99 },
+        { "name": "Vancouver", "lat": 49.26, "lng": -123.11 }
       ]
     },
     "peru": {

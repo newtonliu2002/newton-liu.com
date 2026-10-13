@@ -62,6 +62,7 @@ proves they're there; the commit is refused until it has.
 | Collection names, subtitles, blurbs, order | `data/collections.json` |
 | Landing (globe) and Index copy, About, Contact | `index.html`, `work.html`, `about.html`, `contact.html` |
 | Globe pins | `data/places.json` |
+| Globe road routes | `data/routes.json` waypoints, then `python3 tools/route.py <slug>` |
 | Globe behaviour and map colours | `assets/globe.js`, `assets/globe.css` |
 | Gallery and lightbox behaviour | `assets/site.js` |
 
