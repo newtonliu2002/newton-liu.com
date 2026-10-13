@@ -10406,6 +10406,546 @@
         }
       ],
       "thumb": "images/_thumbs/1600/alberta-bc-yukon/ZL-7451.jpg"
+    },
+    {
+      "src": "images/peru/EZLE1970.jpg",
+      "title": "EZLE1970",
+      "collection": "peru",
+      "location": "",
+      "date": "2024-08-11",
+      "width": 4000,
+      "height": 2666,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "324mm",
+        "aperture": "f/7.1",
+        "shutter": "1/250s",
+        "iso": "125"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/peru/EZLE1970.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/peru/EZLE1970.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/peru/EZLE1970.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/peru/EZLE1970.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/peru/EZLE1970.jpg"
+    },
+    {
+      "src": "images/peru/EZLE3285.jpg",
+      "title": "EZLE3285",
+      "collection": "peru",
+      "location": "",
+      "date": "2024-08-11",
+      "width": 4000,
+      "height": 2667,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/800s",
+        "iso": "2000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/peru/EZLE3285.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/peru/EZLE3285.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/peru/EZLE3285.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/peru/EZLE3285.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/peru/EZLE3285.jpg"
+    },
+    {
+      "src": "images/peru/EZLE3445.jpg",
+      "title": "EZLE3445",
+      "collection": "peru",
+      "location": "",
+      "date": "2024-08-11",
+      "width": 2666,
+      "height": 4000,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "200mm",
+        "aperture": "f/7.1",
+        "shutter": "1/800s",
+        "iso": "2000"
+      },
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/peru/EZLE3445.jpg"
+        },
+        {
+          "w": 1066,
+          "src": "images/_thumbs/1600/peru/EZLE3445.jpg"
+        },
+        {
+          "w": 1599,
+          "src": "images/_thumbs/2400/peru/EZLE3445.jpg"
+        },
+        {
+          "w": 2666,
+          "src": "images/peru/EZLE3445.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/peru/EZLE3445.jpg"
+    },
+    {
+      "src": "images/peru/EZLE1651.jpg",
+      "title": "EZLE1651",
+      "collection": "peru",
+      "location": "",
+      "date": "2024-08-11",
+      "width": 3504,
+      "height": 2336,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/320s",
+        "iso": "12800"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/peru/EZLE1651.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/peru/EZLE1651.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/peru/EZLE1651.jpg"
+        },
+        {
+          "w": 3504,
+          "src": "images/peru/EZLE1651.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/peru/EZLE1651.jpg"
+    },
+    {
+      "src": "images/peru/GZLG4668.jpg",
+      "title": "GZLG4668",
+      "collection": "peru",
+      "location": "",
+      "date": "2024-08-12",
+      "width": 2551,
+      "height": 3827,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/500s",
+        "iso": "8000"
+      },
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/peru/GZLG4668.jpg"
+        },
+        {
+          "w": 1066,
+          "src": "images/_thumbs/1600/peru/GZLG4668.jpg"
+        },
+        {
+          "w": 1599,
+          "src": "images/_thumbs/2400/peru/GZLG4668.jpg"
+        },
+        {
+          "w": 2551,
+          "src": "images/peru/GZLG4668.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/peru/GZLG4668.jpg"
+    },
+    {
+      "src": "images/peru/EZLE2124.jpg",
+      "title": "EZLE2124",
+      "collection": "peru",
+      "location": "",
+      "date": "2024-08-11",
+      "width": 4000,
+      "height": 2666,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/1000s",
+        "iso": "125"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/peru/EZLE2124.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/peru/EZLE2124.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/peru/EZLE2124.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/peru/EZLE2124.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/peru/EZLE2124.jpg"
+    },
+    {
+      "src": "images/peru/GZLG5328.jpg",
+      "title": "GZLG5328",
+      "collection": "peru",
+      "location": "",
+      "date": "2024-08-12",
+      "width": 4000,
+      "height": 2666,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "100mm",
+        "aperture": "f/6.3",
+        "shutter": "1/320s",
+        "iso": "640"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/peru/GZLG5328.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/peru/GZLG5328.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/peru/GZLG5328.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/peru/GZLG5328.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/peru/GZLG5328.jpg"
+    },
+    {
+      "src": "images/peru/ZL-7051.jpg",
+      "title": "ZL-7051",
+      "collection": "peru",
+      "location": "",
+      "date": "2024-08-04",
+      "width": 2666,
+      "height": 4000,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/1000s",
+        "iso": "2500"
+      },
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/peru/ZL-7051.jpg"
+        },
+        {
+          "w": 1066,
+          "src": "images/_thumbs/1600/peru/ZL-7051.jpg"
+        },
+        {
+          "w": 1599,
+          "src": "images/_thumbs/2400/peru/ZL-7051.jpg"
+        },
+        {
+          "w": 2666,
+          "src": "images/peru/ZL-7051.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/peru/ZL-7051.jpg"
+    },
+    {
+      "src": "images/peru/ZL-7793.jpg",
+      "title": "ZL-7793",
+      "collection": "peru",
+      "location": "",
+      "date": "2024-08-04",
+      "width": 4000,
+      "height": 2667,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/1600s",
+        "iso": "1250"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/peru/ZL-7793.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/peru/ZL-7793.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/peru/ZL-7793.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/peru/ZL-7793.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/peru/ZL-7793.jpg"
+    },
+    {
+      "src": "images/peru/ZL-9087.jpg",
+      "title": "ZL-9087",
+      "collection": "peru",
+      "location": "",
+      "date": "2024-08-04",
+      "width": 4000,
+      "height": 2667,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/2000s",
+        "iso": "1250"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/peru/ZL-9087.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/peru/ZL-9087.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/peru/ZL-9087.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/peru/ZL-9087.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/peru/ZL-9087.jpg"
+    },
+    {
+      "src": "images/peru/ZL-7754.jpg",
+      "title": "ZL-7754",
+      "collection": "peru",
+      "location": "",
+      "date": "2024-08-04",
+      "width": 4000,
+      "height": 2666,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/1600s",
+        "iso": "1250"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/peru/ZL-7754.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/peru/ZL-7754.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/peru/ZL-7754.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/peru/ZL-7754.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/peru/ZL-7754.jpg"
+    },
+    {
+      "src": "images/peru/HZLH1837.jpg",
+      "title": "HZLH1837",
+      "collection": "peru",
+      "location": "",
+      "date": "2024-08-06",
+      "width": 3834,
+      "height": 2556,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/6400s",
+        "iso": "8000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/peru/HZLH1837.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/peru/HZLH1837.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/peru/HZLH1837.jpg"
+        },
+        {
+          "w": 3834,
+          "src": "images/peru/HZLH1837.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/peru/HZLH1837.jpg"
+    },
+    {
+      "src": "images/peru/HZLH1393.jpg",
+      "title": "HZLH1393",
+      "collection": "peru",
+      "location": "",
+      "date": "2024-08-06",
+      "width": 4000,
+      "height": 2666,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/5000s",
+        "iso": "6400"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/peru/HZLH1393.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/peru/HZLH1393.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/peru/HZLH1393.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/peru/HZLH1393.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/peru/HZLH1393.jpg"
+    },
+    {
+      "src": "images/peru/AZLA0107.jpg",
+      "title": "AZLA0107",
+      "collection": "peru",
+      "location": "",
+      "date": "2024-08-06",
+      "width": 4000,
+      "height": 2666,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/6400s",
+        "iso": "3200"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/peru/AZLA0107.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/peru/AZLA0107.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/peru/AZLA0107.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/peru/AZLA0107.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/peru/AZLA0107.jpg"
+    },
+    {
+      "src": "images/peru/EZLE1063.jpg",
+      "title": "EZLE1063",
+      "collection": "peru",
+      "location": "",
+      "date": "2024-08-10",
+      "width": 4000,
+      "height": 2666,
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/200s",
+        "iso": "6400"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/peru/EZLE1063.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/peru/EZLE1063.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/peru/EZLE1063.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/peru/EZLE1063.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/peru/EZLE1063.jpg"
     }
   ]
 }

@@ -175,6 +175,25 @@
       "opener": "whole"
     },
     {
+      "slug": "peru",
+      "title": "Peru",
+      "date": "August 2024",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "J2",
+        "L",
+        "J2",
+        "L",
+        "J2",
+        "L",
+        "LLe",
+        "L",
+        "LLe"
+      ],
+      "opener": "whole"
+    },
+    {
       "slug": "sri-lanka",
       "title": "Sri Lanka",
       "date": "November 2024",
