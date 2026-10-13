@@ -180,6 +180,37 @@
       "opener": "whole"
     },
     {
+      "slug": "sri-lanka",
+      "title": "Sri Lanka",
+      "date": "November 2024",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "PPn",
+        "L",
+        "PLLn",
+        "L",
+        "LLe",
+        "L",
+        "PPn",
+        "LLe",
+        "L",
+        "PLLn",
+        "L",
+        "PPn",
+        "L",
+        "PPn",
+        "LLe",
+        "PPn",
+        "L",
+        "LPn",
+        "L",
+        "PPn",
+        "L"
+      ],
+      "opener": "whole"
+    },
+    {
       "slug": "arizona",
       "title": "Arizona",
       "date": "January 2025",

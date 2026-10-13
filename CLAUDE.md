@@ -46,7 +46,7 @@ Dates appear **once per collection**, under the gallery heading ("December
 dates in the manifest by `collectionDate()` in `site.js`, so it stays correct
 as photographs are added. Set `"date"` on a collection in
 `data/collections.json` to override it with fixed text — Galápagos, Ecuador,
-Malaysia, Arizona and Yunnan do, since their files carry no capture dates, and so does any page
+Malaysia, Arizona, Yunnan and Sri Lanka do, since their files carry no capture dates, and so does any page
 that spans separate trips ("January 2024, December 2025"), which the derived
 range would misreport — or to `""` to show no date at all.
 
@@ -145,8 +145,9 @@ big as an upright can be and still be seen whole on a laptop. Plan only; on a
 phone it folds to the upright at full width with the three below.
 
 The `n` templates (`PLLn`, `LLPn`, `LPn`, `PLn`, `PPn`) crop nothing, for
-a collection shot as 4:5 uprights and 3:2 landscapes; Yunnan uses them because
-Newton asked that its landscapes keep their ratio. The landscapes anchor at
+a collection shot as 4:5 uprights and 3:2 landscapes; Yunnan and Sri Lanka use
+them because Newton asked that Yunnan's landscapes keep their ratio. A `PPn`
+of two 2:3 uprights is also uncropped, since both columns share one ratio. The landscapes anchor at
 their own shape and the upright stretches beside them. The column widths
 (52/48, 65.2/34.8) are solved so that the stretch lands on exactly 4:5 at
 laptop size; on a phone only the upright gives up a percent or two. Together
