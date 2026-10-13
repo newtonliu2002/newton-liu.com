@@ -154,32 +154,6 @@
       ]
     },
     {
-      "slug": "yunnan",
-      "title": "Yunnan",
-      "date": "November 2024",
-      "subtitle": "",
-      "blurb": "",
-      "layout": [
-        "PPn",
-        "LLe",
-        "PPn",
-        "L",
-        "PLLn",
-        "PPn",
-        "L",
-        "PPn",
-        "LPn",
-        "PPn",
-        "L",
-        "PLLn",
-        "L",
-        "LLe",
-        "L",
-        "LPn"
-      ],
-      "opener": "whole"
-    },
-    {
       "slug": "sri-lanka",
       "title": "Sri Lanka",
       "date": "November 2024",
@@ -207,6 +181,32 @@
         "L",
         "PPn",
         "L"
+      ],
+      "opener": "whole"
+    },
+    {
+      "slug": "yunnan",
+      "title": "Yunnan",
+      "date": "November 2024",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "PPn",
+        "LLe",
+        "PPn",
+        "L",
+        "PLLn",
+        "PPn",
+        "L",
+        "PPn",
+        "LPn",
+        "PPn",
+        "L",
+        "PLLn",
+        "L",
+        "LLe",
+        "L",
+        "LPn"
       ],
       "opener": "whole"
     },
