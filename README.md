@@ -37,7 +37,8 @@ python3 tools/import.py ~/Desktop/"2025.12 West JPEG" --collection west
    refuses to import a photograph carrying GPS coordinates unless you
    explicitly allow or strip it. Filenames stay as the camera wrote them.
 
-3. A new collection also needs its entry in `data/collections.json`.
+3. A new collection also needs its entry in `data/collections.json`, and an
+   entry under `"places"` in `data/places.json` for its pin on the globe.
 
 4. Rebuild, upload and publish:
 
@@ -59,7 +60,9 @@ proves they're there; the commit is refused until it has.
 |---|---|
 | Colours, type, spacing, grid size | the `:root` block at the top of `assets/site.css` |
 | Collection names, subtitles, blurbs, order | `data/collections.json` |
-| Home page copy, About, Contact | `index.html`, `about.html`, `contact.html` |
+| Landing (globe) and Index copy, About, Contact | `index.html`, `work.html`, `about.html`, `contact.html` |
+| Globe pins | `data/places.json` |
+| Globe behaviour and map colours | `assets/globe.js`, `assets/globe.css` |
 | Gallery and lightbox behaviour | `assets/site.js` |
 
 `collections/<slug>/index.html` is **generated** by `build.py` — edit

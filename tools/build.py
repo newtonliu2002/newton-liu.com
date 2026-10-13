@@ -336,7 +336,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 <title>{title} — Newton Liu Photography</title>
 <meta name="description" content="{title} — photographs by Newton Liu.">
 <meta name="theme-color" content="#121212">
-<script>try{{if(localStorage.getItem("theme")==="light"){{document.documentElement.dataset.theme="light";var m=document.querySelector('meta[name="theme-color"]');if(m)m.content="#ffffff"}}}}catch(e){{}}</script>
+<script>try{{if(localStorage.getItem("theme")==="white"){{document.documentElement.dataset.theme="light";var m=document.querySelector('meta[name="theme-color"]');if(m)m.content="#ffffff"}}}}catch(e){{}}</script>
 <link rel="stylesheet" href="../../assets/site.css?v={v_css}">
 </head>
 

@@ -51,7 +51,8 @@
   var SPIN_RESUME = 1000, SPIN_RAMP = 800;
   var HOVER_DELAY = 120, TURN_DELAY = 450;
   var DWELL = 6000, DWELL_REDUCED = 8000;
-  var FAIL_AFTER = 8000;             // no map by then and the list is all there is
+  var FAIL_AFTER = 20000;            // no map by then (counted while shown) and the list is all there is
+  var FAIL_AFTER_ASKED = 60000;      // after "Load globe" (Save-Data, 2G): slow links get a minute
   var TERRAIN_EXAGGERATION = 1.25;
   var SPLIT = 3, FLIGHT_SPLIT = 6.5; // see setSplit()
   var FOV = 36.87;                   // MapLibre's vertical field of view
@@ -607,8 +608,9 @@
     var first = (recent || deep) && bySlug[recent || deep].pins[0];
     var lng = first ? first.ll[0] : -100;
     // The intro turns the globe at its final size, so it fills the ring
-    // from the first frame. Two-finger turning only where one finger has a
-    // page to scroll (the stacked layout on a touch screen).
+    // from the first frame. Wherever the page scrolls under the globe (the
+    // stacked layout), one finger or a plain wheel scrolls the page: turning
+    // takes two fingers, zooming Ctrl/⌘ + wheel.
     try {
       map = new ml.Map({
         container: mapEl, style: buildStyle(),
@@ -616,7 +618,7 @@
         minZoom: floorZoom(), maxZoom: MAX_ZOOM, maxPitch: 60,
         pixelRatio: Math.min(window.devicePixelRatio || 1, 2), renderWorldCopies: false,
         attributionControl: false, keyboard: false, doubleClickZoom: false, boxZoom: false,
-        dragRotate: false, pitchWithRotate: false, touchPitch: false, cooperativeGestures: COARSE && !L.app,
+        dragRotate: false, pitchWithRotate: false, touchPitch: false, cooperativeGestures: !L.app,
         // The globe's camera can't follow the ground under it (MapLibre 6.11
         // only warns, after every gesture over terrain): measured, the
         // arrivals frame identically without it.
@@ -641,6 +643,8 @@
     var cc = map.getCanvasContainer();
     cc.addEventListener("pointerdown", function () { hold("drag", true); }, { passive: true });
     window.addEventListener("pointerup", function () { hold("drag", false); }, { passive: true });
+    // A swipe the browser turns into a page scroll ends in pointercancel.
+    window.addEventListener("pointercancel", function () { hold("drag", false); }, { passive: true });
     cc.addEventListener("wheel", function () { spinV = 0; released = now(); }, { passive: true });
     buildPins();
   }
@@ -1520,6 +1524,21 @@
     readout();
   }
 
+  // The map can't draw its first frame in a hidden tab (no animation
+  // frames there), so a page opened in the background would give up before
+  // anyone looked. The clock only runs out while the page is shown.
+  function armFail(ms) {
+    clearTimeout(failTimer);
+    failTimer = setTimeout(function () {
+      if (!document.hidden) { fail(); return; }
+      document.addEventListener("visibilitychange", function shown() {
+        if (document.hidden) return;
+        document.removeEventListener("visibilitychange", shown);
+        if (!ready && !failed && !stage.classList.contains("is-deferred")) armFail(ms);
+      });
+    }, ms || FAIL_AFTER);
+  }
+
   window.addEventListener("maplibre:ready", function () { deferred = false; startMap(); });
   window.addEventListener("maplibre:failed", fail);
   window.addEventListener("maplibre:deferred", function () {
@@ -1534,7 +1553,7 @@
     loadBtn.hidden = true;
     fallback.hidden = true;
     stage.classList.remove("is-deferred");
-    failTimer = setTimeout(fail, FAIL_AFTER);
+    armFail(FAIL_AFTER_ASKED);
     if (window.NLLoadMapLibre) window.NLLoadMapLibre();
   });
 
@@ -1628,7 +1647,7 @@
       map.setMinZoom(floorZoom());
       if (was.app !== L.app) {
         addAttribution();
-        if (COARSE) map.cooperativeGestures[L.app ? "disable" : "enable"]();
+        map.cooperativeGestures[L.app ? "disable" : "enable"]();
       }
       if (state === "overview" && !active) map.jumpTo({ center: [map.getCenter().lng, OVERVIEW_LAT], zoom: L.zO, pitch: 0, bearing: 0, padding: L.pad });
       // An open card's camera was framed for the old stage (its padding stays
@@ -1655,7 +1674,7 @@
   L = measure();
   drawStars();
   if (!NL) fail();
-  else failTimer = setTimeout(fail, FAIL_AFTER);
+  else armFail();
 
   Promise.all([
     getJSON("data/collections.json"),

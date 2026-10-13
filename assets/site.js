@@ -1,9 +1,11 @@
 /* ==========================================================================
    newton-liu.com — the whole of the site's behaviour.
 
-   Two page types, told apart by <body data-page="...">:
-     home     — renders the hero image and the collection cards
+   Page types, told apart by <body data-page="...">:
+     work     — the Index: renders the collection cards (renderHome)
      gallery  — renders one collection's justified photo grid + the lightbox
+     globe, prose — the landing and About/Contact: only the nav, the
+                ground switch and window.NLSite (globe.js draws the landing)
 
    <body data-base="../../"> is the path back to the repo root, so the same
    script works from / and from /collections/<slug>/. Keep it relative:
@@ -223,10 +225,11 @@
 
   /* ---------- black / white ground ------------------------------------- */
 
-  // The <head> of every page applies a saved "light" before the first paint;
+  // The <head> of every page applies a saved "white" before the first paint;
   // this adds the switch to the nav and remembers the visitor's choice.
-  // Black (#121212) is the default, and anything else stored (an old "dark",
-  // which meant gray) lands in Black. Storage can be blocked (private
+  // Black (#121212) is the default, and anything else stored lands in Black,
+  // including the old switch's "dark" (gray) and "light" (its white, which
+  // is why White is saved under a new word). Storage can be blocked (private
   // windows), so every read and write is guarded and the switch still works
   // for the visit. The window colour is left to that head script until the
   // switch is used (the landing keeps its own), and every change is announced
@@ -241,10 +244,11 @@
     btn.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true">' +
       '<circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
       '<path d="M8 1.5a6.5 6.5 0 0 0 0 13z" fill="currentColor"/></svg>';
+    // One fixed name; aria-pressed says whether White is on.
+    btn.setAttribute("aria-label", "White background");
     function sync() {
       var light = root.dataset.theme === "light";
       btn.setAttribute("aria-pressed", light ? "true" : "false");
-      btn.setAttribute("aria-label", light ? "Black background" : "White background");
       btn.title = light ? "Black background" : "White background";
     }
     function set(light) {
@@ -255,7 +259,7 @@
     }
     btn.addEventListener("click", function () {
       var light = root.dataset.theme !== "light";
-      try { localStorage.setItem("theme", light ? "light" : "black"); } catch (e) {}
+      try { localStorage.setItem("theme", light ? "white" : "black"); } catch (e) {}
       set(light);
     });
     // A page brought back by the Back button is the one that was left, in
@@ -263,7 +267,7 @@
     window.addEventListener("pageshow", function (e) {
       if (!e.persisted) return;
       var light;
-      try { light = localStorage.getItem("theme") === "light"; } catch (err) { return; }
+      try { light = localStorage.getItem("theme") === "white"; } catch (err) { return; }
       if (light !== (root.dataset.theme === "light")) set(light);
     });
     sync();

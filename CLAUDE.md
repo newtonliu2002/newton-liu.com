@@ -1,7 +1,8 @@
 # newton-liu.com
 
 Photography portfolio for Newton Liu — birds, wildlife, landscape. Static
-site, no build step, no dependencies. Deployed by pushing to `main`
+site, no build step, no packages (outside requests: R2 for photographs,
+Google Fonts for the type, and the globe's map). Deployed by pushing to `main`
 (GitHub Pages serves the repo root). The photographs themselves are not in git:
 they are served from Cloudflare R2 (see "Where the photographs live").
 
@@ -84,6 +85,12 @@ Overlapping pins of different collections merge on screen into one ringed
 pin; clicking it zooms in until they separate. At the overview only each
 collection's first pin shows, so the globe stays calm as collections are
 added.
+
+**Type comes from Google Fonts** (Geist, Geist Mono) on every page: an
+`@import` on line 1 of site.css, which is how About, Contact and the
+generated collection pages get it, so it must stay the first line; index.html
+and work.html also link it directly. Self-hosting the two fonts (both under
+the SIL OFL) would take Google out of every page view; Newton hasn't decided.
 
 **The map is the site's one outside library**, on the landing page only:
 MapLibre GL JS (pinned, loaded from jsDelivr as a module in index.html),
@@ -260,9 +267,8 @@ landscape; the square-cropping block is `pri: -1` because it discards the most
 of a photograph.
 
 The opener is the photograph flagged `"featured": true` in `photos.json`,
-falling back to the first. Note that `featured` is also
-what the home page picks its hero from, so a collection usually wants to be
-first in the manifest rather than flagged.
+falling back to the first. The collection's card on the globe landing uses
+the same photograph (globe.js `joinData`), so flagging one changes both.
 
 A landscape opener is **full bleed**: always the width of the window. Where
 that would make it taller than the window (`--opener-h`, 100vh), it is trimmed
@@ -323,10 +329,11 @@ If a `sizes` hint drifts out of step with the CSS, nothing breaks visibly —
 the browser just fetches a file that is too small (soft) or too large (slow).
 Change one and check the other.
 
-Two things are outside this system and must be maintained by hand: the **hero**
-on the home page is a CSS `background-image`, which cannot carry a srcset, so
-`pickForWidth()` chooses a rung once at load; and the **About band** is written
-directly into `about.html`, srcset, `width` and `height` included.
+One thing is outside this system and must be maintained by hand: the
+**About band** is written directly into `about.html`, srcset, `width` and
+`height` included. (The old home page's hero, a CSS `background-image` sized
+by `pickForWidth()`, went with the globe landing; renderHome's hero branch
+only runs on a page with `#hero-media`, and none has one now.)
 
 A note on the budget: a photograph costs about 2.5 MB with its three smaller
 widths. That is why they left git (next section).
@@ -387,9 +394,10 @@ the photographs reached that in October 2026 (Peru). Since then:
 - **On a new machine or a fresh clone**: `git config core.hooksPath tools/hooks`,
   then `python3 tools/upload.py --download` to bring back `images/`. Newton
   runs `npx wrangler login` before the first upload.
-- **Other checkouts and branches from before the move.** The worktree
-  `~/newton-liu-globe` (branch `globe`) was started before the move: there
-  `images/` is still tracked and its CLAUDE.md is the old one. Merging main
+- **Other checkouts and branches from before the move.** A branch whose
+  history predates a223c34 still tracks `images/`. (The `globe` branch in
+  `~/newton-liu-globe` no longer does: it took the move in a1ac9bd and was
+  merged into main on 2026-10-13.) Merging main
   into such a branch deletes the photographs from *that checkout's disk*.
   That's expected; git is applying the untracking. Copy them back from
   this checkout with `cp -Rc ~/newton-liu.com/images/. images/` (an APFS
@@ -499,8 +507,12 @@ saving needs the token, and they don't have it.
 - **Two grounds: Black (default) and White.** The square at the end of the
   nav (added by site.js, on every page, the landing included) is the one
   switch: it sets `<html data-theme="light">` for White and saves the choice
-  in localStorage `"theme"` (`"light"` = White, anything else = Black), so a
+  in localStorage `"theme"` (`"white"` = White, anything else = Black), so a
   visitor picks once and every page and later visit opens in that ground.
+  The stored word is `"white"`, not `"light"`, because the old white/gray
+  switch saved `"light"` for its white, and those visitors should open in
+  Black like everyone else. Its button keeps one name ("White background")
+  and `aria-pressed` says whether White is on.
   White's tokens are the `:root[data-theme="light"]` block in site.css; a
   colour token added to `:root` needs a White value there too. On the landing
   White is a light "paper atlas" globe: its map colours are `PALETTE` in
@@ -521,7 +533,8 @@ saving needs the token, and they don't have it.
 # Export from Lightroom at any size — import.py handles the downscaling.
 python3 tools/import.py ~/Desktop/"2025.12 West JPEG" --collection west
 # A new collection also needs its entry in data/collections.json (slug =
-# the folder name, title, date line, place in the oldest-first order).
+# the folder name, title, date line, place in the oldest-first order), and,
+# for a pin on the globe, an entry under "places" in data/places.json.
 python3 tools/build.py
 python3 tools/serve.py          # preview at localhost:8137 (reads images/ on disk)
 python3 tools/upload.py         # photographs to R2; GPS-checked again
