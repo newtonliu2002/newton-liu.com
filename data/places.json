@@ -11,10 +11,12 @@
     },
     "hawaii": {
       "status": "draft",
-      "where": "Kaua'i · Hawai'i Island",
+      "where": "Kaua'i · O'ahu · Maui · Hawai'i Island",
       "pins": [
         { "name": "Kaua'i", "lat": 22.07, "lng": -159.50 },
-        { "name": "Maunakea", "lat": 19.76, "lng": -155.46 }
+        { "name": "O'ahu", "lat": 21.47, "lng": -157.98 },
+        { "name": "Maui", "lat": 20.80, "lng": -156.33 },
+        { "name": "Hawai'i Island", "lat": 19.60, "lng": -155.52 }
       ]
     },
     "galapagos": {

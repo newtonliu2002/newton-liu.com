@@ -48,7 +48,7 @@
   var ARRIVE_ZOOM = 7.8;             // single-pin arrival when places.json gives none
   var SENSITIVE_ZOOM = 7;            // never closer than this for a `sensitive` collection
   var SPIN = 1.5;                    // degrees per second
-  var SPIN_RESUME = 4000, SPIN_RAMP = 1200, SLEEP_AFTER = 180000, SLEEP_RAMP = 2000;
+  var SPIN_RESUME = 4000, SPIN_RAMP = 1200;
   var HOVER_DELAY = 120, TURN_DELAY = 450;
   var DWELL = 6000, DWELL_REDUCED = 8000;
   var FAIL_AFTER = 8000;             // no map by then and the list is all there is
@@ -1273,12 +1273,13 @@
   }
 
   /* ------------------------------------------------------------------
-     THE SPIN: 1.5°/s by the clock, only at the overview with nothing open,
-     pointed at or held, the page in view, and not after three idle
-     minutes. It stops at once when touched and ramps back 4 s later.
+     THE SPIN: 1.5°/s by the clock, from the landing on, whenever the
+     camera is out at globe zoom with nothing open, pointed at or held and
+     the page in view. It stops at once when touched and ramps back 4 s
+     later, for as long as the visitor leaves it be.
      ------------------------------------------------------------------ */
 
-  var spinV = 0, lastFrame = 0, lastSpin = 0, held = {}, released = -1e9, lastInput = now();
+  var spinV = 0, lastFrame = 0, lastSpin = 0, held = {}, released = -1e9;
   var paused = session("nl.spin") === "off", stageVisible = true, dirty = true, dwell = -1;
 
   function hold(key, on) {
@@ -1292,8 +1293,7 @@
       stageVisible && state === "overview" && inOverview() && !isHeld() && !map.isMoving() &&
       t - released >= SPIN_RESUME;
     if (!allowed) { spinV = 0; return; }
-    var asleep = t - lastInput > SLEEP_AFTER;
-    spinV = asleep ? Math.max(0, spinV - dt / SLEEP_RAMP) : Math.min(1, spinV + dt / SPIN_RAMP);
+    spinV = Math.min(1, spinV + dt / SPIN_RAMP);
     if (!spinV || (COARSE && t - lastSpin < 33)) return;   // phones: 30 updates a second
     var c = map.getCenter(), step = Math.min(t - lastSpin, 100);
     lastSpin = t;
@@ -1474,8 +1474,10 @@
     if (!L.app && active && !e.target.closest("a")) location.href = bySlug[active].href;
   });
 
-  // Anything the visitor points at stops the spin while they look.
-  [[panel, "panel"], [card, "card"], [consoleEl, "console"]].forEach(function (pair) {
+  // The card and the console stop the spin while they are pointed at. The
+  // list doesn't, so a mouse left resting on it doesn't keep the globe still;
+  // a row it points at stops the spin by lighting its pin.
+  [[card, "card"], [consoleEl, "console"]].forEach(function (pair) {
     pair[0].addEventListener("pointerenter", function (e) {
       if (e.pointerType === "touch") return;
       hold(pair[1], true);
@@ -1489,10 +1491,6 @@
   function byKeyboard() { return now() - lastDown > 500; }
   panel.addEventListener("focusin", function () { if (byKeyboard()) hold("focus", true); });
   panel.addEventListener("focusout", function (e) { if (!panel.contains(e.relatedTarget)) hold("focus", false); });
-
-  ["pointermove", "keydown", "touchstart", "wheel"].forEach(function (type) {
-    window.addEventListener(type, function () { lastInput = now(); }, { passive: true });
-  });
 
   // The tour stops for anything the visitor does, bar the Tour button
   // itself, the card, and moving focus.
@@ -1554,7 +1552,6 @@
   // Back from a gallery out of the back-forward cache: wake the clocks.
   window.addEventListener("pageshow", function (e) {
     if (!e.persisted) return;
-    lastInput = now();
     released = now() - SPIN_RESUME + 400;
     held = {};
     dirty = true;
