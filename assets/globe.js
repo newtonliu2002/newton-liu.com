@@ -64,6 +64,39 @@
     '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors</a>';
   var ATTR_DEM = '<a href="https://mapterhorn.com/attribution">© Mapterhorn</a>';
 
+  /* ------------------------------------------------------------------
+     PALETTE — the map's colours on each ground. Black is the default;
+     White, a paper atlas, is <html data-theme="light">, set by the square
+     at the end of the nav (site.js). buildStyle() reads the current one,
+     and applyPalette() repaints the map in place when the ground changes.
+     What sits over the map in HTML (pins, labels, ring, card) takes its
+     colours from the --g-* properties in globe.css; the two must agree.
+     ------------------------------------------------------------------ */
+  function W(a) { return "rgba(255,255,255," + a + ")"; }
+  function K(a) { return "rgba(0,0,0," + a + ")"; }
+  var PALETTE = {
+    black: {
+      meta: "#050505", stars: true,               // browser chrome = --space
+      land: "#161616", sea: "#0a0a0a", ice: W(.04), park: W(.025), parkEdge: W(.16),
+      coast: W(.16), river: W(.06), border: W(.16), state: W(.08),
+      country: W(.28), stateName: W(.14), parkName: W(.24),
+      shadow: "#000000", highlight: W(.18), accent: "#0a0a0a",
+      line: "#fff", trail: .22,                   // tether and tour trail: colour; the trail's opacity
+      horizon: W(.06), fog: "#050505"
+    },
+    white: {
+      meta: "#f4f4f2", stars: false,
+      land: "#dededa", sea: "#ecece9", ice: W(.4), park: K(.035), parkEdge: K(.22),
+      coast: K(.28), river: K(.07), border: K(.18), state: K(.09),
+      country: K(.45), stateName: K(.26), parkName: K(.4),
+      shadow: K(.42), highlight: "#ffffff", accent: K(.08),
+      line: "#000", trail: .3,
+      horizon: K(.04), fog: "#f4f4f2"
+    }
+  };
+  function ground() { return document.documentElement.getAttribute("data-theme") === "light" ? "white" : "black"; }
+  function pal() { return PALETTE[ground()]; }
+
   // The card's photograph is the card's width on a laptop, and the width of
   // the screen less its margins on a phone, where the card leads with it;
   // the plate is always 200px. See .g-card and .g-plate in globe.css.
@@ -149,7 +182,7 @@
 
   // site.js has just set the browser chrome to the gallery ground.
   var themeMeta = $('meta[name="theme-color"]');
-  if (themeMeta) themeMeta.content = "#050505";
+  if (themeMeta) themeMeta.content = pal().meta;
 
   function setLabel(btn, label, tip) { btn.setAttribute("aria-label", label); btn.title = tip; }
   setLabel(tourBtn, LABELS.tour, LABELS.tourTip);
@@ -231,9 +264,11 @@
 
   /* ---------- stars ------------------------------------------------------ */
 
-  // Static and seeded, so the sky is the same on every visit.
+  // Static and seeded, so the sky is the same on every visit. Paper has none.
   function drawStars() {
-    if (!STARS || !starsEl.getContext) return;
+    var on = STARS && pal().stars;
+    starsEl.hidden = !on;
+    if (!on || !starsEl.getContext) return;
     var w = stage.clientWidth, h = stage.clientHeight, dpr = Math.min(window.devicePixelRatio || 1, 2);
     starsEl.width = Math.round(w * dpr); starsEl.height = Math.round(h * dpr);
     var ctx = starsEl.getContext("2d"), seed = 20261013;
@@ -343,7 +378,7 @@
   }
 
   /* ------------------------------------------------------------------
-     THE MAP: a dark greyscale style written here. "omt-low" (zoom 0-1
+     THE MAP: a greyscale style written here, in the ground's PALETTE. "omt-low" (zoom 0-1
      tiles, ~0.5 MB for the world) draws the globe, "omt" takes over at
      SPLIT for detail (see setSplit). Elevation is switched on only once
      the camera has arrived: hillshade, and 3D terrain on laptops.
@@ -404,7 +439,7 @@
   }
 
   function buildStyle() {
-    function W(a) { return "rgba(255,255,255," + a + ")"; }
+    var P = pal();
     var poly = ["match", ["geometry-type"], ["Polygon", "MultiPolygon"], true, false];
     // Not "protected_area": that class is mostly marine reserves, and a tint
     // over open sea reads as land (the Galápagos reserve rings the islands).
@@ -414,7 +449,7 @@
       var layout = { "text-field": name, "text-font": ["Noto Sans Regular"], "text-size": size,
         "text-transform": "uppercase", "text-letter-spacing": .2, "text-max-width": 8 };
       for (var k in extra) layout[k] = extra[k];
-      return { layout: layout, paint: { "text-color": W(op), "text-opacity": 1, "text-opacity-transition": { duration: 300 } } };
+      return { layout: layout, paint: { "text-color": op, "text-opacity": 1, "text-opacity-transition": { duration: 300 } } };
     }
     function dem() {
       return { type: "raster-dem", tiles: ["nl-dem://{z}/{x}/{y}"], tileSize: 512, encoding: "terrarium", maxzoom: 9, attribution: ATTR_DEM };
@@ -423,41 +458,41 @@
     // also draws the layer from the light tiles. The coastline starts at zoom 1:
     // the one zoom-0 tile's whole-world outline is too big to draw on a globe.
     var V = [
-      ["water", "fill", "water", 0, 24, ["all", poly, ["!=", ["get", "brunnel"], "tunnel"]], { "fill-color": "#0a0a0a", "fill-antialias": false }, null, 1],
-      ["ice", "fill", "landcover", 2, 24, ["match", ["get", "subclass"], ["glacier", "ice_shelf"], true, false], { "fill-color": W(.04), "fill-antialias": false }, null, 1],
-      ["park", "fill", "park", 4.5, 24, ["all", poly, parks], { "fill-color": W(.025) }],
+      ["water", "fill", "water", 0, 24, ["all", poly, ["!=", ["get", "brunnel"], "tunnel"]], { "fill-color": P.sea, "fill-antialias": false }, null, 1],
+      ["ice", "fill", "landcover", 2, 24, ["match", ["get", "subclass"], ["glacier", "ice_shelf"], true, false], { "fill-color": P.ice, "fill-antialias": false }, null, 1],
+      ["park", "fill", "park", 4.5, 24, ["all", poly, parks], { "fill-color": P.park }],
       "hillshade",
       ["coast", "line", "water", 1, 24, ["all", poly, ["match", ["get", "class"], ["ocean", "sea", "lake"], true, false], ["!=", ["get", "brunnel"], "tunnel"]],
-        { "line-color": W(.16), "line-width": ["interpolate", ["linear"], ["zoom"], 1, .5, 7, .8],
+        { "line-color": P.coast, "line-width": ["interpolate", ["linear"], ["zoom"], 1, .5, 7, .8],
           "line-opacity": ["interpolate", ["linear"], ["zoom"], 5, 1, 7.5, .4] }, null, 1],   // fainter close in, where islets crowd
-      ["river", "line", "waterway", 6, 24, ["!=", ["get", "brunnel"], "tunnel"], { "line-color": W(.06) }],
-      ["park-edge", "line", "park", 4.5, 24, ["all", poly, parks], { "line-color": W(.16), "line-width": .8, "line-dasharray": [1, 2] }],
+      ["river", "line", "waterway", 6, 24, ["!=", ["get", "brunnel"], "tunnel"], { "line-color": P.river }],
+      ["park-edge", "line", "park", 4.5, 24, ["all", poly, parks], { "line-color": P.parkEdge, "line-width": .8, "line-dasharray": [1, 2] }],
       ["admin-4", "line", "boundary", 3, 24, ["all", ["==", ["get", "admin_level"], 4], ["!=", ["get", "maritime"], 1]],
-        { "line-color": W(.08), "line-width": .6, "line-dasharray": [2, 2] }],
+        { "line-color": P.state, "line-width": .6, "line-dasharray": [2, 2] }],
       ["admin-2", "line", "boundary", 1.5, 24, ["all", ["==", ["get", "admin_level"], 2], ["!=", ["get", "maritime"], 1], ["!=", ["get", "disputed"], 1]],
-        { "line-color": W(.16), "line-width": .6 }, null, 1],
+        { "line-color": P.border, "line-width": .6 }, null, 1],
       "lines",
       // States and park names stay faint and come in late, so that near a
       // tilted horizon (where the tiles are coarse) nothing crowds the header,
       // and the pins' own labels are the strongest type on an arrival.
-      ["country", "symbol", "place", 2.6, 6, ["==", ["get", "class"], "country"], text(11, .28), null, 1],
-      ["state", "symbol", "place", 5.6, 8, ["==", ["get", "class"], "state"], text(11, .14, { "text-max-width": 12, "text-padding": 24 })],
+      ["country", "symbol", "place", 2.6, 6, ["==", ["get", "class"], "country"], text(11, P.country), null, 1],
+      ["state", "symbol", "place", 5.6, 8, ["==", ["get", "class"], "state"], text(11, P.stateName, { "text-max-width": 12, "text-padding": 24 })],
       ["park-name", "symbol", "park", 6.8, 24, ["all", ["match", ["geometry-type"], ["Point", "MultiPoint"], true, false], ["==", ["get", "class"], "national_park"]],
-        text(11, .24, { "text-padding": 8, "text-max-width": 10 })]
+        text(11, P.parkName, { "text-padding": 8, "text-max-width": 10 })]
     ];
-    var layers = [{ id: "land", type: "background", paint: { "background-color": "#161616" } }];
+    var layers = [{ id: "land", type: "background", paint: { "background-color": P.land } }];
     V.forEach(function (d) {
       if (d === "hillshade") {
         layers.push({ id: "hillshade", type: "hillshade", source: "dem-hs", minzoom: 3.5, layout: { visibility: "none" }, paint: {
           "hillshade-method": "igor", "hillshade-illumination-anchor": "map",
           "hillshade-exaggeration": ["interpolate", ["linear"], ["zoom"], 3.5, 0, 5, .45, 9, .6],
-          "hillshade-shadow-color": "#000000", "hillshade-highlight-color": W(.18), "hillshade-accent-color": "#0a0a0a" } });
+          "hillshade-shadow-color": P.shadow, "hillshade-highlight-color": P.highlight, "hillshade-accent-color": P.accent } });
         return;
       }
       if (d === "lines") {
         // Solid hairlines, like the connector to the card.
-        layers.push({ id: "g-trail", type: "line", source: "g-trail", paint: { "line-color": "#fff", "line-opacity": .22, "line-width": 1, "line-opacity-transition": { duration: 1200 } } });
-        layers.push({ id: "g-tether", type: "line", source: "g-tether", paint: { "line-color": "#fff", "line-opacity": ["get", "o"], "line-width": 1 } });
+        layers.push({ id: "g-trail", type: "line", source: "g-trail", paint: { "line-color": P.line, "line-opacity": P.trail, "line-width": 1, "line-opacity-transition": { duration: 1200 } } });
+        layers.push({ id: "g-tether", type: "line", source: "g-tether", paint: { "line-color": P.line, "line-opacity": ["get", "o"], "line-width": 1 } });
         return;
       }
       var base = { type: d[1], "source-layer": d[2], filter: d[5] };
@@ -482,12 +517,43 @@
         "dem-hs": dem(), "dem-3d": dem(),
         "g-tether": empty, "g-trail": JSON.parse(JSON.stringify(empty))
       },
-      // Space stays transparent so the stars show through; MapLibre's own
-      // atmosphere reads blue, so the rim is the ring in globe.css instead.
-      sky: { "sky-color": "rgba(0,0,0,0)", "horizon-color": "rgba(255,255,255,0.06)", "fog-color": "#050505",
+      // Space stays transparent so the stars (or the paper) show through;
+      // MapLibre's own atmosphere reads blue, so the rim is the ring in
+      // globe.css instead.
+      sky: { "sky-color": "rgba(0,0,0,0)", "horizon-color": P.horizon, "fog-color": P.fog,
              "sky-horizon-blend": .5, "horizon-fog-blend": .6, "fog-ground-blend": .75, "atmosphere-blend": 0 },
+      // A change of ground repaints at once, as the page around the map does.
+      // (Fades written on a property itself still apply.)
+      transition: { duration: 0, delay: 0 },
       layers: layers
     };
+  }
+
+  // The ground changed: repaint the map in place from a fresh buildStyle(),
+  // colour by colour. The style is never reloaded, so a flight, the relief,
+  // the dimmed names of an arrival and an open card all carry on as they
+  // were. Opacities the page sets as it goes (the map's names stepping
+  // aside, the tour's trail fading) are left to it. Before the map has
+  // loaded there is nothing to repaint yet; onLoad catches up.
+  var painted = "";                         // the ground the map was last drawn in
+  function applyPalette() {
+    var P = pal();
+    if (themeMeta) themeMeta.content = P.meta;
+    drawStars();
+    if (!map || !ready || failed || painted === ground()) return;
+    painted = ground();
+    var style = buildStyle();
+    try {
+      style.layers.forEach(function (ly) {
+        for (var k in ly.paint) {
+          if (/-transition$/.test(k) || k === "text-opacity" || (ly.id === "g-trail" && k === "line-opacity")) continue;
+          map.setPaintProperty(ly.id, k, ly.paint[k]);
+        }
+      });
+      if (tour && trail.length) map.setPaintProperty("g-trail", "line-opacity", P.trail);
+      map.setSky(style.sky);
+    } catch (e) {}
+    dirty = true;
   }
 
   // Where the detailed tiles take over from the light ones. In flight it is
@@ -517,6 +583,7 @@
     ml = window.maplibregl;
     ml.addProtocol("nl-dem", demTile);
     L = measure();
+    painted = ground();
     var first = (recent || deep) && bySlug[recent || deep].pins[0];
     var lng = first ? first.ll[0] : -100;
     // The intro turns the globe at its final size, so it fills the ring
@@ -572,6 +639,7 @@
     ready = true;
     clearTimeout(failTimer);
     stage.classList.add("is-ready");
+    applyPalette();                         // in case the ground changed while the style loaded
     loop();
     if (deep) {
       stage.classList.add("has-pins");
@@ -836,7 +904,7 @@
   var trail = [];
   function setTrail(pts) {
     trail = pts;
-    map.setPaintProperty("g-trail", "line-opacity", pts.length ? .22 : 0);
+    map.setPaintProperty("g-trail", "line-opacity", pts.length ? pal().trail : 0);
     map.getSource("g-trail").setData(lines(pts.length > 1 ? [{ o: .22, pts: pts }] : []));
   }
 
@@ -1453,6 +1521,9 @@
      WIRING
      ------------------------------------------------------------------ */
 
+  // site.js says so whenever the visitor switches the ground.
+  document.addEventListener("nl:theme", applyPalette);
+
   tourBtn.addEventListener("click", function () { if (tour) endTour(false); else startTour(); });
   overviewBtn.addEventListener("click", overview);
   function syncPause() {
@@ -1493,15 +1564,16 @@
   panel.addEventListener("focusout", function (e) { if (!panel.contains(e.relatedTarget)) hold("focus", false); });
 
   // The tour stops for anything the visitor does, bar the Tour button
-  // itself, the card, and moving focus.
+  // itself, the card, the ground switch, and moving focus.
+  function groundSwitch(t) { return !!(t && t.closest && t.closest(".theme-toggle")); }
   document.addEventListener("pointerdown", function (e) {
     lastDown = now();
-    if (tour && !tourBtn.contains(e.target) && !card.contains(e.target)) endTour(false);
+    if (tour && !tourBtn.contains(e.target) && !card.contains(e.target) && !groundSwitch(e.target)) endTour(false);
   }, true);
   window.addEventListener("wheel", function () { if (tour) endTour(false); }, { passive: true });
 
   document.addEventListener("keydown", function (e) {
-    if (tour && e.key !== "Tab" && e.key !== "Shift" && !tourBtn.contains(e.target)) endTour(false);
+    if (tour && e.key !== "Tab" && e.key !== "Shift" && !tourBtn.contains(e.target) && !groundSwitch(e.target)) endTour(false);
     if (!ready) return;
     if (e.key === "Escape") {
       if (active) dismiss();

@@ -1,9 +1,10 @@
 /* ==========================================================================
    newton-liu.com — the globe landing (index.html), on top of site.css.
 
-   Only g-* classes, plus the four site pieces the landing reshapes
-   (.masthead, .masthead-inner, .footer, .theme-toggle), always under
-   body[data-page="globe"]. Colours, type and motion are site.css tokens.
+   Only g-* classes, plus the three site pieces the landing reshapes
+   (.masthead, .masthead-inner, .footer), always under
+   body[data-page="globe"]. Colours, type and motion are site.css tokens,
+   or, for what is drawn over the map, the --g-* colours just below.
    The bare numbers are geometry globe.js repeats (the 312px panel
    allowance; the free area's 64px top and 108px bottom): change one, check
    the other.
@@ -20,10 +21,47 @@ body[data-page="globe"] { background: var(--space); --F: calc(var(--edge) + 312p
 /* Sideways in ?edit, the stage scrolls in below the edit bar, so it is that much shorter. */
 @media (max-height: 519px) { body.is-editing[data-page="globe"] { --stage-h: calc(100vh - var(--nl-bar-h, 46px)); } }
 @supports (height: 1svh) { @media (max-height: 519px) { body.is-editing[data-page="globe"] { --stage-h: calc(100svh - var(--nl-bar-h, 46px)); } } }
-/* The landing is always --space, so no ground toggle; its slot and the
-   bar's 1px rule are kept (unseen) so the nav sits exactly where it does on
-   every other page. */
-body[data-page="globe"] .theme-toggle { visibility: hidden; pointer-events: none; }
+
+/* What is drawn over the map, on each ground: Black (the default) and White,
+   a paper atlas (data-theme="light" on <html>). The map's own colours are
+   PALETTE in globe.js, and the two must agree. */
+body[data-page="globe"] {
+  --g-ink:        #fff;                    /* full strength: a pin or row mark lit, the open row's title */
+  --g-pin:        rgba(242,242,242,.85);   /* a pin's crosshair */
+  --g-pin-seen:   rgba(242,242,242,.45);   /* ...once its collection has been opened */
+  --g-pin-dim:    .35;                     /* the other pins while one place is open */
+  --g-pin-stack:  rgba(242,242,242,.6);    /* the circle round a stacked pin */
+  --g-pin-intro:  rgba(255,255,255,.55);   /* the one ring each pin arrives with */
+  --g-ring:       rgba(255,255,255,.1);    /* the globe's rim */
+  --g-ring-glow:  rgba(255,255,255,.04);
+  --g-wire:       rgba(255,255,255,.28);   /* pin to plate, pin to card */
+  --g-card-bk:    rgba(255,255,255,.55);   /* the card's corner brackets */
+  --g-mark:       #5a5a58;                 /* a row's crosshair */
+  --g-row-wash:   rgba(255,255,255,.04);   /* a lit row */
+  --g-veil:       5,5,5;                   /* --space as r,g,b: the header's fade over the map */
+  --g-label-bg:   rgba(5,5,5,.7);          /* behind a place label */
+  --g-attrib-bg:  rgba(5,5,5,.78);         /* behind the map credits */
+}
+:root[data-theme="light"] body[data-page="globe"] {
+  --g-ink:        #000;
+  --g-pin:        rgba(27,28,32,.85);
+  --g-pin-seen:   rgba(27,28,32,.6);       /* dark ink fades faster on paper: these keep Black's contrast */
+  --g-pin-dim:    .5;
+  --g-pin-stack:  rgba(27,28,32,.6);
+  --g-pin-intro:  rgba(27,28,32,.45);
+  --g-ring:       rgba(0,0,0,.14);
+  --g-ring-glow:  rgba(0,0,0,.06);
+  --g-wire:       rgba(0,0,0,.3);
+  --g-card-bk:    rgba(0,0,0,.45);
+  --g-mark:       #96989c;
+  --g-row-wash:   rgba(0,0,0,.035);
+  --g-veil:       244,244,242;
+  --g-label-bg:   rgba(244,244,242,.8);
+  --g-attrib-bg:  rgba(244,244,242,.85);
+}
+
+/* The bar's 1px rule is kept (unseen) so the nav, the ground switch at its
+   end included, sits exactly where it does on every other page. */
 body[data-page="globe"] .masthead { position: static; background: var(--space); border-bottom-color: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
 .g-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
@@ -53,10 +91,10 @@ body[data-page="globe"] .masthead { position: static; background: var(--space); 
 .g-ring {
   position: absolute; left: var(--cx); top: var(--cy); width: var(--d); aspect-ratio: 1; border-radius: 50%;
   transform: translate(-50%, -50%); pointer-events: none;
-  box-shadow: 0 0 0 1px rgba(255,255,255,.1), 0 0 120px rgba(255,255,255,.04);
+  box-shadow: 0 0 0 1px var(--g-ring), 0 0 120px var(--g-ring-glow);
 }
 .g-wire { z-index: 2; overflow: visible; pointer-events: none; }
-.g-wire line { stroke: rgba(255,255,255,.28); }
+.g-wire line { stroke: var(--g-wire); }
 .g-wire rect { fill: var(--bracket); }
 .g-wire :not(.is-on) { display: none; }
 
@@ -73,16 +111,16 @@ body[data-page="globe"] .masthead { position: static; background: var(--space); 
 .g-pin-in { inset: 0; transition: opacity var(--d-base) var(--ease); }
 .g-pin-x {
   left: calc(var(--c) - 7.5px); top: calc(var(--c) - 7.5px); width: 15px; height: 15px;
-  --k: rgba(242,242,242,.85); --dot: var(--k); --a: 3.5px;
+  --k: var(--g-pin); --dot: var(--k); --a: 3.5px;
   background: linear-gradient(var(--k) 0 0) 7px calc(5.5px - var(--a)) / 1px var(--a),
     linear-gradient(var(--k) 0 0) 7px 9.5px / 1px var(--a), linear-gradient(var(--k) 0 0) calc(5.5px - var(--a)) 7px / var(--a) 1px,
     linear-gradient(var(--k) 0 0) 9.5px 7px / var(--a) 1px, linear-gradient(var(--dot) 0 0) 6.5px 6.5px / 2px 2px;
   background-repeat: no-repeat;
 }
-.g-pin.is-visited .g-pin-x { --k: rgba(242,242,242,.45); --dot: transparent; }
-.g-pin:hover .g-pin-x, .g-pin.is-lit .g-pin-x, .g-pin.is-active .g-pin-x { --k: #fff; --a: 5px; }
+.g-pin.is-visited .g-pin-x { --k: var(--g-pin-seen); --dot: transparent; }
+.g-pin:hover .g-pin-x, .g-pin.is-lit .g-pin-x, .g-pin.is-active .g-pin-x { --k: var(--g-ink); --a: 5px; }
 .g-pin.is-active .g-pin-x { --dot: var(--accent); }
-.g-pin.is-dim .g-pin-in { opacity: .35; }
+.g-pin.is-dim .g-pin-in { opacity: var(--g-pin-dim); }
 .g-pin.is-off { pointer-events: none; }
 .g-pin.is-off .g-pin-in { opacity: 0; }
 .g-pin.is-lit { z-index: 1; }
@@ -91,7 +129,7 @@ body[data-page="globe"] .masthead { position: static; background: var(--space); 
 .maplibregl-marker.maplibregl-marker-covered { visibility: hidden; pointer-events: none; }
 .g-pin.is-stack .g-pin-in::after {      /* several collections here: the crosshair in a circle */
   content: ""; position: absolute; left: calc(var(--c) - 7.5px); top: calc(var(--c) - 7.5px);
-  width: 15px; height: 15px; border: 1px solid rgba(242,242,242,.6); border-radius: 50%;
+  width: 15px; height: 15px; border: 1px solid var(--g-pin-stack); border-radius: 50%;
 }
 .g-pin-ring {
   left: var(--c); top: var(--c); width: 9px; height: 9px; border: 1px solid var(--accent); border-radius: 50%;
@@ -113,16 +151,16 @@ body[data-page="globe"] .masthead { position: static; background: var(--space); 
 .g-pin.is-active .g-pin-af { opacity: 1; animation: g-af var(--d-base) var(--ease-out) both; }
 @keyframes g-af { from { left: calc(var(--c) - 18px); top: calc(var(--c) - 18px); width: 36px; height: 36px; opacity: 0; } }
 
-/* Intro: each pin scales in with one soft white ring. */
+/* Intro: each pin scales in with one soft ring. */
 .g-stage:not(.has-pins) .g-pin { visibility: hidden; }
 .g-pin.is-intro .g-pin-in { animation-delay: inherit; }
 .g-pin.is-intro .g-pin-x { animation: g-in var(--d-base) var(--ease-out) both; animation-delay: inherit; }
-.g-pin.is-intro .g-pin-ring { border-color: rgba(255,255,255,.55); animation: g-pulse 1.8s var(--ease-out) forwards; animation-delay: inherit; }
+.g-pin.is-intro .g-pin-ring { border-color: var(--g-pin-intro); animation: g-pulse 1.8s var(--ease-out) forwards; animation-delay: inherit; }
 @keyframes g-in { from { transform: scale(.6); opacity: 0; } }
 
 .g-pin-label {
   left: calc(var(--c) + 16px); top: var(--c); transform: translateY(-50%); padding: 2px 6px; font-style: normal;
-  white-space: nowrap; background: rgba(5,5,5,.7); color: var(--text-dim);
+  white-space: nowrap; background: var(--g-label-bg); color: var(--text-dim);
   visibility: hidden; opacity: 0; transition: opacity var(--d-base) var(--ease);
 }
 .g-pin.has-label .g-pin-label { visibility: visible; opacity: 1; }
@@ -157,7 +195,7 @@ body[data-page="globe"] .masthead { position: static; background: var(--space); 
 .g-card.is-open { opacity: 1; visibility: visible; transform: none; transition: opacity var(--d-slow) var(--ease-out), transform var(--d-slow) var(--ease-out); }
 .g-card.is-leaving { transform: translateY(8px); }
 .g-card.is-quick { transition-duration: .16s; }
-.g-card::after { content: ""; position: absolute; inset: -1px; pointer-events: none; --l: var(--bk-len); --w: 1px; --bc: rgba(255,255,255,.55); }
+.g-card::after { content: ""; position: absolute; inset: -1px; pointer-events: none; --l: var(--bk-len); --w: 1px; --bc: var(--g-card-bk); }
 .g-card p { margin: 0; }
 .g-card-media { display: block; background: var(--bg-raised); }
 .g-card-media img { display: block; width: 100%; height: auto; object-fit: contain; opacity: 0; transition: opacity .4s var(--ease); }
@@ -181,8 +219,8 @@ body[data-page="globe"] .masthead { position: static; background: var(--space); 
 @media (hover: hover) {
   .g-card-go:hover, .g-card button:hover, .g-btn:hover { color: var(--text); background-color: var(--wash); }
   .g-card-go:hover .g-card-go-arrow { transform: translateX(4px); }
-  .g-row:hover { background-color: rgba(255,255,255,.04); }
-  .g-row:hover .g-row-mark { --k: #fff; }
+  .g-row:hover { background-color: var(--g-row-wash); }
+  .g-row:hover .g-row-mark { --k: var(--g-ink); }
 }
 .g-card button.is-end { opacity: .3; pointer-events: none; }
 .g-card-progress { position: absolute; left: 0; right: 0; bottom: -1px; z-index: 1; height: 1px; background: var(--accent); transform-origin: 0; transform: scaleX(0); opacity: 0; }
@@ -216,12 +254,12 @@ body.is-editing .g-tour + .g-readout { border: 0; }
 .g-stage.is-deferred .g-btn { visibility: hidden; }
 
 /* ---------- Attribution: always shown, never collapsed -----------------
-   On a dark backing, so no map label or relief can print through it (over
-   open space the backing is the space colour, so it doesn't show). */
+   On a backing of the space colour, so no map label or relief can print
+   through it (over open space it doesn't show). */
 
 .g-stage .maplibregl-ctrl-attrib {
   margin: 0 !important; padding: 2px 8px; letter-spacing: 0; text-transform: none; color: var(--text-faint);
-  background: rgba(5,5,5,.78); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  background: var(--g-attrib-bg); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
 }
 .g-stage .maplibregl-ctrl-attrib a { color: inherit; text-decoration: none; white-space: nowrap; }
 .g-stage .maplibregl-ctrl-attrib a:hover { color: var(--text-dim); text-decoration: underline; }
@@ -245,10 +283,10 @@ body.is-editing .g-tour + .g-readout { border: 0; }
   min-height: 44px; padding: 10px 16px 10px 36px; color: var(--text); text-decoration: none;
   transition: background-color var(--d-fast) var(--ease);
 }
-.g-row.is-lit { background-color: rgba(255,255,255,.04); }
+.g-row.is-lit { background-color: var(--g-row-wash); }
 .g-row:focus-visible { outline-offset: -2px; }
 .g-row-mark {     /* a small crosshair, mirroring the pin */
-  position: absolute; left: 16px; top: 16px; width: 9px; height: 9px; --k: #5a5a58; --dot: var(--k);
+  position: absolute; left: 16px; top: 16px; width: 9px; height: 9px; --k: var(--g-mark); --dot: var(--k);
   background: linear-gradient(var(--k) 0 0) 4px 0 / 1px 3px, linear-gradient(var(--k) 0 0) 4px 6px / 1px 3px,
     linear-gradient(var(--k) 0 0) 0 4px / 3px 1px, linear-gradient(var(--k) 0 0) 6px 4px / 3px 1px,
     linear-gradient(var(--dot) 0 0) 4px 4px / 1px 1px;
@@ -256,10 +294,10 @@ body.is-editing .g-tour + .g-readout { border: 0; }
 }
 .g-row.is-one .g-row-mark { top: calc(50% - 4.5px); }
 .g-row.is-visited .g-row-mark { --dot: transparent; }
-.g-row.is-lit .g-row-mark { --k: #fff; }
-.g-row[aria-current="true"] { background-color: rgba(212,164,83,.08); box-shadow: inset 2px 0 0 var(--accent); }
+.g-row.is-lit .g-row-mark { --k: var(--g-ink); }
+.g-row[aria-current="true"] { background-color: color-mix(in srgb, var(--accent) 8%, transparent); box-shadow: inset 2px 0 0 var(--accent); }
 .g-row[aria-current="true"] .g-row-mark { --k: var(--accent); --dot: var(--accent); }
-.g-row[aria-current="true"] .g-row-title { color: #fff; }
+.g-row[aria-current="true"] .g-row-title { color: var(--g-ink); }
 .g-row.is-recent { animation: g-recent 2.4s var(--ease) both; }
 @keyframes g-recent { from { box-shadow: inset 2px 0 0 var(--accent); } to { box-shadow: inset 2px 0 0 transparent; } }
 .g-row-title { font: 500 var(--t-row)/20px var(--sans); }
@@ -283,7 +321,7 @@ body.is-editing .g-tour + .g-readout { border: 0; }
   }
   .g-stage::after {      /* keeps the header legible over a map that has flown in close */
     content: ""; position: absolute; inset: 0 0 auto; z-index: 1; height: 128px; pointer-events: none;
-    background: linear-gradient(rgba(5,5,5,.94), rgba(5,5,5,.88) 56px, rgba(5,5,5,0));
+    background: linear-gradient(rgba(var(--g-veil),.94), rgba(var(--g-veil),.88) 56px, rgba(var(--g-veil),0));
   }
 
   .g-panel {

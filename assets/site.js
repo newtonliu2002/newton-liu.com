@@ -221,12 +221,16 @@
     n.textContent = String(new Date().getFullYear());
   });
 
-  /* ---------- white / gray ground -------------------------------------- */
+  /* ---------- black / white ground ------------------------------------- */
 
-  // The <head> of every page applies a saved "dark" before the first paint;
+  // The <head> of every page applies a saved "light" before the first paint;
   // this adds the switch to the nav and remembers the visitor's choice.
-  // Black (#121212) is the default. Storage can be blocked (private windows), so every
-  // read and write is guarded and the switch still works for the visit.
+  // Black (#121212) is the default, and anything else stored (an old "dark",
+  // which meant gray) lands in Black. Storage can be blocked (private
+  // windows), so every read and write is guarded and the switch still works
+  // for the visit. The window colour is left to that head script until the
+  // switch is used (the landing keeps its own), and every change is announced
+  // as "nl:theme" so the landing can repaint its map.
   (function themeToggle() {
     var nav = document.querySelector(".nav");
     if (!nav) return;
@@ -238,17 +242,29 @@
       '<circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
       '<path d="M8 1.5a6.5 6.5 0 0 0 0 13z" fill="currentColor"/></svg>';
     function sync() {
-      var dark = root.dataset.theme === "dark";
-      btn.setAttribute("aria-pressed", dark ? "true" : "false");
-      btn.setAttribute("aria-label", dark ? "Black background" : "Gray background");
-      btn.title = dark ? "Black background" : "Gray background";
-      if (meta) meta.content = dark ? "#2f2f30" : "#121212";
+      var light = root.dataset.theme === "light";
+      btn.setAttribute("aria-pressed", light ? "true" : "false");
+      btn.setAttribute("aria-label", light ? "Black background" : "White background");
+      btn.title = light ? "Black background" : "White background";
+    }
+    function set(light) {
+      if (light) root.dataset.theme = "light"; else delete root.dataset.theme;
+      sync();
+      if (meta) meta.content = light ? "#ffffff" : "#121212";
+      document.dispatchEvent(new CustomEvent("nl:theme", { detail: { light: light } }));
     }
     btn.addEventListener("click", function () {
-      var dark = root.dataset.theme !== "dark";
-      if (dark) root.dataset.theme = "dark"; else delete root.dataset.theme;
-      try { localStorage.setItem("theme", dark ? "dark" : "light"); } catch (e) {}
-      sync();
+      var light = root.dataset.theme !== "light";
+      try { localStorage.setItem("theme", light ? "light" : "black"); } catch (e) {}
+      set(light);
+    });
+    // A page brought back by the Back button is the one that was left, in
+    // the ground it was left in: catch it up with a switch made since.
+    window.addEventListener("pageshow", function (e) {
+      if (!e.persisted) return;
+      var light;
+      try { light = localStorage.getItem("theme") === "light"; } catch (err) { return; }
+      if (light !== (root.dataset.theme === "light")) set(light);
     });
     sync();
     nav.appendChild(btn);

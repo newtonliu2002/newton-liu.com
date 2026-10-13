@@ -496,16 +496,19 @@ saving needs the token, and they don't have it.
 - **All design tokens live in the `:root` block** at the top of
   `assets/site.css`. Restyling should mostly mean editing that block. If a
   colour or size is hard-coded further down the file, that is a bug worth fixing.
-- **Two grounds: black (default) and gray.** The square at the end of the
-  nav (added by site.js) switches to the gray palette in
-  `:root[data-theme="dark"]` and remembers the choice per visitor in
-  localStorage; "dark" in the code means gray. White was retired with the
-  globe. The landing itself is always the near-black of space. A colour
-  token added to `:root` needs a gray value
-  there too. Every page's `<head>` carries a one-line script that applies a
-  saved gray before the first paint (no white flash); the collection pages get
-  it from `PAGE_TEMPLATE` in build.py, where its braces are doubled for
-  `.format()`.
+- **Two grounds: Black (default) and White.** The square at the end of the
+  nav (added by site.js, on every page, the landing included) is the one
+  switch: it sets `<html data-theme="light">` for White and saves the choice
+  in localStorage `"theme"` (`"light"` = White, anything else = Black), so a
+  visitor picks once and every page and later visit opens in that ground.
+  White's tokens are the `:root[data-theme="light"]` block in site.css; a
+  colour token added to `:root` needs a White value there too. On the landing
+  White is a light "paper atlas" globe: its map colours are `PALETTE` in
+  globe.js, repainted live on the `nl:theme` event, and what is drawn over
+  the map is the `body[data-page="globe"]` blocks in globe.css. Every page's
+  `<head>` carries a one-line script that applies a saved White before the
+  first paint (no flash); the collection pages get it from `PAGE_TEMPLATE` in
+  build.py, where its braces are doubled for `.format()`.
 - **Vanilla JS, no libraries** — except MapLibre on the globe page (see
   "The globe"). ES5-ish syntax, no transpiling.
 - **Filenames stay as the camera wrote them** (see "What's shown under a

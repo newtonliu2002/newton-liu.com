@@ -30,9 +30,19 @@
   --lightbox-bg:  rgba(12,12,12,.985);
   --bar:          #000000;            /* ?edit bar */
 
+  /* The ?edit bar and its formatting bar are night on both grounds, so
+     their ink is fixed rather than following the page (see .nl-bar). */
+  --bar-text:         #ededea;
+  --bar-text-dim:     #a8a8a5;
+  --bar-line:         rgba(255,255,255,.28);
+  --bar-wash:         rgba(255,255,255,.06);
+  --bar-accent:       #d4a453;        /* 7.9:1 on the bar */
+  --bar-accent-hover: #e0b566;
+  --bar-on-accent:    #121212;
+
   /* ---- Lines ---------------------------------------------------------
-     White at low alpha rather than greys, so one value holds on both
-     grounds. */
+     White at low alpha rather than greys, so a line takes the tone of
+     whatever it crosses. The White ground uses black the same way. */
   --hairline:        rgba(255,255,255,.12);
   --hairline-soft:   rgba(255,255,255,.06);  /* between list rows */
   --hairline-strong: rgba(255,255,255,.28);  /* outlined buttons */
@@ -117,18 +127,40 @@
 @media (max-width: 900px)  { :root { --row-h: 210px; --gap: 8px; } }
 @media (max-width: 620px)  { :root { --row-h: 148px; --gap: 5px; } }
 
-/* "Gray": the second ground, switched on by the square at the end of the nav
-   (site.js) and remembered per visitor. Night stays the default whatever the
-   visitor's system setting. A small script in each page's <head> sets
-   data-theme before the first paint so a gray visit never flashes black. A
-   neutral mid-dark gray, so it shifts no photograph's colour. The name
-   "dark" is kept because that script and saved settings use it. Tokens not
-   repeated here (the white-alpha lines, the accent) hold on both grounds. */
-:root[data-theme="dark"] {
-  --bg: #2f2f30; --bg-raised: #3a3a3b; --panel: rgba(47,47,48,.86); --panel-solid: #2f2f30;
-  --hairline: rgba(255,255,255,.14); --hairline-soft: rgba(255,255,255,.08);
-  --text-body: #dcdcd8; --text-dim: #c4c4c1; --text-faint: #a3a3a0;  /* 7.5 / 5.3 on #2f2f30 */
-  --lightbox-bg: rgba(47,47,48,.985);
+/* "White": the second ground, switched on by the square at the end of the
+   nav (site.js) and remembered per visitor. Black stays the default whatever
+   the visitor's system setting. A small script in each page's <head> sets
+   data-theme="light" before the first paint, so a White visit never flashes
+   black. A plain paper white, so it shifts no photograph's colour; the
+   amber is taken down a step so it still reads as text. Tokens not repeated
+   here hold on both grounds: --glass follows --bg, and the ?edit bar keeps
+   its night ink (--bar-*, --warn). A colour token added above needs its
+   White value here. Contrast on #ffffff / --space / --bg-raised: */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --space:        #f4f4f2;
+  --bg:           #ffffff;
+  --bg-raised:    #f2f1ee;
+  --panel:        rgba(255,255,255,.84);
+  --panel-solid:  #ffffff;
+  --lightbox-bg:  rgba(255,255,255,.985);
+  --bar:          #16171b;
+
+  --hairline:        rgba(0,0,0,.12);
+  --hairline-soft:   rgba(0,0,0,.06);
+  --hairline-strong: rgba(0,0,0,.28);
+  --bracket:         rgba(0,0,0,.60);
+  --tile-edge:       rgba(0,0,0,.18);
+  --edit-dash:       rgba(0,0,0,.30);
+  --wash:            rgba(0,0,0,.05);
+
+  --text:       #16171b;   /* 17.9 / 16.3 / 15.9 */
+  --text-body:  #2a2c31;   /* 14.0 */
+  --text-dim:   #555860;   /* 7.1 / 6.5 / 6.3 */
+  --text-faint: #64676e;   /* 5.7 / 5.1 / 5.0. The floor for any text */
+  --accent:       #8f621a; /* 5.3 / 4.9 / 4.7, and white on it 5.3 */
+  --accent-hover: #7f5714;
+  --on-accent:    #ffffff;
 }
 
 /* A Work card's bracket colour, registered so that it can fade in. */
@@ -136,18 +168,19 @@
 
 /* The visitor's own settings, still as tokens. */
 @media (prefers-contrast: more) {
-  :root, :root[data-theme="dark"] { --hairline: rgba(255,255,255,.30); --text-faint: #b0b0ad; }
+  :root { --hairline: rgba(255,255,255,.30); --text-faint: #b0b0ad; }
+  :root[data-theme="light"] { --hairline: rgba(0,0,0,.30); --text-faint: #4a4d54; }
 }
 /* Glass becomes solid when asked for, or when the browser can't blur. */
 @media (prefers-reduced-transparency: reduce) {
-  :root { --panel: var(--panel-solid); --glass: var(--bg); }
+  :root, :root[data-theme="light"] { --panel: var(--panel-solid); --glass: var(--bg); }
 }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  :root { --panel: var(--panel-solid); --glass: var(--bg); }
+  :root, :root[data-theme="light"] { --panel: var(--panel-solid); --glass: var(--bg); }
 }
 /* Paper is white whatever the ground on screen. */
 @media print {
-  :root, :root[data-theme="dark"] {
+  :root, :root[data-theme="light"] {
     color-scheme: light;
     --bg: #fff; --bg-raised: #fff; --text: #000; --text-body: #000;
     --text-dim: #333; --text-faint: #555; --hairline: #ccc;
@@ -342,10 +375,10 @@ a   { color: inherit; }
   border: 2px solid var(--accent);
 }
 
-/* Night / gray switch, added to the end of the nav by site.js. Its svg disc
+/* Black / White switch, added to the end of the nav by site.js. Its svg disc
    is replaced by a small square, half filled: the filled half moves across
-   when the gray ground is on. A finger-sized target around it, without
-   moving it. */
+   when the White ground is on (aria-pressed). A finger-sized target around
+   it, without moving it. */
 .theme-toggle {
   position: relative; flex: none;
   appearance: none; background: none; border: 0; cursor: pointer;
@@ -771,7 +804,7 @@ a   { color: inherit; }
 .lightbox.is-bare .lb-figure { gap: 0; }
 .lightbox.is-bare .lb-image { max-height: calc(100vh - 5rem); }
 
-/* Square controls on the dark: close outlined, the arrows bare until the
+/* Square controls on the ground: close outlined, the arrows bare until the
    pointer finds them. All three bring up the brackets on hover. */
 .lb-close, .lb-nav {
   position: absolute;
@@ -877,8 +910,9 @@ body.lb-open { overflow: hidden; }
 
   /* Over a photograph the bar is the same frosted glass as everywhere else,
      88% ground, with its hairline made transparent so no rule crosses the
-     opener. With light ink the worst case is a white sky under the bar;
-     measured there, the dim nav still holds 5.7:1. */
+     opener. On Black the worst case is a white sky under the bar; measured
+     there, the dim nav still holds 5.7:1. On White it is a black night sky,
+     and the dim nav holds 5.4:1. */
   body[data-page="gallery"] .masthead {
     border-bottom-color: transparent;
   }
@@ -1191,9 +1225,18 @@ body.lb-open { overflow: hidden; }
    Deliberately plain: it is scaffolding around the page, and it should not
    be mistaken for part of the design while you're looking past it at the
    words. The one place it borrows from the site is the mono labels, so the
-   bar doesn't read as a browser dialog. Black in both grounds, with an
+   bar doesn't read as a browser dialog. Night in both grounds, with an
    amber rule, so it never melts into the page.
    ========================================================================== */
+
+/* The bars are night on White too, so inside them the page's ink tokens
+   are pointed back at the night ink; the rules below then read as usual. */
+.nl-bar, .nl-format {
+  color-scheme: dark;
+  --text: var(--bar-text); --text-dim: var(--bar-text-dim);
+  --hairline-strong: var(--bar-line); --wash: var(--bar-wash);
+  --accent: var(--bar-accent); --accent-hover: var(--bar-accent-hover); --on-accent: var(--bar-on-accent);
+}
 
 .nl-bar {
   position: fixed;
