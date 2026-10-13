@@ -9,6 +9,13 @@
         { "name": "Kinabatangan River", "lat": 5.52, "lng": 118.28 }
       ]
     },
+    "big-bend": {
+      "status": "draft",
+      "where": "Texas",
+      "pins": [
+        { "name": "Big Bend National Park", "lat": 29.25, "lng": -103.25 }
+      ]
+    },
     "hawaii": {
       "status": "draft",
       "where": "Kaua'i · O'ahu · Maui · Hawai'i Island",
