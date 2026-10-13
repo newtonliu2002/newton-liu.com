@@ -27,7 +27,6 @@
   var LABELS = {
     tour: "Tour", tourTip: "Tour",
     overview: "Back to overview", overviewTip: "Overview",
-    pause: "Pause globe", pauseTip: "Pause", resumeTip: "Resume",
     view: "View collection", arrow: "→", prev: "‹", next: "›", close: "×",
     index: "Index", load: "Load globe",
     unavailable: "Globe unavailable. The collections are listed here.",
@@ -47,7 +46,7 @@
   var MAX_ZOOM = 9;                  // elevation data stops at 9, so does the camera
   var ARRIVE_ZOOM = 7.8;             // single-pin arrival when places.json gives none
   var SENSITIVE_ZOOM = 7;            // never closer than this for a `sensitive` collection
-  var SPIN = 1.5;                    // degrees per second
+  var SPIN = 2;                      // degrees per second
   var SPIN_RESUME = 1000, SPIN_RAMP = 800;
   var HOVER_DELAY = 120, TURN_DELAY = 450;
   var DWELL = 6000, DWELL_REDUCED = 8000;
@@ -179,7 +178,7 @@
   var stage = $("#g-stage"), mapEl = $("#g-map"), ring = $(".g-ring"), starsEl = $(".g-stars");
   var listEl = $("#g-list"), panel = $(".g-panel"), live = $("#g-live"), readEl = $(".g-readout");
   var card = $(".g-card"), plate = $(".g-plate"), consoleEl = $(".g-console");
-  var tourBtn = $(".g-tour"), pauseBtn = $(".g-pause"), overviewBtn = $(".g-overview");
+  var tourBtn = $(".g-tour"), overviewBtn = $(".g-overview");
   var fallback = $(".g-fallback"), loadBtn = $(".g-load");
   var wireP = $(".g-wire-p"), wireC = $(".g-wire-c"), wireEnd = $(".g-wire-end");
   if (!stage || !listEl) return;
@@ -1378,14 +1377,14 @@
   }
 
   /* ------------------------------------------------------------------
-     THE SPIN: 1.5°/s by the clock, from the landing on, whenever the
+     THE SPIN: 2°/s by the clock, from the landing on, whenever the
      camera is out at globe zoom with nothing open, pointed at or held and
      the page in view. It stops at once when touched and ramps back a
      second later, for as long as the visitor leaves it be.
      ------------------------------------------------------------------ */
 
   var spinV = 0, lastFrame = 0, lastSpin = 0, held = {}, released = -1e9;
-  var paused = session("nl.spin") === "off", stageVisible = true, dirty = true, dwell = -1;
+  var stageVisible = true, dirty = true, dwell = -1;
 
   function hold(key, on) {
     if (on) { held[key] = 1; spinV = 0; }
@@ -1394,7 +1393,7 @@
   function isHeld() { for (var k in held) return true; return false; }
 
   function spinStep(t, dt) {
-    var allowed = ready && !failed && !REDUCED && !EDITING && !paused && !tour && !document.hidden &&
+    var allowed = ready && !failed && !REDUCED && !EDITING && !tour && !document.hidden &&
       stageVisible && state === "overview" && inOverview() && !isHeld() && !map.isMoving() &&
       t - released >= SPIN_RESUME;
     if (!allowed) { spinV = 0; return; }
@@ -1578,17 +1577,6 @@
 
   tourBtn.addEventListener("click", function () { if (tour) endTour(false); else startTour(); });
   overviewBtn.addEventListener("click", overview);
-  function syncPause() {
-    pauseBtn.setAttribute("aria-pressed", paused ? "true" : "false");
-    setLabel(pauseBtn, LABELS.pause, paused ? LABELS.resumeTip : LABELS.pauseTip);
-  }
-  pauseBtn.addEventListener("click", function () {
-    paused = !paused;
-    session("nl.spin", paused ? "off" : "on");
-    if (!paused) released = -1e9;
-    syncPause();
-  });
-  syncPause();
 
   $(".g-card-prev").addEventListener("click", function (e) { e.stopPropagation(); step(-1); });
   $(".g-card-next").addEventListener("click", function (e) { e.stopPropagation(); step(1); });

@@ -226,7 +226,7 @@ body[data-page="globe"] .masthead { position: static; background: var(--space); 
 .g-card-progress { position: absolute; left: 0; right: 0; bottom: -1px; z-index: 1; height: 1px; background: var(--accent); transform-origin: 0; transform: scaleX(0); opacity: 0; }
 .g-card.is-touring .g-card-progress { opacity: 1; }
 
-/* ---------- Console: tour · readout · overview · pause ------------------ */
+/* ---------- Console: tour · readout · overview -------------------------- */
 
 .g-console { position: absolute; left: 16px; right: 16px; bottom: 12px; z-index: 4; display: flex; transition: opacity var(--d-base) var(--ease); }
 .g-stage:not(.is-ready):not(.is-deferred):not(.is-failed) .g-console { opacity: 0; visibility: hidden; }   /* in with the globe, not before */
