@@ -881,40 +881,68 @@
         // The straight hop to the next pin, unless a road is drawn instead (a
         // label's dark ground may sit over a road; it has nowhere else to go).
         if (!c.route && n && n.show && n.xy) segs.push([p.xy.x, p.xy.y, n.xy.x, n.xy.y]);
-        if (!p.lw) p.lw = p.el.querySelector(".g-pin-label").offsetWidth;
-        // Above and below, a label may slide sideways to stay on screen.
-        var x = p.xy.x, y = p.xy.y, w = p.lw / 2 + 2, x0 = clamp(x - w, minX, Math.max(minX, maxX - 2 * w)), dx = Math.round(x0 + w - x);
-        p.cands = [[x + 14, y - 10, x + 16 + p.lw, y + 10, 1], [x - 16 - p.lw, y - 10, x - 14, y + 10, -1],
-                   [x0, y - 32, x0 + 2 * w, y - 12, 2, dx], [x0, y + 12, x0 + 2 * w, y + 32, -2, dx]];
+        if (!p.lw) measureLabel(p);
+        // Right, left, above or below; above and below a label may slide
+        // sideways to stay on screen, or sit off to one side (its near end
+        // just past the pin) when the middle is taken. A long name may also
+        // break onto two lines, tried after every one-line place.
+        p.cands = places(p.xy.x, p.xy.y, p.lw, p.lh, 0);
+        if (p.lw2) p.cands = p.cands.concat(places(p.xy.x, p.xy.y, p.lw2, p.lh2, 1));
         p.cands.sort(function (a, b) { return (b[4] === p.label) - (a[4] === p.label); });
         want.push(p);
       });
     }
-    function free(b, self) {
+    // `loose`: a label may cross the line between pins (its dark ground sits
+    // over it) when that is the only way it gets shown at all.
+    function places(x, y, lw, lh, wrap) {
+      var w = lw / 2 + 2, h = lh / 2, x0 = clamp(x - w, minX, Math.max(minX, maxX - 2 * w)), dx = Math.round(x0 + w - x), r = Math.round(w + 4);
+      return [[x + 14, y - h, x + 16 + lw, y + h, 1, 0, wrap], [x - 16 - lw, y - h, x - 14, y + h, -1, 0, wrap],
+              [x0, y - 12 - lh, x0 + 2 * w, y - 12, 2, dx, wrap], [x0, y + 12, x0 + 2 * w, y + 12 + lh, -2, dx, wrap],
+              [x + 4, y - 12 - lh, x + 4 + 2 * w, y - 12, 2, r, wrap], [x - 4 - 2 * w, y - 12 - lh, x - 4, y - 12, 2, -r, wrap],
+              [x + 4, y + 12, x + 4 + 2 * w, y + 12 + lh, -2, r, wrap], [x - 4 - 2 * w, y + 12, x - 4, y + 12 + lh, -2, -r, wrap]];
+    }
+    function free(b, self, loose) {
       if (b[0] < minX || b[2] > maxX || b[1] < (L.app ? 72 : 8) || b[3] > L.h - 8) return false;
       for (var i = 0; i < boxes.length; i++) {
         var o = boxes[i];
         if (o[4] !== self && b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1]) return false;
       }
-      for (var j = 0; j < segs.length; j++) if (crosses(b, segs[j])) return false;
+      if (!loose) for (var j = 0; j < segs.length; j++) if (crosses(b, segs[j])) return false;
       return true;
     }
     want.forEach(function (p) { p.nFree = p.cands.filter(function (b) { return free(b, p); }).length; });
     want.sort(function (a, b) { return a.nFree - b.nFree || a.pi - b.pi; });
     want.forEach(function (p) {
-      var b = p.cands.filter(function (b) { return free(b, p); })[0];
+      var b = p.cands.filter(function (b) { return free(b, p); })[0] || p.cands.filter(function (b) { return free(b, p, true); })[0];
       p.side = b ? b[4] : 0;
       p.dx = b && b[5] || 0;
+      p.wrapped = !!(b && b[6]);
       if (b) boxes.push(b);
     });
     pins.forEach(function (p) {
       var side = want.indexOf(p) < 0 ? 0 : p.side;
       if (side && p.el.style.getPropertyValue("--dx") !== p.dx + "px") p.el.style.setProperty("--dx", p.dx + "px");
+      if (side && p.el.classList.contains("is-wrap") !== p.wrapped) p.el.classList.toggle("is-wrap", p.wrapped);
       if (p.label === side) return;
       p.label = side;
       p.el.classList.toggle("has-label", !!side);
       for (var k in SIDES) if (SIDES[k]) p.el.classList.toggle(SIDES[k], String(side) === k);
     });
+  }
+  // A label's size on one line, and (for a long name) on two: measured once,
+  // hidden labels still take up their room.
+  function measureLabel(p) {
+    var lab = p.el.querySelector(".g-pin-label"), had = p.el.classList.contains("is-wrap");
+    p.el.classList.remove("is-wrap");
+    p.lw = lab.offsetWidth; p.lh = lab.offsetHeight || 20;
+    p.lw2 = 0;
+    if (p.lw > 130 && /\s/.test(lab.textContent.trim())) {
+      p.el.style.setProperty("--wrap", Math.ceil(p.lw * .58) + "px");
+      p.el.classList.add("is-wrap");
+      if (lab.offsetHeight > p.lh * 1.4 && lab.offsetWidth < p.lw - 20) { p.lw2 = lab.offsetWidth; p.lh2 = lab.offsetHeight; }
+      p.el.classList.remove("is-wrap");
+    }
+    if (had) p.el.classList.add("is-wrap");
   }
   // Does the segment s = [x1, y1, x2, y2] pass through the box b? (Liang–Barsky)
   function crosses(b, s) {

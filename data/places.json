@@ -79,13 +79,13 @@
       "status": "draft",
       "where": "Oregon · Washington · Montana · Colorado · Idaho",
       "pins": [
-        { "name": "Crater Lake", "lat": 42.91, "lng": -122.14 },
-        { "name": "Mount Rainier", "lat": 46.79, "lng": -121.74 },
+        { "name": "Crater Lake National Park", "lat": 42.91, "lng": -122.14 },
+        { "name": "Mount Rainier National Park", "lat": 46.79, "lng": -121.74 },
         { "name": "Skagit Valley", "lat": 48.40, "lng": -122.41 },
         { "name": "Glacier National Park", "lat": 48.70, "lng": -113.72 },
         { "name": "Sawtooth Mountains", "lat": 44.22, "lng": -114.94 },
-        { "name": "Black Canyon of the Gunnison", "lat": 38.57, "lng": -107.72 },
-        { "name": "Mesa Verde", "lat": 37.18, "lng": -108.49 }
+        { "name": "Black Canyon of the Gunnison National Park", "lat": 38.57, "lng": -107.72 },
+        { "name": "Mesa Verde National Park", "lat": 37.18, "lng": -108.49 }
       ]
     },
     "yellowstone": {
@@ -102,7 +102,7 @@
       "pins": [
         { "name": "Shiprock", "lat": 36.69, "lng": -108.84 },
         { "name": "Bosque del Apache", "lat": 33.80, "lng": -106.89 },
-        { "name": "Arches", "lat": 38.68, "lng": -109.57 },
+        { "name": "Arches National Park", "lat": 38.68, "lng": -109.57 },
         { "name": "Craters of the Moon", "lat": 43.42, "lng": -113.52 }
       ]
     },
@@ -166,7 +166,7 @@
         { "name": "Akron", "lat": 40.16, "lng": -103.21 },
         { "name": "Great Sand Dunes National Park", "lat": 37.79, "lng": -105.61 },
         { "name": "Ouray", "lat": 38.02, "lng": -107.67 },
-        { "name": "Black Canyon of the Gunnison", "lat": 38.57, "lng": -107.72 },
+        { "name": "Black Canyon of the Gunnison National Park", "lat": 38.57, "lng": -107.72 },
         { "name": "Gunnison", "lat": 38.54, "lng": -106.93 }
       ]
     },
@@ -174,11 +174,11 @@
       "status": "draft",
       "where": "",
       "pins": [
-        { "name": "Glacier Bay", "lat": 58.50, "lng": -137.00 },
+        { "name": "Glacier Bay National Park", "lat": 58.50, "lng": -137.00 },
         { "name": "Juneau", "lat": 58.30, "lng": -134.42 },
-        { "name": "Kenai Fjords", "lat": 59.92, "lng": -149.99 },
-        { "name": "Katmai", "lat": 58.50, "lng": -155.00 },
-        { "name": "Denali", "lat": 63.43, "lng": -150.32 },
+        { "name": "Kenai Fjords National Park", "lat": 59.92, "lng": -149.99 },
+        { "name": "Katmai National Park", "lat": 58.50, "lng": -155.00 },
+        { "name": "Denali National Park", "lat": 63.43, "lng": -150.32 },
         { "name": "Utqiagvik", "lat": 71.29, "lng": -156.79 }
       ]
     }

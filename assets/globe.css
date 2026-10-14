@@ -165,9 +165,12 @@ body[data-page="globe"] .masthead { position: static; background: var(--space); 
 }
 .g-pin.has-label .g-pin-label { visibility: visible; opacity: 1; }
 .g-pin.is-left .g-pin-label { left: auto; right: calc(100% - var(--c) + 16px); }
-.g-pin.is-up .g-pin-label, .g-pin.is-down .g-pin-label { left: calc(var(--c) + var(--dx, 0px)); transform: translate(-50%, -50%); }
-.g-pin.is-up .g-pin-label { top: calc(var(--c) - 22px); }
-.g-pin.is-down .g-pin-label { top: calc(var(--c) + 22px); }
+.g-pin.is-up .g-pin-label, .g-pin.is-down .g-pin-label { left: calc(var(--c) + var(--dx, 0px)); text-align: center; }
+.g-pin.is-up .g-pin-label { top: calc(var(--c) - 12px); transform: translate(-50%, -100%); }
+.g-pin.is-down .g-pin-label { top: calc(var(--c) + 12px); transform: translateX(-50%); }
+/* A long name on two lines, where one line has no room (globe.js measureLabel). */
+.g-pin.is-wrap .g-pin-label { white-space: normal; width: max-content; max-width: var(--wrap, 160px); }
+.g-pin.is-wrap.is-left .g-pin-label { text-align: right; }
 
 /* ---------- Plate: the hover preview (app layout, fine pointers) ------- */
 

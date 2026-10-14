@@ -85,6 +85,16 @@ keyed by the collection's slug, after the usual collections.json entry:
 - **Region level only.** A pin is a national park, island, reserve, valley
   or town a visitor would recognise, at that public place's usual centre.
   Never a photograph's own GPS position, and never a nest, roost, lek or hide.
+- **A national park is named in full** ("Katmai National Park", not
+  "Katmai"), Newton's rule. Other designations keep their own names
+  (Craters of the Moon is a national monument, Tambopata a national reserve).
+  On arrival each pin's name takes one of eight places around it (right,
+  left, above, below, and the four corners), a long name may break onto two
+  lines, and as a last resort a name may sit over the line between pins
+  (`layoutLabels()`). A name is still hidden when none of those is free of
+  the card, the console and the other pins and names: on a laptop that is
+  rare; on a phone, where the map is a short band above the card, the
+  densest collections lose a few.
 - `pins` are in route order: they set the line drawn between them, and the
   first is the one the globe turns to. One pin per place; a collection that
   covers several places (The Canadian West) gets several, and they light up,
