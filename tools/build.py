@@ -333,8 +333,8 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{title} — Newton Liu Photography</title>
-<meta name="description" content="{title} — photographs by Newton Liu.">
+<title>{title} — Newton LIU Photography</title>
+<meta name="description" content="{title} — photographs by Newton LIU.">
 <meta name="theme-color" content="#121212">
 <script>try{{if(localStorage.getItem("theme")==="white"){{document.documentElement.dataset.theme="light";var m=document.querySelector('meta[name="theme-color"]');if(m)m.content="#ffffff"}}}}catch(e){{}}</script>
 <link rel="stylesheet" href="../../assets/site.css?v={v_css}">
@@ -349,7 +349,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 <header class="masthead">
   <div class="wrap masthead-inner">
     <a class="wordmark" href="../../">
-      <span class="wordmark-name">Newton Liu</span>
+      <span class="wordmark-name">Newton LIU</span>
       <span class="wordmark-sub">Photography</span>
     </a>
     <nav class="nav">
@@ -382,7 +382,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 
 <footer class="footer">
   <div class="wrap footer-inner">
-    <p>&copy; <span data-year>2026</span> Newton Liu. All photographs are my own.</p>
+    <p>&copy; <span data-year>2026</span> Newton LIU. All photographs are my own.</p>
     <p class="footer-links">
       <a href="../../about.html">About</a>
       <a href="../../contact.html">Contact</a>

@@ -47,11 +47,17 @@
   var ARRIVE_ZOOM = 7.8;             // single-pin arrival when places.json gives none
   var SENSITIVE_ZOOM = 7;            // never closer than this for a `sensitive` collection
   var SPIN = 2;                      // degrees per second, westward: the land runs left to right
-  var START_LNG = -66;               // the landing faces the eastern Americas and turns west, so the
+  var START_LNG = -58;               // the landing faces the eastern Americas and turns west, so the
                                      // Pacific and Asia come next and the empty Atlantic comes last
+  // Where no card is due for a long way (the Pacific after Hawai'i, the
+  // Atlantic after Sri Lanka) the spin eases up to GAP_BOOST times as fast:
+  // from GAP_FROM degrees off the nearest card's pin, in full by GAP_FULL.
+  var GAP_BOOST = 2.5, GAP_FROM = 12, GAP_FULL = 25;
   // The passing card: each up for 4.5 s at least; a pin is due from 6° before
   // the middle to 15° past it, and its card stays until 40° past.
   var PASS_DWELL = 4500, PASS_AHEAD = 6, PASS_BEHIND = 15, PASS_KEEP = 40;
+  var PASS_FIRST = "ecuador";        // a landing's first card (not on a return from a gallery)
+  var PASS_SKIP = ["big-bend"];      // never a passing card (still on hover and in the list)
   var SPIN_RESUME = 1000, SPIN_RAMP = 800;
   var HOVER_DELAY = 120, TURN_DELAY = 450;
   var DWELL = 6000, DWELL_REDUCED = 8000;
@@ -643,7 +649,7 @@
     map.on("load", onLoad);
     map.on("move", onMove);
     map.on("moveend", onMoveEnd);
-    map.on("click", function () { if (active) dismiss(); });
+    map.on("click", function () { if (active && !afterPlateClick()) dismiss(); });
 
     var cc = map.getCanvasContainer();
     cc.addEventListener("pointerdown", function () { hold("drag", true); }, { passive: true });
@@ -789,7 +795,7 @@
   }
 
   function pinClick(p) {
-    if (!ready) return;
+    if (!ready || afterPlateClick()) return;
     if (p.stack && p.slug !== active) {          // a stack: come closer instead of guessing
       map.easeTo({ center: p.ll, zoom: Math.min(MAX_ZOOM, map.getZoom() + 1.6), duration: REDUCED ? 0 : 700 });
       return;
@@ -967,7 +973,9 @@
 
   function light(slug) {
     if (lit === slug && !crowd) return;
-    if (passing) endPass();                // pointing takes the plate over
+    // Pointing at another collection takes the plate over; pointing at the
+    // one passing keeps its card, live, so the pointer can go on to click it.
+    if (passing && slug && slug !== passing) endPass();
     lit = slug;
     crowd = null;
     cols.forEach(function (c) { c.row.classList.toggle("is-lit", c.slug === slug); });
@@ -975,7 +983,8 @@
     setPinClasses();
     setTether();
     hold("lit", !!slug);
-    if (slug && slug !== active) { prefetch(bySlug[slug]); showPlate(bySlug[slug]); } else hidePlate();
+    if (slug && slug !== active) { prefetch(bySlug[slug]); if (slug !== passing) showPlate(bySlug[slug]); }
+    else if (!passing) hidePlate();
     readout();
     dirty = true;
   }
@@ -1000,6 +1009,7 @@
     if (c.opener && NL) {
       var img = el("img");
       img.alt = "";
+      img.draggable = false;               // a drag on the passing card isn't a drag of its photo
       img.style.aspectRatio = NL.aspectOf(c.opener).toFixed(4);
       NL.responsive(img, c.opener, PLATE_SIZES);
       plate.appendChild(img);
@@ -1010,6 +1020,7 @@
   }
   function crowdPlate(p) {
     if (!L.app || COARSE) return;
+    if (passing) endPass();
     light(null);
     crowd = p;
     plate.textContent = "";
@@ -1061,30 +1072,37 @@
      in one pass (the Rockies) takes turns from one turn to the next.
      Pointing at the plate holds the spin; clicking it flies there. */
 
-  var passing = null, passedAt = 0, passPin = null, lastPassed = {};
+  var passing = null, passedAt = 0, passPin = null, lastPassed = {}, anyPassed = false;
   function passStep(t) {
-    var can = ready && L.app && !COARSE && !tour && !active && !lit && !crowd && !pending &&
+    var can = ready && L.app && !COARSE && !REDUCED && !tour && !active && !crowd &&
       state === "overview" && inOverview();
     if (!can) { if (passing) { endPass(); hidePlate(); } return; }
-    if (held.plate) return;
+    // Held as it is while pointed at (the card, its pin or row, or a row the
+    // pointer is crossing) and while the globe is dragged or eased by hand:
+    // a fling across the Americas shouldn't flash a card per pin.
+    if (held.plate || lit || pending || held.drag || map.isMoving()) return;
     var c = map.getCenter(), best = null, cur = null, halfTurn = 180 / SPIN * 1000;
+    var first = anyPassed || recent || deep ? null : PASS_FIRST, forced = null;
     pins.forEach(function (p) {
       if (!p.show || !p.xy) return;
       var d = ((c.lng - p.ll[0] + 540) % 360) - 180;     // > 0: still to come, left of the middle
       [p.slug].concat(p.stack || []).forEach(function (s) {
+        if (PASS_SKIP.indexOf(s) >= 0) return;
         if (s === passing) { if (Math.abs(d) <= PASS_KEEP) cur = d; return; }
+        if (s === first && Math.abs(d) <= PASS_KEEP) { forced = { s: s, p: p }; return; }
         var seen = lastPassed[s] === undefined ? -Infinity : lastPassed[s];
         if (d > PASS_AHEAD || d < -PASS_BEHIND || t - seen < halfTurn) return;
         if (!best || seen < best.seen || seen === best.seen && Math.abs(d) < Math.abs(best.d)) best = { s: s, d: d, p: p, seen: seen };
       });
     });
     if (passing && cur !== null && t - passedAt < PASS_DWELL) return;
+    if (forced) best = forced;
     if (best) pass(best.s, best.p, t);
     else if (passing && cur === null) { endPass(); hidePlate(); }
   }
   function pass(slug, at, t) {
     if (passing) endPass();
-    passing = slug; passedAt = t; lastPassed[slug] = t;
+    passing = slug; passedAt = t; lastPassed[slug] = t; anyPassed = true;
     passPin = at;
     at.el.classList.add("is-passing");
     showPlate(bySlug[slug], at);
@@ -1096,9 +1114,17 @@
     plate.classList.remove("is-live");
     hold("plate", false);
   }
+  var plateClicked = -1e9;
   plate.addEventListener("pointerenter", function (e) { if (passing && e.pointerType !== "touch") hold("plate", true); });
   plate.addEventListener("pointerleave", function () { hold("plate", false); });
-  plate.addEventListener("click", function () { if (passing) select(passing, "plate"); });
+  plate.addEventListener("click", function () {
+    if (!passing) return;
+    plateClicked = now();                  // the second click of a double-click lands on the map or a pin
+    select(passing, "plate");
+  });
+  // A wheel over the card is meant for the globe: the card steps aside.
+  plate.addEventListener("wheel", function () { if (passing) { endPass(); hidePlate(); } }, { passive: true });
+  function afterPlateClick() { return now() - plateClicked < 450; }
 
   /* ------------------------------------------------------------------
      SELECTING: fly there and open the card
@@ -1455,7 +1481,15 @@
     if (!spinV || (COARSE && t - lastSpin < 33)) return;   // phones: 30 updates a second
     var c = map.getCenter(), step = Math.min(t - lastSpin, 100);
     lastSpin = t;
-    map.jumpTo({ center: [c.lng - SPIN * spinV * step / 1000, c.lat] }, { gSpin: 1 });
+    map.jumpTo({ center: [c.lng - SPIN * gapBoost(c.lng) * spinV * step / 1000, c.lat] }, { gSpin: 1 });
+  }
+  function gapBoost(lng) {
+    var d = 180;
+    cols.forEach(function (c) {
+      if (c.pins.length && PASS_SKIP.indexOf(c.slug) < 0) d = Math.min(d, Math.abs(((lng - c.pins[0].ll[0] + 540) % 360) - 180));
+    });
+    var k = clamp((d - GAP_FROM) / (GAP_FULL - GAP_FROM), 0, 1);
+    return 1 + (GAP_BOOST - 1) * k * k * (3 - 2 * k);
   }
 
   // One loop, from the map's load until a failure ends it.
@@ -1570,6 +1604,8 @@
     // tour. The list keeps no trace of a selection that is no longer shown.
     flight++;
     clearTimeout(failTimer); clearTimeout(cardTimer); clearTimeout(warmTimer); clearTimeout(leaveTimer);
+    if (passing) endPass();
+    hidePlate();
     clearTimeout(flatTimer); clearTimeout(hoverTimer); clearTimeout(turnTimer);
     cancelAnimationFrame(terrainRaf);
     tour = false; dwell = -1; active = null; lit = null; held = {};

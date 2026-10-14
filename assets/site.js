@@ -814,7 +814,7 @@
 
     if (titleEl && meta.title) {
       titleEl.textContent = meta.title;
-      document.title = meta.title + " — Newton Liu Photography";
+      document.title = meta.title + " — Newton LIU Photography";
     }
     if (subEl)   subEl.textContent   = meta.subtitle || "";
     if (blurbEl) blurbEl.textContent = meta.blurb || "";
