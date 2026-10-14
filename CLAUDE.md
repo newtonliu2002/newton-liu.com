@@ -506,6 +506,24 @@ they're small). Their `sizes` mirrors the column: the page width below
 The tab is in the nav of every page: the four hand-written pages, this one,
 and `PAGE_TEMPLATE` in build.py for the collection pages.
 
+**The drop-down.** Pointing at the Projects tab (or tabbing onto it) drops
+a menu under it with "eBird Explorer ↗", which opens the app itself, not
+this page (Newton asked for it that way, 2026-10-13, and to keep this page
+for later). It's built by site.js from `NAV_MENUS` at the top of the file,
+keyed by the tab's page, so a new project in the menu is one entry there
+and no HTML changes; an off-site link gets the ↗. site.js wraps the tab in
+`.nav-drop` beside its `.nav-menu`; the styles are the "Nav drop-down"
+block in site.css. Laptop layout with a mouse only (`hover: hover` and
+over 620px): on a phone the nav row scrolls sideways and would clip it,
+and a touch screen can't point, so there the tab just opens this page.
+Because a tab may now be a `.nav-drop` rather than a bare link, the
+five-item wrap rule counts `.nav > :nth-child(5):not(.theme-toggle)`.
+Keyboard focus opens it (`:has(:focus-visible)`, so focus left by a mouse
+click doesn't hold it open) and Esc shuts it, sending focus back to the
+tab. `.nav-drop` carries the masthead's z-index, because the landing's bar
+is static below 1024px wide or 620px tall and the menu would otherwise
+fall behind the globe's sticky stage.
+
 ## Editing the words (?edit)
 
 **Add `?edit` to any page's URL and the words on it become typeable.** A bar

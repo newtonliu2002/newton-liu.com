@@ -43,6 +43,19 @@
   // worth naming) simply show fewer items.
   var EXIF_FIELDS = ["camera", "lens", "focal", "aperture", "shutter", "iso"];
 
+  /* ------------------------------------------------------------------
+     NAV_MENUS — a short drop-down under a nav tab, keyed by the page that
+     tab opens. Pointing at the tab (or tabbing onto it) shows the menu, on a
+     laptop with a mouse; phones and touch screens just follow the tab to
+     its page. Each entry goes straight where its href says, so eBird
+     Explorer opens the app itself, not the Projects page.
+     ------------------------------------------------------------------ */
+  var NAV_MENUS = {
+    "projects.html": [
+      { label: "eBird Explorer", href: "https://ebird-explorer.onrender.com" }
+    ]
+  };
+
   var body = document.body;
   var BASE = body.dataset.base || "";
   var PAGE = body.dataset.page || "";
@@ -222,6 +235,66 @@
   Array.prototype.forEach.call(document.querySelectorAll("[data-year]"), function (n) {
     n.textContent = String(new Date().getFullYear());
   });
+
+  /* ---------- nav drop-downs (NAV_MENUS) -------------------------------- */
+
+  // The tab is wrapped in a .nav-drop with its menu beside it, so CSS can
+  // show the menu while the pointer or focus is anywhere inside the pair.
+  // An off-site entry gets a small ↗ so it's clear it leaves the site.
+  (function navMenus() {
+    var links = document.querySelectorAll(".nav > a");
+    for (var i = 0; i < links.length; i++) {
+      var a = links[i];
+      var page = (a.getAttribute("href") || "").split(/[?#]/)[0].split("/").pop();
+      if (!page || !Object.prototype.hasOwnProperty.call(NAV_MENUS, page)) continue;
+      var items = NAV_MENUS[page];
+      if (!items || !items.length) continue;
+      var wrap = el("span", "nav-drop");
+      a.parentNode.insertBefore(wrap, a);
+      wrap.appendChild(a);
+      shutOnEscape(wrap);
+      var menu = el("span", "nav-menu");
+      var list = el("ul", "nav-menu-list");
+      list.setAttribute("aria-label", a.textContent);
+      items.forEach(function (item) {
+        var li = el("li");
+        var link = el("a");
+        var offSite = /^https?:/.test(item.href);
+        // An on-site href is written from the site's root ("shoot-planner/"),
+        // so it is read from this page's base, as getJSON does.
+        link.href = offSite || item.href.charAt(0) === "/" ? item.href : BASE + item.href;
+        link.textContent = item.label;
+        if (offSite) {
+          var out = el("span", "nav-menu-out");
+          out.setAttribute("aria-hidden", "true");
+          out.textContent = "↗";
+          link.appendChild(out);
+        }
+        li.appendChild(link);
+        list.appendChild(li);
+      });
+      menu.appendChild(list);
+      wrap.appendChild(menu);
+    }
+
+    // Esc shuts an open menu; it opens again once the pointer and focus have
+    // both left and come back. Focus on a menu link goes back to its tab
+    // first, as the browser would otherwise drop it when the link is hidden.
+    function shutOnEscape(wrap) {
+      var tab = wrap.firstChild;
+      wrap.addEventListener("keydown", function (e) {
+        if (e.key !== "Escape" && e.key !== "Esc") return;
+        wrap.classList.add("is-shut");
+        if (document.activeElement !== tab && wrap.contains(document.activeElement)) tab.focus();
+      });
+      wrap.addEventListener("mouseleave", function () {
+        if (!wrap.contains(document.activeElement)) wrap.classList.remove("is-shut");
+      });
+      wrap.addEventListener("focusout", function (e) {
+        if (!e.relatedTarget || !wrap.contains(e.relatedTarget)) wrap.classList.remove("is-shut");
+      });
+    }
+  })();
 
   /* ---------- black / white ground ------------------------------------- */
 

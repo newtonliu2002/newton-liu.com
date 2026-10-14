@@ -399,15 +399,69 @@ a   { color: inherit; }
   .nav { gap: var(--s5); }
 }
 
+/* Nav drop-down (NAV_MENUS in site.js): a tab that has one is wrapped in
+   .nav-drop with its .nav-menu beside it. Laptops with a mouse only: on a
+   phone the nav is a row that scrolls sideways and would clip it, and a
+   touch screen has no pointing, so there the tab just opens its page. The
+   menu hangs from the bar's bottom rule; its padding-top is a transparent
+   bridge from the tab down to it, so the pointer never crosses a gap on the
+   way. After the pointer leaves it stays whole for a moment, then fades, so
+   a slow diagonal toward its far end still arrives; what you can see is
+   what you can click throughout. Keyboard focus opens it too (focus a
+   mouse click leaves behind does not hold it open), and Esc shuts it
+   (.is-shut, site.js) until the pointer or focus leaves.
+   The .nav-drop's z-index keeps the menu above the landing's sticky globe
+   when the landing's bar is static (below 1024px wide or 620px tall). */
+.nav-drop { position: relative; display: inline-flex; align-items: center; }
+.nav-menu { display: none; }
+@media (hover: hover) and (min-width: 621px) {
+  .nav-drop { z-index: var(--z-masthead); }
+  .nav-drop:hover > a, .nav-drop:has(:focus-visible) > a { color: var(--text); }   /* lit while its menu is open */
+  .nav-menu {
+    display: block;
+    position: absolute; top: 100%; left: -16px;
+    padding-top: calc((var(--masthead-h) - 44px) / 2 + 1px);
+    pointer-events: auto;              /* the landing's bar lets clicks through */
+    visibility: hidden; opacity: 0;
+    transition: opacity var(--d-fast) var(--ease) 180ms, visibility 0s linear 300ms;
+  }
+  .nav-drop:hover .nav-menu, .nav-drop:has(:focus-visible) .nav-menu {
+    visibility: visible; opacity: 1;
+    transition: opacity var(--d-fast) var(--ease), visibility 0s;
+  }
+  .nav .nav-drop.is-shut .nav-menu { visibility: hidden; opacity: 0; transition: none; }
+}
+.nav-menu-list {
+  list-style: none; margin: 0; padding: var(--s2) 0;
+  min-width: max-content;
+  background: var(--bg);
+  border: 1px solid var(--hairline); border-top: 0;
+}
+/* The landing's bar has no visible rule to hang from, so the box closes itself. */
+body[data-page="globe"] .nav-menu-list { border-top: 1px solid var(--hairline); }
+.nav .nav-menu a {
+  display: flex; align-items: center; gap: var(--s2);
+  margin: 0; padding: 12px 16px;
+  font: 400 var(--t-ui)/16px var(--sans);
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--text-dim); text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--d-fast) var(--ease);
+}
+.nav .nav-menu a:hover, .nav .nav-menu a:focus-visible { color: var(--text); }
+.nav-menu-out { font-family: var(--mono); letter-spacing: 0; color: var(--text-faint); }
+
 /* Five or more nav items no longer fit beside the wordmark below 1024px: the
    nav wraps to its own full-width row and the bar stops being sticky, which
    means it is no longer one --masthead-h tall, so the gallery opener stops
-   pulling up behind it. Does nothing with today's four items. */
+   pulling up behind it. Does nothing with today's four items. A tab is a
+   link or a .nav-drop around one, and the switch at the end isn't one, so
+   the count is the fifth child that isn't the switch. */
 @media (min-width: 621px) and (max-width: 1023px) {
-  .masthead:has(.nav > a:nth-of-type(5)) { position: static; }
-  .masthead-inner:has(.nav > a:nth-of-type(5)) { flex-wrap: wrap; row-gap: 0; padding-top: var(--s1); }
-  .masthead-inner:has(.nav > a:nth-of-type(5)) .nav { flex-basis: 100%; }
-  body:has(.nav > a:nth-of-type(5))[data-page="gallery"] .book-lead { margin-top: 0; }
+  .masthead:has(.nav > :nth-child(5):not(.theme-toggle)) { position: static; }
+  .masthead-inner:has(.nav > :nth-child(5):not(.theme-toggle)) { flex-wrap: wrap; row-gap: 0; padding-top: var(--s1); }
+  .masthead-inner:has(.nav > :nth-child(5):not(.theme-toggle)) .nav { flex-basis: 100%; }
+  body:has(.nav > :nth-child(5):not(.theme-toggle))[data-page="gallery"] .book-lead { margin-top: 0; }
 }
 
 /* Phones: two static rows, wordmark then nav. The nav row runs to the
