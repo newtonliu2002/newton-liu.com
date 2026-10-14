@@ -41,7 +41,7 @@
       ]
     },
     "hawaii": {
-      "status": "draft",
+      "status": "confirmed",
       "where": "Hawai'i Island · Kaua'i · Maui · O'ahu",
       "coords": { "lat": 19.5938, "lng": -155.4284 },
       "pins": [
@@ -52,7 +52,7 @@
       ]
     },
     "galapagos": {
-      "status": "draft",
+      "status": "confirmed",
       "where": "",
       "coords": { "lat": -0.6288, "lng": -90.3639 },
       "pins": [
@@ -61,7 +61,7 @@
       ]
     },
     "ecuador": {
-      "status": "draft",
+      "status": "confirmed",
       "where": "",
       "coords": { "lat": -0.0529, "lng": -78.7747 },
       "zoom": 8,
@@ -84,7 +84,7 @@
       ]
     },
     "snowy-west": {
-      "status": "draft",
+      "status": "confirmed",
       "where": "Colorado · Idaho · Montana · Oregon · Washington",
       "coords": { "lat": 43.9793, "lng": -120.7373 },
       "pins": [
@@ -103,6 +103,8 @@
       "coords": { "lat": 47.6201, "lng": -100.5407 },
       "pins": [
         { "name": "Yellowstone National Park", "lat": 44.60, "lng": -110.50 },
+        { "name": "Grand Teton National Park", "lat": 43.81, "lng": -110.65 },
+        { "name": "National Elk Refuge", "lat": 43.56, "lng": -110.68 },
         { "name": "Theodore Roosevelt National Park", "lat": 46.97, "lng": -103.45 }
       ]
     },
@@ -146,8 +148,13 @@
       "where": "",
       "coords": { "lat": 7.5555, "lng": 80.7138 },
       "pins": [
+        { "name": "Matara", "lat": 5.95, "lng": 80.55 },
         { "name": "Sinharaja Forest Reserve", "lat": 6.42, "lng": 80.50 },
-        { "name": "Yala National Park", "lat": 6.55, "lng": 81.50 }
+        { "name": "Yala National Park", "lat": 6.55, "lng": 81.50 },
+        { "name": "Bundala National Park", "lat": 6.20, "lng": 81.22 },
+        { "name": "Horton Plains National Park", "lat": 6.81, "lng": 80.80 },
+        { "name": "Nuwara Eliya", "lat": 6.97, "lng": 80.77 },
+        { "name": "Kandy", "lat": 7.29, "lng": 80.64 }
       ]
     },
     "yunnan": {
@@ -165,7 +172,10 @@
       "coords": { "lat": 34.3953, "lng": -111.7633 },
       "pins": [
         { "name": "Sedona", "lat": 34.87, "lng": -111.76 },
-        { "name": "Santa Cruz Flats", "lat": 32.72, "lng": -111.60 }
+        { "name": "Phoenix", "lat": 33.45, "lng": -112.07 },
+        { "name": "Saguaro National Park", "lat": 32.30, "lng": -111.16 },
+        { "name": "Santa Cruz Flats", "lat": 32.72, "lng": -111.60 },
+        { "name": "Patagonia", "lat": 31.54, "lng": -110.75 }
       ]
     },
     "colorado-nebraska": {
@@ -188,12 +198,13 @@
       "where": "",
       "coords": { "lat": 64.4460, "lng": -149.6809 },
       "pins": [
-        { "name": "Glacier Bay National Park", "lat": 58.50, "lng": -137.00 },
         { "name": "Juneau", "lat": 58.30, "lng": -134.42 },
-        { "name": "Kenai Fjords National Park", "lat": 59.92, "lng": -149.99 },
+        { "name": "Glacier Bay National Park", "lat": 58.50, "lng": -137.00 },
+        { "name": "Utqiagvik", "lat": 71.29, "lng": -156.79 },
         { "name": "Katmai National Park", "lat": 58.50, "lng": -155.00 },
+        { "name": "Kenai Fjords National Park", "lat": 59.92, "lng": -149.99 },
         { "name": "Denali National Park", "lat": 63.43, "lng": -150.32 },
-        { "name": "Utqiagvik", "lat": 71.29, "lng": -156.79 }
+        { "name": "Fairbanks", "lat": 64.84, "lng": -147.72 }
       ]
     }
   }
