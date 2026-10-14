@@ -29,7 +29,6 @@ body[data-page="globe"] {
   --g-ink:        #fff;                    /* full strength: a pin or row mark lit, the open row's title */
   --g-pin:        rgba(242,242,242,.85);   /* a pin's crosshair */
   --g-pin-seen:   rgba(242,242,242,.45);   /* ...once its collection has been opened */
-  --g-pin-dim:    .75;                     /* the other pins while one place is open: still there to click */
   --g-pin-stack:  rgba(242,242,242,.6);    /* the circle round a stacked pin */
   --g-pin-intro:  rgba(255,255,255,.55);   /* the one ring each pin arrives with */
   --g-ring:       rgba(255,255,255,.1);    /* the globe's rim */
@@ -46,7 +45,6 @@ body[data-page="globe"] {
   --g-ink:        #000;
   --g-pin:        rgba(27,28,32,.85);
   --g-pin-seen:   rgba(27,28,32,.6);       /* dark ink fades faster on paper: these keep Black's contrast */
-  --g-pin-dim:    .8;
   --g-pin-stack:  rgba(27,28,32,.6);
   --g-pin-intro:  rgba(27,28,32,.45);
   --g-ring:       rgba(0,0,0,.14);
@@ -120,7 +118,6 @@ body[data-page="globe"] .masthead { position: static; background: var(--space); 
 .g-pin.is-visited .g-pin-x { --k: var(--g-pin-seen); --dot: transparent; }
 .g-pin:hover .g-pin-x, .g-pin.is-lit .g-pin-x, .g-pin.is-passing .g-pin-x, .g-pin.is-active .g-pin-x { --k: var(--g-ink); --a: 5px; }
 .g-pin.is-active .g-pin-x { --dot: var(--accent); }
-.g-pin.is-dim .g-pin-in { opacity: var(--g-pin-dim); }
 .g-pin.is-off { pointer-events: none; }
 .g-pin.is-off .g-pin-in { opacity: 0; }
 .g-pin.is-lit { z-index: 1; }

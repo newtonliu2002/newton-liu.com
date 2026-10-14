@@ -812,7 +812,6 @@
       var cl = p.el.classList;
       cl.toggle("is-active", p.slug === active);
       cl.toggle("is-lit", !!lit && p.slug === lit && p.slug !== active);
-      cl.toggle("is-dim", !!active && p.slug !== active && p.slug !== lit);
       cl.toggle("is-visited", !!visited[p.slug] && p.slug !== active);
     });
   }
