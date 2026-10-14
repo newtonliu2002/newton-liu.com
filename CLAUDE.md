@@ -70,9 +70,13 @@ motion and an off-screen globe stop it. A cluster too dense for one pass (the
 Rockies) takes turns from one turn to the next. Plates are laptop-layout
 only, so phones get the spin without them. Newton's picks: the first card
 of a landing is Ecuador (`PASS_FIRST`), Big Bend never passes (`PASS_SKIP`;
-it still shows on hover), and over a long stretch with no card (the
+it still shows on hover), and over a long stretch with no pin near the middle (the
 Pacific after Hawai'i, the Atlantic after Sri Lanka) the spin eases up to
 2.5× (`gapBoost()`, `GAP_*`) so nobody thinks the globe has stopped.
+On such a stretch the next card doesn't wait for the middle: once the card
+up is past (or there is none), the next pin within 60° shows its card as it
+comes into view (`PASS_REACH`; Newton wanted Asia's cards up while the
+Pacific is still in the middle).
 The console under the globe reads the coordinates of the collection
 passing (or last passed), from its `coords` in places.json, not the
 camera's: Newton's picks, one place (Ecuador: Mindo; Alaska: Denali's summit), a state's or

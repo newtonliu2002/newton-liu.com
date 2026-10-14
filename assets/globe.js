@@ -49,13 +49,16 @@
   var SPIN = 2;                      // degrees per second, westward: the land runs left to right
   var START_LNG = -58;               // the landing faces the eastern Americas and turns west, so the
                                      // Pacific and Asia come next and the empty Atlantic comes last
-  // Where no card is due for a long way (the Pacific after Hawai'i, the
-  // Atlantic after Sri Lanka) the spin eases up to GAP_BOOST times as fast:
-  // from GAP_FROM degrees off the nearest card's pin, in full by GAP_FULL.
+  // Where no pin comes near the middle for a long way (the Pacific after
+  // Hawai'i, the Atlantic after Sri Lanka) the spin eases up to GAP_BOOST
+  // times as fast: from GAP_FROM degrees off the nearest pin, in full by GAP_FULL.
   var GAP_BOOST = 2.5, GAP_FROM = 12, GAP_FULL = 25;
   // The passing card: each up for 4.5 s at least; a pin is due from 6° before
-  // the middle to 15° past it, and its card stays until 40° past.
-  var PASS_DWELL = 4500, PASS_AHEAD = 6, PASS_BEHIND = 15, PASS_KEEP = 40;
+  // the middle to 15° past it, and its card stays until 40° past. On a long
+  // empty stretch (where the spin eases up) the next pin is due as soon as it
+  // is PASS_REACH degrees off, coming into view: Asia's cards start while the
+  // Pacific is still in the middle (Newton asked).
+  var PASS_DWELL = 4500, PASS_AHEAD = 6, PASS_BEHIND = 15, PASS_KEEP = 40, PASS_REACH = 60;
   var PASS_FIRST = "ecuador";        // a landing's first card (not on a return from a gallery)
   var PASS_SKIP = ["big-bend"];      // never a passing card (still on hover and in the list)
   var SPIN_RESUME = 1000, SPIN_RAMP = 800;
@@ -1110,7 +1113,9 @@
      pin is crossing the middle shows its plate, for PASS_DWELL at least.
      Of those due, the one shown longest ago goes first (then the nearest),
      and none comes back within half a turn, so a cluster too dense to show
-     in one pass (the Rockies) takes turns from one turn to the next.
+     in one pass (the Rockies) takes turns from one turn to the next. Where
+     nothing is near the middle (gapBoost), the next pin coming into view
+     takes over once the card up is on its way out.
      Pointing at the plate holds the spin; clicking it flies there. */
 
   var passing = null, passedAt = 0, passPin = null, lastPassed = {}, anyPassed = false, passAt = null;
@@ -1121,22 +1126,25 @@
     // pointer is crossing) and while the globe is dragged or eased by hand:
     // a fling across the Americas shouldn't flash a card per pin.
     if (held.plate || lit || pending || held.drag || map.isMoving()) return;
-    var c = map.getCenter(), best = null, cur = null, halfTurn = 180 / SPIN * 1000;
-    var first = anyPassed || recent || deep ? null : PASS_FIRST, forced = null;
+    var c = map.getCenter(), best = null, cur = null, early = null, halfTurn = 180 / SPIN * 1000;
+    var first = anyPassed || recent || deep ? null : PASS_FIRST, forced = null, gap = gapBoost(c.lng) > 1;
     pins.forEach(function (p) {
       if (!p.show || !p.xy) return;
       var d = ((c.lng - p.ll[0] + 540) % 360) - 180;     // > 0: still to come, left of the middle
       [p.slug].concat(p.stack || []).forEach(function (s) {
         if (PASS_SKIP.indexOf(s) >= 0) return;
-        if (s === passing) { if (Math.abs(d) <= PASS_KEEP) cur = d; return; }
+        if (s === passing) { if (d >= -PASS_KEEP && d <= Math.max(PASS_KEEP, PASS_REACH)) cur = d; return; }
         if (s === first && Math.abs(d) <= PASS_KEEP) { forced = { s: s, p: p }; return; }
         var seen = lastPassed[s] === undefined ? -Infinity : lastPassed[s];
-        if (d > PASS_AHEAD || d < -PASS_BEHIND || t - seen < halfTurn) return;
+        if (t - seen < halfTurn) return;
+        if (gap && d > PASS_AHEAD && d <= PASS_REACH) { if (!early || d < early.d) early = { s: s, d: d, p: p }; return; }
+        if (d > PASS_AHEAD || d < -PASS_BEHIND) return;
         if (!best || seen < best.seen || seen === best.seen && Math.abs(d) < Math.abs(best.d)) best = { s: s, d: d, p: p, seen: seen };
       });
     });
     if (passing && cur !== null && t - passedAt < PASS_DWELL) return;
     if (forced) best = forced;
+    if (!best && early && (cur === null || cur < -PASS_BEHIND)) best = early;
     if (best) pass(best.s, best.p, t);
     else if (passing && cur === null) { endPass(); hidePlate(); }
   }
