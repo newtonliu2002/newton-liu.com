@@ -340,7 +340,8 @@
       var date = typeof c.date === "string" ? c.date : derived;   // "" hides it
       var col = {
         slug: c.slug, title: c.title || c.slug, sub: c.subtitle || "", date: date,
-        where: pl.where || "", zoom: pl.zoom, sensitive: !!pl.sensitive, i: i, opener: opener,
+        // A list of places ("Maine · Massachusetts") breaks only after a dot.
+        where: (pl.where || "").replace(/ · /g, "\u00a0· "), zoom: pl.zoom, sensitive: !!pl.sensitive, i: i, opener: opener,
         // What the console reads while this collection passes (places.json `coords`).
         at: pl.coords && typeof pl.coords.lat === "number" && typeof pl.coords.lng === "number" ? [pl.coords.lat, pl.coords.lng] : null,
         href: BASE + "collections/" + c.slug + "/", pins: [],
@@ -888,8 +889,10 @@
         // sideways to stay on screen, or sit off to one side (its near end
         // just past the pin) when the middle is taken. A long name may also
         // break onto two lines, tried after every one-line place.
-        p.cands = places(p.xy.x, p.xy.y, p.lw, p.lh, 0);
-        if (p.lw2) p.cands = p.cands.concat(places(p.xy.x, p.xy.y, p.lw2, p.lh2, 1));
+        var one = places(p.xy.x, p.xy.y, p.lw, p.lh, 0), two = p.lw2 ? places(p.xy.x, p.xy.y, p.lw2, p.lh2, 1) : [];
+        // Right beside the pin first, on one line then two; the corners,
+        // where a name could be read as its neighbour's, only after that.
+        p.cands = one.slice(0, 4).concat(two.slice(0, 4), one.slice(4), two.slice(4));
         p.cands.sort(function (a, b) { return (b[4] === p.label) - (a[4] === p.label); });
         want.push(p);
       });
@@ -938,10 +941,18 @@
     p.el.classList.remove("is-wrap");
     p.lw = lab.offsetWidth; p.lh = lab.offsetHeight || 20;
     p.lw2 = 0;
-    if (p.lw > 130 && /\s/.test(lab.textContent.trim())) {
-      p.el.style.setProperty("--wrap", Math.ceil(p.lw * .58) + "px");
+    var text = lab.textContent.trim(), words = text.split(/\s+/);
+    if (p.lw > 130 && words.length > 1) {
+      // Two lines, never three: the break that leaves the longer line
+      // shortest. The type is monospaced, so width goes by characters.
+      var cs = getComputedStyle(lab), pad = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+      var best = text.length;
+      for (var i = 1; i < words.length; i++) {
+        best = Math.min(best, Math.max(words.slice(0, i).join(" ").length, words.slice(i).join(" ").length));
+      }
+      p.el.style.setProperty("--wrap", Math.ceil(best * (p.lw - pad) / text.length + pad + 2) + "px");
       p.el.classList.add("is-wrap");
-      if (lab.offsetHeight > p.lh * 1.4 && lab.offsetWidth < p.lw - 20) { p.lw2 = lab.offsetWidth; p.lh2 = lab.offsetHeight; }
+      if (lab.offsetHeight > p.lh * 1.4 && lab.offsetHeight < p.lh * 2.6) { p.lw2 = lab.offsetWidth; p.lh2 = lab.offsetHeight; }
       p.el.classList.remove("is-wrap");
     }
     if (had) p.el.classList.add("is-wrap");
@@ -1188,7 +1199,9 @@
     map.setPadding(keep);
     // The 3.2 floor keeps a laptop arrival close; a phone's small stage
     // follows the fit, so a wide spread (Alaska) still lands above the card.
-    var zoom = cam ? clamp(cam.zoom - .45, L.app ? 3.2 : Math.min(3.2, L.zO + .2), 7.4) : 4, y0 = merc(b.getSouth()), y1 = merc(b.getNorth());
+    // A laptop frames the places close (room for their names beside the
+    // card); a phone's short band above the card keeps a wider margin.
+    var zoom = cam ? clamp(cam.zoom - (L.app ? .15 : .45), L.app ? 3.2 : Math.min(3.2, L.zO + .2), 7.4) : 4, y0 = merc(b.getSouth()), y1 = merc(b.getNorth());
     if (c.sensitive) zoom = Math.min(zoom, SENSITIVE_ZOOM);
     var mid = [(b.getWest() + b.getEast()) / 2, (2 * Math.atan(Math.exp((y0 + y1) / 2)) - Math.PI / 2) / rad];
     return { center: mid, zoom: zoom, pitch: 32, bearing: 0, padding: pad };
