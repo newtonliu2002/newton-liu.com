@@ -1602,11 +1602,12 @@
      READOUT AND ANNOUNCEMENTS
      ------------------------------------------------------------------ */
 
-  // [lat, lng], or where the camera is looking.
-  function coords(at) {
+  // [lat, lng], or where the camera is looking, to `dp` decimals (four).
+  function coords(at, dp) {
     var c = at ? { lat: at[0], lng: at[1] } : map.getCenter(), lng = ((c.lng + 540) % 360) - 180;
-    return Math.abs(c.lat).toFixed(1) + "° " + (c.lat >= 0 ? LABELS.north : LABELS.south) + " · " +
-           Math.abs(lng).toFixed(1) + "° " + (lng >= 0 ? LABELS.east : LABELS.west);
+    if (dp === undefined) dp = 4;
+    return Math.abs(c.lat).toFixed(dp) + "° " + (c.lat >= 0 ? LABELS.north : LABELS.south) + " · " +
+           Math.abs(lng).toFixed(dp) + "° " + (lng >= 0 ? LABELS.east : LABELS.west);
   }
   function readout() {
     var s, h = lit && bySlug[lit], a = active && bySlug[active];
@@ -1618,7 +1619,15 @@
     else if (state === "returning") s = LABELS.rOverview;
     // Out at the globe, the place of the collection passing (or last passed);
     // the camera's own position while the visitor drags or zooms in.
-    else s = passAt && !held.drag && inOverview() ? coords(passAt) : coords();
+    else {
+      // Four decimals, or as many as the bar has room for (a narrow phone).
+      var at = passAt && !held.drag && inOverview() ? passAt : null;
+      for (var dp = 4; dp >= 1; dp--) {
+        readEl.textContent = coords(at, dp);
+        if (readEl.scrollWidth <= readEl.clientWidth) break;
+      }
+      s = readEl.textContent;
+    }
     readEl.textContent = s;
     if (tour) readEl.insertBefore(el("b", null, LABELS.rTour), readEl.firstChild);
   }

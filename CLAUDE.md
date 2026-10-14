@@ -110,7 +110,7 @@ keyed by the collection's slug, after the usual collections.json entry:
   fly and frame together.
 - `where` is the short line under the title in the list and the card; `""`
   hides it. Several places are listed A to Z ("Maine · Massachusetts ·
-  New Jersey"), Newton's rule. `coords` ({lat, lng}, one decimal) is what
+  New Jersey"), Newton's rule. `coords` ({lat, lng}, four decimals) is what
   the console reads while the collection passes; without it, its first pin. `zoom` (optional, single-pin only) sets how close the camera
   arrives. `sensitive: true` keeps it back at zoom 7 (the sage-grouse leks).
 - `status` is `"draft"` until Newton has confirmed the row.
