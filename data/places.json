@@ -170,7 +170,7 @@
     },
     "colorado-nebraska": {
       "status": "draft",
-      "where": "",
+      "where": "Colorado · Nebraska",
       "coords": { "lat": 38.7252, "lng": -105.6077 },
       "sensitive": true,
       "pins": [
