@@ -139,8 +139,9 @@
       "coords": { "lat": -6.8700, "lng": -75.0459 },
       "pins": [
         { "name": "Lima", "lat": -12.05, "lng": -77.04 },
-        { "name": "Sacred Valley", "lat": -13.31, "lng": -72.12 },
-        { "name": "Tambopata", "lat": -12.92, "lng": -69.28 }
+        { "name": "Cusco", "lat": -13.52, "lng": -71.98 },
+        { "name": "Machu Picchu", "lat": -13.16, "lng": -72.55 },
+        { "name": "Tambopata", "lat": -12.59, "lng": -69.19 }
       ]
     },
     "sri-lanka": {
@@ -162,8 +163,9 @@
       "where": "China",
       "coords": { "lat": 24.9750, "lng": 101.4870 },
       "pins": [
-        { "name": "Baima Snow Mountain", "lat": 28.33, "lng": 99.08 },
-        { "name": "Gaoligong Mountains", "lat": 25.30, "lng": 98.80 }
+        { "name": "Gaoligong Mountains", "lat": 25.29, "lng": 98.80 },
+        { "name": "Lijiang", "lat": 26.87, "lng": 100.23 },
+        { "name": "Shangri-La", "lat": 27.83, "lng": 99.71 }
       ]
     },
     "arizona": {
