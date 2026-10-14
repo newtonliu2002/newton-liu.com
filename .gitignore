@@ -22,9 +22,11 @@ _compare/
 _arrange/
 
 # The photographs live in Cloudflare R2, not in git (CLAUDE.md, "Where the
-# photographs live"). Only the About page's own images stay here.
+# photographs live"). Only the About page's own images and the Projects
+# page's screenshots stay here.
 /images/*
 !/images/_about/
+!/images/_projects/
 
 # wrangler's per-folder cache, and upload.py's record of what R2 already has
 .wrangler/

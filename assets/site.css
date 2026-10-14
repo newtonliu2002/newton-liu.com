@@ -1180,6 +1180,61 @@ body.lb-open { overflow: hidden; }
   .about-jump a { min-height: 44px; }
 }
 
+/* ---------- Projects (projects.html) -----------------------------------
+   The prose pages' rail, with projects in the column instead of prose: a
+   mono kicker, the name, a blurb, the way in, then its screenshots. The
+   apps are light-themed, so each screenshot sits in a hairline frame that
+   keeps its edge on the White ground too. */
+
+.projects { min-width: 0; }
+.project { scroll-margin-top: calc(var(--masthead-h) + 2rem); }
+.project + .project {
+  margin-top: var(--s8);
+  padding-top: var(--s7);
+  border-top: 1px solid var(--hairline);
+}
+
+.project-kicker, .project-note, .project-shot figcaption {
+  font: 400 var(--t-label)/16px var(--mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.project-kicker { margin: 0; }
+
+.project-title {
+  margin: var(--s3) 0 0;
+  font: 500 var(--t-h2)/1.1 var(--sans);
+  letter-spacing: -.015em;
+  color: var(--text);
+}
+
+/* Paragraphs are separated by a blank line, as in a gallery blurb. */
+.project-blurb {
+  max-width: 62ch;
+  margin: var(--s5) 0 0;
+  font: 400 var(--t-body)/1.7 var(--sans);
+  color: var(--text-body);
+  white-space: pre-line;
+  text-wrap: pretty;
+}
+
+.project-actions {
+  display: flex; flex-wrap: wrap; align-items: center;
+  column-gap: var(--s5); row-gap: var(--s2);
+  margin: var(--s5) 0 var(--s7);
+}
+
+/* The figure's width is the column's: the `sizes` hint in projects.html
+   (100vw below 1000px, else 62vw up to the 108rem wrap) mirrors it. */
+.project-shot { margin: 0 0 var(--s7); }
+.project-shot img {
+  display: block; width: 100%; height: auto;
+  border: 1px solid var(--hairline);
+  background: var(--bg-raised);
+}
+.project-shot figcaption { margin-top: var(--s3); }
+
 /* ==========================================================================
    Edit mode
 

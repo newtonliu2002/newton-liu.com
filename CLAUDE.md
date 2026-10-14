@@ -21,6 +21,7 @@ Adding 200 photos should change zero lines of HTML.
 index.html                  landing page — the globe and the collections list
 work.html                   the same collections as a grid of covers ("Index")
 about.html, contact.html    prose pages
+projects.html               things built alongside the photography (eBird Explorer)
 collections/<slug>/index.html   one stub per collection (generated; ~15 lines)
 assets/site.css             ALL styling — design tokens in :root at the top
 assets/site.js              renders the grid, the collection cards, the lightbox
@@ -38,7 +39,8 @@ tools/upload.py             puts the photographs in Cloudflare R2, proves they'r
 tools/hooks/                refuse image files in git, and data ahead of R2 (pre-commit, pre-merge-commit)
 images/<slug>/*.jpg         the photographs, one folder per collection  (not in git: R2)
 images/_thumbs/<edge>/      generated smaller widths                    (not in git: R2)
-images/_about/              the About page's images — the one image folder in git
+images/_about/              the About page's images — in git
+images/_projects/           the Projects page's screenshots — in git
 ```
 
 Folders under `images/` starting with `_` are skipped by the scanner.
@@ -67,6 +69,13 @@ of a landing is Ecuador (`PASS_FIRST`), Big Bend never passes (`PASS_SKIP`;
 it still shows on hover), and over a long stretch with no card (the
 Pacific after Hawai'i, the Atlantic after Sri Lanka) the spin eases up to
 2.5× (`gapBoost()`, `GAP_*`) so nobody thinks the globe has stopped.
+The console under the globe reads the coordinates of the collection
+passing (or last passed), from its `coords` in places.json, not the
+camera's: Newton's picks, one place (Ecuador: Mindo), a state's or
+country's middle, or where a several-state trip started. Phones run the
+same schedule without the cards: the bar steps through the places and the
+pin lights. While the visitor drags or zooms in, it shows the camera's
+own position.
 
 **Adding a collection to the globe is one entry in `data/places.json`**,
 keyed by the collection's slug, after the usual collections.json entry:
@@ -100,7 +109,9 @@ keyed by the collection's slug, after the usual collections.json entry:
   covers several places (The Canadian West) gets several, and they light up,
   fly and frame together.
 - `where` is the short line under the title in the list and the card; `""`
-  hides it. `zoom` (optional, single-pin only) sets how close the camera
+  hides it. Several places are listed A to Z ("Maine · Massachusetts ·
+  New Jersey"), Newton's rule. `coords` ({lat, lng}, one decimal) is what
+  the console reads while the collection passes; without it, its first pin. `zoom` (optional, single-pin only) sets how close the camera
   arrives. `sensitive: true` keeps it back at zoom 7 (the sage-grouse leks).
 - `status` is `"draft"` until Newton has confirmed the row.
 - A collection with no entry is still listed; it just has no pin.
@@ -392,7 +403,7 @@ the photographs reached that in October 2026 (Peru). Since then:
   page on localhost/127.0.0.1), so a collection can be arranged before
   anything is uploaded. To preview against R2 instead, run
   `localStorage.media = "r2"` in the console, and delete it afterwards.
-- **`images/` is gitignored** except `images/_about/`. The folder on this Mac
+- **`images/` is gitignored** except `images/_about/` and `images/_projects/`. The folder on this Mac
   is the working copy; the masters stay in Lightroom; R2 holds the published
   copies. Git history before the move still contains the photographs. Never
   rewrite history to remove them.
@@ -422,7 +433,7 @@ the photographs reached that in October 2026 (Peru). Since then:
   setting is per clone: `git config core.hooksPath tools/hooks`. Check it
   with `git config --get core.hooksPath` before relying on them. Worktrees of
   this clone share it. `pre-commit` refuses image files outside
-  `images/_about/`, refuses GPS in `images/_about/`, and refuses a staged
+  `images/_about/` and `images/_projects/`, refuses GPS in `images/_about/`, and refuses a staged
   `data/photos.json` or `data/collections.json` that points at files R2
   doesn't have (`upload.py --check` on the staged versions).
   `pre-merge-commit` runs the same checks on a merge. A rebase or
@@ -466,6 +477,31 @@ renamed, change the `src` and `srcset` in `about.html` too.
 
 The older `.prose`/`.prose h1` rules are still in `site.css` but nothing uses
 them now. They're the fallback if a plain text page is ever wanted.
+
+## Projects (projects.html)
+
+The nav's second tab: things Newton has built alongside the photography,
+starting with **eBird Explorer**, his birding trip planner. The app itself
+is not part of this site: it runs on Render (its own server and eBird key)
+at https://ebird-explorer.onrender.com, behind a password, from the private
+repo `ebird-explorer`. This page only describes it and links to it.
+
+Same rail/column structure as the prose pages (`.about-body.is-bare`), with
+`.projects` > `article.project` in the column instead of `.about-prose`:
+kicker, name, blurb, "Open the app" and a note, then the screenshots. A new
+project is one more `<article class="project" id="…">` under the last, plus
+a link to its `#id` in the rail's `.about-jump`. Its words carry
+`data-edit="projects.<project>.…"` keys, so they edit like any other copy;
+the blurb is `data-edit-lines` and shows a blank line as a paragraph gap.
+
+Screenshots are page furniture like the About band, written into the HTML:
+`images/_projects/<project>/<name>.webp` (2880 wide, taken at 1440×900 at
+2×) beside `1440/<name>.webp`, both in git (they aren't photographs, and
+they're small). Their `sizes` mirrors the column: the page width below
+1000px, else 62vw up to the 108rem wrap.
+
+The tab is in the nav of every page: the four hand-written pages, this one,
+and `PAGE_TEMPLATE` in build.py for the collection pages.
 
 ## Editing the words (?edit)
 
@@ -597,7 +633,8 @@ rebuild.
 - **Never commit full-resolution originals.** Git keeps them forever, and the
   repo has a 1 GB soft limit. Web-sized exports only; masters stay in
   Lightroom. `.gitignore` blocks RAW and TIFF extensions as a backstop.
-- **Don't commit photographs at all** (except `images/_about/`). They go to
+- **Don't commit photographs at all** (except `images/_about/`; the
+  screenshots in `images/_projects/` aren't photographs). They go to
   R2 through `upload.py`; `.gitignore` and the pre-commit hook back this up.
 - **EXIF GPS is not stripped by this project.** Strip it at export time.
   Precise coordinates for nests, roosts and rarities should not be published.

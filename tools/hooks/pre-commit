@@ -3,7 +3,8 @@
 # Enabled once per clone with:  git config core.hooksPath tools/hooks
 # pre-merge-commit runs this too, so a merge is checked like a commit.
 #
-# 1. No image files in git, except the About page's own images/_about/.
+# 1. No image files in git, except the About page's own images/_about/
+#    and the Projects page's screenshots in images/_projects/.
 #    The photographs live in Cloudflare R2; git keeps every file forever.
 # 2. The About images do go into public history, so no GPS in them.
 # 3. No data/photos.json or data/collections.json pointing at files R2
@@ -15,7 +16,7 @@ staged() {
   git -c core.quotePath=false diff --cached --name-only --no-renames --diff-filter=ACMRT "$@"
 }
 
-stray=$(staged -- images ':(exclude)images/_about')
+stray=$(staged -- images ':(exclude)images/_about' ':(exclude)images/_projects')
 if [ -n "$stray" ]; then
   echo "pre-commit: image files are staged, but photographs don't go in git:" >&2
   echo "$stray" | head -10 | sed 's/^/  /' >&2

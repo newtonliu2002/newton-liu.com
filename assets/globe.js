@@ -341,6 +341,8 @@
       var col = {
         slug: c.slug, title: c.title || c.slug, sub: c.subtitle || "", date: date,
         where: pl.where || "", zoom: pl.zoom, sensitive: !!pl.sensitive, i: i, opener: opener,
+        // What the console reads while this collection passes (places.json `coords`).
+        at: pl.coords && typeof pl.coords.lat === "number" && typeof pl.coords.lng === "number" ? [pl.coords.lat, pl.coords.lng] : null,
         href: BASE + "collections/" + c.slug + "/", pins: [],
         // The road it took (data/routes.json), drawn in place of the arcs between pins.
         route: rt && rt.length > 1 && rt.every(function (q) { return q && typeof q[0] === "number" && typeof q[1] === "number"; }) ? rt : null
@@ -1100,10 +1102,9 @@
      in one pass (the Rockies) takes turns from one turn to the next.
      Pointing at the plate holds the spin; clicking it flies there. */
 
-  var passing = null, passedAt = 0, passPin = null, lastPassed = {}, anyPassed = false;
+  var passing = null, passedAt = 0, passPin = null, lastPassed = {}, anyPassed = false, passAt = null;
   function passStep(t) {
-    var can = ready && L.app && !COARSE && !REDUCED && !tour && !active && !crowd &&
-      state === "overview" && inOverview();
+    var can = ready && !REDUCED && !tour && !active && !crowd && state === "overview" && inOverview();
     if (!can) { if (passing) { endPass(); hidePlate(); } return; }
     // Held as it is while pointed at (the card, its pin or row, or a row the
     // pointer is crossing) and while the globe is dragged or eased by hand:
@@ -1133,8 +1134,14 @@
     passing = slug; passedAt = t; lastPassed[slug] = t; anyPassed = true;
     passPin = at;
     at.el.classList.add("is-passing");
-    showPlate(bySlug[slug], at);
-    plate.classList.add("is-live");
+    // The console reads the collection's place from now until the next one
+    // passes; a phone (no plates) gets that and the lit pin, no card.
+    passAt = bySlug[slug].at || [at.ll[1], at.ll[0]];
+    if (L.app && !COARSE) {
+      showPlate(bySlug[slug], at);
+      plate.classList.add("is-live");
+    }
+    readout();
   }
   function endPass() {
     if (passPin) passPin.el.classList.remove("is-passing");
@@ -1595,8 +1602,9 @@
      READOUT AND ANNOUNCEMENTS
      ------------------------------------------------------------------ */
 
-  function coords() {
-    var c = map.getCenter(), lng = ((c.lng + 540) % 360) - 180;
+  // [lat, lng], or where the camera is looking.
+  function coords(at) {
+    var c = at ? { lat: at[0], lng: at[1] } : map.getCenter(), lng = ((c.lng + 540) % 360) - 180;
     return Math.abs(c.lat).toFixed(1) + "° " + (c.lat >= 0 ? LABELS.north : LABELS.south) + " · " +
            Math.abs(lng).toFixed(1) + "° " + (lng >= 0 ? LABELS.east : LABELS.west);
   }
@@ -1608,7 +1616,9 @@
     else if (h && lit !== active) s = h.title + (h.where && !plateFor ? " — " + h.where : "");   // the plate shows it already
     else if (a) s = (state === "selecting" ? "→ " : "") + a.title;
     else if (state === "returning") s = LABELS.rOverview;
-    else s = coords();
+    // Out at the globe, the place of the collection passing (or last passed);
+    // the camera's own position while the visitor drags or zooms in.
+    else s = passAt && !held.drag && inOverview() ? coords(passAt) : coords();
     readEl.textContent = s;
     if (tour) readEl.insertBefore(el("b", null, LABELS.rTour), readEl.firstChild);
   }

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projects — Newton Liu Photography</title>
+<meta name="description" content="Things Newton Liu has built alongside the photography, starting with eBird Explorer.">
+<meta name="theme-color" content="#121212">
+<script>try{if(localStorage.getItem("theme")==="white"){document.documentElement.dataset.theme="light";var m=document.querySelector('meta[name="theme-color"]');if(m)m.content="#ffffff"}}catch(e){}</script>
+<link rel="stylesheet" href="assets/site.css?v=d12d8924">
+</head>
+
+<body data-page="prose" data-base="">
+
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <a class="wordmark" href="./">
+      <span class="wordmark-name">Newton Liu</span>
+      <span class="wordmark-sub">Photography</span>
+    </a>
+    <nav class="nav">
+      <a href="index.html#collections">Work</a>
+      <a href="projects.html" aria-current="page">Projects</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- Same rail/column structure as about.html and contact.html. One
+       <article class="project"> per project; add the next one below the
+       last. Screenshots live in images/_projects/<project>/ (in git, like
+       images/_about/), full size beside a 1440/ folder for small screens. -->
+  <div class="wrap-wide about-body is-bare">
+    <aside class="about-rail">
+      <h1 class="about-title" data-edit="projects.title">Projects</h1>
+      <p class="about-name" data-edit="projects.name">Newton Liu</p>
+      <nav class="about-jump">
+        <a href="#ebird-explorer">eBird Explorer</a>
+      </nav>
+    </aside>
+
+    <div class="projects">
+      <article class="project" id="ebird-explorer">
+        <p class="project-kicker" data-edit="projects.ebird.kicker">Web app · 2026</p>
+        <h2 class="project-title">eBird Explorer</h2>
+        <p class="project-blurb" data-edit="projects.ebird.blurb" data-edit-lines>A trip planner built on eBird’s live data. For each place I’m heading, it lists the birds I still need, the hotspots where they’ve been reported, and how often they turn up on complete checklists, so a day in the field goes where the birds are.
+
+I built it for my own trips, from Alaska and Quebec to Puerto Rico and Oaxaca.</p>
+        <p class="project-actions">
+          <a class="text-link" href="https://ebird-explorer.onrender.com">Open the app &rarr;</a>
+          <span class="project-note" data-edit="projects.ebird.note">Password required</span>
+        </p>
+
+        <figure class="project-shot">
+          <img src="images/_projects/ebird-explorer/area-plan.webp"
+               srcset="images/_projects/ebird-explorer/1440/area-plan.webp 1440w, images/_projects/ebird-explorer/area-plan.webp 2880w"
+               sizes="(max-width: 1000px) 100vw, min(62vw, 67rem)"
+               alt="eBird Explorer's Area Plan for Quebec: six trip areas across the top, Trois-Rivières picked, and its hotspots ranked by how many target birds each has reported."
+               width="2880" height="1800" decoding="async">
+          <figcaption data-edit="projects.ebird.shot1">Area plan: every hotspot in an area, ranked by how many target birds it holds</figcaption>
+        </figure>
+
+        <figure class="project-shot">
+          <img src="images/_projects/ebird-explorer/matrix.webp"
+               srcset="images/_projects/ebird-explorer/1440/matrix.webp 1440w, images/_projects/ebird-explorer/matrix.webp 2880w"
+               sizes="(max-width: 1000px) 100vw, min(62vw, 67rem)"
+               alt="eBird Explorer's Species Matrix: target birds down the side, Quebec trip areas across the top, each cell marked Reliable, Possible or No reports with its checklist rate."
+               width="2880" height="1800" loading="lazy" decoding="async">
+          <figcaption data-edit="projects.ebird.shot2">Species matrix: each bird against each area, by its share of complete checklists</figcaption>
+        </figure>
+      </article>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <p>&copy; <span data-year>2026</span> Newton Liu. All photographs are my own.</p>
+    <p class="footer-links">
+      <a href="index.html#collections">Work</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </p>
+  </div>
+</footer>
+
+<script src="assets/site.js?v=f0a52b72"></script>
+<script src="assets/edit.js?v=c63f7eb5"></script>
+</body>
+</html>

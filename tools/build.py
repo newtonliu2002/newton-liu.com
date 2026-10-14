@@ -354,6 +354,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
     </a>
     <nav class="nav">
       <a href="../../#collections" aria-current="page">Work</a>
+      <a href="../../projects.html">Projects</a>
       <a href="../../about.html">About</a>
       <a href="../../contact.html">Contact</a>
     </nav>
@@ -449,7 +450,7 @@ def asset_stamps():
 def stamp_root_pages(stamps):
     """Refresh ?v= on the hand-written pages. Returns how many changed."""
     changed = 0
-    for page in ("index.html", "work.html", "about.html", "contact.html"):
+    for page in ("index.html", "work.html", "projects.html", "about.html", "contact.html"):
         path = os.path.join(ROOT, page)
         if not os.path.exists(path):
             continue
