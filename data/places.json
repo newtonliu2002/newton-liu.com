@@ -37,7 +37,8 @@
       "pins": [
         { "name": "Monterey", "lat": 36.60, "lng": -121.90 },
         { "name": "Yosemite National Park", "lat": 37.84, "lng": -119.52 },
-        { "name": "Sequoia & Kings Canyon National Parks", "lat": 36.70, "lng": -118.58 }
+        { "name": "Sequoia & Kings Canyon National Parks", "lat": 36.70, "lng": -118.58 },
+        { "name": "Channel Islands National Park", "lat": 34.00, "lng": -119.80 }
       ]
     },
     "hawaii": {
