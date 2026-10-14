@@ -213,8 +213,8 @@
         { "name": "Glacier Bay National Park", "lat": 58.50, "lng": -137.00 },
         { "name": "Utqiagvik", "lat": 71.29, "lng": -156.79 },
         { "name": "Katmai National Park", "lat": 58.50, "lng": -155.00 },
-        { "name": "Kenai Fjords National Park", "lat": 59.92, "lng": -149.99 },
-        { "name": "Denali National Park", "lat": 63.43, "lng": -150.32 },
+        { "name": "Kenai Fjords National Park", "lat": 60.12, "lng": -149.44 },
+        { "name": "Denali National Park", "lat": 63.73, "lng": -148.92 },
         { "name": "Fairbanks", "lat": 64.84, "lng": -147.72 }
       ]
     }

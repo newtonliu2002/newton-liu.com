@@ -125,6 +125,12 @@ keyed by the collection's slug, after the usual collections.json entry:
   over it. Pins on a traced route sit on the road, at the park's visitor hub
   or the town, so the line runs through them. Re-run the tool after moving a
   waypoint; a collection without an entry keeps its arcs.
+  A road may cover only the part of a trip that was driven. Alaska's runs from
+  Haines over the Haines Highway and the Alaska Highway to Tok, then Fairbanks,
+  Denali, Anchorage, Seward and Homer, in the order that draws one line with
+  the least doubling back (Newton: "in no particular order"). Its fly-in and
+  boat places (Juneau, Glacier Bay, Utqiagvik, Katmai) sit off the line, and
+  the road replaces all of the collection's arcs.
 
 Overlapping pins of different collections merge on screen into one ringed
 pin; clicking it zooms in until they separate. At the overview only each
