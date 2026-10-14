@@ -128,7 +128,8 @@ a dot at each collection's lead pin, amber while its card passes, full ink
 while it is pointed at or open. It fades as the camera leaves the overview.
 
 **Local time.** The passing card and the card show the time where the
-collection is, 24-hour, kept current while they are up: one time per
+collection is, 12-hour with AM/PM ("7:36 AM"; Newton asked, 2026-10-14),
+kept current while they are up: one time per
 collection, from its `tz` in places.json. A place without one shows none.
 
 **Adding a collection to the globe is one entry in `data/places.json`**,

@@ -2195,15 +2195,16 @@
 
   // One time to a collection, in its place's zone (places.json `tz`: a
   // collection that crosses a line keeps to the zone of the pin that stands
-  // for it), 24-hour, by the sky's clock, so ?t= moves it too. Checked
+  // for it), 12-hour with AM/PM ("7:36 AM": Newton asked, since "07:36"
+  // alone doesn't say morning or evening), by the sky's clock, so ?t= moves it too. Checked
   // every few seconds while the plate or the card is up, so the minute
   // turns over on time. A place with no `tz` shows no time.
   var clockFmt = {}, cardCol = null, plateCol = null, clockTimer = 0;
   function clockAt(tz) {
     if (!tz || !window.Intl) return "";
     try {
-      var f = clockFmt[tz] || (clockFmt[tz] = new Intl.DateTimeFormat("en-GB", { timeZone: tz, hour: "2-digit", minute: "2-digit", hourCycle: "h23" }));
-      return f.format(new Date(skyTime()));
+      var f = clockFmt[tz] || (clockFmt[tz] = new Intl.DateTimeFormat("en-US", { timeZone: tz, hour: "numeric", minute: "2-digit", hour12: true }));
+      return f.format(new Date(skyTime())).replace(/\s+/g, "\u00a0");   // AM/PM never wraps away from the time
     } catch (e) { return ""; }
   }
   function colTime(c) { return c ? clockAt(c.tz) : ""; }
