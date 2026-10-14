@@ -6,7 +6,8 @@
 # 1. No image files in git, except the About page's own images/_about/
 #    and the Projects page's screenshots in images/_projects/.
 #    The photographs live in Cloudflare R2; git keeps every file forever.
-# 2. The About images do go into public history, so no GPS in them.
+# 2. The About and Projects images do go into public history, so no GPS in
+#    them (the check reads JPEG EXIF; the Projects screenshots are WebP).
 # 3. No data/photos.json or data/collections.json pointing at files R2
 #    doesn't have yet: the live site would show them as broken images.
 
@@ -24,8 +25,8 @@ if [ -n "$stray" ]; then
   exit 1
 fi
 
-if [ -n "$(staged -- images/_about)" ]; then
-  staged -z -- images/_about | python3 -c '
+if [ -n "$(staged -- images/_about images/_projects)" ]; then
+  staged -z -- images/_about images/_projects | python3 -c '
 import importlib.util, sys
 spec = importlib.util.spec_from_file_location("site_import", "tools/import.py")
 m = importlib.util.module_from_spec(spec)

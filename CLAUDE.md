@@ -132,7 +132,7 @@ collection's first pin shows, so the globe stays calm as collections are
 added.
 
 **Type comes from Google Fonts** (Geist, Geist Mono) on every page: an
-`@import` on line 1 of site.css, which is how About, Contact and the
+`@import` on line 1 of site.css, which is how About, Projects, Contact and the
 generated collection pages get it, so it must stay the first line; index.html
 and work.html also link it directly. Self-hosting the two fonts (both under
 the SIL OFL) would take Google out of every page view; Newton hasn't decided.
@@ -433,7 +433,7 @@ the photographs reached that in October 2026 (Peru). Since then:
   setting is per clone: `git config core.hooksPath tools/hooks`. Check it
   with `git config --get core.hooksPath` before relying on them. Worktrees of
   this clone share it. `pre-commit` refuses image files outside
-  `images/_about/` and `images/_projects/`, refuses GPS in `images/_about/`, and refuses a staged
+  `images/_about/` and `images/_projects/`, refuses GPS in `images/_about/` and `images/_projects/`, and refuses a staged
   `data/photos.json` or `data/collections.json` that points at files R2
   doesn't have (`upload.py --check` on the staged versions).
   `pre-merge-commit` runs the same checks on a merge. A rebase or
@@ -490,9 +490,12 @@ Same rail/column structure as the prose pages (`.about-body.is-bare`), with
 `.projects` > `article.project` in the column instead of `.about-prose`:
 kicker, name, blurb, "Open the app" and a note, then the screenshots. A new
 project is one more `<article class="project" id="…">` under the last, plus
-a link to its `#id` in the rail's `.about-jump`. Its words carry
-`data-edit="projects.<project>.…"` keys, so they edit like any other copy;
-the blurb is `data-edit-lines` and shows a blank line as a paragraph gap.
+a link to its `#id` in the rail's `.about-jump`. Its kicker, blurb, note
+and captions carry `data-edit="projects.<key>.…"` keys, so they edit like any
+other copy (eBird Explorer's key is `ebird`; its id and image folder are
+`ebird-explorer`); the name, the link and the alt text are written in the
+HTML, so the rail's jump link can't fall out of step with an edited name.
+The blurb is `data-edit-lines` and shows a blank line as a paragraph gap.
 
 Screenshots are page furniture like the About band, written into the HTML:
 `images/_projects/<project>/<name>.webp` (2880 wide, taken at 1440×900 at
@@ -577,8 +580,9 @@ saving needs the token, and they don't have it.
   `assets/site.css`. Restyling should mostly mean editing that block. If a
   colour or size is hard-coded further down the file, that is a bug worth fixing.
 - **Two grounds: Black (default) and White.** The square at the end of the
-  nav (added by site.js, on every page, the landing included) is the one
-  switch: it sets `<html data-theme="light">` for White and saves the choice
+  nav (added by site.js, on every page, the landing included; on a phone it
+  sits to the right of the wordmark instead, so the sideways-scrolling nav
+  row can't hide it) is the one switch: it sets `<html data-theme="light">` for White and saves the choice
   in localStorage `"theme"` (`"white"` = White, anything else = Black), so a
   visitor picks once and every page and later visit opens in that ground.
   The stored word is `"white"`, not `"light"`, because the old white/gray

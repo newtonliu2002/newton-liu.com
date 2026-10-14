@@ -385,6 +385,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   <div class="wrap footer-inner">
     <p>&copy; <span data-year>2026</span> Newton Liu. All photographs are my own.</p>
     <p class="footer-links">
+      <a href="../../projects.html">Projects</a>
       <a href="../../about.html">About</a>
       <a href="../../contact.html">Contact</a>
     </p>

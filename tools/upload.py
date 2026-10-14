@@ -9,7 +9,7 @@
 
 Why this exists: GitHub Pages refuses a site over 1 GB, and the photographs
 alone reached that in October 2026. So images/ is no longer in git (only
-images/_about/ is, for the About page). The photographs live in the R2 bucket
+images/_about/ and images/_projects/ are, for the About and Projects pages). The photographs live in the R2 bucket
 `newton-liu-photos`, each stored under its repo path, and the live site reads
 them from R2's public address — the `R2` constant in assets/site.js, which this
 script reads too, so the address is written down in exactly one place. The

@@ -60,7 +60,7 @@ proves they're there; the commit is refused until it has.
 |---|---|
 | Colours, type, spacing, grid size | the `:root` block at the top of `assets/site.css` |
 | Collection names, subtitles, blurbs, order | `data/collections.json` |
-| Landing (globe) and Index copy, About, Contact | `index.html`, `work.html`, `about.html`, `contact.html` |
+| Landing (globe) and Index copy, Projects, About, Contact | `index.html`, `work.html`, `projects.html`, `about.html`, `contact.html` |
 | Globe pins | `data/places.json` |
 | Globe road routes | `data/routes.json` waypoints, then `python3 tools/route.py <slug>` |
 | Globe behaviour and map colours | `assets/globe.js`, `assets/globe.css` |
@@ -75,7 +75,8 @@ See [CLAUDE.md](CLAUDE.md) for the conventions this project follows.
 
 - **Never commit photographs.** They go to R2 through `tools/upload.py`; git
   keeps every file forever and GitHub Pages refuses a site over 1 GB. Only
-  the About page's own images (`images/_about/`) are in git.
+  the About page's own images (`images/_about/`) and the Projects page's
+  screenshots (`images/_projects/`) are in git.
 - **Strip EXIF GPS at export.** Precise coordinates for nests, roosts and
   rarities shouldn't be published.
 - **This repo is public.** Anything pushed is permanent, including files

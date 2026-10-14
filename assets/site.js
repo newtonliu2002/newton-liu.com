@@ -271,7 +271,29 @@
       if (light !== (root.dataset.theme === "light")) set(light);
     });
     sync();
-    nav.appendChild(btn);
+    // At the end of the nav; on a phone the nav is a row that scrolls
+    // sideways and could carry the switch out of sight, so there it moves up
+    // to the right of the wordmark instead (site.css, the 620px block).
+    var phone = window.matchMedia ? window.matchMedia("(max-width: 620px)") : null;
+    function place() { (phone && phone.matches ? nav.parentNode : nav).appendChild(btn); }
+    place();
+    if (phone && phone.addEventListener) phone.addEventListener("change", place);
+    else if (phone && phone.addListener) phone.addListener(place);
+  })();
+
+  // The phone nav fades at its right edge only while there is more of it to
+  // scroll to (.has-more, site.css), so a row that fits is never dimmed.
+  (function navOverflow() {
+    var nav = document.querySelector(".nav");
+    if (!nav) return;
+    function more() {
+      var on = nav.scrollLeft + nav.clientWidth < nav.scrollWidth - 1;
+      if (on !== nav.classList.contains("has-more")) nav.classList.toggle("has-more", on);
+    }
+    nav.addEventListener("scroll", more, { passive: true });
+    window.addEventListener("resize", more);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(more);
+    more();
   })();
 
   /* ---------- home ---------------------------------------------------- */

@@ -402,7 +402,7 @@ a   { color: inherit; }
 /* Five or more nav items no longer fit beside the wordmark below 1024px: the
    nav wraps to its own full-width row and the bar stops being sticky, which
    means it is no longer one --masthead-h tall, so the gallery opener stops
-   pulling up behind it. Does nothing with today's three items. */
+   pulling up behind it. Does nothing with today's four items. */
 @media (min-width: 621px) and (max-width: 1023px) {
   .masthead:has(.nav > a:nth-of-type(5)) { position: static; }
   .masthead-inner:has(.nav > a:nth-of-type(5)) { flex-wrap: wrap; row-gap: 0; padding-top: var(--s1); }
@@ -412,9 +412,11 @@ a   { color: inherit; }
 
 /* Phones: two static rows, wordmark then nav. The nav row runs to the
    window's edges and scrolls sideways once it outgrows them (fading at the
-   right from the fourth item on, as the cue), so every page stays one tap
-   away without a menu button. The opener rules below drop the pull-up at
-   this width for the same reason. */
+   right while there is more to scroll to, as the cue: .has-more, set by
+   site.js), so every page stays one tap away without a menu button. The
+   Black/White switch is not in that row here: site.js moves it up to the
+   right of the wordmark, where scrolling can't carry it out of sight. The
+   opener rules below drop the pull-up at this width for the same reason. */
 @media (max-width: 620px) {
   .masthead { position: static; }
   .masthead-inner {
@@ -429,7 +431,7 @@ a   { color: inherit; }
     padding-inline: var(--edge);
   }
   .nav::-webkit-scrollbar { display: none; }
-  .nav:has(> a:nth-of-type(4)) {
+  .nav.has-more {
     -webkit-mask-image: linear-gradient(to right, var(--mask-solid) calc(100% - 24px), transparent);
             mask-image: linear-gradient(to right, var(--mask-solid) calc(100% - 24px), transparent);
   }
@@ -437,7 +439,12 @@ a   { color: inherit; }
      is drawn just inside, clear of the letters thanks to the padding. */
   .nav a:focus-visible, .theme-toggle:focus-visible { outline-offset: -2px; }
   .nav a[aria-current="page"]::before { position: static; margin: -1px 8px 0 0; }
-  .theme-toggle { margin-left: auto; }
+  /* Centred on the wordmark row: 44px tall from the top padding, like the
+     wordmark, its square flush with the right edge of the page. */
+  .masthead-inner { position: relative; }
+  .masthead-inner > .theme-toggle {
+    position: absolute; top: calc(var(--s1) + 15px); right: var(--edge);
+  }
 }
 
 /* ---------- Work index (work.html) -------------------------------------
@@ -1228,6 +1235,7 @@ body.lb-open { overflow: hidden; }
 /* The figure's width is the column's: the `sizes` hint in projects.html
    (100vw below 1000px, else 62vw up to the 108rem wrap) mirrors it. */
 .project-shot { margin: 0 0 var(--s7); }
+.project-shot:last-child { margin-bottom: 0; }   /* .about-body pads the end */
 .project-shot img {
   display: block; width: 100%; height: auto;
   border: 1px solid var(--hairline);
