@@ -47,24 +47,9 @@
       ]
     },
     {
-      "slug": "big-bend",
-      "title": "Big Bend",
-      "date": "May 2022",
-      "subtitle": "",
-      "blurb": "",
-      "layout": [
-        "J2",
-        "LLe",
-        "L",
-        "LLe",
-        "J2",
-        "L"
-      ]
-    },
-    {
       "slug": "california",
       "title": "California",
-      "date": "June 2022, January 2023",
+      "date": "January 2022, June 2022, January 2023",
       "subtitle": "",
       "blurb": "",
       "layout": [
@@ -81,6 +66,21 @@
         "LLe"
       ],
       "opener": "whole"
+    },
+    {
+      "slug": "big-bend",
+      "title": "Big Bend",
+      "date": "May 2022",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "J2",
+        "LLe",
+        "L",
+        "LLe",
+        "J2",
+        "L"
+      ]
     },
     {
       "slug": "florida",
