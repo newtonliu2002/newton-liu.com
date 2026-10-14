@@ -13,7 +13,7 @@
     },
     "new-england": {
       "status": "confirmed",
-      "where": "Massachusetts · New Jersey · Maine",
+      "where": "Maine · Massachusetts · New Jersey",
       "pins": [
         { "name": "Parker River National Wildlife Refuge", "lat": 42.75, "lng": -70.80 },
         { "name": "Cape May", "lat": 38.93, "lng": -74.92 },
@@ -38,7 +38,7 @@
     },
     "hawaii": {
       "status": "draft",
-      "where": "Kaua'i · O'ahu · Maui · Hawai'i Island",
+      "where": "Hawai'i Island · Kaua'i · Maui · O'ahu",
       "pins": [
         { "name": "Kaua'i", "lat": 22.07, "lng": -159.50 },
         { "name": "O'ahu", "lat": 21.47, "lng": -157.98 },
@@ -77,7 +77,7 @@
     },
     "snowy-west": {
       "status": "draft",
-      "where": "Oregon · Washington · Montana · Colorado · Idaho",
+      "where": "Colorado · Idaho · Montana · Oregon · Washington",
       "pins": [
         { "name": "Crater Lake National Park", "lat": 42.91, "lng": -122.14 },
         { "name": "Mount Rainier National Park", "lat": 46.79, "lng": -121.74 },
@@ -90,7 +90,7 @@
     },
     "yellowstone": {
       "status": "draft",
-      "where": "Wyoming · North Dakota",
+      "where": "North Dakota · Wyoming",
       "pins": [
         { "name": "Yellowstone National Park", "lat": 44.60, "lng": -110.50 },
         { "name": "Theodore Roosevelt National Park", "lat": 46.97, "lng": -103.45 }
@@ -98,7 +98,7 @@
     },
     "desert-west": {
       "status": "draft",
-      "where": "New Mexico · Utah · Idaho",
+      "where": "Idaho · New Mexico · Utah",
       "pins": [
         { "name": "Shiprock", "lat": 36.69, "lng": -108.84 },
         { "name": "Bosque del Apache", "lat": 33.80, "lng": -106.89 },
