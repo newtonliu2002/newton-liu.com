@@ -1,6 +1,6 @@
 # newton-liu.com
 
-Photography portfolio for Newton LIU — birds, wildlife, landscape. Static
+Photography portfolio for Newton Liu — birds, wildlife, landscape. Static
 site, no build step, no packages (outside requests: R2 for photographs,
 Google Fonts for the type, and the globe's map). Deployed by pushing to `main`
 (GitHub Pages serves the repo root). The photographs themselves are not in git:
@@ -557,11 +557,6 @@ saving needs the token, and they don't have it.
   `<head>` carries a one-line script that applies a saved White before the
   first paint (no flash); the collection pages get it from `PAGE_TEMPLATE` in
   build.py, where its braces are doubled for `.format()`.
-- **His name is "Newton LIU"**, surname in capitals, everywhere it is shown:
-  the wordmark, every `<title>` and meta description, the footer, About
-  and Contact (and their `data/text.json` keys), `PAGE_TEMPLATE` in
-  build.py, and the title site.js sets on a gallery. URLs, the domain and
-  account names keep their own spelling.
 - **Vanilla JS, no libraries** — except MapLibre on the globe page (see
   "The globe"). ES5-ish syntax, no transpiling.
 - **Filenames stay as the camera wrote them** (see "What's shown under a
