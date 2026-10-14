@@ -61,6 +61,7 @@
   var SPIN_RESUME = 1000, SPIN_RAMP = 800;
   var HOVER_DELAY = 120, TURN_DELAY = 450;
   var DWELL = 6000, DWELL_REDUCED = 8000;
+  var IDLE_RETURN = 10000;           // zoomed in and left alone this long: back out to the turning globe
   var FAIL_AFTER = 20000;            // no map by then (counted while shown) and the list is all there is
   var FAIL_AFTER_ASKED = 60000;      // after "Load globe" (Save-Data, 2G): slow links get a minute
   var TERRAIN_EXAGGERATION = 1.25;
@@ -1549,6 +1550,7 @@
     spinStep(t, dt);
     passStep(t);
     tourStep(dt);
+    idleStep(dt);
     if (dirty) {
       dirty = false;
       layoutPins();
@@ -1557,6 +1559,22 @@
       layoutLabels();
       if (placeWire()) dirty = true;        // still drawing in
     }
+  }
+
+  // Left alone away from the overview (a card open, or zoomed in by hand),
+  // the globe goes back out and turns again, as if × were pressed. Any input
+  // starts the clock over; it stands still while the pointer rests on the
+  // card, during a drag, with keyboard focus in the list, and while the
+  // globe is off screen. The tour keeps its own clock; reduced motion has
+  // no spin to go back to.
+  var idle = 0;
+  function wake() { idle = 0; }
+  function idleStep(dt) {
+    var away = state === "arrived" || state === "free" || (state === "overview" && (!inOverview() || !level()));
+    if (!away || REDUCED || EDITING || tour || document.hidden || !stageVisible ||
+        held.card || held.drag || held.focus || map.isMoving()) { idle = 0; return; }
+    idle += dt;
+    if (idle >= IDLE_RETURN) { idle = 0; overview(); }
   }
 
   /* ------------------------------------------------------------------
@@ -1760,6 +1778,9 @@
     if (tour && !tourBtn.contains(e.target) && !card.contains(e.target) && !groundSwitch(e.target)) endTour(false);
   }, true);
   window.addEventListener("wheel", function () { if (tour) endTour(false); }, { passive: true });
+  ["pointermove", "pointerdown", "wheel", "keydown", "scroll"].forEach(function (type) {
+    document.addEventListener(type, wake, { capture: true, passive: true });
+  });
 
   document.addEventListener("keydown", function (e) {
     if (tour && e.key !== "Tab" && e.key !== "Shift" && !tourBtn.contains(e.target) && !groundSwitch(e.target)) endTour(false);
@@ -1815,6 +1836,7 @@
     if (!e.persisted) return;
     released = now() - SPIN_RESUME + 400;
     held = {};
+    idle = 0;
     dirty = true;
   });
 

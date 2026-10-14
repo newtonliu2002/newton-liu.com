@@ -62,7 +62,11 @@ Atlantic last; there is no pause button, by Newton's choice. As it turns,
 the collection crossing the middle shows its plate (photo, title, where)
 for a few seconds: the **passing card** (`passStep()`, `PASS_*`). Pointing
 at it holds the spin, clicking it flies there, and × or Esc on a card flies
-back out to the turning globe. A cluster too dense for one pass (the
+back out to the turning globe. Left alone for 10 s while zoomed in (a card
+open, or zoomed by hand), it flies back out on its own (`IDLE_RETURN`,
+`idleStep()`; Newton asked for it). Any input restarts the clock; a pointer
+resting on the card, a drag, keyboard focus in the list, the tour, reduced
+motion and an off-screen globe stop it. A cluster too dense for one pass (the
 Rockies) takes turns from one turn to the next. Plates are laptop-layout
 only, so phones get the spin without them. Newton's picks: the first card
 of a landing is Ecuador (`PASS_FIRST`), Big Bend never passes (`PASS_SKIP`;
