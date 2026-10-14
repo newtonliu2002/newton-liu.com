@@ -76,11 +76,11 @@
       "coords": { "lat": 27.7568, "lng": -81.4640 },
       "zoom": 7.4,
       "pins": [
-        { "name": "Lake Apopka", "lat": 28.62, "lng": -81.61 },
+        { "name": "Lake Apopka", "lat": 28.67, "lng": -81.56 },
         { "name": "Merritt Island National Wildlife Refuge", "lat": 28.62, "lng": -80.74 },
-        { "name": "Three Lakes Wildlife Management Area", "lat": 27.91, "lng": -81.16 },
-        { "name": "Everglades National Park", "lat": 25.37, "lng": -80.88 },
-        { "name": "Sanibel & Fort Myers", "lat": 26.50, "lng": -82.05 },
+        { "name": "Three Lakes Wildlife Management Area", "lat": 27.90, "lng": -81.15 },
+        { "name": "Everglades National Park", "lat": 25.14, "lng": -80.92 },
+        { "name": "Sanibel & Fort Myers", "lat": 26.48, "lng": -82.02 },
         { "name": "Fort De Soto Park", "lat": 27.62, "lng": -82.73 }
       ]
     },
@@ -185,7 +185,7 @@
       "pins": [
         { "name": "Sedona", "lat": 34.87, "lng": -111.76 },
         { "name": "Phoenix", "lat": 33.45, "lng": -112.07 },
-        { "name": "Saguaro National Park", "lat": 32.30, "lng": -111.16 },
+        { "name": "Saguaro National Park", "lat": 32.31, "lng": -111.17 },
         { "name": "Santa Cruz Flats", "lat": 32.72, "lng": -111.60 },
         { "name": "Patagonia", "lat": 31.54, "lng": -110.75 }
       ]

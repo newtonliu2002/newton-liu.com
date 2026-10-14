@@ -134,6 +134,10 @@ keyed by the collection's slug, after the usual collections.json entry:
   map of the trip, though not its order. No Homer, and no Tok-to-Fairbanks
   stretch. Glacier Bay, Utqiagvik and Katmai sit off the line, and the road
   replaces all of the collection's arcs.
+  Arizona and Florida follow the checklist order of Newton's eBird trip
+  reports (January 2025; November 2023), through Tubac and Patagonia Lake, and
+  down the Everglades park road to Flamingo; their pins were nudged onto the
+  road (Lake Apopka at the Wildlife Drive, Everglades at Flamingo).
 
 Overlapping pins of different collections merge on screen into one ringed
 pin; clicking it zooms in until they separate. At the overview only each
