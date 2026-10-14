@@ -108,8 +108,10 @@ keyed by the collection's slug, after the usual collections.json entry:
   first is the one the globe turns to. One pin per place; a collection that
   covers several places (The Canadian West) gets several, and they light up,
   fly and frame together.
-- `where` is the short line under the title in the list and the card; `""`
-  hides it. Several places are listed A to Z ("Maine · Massachusetts ·
+- `where` is the short line under the title on the card and the passing
+  card; `""` hides it. The list shows titles only (Newton had the place lines
+  and the tagline above it taken off; the tagline stays as the page's
+  visually hidden h1). Several places are listed A to Z ("Maine · Massachusetts ·
   New Jersey"), Newton's rule. `coords` ({lat, lng}, four decimals) is what
   the console reads while the collection passes; without it, its first pin. `zoom` (optional, single-pin only) sets how close the camera
   arrives. `sensitive: true` keeps it back at zoom 7 (the sage-grouse leks).

@@ -370,9 +370,7 @@
       a.setAttribute("data-slug", c.slug);
       a.appendChild(el("span", "g-row-mark")).setAttribute("aria-hidden", "true");
       a.appendChild(el("span", "g-row-title", c.title));
-      if (c.where) a.appendChild(el("span", "g-row-where", c.where));
       if (visited[c.slug]) a.classList.add("is-visited");
-      if (!c.where) a.classList.add("is-one");
       c.row = a;
       li.appendChild(a);
       listEl.appendChild(li);
