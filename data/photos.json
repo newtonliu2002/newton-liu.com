@@ -8300,6 +8300,35 @@
       "thumb": "images/_thumbs/1600/yunnan/15-1.jpg"
     },
     {
+      "src": "images/yunnan/14-copy.jpg",
+      "title": "14 Copy",
+      "collection": "yunnan",
+      "location": "",
+      "date": "",
+      "width": 2500,
+      "height": 1522,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/yunnan/14-copy.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/yunnan/14-copy.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/yunnan/14-copy.jpg"
+        },
+        {
+          "w": 2500,
+          "src": "images/yunnan/14-copy.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/yunnan/14-copy.jpg"
+    },
+    {
       "src": "images/yunnan/8-1.jpg",
       "title": "8 1",
       "collection": "yunnan",
