@@ -46,7 +46,12 @@
   var MAX_ZOOM = 9;                  // elevation data stops at 9, so does the camera
   var ARRIVE_ZOOM = 7.8;             // single-pin arrival when places.json gives none
   var SENSITIVE_ZOOM = 7;            // never closer than this for a `sensitive` collection
-  var SPIN = 2;                      // degrees per second
+  var SPIN = 2;                      // degrees per second, westward: the land runs left to right
+  var START_LNG = -66;               // the landing faces the eastern Americas and turns west, so the
+                                     // Pacific and Asia come next and the empty Atlantic comes last
+  // The passing card: each up for 4.5 s at least; a pin is due from 6° before
+  // the middle to 15° past it, and its card stays until 40° past.
+  var PASS_DWELL = 4500, PASS_AHEAD = 6, PASS_BEHIND = 15, PASS_KEEP = 40;
   var SPIN_RESUME = 1000, SPIN_RAMP = 800;
   var HOVER_DELAY = 120, TURN_DELAY = 450;
   var DWELL = 6000, DWELL_REDUCED = 8000;
@@ -606,7 +611,7 @@
     L = measure();
     painted = ground();
     var first = (recent || deep) && bySlug[recent || deep].pins[0];
-    var lng = first ? first.ll[0] : -100;
+    var lng = first ? first.ll[0] : START_LNG;
     // The intro turns the globe at its final size, so it fills the ring
     // from the first frame. Wherever the page scrolls under the globe (the
     // stacked layout), one finger or a plain wheel scrolls the page: turning
@@ -962,6 +967,7 @@
 
   function light(slug) {
     if (lit === slug && !crowd) return;
+    if (passing) endPass();                // pointing takes the plate over
     lit = slug;
     crowd = null;
     cols.forEach(function (c) { c.row.classList.toggle("is-lit", c.slug === slug); });
@@ -987,7 +993,7 @@
 
   var plateFor = null, crowd = null, plateH = 0, plateW = 200;
 
-  function showPlate(c) {
+  function showPlate(c, at) {
     if (!L.app || COARSE || !c.pins.length) { hidePlate(); return; }
     plate.textContent = "";
     plate.classList.remove("is-text");
@@ -1000,7 +1006,7 @@
     }
     plate.appendChild(el("p", "g-plate-title", c.title));
     if (c.where) plate.appendChild(el("p", "g-plate-where", c.where));
-    openPlate(c.pins[0].p);
+    openPlate(at || c.pins[0].p);
   }
   function crowdPlate(p) {
     if (!L.app || COARSE) return;
@@ -1045,6 +1051,54 @@
     wireP.setAttribute("y2", clamp(p.xy.y, y + 1, y + h - 1));
     wireP.classList.toggle("is-on", Math.abs((leftSide ? x + w : x) - p.xy.x) > 10);
   }
+
+  /* ---------- the passing card: the plate, as the globe turns on its own ---
+
+     Out at the overview with nothing pointed at or open, a collection whose
+     pin is crossing the middle shows its plate, for PASS_DWELL at least.
+     Of those due, the one shown longest ago goes first (then the nearest),
+     and none comes back within half a turn, so a cluster too dense to show
+     in one pass (the Rockies) takes turns from one turn to the next.
+     Pointing at the plate holds the spin; clicking it flies there. */
+
+  var passing = null, passedAt = 0, passPin = null, lastPassed = {};
+  function passStep(t) {
+    var can = ready && L.app && !COARSE && !tour && !active && !lit && !crowd && !pending &&
+      state === "overview" && inOverview();
+    if (!can) { if (passing) { endPass(); hidePlate(); } return; }
+    if (held.plate) return;
+    var c = map.getCenter(), best = null, cur = null, halfTurn = 180 / SPIN * 1000;
+    pins.forEach(function (p) {
+      if (!p.show || !p.xy) return;
+      var d = ((c.lng - p.ll[0] + 540) % 360) - 180;     // > 0: still to come, left of the middle
+      [p.slug].concat(p.stack || []).forEach(function (s) {
+        if (s === passing) { if (Math.abs(d) <= PASS_KEEP) cur = d; return; }
+        var seen = lastPassed[s] === undefined ? -Infinity : lastPassed[s];
+        if (d > PASS_AHEAD || d < -PASS_BEHIND || t - seen < halfTurn) return;
+        if (!best || seen < best.seen || seen === best.seen && Math.abs(d) < Math.abs(best.d)) best = { s: s, d: d, p: p, seen: seen };
+      });
+    });
+    if (passing && cur !== null && t - passedAt < PASS_DWELL) return;
+    if (best) pass(best.s, best.p, t);
+    else if (passing && cur === null) { endPass(); hidePlate(); }
+  }
+  function pass(slug, at, t) {
+    if (passing) endPass();
+    passing = slug; passedAt = t; lastPassed[slug] = t;
+    passPin = at;
+    at.el.classList.add("is-passing");
+    showPlate(bySlug[slug], at);
+    plate.classList.add("is-live");
+  }
+  function endPass() {
+    if (passPin) passPin.el.classList.remove("is-passing");
+    passing = null; passPin = null;
+    plate.classList.remove("is-live");
+    hold("plate", false);
+  }
+  plate.addEventListener("pointerenter", function (e) { if (passing && e.pointerType !== "touch") hold("plate", true); });
+  plate.addEventListener("pointerleave", function () { hold("plate", false); });
+  plate.addEventListener("click", function () { if (passing) select(passing, "plate"); });
 
   /* ------------------------------------------------------------------
      SELECTING: fly there and open the card
@@ -1377,7 +1431,7 @@
   }
 
   /* ------------------------------------------------------------------
-     THE SPIN: 2°/s by the clock, from the landing on, whenever the
+     THE SPIN: 2°/s westward by the clock, from the landing on, whenever the
      camera is out at globe zoom with nothing open, pointed at or held and
      the page in view. It stops at once when touched and ramps back a
      second later, for as long as the visitor leaves it be.
@@ -1414,6 +1468,7 @@
     lastFrame = t;
     if (!spinV) lastSpin = t;
     spinStep(t, dt);
+    passStep(t);
     tourStep(dt);
     if (dirty) {
       dirty = false;

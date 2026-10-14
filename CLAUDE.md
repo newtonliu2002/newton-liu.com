@@ -54,6 +54,16 @@ on the same row, or the card, opens the gallery. Keyboard and screen-reader
 users get the rows as plain links. `work.html` ("Index") shows the same
 collections as a grid of covers, rendered by site.js's `renderHome`.
 
+The globe opens over the eastern Americas and turns west on its own
+(`START_LNG`, `SPIN`), so the Pacific and Asia come next and the empty
+Atlantic last; there is no pause button, by Newton's choice. As it turns,
+the collection crossing the middle shows its plate (photo, title, where)
+for a few seconds: the **passing card** (`passStep()`, `PASS_*`). Pointing
+at it holds the spin, clicking it flies there, and × or Esc on a card flies
+back out to the turning globe. A cluster too dense for one pass (the
+Rockies) takes turns from one turn to the next. Plates are laptop-layout
+only, so phones get the spin without them.
+
 **Adding a collection to the globe is one entry in `data/places.json`**,
 keyed by the collection's slug, after the usual collections.json entry:
 
@@ -114,8 +124,10 @@ still works on its own; under Save-Data the globe waits for "Load globe".
 
 globe.js reads photographs only through `window.NLSite` (exported by
 site.js: `url`, `responsive`, `collectionDate`, `aspectOf`, `getJSON`), so
-the landing resolves image URLs exactly as the galleries do. No photograph
-is requested until a row or pin is pointed at. Every label globe.js puts on
+the landing resolves image URLs exactly as the galleries do. Each passing
+card loads its collection's opening photograph at plate size (200px) as it
+crosses; otherwise no photograph is requested until a row or pin is
+pointed at. Every label globe.js puts on
 the page is in `LABELS` at its top; the numbers (spin speed, zooms, timings)
 and switches (`STARS`, `TERRAIN_3D`) are just below it.
 

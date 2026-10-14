@@ -118,7 +118,7 @@ body[data-page="globe"] .masthead { position: static; background: var(--space); 
   background-repeat: no-repeat;
 }
 .g-pin.is-visited .g-pin-x { --k: var(--g-pin-seen); --dot: transparent; }
-.g-pin:hover .g-pin-x, .g-pin.is-lit .g-pin-x, .g-pin.is-active .g-pin-x { --k: var(--g-ink); --a: 5px; }
+.g-pin:hover .g-pin-x, .g-pin.is-lit .g-pin-x, .g-pin.is-passing .g-pin-x, .g-pin.is-active .g-pin-x { --k: var(--g-ink); --a: 5px; }
 .g-pin.is-active .g-pin-x { --dot: var(--accent); }
 .g-pin.is-dim .g-pin-in { opacity: var(--g-pin-dim); }
 .g-pin.is-off { pointer-events: none; }
@@ -175,6 +175,7 @@ body[data-page="globe"] .masthead { position: static; background: var(--space); 
   position: absolute; left: 0; top: 0; z-index: 3; width: 200px; padding-bottom: 10px; pointer-events: none;
   opacity: 0; clip-path: inset(0 0 100% 0); transition: opacity var(--d-fast) var(--ease), clip-path 0s var(--d-fast);
 }
+.g-plate.is-live { pointer-events: auto; cursor: pointer; }   /* the passing card: click to fly there */
 .g-plate.is-on { opacity: 1; clip-path: inset(0); transition: opacity .28s var(--ease-out), clip-path .28s var(--ease-out); }
 .g-plate img { display: block; width: 100%; height: auto; background: var(--bg-raised); }
 .g-plate p { margin: 0; padding: 0 10px; }
