@@ -145,6 +145,14 @@
         { "name": "Tambopata", "lat": -12.59, "lng": -69.19 }
       ]
     },
+    "guangxi": {
+      "status": "confirmed",
+      "where": "China",
+      "coords": { "lat": 22.4500, "lng": 106.9534 },
+      "pins": [
+        { "name": "Nonggang National Nature Reserve", "lat": 22.45, "lng": 106.95 }
+      ]
+    },
     "sri-lanka": {
       "status": "draft",
       "where": "",

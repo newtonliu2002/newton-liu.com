@@ -259,6 +259,26 @@
       "opener": "whole"
     },
     {
+      "slug": "guangxi",
+      "title": "Guangxi",
+      "date": "October 2024",
+      "subtitle": "",
+      "blurb": "",
+      "layout": [
+        "LLe",
+        "L",
+        "LLe",
+        "L",
+        "LLe",
+        "PPn",
+        "L",
+        "LLe",
+        "L",
+        "LLe",
+        "L"
+      ]
+    },
+    {
       "slug": "sri-lanka",
       "title": "Sri Lanka",
       "date": "November 2024",

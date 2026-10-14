@@ -12640,6 +12640,654 @@
         }
       ],
       "thumb": "images/_thumbs/1600/new-england/2022-12-Cape-May-1.jpg"
+    },
+    {
+      "src": "images/guangxi/U2A3088.jpg",
+      "title": "U2A3088",
+      "collection": "guangxi",
+      "location": "",
+      "date": "2024-10-26",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/800s",
+        "iso": "6400"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi/U2A3088.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi/U2A3088.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi/U2A3088.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/guangxi/U2A3088.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi/U2A3088.jpg"
+    },
+    {
+      "src": "images/guangxi/AU2A0056.jpg",
+      "title": "AU2A0056",
+      "collection": "guangxi",
+      "location": "",
+      "date": "2024-10-27",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/8000s",
+        "iso": "4000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi/AU2A0056.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi/AU2A0056.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi/AU2A0056.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/guangxi/AU2A0056.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi/AU2A0056.jpg"
+    },
+    {
+      "src": "images/guangxi/U2A4684.jpg",
+      "title": "U2A4684",
+      "collection": "guangxi",
+      "location": "",
+      "date": "2024-10-26",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/1600s",
+        "iso": "400"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi/U2A4684.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi/U2A4684.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi/U2A4684.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/guangxi/U2A4684.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi/U2A4684.jpg"
+    },
+    {
+      "src": "images/guangxi/U2A0554.jpg",
+      "title": "U2A0554",
+      "collection": "guangxi",
+      "location": "",
+      "date": "2024-10-25",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/1000s",
+        "iso": "6400"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi/U2A0554.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi/U2A0554.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi/U2A0554.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/guangxi/U2A0554.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi/U2A0554.jpg"
+    },
+    {
+      "src": "images/guangxi/U2A6681.jpg",
+      "title": "U2A6681",
+      "collection": "guangxi",
+      "location": "",
+      "date": "2024-10-27",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/400s",
+        "iso": "6400"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi/U2A6681.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi/U2A6681.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi/U2A6681.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/guangxi/U2A6681.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi/U2A6681.jpg"
+    },
+    {
+      "src": "images/guangxi/U2A0304.jpg",
+      "title": "U2A0304",
+      "collection": "guangxi",
+      "location": "",
+      "date": "2024-10-25",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/640s",
+        "iso": "6400"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi/U2A0304.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi/U2A0304.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi/U2A0304.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/guangxi/U2A0304.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi/U2A0304.jpg"
+    },
+    {
+      "src": "images/guangxi/U2A6454.jpg",
+      "title": "U2A6454",
+      "collection": "guangxi",
+      "location": "",
+      "date": "2024-10-26",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/1250s",
+        "iso": "8000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi/U2A6454.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi/U2A6454.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi/U2A6454.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/guangxi/U2A6454.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi/U2A6454.jpg"
+    },
+    {
+      "src": "images/guangxi/U2A0783.jpg",
+      "title": "U2A0783",
+      "collection": "guangxi",
+      "location": "",
+      "date": "2024-10-25",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/125s",
+        "iso": "2500"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi/U2A0783.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi/U2A0783.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi/U2A0783.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/guangxi/U2A0783.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi/U2A0783.jpg"
+    },
+    {
+      "src": "images/guangxi/U2A7998.jpg",
+      "title": "U2A7998",
+      "collection": "guangxi",
+      "location": "",
+      "date": "2024-10-27",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/4000s",
+        "iso": "3200"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi/U2A7998.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi/U2A7998.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi/U2A7998.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/guangxi/U2A7998.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi/U2A7998.jpg"
+    },
+    {
+      "src": "images/guangxi/U2A7382.jpg",
+      "title": "U2A7382",
+      "collection": "guangxi",
+      "location": "",
+      "date": "2024-10-27",
+      "width": 2668,
+      "height": 4000,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/2000s",
+        "iso": "2500"
+      },
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/guangxi/U2A7382.jpg"
+        },
+        {
+          "w": 1067,
+          "src": "images/_thumbs/1600/guangxi/U2A7382.jpg"
+        },
+        {
+          "w": 1601,
+          "src": "images/_thumbs/2400/guangxi/U2A7382.jpg"
+        },
+        {
+          "w": 2668,
+          "src": "images/guangxi/U2A7382.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi/U2A7382.jpg"
+    },
+    {
+      "src": "images/guangxi/U2A7739.jpg",
+      "title": "U2A7739",
+      "collection": "guangxi",
+      "location": "",
+      "date": "2024-10-27",
+      "width": 2668,
+      "height": 4000,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/1600s",
+        "iso": "2000"
+      },
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/guangxi/U2A7739.jpg"
+        },
+        {
+          "w": 1067,
+          "src": "images/_thumbs/1600/guangxi/U2A7739.jpg"
+        },
+        {
+          "w": 1601,
+          "src": "images/_thumbs/2400/guangxi/U2A7739.jpg"
+        },
+        {
+          "w": 2668,
+          "src": "images/guangxi/U2A7739.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi/U2A7739.jpg"
+    },
+    {
+      "src": "images/guangxi/U2A0976.jpg",
+      "title": "U2A0976",
+      "collection": "guangxi",
+      "location": "",
+      "date": "2024-10-25",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/320s",
+        "iso": "4000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi/U2A0976.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi/U2A0976.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi/U2A0976.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/guangxi/U2A0976.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi/U2A0976.jpg"
+    },
+    {
+      "src": "images/guangxi/U2A9418.jpg",
+      "title": "U2A9418",
+      "collection": "guangxi",
+      "location": "",
+      "date": "2024-10-27",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/5000s",
+        "iso": "4000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi/U2A9418.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi/U2A9418.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi/U2A9418.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/guangxi/U2A9418.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi/U2A9418.jpg"
+    },
+    {
+      "src": "images/guangxi/U2A1626.jpg",
+      "title": "U2A1626",
+      "collection": "guangxi",
+      "location": "",
+      "date": "2024-10-25",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/60s",
+        "iso": "1250"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi/U2A1626.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi/U2A1626.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi/U2A1626.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/guangxi/U2A1626.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi/U2A1626.jpg"
+    },
+    {
+      "src": "images/guangxi/U2A0671.jpg",
+      "title": "U2A0671",
+      "collection": "guangxi",
+      "location": "",
+      "date": "2024-10-25",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/200s",
+        "iso": "6400"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi/U2A0671.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi/U2A0671.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi/U2A0671.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/guangxi/U2A0671.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi/U2A0671.jpg"
+    },
+    {
+      "src": "images/guangxi/U2A1779.jpg",
+      "title": "U2A1779",
+      "collection": "guangxi",
+      "location": "",
+      "date": "2024-10-25",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/640s",
+        "iso": "8000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi/U2A1779.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi/U2A1779.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi/U2A1779.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/guangxi/U2A1779.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi/U2A1779.jpg"
+    },
+    {
+      "src": "images/guangxi/U2A8129.jpg",
+      "title": "U2A8129",
+      "collection": "guangxi",
+      "location": "",
+      "date": "2024-10-27",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/4000s",
+        "iso": "3200"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi/U2A8129.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi/U2A8129.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi/U2A8129.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/guangxi/U2A8129.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi/U2A8129.jpg"
+    },
+    {
+      "src": "images/guangxi/U2A3552.jpg",
+      "title": "U2A3552",
+      "collection": "guangxi",
+      "location": "",
+      "date": "2024-10-26",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/640s",
+        "iso": "5000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi/U2A3552.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi/U2A3552.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi/U2A3552.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/guangxi/U2A3552.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi/U2A3552.jpg"
     }
   ]
 }
