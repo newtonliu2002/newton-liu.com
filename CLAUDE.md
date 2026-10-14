@@ -142,6 +142,12 @@ keyed by the collection's slug, after the usual collections.json entry:
   reports (January 2025; November 2023), through Tubac and Patagonia Lake, and
   down the Everglades park road to Flamingo; their pins were nudged onto the
   road (Lake Apopka at the Wildlife Drive, Everglades at Flamingo).
+  Grouse Country follows its April 2025 report too: Craig, Loveland Pass,
+  North Park (Walden), out to the Nebraska National Forest, the Platte at
+  Kearney and back, Pawnee, Summit County, Great Sand Dunes, Ouray, Black
+  Canyon, Gunnison. Its unpinned stops are towns, never the leks themselves;
+  the street-address checklists (Akron, Sedalia, Peyton) stay off the line,
+  and the Great Sand Dunes pin sits at the visitor center.
 
 Overlapping pins of different collections merge on screen into one ringed
 pin; clicking it zooms in until they separate. At the overview only each
