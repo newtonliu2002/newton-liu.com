@@ -53,7 +53,8 @@
   var NAV_MENUS = {
     "projects.html": [
       { label: "eBird Explorer", href: "https://ebird-explorer.onrender.com" },
-      { label: "Shoot Planner", href: "shoot-planner/" }
+      { label: "Shoot Planner", href: "shoot-planner/" },
+      { label: "Retreat Finder", href: "retreat-finder/" }
     ]
   };
 
