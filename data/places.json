@@ -173,6 +173,7 @@
       "coords": { "lat": 24.9750, "lng": 101.4870 },
       "pins": [
         { "name": "Gaoligong Mountains", "lat": 25.29, "lng": 98.80 },
+        { "name": "Dali", "lat": 25.69, "lng": 100.16 },
         { "name": "Lijiang", "lat": 26.87, "lng": 100.23 },
         { "name": "Shangri-La", "lat": 27.83, "lng": 99.71 }
       ]
