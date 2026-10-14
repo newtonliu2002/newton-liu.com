@@ -4757,42 +4757,6 @@
       "thumb": "images/_thumbs/1600/desert-west/05A3643.jpg"
     },
     {
-      "src": "images/desert-west/05A2448.jpg",
-      "title": "05A2448",
-      "collection": "desert-west",
-      "location": "",
-      "date": "2024-01-13",
-      "width": 4000,
-      "height": 2668,
-      "exif": {
-        "camera": "Canon EOS R5",
-        "lens": "RF100-500mm F4.5-7.1 L IS USM",
-        "focal": "500mm",
-        "aperture": "f/7.1",
-        "shutter": "1/1000s",
-        "iso": "1000"
-      },
-      "variants": [
-        {
-          "w": 800,
-          "src": "images/_thumbs/800/desert-west/05A2448.jpg"
-        },
-        {
-          "w": 1600,
-          "src": "images/_thumbs/1600/desert-west/05A2448.jpg"
-        },
-        {
-          "w": 2400,
-          "src": "images/_thumbs/2400/desert-west/05A2448.jpg"
-        },
-        {
-          "w": 4000,
-          "src": "images/desert-west/05A2448.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/desert-west/05A2448.jpg"
-    },
-    {
       "src": "images/desert-west/05A3685.jpg",
       "title": "05A3685",
       "collection": "desert-west",
@@ -4827,6 +4791,42 @@
         }
       ],
       "thumb": "images/_thumbs/1600/desert-west/05A3685.jpg"
+    },
+    {
+      "src": "images/desert-west/05A3651.jpg",
+      "title": "05A3651",
+      "collection": "desert-west",
+      "location": "",
+      "date": "2024-01-14",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/400s",
+        "iso": "2000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/desert-west/05A3651.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/desert-west/05A3651.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/desert-west/05A3651.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/desert-west/05A3651.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/desert-west/05A3651.jpg"
     },
     {
       "src": "images/desert-west/DJI-20251228075954-0067-D.jpg",
@@ -5116,42 +5116,6 @@
         }
       ],
       "thumb": "images/_thumbs/1600/yellowstone/0Z9A0522.jpg"
-    },
-    {
-      "src": "images/desert-west/05A3651.jpg",
-      "title": "05A3651",
-      "collection": "desert-west",
-      "location": "",
-      "date": "2024-01-14",
-      "width": 4000,
-      "height": 2668,
-      "exif": {
-        "camera": "Canon EOS R5",
-        "lens": "RF100-500mm F4.5-7.1 L IS USM",
-        "focal": "500mm",
-        "aperture": "f/7.1",
-        "shutter": "1/400s",
-        "iso": "2000"
-      },
-      "variants": [
-        {
-          "w": 800,
-          "src": "images/_thumbs/800/desert-west/05A3651.jpg"
-        },
-        {
-          "w": 1600,
-          "src": "images/_thumbs/1600/desert-west/05A3651.jpg"
-        },
-        {
-          "w": 2400,
-          "src": "images/_thumbs/2400/desert-west/05A3651.jpg"
-        },
-        {
-          "w": 4000,
-          "src": "images/desert-west/05A3651.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/desert-west/05A3651.jpg"
     },
     {
       "src": "images/desert-west/DJI-20251228074816-0049-D.jpg",
@@ -5546,6 +5510,42 @@
         }
       ],
       "thumb": "images/_thumbs/1600/snowy-west/05A2596.jpg"
+    },
+    {
+      "src": "images/snowy-west/05A2448.jpg",
+      "title": "05A2448",
+      "collection": "snowy-west",
+      "location": "",
+      "date": "2024-01-13",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5",
+        "lens": "RF100-500mm F4.5-7.1 L IS USM",
+        "focal": "500mm",
+        "aperture": "f/7.1",
+        "shutter": "1/1000s",
+        "iso": "1000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/snowy-west/05A2448.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/snowy-west/05A2448.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/snowy-west/05A2448.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/snowy-west/05A2448.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/snowy-west/05A2448.jpg"
     },
     {
       "src": "images/snowy-west/05A0702.jpg",
