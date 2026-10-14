@@ -29,7 +29,7 @@ body[data-page="globe"] {
   --g-ink:        #fff;                    /* full strength: a pin or row mark lit, the open row's title */
   --g-pin:        rgba(242,242,242,.85);   /* a pin's crosshair */
   --g-pin-seen:   rgba(242,242,242,.45);   /* ...once its collection has been opened */
-  --g-pin-dim:    .35;                     /* the other pins while one place is open */
+  --g-pin-dim:    .75;                     /* the other pins while one place is open: still there to click */
   --g-pin-stack:  rgba(242,242,242,.6);    /* the circle round a stacked pin */
   --g-pin-intro:  rgba(255,255,255,.55);   /* the one ring each pin arrives with */
   --g-ring:       rgba(255,255,255,.1);    /* the globe's rim */
@@ -46,7 +46,7 @@ body[data-page="globe"] {
   --g-ink:        #000;
   --g-pin:        rgba(27,28,32,.85);
   --g-pin-seen:   rgba(27,28,32,.6);       /* dark ink fades faster on paper: these keep Black's contrast */
-  --g-pin-dim:    .5;
+  --g-pin-dim:    .8;
   --g-pin-stack:  rgba(27,28,32,.6);
   --g-pin-intro:  rgba(27,28,32,.45);
   --g-ring:       rgba(0,0,0,.14);
