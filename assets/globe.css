@@ -24,7 +24,9 @@ body[data-page="globe"] { background: var(--space); --F: calc(var(--edge) + 312p
 
 /* What is drawn over the map, on each ground: Black (the default) and White,
    a paper atlas (data-theme="light" on <html>). The map's own colours are
-   PALETTE in globe.js, and the two must agree. */
+   PALETTE in globe.js, and the two must agree. Out at the globe, where both
+   grounds show the same day and night, the pins take the inks under "Day
+   and night" at the end of this file instead. */
 body[data-page="globe"] {
   --g-ink:        #fff;                    /* full strength: a pin or row mark lit, the open row's title */
   --g-pin:        rgba(242,242,242,.85);   /* a pin's crosshair */
@@ -40,6 +42,8 @@ body[data-page="globe"] {
   --g-veil:       5,5,5;                   /* --space as r,g,b: the header's fade over the map */
   --g-label-bg:   rgba(5,5,5,.7);          /* behind a place label */
   --g-attrib-bg:  rgba(5,5,5,.78);         /* behind the map credits */
+  --g-dial-tick:  rgba(255,255,255,.16);   /* the dial: a tick every 10° */
+  --g-dial-major: rgba(255,255,255,.32);   /* ...every 60°, under a number */
 }
 :root[data-theme="light"] body[data-page="globe"] {
   --g-ink:        #000;
@@ -56,6 +60,8 @@ body[data-page="globe"] {
   --g-veil:       244,244,242;
   --g-label-bg:   rgba(244,244,242,.8);
   --g-attrib-bg:  rgba(244,244,242,.85);
+  --g-dial-tick:  rgba(0,0,0,.18);
+  --g-dial-major: rgba(0,0,0,.36);
 }
 
 /* The bar's 1px rule is kept (unseen) so the nav, the ground switch at its
@@ -498,3 +504,74 @@ body.is-editing .g-tour + .g-readout { border: 0; }
   .g-pin * { animation: none !important; }
 }
 @media (forced-colors: active) { .g-pin-x, .g-pin-af, .g-row-mark { forced-color-adjust: none; } }
+
+/* ==========================================================================
+   The dial: the ring round the globe as an instrument's bezel (globe.js,
+   "THE DIAL"). Laptop layout only; it comes in with the pins. Ticks and
+   numbers outside the rim, a dot per collection on it, an index at
+   12 o'clock. Amber only for the collection passing.
+   ========================================================================== */
+
+.g-dial { position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; overflow: visible; pointer-events: none; opacity: 0; transition: opacity .8s var(--ease); }
+.g-stage.has-pins .g-dial { opacity: 1; }
+.g-dial-tick { fill: none; stroke: var(--g-dial-tick); }
+.g-dial-tick.is-major { stroke: var(--g-dial-major); }
+.g-dial-num { fill: var(--text-faint); font: 400 var(--t-label) var(--mono); letter-spacing: .14em; text-transform: uppercase; font-variant-numeric: tabular-nums; transition: opacity var(--d-slow) var(--ease); }
+.g-dial-num.is-gone { opacity: 0; }       /* round the far side, or stepping aside for the plate, the panel, the masthead */
+/* A collection's square, 4px, shown at half that, the row marks' grey; it
+   grows back when it is the one: full ink pointed at or open, amber passing. */
+.g-dial-dot { fill: var(--g-mark); transform-box: fill-box; transform-origin: center; transform: scale(.5); transition: fill var(--d-base) var(--ease), transform var(--d-base) var(--ease-out); }
+.g-dial-mark.is-lit .g-dial-dot { fill: var(--g-ink); transform: none; }
+.g-dial-mark.is-passing .g-dial-dot { fill: var(--accent); transform: none; }
+.g-dial-index { fill: none; stroke: var(--text-dim); }
+@media not all and (min-width: 1024px) and (min-height: 620px) { .g-dial { display: none; } }
+@media (forced-colors: active) { .g-dial { display: none; } }
+
+/* ==========================================================================
+   The local time (globe.js, "the local time"): one per collection, in its
+   place's zone, on the plate and the card.
+   ========================================================================== */
+
+/* The plate: the time floats right after the place, so it closes its last
+   line (or has one of its own when that line is full). */
+.g-plate .g-plate-where { display: flow-root; }
+.g-plate .g-plate-time { float: right; margin-left: 10px; font-variant-numeric: tabular-nums; }
+/* The card: the place on the left, the time on the right. On a phone the
+   place is hidden, and the time sits at the card's bottom right, level
+   with the way in. */
+.g-card-foot { display: flex; align-items: flex-end; gap: 16px; margin-top: 10px; }
+.g-card-foot[hidden] { display: none; }   /* no place and no time */
+.g-card .g-card-foot .g-card-where { margin-top: 0; flex: 1 1 auto; min-width: 0; }
+.g-card .g-card-time {
+  margin: 0 0 0 auto; flex: none; color: var(--text-dim);
+  font: 400 var(--t-label)/16px var(--mono); letter-spacing: .12em; font-variant-numeric: tabular-nums;
+}
+@media not all and (min-width: 1024px) and (min-height: 620px) {
+  .g-card-foot { position: absolute; right: 12px; bottom: 12px; margin: 0; }
+}
+
+/* ==========================================================================
+   Day and night (globe.js, "THE SKY"). Out at the globe (globe.js adds
+   .is-paper-globe while the sky is on) the globe is the same on both
+   grounds: the Black map by night, paper on a slate sea by day. Each pin
+   takes the ink of the ground under it (.is-sunlit, from the sun's height
+   at the pin and how much of the ground round it is land): light on the
+   night and the slate, as on Black, and the paper's own ink on the paper,
+   as on White. Written out here, not taken from the two blocks at the
+   top, because a pin once seen differs: a touch stronger on the night
+   (.5 against Black's .45), a touch fainter on the paper (.55 against
+   White's .6), as approved.
+   ========================================================================== */
+
+.g-stage.is-paper-globe .g-pin {
+  --g-ink: #fff; --g-pin: rgba(242,242,242,.85); --g-pin-seen: rgba(242,242,242,.5);
+  --g-pin-stack: rgba(242,242,242,.6); --g-pin-intro: rgba(255,255,255,.55);
+}
+.g-stage.is-paper-globe .g-pin.is-sunlit {
+  --g-ink: #000; --g-pin: rgba(27,28,32,.85); --g-pin-seen: rgba(27,28,32,.55);
+  --g-pin-stack: rgba(27,28,32,.6); --g-pin-intro: rgba(27,28,32,.45);
+}
+/* The wire from a pin to its plate starts on the globe, night or paper,
+   and ends on the page, black or white: one grey reads on all four (as
+   Black's on the black, a graphite line on the paper). */
+.g-stage.is-paper-globe { --g-wire: rgba(140,140,140,.56); }

@@ -1,11 +1,12 @@
 {
-  "_comment": "Hand-edited. Where each collection sits on the globe, keyed by the slug in collections.json. Region level only: a national park, island, reserve, valley or town that a visitor would recognise, at that public place's usual centre point. Never a photograph's own GPS position, and never a nest, roost, lek or hide. `where` is the short line under the title in the list and the card (\"\" hides it). `pins` are in route order, which sets the dashed line between them; the first pin is the one the globe turns to and the one shown out at the globe, unless `lead` names another pin (Alaska: Denali National Park, Newton's pick). Optional `zoom` sets how close a single-pin collection arrives. `sensitive: true` keeps the camera back (never closer than zoom 7) for collections of lekking or nesting species. `coords` (four decimals) is what the console reads while the collection's card passes (Newton's picks: one place, a state's or country's middle, or where a several-state trip started). `status` is \"draft\" until Newton has confirmed the row. `region` is the heading the collection is listed under on the globe page; `regions` (top) is the order of those headings (Hawai'i counts as North America, Newton's call). A collection with no entry here is still listed; it simply has no pin. A place with `title` (and `date`) but no collection yet (Morocco and Birds of the Rio Grande, until Newton adds their photographs) is on the globe with its pins, road and row, but no photograph and no gallery; once collections.json has it, its `title` and `date` here are ignored and can go. To add a collection: add its entry to collections.json as usual, then add one entry here.",
+  "_comment": "Hand-edited. Where each collection sits on the globe, keyed by the slug in collections.json. Region level only: a national park, island, reserve, valley or town that a visitor would recognise, at that public place's usual centre point. Never a photograph's own GPS position, and never a nest, roost, lek or hide. `where` is the short line under the title in the list and the card (\"\" hides it). `tz` (an IANA time zone) is the zone of the local time shown on its passing card and its card: one per collection, its lead pin's (a collection that crosses a line keeps to the zone of the pin that stands for it); without it no time shows. `pins` are in route order, which sets the dashed line between them; the first pin is the one the globe turns to and the one shown out at the globe, unless `lead` names another pin (Alaska: Denali National Park, Newton's pick). Optional `zoom` sets how close a single-pin collection arrives. `sensitive: true` keeps the camera back (never closer than zoom 7) for collections of lekking or nesting species. `coords` (four decimals) is what the console reads while the collection's card passes (Newton's picks: one place, a state's or country's middle, or where a several-state trip started). `status` is \"draft\" until Newton has confirmed the row. `region` is the heading the collection is listed under on the globe page; `regions` (top) is the order of those headings (Hawai'i counts as North America, Newton's call). A collection with no entry here is still listed; it simply has no pin. A place with `title` (and `date`) but no collection yet (Morocco and Birds of the Rio Grande, until Newton adds their photographs) is on the globe with its pins, road and row, but no photograph and no gallery; once collections.json has it, its `title` and `date` here are ignored and can go. To add a collection: add its entry to collections.json as usual, then add one entry here.",
   "regions": ["North America", "South America", "Asia", "Africa"],
   "places": {
     "malaysia": {
       "status": "draft",
       "region": "Asia",
       "where": "Sabah, Borneo",
+      "tz": "Asia/Kuching",
       "coords": { "lat": 5.4257, "lng": 117.0326 },
       "pins": [
         { "name": "Central Sabah", "lat": 5.63, "lng": 117.12 },
@@ -18,6 +19,7 @@
       "status": "confirmed",
       "region": "North America",
       "where": "Maine · Massachusetts · New Jersey",
+      "tz": "America/New_York",
       "coords": { "lat": 42.3789, "lng": -72.0324 },
       "pins": [
         { "name": "Parker River National Wildlife Refuge", "lat": 42.75, "lng": -70.80 },
@@ -29,6 +31,7 @@
       "status": "draft",
       "region": "North America",
       "where": "Texas",
+      "tz": "America/Chicago",
       "coords": { "lat": 29.3332, "lng": -103.1943 },
       "pins": [
         { "name": "Big Bend National Park", "lat": 29.25, "lng": -103.25 }
@@ -38,6 +41,7 @@
       "status": "confirmed",
       "region": "North America",
       "where": "",
+      "tz": "America/Los_Angeles",
       "coords": { "lat": 36.7015, "lng": -118.7560 },
       "pins": [
         { "name": "Monterey", "lat": 36.60, "lng": -121.90 },
@@ -50,6 +54,7 @@
       "status": "confirmed",
       "region": "North America",
       "where": "Hawai'i Island · Kaua'i · Maui · O'ahu",
+      "tz": "Pacific/Honolulu",
       "coords": { "lat": 19.5938, "lng": -155.4284 },
       "pins": [
         { "name": "Kaua'i", "lat": 22.07, "lng": -159.50 },
@@ -62,6 +67,7 @@
       "status": "confirmed",
       "region": "South America",
       "where": "",
+      "tz": "Pacific/Galapagos",
       "coords": { "lat": -0.6288, "lng": -90.3639 },
       "pins": [
         { "name": "Santa Cruz Island", "lat": -0.74, "lng": -90.31 },
@@ -72,6 +78,7 @@
       "status": "confirmed",
       "region": "South America",
       "where": "",
+      "tz": "America/Guayaquil",
       "coords": { "lat": -0.0529, "lng": -78.7747 },
       "zoom": 8,
       "pins": [
@@ -82,6 +89,7 @@
       "status": "draft",
       "region": "North America",
       "where": "",
+      "tz": "America/New_York",
       "coords": { "lat": 27.7568, "lng": -81.4640 },
       "zoom": 7.4,
       "pins": [
@@ -97,6 +105,7 @@
       "status": "confirmed",
       "region": "North America",
       "where": "Colorado · Idaho · Montana · Oregon · Washington",
+      "tz": "America/Los_Angeles",
       "coords": { "lat": 43.9793, "lng": -120.7373 },
       "pins": [
         { "name": "Crater Lake National Park", "lat": 42.91, "lng": -122.14 },
@@ -112,6 +121,7 @@
       "status": "draft",
       "region": "North America",
       "where": "North Dakota · Wyoming",
+      "tz": "America/Denver",
       "coords": { "lat": 47.6201, "lng": -100.5407 },
       "pins": [
         { "name": "Yellowstone National Park", "lat": 44.60, "lng": -110.50 },
@@ -124,6 +134,7 @@
       "status": "draft",
       "region": "North America",
       "where": "Idaho · New Mexico · Utah",
+      "tz": "America/Denver",
       "coords": { "lat": 34.5802, "lng": -105.9960 },
       "pins": [
         { "name": "Shiprock", "lat": 36.69, "lng": -108.84 },
@@ -136,6 +147,7 @@
       "status": "draft",
       "region": "North America",
       "where": "Alberta · British Columbia · Yukon",
+      "tz": "America/Edmonton",
       "coords": { "lat": 55.0013, "lng": -115.0021 },
       "pins": [
         { "name": "Waterton Lakes National Park", "lat": 49.05, "lng": -113.91 },
@@ -151,6 +163,7 @@
       "status": "draft",
       "region": "South America",
       "where": "",
+      "tz": "America/Lima",
       "coords": { "lat": -6.8700, "lng": -75.0459 },
       "pins": [
         { "name": "Lima", "lat": -12.05, "lng": -77.04 },
@@ -163,6 +176,7 @@
       "status": "confirmed",
       "region": "Asia",
       "where": "China",
+      "tz": "Asia/Shanghai",
       "coords": { "lat": 22.4500, "lng": 106.9534 },
       "pins": [
         { "name": "Nonggang National Nature Reserve", "lat": 22.45, "lng": 106.95 }
@@ -172,6 +186,7 @@
       "status": "draft",
       "region": "Asia",
       "where": "",
+      "tz": "Asia/Colombo",
       "coords": { "lat": 7.5555, "lng": 80.7138 },
       "pins": [
         { "name": "Matara", "lat": 5.95, "lng": 80.55 },
@@ -187,6 +202,7 @@
       "status": "draft",
       "region": "Asia",
       "where": "China",
+      "tz": "Asia/Shanghai",
       "coords": { "lat": 24.9750, "lng": 101.4870 },
       "pins": [
         { "name": "Gaoligong Mountains", "lat": 25.29, "lng": 98.80 },
@@ -199,6 +215,7 @@
       "status": "draft",
       "region": "North America",
       "where": "",
+      "tz": "America/Phoenix",
       "coords": { "lat": 34.3953, "lng": -111.7633 },
       "pins": [
         { "name": "Sedona", "lat": 34.87, "lng": -111.76 },
@@ -212,6 +229,7 @@
       "status": "draft",
       "region": "North America",
       "where": "Colorado · Nebraska",
+      "tz": "America/Denver",
       "coords": { "lat": 38.7252, "lng": -105.6077 },
       "sensitive": true,
       "pins": [
@@ -229,6 +247,7 @@
       "status": "draft",
       "region": "North America",
       "where": "",
+      "tz": "America/Anchorage",
       "coords": { "lat": 63.0694, "lng": -151.0072 },
       "lead": "Denali National Park",
       "pins": [
@@ -247,6 +266,7 @@
       "title": "Morocco",
       "date": "March 2026",
       "where": "",
+      "tz": "Africa/Casablanca",
       "coords": { "lat": 31.7917, "lng": -7.0926 },
       "pins": [
         { "name": "Merja Zerga", "lat": 34.87, "lng": -6.29 },
@@ -264,6 +284,7 @@
       "title": "Birds of the Rio Grande",
       "date": "May 2026",
       "where": "Nuevo León · Texas",
+      "tz": "America/Chicago",
       "lead": "Bentsen-Rio Grande Valley State Park",
       "coords": { "lat": 26.1838, "lng": -98.3810 },
       "pins": [

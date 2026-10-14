@@ -63,8 +63,8 @@ collections as a grid of covers, rendered by site.js's `renderHome`.
 The globe opens over the eastern Americas and turns west on its own
 (`START_LNG`, `SPIN`), so the Pacific and Asia come next and Morocco and the
 Atlantic last; there is no pause button, by Newton's choice. As it turns,
-the collection crossing the middle shows its plate (photo, title, where)
-for a few seconds: the **passing card** (`passStep()`, `PASS_*`). Its row
+the collection crossing the middle shows its plate (photo, title, where,
+local time) for a few seconds: the **passing card** (`passStep()`, `PASS_*`). Its row
 in the list lights with it (amber arms, an amber wire out toward the globe;
 its region heading brightens), and on the laptop layout the list glides to
 keep that row in view unless the pointer or keyboard focus is in the list;
@@ -96,6 +96,41 @@ same schedule without the cards: the bar steps through the places and the
 pin lights. While the visitor drags or zooms in, it shows the camera's
 own position.
 
+**Day and night** ("THE SKY" in globe.js; Newton chose this look on
+2026-10-14). Out at the globe it is day and night where they really are,
+by the visitor's clock. Night is the plain Black map, nothing laid over
+it. Day is paper: the land in the White ground's paper on a deep slate
+sea, brightest under the sun and greying toward the day's edge, with soft
+relief in the real sun's light. A crisp gold line runs where day turns to
+night, at the middle of the dusk (`SKY_DUSK`: the sun 3° up to 5° down), in
+a faint warm band; it is a vector line over the map (`sky-line`,
+`sky-line-glow`) because the day's tiles are far too coarse out at the
+globe to draw a sharp one. The sun's mark (ring, dot, glow) and the moon,
+in its real phase, stand where each is overhead. On the paper the night's
+white ink would vanish, so the pins, a collection's line and the moon
+change ink with the ground under them; the coastlines and borders are one
+grey that reads on both. The globe is the same on both grounds; coming in
+to a collection (zooming or tilting) the sky fades out and each ground
+arrives on its own plain map (`PALETTE`). The day is drawn in the page,
+two raster layers from the sun's height, its land half under the map's
+water, so the day's coastlines are the map's own. The relief, and whether
+a pin, a line or the moon stands on land or sea (for its ink), come from
+one Mapterhorn tile, the whole world at zoom 0 (~120 KB), fetched on
+landing (and tried again if it fails). **`?t=` shows another moment**
+(`?t=2026-10-14T22:30Z`, any ISO time; the clock runs on from there): the
+one switch, for checking a sunrise or a night without waiting for it. It
+moves the local times too.
+
+**The dial** ("THE DIAL", laptop layout only): the ring as an
+instrument's bezel. It turns with the globe and reads longitude: a tick
+every 10°, a number every 60°, a fixed index at 12 o'clock, and on the rim
+a dot at each collection's lead pin, amber while its card passes, full ink
+while it is pointed at or open. It fades as the camera leaves the overview.
+
+**Local time.** The passing card and the card show the time where the
+collection is, 24-hour, kept current while they are up: one time per
+collection, from its `tz` in places.json. A place without one shows none.
+
 **Adding a collection to the globe is one entry in `data/places.json`**,
 keyed by the collection's slug, after the usual collections.json entry:
 
@@ -103,6 +138,7 @@ keyed by the collection's slug, after the usual collections.json entry:
 "peru": {
   "status": "draft",
   "where": "",
+  "tz": "America/Lima",
   "pins": [
     { "name": "Lima", "lat": -12.05, "lng": -77.04 },
     { "name": "Sacred Valley", "lat": -13.31, "lng": -72.12 }
@@ -133,7 +169,10 @@ keyed by the collection's slug, after the usual collections.json entry:
   card; `""` hides it. The list shows titles only (Newton had the place lines
   and the tagline above it taken off; the tagline stays as the page's
   visually hidden h1). Several places are listed A to Z ("Maine · Massachusetts ·
-  New Jersey"), Newton's rule. `coords` ({lat, lng}, four decimals) is what
+  New Jersey"), Newton's rule. `tz` (an IANA zone, "America/Denver") is the
+  zone of the local time on its passing card and card: one per collection,
+  the lead pin's, so Grouse Country keeps Colorado's though two of its pins
+  are in Nebraska. `coords` ({lat, lng}, four decimals) is what
   the console reads while the collection passes; without it, its first pin. `zoom` (optional, single-pin only) sets how close the camera
   arrives. `sensitive: true` keeps it back at zoom 7 (the sage-grouse leks).
 - `status` is `"draft"` until Newton has confirmed the row.
@@ -215,7 +254,8 @@ the SIL OFL) would take Google out of every page view; Newton hasn't decided.
 **The map is the site's one outside library**, on the landing page only:
 MapLibre GL JS (pinned, loaded from jsDelivr as a module in index.html),
 with free, keyless map data from OpenFreeMap (coastlines, borders, park
-outlines) and Mapterhorn (elevation for the relief and 3D terrain). The map
+outlines) and Mapterhorn (elevation for the relief and 3D terrain, and the
+one zoom-0 tile the day's relief is drawn from). The map
 style is written in globe.js (`buildStyle()`), not loaded, so it stays
 greyscale and English-only. **Their credit line is required by their
 licences and must stay visible** — restyle it, never hide it. If the
@@ -229,7 +269,8 @@ card loads its collection's opening photograph at plate size (200px) as it
 crosses; otherwise no photograph is requested until a row or pin is
 pointed at. Every label globe.js puts on
 the page is in `LABELS` at its top; the numbers (spin speed, zooms, timings)
-and switches (`STARS`, `TERRAIN_3D`) are just below it.
+and switches (`STARS`, `TERRAIN_3D`) are just below it, and day and night's
+(`SKY_*`, `PAPER`) and the dial's (`DIAL_*`) head their own sections.
 
 ## What's shown under a photograph
 
@@ -686,10 +727,16 @@ saving needs the token, and they don't have it.
   Black like everyone else. Its button keeps one name ("White background")
   and `aria-pressed` says whether White is on.
   White's tokens are the `:root[data-theme="light"]` block in site.css; a
-  colour token added to `:root` needs a White value there too. On the landing
-  White is a light "paper atlas" globe: its map colours are `PALETTE` in
-  globe.js, repainted live on the `nl:theme` event, and what is drawn over
-  the map is the `body[data-page="globe"]` blocks in globe.css. Every page's
+  colour token added to `:root` needs a White value there too. On the
+  landing, out at the globe, both grounds show the same day-and-night globe
+  (see "The globe": the Black map by night, paper by day; Newton's choice,
+  2026-10-14, so White's overview is no longer a paper atlas). Arriving at
+  a collection, each
+  ground has its own plain map, White's a light "paper atlas": the map
+  colours are `PALETTE` in globe.js, repainted live on the `nl:theme`
+  event, and what is drawn over the map is the `body[data-page="globe"]`
+  blocks in globe.css (out at the globe the pins take the "Day and night"
+  inks at its end instead). Every page's
   `<head>` carries a one-line script that applies a saved White before the
   first paint (no flash); the collection pages get it from `PAGE_TEMPLATE` in
   build.py, where its braces are doubled for `.format()`.

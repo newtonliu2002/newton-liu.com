@@ -1,8 +1,9 @@
 /* ==========================================================================
    newton-liu.com — the globe landing.
 
-   A slowly turning globe with a pin wherever a collection was photographed,
-   and the list of collections beside it. Pointing at a row or pin lights
+   A slowly turning globe, day and night on it as they are right now, with
+   a pin wherever a collection was photographed, and the list of
+   collections beside it. Pointing at a row or pin lights
    that collection; clicking flies there and opens a card with its opening
    photograph. The list is the accessible way to the same thing: keyboard
    and screen-reader users get plain links.
@@ -39,7 +40,8 @@
   };
 
   /* ------------------------------------------------------------------
-     Switches and numbers.
+     Switches and numbers. Day and night's own (SKY_*, PAPER) and the
+     dial's (DIAL_*) head their sections, "THE SKY" and "THE DIAL".
      ------------------------------------------------------------------ */
   var STARS = true;                  // the faint static starfield behind the globe
   var OVERVIEW_LAT = 25;             // the overview looks at this latitude
@@ -80,12 +82,17 @@
   var ATTR_DEM = '<a href="https://mapterhorn.com/attribution">© Mapterhorn</a>';
 
   /* ------------------------------------------------------------------
-     PALETTE — the map's colours on each ground. Black is the default;
-     White, a paper atlas, is <html data-theme="light">, set by the square
-     at the end of the nav (site.js). buildStyle() reads the current one,
-     and applyPalette() repaints the map in place when the ground changes.
-     What sits over the map in HTML (pins, labels, ring, card) takes its
-     colours from the --g-* properties in globe.css; the two must agree.
+     PALETTE — the map's colours on each ground, as a collection arrives
+     on it. Black is the default; White, a paper atlas, is
+     <html data-theme="light">, set by the square at the end of the nav
+     (site.js). Out at the globe both grounds show the same day and night
+     (THE SKY): buildStyle() starts from the globe's colours (skyPalette:
+     the current ground's, with the Black map's land, sea and ice and the
+     day's lines over them), skyBlend() turns them into the ground's own as
+     the sky goes, and applyPalette() repaints the map in place when the
+     ground changes. What sits over the map in HTML (pins, labels, ring,
+     card) takes its colours from the --g-* properties in globe.css; the
+     two must agree.
      ------------------------------------------------------------------ */
   function W(a) { return "rgba(255,255,255," + a + ")"; }
   function K(a) { return "rgba(0,0,0," + a + ")"; }
@@ -137,6 +144,7 @@
     return n;
   }
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function wrap180(a) { return ((a % 360) + 540) % 360 - 180; }   // any angle (°) to -180..180
   function now() { return window.performance ? performance.now() : Date.now(); }
   function easeInOut(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
   function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
@@ -179,10 +187,27 @@
     return out;
   }
   function merc(lat) { return Math.log(Math.tan(Math.PI / 4 + lat * rad / 2)); }
+  // Out at the globe each line is cut where it crosses from the paper onto
+  // the dark, the night or the slate sea (sun: 1 on the paper), so each
+  // stretch can take its own ink (skyBlend); the stretches share the point
+  // where they meet, so the line stays whole.
   function lines(groups) {
-    return { type: "FeatureCollection", features: groups.map(function (g) {
-      return { type: "Feature", properties: { o: g.o }, geometry: { type: "LineString", coordinates: arcs(g.pts) } };
-    }) };
+    var out = [];
+    groups.forEach(function (g) {
+      var pts = arcs(g.pts), run = [], sun = -1;
+      if (!skyOn) { out.push({ type: "Feature", properties: { o: g.o, sun: 0 }, geometry: { type: "LineString", coordinates: pts } }); return; }
+      pts.forEach(function (p) {
+        var s = skySunlit(p[0], p[1]) ? 1 : 0;
+        if (s !== sun && run.length) {
+          run.push(p);
+          if (run.length > 1) out.push({ type: "Feature", properties: { o: g.o, sun: sun }, geometry: { type: "LineString", coordinates: run } });
+          run = [p];
+        } else run.push(p);
+        sun = s;
+      });
+      if (run.length > 1) out.push({ type: "Feature", properties: { o: g.o, sun: sun }, geometry: { type: "LineString", coordinates: run } });
+    });
+    return { type: "FeatureCollection", features: out };
   }
 
   /* ---------- the page ------------------------------------------------- */
@@ -325,6 +350,643 @@
   }
 
   /* ------------------------------------------------------------------
+     THE SKY: day and night on the globe as they are right now, by the
+     visitor's own clock.
+
+     Night is the Black map exactly as it is, nothing laid over it. Day is
+     paper: the land in the White ground's paper on a deep slate sea, lit
+     as a ball is in sunlight (brightest under the sun, greying toward the
+     day's edge), its mountains softly shaded by the real sun, low and long
+     toward the dusk, flat under the noon. Out at the globe it is one globe
+     on both grounds, whatever page it sits on; coming in to a collection,
+     or tilting, the sky goes and each ground has its own plain map again,
+     so a card never opens on a lit or darkened map.
+
+     Where the day turns to night runs a crisp gold line, at the middle of
+     the dusk (SKY_DUSK), in a faint warm band. It is a vector line over the
+     map, not part of the day's tiles: a tile texel is several screen pixels
+     out at the globe, so a line drawn in them could only be a soft smear.
+     The sun's mark (a ring, a dot, a glow) stands where the sun is
+     overhead, and the moon where it is overhead, in its real phase, its
+     lit limb toward the sun.
+
+     The day is two raster layers the page draws itself ("nl-day" and
+     "nl-land", skyPaperDraw), from the sun's height at each texel. The
+     field is smooth, so a few small tiles stretched by MapLibre carry it,
+     drawn one at a time between frames, and new every SKY_REFRESH (the line
+     moves a quarter of a degree a minute). The day's land half lies under
+     the map's water, so its coastlines are the map's own. The relief, and
+     whether a pin, a line or the moon stands on land or sea (for its ink),
+     come from one tile of elevation: Mapterhorn's whole world at zoom 0
+     (512 px, ~120 KB), fetched as the sky comes on; until it is here the
+     paper is flat.
+
+     On the paper the night's white ink would vanish, so what is drawn over
+     the map changes ink with the ground under it: each pin (.is-sunlit),
+     each stretch of a collection's line, the moon (printed over the paper,
+     as an almanac prints it) and the sun's mark (a deep amber on the paper,
+     Black's own over the slate). The coastlines and borders are one grey
+     that reads as light on the night and as graphite on the paper.
+
+     ?t=<an ISO time> (?t=2026-10-14T22:30Z) shows another moment: the sky,
+     the moon and the local times on the cards, the clock running on from
+     there.
+     ------------------------------------------------------------------ */
+
+  var SKY_DUSK = [3, -5];            // the sun's height (°) where the day starts to go, and where it is gone
+  // The warm band, by the sun's height (°): [fade in, full, full, fade
+  // out]. It spans the dusk and is fullest across its middle, where the
+  // paper is half gone to night, so it is the gold line's own light, not a
+  // stripe beside it.
+  var SKY_GOLD_AT = [3, 0, -2, -5];
+  var SKY_GOLD = [236, 186, 118, .12];   // its colour and strength: a gold as pale as late light on paper
+  // The gold line: a pale gold hairline in a soft, wider glow of the accent's gold.
+  var SKY_LINE_C = { line: "#f3cf86", width: 1.1, glow: "#dca451", glowWidth: 9, glowBlur: 7, glowOp: .5 };
+  // The sun's mark: a deep amber over the paper, Black's own amber over the
+  // slate (skySunC), in a soft glow of Black's.
+  var SKY_SUN_C = { paper: "#8f621a", slate: "#d4a453", glow: "#e0b566", glowOp: .42 };
+  var SKY_MOON_C = [214, 218, 226];  // the moon over the night and the slate
+  var SKY_MOON_R = 6.5;              // its radius, as the sun's ring
+  var SKY_TEX = 128;                 // a day tile's texels a side (MapLibre stretches them to its 256)
+  var SKY_REFRESH = 120000;          // new day tiles this often (ms)
+  var SKY_RELIEF = true;             // the paper's mountains, in the sun's own light
+  var SKY_DEM_TRIES = 3;             // fetches of the relief's tile (one a SKY_REFRESH) before going without
+  // The day, in sRGB 0-255. land and sea are under the sun, landEdge and
+  // seaEdge where it sets, and between them by the sine of its height to
+  // the power `rise`: 1 is how a matte ball takes the light (Lambert), so
+  // the paper is brightest under the sun and greys evenly to the edge. The
+  // sea is a deep slate, so the day is told by its continents, paper on the
+  // dark, and the globe stays a dark thing on the black page: lit, but not
+  // grey (a mid-grey sea turned a day facing the Pacific into a flat grey
+  // disc). It still takes the light, 68 under the sun to 42 at the day's
+  // edge, against the night's 10, so a day that is all ocean is a ball in
+  // sunlight. The paper has a whisper of warmth only where the sun is
+  // high; at the edge it is neutral, so the dusk never browns.
+  // nightLand and nightSea: the map out at the globe, the Black map's land
+  // and sea, whatever the ground. ink: how light the ground under a pin, a
+  // line or the moon must be (luminance, land and sea as they share the
+  // place, skyLandAt) for it to change to the paper's ink; halfway between
+  // the two inks reads best on either.
+  // The lines: one grey for the coast and the borders that lays down on the
+  // night land just what Black's white W(.16) does (59 on 22), and on the
+  // paper a graphite hairline (175 on 226); the country names the same way.
+  // lineDay and lineNight: a collection's line on the paper and off it.
+  // The relief: heights exaggerated `reliefZ` times (the coarse tile's
+  // slopes are a few degrees at most), and how far a slope's light moves
+  // the paper, per unit of the sine of the sun's height on it, in grey
+  // levels. Kept low: a soft relief, as an atlas prints it; at twice this
+  // the paper looked like plaster.
+  var PAPER = {
+    land: [232, 228, 218], landEdge: [166, 165, 162], sea: [66, 68, 72], seaEdge: [40, 42, 47], rise: 1,
+    nightLand: rgba(PALETTE.black.land).slice(0, 3), nightSea: rgba(PALETTE.black.sea).slice(0, 3), ink: 135,
+    coast: "rgba(108,108,108,.43)", border: "rgba(108,108,108,.43)", country: "rgba(115,115,115,.7)",
+    lineDay: "#1b1c20", lineNight: "#fff",
+    reliefZ: 16, relief: 80
+  };
+
+  // ?t=: the sky's clock, this far from the visitor's (ms).
+  var skyOffset = (function () {
+    var m = /[?&]t=([^&#]*)/.exec(location.search), t = NaN;
+    try { if (m) t = Date.parse(decodeURIComponent(m[1])); } catch (e) {}
+    return isFinite(t) ? t - Date.now() : 0;
+  })();
+
+  /* ---------- where the sun and the moon are ----------------------------- */
+
+  function skyTime() { return Date.now() + skyOffset; }
+  function skyDays(t) { return t / 864e5 - 10957.5; }     // since J2000.0, 2000-01-01 12:00 UT
+  // Greenwich mean sidereal time, in degrees: how far the Earth has turned
+  // under the stars. The right ascension overhead at longitude λ is GMST + λ.
+  function skyGmst(d) {
+    var T = d / 36525;
+    return ((280.46061837 + 360.98564736629 * d + .000387933 * T * T) % 360 + 360) % 360;
+  }
+  // The subsolar point [lng, lat]: the sun's position by the US Naval
+  // Observatory's approximate formulae (good to a minute of arc for
+  // centuries either side of 2000), brought to the ground by GMST.
+  function skySunAt(d) {
+    var g = (357.529 + .98560028 * d) * rad, q = 280.459 + .98564736 * d;
+    var L = (q + 1.915 * Math.sin(g) + .020 * Math.sin(2 * g)) * rad, e = (23.439 - .00000036 * d) * rad;
+    var ra = Math.atan2(Math.cos(e) * Math.sin(L), Math.cos(L)) / rad, dec = Math.asin(Math.sin(e) * Math.sin(L)) / rad;
+    return [wrap180(ra - skyGmst(d)), dec];
+  }
+  // The sublunar point [lng, lat]: the moon's ecliptic longitude and
+  // latitude by the Astronomical Almanac's low-precision series (good to
+  // about 0.3°, 1950-2050), to the equator by the obliquity, to the ground
+  // by GMST. Geocentric, as the subsolar point is.
+  function skyMoonAt(d) {
+    var T = d / 36525, S = function (a, b) { return Math.sin((a + b * T) * rad); };
+    var l = 218.32 + 481267.881 * T + 6.29 * S(135.0, 477198.87) - 1.27 * S(259.3, -413335.36) + .66 * S(235.7, 890534.22)
+          + .21 * S(269.9, 954397.74) - .19 * S(357.5, 35999.05) - .11 * S(186.5, 966404.03);
+    var b = 5.13 * S(93.3, 483202.02) + .28 * S(228.2, 960400.89) - .28 * S(318.3, 6003.15) - .17 * S(217.6, -407332.21);
+    var e = (23.439 - .00000036 * d) * rad, L = l * rad, B = b * rad;
+    var x = Math.cos(B) * Math.cos(L), y = Math.cos(e) * Math.cos(B) * Math.sin(L) - Math.sin(e) * Math.sin(B);
+    var z = Math.sin(e) * Math.cos(B) * Math.sin(L) + Math.cos(e) * Math.sin(B);
+    return [wrap180(Math.atan2(y, x) / rad - skyGmst(d)), Math.asin(z) / rad];
+  }
+  // The moon's lit fraction, from its angle to the sun as seen from the
+  // Earth (the two ground points stand for the two directions), and the
+  // way to the sun from the point under the moon (degrees from north).
+  function skyMoonPhase(sun, moon) {
+    var p1 = moon[1] * rad, p2 = sun[1] * rad, dl = (sun[0] - moon[0]) * rad;
+    var c = Math.sin(p1) * Math.sin(p2) + Math.cos(p1) * Math.cos(p2) * Math.cos(dl);
+    var az = Math.atan2(Math.sin(dl) * Math.cos(p2), Math.cos(p1) * Math.sin(p2) - Math.sin(p1) * Math.cos(p2) * Math.cos(dl)) / rad;
+    return { lit: (1 - c) / 2, toSun: az };
+  }
+
+  /* ---------- the day: two tiles drawn in the page ------------------------ */
+
+  var skySun = [0, 0], skyMoon = [0, 0], skyMoonLit = 0, skyMoonToSun = 0, skyVer = 0, skyRefreshed = 0, skyOp = -1, skyVis = true, skyOn = false;
+  var skyQueue = [];
+  function skySmooth(a, b, x) { var k = clamp((x - a) / (b - a), 0, 1); return k * k * (3 - 2 * k); }
+  // A band over the sun's height: [fade in, full, full, fade out], high to low.
+  function skyBand(at, A) { return A > at[1] ? skySmooth(at[0], at[1], A) : A < at[2] ? skySmooth(at[3], at[2], A) : 1; }
+  // MapLibre asks for every tile in one frame; each is drawn in a task of
+  // its own, so the spin never waits on more than one. A tile that fails
+  // fails alone: its request is answered, and the queue carries on.
+  function skyTile(params) {
+    return new Promise(function (done, fail) {
+      skyQueue.push(function () { try { done(skyPaperTile(params.url)); } catch (e) { fail(e); } });
+      if (skyQueue.length === 1) setTimeout(skyPump, 0);
+    });
+  }
+  function skyPump() {
+    var job = skyQueue.shift();
+    if (skyQueue.length) setTimeout(skyPump, 0);
+    if (job) job();
+  }
+
+  // What the day lays down at one place: the land's colour and the sea's
+  // (out[0-2], out[3-5]), from h, the sine of the sun's height there.
+  // Night is the map's own land and sea; day is paper on slate, from the
+  // edge colours at sunset to the full ones under the sun; then the warm
+  // band over both, as the dusk's own light. rl: the relief's light on the
+  // land (grey levels, + toward the sun, - away), if any.
+  function skyPaperAt(h, out, rl) {
+    var P = PAPER, c;
+    var day = 1 - skySmooth(Math.sin(SKY_DUSK[0] * rad), Math.sin(SKY_DUSK[1] * rad), h);
+    var q = h > 0 ? Math.pow(h, P.rise) : 0;
+    rl = rl || 0;
+    for (c = 0; c < 3; c++) {
+      var dl = clamp(P.landEdge[c] + (P.land[c] - P.landEdge[c]) * q + rl, 0, 255), ds = P.seaEdge[c] + (P.sea[c] - P.seaEdge[c]) * q;
+      out[c] = P.nightLand[c] + (dl - P.nightLand[c]) * day;
+      out[c + 3] = P.nightSea[c] + (ds - P.nightSea[c]) * day;
+    }
+    var w = Math.min(1, skyBand(SKY_GOLD_AT, Math.asin(clamp(h, -1, 1)) / rad) * SKY_GOLD[3]);
+    if (w > 0) { skyTint(out, 0, SKY_GOLD, w); skyTint(out, 3, SKY_GOLD, w); }
+    return out;
+  }
+  // The band over one colour (out[i..i+2]). Over the dark it is light, a
+  // glow; over the paper only its hue is taken, the paper's lightness kept,
+  // so the dusk warms the paper and never lays a brighter stripe along it
+  // (the ramp from paper to night stays a ramp). The glow over the slate
+  // and the night is at .6 of the paper's strength: at full strength the
+  // gold over the sea ran pole to pole as a tan stripe twice as light as
+  // the day's sea beside it.
+  function skyTint(out, i, band, w) {
+    var l0 = .2126 * out[i] + .7152 * out[i + 1] + .0722 * out[i + 2], c, keep = skySmooth(40, 140, l0);
+    w *= .6 + .4 * keep;
+    for (c = 0; c < 3; c++) out[i + c] += (band[c] - out[i + c]) * w;
+    var l1 = .2126 * out[i] + .7152 * out[i + 1] + .0722 * out[i + 2], l = l1 + (l0 - l1) * keep;
+    if (l1 > 0) for (c = 0; c < 3; c++) out[i + c] = Math.min(255, out[i + c] * l / l1);
+  }
+  // The light under a place, as the eye has it (luminance, 0-255): what
+  // decides the ink of a pin, a line or the moon there. Paper and slate
+  // are far apart, so it is the two as they share the place (skyLandAt):
+  // Hawai'i's pin sits on the sea out at the globe, Arizona's on the paper.
+  var skyPaperBuf = new Float32Array(6);
+  // `unknown`: how much land to count on while the tile that tells is not
+  // here (skyLandAt).
+  function skyPaperLum(lng, lat, unknown) {
+    var p = lat * rad, h = Math.sin(p) * Math.sin(skySun[1] * rad) + Math.cos(p) * Math.cos(skySun[1] * rad) * Math.cos((lng - skySun[0]) * rad);
+    var o = skyPaperAt(h, skyPaperBuf), f = skyLandAt(lng, lat, unknown);
+    return f * (.2126 * o[0] + .7152 * o[1] + .0722 * o[2]) + (1 - f) * (.2126 * o[3] + .7152 * o[4] + .0722 * o[5]);
+  }
+  function skySunlit(lng, lat, unknown) { return skyPaperLum(lng, lat, unknown) > PAPER.ink; }
+
+  // The relief's heights: Mapterhorn's zoom-0 tile (terrarium: metres =
+  // R·256 + G + B/256 - 32768), 512 px of Web Mercator, as the arrival's
+  // land mask reads it. Fetched as the sky comes on; its arrival redraws
+  // the day with its mountains. The same tile says, for the inks, where the
+  // land is (Mapterhorn's sea is exactly 0 m, 128,0,0, as landMask reads
+  // it): skyLand, 1 on land. The day's own coastlines are the map's water,
+  // not this. A fetch that fails is tried again with the next fresh tiles
+  // (skyRedraw), SKY_DEM_TRIES in all.
+  var skyDem = null, skyLand = null, skyDemAsked = false, skyDemTried = 0;
+  function skyDemLoad() {
+    if (skyDem || skyDemAsked || skyDemTried >= SKY_DEM_TRIES) return;
+    skyDemAsked = true;
+    skyDemTried++;
+    fetch(demURL(0, 0, 0)).then(function (r) { if (!r.ok) throw r; return r.blob(); })
+      .then(function (b) { return createImageBitmap(b, { colorSpaceConversion: "none", premultiplyAlpha: "none" }); })
+      .then(function (bmp) {
+        var cv = el("canvas"), g, d, e = new Float32Array(512 * 512), m = new Uint8Array(512 * 512);
+        cv.width = cv.height = 512;
+        g = cv.getContext("2d", { willReadFrequently: true });
+        g.drawImage(bmp, 0, 0, 512, 512);
+        d = g.getImageData(0, 0, 512, 512).data;
+        for (var i = 0; i < e.length; i++) {
+          e[i] = Math.max(0, d[4 * i] * 256 + d[4 * i + 1] + d[4 * i + 2] / 256 - 32768);
+          m[i] = d[4 * i] !== 128 || d[4 * i + 1] || d[4 * i + 2] ? 1 : 0;
+        }
+        skyDem = e; skyLand = m;
+        skyRedraw();
+      }).catch(function () { skyDemAsked = false; });
+  }
+  // How much of the ground round a place is land, 0-1: the tile's pixels
+  // (~78 km at the equator) within two of it, about the span of a pin's
+  // crosshair out at the globe. Until the tile is here, `unknown`, else
+  // land: most pins are inland, and the redraw on its arrival puts the
+  // rest right. (The sun's mark counts on sea, as most of the globe is.)
+  function skyLandAt(lng, lat, unknown) {
+    if (!skyLand) return unknown === undefined ? 1 : unknown;
+    var x = Math.floor((wrap180(lng) + 180) / 360 * 512), y = Math.floor((1 - merc(clamp(lat, -85, 85)) / Math.PI) / 2 * 512), n = 0, s = 0;
+    for (var j = Math.max(0, y - 2); j <= Math.min(511, y + 2); j++)
+      for (var i = x - 2; i <= x + 2; i++) { s += skyLand[j * 512 + (i + 512) % 512]; n++; }
+    return s / n;
+  }
+  // The sine of the sun's height over the ground's own slope at DEM pixel
+  // (ix, iy): Horn's 3x3 gradient, exaggerated, against the sun's
+  // direction in east, north and up (sE, sN, sU). Rows clamp at the
+  // Mercator edge; columns wrap at the antimeridian.
+  function skySlopeSun(ix, iy, pix, sE, sN, sU) {
+    var E = skyDem, W = 512, xm = (ix + W - 1) % W, xp = (ix + 1) % W, ym = Math.max(0, iy - 1) * W, y0 = iy * W, yp = Math.min(W - 1, iy + 1) * W;
+    var gx = (E[ym + xp] + 2 * E[y0 + xp] + E[yp + xp] - E[ym + xm] - 2 * E[y0 + xm] - E[yp + xm]) / (8 * pix);
+    var gy = (E[ym + xm] + 2 * E[ym + ix] + E[ym + xp] - E[yp + xm] - 2 * E[yp + ix] - E[yp + xp]) / (8 * pix);   // northward
+    var k = PAPER.reliefZ, nx = -k * gx, ny = -k * gy, m = 1 / Math.sqrt(nx * nx + ny * ny + 1);
+    return (nx * sE + ny * sN + sU) * m;
+  }
+
+  // Two layers make the day, from one set of colours per texel. The map
+  // under them is the Black map (land L0, sea S0). "sky-day" lies over land
+  // and sea alike (colour C, cover a), so the sea comes out C·a + S0·(1-a);
+  // "sky-land" lies on the land alone, under the sea (opaque, colour L1),
+  // so the land comes out C·a + L1·(1-a). For the land Ld and the sea Sd
+  // wanted, a is the least cover that can make the sea (C at most 255 in
+  // every channel), C follows from it, and L1 = S0 + (Ld - Sd) / (1 - a).
+  // Least cover, so the night is no cover at all: where the day is gone the
+  // first layer is clear and the second is the land's own colour, and the
+  // map shows exactly as it is. Both tiles come from one pass; the second
+  // asked for waits in skyPair until it is.
+  var skyPair = {};
+  function skyPaperTile(url) {
+    var t = /(\d+)\/(\d+)\/(\d+)/.exec(url), z = +t[1], x = +t[2], y = +t[3], key = z + "/" + x + "/" + y, half = url.indexOf("nl-land") === 0 ? "land" : "day";
+    var pair = skyPair[key];
+    if (!pair || pair.ver !== skyVer || !pair[half]) {
+      for (var k in skyPair) if (skyPair[k].ver !== skyVer) delete skyPair[k];   // an older clock's
+      pair = skyPair[key] = skyPaperDraw(z, x, y);
+      pair.ver = skyVer;
+    }
+    var img = pair[half];
+    pair[half] = null;
+    if (!pair.day && !pair.land) delete skyPair[key];
+    // MapLibre's raster shader takes premultiplied colour.
+    return createImageBitmap(img, { premultiplyAlpha: "premultiply" }).then(function (bmp) { return { data: bmp }; });
+  }
+  function skyPaperDraw(z, x, y) {
+    var n = 1 << z, S = SKY_TEX, i, j, c;
+    var dayImg = new ImageData(S, S), landImg = new ImageData(S, S), dp = dayImg.data, lp = landImg.data, cosH = new Float32Array(S);
+    var sd = Math.sin(skySun[1] * rad), cd = Math.cos(skySun[1] * rad), out = new Float32Array(6);
+    var S0 = PAPER.nightSea, band = S / 4, sinH = new Float32Array(S), dem = SKY_RELIEF && skyDem, rl = 0;
+    for (i = 0; i < S; i++) {
+      var hx = ((x + (i + .5) / S) / n * 360 - 180 - skySun[0]) * rad;
+      cosH[i] = Math.cos(hx); sinH[i] = Math.sin(hx);
+    }
+    for (j = 0; j < S; j++) {
+      var lat = Math.atan(Math.sinh(Math.PI * (1 - 2 * (y + (j + .5) / S) / n))), dg = lat / rad;
+      var a0 = Math.sin(lat) * sd, b0 = Math.cos(lat) * cd;
+      // MapLibre caps each pole (past 85°) with the edge row of the tiles
+      // there, and a cap that small reads the tile's coarse mipmaps, which
+      // average many rows. So the tiles at a pole ease into the pole's own
+      // light over their last quarter: the cap is one even shade, and the
+      // easing bends the sun's height by a few degrees at most, at 83-85°.
+      var pole = !y && j < S / 2 ? 1 : y === n - 1 && j >= S / 2 ? -1 : 0, ps = pole * sd;
+      var ease = pole ? skySmooth(0, band, pole > 0 ? j : S - 1 - j) : 1;
+      // Past 84°N there is only the Arctic Ocean, but MapLibre caps the pole
+      // with the land's colour (no sea is drawn there): the land takes the
+      // sea's, so the cap is sea by day and by night.
+      var arctic = skySmooth(83.6, 84.4, dg);
+      // The relief's row: the DEM's row under it, a DEM pixel's size on the
+      // ground here (Mercator keeps it square), and the relief fading out
+      // toward the pole caps, where the light is eased.
+      var cl = Math.cos(lat), sl = Math.sin(lat), iy = Math.min(511, Math.floor((y + (j + .5) / S) / n * 512));
+      var pix = 2 * Math.PI * 6371000 * cl / 512, rf = dem ? 1 - skySmooth(78, 82, Math.abs(dg)) : 0;
+      for (i = 0; i < S; i++) {
+        var h = a0 + b0 * cosH[i], k = 4 * (j * S + i);
+        // The sun from here: east and north (the hour angle's sine and
+        // cosine), then up; a slope facing it is lit more than the flat, a
+        // slope turned away less, as far as the paper is lit at all.
+        if (rf > 0 && h > -.05) {
+          var sE = -cd * sinH[i], sN = cl * sd - sl * cd * cosH[i];
+          rl = (skySlopeSun(Math.floor((x + (i + .5) / S) / n * 512) % 512, iy, pix, sE, sN, h) - h) * PAPER.relief * rf;
+        } else rl = 0;
+        if (ease < 1) h = ps + (h - ps) * ease;
+        skyPaperAt(h, out, rl);
+        if (arctic > 0) for (c = 0; c < 3; c++) out[c] += (out[c + 3] - out[c]) * arctic;
+        // The least cover that can make the sea, and its 8-bit value.
+        var a = 0;
+        for (c = 0; c < 3; c++) {
+          var s = out[c + 3], s0 = S0[c];
+          a = Math.max(a, s > s0 ? (s - s0) / (255 - s0) : s < s0 ? 1 - s / s0 : 0);
+        }
+        var ab = Math.round(255 * Math.min(a, 1)), af = ab / 255;
+        for (c = 0; c < 3; c++) {
+          dp[k + c] = af > 0 ? (out[c + 3] - S0[c] * (1 - af)) / af : 0;
+          lp[k + c] = af < 1 ? S0[c] + (out[c] - out[c + 3]) / (1 - af) : out[c];
+        }
+        dp[k + 3] = ab; lp[k + 3] = 255;
+      }
+    }
+    return { day: dayImg, land: landImg };
+  }
+  function skyURL(protocol) { return protocol + "://{z}/{x}/{y}?v=" + skyVer; }
+
+  /* ---------- the sun, the moon and the gold line -------------------------- */
+
+  // The sun's mark: over the paper the deep amber reads and Black's would
+  // fade into it; over the slate it is the other way round. Until the
+  // tile that tells land from sea is here, the slate's (skyLandAt).
+  function skySunC() { return skySunlit(skySun[0], skySun[1], 0) ? SKY_SUN_C.paper : SKY_SUN_C.slate; }
+  function skySunData() {
+    return { type: "Feature", properties: {}, geometry: { type: "Point", coordinates: [skySun[0], skySun[1]] } };
+  }
+  function skyMoonData() {
+    return { type: "Feature", properties: { rot: skyMoonToSun - 90 },
+             geometry: { type: "Point", coordinates: [skyMoon[0], skyMoon[1]] } };
+  }
+  // The moon's face, drawn here in its phase, the lit limb to the right
+  // (the layer turns it to face the sun's mark): the dark of it faint, so
+  // a new moon still shows as a disc, and a hairline round the whole.
+  // Drawn at the first pixel ratio for good: MapLibre will only swap an
+  // image for one of the same size, and a zoomed page or another screen
+  // changes the ratio.
+  var skyMoonDpr = 0, skyMoonOk = false, skyMoonOp = -1, skyMoonVis = true;
+  function skyMoonImage() {
+    var dpr = skyMoonDpr || (skyMoonDpr = Math.min(2, window.devicePixelRatio || 1)), R = SKY_MOON_R * dpr, P = Math.ceil(R + 2 * dpr), D = 2 * P;
+    var cv = document.createElement("canvas"); cv.width = D; cv.height = D;
+    var cx = cv.getContext("2d"), col = "rgb(" + SKY_MOON_C.join(",") + ")", k = skyMoonLit;
+    // Over the paper the moon is printed, as an almanac prints it: the
+    // dark of it in ink, the lit part paper-white, an ink line round both.
+    // (So it is while the tile that tells land from sea is not here: a
+    // printed moon reads on the slate too, a light one vanishes on paper.)
+    var paper = skySunlit(skyMoon[0], skyMoon[1]), ink = "rgb(27,28,32)";
+    function litPart() {
+      cx.beginPath();
+      cx.arc(P, P, R, -Math.PI / 2, Math.PI / 2, false);
+      // The terminator: half an ellipse, bulging out to the dark side past
+      // the half moon, back into the lit side before it.
+      cx.ellipse(P, P, Math.max(.01, R * Math.abs(1 - 2 * k)), R, 0, Math.PI / 2, -Math.PI / 2, k < .5);
+      cx.fill();
+    }
+    if (paper) {
+      cx.fillStyle = ink; cx.globalAlpha = .82; cx.beginPath(); cx.arc(P, P, R, 0, 2 * Math.PI); cx.fill();
+      cx.fillStyle = "rgb(250,248,242)"; cx.globalAlpha = 1; litPart();
+      cx.globalAlpha = .9; cx.strokeStyle = ink; cx.lineWidth = dpr * .75;
+      cx.beginPath(); cx.arc(P, P, R, 0, 2 * Math.PI); cx.stroke();
+      return { img: cx.getImageData(0, 0, D, D), dpr: dpr };
+    }
+    cx.fillStyle = col;
+    cx.globalAlpha = .16; cx.beginPath(); cx.arc(P, P, R, 0, 2 * Math.PI); cx.fill();
+    cx.globalAlpha = 1; litPart();
+    cx.globalAlpha = .55; cx.strokeStyle = col; cx.lineWidth = dpr * .75;
+    cx.beginPath(); cx.arc(P, P, R, 0, 2 * Math.PI); cx.stroke();
+    return { img: cx.getImageData(0, 0, D, D), dpr: dpr };
+  }
+  function skyMoonPlace() {
+    skyMoon = skyMoonAt(skyDays(skyTime()));
+    var ph = skyMoonPhase(skySun, skyMoon);
+    skyMoonLit = ph.lit; skyMoonToSun = ph.toSun;
+  }
+  // The gold line runs where the day is half gone (the middle of SKY_DUSK,
+  // by the sine of the sun's height, as the tiles shade it): a small circle
+  // that far from the point under the sun, its longitudes kept continuous
+  // as arcs() keeps them.
+  function skyLineData() {
+    var out = [], d = Math.PI / 2 - Math.asin((Math.sin(SKY_DUSK[0] * rad) + Math.sin(SKY_DUSK[1] * rad)) / 2), la = skySun[1] * rad, lo = skySun[0] * rad;
+    for (var i = 0; i <= 360; i += 2) {
+      var th = i * rad, b = Math.asin(Math.sin(la) * Math.cos(d) + Math.cos(la) * Math.sin(d) * Math.cos(th));
+      out.push([(lo + Math.atan2(Math.sin(th) * Math.sin(d) * Math.cos(la), Math.cos(d) - Math.sin(la) * Math.sin(b))) / rad, b / rad]);
+    }
+    for (var m = 1; m < out.length; m++) out[m][0] = out[m - 1][0] + wrap180(out[m][0] - out[m - 1][0]);
+    return { type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: out } };
+  }
+
+  /* ---------- on the map ---------------------------------------------------- */
+
+  // From onLoad. The day goes in under the coastlines (and its land half
+  // under the sea), so the lines and names draw over it; the gold line and
+  // the sun over the coastlines and borders, under the names. Zoom 2 is as
+  // fine as the day's field needs.
+  var SKY_LAYERS = ["sky-day", "sky-land", "sky-line-glow", "sky-line", "sky-sun-glow", "sky-sun", "sky-sun-ring"];
+  var SKY_SOURCES = ["sky-day", "sky-land", "sky-line", "sky-sun"];
+  // A circle's paint, flat to the screen, so it stays round at the limb.
+  function skyFlat(paint) { paint["circle-pitch-alignment"] = "viewport"; paint["circle-pitch-scale"] = "viewport"; return paint; }
+  function skyMapOn() {
+    if (skyOn) return;
+    try {
+      ml.addProtocol("nl-day", skyTile);
+      ml.addProtocol("nl-land", skyTile);
+      skySun = skySunAt(skyDays(skyTime()));
+      skyMoonPlace();
+      map.addSource("sky-day", { type: "raster", tiles: [skyURL("nl-day")], tileSize: 256, maxzoom: 2 });
+      map.addLayer({ id: "sky-day", type: "raster", source: "sky-day",
+        paint: { "raster-fade-duration": 0, "raster-opacity": 1 } }, "coast-lo");
+      map.addSource("sky-land", { type: "raster", tiles: [skyURL("nl-land")], tileSize: 256, maxzoom: 2 });
+      map.addLayer({ id: "sky-land", type: "raster", source: "sky-land",
+        paint: { "raster-fade-duration": 0, "raster-opacity": 1 } }, "water-lo");
+      map.addSource("sky-line", { type: "geojson", data: skyLineData() });
+      map.addLayer({ id: "sky-line-glow", type: "line", source: "sky-line", layout: { "line-cap": "round" },
+        paint: { "line-color": SKY_LINE_C.glow, "line-width": SKY_LINE_C.glowWidth, "line-blur": SKY_LINE_C.glowBlur,
+          "line-opacity": SKY_LINE_C.glowOp } }, "country-lo");
+      map.addLayer({ id: "sky-line", type: "line", source: "sky-line", layout: { "line-cap": "round" },
+        paint: { "line-color": SKY_LINE_C.line, "line-width": SKY_LINE_C.width, "line-opacity": 1 } }, "country-lo");
+      // The sun's sign, ☉: a dot in a ring, in a soft glow, flat to the screen.
+      var sunC = skySunC();
+      map.addSource("sky-sun", { type: "geojson", data: skySunData() });
+      map.addLayer({ id: "sky-sun-glow", type: "circle", source: "sky-sun", paint: skyFlat({
+        "circle-color": SKY_SUN_C.glow, "circle-radius": 18, "circle-blur": 1, "circle-opacity": SKY_SUN_C.glowOp }) }, "country-lo");
+      map.addLayer({ id: "sky-sun", type: "circle", source: "sky-sun", paint: skyFlat({
+        "circle-color": sunC, "circle-radius": 2.5, "circle-opacity": 1,
+        "circle-stroke-color": "rgba(0,0,0,0)", "circle-stroke-width": 0 }) }, "country-lo");
+      map.addLayer({ id: "sky-sun-ring", type: "circle", source: "sky-sun", paint: skyFlat({
+        "circle-color": "rgba(0,0,0,0)", "circle-radius": 6.5, "circle-opacity": 1,
+        "circle-stroke-color": sunC, "circle-stroke-width": 1, "circle-stroke-opacity": 1 }) }, "country-lo");
+      skyOn = true;
+      skyRefreshed = now();
+    } catch (e) {
+      // No sky: each ground's own map throughout, with nothing of a sky
+      // half put on left over it (skyFade, which would hide it, never runs).
+      SKY_LAYERS.forEach(function (id) { try { if (map.getLayer(id)) map.removeLayer(id); } catch (x) {} });
+      SKY_SOURCES.forEach(function (id) { try { if (map.getSource(id)) map.removeSource(id); } catch (x) {} });
+      skyBlend(0, true);
+      return;
+    }
+    skyDemLoad();
+    skyMoonOn();
+  }
+  // The moon, in its phase, its lit limb toward the sun. Flat to the
+  // screen as the sun is; turned with the map, so it keeps pointing at the
+  // sun while the globe turns. On its own, so a moon that fails takes
+  // nothing else with it.
+  function skyMoonOn() {
+    if (!skyOn || skyMoonOk) return;
+    try {
+      var mi = skyMoonImage();
+      map.addImage("sky-moon", mi.img, { pixelRatio: mi.dpr });
+      map.addSource("sky-moon", { type: "geojson", data: skyMoonData() });
+      map.addLayer({ id: "sky-moon", type: "symbol", source: "sky-moon",
+        layout: { "icon-image": "sky-moon", "icon-rotate": ["get", "rot"], "icon-allow-overlap": true, "icon-ignore-placement": true,
+                  "icon-pitch-alignment": "viewport", "icon-rotation-alignment": "map" },
+        paint: { "icon-opacity": 0 } }, "country-lo");
+      skyMoonOk = true;
+    } catch (e) {}
+  }
+  // The clock moved on, or the relief arrived: fresh tiles, drawn anew,
+  // and the sun, the moon, the line and every ink put right (and the
+  // relief asked for again if it failed to come).
+  function skyRedraw() {
+    if (!skyOn) return;
+    if (!skyDem) skyDemLoad();
+    skyVer++;
+    skySun = skySunAt(skyDays(skyTime()));
+    skyMoonPlace();
+    skyRefreshed = now();
+    try {
+      map.getSource("sky-day").setTiles([skyURL("nl-day")]);
+      map.getSource("sky-land").setTiles([skyURL("nl-land")]);
+      map.getSource("sky-sun").setData(skySunData());
+      map.setPaintProperty("sky-sun", "circle-color", skySunC());
+      map.setPaintProperty("sky-sun-ring", "circle-stroke-color", skySunC());
+      map.getSource("sky-line").setData(skyLineData());
+    } catch (e) {}
+    if (skyMoonOk) try {
+      map.updateImage("sky-moon", skyMoonImage().img);
+      map.getSource("sky-moon").setData(skyMoonData());
+    } catch (e) {}
+    skyPinsLight();
+    if (ready) try { setTether(); } catch (e) {}
+  }
+  // Each pin's ink from the light under it (skySunlit): ink on the paper,
+  // light on the night and the slate (with the stage's is-paper-globe, see
+  // globe.css). The sun moves a quarter of a degree a minute, so this keeps
+  // up at the tiles' pace; pins arriving later catch up in skyFrame.
+  var skyPinsAt = -1;
+  function skyPinsLight() {
+    pins.forEach(function (p) { p.el.classList.toggle("is-sunlit", skySunlit(p.ll[0], p.ll[1])); });
+    skyPinsAt = pins.length;
+  }
+  // Out at the globe the sky is full. It goes as the camera comes in (over
+  // the zoom the rim fades on, a little later) or tilts (gone by 12°, so
+  // every pitched arrival lands on a plain map), and once gone its layers
+  // are hidden, so they neither draw nor keep tiles. The map's own colours
+  // go with it, from the globe's to the ground's (skyBlend), and so do the
+  // pins' inks.
+  function skyFade() {
+    var op = Math.min(clamp((L.zO + 2.2 - sizeZoom()) / 1.2, 0, 1), clamp((12 - map.getPitch()) / 10, 0, 1));
+    if (Math.abs(op - skyOp) < .01 && !(op !== skyOp && (op === 0 || op === 1))) return;
+    if (skyVis !== op > 0) {
+      skyVis = op > 0;
+      SKY_LAYERS.forEach(function (id) { map.setLayoutProperty(id, "visibility", skyVis ? "visible" : "none"); });
+    }
+    skyOp = op;
+    stage.classList.toggle("is-paper-globe", op > .5);
+    skyBlend(op);
+    map.setPaintProperty("sky-day", "raster-opacity", op);
+    map.setPaintProperty("sky-land", "raster-opacity", op);
+    map.setPaintProperty("sky-sun-glow", "circle-opacity", SKY_SUN_C.glowOp * op);
+    map.setPaintProperty("sky-sun", "circle-opacity", op);
+    map.setPaintProperty("sky-sun-ring", "circle-stroke-opacity", op);
+    map.setPaintProperty("sky-line-glow", "line-opacity", SKY_LINE_C.glowOp * op);
+    map.setPaintProperty("sky-line", "line-opacity", op);
+  }
+  // The moon goes with the sky, and behind the globe's rim the moment it
+  // passes it: MapLibre hides an icon on the far side only when it next
+  // places its symbols, a beat behind a fast turn. Out at the globe the
+  // camera looks straight down at the centre, so it sees as far as
+  // horizon() round from it.
+  function skyMoonFade() {
+    if (!skyMoonOk) return;
+    var op = skyOp;
+    if (op > 0) {
+      var c = map.getCenter(), p1 = c.lat * rad, p2 = skyMoon[1] * rad, rim = Math.cos(horizon(map.getZoom(), c.lat, L.h) * rad);
+      var cd = Math.sin(p1) * Math.sin(p2) + Math.cos(p1) * Math.cos(p2) * Math.cos((skyMoon[0] - c.lng) * rad);
+      op *= skySmooth(rim, rim + .03, cd);
+    }
+    if (Math.abs(op - skyMoonOp) < .01 && !(op !== skyMoonOp && (op === 0 || op === 1))) return;
+    if (skyMoonVis !== op > 0) {
+      skyMoonVis = op > 0;
+      map.setLayoutProperty("sky-moon", "visibility", skyMoonVis ? "visible" : "none");
+    }
+    skyMoonOp = op;
+    map.setPaintProperty("sky-moon", "icon-opacity", op);
+  }
+  // Every frame from frame(): the pins' inks as pins arrive, the sky's
+  // fade with the zoom and tilt, and fresh tiles when due (only while the
+  // sky shows; a hidden one catches up as it comes back).
+  function skyFrame() {
+    if (!skyOn) return;
+    if (skyPinsAt !== pins.length) skyPinsLight();
+    skyFade();
+    skyMoonFade();
+    if (skyOp > 0 && now() - skyRefreshed > SKY_REFRESH) skyRedraw();
+  }
+
+  /* ---------- the map under the sky: its colours ---------------------------- */
+
+  // Out at the globe the map is the Black map on either ground (the day is
+  // laid over it by the tiles), with PAPER's greys for the lines, which
+  // read on the night and on the paper alike. buildStyle() starts it so;
+  // coming in to a collection it turns into the ground's own map, step for
+  // step with the sky as it goes (skyFade's opacity, in twentieths).
+  function skyColors() {
+    var B = PALETTE.black;
+    return { land: B.land, sea: B.sea, ice: B.ice, coast: PAPER.coast, border: PAPER.border, country: PAPER.country, line: B.line };
+  }
+  function skyPalette() {
+    var G = skyColors(), P = pal(), out = {}, k;
+    for (k in P) out[k] = P[k];
+    for (k in G) out[k] = G[k];
+    return out;
+  }
+  // "#rgb", "#rrggbb", "rgb()" or "rgba()" → [r, g, b, a]; and a mix of two.
+  function rgba(c) {
+    var m;
+    if ((m = /^#([0-9a-f]{3})$/i.exec(c))) return [0, 1, 2].map(function (i) { return parseInt(m[1][i] + m[1][i], 16); }).concat(1);
+    if ((m = /^#([0-9a-f]{6})$/i.exec(c))) return [0, 2, 4].map(function (i) { return parseInt(m[1].substr(i, 2), 16); }).concat(1);
+    m = /rgba?\(([^)]*)\)/.exec(c) || [0, "0,0,0,0"];
+    var v = m[1].split(",").map(parseFloat);
+    return [v[0], v[1], v[2], v.length > 3 ? v[3] : 1];
+  }
+  function mix(a, b, k) {
+    var x = rgba(a), y = rgba(b), o = x.map(function (v, i) { return v + (y[i] - v) * k; });
+    return "rgba(" + Math.round(o[0]) + "," + Math.round(o[1]) + "," + Math.round(o[2]) + "," + o[3].toFixed(3) + ")";
+  }
+  // Which paint property of which layer each of skyColors() sets.
+  var BLEND = {
+    land: [["land", "background-color"]], sea: [["water", "fill-color"], ["water-lo", "fill-color"]],
+    ice: [["ice", "fill-color"], ["ice-lo", "fill-color"]], coast: [["coast", "line-color"], ["coast-lo", "line-color"]],
+    border: [["admin-2", "line-color"], ["admin-2-lo", "line-color"]], country: [["country", "text-color"], ["country-lo", "text-color"]],
+    line: [["g-trail", "line-color"], ["g-tether", "line-color"]]
+  };
+  var skyBlendK = -1;
+  function skyBlend(op, force) {
+    if (!map) return;
+    var k = Math.round(clamp(op, 0, 1) * 20) / 20;
+    if (k === skyBlendK && !force) return;
+    skyBlendK = k;
+    var P = pal(), G = skyColors();
+    try {
+      for (var key in BLEND) {
+        // A collection's line is cut where the day meets the night
+        // (lines()), each stretch in its own ink.
+        var c = key === "line" ? ["case", ["==", ["get", "sun"], 1], mix(P.line, PAPER.lineDay, k), mix(P.line, PAPER.lineNight, k)]
+              : mix(P[key], G[key], k);
+        BLEND[key].forEach(function (t) { if (map.getLayer(t[0])) map.setPaintProperty(t[0], t[1], c); });
+      }
+    } catch (e) {}
+  }
+
+  /* ------------------------------------------------------------------
      DATA
      ------------------------------------------------------------------ */
 
@@ -361,6 +1023,8 @@
         slug: c.slug, title: c.title || c.slug, sub: c.subtitle || "", date: date,
         // A list of places ("Maine · Massachusetts") breaks only after a dot.
         where: (pl.where || "").replace(/ · /g, "\u00a0· "), zoom: pl.zoom, sensitive: !!pl.sensitive, i: i, opener: opener,
+        // Its time zone (places.json `tz`, IANA), for the local time on its plate and card.
+        tz: typeof pl.tz === "string" ? pl.tz : "",
         // What the console reads while this collection passes (places.json `coords`).
         at: pl.coords && typeof pl.coords.lat === "number" && typeof pl.coords.lng === "number" ? [pl.coords.lat, pl.coords.lng] : null,
         // Its heading in the list (places.json `region`; the order is its `regions`).
@@ -523,10 +1187,12 @@
   }
 
   /* ------------------------------------------------------------------
-     THE MAP: a greyscale style written here, in the ground's PALETTE. "omt-low" (zoom 0-1
-     tiles, ~0.5 MB for the world) draws the globe, "omt" takes over at
-     SPLIT for detail (see setSplit). Elevation is switched on only once
-     the camera has arrived: hillshade, and 3D terrain on laptops.
+     THE MAP: a greyscale style written here, in the globe's colours out
+     at the globe and the ground's PALETTE on arrival (skyPalette,
+     skyBlend). "omt-low" (zoom 0-1 tiles, ~0.5 MB for the world) draws
+     the globe, "omt" takes over at SPLIT for detail (see setSplit).
+     Elevation is switched on only once the camera has arrived:
+     hillshade, and 3D terrain on laptops.
      ------------------------------------------------------------------ */
 
   var ranges = {};      // id → [minzoom, maxzoom, "lo" | "hi"] for the layers setSplit() moves
@@ -584,7 +1250,7 @@
   }
 
   function buildStyle() {
-    var P = pal();
+    var P = skyPalette();                  // out at the globe; skyBlend() turns it into the ground's own
     var poly = ["match", ["geometry-type"], ["Polygon", "MultiPolygon"], true, false];
     // Not "protected_area": that class is mostly marine reserves, and a tint
     // over open sea reads as land (the Galápagos reserve rings the islands).
@@ -698,6 +1364,7 @@
       if (tour && trail.length) map.setPaintProperty("g-trail", "line-opacity", P.trail);
       map.setSky(style.sky);
     } catch (e) {}
+    skyBlend(skyOn ? Math.max(skyOp, 0) : 0, true);   // the globe's colours, as far as the sky is on
     dirty = true;
   }
 
@@ -771,6 +1438,7 @@
     window.addEventListener("pointercancel", function () { hold("drag", false); }, { passive: true });
     cc.addEventListener("wheel", function () { spinV = 0; released = now(); }, { passive: true });
     buildPins();
+    buildDial();
   }
 
   function addAttribution() {
@@ -790,6 +1458,7 @@
     showWaiting(true);
     map.setMinZoom(floorZoom());
     applyPalette();                         // in case the ground changed while the style loaded
+    skyMapOn();                             // day and night on the globe, by the visitor's clock
     loop();
     if (deep) {
       stage.classList.add("has-pins");
@@ -1151,7 +1820,7 @@
 
   /* ---------- the plate: a small preview beside the pin ------------------- */
 
-  var plateFor = null, crowd = null, plateH = 0, plateW = 200;
+  var plateFor = null, crowd = null, plateH = 0, plateW = 200, plateBox = null;
 
   function showPlate(c, at) {
     if (!L.app || COARSE || !c.pins.length) { hidePlate(); return; }
@@ -1166,7 +1835,15 @@
       plate.appendChild(img);
     }
     plate.appendChild(el("p", "g-plate-title", c.title));
-    if (c.where) plate.appendChild(el("p", "g-plate-where", c.where));
+    // The local time floats right after the place, so it ends its last
+    // line when there is room, and takes a line of its own when there is not.
+    var time = colTime(c);
+    if (c.where || time) {
+      var where = el("p", "g-plate-where", c.where);
+      if (time) where.appendChild(el("span", "g-plate-time", time));
+      plate.appendChild(where);
+    }
+    plateCol = c;
     openPlate(at || c.lead.p);
   }
   function crowdPlate(p) {
@@ -1187,9 +1864,10 @@
     plateW = plate.offsetWidth;
     plate.classList.add("is-on");
     dirty = true;
+    clockTick();
   }
   function hidePlate() {
-    plateFor = null; crowd = null;
+    plateFor = null; crowd = null; plateBox = null;
     plate.classList.remove("is-on");
     wireP.classList.remove("is-on");
   }
@@ -1198,7 +1876,7 @@
     var p = plateFor;
     if (!p) return;
     if (!p.show) p = (p.c.pins.filter(function (q) { return q.p.show; })[0] || {}).p;
-    if (!p || !p.xy) { plate.style.visibility = "hidden"; wireP.classList.remove("is-on"); return; }
+    if (!p || !p.xy) { plate.style.visibility = "hidden"; wireP.classList.remove("is-on"); plateBox = null; return; }
     plate.style.visibility = "";
     var w = plateW, h = plateH, x = p.xy.x + 16, right = L.w - L.e;
     if (cardShown) right = L.w - L.e - cardWidth() - 16;
@@ -1206,6 +1884,7 @@
     x = clamp(x, L.F, right - w);
     var y = clamp(p.xy.y - h / 2, 72, L.h - 108 - h);
     plate.style.transform = "translate(" + Math.round(x) + "px," + Math.round(y) + "px)";
+    plateBox = [x, y, x + w, y + h];       // the dial's numbers step aside for it
     var leftSide = x < p.xy.x;
     wireP.setAttribute("x1", p.xy.x + (leftSide ? -8 : 8));
     wireP.setAttribute("y1", p.xy.y);
@@ -1237,7 +1916,7 @@
     var first = anyPassed || recent || deep ? null : PASS_FIRST, forced = null, gap = gapBoost(c.lng) > 1;
     pins.forEach(function (p) {
       if (!p.show || !p.xy) return;
-      var d = ((c.lng - p.ll[0] + 540) % 360) - 180;     // > 0: still to come, left of the middle
+      var d = wrap180(c.lng - p.ll[0]);    // > 0: still to come, left of the middle
       [p.slug].concat(p.stack || []).forEach(function (s) {
         if (PASS_SKIP.indexOf(s) >= 0) return;
         if (s === passing) { if (d >= -PASS_KEEP && d <= Math.max(PASS_KEEP, PASS_REACH)) cur = d; return; }
@@ -1512,6 +2191,38 @@
     if (c.opener) NL.responsive(new Image(), c.opener, ar <= .95 ? "min(100vw, " + Math.round(88 * ar) + "vh)" : "100vw");
   }
 
+  /* ---------- the local time, on the plate and the card ----------------- */
+
+  // One time to a collection, in its place's zone (places.json `tz`: a
+  // collection that crosses a line keeps to the zone of the pin that stands
+  // for it), 24-hour, by the sky's clock, so ?t= moves it too. Checked
+  // every few seconds while the plate or the card is up, so the minute
+  // turns over on time. A place with no `tz` shows no time.
+  var clockFmt = {}, cardCol = null, plateCol = null, clockTimer = 0;
+  function clockAt(tz) {
+    if (!tz || !window.Intl) return "";
+    try {
+      var f = clockFmt[tz] || (clockFmt[tz] = new Intl.DateTimeFormat("en-GB", { timeZone: tz, hour: "2-digit", minute: "2-digit", hourCycle: "h23" }));
+      return f.format(new Date(skyTime()));
+    } catch (e) { return ""; }
+  }
+  function colTime(c) { return c ? clockAt(c.tz) : ""; }
+  function clockTick() {
+    var on = false, t;
+    if (plateFor && plateCol && !crowd) {
+      t = $(".g-plate-time");
+      if (t) { var v = colTime(plateCol); if (t.textContent !== v) t.textContent = v; on = true; }
+    }
+    if (cardShown && cardCol) {
+      t = $(".g-card-time");
+      var w = colTime(cardCol);
+      if (t && t.textContent !== w) { t.textContent = w; t.hidden = !w; }
+      on = true;
+    }
+    clearTimeout(clockTimer);
+    if (on) clockTimer = setTimeout(clockTick, 5000);
+  }
+
   /* ------------------------------------------------------------------
      THE CARD
      ------------------------------------------------------------------ */
@@ -1537,6 +2248,10 @@
       n.textContent = parts[k] || "";
       n.hidden = !parts[k];
     }
+    cardCol = c;
+    var ct = $(".g-card-time"), foot = $(".g-card-foot");
+    if (ct) { ct.textContent = colTime(c); ct.hidden = !ct.textContent; }
+    if (foot) foot.hidden = !c.where && !(ct && ct.textContent);   // neither: no gap under the title
     $(".g-card-prev").classList.toggle("is-end", c.n === 0);
     $(".g-card-next").classList.toggle("is-end", c.n === seq.length - 1);
   }
@@ -1550,6 +2265,7 @@
     card.classList.toggle("is-touring", tour);
     stage.classList.add("has-card");
     cardShown = true;
+    clockTick();
     geo = null;
     dirty = true;
   }
@@ -1625,6 +2341,215 @@
   }
 
   /* ------------------------------------------------------------------
+     THE DIAL: the ring as an instrument's bezel (laptop layout only).
+
+     It reads longitude, and turns with the globe. A meridian sits at its
+     longitude less the camera's, clockwise from 12 o'clock: 12 o'clock is
+     the meridian facing the visitor, 3 and 9 o'clock the limbs (on the
+     equator), the lower half the far side. It is a heading, not a map
+     scale (at the overview the land at the top of the rim is over the
+     pole, on the far side), so it is numbered sparingly, every 60°, and
+     doesn't invite reading the figures against the coast. As the globe
+     turns west the whole bezel turns clockwise, so a collection's dot
+     comes up on the left, crosses the top as its passing card shows, and
+     sets on the right.
+     Outside the rim: a tick every 10°, a longer one under each number. On
+     the rim: a small dot at each collection's lead pin (Morocco's too), the
+     grey of the list's row marks. The same dot grows into a square when it
+     is the one: amber while its card passes (the square that ends its
+     row's wire), full ink while it is pointed at or open. A fixed index
+     stands at 12 o'clock in a gap the ticks fade out across, so no tick
+     ever stands beside it like a second index.
+
+     The lower half fades out by DIAL_FADE_TO, so nothing reaches the
+     console (the numbers don't dim: each stays whole to DIAL_NUM_TO,
+     then goes). The whole dial fades as the camera leaves the overview
+     (sooner than the ring: numbers over a close map are noise) and goes
+     with the ring as the camera tilts. Each frame only the turning group's
+     transform, the few numbers and, while zooming, the tick path change.
+     ------------------------------------------------------------------ */
+
+  var DIAL_TICK = 10, DIAL_MAJOR = 60;   // degrees between ticks; between the long, numbered ones
+  var DIAL_GAP = 4, DIAL_MINOR = 4, DIAL_LONG = 7, DIAL_NUM = 6;   // px out from the rim, in order
+  var DIAL_BEAD = 4;                     // px: a collection's square when it is the one (half that at rest, in globe.css)
+  var DIAL_NOTCH = 20, DIAL_CLEAR = 12;  // px either side of the index: ticks fade from DIAL_NOTCH, gone by DIAL_CLEAR
+  var DIAL_FADE_FROM = 76, DIAL_FADE_TO = 118;   // degrees from 12 o'clock: ticks and dots full above, gone below
+  var DIAL_NUM_TO = 102;                 // numbers stay whole (never dimmer than --text-faint) to here, then go
+  var DIAL_OUT = 1;                      // gone this far (in zoom) in from the overview
+  var SVG = "http://www.w3.org/2000/svg";
+  var dial = null;
+
+  function svg(tag, cls, parent) {
+    var n = document.createElementNS(SVG, tag);
+    if (cls) n.setAttribute("class", cls);
+    if (parent) parent.appendChild(n);
+    return n;
+  }
+  function gradient(id, defs, stops) {
+    var g = svg("linearGradient", null, defs);
+    g.id = id;
+    g.setAttribute("gradientUnits", "userSpaceOnUse");
+    stops.forEach(function (s) {
+      var n = svg("stop", null, g);
+      n.setAttribute("offset", s[0]); n.setAttribute("stop-color", s[1]);
+    });
+    return g;
+  }
+
+  function buildDial() {
+    var root = svg("svg", "g-dial");
+    root.setAttribute("aria-hidden", "true");
+    var defs = svg("defs", null, root), mask = svg("mask", null, defs);
+    // The mask, in the stage's own terms: a sheet fading the lower half
+    // out, and over it the gap at 12 o'clock, which only reaches as far in
+    // as the ticks, so a dot crossing the index stays whole.
+    var k = (DIAL_NOTCH - DIAL_CLEAR) / (2 * DIAL_NOTCH);
+    var fade = gradient("g-dial-fade", defs, [[0, "#fff"], [1, "#000"]]);
+    var notch = gradient("g-dial-notch", defs, [[0, "#fff"], [k, "#000"], [1 - k, "#000"], [1, "#fff"]]);
+    var sheet = svg("rect", null, mask), cut = svg("rect", null, mask);
+    mask.id = "g-dial-mask";
+    mask.setAttribute("maskUnits", "userSpaceOnUse");
+    fade.setAttribute("x1", 0); fade.setAttribute("x2", 0);
+    notch.setAttribute("y1", 0); notch.setAttribute("y2", 0);
+    sheet.setAttribute("fill", "url(#g-dial-fade)");
+    cut.setAttribute("fill", "url(#g-dial-notch)");
+    // The index under the dots, so a square crossing 12 o'clock sits on it.
+    var all = svg("g", null, root), index = svg("path", "g-dial-index", all), face = svg("g", null, all), numG = svg("g", null, all);
+    face.setAttribute("mask", "url(#g-dial-mask)");
+    var turn = svg("g", null, face);
+    var d = { all: all, fade: fade, notch: notch, mask: mask, sheet: sheet, cut: cut, turn: turn,
+              minor: svg("path", "g-dial-tick", turn), major: svg("path", "g-dial-tick is-major", turn),
+              markG: svg("g", null, turn), nums: [], marks: [], index: index,
+              r: 0, cx: 0, cy: 0, L: null, shut: [], key: "" };
+    for (var lng = -180 + DIAL_MAJOR; lng <= 180; lng += DIAL_MAJOR) {
+      var t = svg("text", "g-dial-num", numG);
+      t.textContent = lng === 0 || lng === 180 ? Math.abs(lng) + "°" : Math.abs(lng) + "°" + (lng > 0 ? LABELS.east : LABELS.west);
+      t.setAttribute("data-lng", lng);
+      t.setAttribute("text-anchor", "middle");
+      t.setAttribute("dy", ".35em");     // the figures' middle on the point
+      t.setAttribute("dx", ".07em");     // and their trailing letter-space split evenly
+      d.nums.push({ el: t, lng: lng, w: 0, shown: true, gone: false });
+    }
+    // Each collection's square is drawn at 12 o'clock, centred on the rim's
+    // line, and turned to its longitude; globe.css shrinks it to a dot.
+    cols.forEach(function (c) {
+      if (!c.lead) return;
+      var g = svg("g", "g-dial-mark", d.markG);
+      g.setAttribute("transform", "rotate(" + c.lead.ll[0] + ")");
+      d.marks.push({ c: c, el: g, dot: svg("rect", "g-dial-dot", g) });
+    });
+    // Above the map and the header's veil, below the wires, plate, console and card.
+    stage.insertBefore(root, mapEl);
+    dial = d;
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { dial.L = null; dirty = true; });
+  }
+
+  // Collections passing, pointed at or open: their dots change and come to
+  // the top of the pile (the Rockies' dots overlap).
+  function dialState() {
+    if (!dial) return;
+    var key = passing + "|" + lit + "|" + active;
+    if (key === dial.key) return;
+    dial.key = key;
+    var top = [];
+    dial.marks.forEach(function (m) {
+      var s = m.c.slug, cl = m.el.classList;
+      cl.toggle("is-passing", s === passing && s !== active);
+      cl.toggle("is-lit", s === lit || s === active);
+      if (s === passing || s === lit || s === active) top.push(m.el);
+    });
+    top.forEach(function (n) { dial.markG.appendChild(n); });
+    dirty = true;
+  }
+
+  function placeDial() {
+    if (!dial) return;
+    // Out over the last DIAL_OUT of zoom before the overview, and with the
+    // ring as the camera tilts (the ring is gone past 2°).
+    var op = L.app ? Math.min(clamp((L.zO + DIAL_OUT - sizeZoom()) / .6, 0, 1), clamp(1 - map.getPitch() / 2, 0, 1)) : 0;
+    dial.all.style.opacity = op ? op.toFixed(3) : 0;
+    if (!op) return;
+    var r = silhouette(map.getZoom(), map.getCenter().lat, L.h), pad = map.getPadding();
+    var cx = pad.left + (L.w - pad.left - pad.right) / 2, cy = pad.top + (L.h - pad.top - pad.bottom) / 2;
+    if (Math.abs(r - dial.r) > .05 || cx !== dial.cx || cy !== dial.cy || dial.L !== L) dialGeometry(r, cx, cy);
+    var c = map.getCenter().lng, num = r + DIAL_GAP + DIAL_LONG + DIAL_NUM;
+    dial.turn.setAttribute("transform", "translate(" + cx + " " + cy + ") rotate(" + (-c).toFixed(3) + ")");
+    var boxes = plateBox ? dial.shut.concat([plateBox]) : dial.shut;
+    dial.nums.forEach(function (n) {
+      var a = wrap180(n.lng - c), s = Math.sin(a * rad), k = Math.cos(a * rad), near = Math.abs(a) < DIAL_NUM_TO + 30;
+      if (near !== n.shown) { n.shown = near; n.el.style.display = near ? "" : "none"; }
+      if (!near) return;
+      // Upright figures, their near edge a fixed gap off the ticks all the way round.
+      var rho = num + Math.abs(s) * n.w / 2 + Math.abs(k) * 4, x = cx + rho * s, y = cy - rho * k;
+      n.el.setAttribute("x", x.toFixed(2));
+      n.el.setAttribute("y", y.toFixed(2));
+      // Numbers aren't faded with the ticks (no text is fainter than
+      // --text-faint): each is whole until DIAL_NUM_TO, then goes. Nor do
+      // they run under the masthead, the panel or the plate; they step
+      // aside rather than be cut by an edge.
+      var gone = Math.abs(a) > DIAL_NUM_TO || boxes.some(function (b) {
+        return x + n.w / 2 + 6 > b[0] && x - n.w / 2 - 6 < b[2] && y + 10 > b[1] && y - 10 < b[3];
+      });
+      if (gone !== n.gone) { n.gone = gone; n.el.classList.toggle("is-gone", gone); }
+    });
+  }
+
+  // Only when the dial changes size or place (a resize, the zoom fading it
+  // out), and once the type has loaded, never once a frame at the overview.
+  function dialGeometry(r, cx, cy) {
+    dial.r = r; dial.cx = cx; dial.cy = cy;
+    if (dial.L !== L) {
+      dial.L = L;
+      // The wordmark, the nav's words (not their taller hit areas) and the
+      // ground switch, and the panel: no number runs under them.
+      var s = stage.getBoundingClientRect(), range = document.createRange();
+      dial.shut = [];
+      [".wordmark", ".masthead .theme-toggle", ".g-panel"].concat(Array.prototype.slice.call(document.querySelectorAll(".masthead .nav > a, .masthead .nav-drop > a")))
+        .forEach(function (n) {
+          if (typeof n === "string") n = $(n);
+          else { range.selectNodeContents(n); n = range; }
+          var b = n && n.getBoundingClientRect();
+          if (b && b.width) dial.shut.push([b.left - s.left - 12, b.top - s.top - 4, b.right - s.left + 4, b.bottom - s.top + 4]);   // 12: the current tab's square
+        });
+      dial.nums.forEach(function (n) { n.el.style.display = ""; n.shown = true; n.w = n.el.getComputedTextLength ? n.el.getComputedTextLength() : 30; });
+    }
+    function spokes(step, r0, r1, skip) {
+      var p = "";
+      for (var a = 0; a < 360; a += step) {
+        if (skip && a % skip === 0) continue;
+        var s = Math.sin(a * rad), k = Math.cos(a * rad);
+        p += "M" + (r0 * s).toFixed(2) + " " + (-r0 * k).toFixed(2) + "L" + (r1 * s).toFixed(2) + " " + (-r1 * k).toFixed(2);
+      }
+      return p;
+    }
+    var r0 = r + DIAL_GAP, rim = r + .5, b = DIAL_BEAD;   // the rim's line is the pixel just outside r
+    dial.minor.setAttribute("d", spokes(DIAL_TICK, r0, r0 + DIAL_MINOR, DIAL_MAJOR));
+    dial.major.setAttribute("d", spokes(DIAL_MAJOR, r0, r0 + DIAL_LONG));
+    dial.marks.forEach(function (m) {
+      m.dot.setAttribute("x", -b / 2); m.dot.setAttribute("y", (-rim - b / 2).toFixed(2));
+      m.dot.setAttribute("width", b); m.dot.setAttribute("height", b);
+    });
+    // The index: a hairline up from the rim at 12 o'clock, one pixel past
+    // the longest ticks (which float off the rim), on a whole pixel so it
+    // stays sharp. A number crossing 12 o'clock clears it by DIAL_NUM.
+    var ix = Math.round(cx) + .5, top = cy - r0 - DIAL_LONG - 1;
+    dial.index.setAttribute("d", "M" + ix + " " + (cy - r - 1).toFixed(1) + "V" + top.toFixed(1));
+    // The gap round it: the tick band only, from just past a grown square out.
+    var gapIn = cy - rim - b / 2 - .5;
+    dial.notch.setAttribute("x1", (ix - DIAL_NOTCH).toFixed(1)); dial.notch.setAttribute("x2", (ix + DIAL_NOTCH).toFixed(1));
+    dial.cut.setAttribute("x", (ix - DIAL_NOTCH).toFixed(1)); dial.cut.setAttribute("width", 2 * DIAL_NOTCH);
+    dial.cut.setAttribute("y", (top - 2).toFixed(1)); dial.cut.setAttribute("height", (gapIn - top + 2).toFixed(1));
+    // The fade, top to bottom in the stage's own terms, through the middle of the numbers.
+    var mid = r + DIAL_GAP + DIAL_LONG;
+    dial.fade.setAttribute("y1", (cy - mid * Math.cos(DIAL_FADE_FROM * rad)).toFixed(1));
+    dial.fade.setAttribute("y2", (cy - mid * Math.cos(DIAL_FADE_TO * rad)).toFixed(1));
+    dial.sheet.setAttribute("x", -L.w); dial.sheet.setAttribute("y", -L.h);
+    dial.sheet.setAttribute("width", 3 * L.w); dial.sheet.setAttribute("height", 3 * L.h);
+    dial.mask.setAttribute("x", -L.w); dial.mask.setAttribute("y", -L.h);
+    dial.mask.setAttribute("width", 3 * L.w); dial.mask.setAttribute("height", 3 * L.h);
+  }
+
+  /* ------------------------------------------------------------------
      THE SPIN: 2°/s westward by the clock, from the landing on, whenever the
      camera is out at globe zoom with nothing open, pointed at or held and
      the page in view. It stops at once when touched and ramps back a
@@ -1654,7 +2579,7 @@
   function gapBoost(lng) {
     var d = 180;
     cols.forEach(function (c) {
-      if (c.pins.length && PASS_SKIP.indexOf(c.slug) < 0) d = Math.min(d, Math.abs(((lng - c.lead.ll[0] + 540) % 360) - 180));
+      if (c.pins.length && PASS_SKIP.indexOf(c.slug) < 0) d = Math.min(d, Math.abs(wrap180(lng - c.lead.ll[0])));
     });
     var k = clamp((d - GAP_FROM) / (GAP_FULL - GAP_FROM), 0, 1);
     return 1 + (GAP_BOOST - 1) * k * k * (3 - 2 * k);
@@ -1673,14 +2598,17 @@
     passStep(t);
     tourStep(dt);
     idleStep(dt);
+    dialState();
     if (dirty) {
       dirty = false;
       layoutPins();
       placeRing();
       placePlate();
+      placeDial();
       layoutLabels();
       if (placeWire()) dirty = true;        // still drawing in
     }
+    skyFrame();
   }
 
   // Left alone away from the overview (a card open, or zoomed in by hand),
@@ -1754,7 +2682,7 @@
 
   // [lat, lng], or where the camera is looking, to `dp` decimals (four).
   function coords(at, dp) {
-    var c = at ? { lat: at[0], lng: at[1] } : map.getCenter(), lng = ((c.lng + 540) % 360) - 180;
+    var c = at ? { lat: at[0], lng: at[1] } : map.getCenter(), lng = wrap180(c.lng);
     if (dp === undefined) dp = 4;
     return Math.abs(c.lat).toFixed(dp) + "° " + (c.lat >= 0 ? LABELS.north : LABELS.south) + " · " +
            Math.abs(lng).toFixed(dp) + "° " + (lng >= 0 ? LABELS.east : LABELS.west);
