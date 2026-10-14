@@ -1,5 +1,5 @@
 {
-  "_comment": "Hand-edited. Where each collection sits on the globe, keyed by the slug in collections.json. Region level only: a national park, island, reserve, valley or town that a visitor would recognise, at that public place's usual centre point. Never a photograph's own GPS position, and never a nest, roost, lek or hide. `where` is the short line under the title in the list and the card (\"\" hides it). `pins` are in route order, which sets the dashed line between them; the first pin is the one the globe turns to and the one shown out at the globe, unless `lead` names another pin (Alaska: Denali National Park, Newton's pick). Optional `zoom` sets how close a single-pin collection arrives. `sensitive: true` keeps the camera back (never closer than zoom 7) for collections of lekking or nesting species. `coords` (four decimals) is what the console reads while the collection's card passes (Newton's picks: one place, a state's or country's middle, or where a several-state trip started). `status` is \"draft\" until Newton has confirmed the row. `region` is the heading the collection is listed under on the globe page; `regions` (top) is the order of those headings (Hawai'i counts as North America, Newton's call). A collection with no entry here is still listed; it simply has no pin. A place with `title` (and `date`) but no collection yet (Morocco, until Newton adds its photographs) is on the globe with its pins, road and row, but no photograph and no gallery; once collections.json has it, its `title` and `date` here are ignored and can go. To add a collection: add its entry to collections.json as usual, then add one entry here.",
+  "_comment": "Hand-edited. Where each collection sits on the globe, keyed by the slug in collections.json. Region level only: a national park, island, reserve, valley or town that a visitor would recognise, at that public place's usual centre point. Never a photograph's own GPS position, and never a nest, roost, lek or hide. `where` is the short line under the title in the list and the card (\"\" hides it). `pins` are in route order, which sets the dashed line between them; the first pin is the one the globe turns to and the one shown out at the globe, unless `lead` names another pin (Alaska: Denali National Park, Newton's pick). Optional `zoom` sets how close a single-pin collection arrives. `sensitive: true` keeps the camera back (never closer than zoom 7) for collections of lekking or nesting species. `coords` (four decimals) is what the console reads while the collection's card passes (Newton's picks: one place, a state's or country's middle, or where a several-state trip started). `status` is \"draft\" until Newton has confirmed the row. `region` is the heading the collection is listed under on the globe page; `regions` (top) is the order of those headings (Hawai'i counts as North America, Newton's call). A collection with no entry here is still listed; it simply has no pin. A place with `title` (and `date`) but no collection yet (Morocco and Birds of the Rio Grande, until Newton adds their photographs) is on the globe with its pins, road and row, but no photograph and no gallery; once collections.json has it, its `title` and `date` here are ignored and can go. To add a collection: add its entry to collections.json as usual, then add one entry here.",
   "regions": ["North America", "South America", "Asia", "Africa"],
   "places": {
     "malaysia": {
@@ -256,6 +256,24 @@
         { "name": "Souss-Massa National Park", "lat": 30.08, "lng": -9.66 },
         { "name": "Guelmim", "lat": 28.99, "lng": -10.07 },
         { "name": "Oukaïmeden", "lat": 31.21, "lng": -7.86 }
+      ]
+    },
+    "rio-grande": {
+      "status": "draft",
+      "region": "North America",
+      "title": "Birds of the Rio Grande",
+      "date": "May 2026",
+      "where": "Nuevo León · Texas",
+      "lead": "Bentsen-Rio Grande Valley State Park",
+      "coords": { "lat": 26.1838, "lng": -98.3810 },
+      "pins": [
+        { "name": "High Island", "lat": 29.57, "lng": -94.39 },
+        { "name": "Bentsen-Rio Grande Valley State Park", "lat": 26.18, "lng": -98.38 },
+        { "name": "Santa Ana National Wildlife Refuge", "lat": 26.08, "lng": -98.13 },
+        { "name": "Salineño", "lat": 26.52, "lng": -99.11 },
+        { "name": "Monterrey", "lat": 25.58, "lng": -100.24 },
+        { "name": "Cumbres de Monterrey National Park", "lat": 25.292, "lng": -100.243 },
+        { "name": "Galeana", "lat": 24.83, "lng": -100.08 }
       ]
     }
   }

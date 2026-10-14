@@ -50,12 +50,14 @@ Folders under `images/` starting with `_` are skipped by the scanner.
 The home page is a dark globe that turns slowly, with a pin wherever a
 collection was photographed and the list of collections on the left (below
 the globe on a phone), grouped under region headings (North America, South
-America, Asia, Africa; Newton's pick from the list previews), oldest trip
-first within each. Pointing at a row or a pin lights that collection;
-clicking flies there, lifts the terrain, and opens a card with the
-collection's opening photograph and a link into the gallery. A second click
-on the same row, or the card, opens the gallery. Keyboard and screen-reader
-users get the rows as plain links. `work.html` ("Index") shows the same
+America, Asia, Africa; Newton's pick from the list previews), A to Z within
+each by the title as it reads, so The Snowy West sits under T (Newton asked,
+2026-10-14; `byTitle()`). The card's ‹ › and the tour follow the list's
+order (`seq`); the pins still arrive oldest trip first (`cols`). Pointing
+at a row or a pin lights that collection; clicking flies there, lifts the
+terrain, and opens a card with the collection's opening photograph and a
+link into the gallery. A second click on the same row, or the card, opens
+the gallery. Keyboard and screen-reader users get the rows as plain links. `work.html` ("Index") shows the same
 collections as a grid of covers, rendered by site.js's `renderHome`.
 
 The globe opens over the eastern Americas and turns west on its own
@@ -141,11 +143,12 @@ keyed by the collection's slug, after the usual collections.json entry:
   region goes last, under no heading.
 - A collection with no entry is still listed; it just has no pin.
 - **A place before its photographs.** An entry with `title` and `date` but no
-  collections.json entry (Morocco, March 2026: Newton asked for the pin and
-  road first, photographs to follow) is on the globe with its pins, road,
-  passing card (the title alone) and a row under its region, which flies
-  there; the card has no photograph and no "View collection". Its row shows
-  only while the globe is up, and it is not on the Index or any other page.
+  collections.json entry (Morocco, March 2026, and Birds of the Rio Grande,
+  May 2026: Newton asked for the pins and road first, photographs to follow)
+  is on the globe with its pins, road, passing card (the title alone) and a
+  row under its region, which flies there; the card has no photograph and
+  no "View collection". Its row shows only while the globe is up, and it is
+  not on the Index or any other page.
   When the photographs come, add the collections.json entry as usual (in
   oldest-first order); the `title` and `date` here are then ignored and can go.
 - **Roads (optional): `data/routes.json`.** A collection whose line should
@@ -182,6 +185,21 @@ keyed by the collection's slug, after the usual collections.json entry:
   and back, Souss-Massa (the Massa estuary and Sidi R'bat), Guelmim, and up
   to Oukaïmeden. The checklist named by street coordinates in Agadir stays
   off the line; Cap Ghir is on the road but has no pin.
+  Birds of the Rio Grande is the Texas and Nuevo León part of Newton's May
+  2026 report (6–16 May; his title, his cut: the New Mexico to Montana
+  half is left out). High Island down to the Valley (drawn as a drive),
+  Bentsen-Rio Grande Valley State Park, Santa Ana National Wildlife Refuge,
+  up the river to Salineño and Falcon State Park, over at Laredo to
+  Monterrey (La Estanzuela, Chipinque), Santiago, Cumbres de Monterrey
+  National Park (Mesa del Oso and its canyons), Galeana (Ejido El Uno,
+  which OpenStreetMap can't place, so the town stands for it), and back
+  over the Colombia bridge, where the road ends. Pins close together share
+  one, so they don't sit on top of each other at the arrival: Falcon State
+  Park is Salineño's (7 km), Chipinque is Monterrey's, Santiago's stops are
+  on the road without a pin. Its lead (the overview pin) and readout are
+  Bentsen, on the river the title names. The private ranch (Santa Margarita,
+  guided groups only) and the street-address and "Random" checklists stay
+  off the line.
 
 Overlapping pins of different collections merge on screen into one ringed
 pin; clicking it zooms in until they separate. At the overview only each
@@ -228,12 +246,13 @@ Malaysia, Arizona, Yunnan, Sri Lanka and Guangxi do, since their files carry no 
 that spans separate trips ("January 2024, December 2025"), which the derived
 range would misreport — or to `""` to show no date at all.
 
-The order of `data/collections.json` is the order of the home page: **oldest
-trip first, by each collection's earliest date**. A new collection goes in by
-that rule. Only collections with photographs are listed (the globe page's
-one exception is a place Newton asked to pin first; see "A place before its
-photographs") — there are no
-"coming soon" placeholders.
+The order of `data/collections.json` is the order of the Index (work.html)
+and of the pins' arrival on the globe: **oldest trip first, by each
+collection's earliest date**. A new collection goes in by that rule. (The
+globe's own list is A to Z within each region; see "The globe".) Only
+collections with photographs are listed (the globe page's one exception is
+a place Newton asked to pin first; see "A place before its photographs") —
+there are no "coming soon" placeholders.
 
 Two switches at the top of `assets/site.js` control all of this:
 

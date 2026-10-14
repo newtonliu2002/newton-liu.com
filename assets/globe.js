@@ -218,11 +218,13 @@
 
   // bySlug has no prototype, and has() asks for its own keys only, so a
   // hash or a referrer like "#constructor" can never pass for a collection.
-  var cols = [], bySlug = Object.create(null);   // collections, oldest trip first (the tour's order;
-                                                 // a place waiting for photographs comes last)
+  var cols = [], bySlug = Object.create(null);   // collections, oldest trip first (the order the pins
+                                                 // arrive in; a place waiting for photographs comes last)
+  var seq = [];                                  // the same in the list's order, region by region and
+                                                 // A to Z (the card's arrows and the tour follow it)
   var regions = [];                              // the list's headings, in order (places.json `regions`)
   function has(slug) { return typeof slug === "string" && Object.prototype.hasOwnProperty.call(bySlug, slug); }
-  var pins = [];                            // every pin, in list order
+  var pins = [];                            // every pin, oldest trip first
   var map = null, ml = null, attribution = null;
   var dataReady = false, ready = false, failed = false, deferred = false, failTimer = 0;
   var state = "intro";                      // intro · overview · selecting · arrived · free · returning
@@ -336,9 +338,10 @@
 
   // The opener and the date line follow the gallery's own rules: the
   // `featured` photograph else the first; `date` if set, else derived.
-  // A place with a `title` and no collection yet (Morocco, until its
-  // photographs come) joins the end: pins, road and row, no photograph and
-  // no gallery (`href` null). Once collections.json has it, that entry wins.
+  // A place with a `title` and no collection yet (Morocco and the Rio
+  // Grande, until their photographs come) joins the end: pins, road and
+  // row, no photograph and no gallery (`href` null). Once collections.json
+  // has it, that entry wins.
   function joinData(collections, photos, places, routes) {
     var byCol = {}, listed = {};
     photos.forEach(function (p) { (byCol[p.collection] = byCol[p.collection] || []).push(p); });
@@ -378,9 +381,10 @@
 
   /* ------------------------------------------------------------------
      THE LIST: ordinary links, grouped under their regions (places.json
-     `region`, headings in its `regions` order; oldest trip first within
-     each). A pointer click on a row not already open flies there instead;
-     a second click, Enter, or a modified click follows the link as usual.
+     `region`, headings in its `regions` order; A to Z within each, by the
+     title as it reads, Newton's call). A pointer click on a row not already
+     open flies there instead; a second click, Enter, or a modified click
+     follows the link as usual.
      A place waiting for its photographs (no gallery) is a button that flies
      there, listed only while the globe is up.
      While a passing card is up its row is lit too (.is-passing), and on
@@ -388,14 +392,19 @@
      pointer or keyboard focus is in the list.
      ------------------------------------------------------------------ */
 
+  // A to Z as the title reads ("The Snowy West" under T), accents and case aside.
+  function byTitle(a, b) { return a.title.localeCompare(b.title, "en", { sensitivity: "base" }) || a.i - b.i; }
+
   function renderList() {
     listEl.textContent = "";
     var order = regions.slice(), groups = {};
+    seq = [];
     cols.forEach(function (c) { if (c.region && order.indexOf(c.region) < 0) order.push(c.region); });
     order.push("");                         // a collection no region names: last, under no heading
     order.forEach(function (name) {
-      var mine = cols.filter(function (c) { return c.region === name; });
+      var mine = cols.filter(function (c) { return c.region === name; }).sort(byTitle);
       if (!mine.length) return;
+      mine.forEach(function (c) { c.n = seq.length; seq.push(c); });
       var g = el("li", "g-region"), ol = el("ol", "g-rows");
       if (name) {
         var h = el("h3", "g-region-head");
@@ -408,7 +417,7 @@
       listEl.appendChild(g);
       groups[name] = ol;
     });
-    cols.forEach(function (c) {
+    seq.forEach(function (c) {
       var li = el("li"), a = el("a", "g-row");
       if (c.href) a.href = c.href;
       else { a.setAttribute("role", "button"); a.tabIndex = 0; li.hidden = true; }
@@ -1423,8 +1432,8 @@
 
   function step(d) {
     if (!active) return;
-    var i = bySlug[active].i + d;
-    if (i >= 0 && i < cols.length) select(cols[i].slug, "key");
+    var i = bySlug[active].n + d;
+    if (i >= 0 && i < seq.length) select(seq[i].slug, "key");
   }
 
   /* ---------- relief: hillshade, and the mountains rising ------------------ */
@@ -1528,8 +1537,8 @@
       n.textContent = parts[k] || "";
       n.hidden = !parts[k];
     }
-    $(".g-card-prev").classList.toggle("is-end", c.i === 0);
-    $(".g-card-next").classList.toggle("is-end", c.i === cols.length - 1);
+    $(".g-card-prev").classList.toggle("is-end", c.n === 0);
+    $(".g-card-next").classList.toggle("is-end", c.n === seq.length - 1);
   }
 
   var leaveTimer = 0;
@@ -1703,12 +1712,12 @@
     stage.classList.add("is-touring");      // stacked: the console stays, the card sits above it
     say(LABELS.tourStarted);
     setTrail([]);
-    var i = active ? bySlug[active].i + 1 : 0;
-    tourGo(i < cols.length ? i : 0);
+    var i = active ? bySlug[active].n + 1 : 0;
+    tourGo(i < seq.length ? i : 0);
   }
   function tourGo(i) {
-    if (i >= cols.length) { endTour(true); return; }
-    var from = active && bySlug[active], to = cols[i];
+    if (i >= seq.length) { endTour(true); return; }
+    var from = active && bySlug[active], to = seq[i];
     tourAt = i;
     if (from && from.pins.length && to.pins.length && from !== to) {
       setTrail((trail.length ? trail : [from.lead.ll]).concat([to.lead.ll]));
