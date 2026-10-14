@@ -1,5 +1,5 @@
 {
-  "_comment": "Hand-edited. Where each collection sits on the globe, keyed by the slug in collections.json. Region level only: a national park, island, reserve, valley or town that a visitor would recognise, at that public place's usual centre point. Never a photograph's own GPS position, and never a nest, roost, lek or hide. `where` is the short line under the title in the list and the card (\"\" hides it). `pins` are in route order, which sets the dashed line between them; the first pin is the one the globe turns to. Optional `zoom` sets how close a single-pin collection arrives. `sensitive: true` keeps the camera back (never closer than zoom 7) for collections of lekking or nesting species. `coords` (four decimals) is what the console reads while the collection's card passes (Newton's picks: one place, a state's or country's middle, or where a several-state trip started). `status` is \"draft\" until Newton has confirmed the row. A collection with no entry here is still listed; it simply has no pin. To add a collection: add its entry to collections.json as usual, then add one entry here.",
+  "_comment": "Hand-edited. Where each collection sits on the globe, keyed by the slug in collections.json. Region level only: a national park, island, reserve, valley or town that a visitor would recognise, at that public place's usual centre point. Never a photograph's own GPS position, and never a nest, roost, lek or hide. `where` is the short line under the title in the list and the card (\"\" hides it). `pins` are in route order, which sets the dashed line between them; the first pin is the one the globe turns to and the one shown out at the globe, unless `lead` names another pin (Alaska: Denali National Park, Newton's pick). Optional `zoom` sets how close a single-pin collection arrives. `sensitive: true` keeps the camera back (never closer than zoom 7) for collections of lekking or nesting species. `coords` (four decimals) is what the console reads while the collection's card passes (Newton's picks: one place, a state's or country's middle, or where a several-state trip started). `status` is \"draft\" until Newton has confirmed the row. A collection with no entry here is still listed; it simply has no pin. To add a collection: add its entry to collections.json as usual, then add one entry here.",
   "places": {
     "malaysia": {
       "status": "draft",
@@ -209,7 +209,8 @@
     "alaska": {
       "status": "draft",
       "where": "",
-      "coords": { "lat": 64.4460, "lng": -149.6809 },
+      "coords": { "lat": 63.0694, "lng": -151.0072 },
+      "lead": "Denali National Park",
       "pins": [
         { "name": "Juneau", "lat": 58.30, "lng": -134.42 },
         { "name": "Glacier Bay National Park", "lat": 58.50, "lng": -137.00 },

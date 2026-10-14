@@ -352,6 +352,8 @@
       (pl.pins || []).forEach(function (p) {
         if (typeof p.lat === "number" && typeof p.lng === "number") col.pins.push({ name: p.name || "", ll: [p.lng, p.lat] });
       });
+      // The pin that stands for it out at the globe (places.json `lead`, a pin's name); else the first.
+      col.lead = col.pins.filter(function (p) { return p.name === pl.lead; })[0] || col.pins[0] || null;
       cols.push(col);
       bySlug[c.slug] = col;
     });
@@ -618,7 +620,7 @@
     ml.addProtocol("nl-dem", demTile);
     L = measure();
     painted = ground();
-    var first = (recent || deep) && bySlug[recent || deep].pins[0];
+    var first = (recent || deep) && bySlug[recent || deep].lead;
     var lng = first ? first.ll[0] : START_LNG;
     // The intro turns the globe at its final size, so it fills the ring
     // from the first frame. Wherever the page scrolls under the globe (the
@@ -748,7 +750,7 @@
 
   /* ------------------------------------------------------------------
      PINS: one marker per place, thinned out on screen every frame
-     (layoutPins). At the overview only each collection's first pin shows;
+     (layoutPins). At the overview only each collection's lead pin shows;
      where pins of different collections would overlap, one stands for
      all as a stacked pin. A collection's own pins never hide each other.
      ------------------------------------------------------------------ */
@@ -762,7 +764,7 @@
         e.innerHTML = '<i class="g-pin-in"><i class="g-pin-x"></i><i class="g-pin-ring"></i><i class="g-pin-af"></i><i class="g-pin-label"></i></i>';
         e.querySelector(".g-pin-label").textContent = pp.name;
         if (visited[c.slug]) e.classList.add("is-visited");
-        var p = { c: c, slug: c.slug, pi: pi, ll: pp.ll, el: e, show: true, xy: null, stack: null, label: 0, lw: 0 };
+        var p = { c: c, slug: c.slug, pi: pi, lead: pp === c.lead, ll: pp.ll, el: e, show: true, xy: null, stack: null, label: 0, lw: 0 };
         p.marker = new ml.Marker({ element: e, anchor: "center", opacityWhenCovered: "0" }).setLngLat(pp.ll).addTo(map);
         // Lighting a pin reveals the rest of its collection, which may land
         // under the pointer: the pin pointed at stays on top (.is-hover), and
@@ -829,7 +831,7 @@
     pins.forEach(function (p) { if (p.slug === lit && p.slug !== active) order.push(p); });
     pins.forEach(function (p) { if (p.slug !== lit && p.slug !== active) order.push(p); });
     order.forEach(function (p) {
-      var show = !(anchorsOnly && p.pi > 0 && p.slug !== active && p.slug !== lit);
+      var show = !(anchorsOnly && !p.lead && p.slug !== active && p.slug !== lit);
       p.stack = null;
       if (show && far < 181 && angle(cc, p.ll) > far) show = false;
       if (show) {
@@ -1032,7 +1034,7 @@
   function turnTo(slug) {
     var c = bySlug[slug];
     if (!ready || !c || !c.pins.length || !inOverview() || state !== "overview") return;
-    var ctr = map.getCenter(), p = c.pins[0].ll;
+    var ctr = map.getCenter(), p = c.lead.ll;
     if (angle([ctr.lng, ctr.lat], p) <= 70) return;
     map.easeTo({ center: [p[0], OVERVIEW_LAT], duration: REDUCED ? 0 : 900, padding: L.pad });
   }
@@ -1055,7 +1057,7 @@
     }
     plate.appendChild(el("p", "g-plate-title", c.title));
     if (c.where) plate.appendChild(el("p", "g-plate-where", c.where));
-    openPlate(at || c.pins[0].p);
+    openPlate(at || c.lead.p);
   }
   function crowdPlate(p) {
     if (!L.app || COARSE) return;
@@ -1532,7 +1534,7 @@
   function gapBoost(lng) {
     var d = 180;
     cols.forEach(function (c) {
-      if (c.pins.length && PASS_SKIP.indexOf(c.slug) < 0) d = Math.min(d, Math.abs(((lng - c.pins[0].ll[0] + 540) % 360) - 180));
+      if (c.pins.length && PASS_SKIP.indexOf(c.slug) < 0) d = Math.min(d, Math.abs(((lng - c.lead.ll[0] + 540) % 360) - 180));
     });
     var k = clamp((d - GAP_FROM) / (GAP_FULL - GAP_FROM), 0, 1);
     return 1 + (GAP_BOOST - 1) * k * k * (3 - 2 * k);
@@ -1598,7 +1600,7 @@
     var from = active && bySlug[active], to = cols[i];
     tourAt = i;
     if (from && from.pins.length && to.pins.length && from !== to) {
-      setTrail((trail.length ? trail : [from.pins[0].ll]).concat([to.pins[0].ll]));
+      setTrail((trail.length ? trail : [from.lead.ll]).concat([to.lead.ll]));
     }
     card.classList.add("is-touring");
     select(to.slug, "tour");

@@ -75,7 +75,7 @@ Pacific after Hawai'i, the Atlantic after Sri Lanka) the spin eases up to
 2.5× (`gapBoost()`, `GAP_*`) so nobody thinks the globe has stopped.
 The console under the globe reads the coordinates of the collection
 passing (or last passed), from its `coords` in places.json, not the
-camera's: Newton's picks, one place (Ecuador: Mindo), a state's or
+camera's: Newton's picks, one place (Ecuador: Mindo; Alaska: Denali's summit), a state's or
 country's middle, or where a several-state trip started. Phones run the
 same schedule without the cards: the bar steps through the places and the
 pin lights. While the visitor drags or zooms in, it shows the camera's
@@ -109,7 +109,9 @@ keyed by the collection's slug, after the usual collections.json entry:
   rare; on a phone, where the map is a short band above the card, the
   densest collections lose a few.
 - `pins` are in route order: they set the line drawn between them, and the
-  first is the one the globe turns to. One pin per place; a collection that
+  first is the one the globe turns to and the only one shown out at the
+  globe, unless `lead` names another pin (Alaska leads with Denali National
+  Park, Newton's pick, while its pins keep the Juneau-first order). One pin per place; a collection that
   covers several places (The Canadian West) gets several, and they light up,
   fly and frame together.
 - `where` is the short line under the title on the card and the passing
