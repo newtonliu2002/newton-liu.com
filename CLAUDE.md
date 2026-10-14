@@ -167,7 +167,7 @@ Dates appear **once per collection**, under the gallery heading ("December
 dates in the manifest by `collectionDate()` in `site.js`, so it stays correct
 as photographs are added. Set `"date"` on a collection in
 `data/collections.json` to override it with fixed text — Galápagos, Ecuador,
-Malaysia, Arizona, Yunnan and Sri Lanka do, since their files carry no capture dates, and so does any page
+Malaysia, Arizona, Yunnan, Sri Lanka and Guangxi do, since their files carry no capture dates, and so does any page
 that spans separate trips ("January 2024, December 2025"), which the derived
 range would misreport — or to `""` to show no date at all.
 
