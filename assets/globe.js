@@ -48,9 +48,9 @@
   var SENSITIVE_ZOOM = 7;            // never closer than this for a `sensitive` collection
   var SPIN = 2;                      // degrees per second, westward: the land runs left to right
   var START_LNG = -58;               // the landing faces the eastern Americas and turns west, so the
-                                     // Pacific and Asia come next and the empty Atlantic comes last
+                                     // Pacific and Asia come next and Morocco and the Atlantic come last
   // Where no pin comes near the middle for a long way (the Pacific after
-  // Hawai'i, the Atlantic after Sri Lanka) the spin eases up to GAP_BOOST
+  // Hawai'i, the Sahara after Sri Lanka, the Atlantic after Morocco) the spin eases up to GAP_BOOST
   // times as fast: from GAP_FROM degrees off the nearest pin, in full by GAP_FULL.
   var GAP_BOOST = 2.5, GAP_FROM = 12, GAP_FULL = 25;
   // The passing card: each up for 4.5 s at least; a pin is due from 6° before
@@ -218,7 +218,9 @@
 
   // bySlug has no prototype, and has() asks for its own keys only, so a
   // hash or a referrer like "#constructor" can never pass for a collection.
-  var cols = [], bySlug = Object.create(null);   // collections, in list order
+  var cols = [], bySlug = Object.create(null);   // collections, oldest trip first (the tour's order;
+                                                 // a place waiting for photographs comes last)
+  var regions = [];                              // the list's headings, in order (places.json `regions`)
   function has(slug) { return typeof slug === "string" && Object.prototype.hasOwnProperty.call(bySlug, slug); }
   var pins = [];                            // every pin, in list order
   var map = null, ml = null, attribution = null;
@@ -334,9 +336,19 @@
 
   // The opener and the date line follow the gallery's own rules: the
   // `featured` photograph else the first; `date` if set, else derived.
+  // A place with a `title` and no collection yet (Morocco, until its
+  // photographs come) joins the end: pins, road and row, no photograph and
+  // no gallery (`href` null). Once collections.json has it, that entry wins.
   function joinData(collections, photos, places, routes) {
-    var byCol = {};
+    var byCol = {}, listed = {};
     photos.forEach(function (p) { (byCol[p.collection] = byCol[p.collection] || []).push(p); });
+    collections.forEach(function (c) { listed[c.slug] = 1; });
+    Object.keys(places).forEach(function (s) {
+      var pl = places[s];
+      if (!listed[s] && pl && typeof pl.title === "string" && pl.title) {
+        collections = collections.concat([{ slug: s, title: pl.title, date: pl.date || "", waiting: true }]);
+      }
+    });
     collections.forEach(function (c, i) {
       var shots = byCol[c.slug] || [], pl = places[c.slug] || {}, rt = (routes[c.slug] || {}).path;
       var opener = shots.filter(function (p) { return p.featured; })[0] || shots[0] || null;
@@ -348,7 +360,9 @@
         where: (pl.where || "").replace(/ · /g, "\u00a0· "), zoom: pl.zoom, sensitive: !!pl.sensitive, i: i, opener: opener,
         // What the console reads while this collection passes (places.json `coords`).
         at: pl.coords && typeof pl.coords.lat === "number" && typeof pl.coords.lng === "number" ? [pl.coords.lat, pl.coords.lng] : null,
-        href: BASE + "collections/" + c.slug + "/", pins: [],
+        // Its heading in the list (places.json `region`; the order is its `regions`).
+        region: typeof pl.region === "string" ? pl.region : "",
+        href: c.waiting ? null : BASE + "collections/" + c.slug + "/", pins: [],
         // The road it took (data/routes.json), drawn in place of the arcs between pins.
         route: rt && rt.length > 1 && rt.every(function (q) { return q && typeof q[0] === "number" && typeof q[1] === "number"; }) ? rt : null
       };
@@ -363,23 +377,48 @@
   }
 
   /* ------------------------------------------------------------------
-     THE LIST: ordinary links. A pointer click on a row not already open
-     flies there instead; a second click, Enter, or a modified click
-     follows the link as usual.
+     THE LIST: ordinary links, grouped under their regions (places.json
+     `region`, headings in its `regions` order; oldest trip first within
+     each). A pointer click on a row not already open flies there instead;
+     a second click, Enter, or a modified click follows the link as usual.
+     A place waiting for its photographs (no gallery) is a button that flies
+     there, listed only while the globe is up.
+     While a passing card is up its row is lit too (.is-passing), and on
+     the laptop layout the list glides to keep that row in view, unless the
+     pointer or keyboard focus is in the list.
      ------------------------------------------------------------------ */
 
   function renderList() {
     listEl.textContent = "";
+    var order = regions.slice(), groups = {};
+    cols.forEach(function (c) { if (c.region && order.indexOf(c.region) < 0) order.push(c.region); });
+    order.push("");                         // a collection no region names: last, under no heading
+    order.forEach(function (name) {
+      var mine = cols.filter(function (c) { return c.region === name; });
+      if (!mine.length) return;
+      var g = el("li", "g-region"), ol = el("ol", "g-rows");
+      if (name) {
+        var h = el("h3", "g-region-head");
+        h.appendChild(el("span", "g-region-mark")).setAttribute("aria-hidden", "true");
+        h.appendChild(el("span", "g-region-name", name));
+        h.appendChild(el("span", "g-region-rule")).setAttribute("aria-hidden", "true");
+        g.appendChild(h);
+      }
+      g.appendChild(ol);
+      listEl.appendChild(g);
+      groups[name] = ol;
+    });
     cols.forEach(function (c) {
       var li = el("li"), a = el("a", "g-row");
-      a.href = c.href;
+      if (c.href) a.href = c.href;
+      else { a.setAttribute("role", "button"); a.tabIndex = 0; li.hidden = true; }
       a.setAttribute("data-slug", c.slug);
       a.appendChild(el("span", "g-row-mark")).setAttribute("aria-hidden", "true");
       a.appendChild(el("span", "g-row-title", c.title));
       if (visited[c.slug]) a.classList.add("is-visited");
       c.row = a;
       li.appendChild(a);
-      listEl.appendChild(li);
+      groups[c.region].appendChild(li);
 
       a.addEventListener("pointerenter", function (e) { if (e.pointerType !== "touch") hoverIn(c.slug); });
       a.addEventListener("pointerleave", hoverOut);
@@ -389,7 +428,9 @@
       a.addEventListener("blur", function () { if (lit === c.slug || pending === c.slug) hoverOut(); });
       a.addEventListener("click", function (e) {
         if (!ready || failed || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-        if (e.detail === 0 || active === c.slug) return;        // keyboard, or the second click
+        // Keyboard (detail 0) follows a row's link; a row with no link is a
+        // button, and a screen reader's or voice control's press flies there.
+        if (e.detail === 0 && c.href || active === c.slug) return;   // or the second click
         e.preventDefault();
         var r = stage.getBoundingClientRect(), bar = $(".nl-bar"), top0 = bar ? bar.offsetHeight : 0;
         var seen = (Math.min(r.bottom, window.innerHeight) - Math.max(r.top, top0)) / r.height;
@@ -398,10 +439,33 @@
           setTimeout(function () { select(c.slug, "row"); }, 300);
         } else select(c.slug, "row");
       });
+      if (!c.href) a.addEventListener("keydown", function (e) {   // a button: Enter or Space presses it
+        if (e.key !== "Enter" && e.key !== " ") return;
+        e.preventDefault();
+        a.click();
+      });
     });
+    showGroups();
     listEl.classList.add("is-new");
     listEl.addEventListener("scroll", overflowCheck, { passive: true });
+    listEl.addEventListener("pointerenter", function () { cancelAnimationFrame(glideRaf); });
+    ["pointerdown", "wheel", "touchstart", "keydown"].forEach(function (type) {
+      listEl.addEventListener(type, function () { cancelAnimationFrame(glideRaf); handled = now(); }, { passive: true });
+    });
     overflowCheck();
+  }
+
+  // Rows waiting for photographs show only with the globe; a region whose
+  // rows are all hidden hides its heading too.
+  function showWaiting(on) {
+    cols.forEach(function (c) { if (!c.href && c.row) c.row.parentNode.hidden = !on; });
+    showGroups();
+    overflowCheck();
+  }
+  function showGroups() {
+    Array.prototype.forEach.call(listEl.querySelectorAll(".g-region"), function (g) {
+      g.hidden = !g.querySelector(".g-rows > li:not([hidden])");
+    });
   }
 
   // The bottom fade only while there is more list below.
@@ -409,11 +473,44 @@
     listEl.classList.toggle("is-overflowing", listEl.scrollTop + listEl.clientHeight < listEl.scrollHeight - 2);
   }
 
+  // Where the list should scroll to show a row whole, clear of its region's
+  // heading (it sticks at the top) and of the bottom fade; null if it shows.
+  // `mid` puts it in the middle instead of just inside the edge.
+  function rowScroll(c, mid) {
+    if (!L || !L.app || !c.row || c.row.parentNode.hidden) return null;   // stacked: the page scrolls, leave it be
+    var head = c.row.closest(".g-region").querySelector(".g-region-head");
+    var hh = head ? head.offsetHeight : 0, fade = 24, rr = c.row.getBoundingClientRect();
+    var top = rr.top - listEl.getBoundingClientRect().top + listEl.scrollTop, h = rr.height, view = listEl.clientHeight;
+    var lo = listEl.scrollTop + hh, hi = listEl.scrollTop + view - fade;
+    if (top >= lo && top + h <= hi) return null;
+    var to = mid ? top - hh - (view - hh - fade - h) / 2 : top < lo ? top - hh : top + h - view + fade;
+    return clamp(Math.round(to), 0, listEl.scrollHeight - view);
+  }
   function scrollRowIntoView(c) {
-    if (!L.app || !c.row) return;           // stacked: the page scrolls, leave it be
-    var top = c.row.offsetTop - listEl.offsetTop, h = c.row.offsetHeight;
-    if (top < listEl.scrollTop) listEl.scrollTop = top;
-    else if (top + h > listEl.scrollTop + listEl.clientHeight) listEl.scrollTop = top + h - listEl.clientHeight;
+    var to = rowScroll(c, false);
+    if (to !== null) { cancelAnimationFrame(glideRaf); listEl.scrollTop = to; }
+  }
+
+  // The passing row, glided into view. Hands on the list (the pointer over
+  // it, keyboard focus in it, or a press, touch, wheel or key there in the
+  // last IDLE_RETURN) leave its scroll alone, and stop a glide under way.
+  var glideRaf = 0, handled = -1e9;
+  function glideRowIntoView(c) {
+    var f = document.activeElement;
+    if (listEl.matches(":hover") || now() - handled < IDLE_RETURN) return;
+    if (f && listEl.contains(f) && f.matches(":focus-visible")) return;
+    var to = rowScroll(c, true);
+    if (to === null) return;
+    cancelAnimationFrame(glideRaf);
+    if (REDUCED) { listEl.scrollTop = to; return; }
+    var from = listEl.scrollTop, d = to - from, t0 = 0, dur = clamp(Math.abs(d) * 1.6, 600, 1200);
+    if (Math.abs(d) < 2) return;
+    glideRaf = requestAnimationFrame(function step(t) {
+      if (!t0) t0 = t;
+      var k = Math.min(1, (t - t0) / dur);
+      listEl.scrollTop = from + d * easeInOut(k);
+      if (k < 1) glideRaf = requestAnimationFrame(step);
+    });
   }
 
   /* ------------------------------------------------------------------
@@ -681,6 +778,7 @@
     ready = true;
     clearTimeout(failTimer);
     stage.classList.add("is-ready");
+    showWaiting(true);
     map.setMinZoom(floorZoom());
     applyPalette();                         // in case the ground changed while the style loaded
     loop();
@@ -807,7 +905,7 @@
       map.easeTo({ center: p.ll, zoom: Math.min(MAX_ZOOM, map.getZoom() + 1.6), duration: REDUCED ? 0 : 700 });
       return;
     }
-    if (p.slug === active) { location.href = p.c.href; return; }
+    if (p.slug === active) { if (p.c.href) location.href = p.c.href; return; }
     select(p.slug, "pin");
   }
 
@@ -1049,7 +1147,7 @@
   function showPlate(c, at) {
     if (!L.app || COARSE || !c.pins.length) { hidePlate(); return; }
     plate.textContent = "";
-    plate.classList.remove("is-text");
+    plate.classList.toggle("is-text", !c.opener);   // no photograph yet: the title alone
     if (c.opener && NL) {
       var img = el("img");
       img.alt = "";
@@ -1153,6 +1251,9 @@
     passing = slug; passedAt = t; lastPassed[slug] = t; anyPassed = true;
     passPin = at;
     at.el.classList.add("is-passing");
+    var c = bySlug[slug];
+    c.row.classList.add("is-passing");      // its row lights with it, and comes into view
+    if (L.app) glideRowIntoView(c);
     // The console reads the collection's place from now until the next one
     // passes; a phone (no plates) gets that and the lit pin, no card.
     passAt = bySlug[slug].at || [at.ll[1], at.ll[0]];
@@ -1164,6 +1265,7 @@
   }
   function endPass() {
     if (passPin) passPin.el.classList.remove("is-passing");
+    if (passing) bySlug[passing].row.classList.remove("is-passing");
     passing = null; passPin = null;
     plate.classList.remove("is-live");
     hold("plate", false);
@@ -1265,7 +1367,7 @@
     geo = null;
     wireStart = now();
     dirty = true;
-    say(LABELS.showing.replace("{title}", c.title) + (how === "row" ? " " + LABELS.again : ""));
+    say(LABELS.showing.replace("{title}", c.title) + (how === "row" && c.href ? " " + LABELS.again : ""));
     try { history.replaceState(null, "", "#" + c.slug); } catch (e) {}
     if (!visited[c.slug]) {
       visited[c.slug] = 1;
@@ -1390,7 +1492,7 @@
     NL.responsive(new Image(), c.opener, CARD_SIZES);
   }
   function warm(c) {
-    if (SAVE_DATA || warmed[c.slug] || active !== c.slug || !NL) return;
+    if (SAVE_DATA || warmed[c.slug] || active !== c.slug || !NL || !c.href) return;
     warmed[c.slug] = 1;
     var link = el("link");
     link.rel = "prefetch";
@@ -1408,8 +1510,9 @@
   function fillCard(c) {
     var media = $(".g-card-media");
     media.textContent = "";
-    media.href = c.href;
-    $(".g-card-go").href = c.href;
+    if (c.href) { media.href = c.href; $(".g-card-go").href = c.href; }
+    else { media.removeAttribute("href"); $(".g-card-go").removeAttribute("href"); }
+    card.classList.toggle("is-waiting", !c.href);     // no gallery yet: no photograph, no "View collection"
     if (c.opener && NL) {
       var img = el("img");
       img.alt = "";
@@ -1700,6 +1803,7 @@
     cardShown = false;
     tourBtn.setAttribute("aria-pressed", "false");
     cols.forEach(function (c) { c.row.removeAttribute("aria-current"); c.row.classList.remove("is-lit"); });
+    showWaiting(false);                     // no globe, nothing to show for a place without a gallery
     if (has(location.hash.slice(1))) {
       try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
     }
@@ -1758,7 +1862,7 @@
   $(".g-card-next").addEventListener("click", function (e) { e.stopPropagation(); step(1); });
   $(".g-card-close").addEventListener("click", function (e) { e.stopPropagation(); overview(); });
   card.addEventListener("click", function (e) {            // a phone: the whole card is the link
-    if (!L.app && active && !e.target.closest("a")) location.href = bySlug[active].href;
+    if (!L.app && active && !e.target.closest("a") && bySlug[active].href) location.href = bySlug[active].href;
   });
 
   // The card and the console stop the spin while they are pointed at. The
@@ -1865,6 +1969,7 @@
   ]).then(function (r) {
     joinData((r[0] && r[0].collections) || [], (r[1] && r[1].photos) || [], (r[2] && r[2].places) || {},
              (r[3] && r[3].routes) || {});
+    if (r[2] && Array.isArray(r[2].regions)) regions = r[2].regions.filter(function (s) { return typeof s === "string" && s; });
     var hash = location.hash.slice(1);
     try { hash = decodeURIComponent(hash); } catch (e) {}      // a malformed escape is just an unknown hash
     if (has(hash)) deep = hash;

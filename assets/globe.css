@@ -224,6 +224,8 @@ body[data-page="globe"] .masthead { position: static; background: var(--space); 
   .g-row:hover .g-row-mark { --k: var(--g-ink); }
 }
 .g-card button.is-end { opacity: .3; pointer-events: none; }
+.g-card.is-waiting .g-card-go { visibility: hidden; }      /* no gallery yet, and no photograph */
+.g-card.is-waiting .g-card-media { display: none; }
 .g-card-progress { position: absolute; left: 0; right: 0; bottom: -1px; z-index: 1; height: 1px; background: var(--accent); transform-origin: 0; transform: scaleX(0); opacity: 0; }
 .g-card.is-touring .g-card-progress { opacity: 1; }
 
@@ -272,8 +274,7 @@ body.is-editing .g-tour + .g-readout { border: 0; }
 .g-list-title { letter-spacing: .16em; color: var(--text-faint); }
 .g-index-link { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; color: var(--text-dim); text-decoration: none; transition: color var(--d-fast) var(--ease); }
 .g-index-link:hover { color: var(--text); }
-.g-list { list-style: none; margin: 0; padding: 0; }
-.g-list li { border-top: 1px solid var(--hairline-soft); }
+.g-list, .g-rows { list-style: none; margin: 0; padding: 0; }
 .g-list.is-new li { animation: g-fade .16s var(--ease) both; }
 @keyframes g-fade { from { opacity: 0; } }
 .g-list-status { padding: 14px 20px; color: var(--text-faint); }
@@ -300,6 +301,65 @@ body.is-editing .g-tour + .g-readout { border: 0; }
 .g-row.is-recent { animation: g-recent 2.4s var(--ease) both; }
 @keyframes g-recent { from { box-shadow: inset 2px 0 0 var(--accent); } to { box-shadow: inset 2px 0 0 transparent; } }
 .g-row-title { font: 500 var(--t-row)/20px var(--sans); }
+.g-row[role="button"] { cursor: pointer; }      /* a place waiting for its photographs: flies there, no gallery */
+
+/* A region: a mono caps heading with the stacked pin's mark (a crosshair in
+   a ring: several collections here) and a hairline on to the panel's edge.
+   It answers its rows: lit while one of them is pointed at, passing or open. */
+.g-region-head {
+  display: flex; align-items: center; gap: 9px; height: 32px; margin: 0; padding: 0 16px 0 14px;
+  font: 400 var(--t-label)/16px var(--mono); letter-spacing: .16em; text-transform: uppercase;
+  color: var(--text-faint); transition: color var(--d-fast) var(--ease);
+}
+.g-region-mark {
+  flex: none; position: relative; width: 13px; height: 13px; box-sizing: border-box;
+  border: 1px solid var(--k); border-radius: 50%; --k: var(--g-mark);
+  transition: border-color var(--d-fast) var(--ease);
+}
+.g-region-mark::after {
+  content: ""; position: absolute; left: 1px; top: 1px; width: 9px; height: 9px;
+  background: linear-gradient(var(--k) 0 0) 4px 1px / 1px 2px, linear-gradient(var(--k) 0 0) 4px 6px / 1px 2px,
+    linear-gradient(var(--k) 0 0) 1px 4px / 2px 1px, linear-gradient(var(--k) 0 0) 6px 4px / 2px 1px,
+    linear-gradient(var(--k) 0 0) 4px 4px / 1px 1px;
+  background-repeat: no-repeat;
+}
+.g-region-name { flex: none; }
+.g-region-rule { flex: 1; height: 1px; margin-left: 3px; background: var(--hairline); }
+.g-region:has(.g-row:hover, .g-row.is-lit, .g-row.is-passing, .g-row[aria-current="true"]) .g-region-head { color: var(--text-dim); }
+.g-region:has(.g-row:hover, .g-row.is-lit, .g-row.is-passing, .g-row[aria-current="true"]) .g-region-mark { --k: var(--g-ink); }
+
+/* The row of the collection whose passing card is up lights the way its pin
+   does on the globe: the crosshair's arms reach out (in amber), the name goes
+   to full ink, and an amber wire runs from the name out to the panel's edge,
+   toward the globe, as the white wire runs from a pin to its card, with a
+   faint amber light gathering there. Distinct from pointing at a row
+   (.is-lit: white mark, grey wash) and from the open one (amber wash, bar). */
+.g-row::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  background: linear-gradient(90deg, transparent 35%, color-mix(in srgb, var(--accent) 7%, transparent));
+  transition: opacity .3s var(--ease);
+}
+.g-row-title { position: relative; display: flex; align-items: center; min-width: 0; transition: color var(--d-base) var(--ease); }
+.g-row-title::after {                 /* the wire: always there, at no length */
+  content: ""; flex: 1 1 0; min-width: 0; height: 4px; margin: 0 -16px 0 14px;
+  background:
+    linear-gradient(var(--accent) 0 0) 100% 50% / 4px 4px no-repeat,
+    linear-gradient(90deg, color-mix(in srgb, var(--accent) 12%, transparent), var(--accent)) 0 50% / calc(100% - 4px) 1px no-repeat;
+  transform: scaleX(0); transform-origin: 0 50%; opacity: 0;
+  transition: transform .2s var(--ease), opacity .2s var(--ease);
+}
+.g-row.is-passing::before { opacity: 1; transition-duration: .6s; }
+.g-row.is-passing .g-row-title { color: var(--g-ink); }
+.g-row.is-passing .g-row-title::after { transform: none; opacity: 1; transition: transform .6s .08s var(--ease-out), opacity .2s var(--ease); }
+.g-row.is-passing .g-row-mark {      /* the arms reach out, 3px to 5px, as a passing pin's do */
+  --k: var(--accent); --dot: var(--accent);
+  top: calc(50% - 6.5px); width: 13px; height: 13px; margin-left: -2px;
+  background: linear-gradient(var(--k) 0 0) 6px 0 / 1px 5px, linear-gradient(var(--k) 0 0) 6px 8px / 1px 5px,
+    linear-gradient(var(--k) 0 0) 0 6px / 5px 1px, linear-gradient(var(--k) 0 0) 8px 6px / 5px 1px,
+    linear-gradient(var(--dot) 0 0) 6px 6px / 1px 1px;
+  background-repeat: no-repeat;
+}
+@media (forced-colors: active) { .g-row::before { display: none; } }
 
 /* ==========================================================================
    App layout: the globe fills the window, nothing scrolls
@@ -330,7 +390,15 @@ body.is-editing .g-tour + .g-readout { border: 0; }
   .g-atlas { flex: 1; min-height: 0; display: flex; flex-direction: column; }
   .g-list-head { flex: none; padding: 0 16px 0 20px; }
   .g-index-link { min-height: 40px; }
-  .g-row { min-height: 56px; }      /* one even rhythm */
+  /* Tight rows, so every region reads at once; when the window is short
+     enough to scroll, the region stays named at the top, on the panel's own
+     glass laid over the ground (opaque, the panel's tone, so it only shows
+     as a band once rows pass under it). */
+  .g-row { min-height: 27px; padding-top: 3.5px; padding-bottom: 3.5px; }
+  .g-region:first-child { padding-top: 6px; }
+  .g-region + .g-region { margin-top: 6px; }
+  .g-region-head { position: sticky; top: 0; z-index: 1; height: 30px; background: linear-gradient(var(--panel) 0 0), var(--space); }
+  .g-list { padding: 0 0 8px; border-top: 1px solid var(--hairline-soft); scroll-padding: 30px 0 24px; }   /* a focused row clears the heading and the fade */
   .g-list { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--hairline-strong) transparent; }
   .g-list.is-overflowing { -webkit-mask-image: linear-gradient(var(--mask-solid) calc(100% - 24px), transparent); mask-image: linear-gradient(var(--mask-solid) calc(100% - 24px), transparent); }
 
@@ -353,7 +421,7 @@ body.is-editing .g-tour + .g-readout { border: 0; }
   .g-card-body { padding: 20px 24px 24px; }
   .g-stage .maplibregl-ctrl-bottom-right { right: var(--edge); bottom: 12px; }
 }
-@media (min-width: 1024px) and (min-height: 620px) and (pointer: coarse) { .g-index-link { min-height: 44px; } }
+@media (min-width: 1024px) and (min-height: 620px) and (pointer: coarse) { .g-index-link, .g-row { min-height: 44px; } }
 @media (min-width: 1024px) and (max-width: 1235px) and (min-height: 620px) {   /* the card at its narrowest */
   .g-card-body { padding: 20px; }
   .g-card-go { padding: 0 12px; letter-spacing: .12em; }
@@ -367,8 +435,13 @@ body.is-editing .g-tour + .g-readout { border: 0; }
   .g-panel { padding: 0 var(--edge); background: var(--space); }
   .g-list { margin: 0 calc(-1 * var(--edge)); }
   .g-list-status { padding-inline: var(--edge); }
+  .g-rows > li { border-top: 1px solid var(--hairline-soft); }
+  .g-region-head { height: 44px; margin-top: 12px; padding: 0 var(--edge) 0 calc(var(--edge) - 2px); }
   .g-row { min-height: 56px; padding: 12px var(--edge) 12px calc(var(--edge) + 20px); }
   .g-row-mark { left: var(--edge); }
+  .g-row-title::after { margin-right: calc(-1 * var(--edge)); }
+  .g-card.is-waiting { cursor: auto; }
+  .g-card.is-waiting .g-card-go { display: none; }
   #collections { scroll-margin-top: var(--stage-h); }
   body.is-editing .g-stage { scroll-margin-top: var(--nl-bar-h); }    /* scrolled into view below the ?edit bar */
 
@@ -413,6 +486,7 @@ body.is-editing .g-tour + .g-readout { border: 0; }
 @media (max-height: 519px) {
   .g-stage { position: relative; }
   .g-card { display: grid; grid-template-columns: 168px minmax(0, 1fr); align-items: center; max-width: 520px; }
+  .g-card.is-waiting { grid-template-columns: minmax(0, 1fr); }
   .g-card-media { height: 112px; }
   .g-card-media img { height: 100%; max-height: none; }
 }

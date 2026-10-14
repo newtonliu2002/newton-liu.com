@@ -49,7 +49,9 @@ Folders under `images/` starting with `_` are skipped by the scanner.
 
 The home page is a dark globe that turns slowly, with a pin wherever a
 collection was photographed and the list of collections on the left (below
-the globe on a phone). Pointing at a row or a pin lights that collection;
+the globe on a phone), grouped under region headings (North America, South
+America, Asia, Africa; Newton's pick from the list previews), oldest trip
+first within each. Pointing at a row or a pin lights that collection;
 clicking flies there, lifts the terrain, and opens a card with the
 collection's opening photograph and a link into the gallery. A second click
 on the same row, or the card, opens the gallery. Keyboard and screen-reader
@@ -57,10 +59,14 @@ users get the rows as plain links. `work.html` ("Index") shows the same
 collections as a grid of covers, rendered by site.js's `renderHome`.
 
 The globe opens over the eastern Americas and turns west on its own
-(`START_LNG`, `SPIN`), so the Pacific and Asia come next and the empty
+(`START_LNG`, `SPIN`), so the Pacific and Asia come next and Morocco and the
 Atlantic last; there is no pause button, by Newton's choice. As it turns,
 the collection crossing the middle shows its plate (photo, title, where)
-for a few seconds: the **passing card** (`passStep()`, `PASS_*`). Pointing
+for a few seconds: the **passing card** (`passStep()`, `PASS_*`). Its row
+in the list lights with it (amber arms, an amber wire out toward the globe;
+its region heading brightens), and on the laptop layout the list glides to
+keep that row in view unless the pointer or keyboard focus is in the list;
+a short window scrolls under the region heading, which stays pinned. Pointing
 at it holds the spin, clicking it flies there, and × or Esc on a card flies
 back out to the turning globe. Left alone for 10 s while zoomed in (a card
 open, or zoomed by hand), it flies back out on its own (`IDLE_RETURN`,
@@ -71,12 +77,15 @@ Rockies) takes turns from one turn to the next. Plates are laptop-layout
 only, so phones get the spin without them. Newton's picks: the first card
 of a landing is Ecuador (`PASS_FIRST`), Big Bend never passes (`PASS_SKIP`;
 it still shows on hover), and over a long stretch with no pin near the middle (the
-Pacific after Hawai'i, the Atlantic after Sri Lanka) the spin eases up to
+Pacific after Hawai'i, Arabia and the Sahara after Sri Lanka, the Atlantic
+after Morocco) the spin eases up to
 2.5× (`gapBoost()`, `GAP_*`) so nobody thinks the globe has stopped.
 On such a stretch the next card doesn't wait for the middle: once the card
 up is past (or there is none), the next pin within 60° shows its card as it
 comes into view (`PASS_REACH`; Newton wanted Asia's cards up while the
-Pacific is still in the middle).
+Pacific is still in the middle). With Morocco on the globe no card is ever
+missing: its card comes up at about 53°E, after Sri Lanka's, and New
+England's takes over at about 22°W.
 The console under the globe reads the coordinates of the collection
 passing (or last passed), from its `coords` in places.json, not the
 camera's: Newton's picks, one place (Ecuador: Mindo; Alaska: Denali's summit), a state's or
@@ -126,7 +135,19 @@ keyed by the collection's slug, after the usual collections.json entry:
   the console reads while the collection passes; without it, its first pin. `zoom` (optional, single-pin only) sets how close the camera
   arrives. `sensitive: true` keeps it back at zoom 7 (the sage-grouse leks).
 - `status` is `"draft"` until Newton has confirmed the row.
+- `region` is the heading a collection is listed under; the top-level
+  `regions` array orders the headings. Hawai'i is North America (Newton's
+  call). A region not in `regions` follows them, and a collection with no
+  region goes last, under no heading.
 - A collection with no entry is still listed; it just has no pin.
+- **A place before its photographs.** An entry with `title` and `date` but no
+  collections.json entry (Morocco, March 2026: Newton asked for the pin and
+  road first, photographs to follow) is on the globe with its pins, road,
+  passing card (the title alone) and a row under its region, which flies
+  there; the card has no photograph and no "View collection". Its row shows
+  only while the globe is up, and it is not on the Index or any other page.
+  When the photographs come, add the collections.json entry as usual (in
+  oldest-first order); the `title` and `date` here are then ignored and can go.
 - **Roads (optional): `data/routes.json`.** A collection whose line should
   follow the roads Newton drove (The Canadian West: the Alaska and
   Stewart–Cassiar Highways) has `waypoints` there ([lat, lng], driving order,
@@ -154,6 +175,13 @@ keyed by the collection's slug, after the usual collections.json entry:
   Canyon, Gunnison. Its unpinned stops are towns, never the leks themselves;
   the street-address checklists (Akron, Sedalia, Peyton) stay off the line,
   and the Great Sand Dunes pin sits at the visitor center.
+  Morocco follows its March 2026 report: from the Zaër south of Rabat (the
+  Ain Sferjla reserve and the Bir Ben Aabbou lagoons, which OpenStreetMap
+  can't place, so the road starts at Ain El Aouda) up to Merja Zerga, Sidi
+  Boughaba, Rabat, then down to Agadir (drawn as a drive), out to Cap Ghir
+  and back, Souss-Massa (the Massa estuary and Sidi R'bat), Guelmim, and up
+  to Oukaïmeden. The checklist named by street coordinates in Agadir stays
+  off the line; Cap Ghir is on the road but has no pin.
 
 Overlapping pins of different collections merge on screen into one ringed
 pin; clicking it zooms in until they separate. At the overview only each
@@ -202,7 +230,9 @@ range would misreport — or to `""` to show no date at all.
 
 The order of `data/collections.json` is the order of the home page: **oldest
 trip first, by each collection's earliest date**. A new collection goes in by
-that rule. Only collections with photographs are listed — there are no
+that rule. Only collections with photographs are listed (the globe page's
+one exception is a place Newton asked to pin first; see "A place before its
+photographs") — there are no
 "coming soon" placeholders.
 
 Two switches at the top of `assets/site.js` control all of this:

@@ -1,8 +1,10 @@
 {
-  "_comment": "Hand-edited. Where each collection sits on the globe, keyed by the slug in collections.json. Region level only: a national park, island, reserve, valley or town that a visitor would recognise, at that public place's usual centre point. Never a photograph's own GPS position, and never a nest, roost, lek or hide. `where` is the short line under the title in the list and the card (\"\" hides it). `pins` are in route order, which sets the dashed line between them; the first pin is the one the globe turns to and the one shown out at the globe, unless `lead` names another pin (Alaska: Denali National Park, Newton's pick). Optional `zoom` sets how close a single-pin collection arrives. `sensitive: true` keeps the camera back (never closer than zoom 7) for collections of lekking or nesting species. `coords` (four decimals) is what the console reads while the collection's card passes (Newton's picks: one place, a state's or country's middle, or where a several-state trip started). `status` is \"draft\" until Newton has confirmed the row. A collection with no entry here is still listed; it simply has no pin. To add a collection: add its entry to collections.json as usual, then add one entry here.",
+  "_comment": "Hand-edited. Where each collection sits on the globe, keyed by the slug in collections.json. Region level only: a national park, island, reserve, valley or town that a visitor would recognise, at that public place's usual centre point. Never a photograph's own GPS position, and never a nest, roost, lek or hide. `where` is the short line under the title in the list and the card (\"\" hides it). `pins` are in route order, which sets the dashed line between them; the first pin is the one the globe turns to and the one shown out at the globe, unless `lead` names another pin (Alaska: Denali National Park, Newton's pick). Optional `zoom` sets how close a single-pin collection arrives. `sensitive: true` keeps the camera back (never closer than zoom 7) for collections of lekking or nesting species. `coords` (four decimals) is what the console reads while the collection's card passes (Newton's picks: one place, a state's or country's middle, or where a several-state trip started). `status` is \"draft\" until Newton has confirmed the row. `region` is the heading the collection is listed under on the globe page; `regions` (top) is the order of those headings (Hawai'i counts as North America, Newton's call). A collection with no entry here is still listed; it simply has no pin. A place with `title` (and `date`) but no collection yet (Morocco, until Newton adds its photographs) is on the globe with its pins, road and row, but no photograph and no gallery; once collections.json has it, its `title` and `date` here are ignored and can go. To add a collection: add its entry to collections.json as usual, then add one entry here.",
+  "regions": ["North America", "South America", "Asia", "Africa"],
   "places": {
     "malaysia": {
       "status": "draft",
+      "region": "Asia",
       "where": "Sabah, Borneo",
       "coords": { "lat": 5.4257, "lng": 117.0326 },
       "pins": [
@@ -14,6 +16,7 @@
     },
     "new-england": {
       "status": "confirmed",
+      "region": "North America",
       "where": "Maine · Massachusetts · New Jersey",
       "coords": { "lat": 42.3789, "lng": -72.0324 },
       "pins": [
@@ -24,6 +27,7 @@
     },
     "big-bend": {
       "status": "draft",
+      "region": "North America",
       "where": "Texas",
       "coords": { "lat": 29.3332, "lng": -103.1943 },
       "pins": [
@@ -32,6 +36,7 @@
     },
     "california": {
       "status": "confirmed",
+      "region": "North America",
       "where": "",
       "coords": { "lat": 36.7015, "lng": -118.7560 },
       "pins": [
@@ -43,6 +48,7 @@
     },
     "hawaii": {
       "status": "confirmed",
+      "region": "North America",
       "where": "Hawai'i Island · Kaua'i · Maui · O'ahu",
       "coords": { "lat": 19.5938, "lng": -155.4284 },
       "pins": [
@@ -54,6 +60,7 @@
     },
     "galapagos": {
       "status": "confirmed",
+      "region": "South America",
       "where": "",
       "coords": { "lat": -0.6288, "lng": -90.3639 },
       "pins": [
@@ -63,6 +70,7 @@
     },
     "ecuador": {
       "status": "confirmed",
+      "region": "South America",
       "where": "",
       "coords": { "lat": -0.0529, "lng": -78.7747 },
       "zoom": 8,
@@ -72,6 +80,7 @@
     },
     "florida": {
       "status": "draft",
+      "region": "North America",
       "where": "",
       "coords": { "lat": 27.7568, "lng": -81.4640 },
       "zoom": 7.4,
@@ -86,6 +95,7 @@
     },
     "snowy-west": {
       "status": "confirmed",
+      "region": "North America",
       "where": "Colorado · Idaho · Montana · Oregon · Washington",
       "coords": { "lat": 43.9793, "lng": -120.7373 },
       "pins": [
@@ -100,6 +110,7 @@
     },
     "yellowstone": {
       "status": "draft",
+      "region": "North America",
       "where": "North Dakota · Wyoming",
       "coords": { "lat": 47.6201, "lng": -100.5407 },
       "pins": [
@@ -111,6 +122,7 @@
     },
     "desert-west": {
       "status": "draft",
+      "region": "North America",
       "where": "Idaho · New Mexico · Utah",
       "coords": { "lat": 34.5802, "lng": -105.9960 },
       "pins": [
@@ -122,6 +134,7 @@
     },
     "alberta-bc-yukon": {
       "status": "draft",
+      "region": "North America",
       "where": "Alberta · British Columbia · Yukon",
       "coords": { "lat": 55.0013, "lng": -115.0021 },
       "pins": [
@@ -136,6 +149,7 @@
     },
     "peru": {
       "status": "draft",
+      "region": "South America",
       "where": "",
       "coords": { "lat": -6.8700, "lng": -75.0459 },
       "pins": [
@@ -147,6 +161,7 @@
     },
     "guangxi": {
       "status": "confirmed",
+      "region": "Asia",
       "where": "China",
       "coords": { "lat": 22.4500, "lng": 106.9534 },
       "pins": [
@@ -155,6 +170,7 @@
     },
     "sri-lanka": {
       "status": "draft",
+      "region": "Asia",
       "where": "",
       "coords": { "lat": 7.5555, "lng": 80.7138 },
       "pins": [
@@ -169,6 +185,7 @@
     },
     "yunnan": {
       "status": "draft",
+      "region": "Asia",
       "where": "China",
       "coords": { "lat": 24.9750, "lng": 101.4870 },
       "pins": [
@@ -180,6 +197,7 @@
     },
     "arizona": {
       "status": "draft",
+      "region": "North America",
       "where": "",
       "coords": { "lat": 34.3953, "lng": -111.7633 },
       "pins": [
@@ -192,6 +210,7 @@
     },
     "colorado-nebraska": {
       "status": "draft",
+      "region": "North America",
       "where": "Colorado · Nebraska",
       "coords": { "lat": 38.7252, "lng": -105.6077 },
       "sensitive": true,
@@ -208,6 +227,7 @@
     },
     "alaska": {
       "status": "draft",
+      "region": "North America",
       "where": "",
       "coords": { "lat": 63.0694, "lng": -151.0072 },
       "lead": "Denali National Park",
@@ -219,6 +239,23 @@
         { "name": "Kenai Fjords National Park", "lat": 60.12, "lng": -149.44 },
         { "name": "Denali National Park", "lat": 63.73, "lng": -148.92 },
         { "name": "Fairbanks", "lat": 64.84, "lng": -147.72 }
+      ]
+    },
+    "morocco": {
+      "status": "draft",
+      "region": "Africa",
+      "title": "Morocco",
+      "date": "March 2026",
+      "where": "",
+      "coords": { "lat": 31.7917, "lng": -7.0926 },
+      "pins": [
+        { "name": "Merja Zerga", "lat": 34.87, "lng": -6.29 },
+        { "name": "Sidi Boughaba", "lat": 34.21, "lng": -6.69 },
+        { "name": "Rabat", "lat": 34.01, "lng": -6.82 },
+        { "name": "Agadir", "lat": 30.42, "lng": -9.60 },
+        { "name": "Souss-Massa National Park", "lat": 30.08, "lng": -9.66 },
+        { "name": "Guelmim", "lat": 28.99, "lng": -10.07 },
+        { "name": "Oukaïmeden", "lat": 31.21, "lng": -7.86 }
       ]
     }
   }
