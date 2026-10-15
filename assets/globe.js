@@ -49,8 +49,9 @@
   var ARRIVE_ZOOM = 7.8;             // single-pin arrival when places.json gives none
   var SENSITIVE_ZOOM = 7;            // never closer than this for a `sensitive` collection
   var SPIN = 2;                      // degrees per second, westward: the land runs left to right
-  var START_LNG = -58;               // the landing faces the eastern Americas and turns west, so the
-                                     // Pacific and Asia come next and Morocco and the Atlantic come last
+  var START_LNG = -42;               // the landing has Morocco on the right and the Americas on the left:
+                                     // Morocco's card first, then the turn west carries straight on to
+                                     // Ecuador's, and on through the Pacific and Asia (Newton asked)
   // Where no pin comes near the middle for a long way (the Pacific after
   // Hawai'i, the Sahara after Sri Lanka, the Atlantic after Morocco) the spin eases up to GAP_BOOST
   // times as fast: from GAP_FROM degrees off the nearest pin, in full by GAP_FULL.
@@ -61,8 +62,17 @@
   // is PASS_REACH degrees off, coming into view: Asia's cards start while the
   // Pacific is still in the middle (Newton asked).
   var PASS_DWELL = 4500, PASS_AHEAD = 6, PASS_BEHIND = 15, PASS_KEEP = 40, PASS_REACH = 60;
-  var PASS_FIRST = "ecuador";        // a landing's first card (not on a return from a gallery)
-  var PASS_SKIP = ["big-bend"];      // never a passing card (still on hover and in the list)
+  // Newton's running order (2026-10-15), from a landing's first card round to the
+  // last. A collection not in it has no passing card (it still shows on hover and
+  // in the list): Big Bend, New England, Arizona and California, for now.
+  var PASS_ORDER = ["morocco", "ecuador", "peru", "florida", "galapagos", "rio-grande",
+    "colorado-nebraska", "desert-west", "yellowstone", "alberta-bc-yukon", "california-film",
+    "snowy-west", "alaska", "hawaii", "malaysia", "guangxi", "yunnan", "sri-lanka"];
+  // Where the next card's pin is already past the middle while the card up
+  // has its 4.5 s (the West: six cards within 15°), the spin slows, down to
+  // PASS_BRAKE of its pace by 13° past (a PASS_BRAKE_SPAN-degree ramp), so no
+  // card is left far behind its pin.
+  var PASS_BRAKE = .35, PASS_BRAKE_SPAN = 20;
   var SPIN_RESUME = 1000, SPIN_RAMP = 800;
   var HOVER_DELAY = 120, TURN_DELAY = 450;
   var DWELL = 6000, DWELL_REDUCED = 8000;
@@ -1895,48 +1905,106 @@
 
   /* ---------- the passing card: the plate, as the globe turns on its own ---
 
-     Out at the overview with nothing pointed at or open, a collection whose
-     pin is crossing the middle shows its plate, for PASS_DWELL at least.
-     Of those due, the one shown longest ago goes first (then the nearest),
-     and none comes back within half a turn, so a cluster too dense to show
-     in one pass (the Rockies) takes turns from one turn to the next. Where
-     nothing is near the middle (gapBoost), the next pin coming into view
-     takes over once the card up is on its way out.
+     Out at the overview with nothing pointed at or open, the collections
+     take turns in Newton's running order (PASS_ORDER), each card up for
+     PASS_DWELL at least. The next one comes up once its pin is due, from
+     PASS_AHEAD before the middle; where nothing is near the middle
+     (gapBoost), as soon as its pin comes into view (PASS_REACH), once the
+     card up is on its way out. Where the next pin is past the middle before
+     the card up has had its time, the spin slows for it (passBrake). A
+     landing starts at the top of the order; after anything else (a return
+     from a gallery, a drag, a flight home, a stack pointed at) the order
+     picks up at the first card whose pin hasn't yet passed the middle and
+     that hasn't shown in the last half turn. A card whose pin got more than
+     PASS_KEEP past before its turn is skipped, till the next turn.
      Pointing at the plate holds the spin; clicking it flies there. */
 
-  var passing = null, passedAt = 0, passPin = null, lastPassed = {}, anyPassed = false, passAt = null;
+  var passing = null, passedAt = 0, passPin = null, lastPassed = {}, passAt = null;
+  var passOrder = null, passSlot = null, passNext = -1, passLost = true, passFresh = true, passBrakeTo = 1;
   function passStep(t) {
     var can = ready && !REDUCED && !tour && !active && !crowd && state === "overview" && inOverview();
-    if (!can) { if (passing) { endPass(); hidePlate(); } return; }
+    if (!can) { passLost = true; passBrakeTo = 1; if (passing) { endPass(); hidePlate(); } return; }
     // Held as it is while pointed at (the card, its pin or row, or a row the
     // pointer is crossing) and while the globe is dragged or eased by hand:
-    // a fling across the Americas shouldn't flash a card per pin.
+    // a fling across the Americas shouldn't flash a card per pin. A globe
+    // that moved picks the order up again from where it stops.
+    if (held.drag || map.isMoving()) passLost = true;
     if (held.plate || lit || pending || held.drag || map.isMoving()) return;
-    var c = map.getCenter(), best = null, cur = null, early = null, halfTurn = 180 / SPIN * 1000;
-    var first = anyPassed || recent || deep ? null : PASS_FIRST, forced = null, gap = gapBoost(c.lng) > 1;
+    if (!passOrder) passSlots();
+    if (!passOrder.length) return;
+    var c = map.getCenter(), at = passPins(), cur = null;
+    if (passing && at[passing]) {
+      var dc = wrap180(c.lng - at[passing].ll[0]);
+      if (dc >= -PASS_KEEP && dc <= Math.max(PASS_KEEP, PASS_REACH)) cur = dc;
+    }
+    var first = false;
+    if (passLost || passNext < 0) {
+      // The top of the order only while the globe still faces the landing (a
+      // visitor may have flown it elsewhere before the first card).
+      first = passFresh && !recent && !deep && Math.abs(wrap180(c.lng - passSlot[0])) <= PASS_KEEP;
+      passNext = first ? 0 : passFind(c.lng, t);
+      passLost = passFresh = false;
+    }
+    // A card the globe has carried too far before its turn waits for the next turn.
+    for (var n = 0; n < passOrder.length && !first && passNext >= 0; n++) {
+      if (wrap180(c.lng - bySlug[passOrder[passNext]].lead.ll[0]) >= -PASS_KEEP) break;
+      passNext = (passNext + 1) % passOrder.length;
+    }
+    var s = passNext >= 0 ? passOrder[passNext] : null, p = s && at[s];
+    var d = s ? wrap180(c.lng - (p ? p.ll : bySlug[s].lead.ll)[0]) : 0;   // > 0: still to come, left of the middle
+    passBrakeTo = 1;
+    // The card up keeps its time while its pin is in view.
+    if (passing && at[passing] && t - passedAt < PASS_DWELL) {
+      if (s && d < 0) passBrakeTo = Math.max(PASS_BRAKE, 1 + d / PASS_BRAKE_SPAN);
+      return;
+    }
+    var due = p && (first ? Math.abs(d) <= PASS_KEEP : d <= PASS_AHEAD ||
+      gapBoost(c.lng) > 1 && d <= PASS_REACH && (cur === null || cur < -PASS_BEHIND));
+    if (due) {
+      pass(s, p, t);
+      passNext = (passNext + 1) % passOrder.length;
+    } else if (passing && cur === null) { endPass(); hidePlate(); }
+  }
+  // The order's collections that are on the globe, and where each stands in
+  // it: its lead pin's longitude, never east of the one before (Peru's Lima is
+  // 1.7° east of Ecuador's Mindo, but Peru comes second).
+  function passSlots() {
+    passOrder = PASS_ORDER.filter(function (s) { return bySlug[s] && bySlug[s].lead; });
+    passSlot = [];
+    passOrder.forEach(function (s, i) {
+      var lng = bySlug[s].lead.ll[0];
+      if (i) {
+        var prev = passSlot[i - 1], back = ((prev - lng) % 360 + 360) % 360;
+        lng = back > 180 ? prev : prev - back;
+      }
+      passSlot.push(lng);
+    });
+  }
+  // The pin that carries each collection's card: its own, or the stack it is in.
+  function passPins() {
+    var at = {};
     pins.forEach(function (p) {
       if (!p.show || !p.xy) return;
-      var d = wrap180(c.lng - p.ll[0]);    // > 0: still to come, left of the middle
-      [p.slug].concat(p.stack || []).forEach(function (s) {
-        if (PASS_SKIP.indexOf(s) >= 0) return;
-        if (s === passing) { if (d >= -PASS_KEEP && d <= Math.max(PASS_KEEP, PASS_REACH)) cur = d; return; }
-        if (s === first && Math.abs(d) <= PASS_KEEP) { forced = { s: s, p: p }; return; }
-        var seen = lastPassed[s] === undefined ? -Infinity : lastPassed[s];
-        if (t - seen < halfTurn) return;
-        if (gap && d > PASS_AHEAD && d <= PASS_REACH) { if (!early || d < early.d) early = { s: s, d: d, p: p }; return; }
-        if (d > PASS_AHEAD || d < -PASS_BEHIND) return;
-        if (!best || seen < best.seen || seen === best.seen && Math.abs(d) < Math.abs(best.d)) best = { s: s, d: d, p: p, seen: seen };
-      });
+      if (!at[p.slug] || p.lead) at[p.slug] = p;
+      (p.stack || []).forEach(function (s) { if (!at[s]) at[s] = p; });
     });
-    if (passing && cur !== null && t - passedAt < PASS_DWELL) return;
-    if (forced) best = forced;
-    if (!best && early && (cur === null || cur < -PASS_BEHIND)) best = early;
-    if (best) pass(best.s, best.p, t);
-    else if (passing && cur === null) { endPass(); hidePlate(); }
+    return at;
+  }
+  // Where the order picks up: the first card still to come (by passSlot; a pin
+  // up to 2° past the middle counts), skipping any shown in the last half turn.
+  // Those already past wait for the next turn, so the West isn't replayed at a crawl.
+  function passFind(lng, t) {
+    var best = -1, soonest = Infinity, halfTurn = 180 / SPIN * 1000;
+    passOrder.forEach(function (s, i) {
+      if (s === passing || t - (lastPassed[s] === undefined ? -Infinity : lastPassed[s]) < halfTurn) return;
+      var left = ((wrap180(lng - passSlot[i]) + 2) % 360 + 360) % 360;
+      if (left < soonest) { soonest = left; best = i; }
+    });
+    return best;
   }
   function pass(slug, at, t) {
     if (passing) endPass();
-    passing = slug; passedAt = t; lastPassed[slug] = t; anyPassed = true;
+    passing = slug; passedAt = t; lastPassed[slug] = t;
     passPin = at;
     at.el.classList.add("is-passing");
     var c = bySlug[slug];
@@ -2554,10 +2622,11 @@
      THE SPIN: 2°/s westward by the clock, from the landing on, whenever the
      camera is out at globe zoom with nothing open, pointed at or held and
      the page in view. It stops at once when touched and ramps back a
-     second later, for as long as the visitor leaves it be.
+     second later, for as long as the visitor leaves it be. It eases up over
+     empty stretches (gapBoost) and slows where cards crowd (passBrake).
      ------------------------------------------------------------------ */
 
-  var spinV = 0, lastFrame = 0, lastSpin = 0, held = {}, released = -1e9;
+  var spinV = 0, lastFrame = 0, lastSpin = 0, held = {}, released = -1e9, passBrake = 1;
   var stageVisible = true, dirty = true, dwell = -1;
 
   function hold(key, on) {
@@ -2575,12 +2644,14 @@
     if (!spinV || (COARSE && t - lastSpin < 33)) return;   // phones: 30 updates a second
     var c = map.getCenter(), step = Math.min(t - lastSpin, 100);
     lastSpin = t;
-    map.jumpTo({ center: [c.lng - SPIN * gapBoost(c.lng) * spinV * step / 1000, c.lat] }, { gSpin: 1 });
+    // Slowing for a crowd of cards (passStep sets the pace) eases in and out over about half a second.
+    passBrake += (passBrakeTo - passBrake) * Math.min(1, step / 500);
+    map.jumpTo({ center: [c.lng - SPIN * gapBoost(c.lng) * passBrake * spinV * step / 1000, c.lat] }, { gSpin: 1 });
   }
   function gapBoost(lng) {
     var d = 180;
     cols.forEach(function (c) {
-      if (c.pins.length && PASS_SKIP.indexOf(c.slug) < 0) d = Math.min(d, Math.abs(wrap180(lng - c.lead.ll[0])));
+      if (c.pins.length && PASS_ORDER.indexOf(c.slug) >= 0) d = Math.min(d, Math.abs(wrap180(lng - c.lead.ll[0])));
     });
     var k = clamp((d - GAP_FROM) / (GAP_FULL - GAP_FROM), 0, 1);
     return 1 + (GAP_BOOST - 1) * k * k * (3 - 2 * k);

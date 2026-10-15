@@ -60,9 +60,9 @@ link into the gallery. A second click on the same row, or the card, opens
 the gallery. Keyboard and screen-reader users get the rows as plain links. `work.html` ("Index") shows the same
 collections as a grid of covers, rendered by site.js's `renderHome`.
 
-The globe opens over the eastern Americas and turns west on its own
-(`START_LNG`, `SPIN`), so the Pacific and Asia come next and Morocco and the
-Atlantic last; there is no pause button, by Newton's choice. As it turns,
+The globe opens with Morocco on the right and the Americas on the left and
+turns west on its own (`START_LNG`, `SPIN`): Morocco's card first, then the
+Americas, the Pacific and Asia; there is no pause button, by Newton's choice. As it turns,
 the collection crossing the middle shows its plate (photo, title, where,
 local time) for a few seconds: the **passing card** (`passStep()`, `PASS_*`). Its row
 in the list lights with it (amber arms, an amber wire out toward the globe;
@@ -74,11 +74,21 @@ back out to the turning globe. Left alone for 10 s while zoomed in (a card
 open, or zoomed by hand), it flies back out on its own (`IDLE_RETURN`,
 `idleStep()`; Newton asked for it). Any input restarts the clock; a pointer
 resting on the card, a drag, keyboard focus in the list, the tour, reduced
-motion and an off-screen globe stop it. A cluster too dense for one pass (the
-Rockies) takes turns from one turn to the next. Plates are laptop-layout
-only, so phones get the spin without them. Newton's picks: the first card
-of a landing is Ecuador (`PASS_FIRST`), Big Bend never passes (`PASS_SKIP`;
-it still shows on hover), and over a long stretch with no pin near the middle (the
+motion and an off-screen globe stop it. The cards come in Newton's running
+order (`PASS_ORDER`, 2026-10-15), which he set by local time, each card's
+clock the same as or earlier than the one before (Florida and the Rio Grande
+run an hour ahead in US summer time; he took that): Morocco, Ecuador, Peru,
+Florida, Galápagos, Rio Grande, Grouse Country, Desert West, Yellowstone,
+Canadian West, California in Film, Snowy West, Alaska, Hawai'i, Malaysia,
+Guangxi, Yunnan, Sri Lanka. A collection not in it never passes (it still
+shows on hover and in the list): Big Bend, New England, Arizona and
+California, for now, and a new collection until it is added. A landing starts
+at the top; after a drag, a gallery or a flight home the order picks up at the
+first card still to come. Where the next card's pin is past the middle
+before the card up has had its 4.5 s (the West: six cards within 15°), the
+spin slows, to 35% at most (`PASS_BRAKE*`, eased in `spinStep()`; Newton
+approved), so every card comes up near its pin. Plates are laptop-layout
+only, so phones get the spin without them. Over a long stretch with no pin near the middle (the
 Pacific after Hawai'i, Arabia and the Sahara after Sri Lanka, the Atlantic
 after Morocco) the spin eases up to
 2.5× (`gapBoost()`, `GAP_*`) so nobody thinks the globe has stopped.
@@ -86,8 +96,8 @@ On such a stretch the next card doesn't wait for the middle: once the card
 up is past (or there is none), the next pin within 60° shows its card as it
 comes into view (`PASS_REACH`; Newton wanted Asia's cards up while the
 Pacific is still in the middle). With Morocco on the globe no card is ever
-missing: its card comes up at about 53°E, after Sri Lanka's, and New
-England's takes over at about 22°W.
+missing: its card comes up at about 53°E, after Sri Lanka's, and Ecuador's
+takes over at about 21°W.
 The console under the globe reads the coordinates of the collection
 passing (or last passed), from its `coords` in places.json, not the
 camera's: Newton's picks, one place (Ecuador: Mindo; Alaska: Denali's summit), a state's or
