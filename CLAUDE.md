@@ -619,7 +619,8 @@ goes where its mark is. Its Hasselblad note links to The Desert West (his
 yes). Unlike an English page it has no larger opening paragraph: one size
 throughout (Newton asked). Edit it only as with a blurb. Its rail is the
 order he asked for, My story, Gear, Contact, built from the prose's
-headings (`<h2 id="my-story">`; Gear waits for his words), and lights the
+headings (`<h2 id="my-story">`, `<h2 id="gear">`: his kit in his order,
+under the makers' full names, 2026-10-15), and lights the
 section being read as Projects' does: `railLights()` in site.js, opted into
 by the rail's `data-follow`.
 
