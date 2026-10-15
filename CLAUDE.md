@@ -615,7 +615,9 @@ the photographs reached that in October 2026 (Peru). Since then:
 **About is Newton's own essay, in Chinese** (2026-10-15; `about.prose` in
 text.json, mirrored in about.html so nothing else shows while text.json
 loads). Its "（figure N）" marks are his, for photographs he is sending: each
-goes where its mark is. Edit it only as with a blurb.
+goes where its mark is. Its Hasselblad note links to The Desert West (his
+yes). Unlike an English page it has no larger opening paragraph: one size
+throughout (Newton asked). Edit it only as with a blurb.
 
 Both use the gallery's vocabulary rather than the old centred `.prose` block: a
 sticky left rail carrying the page label and jump links, a right-hand column of

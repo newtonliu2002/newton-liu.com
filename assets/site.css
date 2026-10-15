@@ -1212,14 +1212,15 @@ body.lb-open { overflow: hidden; }
 }
 
 /* About written in Chinese takes a Chinese blurb's size and air (see
-   .gallery-blurb:lang(zh)), ragged right; its opening paragraph stays a size up. */
+   .gallery-blurb:lang(zh)), ragged right, one size throughout: its opening
+   paragraph is set like the rest (Newton asked), not as a lede. */
 .about-prose p:lang(zh) {
   font-size: var(--t-zh-body);
   line-height: 1.9;
   text-align: start;
   hanging-punctuation: allow-end;
 }
-.about-prose > p:first-child:lang(zh) { font-size: var(--t-lede); line-height: 1.7; }
+.about-prose > p:first-child:lang(zh) { margin-bottom: 1.5em; color: var(--text-body); }
 /* An English line in a page that opens in Chinese (the sign-off) takes the
    same typewriter and size, as it does at the end of a Chinese blurb; its
    lang stays English. */
