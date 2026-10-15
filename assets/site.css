@@ -471,6 +471,7 @@ body[data-page="globe"] .nav-menu-list { border-top: 1px solid var(--hairline); 
   .masthead-inner:has(.nav > :nth-child(5):not(.theme-toggle)) { flex-wrap: wrap; row-gap: 0; padding-top: var(--s1); }
   .masthead-inner:has(.nav > :nth-child(5):not(.theme-toggle)) .nav { flex-basis: 100%; }
   body:has(.nav > :nth-child(5):not(.theme-toggle))[data-page="gallery"] .book-lead { margin-top: 0; }
+  body:has(.nav > :nth-child(5):not(.theme-toggle)) .about-band { margin-top: 0; }
 }
 
 /* Phones: two static rows, wordmark then nav. The nav row runs to the
@@ -1114,23 +1115,31 @@ body.lb-open { overflow: hidden; }
    Prose pages (About, Contact)
 
    The gallery's vocabulary applied to text: a left rail against a right-hand
-   column, small tracked mono labels, hairline rules between sections. The
-   photograph is a quiet band rather than an opener — this page is text, and
-   the photographs are not the subject.
+   column, small tracked mono labels, hairline rules between sections. About
+   opens on a photograph the way a gallery does, full bleed (.about-band).
    ========================================================================== */
 
-/* The band's 44vh is mirrored by the sizes hint written into about.html. */
+/* About's cover is full bleed, as a gallery opens (Newton asked,
+   2026-10-15): the width of the window and up behind the bar, shown whole;
+   a panorama never reaches the --opener-h cap. The element carries
+   .wrap-wide, overridden here on source order, as .book-lead is. The sizes
+   hint in about.html says 100vw to match. */
 .about-band {
-  display: flex;
-  justify-content: center;
-  padding: 2vh 0 clamp(2.5rem, 8vh, 6rem);
+  max-width: none;
+  padding: 0 0 clamp(2.5rem, 8vh, 6rem);
 }
 
 .about-band img {
-  width: auto;
+  display: block;
+  width: 100%;
   height: auto;
-  max-width: 100%;
-  max-height: 44vh;
+  max-height: var(--opener-h);
+  object-fit: cover;
+}
+
+@media (min-width: 621px) {
+  .about-band { margin-top: calc(-1 * (var(--masthead-h) + 1px)); }
+  body:has(.about-band) .masthead { border-bottom-color: transparent; }
 }
 
 .about-body {

@@ -639,7 +639,9 @@ Both use the gallery's vocabulary rather than the old centred `.prose` block: a
 sticky left rail carrying the page label and jump links, a right-hand column of
 text at a 62ch measure, section headings as hairline-ruled small caps.
 
-The markup is `.about-band` (optional photograph) then `.about-body` >
+The markup is `.about-band` (optional photograph; full bleed like a
+gallery's opener, up behind the bar, since Newton asked on 2026-10-15; now his
+Alaska hanging-glacier panorama, B0003302) then `.about-body` >
 `.about-rail` + `.about-prose`. `.about-body.is-bare` adds the top padding a
 page needs when it has no band — Contact uses it, because two pages opening on
 the same photograph looks like a mistake.
