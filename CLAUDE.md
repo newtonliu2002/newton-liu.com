@@ -39,7 +39,7 @@ tools/upload.py             puts the photographs in Cloudflare R2, proves they'r
 tools/hooks/                refuse image files in git, and data ahead of R2 (pre-commit, pre-merge-commit)
 images/<slug>/*.jpg         the photographs, one folder per collection  (not in git: R2)
 images/_thumbs/<edge>/      generated smaller widths                    (not in git: R2)
-images/_about/              the About page's images — in git
+images/_about/              the About page's cover and essay figures — in git
 images/_projects/           the Projects page's screenshots — in git
 ```
 
@@ -623,8 +623,9 @@ before the first paint by a line in about.html's head, and a link into the
 other version (`#gear-en`) opens it. Newton wanted everything in Chinese for
 now: the English My story is left empty for him to write, and the titles
 are for screen readers only (he wanted the page to open on My story). Gear
-is the same list in both, with 哈苏 / 佳能 / 大疆 for the makers in Chinese. Its "（figure N）" marks are his, for photographs he is sending: each
-goes where its mark is. Its Hasselblad note links to The Desert West (his
+is the same list in both, with 哈苏 / 佳能 / 大疆 for the makers in Chinese. Its "（figure N）" marks are his, and stay in the text as he typed
+them; his photographs for them (see below) show after the paragraph holding
+each mark. Its Hasselblad note links to The Desert West (his
 yes). Unlike an English page it has no larger opening paragraph: one size
 throughout (Newton asked). Edit it only as with a blurb. Its rail is the
 order he asked for, 我的故事 / My story, 设备 / Gear, 联系方式 / Contact,
@@ -646,11 +647,32 @@ Alaska hanging-glacier panorama, B0003302) then `.about-body` >
 page needs when it has no band — Contact uses it, because two pages opening on
 the same photograph looks like a mistake.
 
-The About band is **the one photograph hand-written into HTML**. It is page
-furniture, not a collection entry, so it is deliberately outside `photos.json`:
-the file and its 800/1600/2400 widths live in `images/_about/`, which the
-build skips. Nothing checks that they still exist, so if they are moved or
-renamed, change the `src` and `srcset` in `about.html` too.
+The About band and the essay's figures are **the photographs hand-written
+into HTML**. They are page furniture, not collection entries, so they are
+deliberately outside `photos.json`: each file and its 800/1600/2400 long-edge
+versions live in `images/_about/` (`fig-3.png`, `fig-4.jpg` … `fig-a.jpg`),
+which the build skips. Nothing checks that they still exist, so if they are
+moved or renamed, change the `src` and `srcset` in `about.html` too. They are
+web-sized copies of what Newton sends (4000 long edge at most, his own size
+if smaller), with EXIF, XMP and IPTC stripped (APP1 and APP13; the colour
+profile stays): his phone shots carry GPS. The hook's GPS check reads only a
+JPEG's first EXIF block, not PNGs, so strip before committing rather than
+counting on it.
+
+**The figures** (Newton sent them 2026-10-15; 1 and 2 still to come) wait in
+a `<template data-figures-for="#about-zh">` beside the prose, one
+`<figure class="about-fig" data-figure="4">` each, captioned with his
+"figure 4". They can't live in the prose: it is an editable slot that
+text.json rewrites, and edit.js's sanitiser would strip them. site.js
+`aboutFigures()` puts each after the paragraph holding its mark, in the
+marks' order, and again whenever the prose is rewritten, so when Newton
+sends an edited essay the figures follow his marks; a mark with no figure
+shows nothing, and a figure whose mark is gone doesn't show. Not in ?edit,
+or they would be saved into the essay. A new figure is one more `<figure>`
+in the template whose `data-figure` is the mark's number or letter. They
+are the column's full width, as Projects' shots are (`62cqi`, measured on
+`.about-body.has-figures`), wider than the text; an upright stops short of
+the window's height.
 
 The older `.prose`/`.prose h1` rules are still in `site.css` but nothing uses
 them now. They're the fallback if a plain text page is ever wanted.

@@ -477,6 +477,46 @@
     });
   })();
 
+  // The About essay's figures (Newton's photographs for its "（figure N）"
+  // marks, 2026-10-15) wait in a <template data-figures-for> beside the
+  // prose, not in it: the prose is an editable slot that data/text.json
+  // rewrites, and edit.js's sanitiser would strip a figure out of it. Each
+  // goes after the paragraph holding its mark, in the marks' order, and is
+  // placed again whenever the prose is rewritten, so a figure follows its
+  // mark through Newton's edits; one whose mark is gone doesn't show. None
+  // in ?edit, or they would be saved into the essay as text.
+  (function aboutFigures() {
+    if (/[?&]edit\b/.test(location.search)) return;
+    var MARK = /[（(]\s*figure\s+([0-9a-z]+)\s*[）)]/gi;
+    Array.prototype.forEach.call(document.querySelectorAll("template[data-figures-for]"), function (tpl) {
+      var prose = document.querySelector(tpl.getAttribute("data-figures-for"));
+      if (!prose) return;
+      var watch = window.MutationObserver && new MutationObserver(place);
+      function place() {
+        if (watch) watch.disconnect();
+        Array.prototype.forEach.call(prose.querySelectorAll(":scope > .about-fig"), function (f) {
+          prose.removeChild(f);
+        });
+        var shown = {};   // a mark written twice shows its photograph once
+        Array.prototype.forEach.call(prose.querySelectorAll(":scope > p"), function (p) {
+          var after = p, m;
+          MARK.lastIndex = 0;
+          while ((m = MARK.exec(p.textContent))) {
+            var key = m[1].toLowerCase();
+            var fig = !shown[key] && tpl.content.querySelector('[data-figure="' + key + '"]');
+            if (!fig) continue;
+            shown[key] = true;
+            fig = fig.cloneNode(true);
+            prose.insertBefore(fig, after.nextSibling);
+            after = fig;
+          }
+        });
+        if (watch) watch.observe(prose, { childList: true });
+      }
+      place();
+    });
+  })();
+
   /* ---------- Chinese text ---------------------------------------------- */
 
   // Any Chinese on the site, a blurb today or a title, subtitle or caption

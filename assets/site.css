@@ -1232,8 +1232,10 @@ body.lb-open { overflow: hidden; }
 .about-prose > p:first-child:lang(zh) { margin-bottom: 1.5em; color: var(--text-body); }
 /* An English line straight after Chinese (the essay's sign-off) takes the
    same typewriter and size, as it does at the end of a Chinese blurb; its
-   lang stays English. An English section after a heading keeps the sans. */
-.about-prose p:lang(zh) + p:not(:lang(zh)) {
+   lang stays English. So does one after a figure, which only ever follows
+   a Chinese paragraph (figure 9 sits above the sign-off). An English
+   section after a heading keeps the sans. */
+.about-prose :is(p:lang(zh), .about-fig) + p:not(:lang(zh)) {
   font: 400 var(--t-zh-body)/1.9 var(--zh);
   letter-spacing: .05em;
   -webkit-font-smoothing: auto;
@@ -1327,8 +1329,35 @@ body.lb-open { overflow: hidden; }
 .about-prose[data-lang="zh"] .contact-list { font: 400 var(--t-zh-body)/1.9 var(--zh); letter-spacing: .05em; -webkit-font-smoothing: auto; }
 .about-prose[data-lang="zh"] .contact-list li { column-gap: 0; }
 
+/* The essay's figures (site.js aboutFigures puts each after the paragraph
+   holding its mark): the column's full width, as Projects' shots are, so
+   wider than the text's 62ch; an upright stops short of the window's
+   height, drawn whole at the left of its box. The box takes its shape from
+   the img's width and height before the photograph loads (they're lazy),
+   or a jump to 设备 or 联系方式 would land short of it. 62cqi is the grid's
+   62% column, measured on About's .about-body (.has-figures); below 1000px
+   the column is the whole width. The sizes hints in about.html mirror
+   this. */
+.about-body.has-figures { container-type: inline-size; }
+.about-fig { width: 62cqi; margin: var(--s6) 0 var(--s7); }
+.about-fig img {
+  display: block;
+  width: 100%; height: auto;
+  max-height: calc(100svh - var(--masthead-h) - 6rem);
+  object-fit: contain;
+  object-position: left top;
+}
+.about-fig figcaption {
+  margin-top: var(--s3);
+  font: 400 var(--t-label)/16px var(--mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
 @media (max-width: 1000px) {
   .about-body { display: block; }
+  .about-fig { width: 100cqi; }
   .about-rail { position: static; margin-bottom: 3.5vh; }
   .about-jump { flex-direction: row; flex-wrap: wrap; column-gap: var(--s5); max-width: none; margin-top: var(--s3); border-top: 0; }
   .about-jump a { min-height: 44px; min-width: 44px; border-bottom: 0; }
