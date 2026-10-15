@@ -769,7 +769,7 @@ body[data-page="globe"] .nav-menu-list { border-top: 1px solid var(--hairline); 
   list-style: none; margin: var(--s5) 0 0; padding: 0;
 }
 .contact-list li {
-  display: flex; align-items: center;
+  display: flex; align-items: center; column-gap: .3em;   /* "Instagram:" and its linked handle */
   min-height: 48px;
 }
 .contact-list li + li { border-top: 1px solid var(--hairline); }
@@ -1312,8 +1312,11 @@ body.lb-open { overflow: hidden; }
 
 /* The Chinese gear list in the essay's size, like its paragraphs. */
 .about-prose[data-lang] li:lang(zh) { font-size: var(--t-zh-body); line-height: 1.9; }
-/* And the Chinese version's contact list, all Latin, in its typewriter. */
-.about-prose[data-lang="zh"] .contact-list { font: 400 var(--t-zh-body)/1.9 var(--zh); letter-spacing: .05em; }
+/* And the Chinese version's contact list in its typewriter, every row inked
+   alike (邮箱 is marked Chinese, the others aren't); a full-width ： brings
+   its own space. */
+.about-prose[data-lang="zh"] .contact-list { font: 400 var(--t-zh-body)/1.9 var(--zh); letter-spacing: .05em; -webkit-font-smoothing: auto; }
+.about-prose[data-lang="zh"] .contact-list li { column-gap: 0; }
 
 @media (max-width: 1000px) {
   .about-body { display: block; }
