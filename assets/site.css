@@ -1312,6 +1312,8 @@ body.lb-open { overflow: hidden; }
 
 /* The Chinese gear list in the essay's size, like its paragraphs. */
 .about-prose[data-lang] li:lang(zh) { font-size: var(--t-zh-body); line-height: 1.9; }
+/* And the Chinese version's contact list, all Latin, in its typewriter. */
+.about-prose[data-lang="zh"] .contact-list { font: 400 var(--t-zh-body)/1.9 var(--zh); letter-spacing: .05em; }
 
 @media (max-width: 1000px) {
   .about-body { display: block; }

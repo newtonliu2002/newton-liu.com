@@ -628,8 +628,10 @@ goes where its mark is. Its Hasselblad note links to The Desert West (his
 yes). Unlike an English page it has no larger opening paragraph: one size
 throughout (Newton asked). Edit it only as with a blurb. Its rail is the
 order he asked for, 我的故事 / My story, 设备 / Gear, 联系方式 / Contact,
-built from each version's headings (`my-story`, `gear`; `my-story-en`,
-`gear-en`: his kit in his order, under the makers' full names), and lights the
+built from each version's headings (`my-story`, `gear`, `contact`;
+`my-story-en`, `gear-en`, `contact-en`: his kit in his order, under the
+makers' full names; his contacts at the foot of the page, the same list as
+the Contact page, which stays a page of its own, Newton's call), and lights the
 section being read as Projects' does: `railLights()` in site.js, opted into
 by the rail's `data-follow`.
 
