@@ -347,8 +347,12 @@ typewriter pairing he chose (American Typewriter for its Latin, Song for the
 characters: `--zh` and `:lang(zh)` in `site.css`). Nothing needs doing per
 text: `chineseText` in `site.js` watches the page and marks a text that is
 mostly Chinese `lang="zh-Hans"` (`data-zh`), and wraps Chinese inside
-English text in a `<span data-zh-run>`. `.gallery-blurb:lang(zh)` only
-sets a Chinese blurb's size, leading and colour.
+English text in a `<span data-zh-run>`. A paragraph in a page of prose
+(`[data-edit-rich]`) that is mostly Chinese counts as Chinese too, so the
+About essay's paragraph quoting an English sentence keeps the typewriter.
+`.gallery-blurb:lang(zh)` and `.about-prose p:lang(zh)` only set the size,
+leading and colour; an English line on an About page that opens in Chinese
+(the sign-off) takes the same face without being marked Chinese.
 
 ## The gallery layout (packed grid)
 
@@ -603,6 +607,11 @@ the photographs reached that in October 2026 (Peru). Since then:
   a browser that already has it.
 
 ## Prose pages (About, Contact)
+
+**About is Newton's own essay, in Chinese** (2026-10-15; `about.prose` in
+text.json, mirrored in about.html so nothing else shows while text.json
+loads). Its "（figure N）" marks are his, for photographs he is sending: each
+goes where its mark is. Edit it only as with a blurb.
 
 Both use the gallery's vocabulary rather than the old centred `.prose` block: a
 sticky left rail carrying the page label and jump links, a right-hand column of

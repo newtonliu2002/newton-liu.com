@@ -1211,6 +1211,24 @@ body.lb-open { overflow: hidden; }
   text-wrap: pretty;
 }
 
+/* About written in Chinese takes a Chinese blurb's size and air (see
+   .gallery-blurb:lang(zh)), ragged right; its opening paragraph stays a size up. */
+.about-prose p:lang(zh) {
+  font-size: var(--t-zh-body);
+  line-height: 1.9;
+  text-align: start;
+  hanging-punctuation: allow-end;
+}
+.about-prose > p:first-child:lang(zh) { font-size: var(--t-lede); line-height: 1.7; }
+/* An English line in a page that opens in Chinese (the sign-off) takes the
+   same typewriter and size, as it does at the end of a Chinese blurb; its
+   lang stays English. */
+.about-prose:has(> p:first-child:lang(zh)) > p:not(:lang(zh)) {
+  font: 400 var(--t-zh-body)/1.9 var(--zh);
+  letter-spacing: .05em;
+  -webkit-font-smoothing: auto;
+}
+
 /* Section headings are ruled mono labels, not display type — the rail
    already carries the page's voice. */
 .about-prose h2 {

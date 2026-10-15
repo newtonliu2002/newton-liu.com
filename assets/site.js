@@ -457,6 +457,13 @@
       return (text.match(HAN_ALL) || []).length > (text.match(LATIN_ALL) || []).length;
     }
 
+    // A paragraph in a page of prose that is mostly Chinese is Chinese too,
+    // even one that quotes a long English sentence (the About essay).
+    function inChinese(p) {
+      var page = p.parentElement && p.parentElement.closest("[data-edit-rich]");
+      return !!page && mostlyChinese(page.textContent);
+    }
+
     function askFonts() {
       if (fontsAsked) return;
       fontsAsked = true;
@@ -501,7 +508,7 @@
       if (SKIP.test(p.nodeName) || p.namespaceURI !== XHTML) return;
       var text = p.textContent;
       if (p.hasAttribute("data-zh")) {
-        if (mostlyChinese(text)) return;
+        if (mostlyChinese(text) || inChinese(p)) return;
         // Turned English: unmark it, then mark any Chinese still inside.
         p.removeAttribute("lang");
         p.removeAttribute("data-zh");
@@ -515,7 +522,7 @@
       var lang = given ? given.getAttribute("lang") : "";
       if (/^zh/i.test(lang)) { askFonts(); return; }   // inside Chinese already
       if (lang && !/^en/i.test(lang)) return;          // another language, by hand
-      if (given !== p && mostlyChinese(text)) {
+      if (given !== p && (mostlyChinese(text) || inChinese(p))) {
         p.lang = "zh-Hans";
         p.setAttribute("data-zh", "");
         askFonts();
