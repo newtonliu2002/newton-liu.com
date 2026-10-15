@@ -448,6 +448,11 @@ how Malaysia's owl keeps its feet. A panorama never reaches the cap, so it is
 never cut; a 3:2 frame on a wide window loses up to about a fifth of its
 height; a near-square frame would lose far more, so it makes a poor opener.
 An upright opener is not bled: it stays centred, capped at 88vh, uncropped.
+So is a square one (ratio up to 1.05): California in Film's 6×6 frame lost
+too much to the trim, and Newton said "just leave it square" (2026-10-14).
+Its collection also has `"opener": "whole"`, which only drops the pull-up
+for an upright or square, so the frame starts below the bar instead of
+under it.
 
 A subject that fills its frame top to bottom can't survive that trim — the
 Galápagos pelican runs from 6% to 85% of its height, so one screen would cost

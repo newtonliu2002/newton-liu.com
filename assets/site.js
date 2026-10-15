@@ -699,8 +699,9 @@
   }
 
   // The opener: whichever photograph is flagged `featured`, else the first.
-  // A landscape spans the window and is trimmed to its height; an upright is
-  // never cropped. See .book-opener in site.css.
+  // A landscape spans the window and is trimmed to its height; an upright or
+  // a square (California in Film's 6×6 frames; Newton: "just leave it
+  // square") is never cropped. See .book-opener in site.css.
   function renderOpener(photos) {
     var slot = document.querySelector(".book-opener");
     if (!slot) return 0;
@@ -709,7 +710,7 @@
     for (var n = 0; n < photos.length; n++) { if (photos[n].featured) { at = n; break; } }
     var photo = photos[at];
 
-    var upright = aspectOf(photo) <= 0.95;
+    var upright = aspectOf(photo) <= 1.05;          // squares count as uprights here
     var img = el("img");
     // A landscape opener is always the window's width (trimmed to its height,
     // never shrunk), so it asks for 100vw. An upright is capped at

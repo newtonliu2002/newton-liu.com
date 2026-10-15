@@ -969,8 +969,9 @@ body.lb-open { overflow: hidden; }
   object-fit: cover;
 }
 
-/* An upright spanning the window would be several screens tall, so it keeps
-   its own shape instead: centred, capped by height, uncropped. */
+/* An upright spanning the window would be several screens tall, and a square
+   would lose a third of itself to the trim, so both keep their own shape
+   instead: centred, capped by height, uncropped. */
 .book-opener.is-upright img {
   width: auto;
   max-width: 100%;
