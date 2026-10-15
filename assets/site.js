@@ -54,7 +54,8 @@
     "projects.html": [
       { label: "eBird Explorer", href: "https://ebird-explorer.onrender.com" },
       { label: "Shoot Planner", href: "shoot-planner/" },
-      { label: "Retreat Finder", href: "retreat-finder/" }
+      { label: "Retreat Finder", href: "retreat-finder/" },
+      { label: "Site Ranking", href: "https://ebird-explorer.onrender.com/site-ranking" }
     ]
   };
 
