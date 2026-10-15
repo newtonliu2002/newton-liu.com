@@ -172,6 +172,17 @@
         { "name": "Tambopata", "lat": -12.59, "lng": -69.19 }
       ]
     },
+    "california-film": {
+      "status": "draft",
+      "region": "North America",
+      "where": "",
+      "tz": "America/Los_Angeles",
+      "coords": { "lat": 33.3889, "lng": -118.4239 },
+      "zoom": 9,
+      "pins": [
+        { "name": "Catalina Island", "lat": 33.39, "lng": -118.42 }
+      ]
+    },
     "guangxi": {
       "status": "confirmed",
       "region": "Asia",
