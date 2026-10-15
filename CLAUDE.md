@@ -659,20 +659,34 @@ profile stays): his phone shots carry GPS. The hook's GPS check reads only a
 JPEG's first EXIF block, not PNGs, so strip before committing rather than
 counting on it.
 
-**The figures** (Newton sent them 2026-10-15; 1 and 2 still to come) wait in
+**The figures** (Newton sent them 2026-10-15; figure 1 still to come) wait in
 a `<template data-figures-for="#about-zh">` beside the prose, one
-`<figure class="about-fig" data-figure="4">` each, captioned with his
-"figure 4". They can't live in the prose: it is an editable slot that
-text.json rewrites, and edit.js's sanitiser would strip them. site.js
-`aboutFigures()` puts each after the paragraph holding its mark, in the
-marks' order, and again whenever the prose is rewritten, so when Newton
+`<figure class="about-fig" lang="en" data-figure="4">` each, captioned with
+his "figure 4" (`lang="en"`, or the caption takes the Chinese typewriter
+from the paragraph it sits in). They can't live in the prose: it is an
+editable slot that text.json rewrites, and edit.js's sanitiser would strip
+them. site.js `aboutFigures()` places them, in the marks' order, and again
+whenever the prose is rewritten or the window crosses 1000px, so when Newton
 sends an edited essay the figures follow his marks; a mark with no figure
 shows nothing, and a figure whose mark is gone doesn't show. Not in ?edit,
 or they would be saved into the essay. A new figure is one more `<figure>`
-in the template whose `data-figure` is the mark's number or letter. They
-are the column's full width, as Projects' shots are (`62cqi`, measured on
-`.about-body.has-figures`), wider than the text; an upright stops short of
-the window's height.
+in the template whose `data-figure` is the mark's number or letter.
+
+Wide (over 1000px), Newton's layout: every figure the same width, in the
+left column, beside the line holding its mark, the text staying in its
+column on the right. Each is a float inside its paragraph right after the
+mark, pulled into the left column by negative margin (`35cqi` wide,
+`-38cqi`, the grid's column plus gap measured on `.about-body.has-figures`);
+`clear: left` stacks them. The photographs are about twice the essay's
+height, so `align()` pads a paragraph down (inline `padding-top`) when its
+figure would land more than 160px below the mark: gaps in the text are the
+price of keeping figures by their marks. A float the rail's height
+(`--rail-h`) heads the column so the first figure starts below the rail,
+and the essay's next heading clears the last figure. The rail folds up
+while the essay is read (site.js `aboutRailFold`, `.is-folded`) and comes
+back once the next heading reaches it with no figure behind it. Narrow: each
+figure goes after its paragraph, full width, an upright capped at the
+window's height; the rail is static and never folds.
 
 The older `.prose`/`.prose h1` rules are still in `site.css` but nothing uses
 them now. They're the fallback if a plain text page is ever wanted.

@@ -1329,24 +1329,26 @@ body.lb-open { overflow: hidden; }
 .about-prose[data-lang="zh"] .contact-list { font: 400 var(--t-zh-body)/1.9 var(--zh); letter-spacing: .05em; -webkit-font-smoothing: auto; }
 .about-prose[data-lang="zh"] .contact-list li { column-gap: 0; }
 
-/* The essay's figures (site.js aboutFigures puts each after the paragraph
-   holding its mark): the column's full width, as Projects' shots are, so
-   wider than the text's 62ch; an upright stops short of the window's
-   height, drawn whole at the left of its box. The box takes its shape from
+/* The essay's figures (site.js aboutFigures), Newton's photographs for its
+   "（figure N）" marks. On a wide screen they hang in the left column, all
+   one width, each beside the line holding its mark (Newton asked,
+   2026-10-15), while the rail folds out of their way (aboutRailFold). Each
+   is a float inside its paragraph, pulled out of the text column by its
+   width plus the gap, so it takes no room from the text; clear: left puts
+   one that would overlap the one above below it, so a figure can slip down
+   from its mark but never up. A float the rail's height (--rail-h, from
+   aboutRailFold) goes first, so the rail and a figure never share the top
+   of the column, and the essay's next heading (设备) clears the last one.
+   35cqi and 38cqi are the grid's 1fr column, and that plus the gap,
+   measured on About's .about-body (.has-figures). Below 1000px a figure
+   follows its paragraph instead, the whole width, an upright stopping
+   short of the window's height. Either way the box takes its shape from
    the img's width and height before the photograph loads (they're lazy),
-   or a jump to 设备 or 联系方式 would land short of it. 62cqi is the grid's
-   62% column, measured on About's .about-body (.has-figures); below 1000px
-   the column is the whole width. The sizes hints in about.html mirror
-   this. */
+   or a jump to 设备 or 联系方式 would land short. The sizes hints in
+   about.html mirror this. */
 .about-body.has-figures { container-type: inline-size; }
-.about-fig { width: 62cqi; margin: var(--s6) 0 var(--s7); }
-.about-fig img {
-  display: block;
-  width: 100%; height: auto;
-  max-height: calc(100svh - var(--masthead-h) - 6rem);
-  object-fit: contain;
-  object-position: left top;
-}
+.about-fig { margin: var(--s6) 0 var(--s7); }
+.about-fig img { display: block; width: 100%; height: auto; }
 .about-fig figcaption {
   margin-top: var(--s3);
   font: 400 var(--t-label)/16px var(--mono);
@@ -1355,9 +1357,47 @@ body.lb-open { overflow: hidden; }
   color: var(--text-faint);
 }
 
+@media (min-width: 1001px) {
+  .about-prose.has-figs::before {
+    content: "";
+    float: left;
+    width: 35cqi;
+    height: calc(var(--rail-h, 14rem) + var(--s6));
+    margin-left: -38cqi;
+  }
+  .about-prose.has-figs .about-fig {
+    float: left;
+    clear: left;
+    width: 35cqi;
+    margin: 0 0 var(--s6) -38cqi;
+  }
+  .about-prose.has-figs h2 ~ h2 { clear: left; }
+
+  /* The rail folds up while the essay is read and comes back down for
+     设备 and 联系方式 (Newton asked; site.js aboutRailFold says when). It
+     keeps its place in the grid, so nothing moves; a key that lands in it
+     opens it. The clip reaches past the box for the lit square and focus
+     rings. */
+  .about-rail {
+    clip-path: inset(-1rem -1rem -1rem -2rem);
+    transition: clip-path var(--d-slow) var(--ease), opacity var(--d-slow) var(--ease), visibility 0s;
+  }
+  .about-rail.is-folded:not(:focus-within) {
+    clip-path: inset(-1rem -1rem calc(100% + 1rem) -2rem);
+    opacity: 0;
+    visibility: hidden;
+    transition: clip-path var(--d-slow) var(--ease), opacity var(--d-slow) var(--ease), visibility 0s var(--d-slow);
+  }
+}
+
 @media (max-width: 1000px) {
   .about-body { display: block; }
   .about-fig { width: 100cqi; }
+  .about-fig img {
+    max-height: calc(100svh - var(--masthead-h) - 6rem);
+    object-fit: contain;
+    object-position: left top;
+  }
   .about-rail { position: static; margin-bottom: 3.5vh; }
   .about-jump { flex-direction: row; flex-wrap: wrap; column-gap: var(--s5); max-width: none; margin-top: var(--s3); border-top: 0; }
   .about-jump a { min-height: 44px; min-width: 44px; border-bottom: 0; }

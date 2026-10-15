@@ -480,41 +480,153 @@
   // The About essay's figures (Newton's photographs for its "（figure N）"
   // marks, 2026-10-15) wait in a <template data-figures-for> beside the
   // prose, not in it: the prose is an editable slot that data/text.json
-  // rewrites, and edit.js's sanitiser would strip a figure out of it. Each
-  // goes after the paragraph holding its mark, in the marks' order, and is
-  // placed again whenever the prose is rewritten, so a figure follows its
-  // mark through Newton's edits; one whose mark is gone doesn't show. None
-  // in ?edit, or they would be saved into the essay as text.
+  // rewrites, and edit.js's sanitiser would strip a figure out of it. On a
+  // wide screen each goes into its paragraph straight after its mark, and
+  // site.css hangs it in the left column beside that line (Newton asked,
+  // 2026-10-15); on a narrow one, where there is no left column, it goes
+  // after the paragraph. They are placed again whenever the prose is
+  // rewritten or the window crosses 1000px, so a figure follows its mark
+  // through Newton's edits; one whose mark is gone doesn't show. None in
+  // ?edit, or they would be saved into the essay as text.
   (function aboutFigures() {
     if (/[?&]edit\b/.test(location.search)) return;
     var MARK = /[（(]\s*figure\s+([0-9a-z]+)\s*[）)]/gi;
+    var wide = window.matchMedia && window.matchMedia("(min-width: 1001px)");
     Array.prototype.forEach.call(document.querySelectorAll("template[data-figures-for]"), function (tpl) {
       var prose = document.querySelector(tpl.getAttribute("data-figures-for"));
       if (!prose) return;
       var watch = window.MutationObserver && new MutationObserver(place);
+      // Where a mark ends: its text node and the offset in it (a mark split
+      // across an inline element still counts), and the paragraph's child
+      // holding that node, as a figure must not land inside a link.
+      function spot(p, at) {
+        var walk = document.createTreeWalker(p, NodeFilter.SHOW_TEXT), t, seen = 0;
+        while ((t = walk.nextNode())) {
+          if (seen + t.data.length >= at) {
+            var top = t;
+            while (top.parentNode !== p) top = top.parentNode;
+            return { node: t, offset: at - seen, top: top };
+          }
+          seen += t.data.length;
+        }
+        return null;
+      }
       function place() {
         if (watch) watch.disconnect();
-        Array.prototype.forEach.call(prose.querySelectorAll(":scope > .about-fig"), function (f) {
-          prose.removeChild(f);
+        Array.prototype.forEach.call(prose.querySelectorAll(".about-fig"), function (f) {
+          var host = f.parentNode;
+          host.removeChild(f);
+          host.normalize();
         });
-        var shown = {};   // a mark written twice shows its photograph once
+        var shown = {}, any = false, inline = !!(wide && wide.matches);
         Array.prototype.forEach.call(prose.querySelectorAll(":scope > p"), function (p) {
-          var after = p, m;
+          var found = [], m;
           MARK.lastIndex = 0;
           while ((m = MARK.exec(p.textContent))) {
             var key = m[1].toLowerCase();
             var fig = !shown[key] && tpl.content.querySelector('[data-figure="' + key + '"]');
             if (!fig) continue;
             shown[key] = true;
-            fig = fig.cloneNode(true);
-            prose.insertBefore(fig, after.nextSibling);
-            after = fig;
+            found.push({ fig: fig.cloneNode(true), at: m.index + m[0].length });
           }
+          if (!found.length) return;
+          any = true;
+          if (!inline) {
+            var after = p;
+            found.forEach(function (f) { prose.insertBefore(f.fig, after.nextSibling); after = f.fig; });
+            return;
+          }
+          // The last mark first, so splitting a text node leaves the
+          // offsets of the marks before it where they were.
+          found.reverse().forEach(function (f) {
+            var s = spot(p, f.at);
+            if (!s) return p.insertBefore(f.fig, p.firstChild);
+            if (s.top !== s.node) return p.insertBefore(f.fig, s.top.nextSibling);
+            var rest = s.offset < s.node.data.length ? s.node.splitText(s.offset) : s.node.nextSibling;
+            p.insertBefore(f.fig, rest);
+          });
         });
+        prose.classList.toggle("has-figs", any && inline);
         if (watch) watch.observe(prose, { childList: true });
+        align();
       }
+      // The photographs are far taller than the essay, so a figure stacked
+      // under the ones before it can fall well below its mark. When it would
+      // fall more than SLIP below the line holding its mark, its paragraph
+      // waits instead: padding above the paragraph brings the line down to
+      // the figure. Measured paragraph by paragraph, top down, as each wait
+      // moves everything after it, and again whenever the lines can rewrap.
+      var queued = false;
+      function align() {
+        queued = false;
+        var paras = prose.querySelectorAll(":scope > p");
+        Array.prototype.forEach.call(paras, function (p) { p.style.paddingTop = ""; });
+        if (!prose.classList.contains("has-figs") || prose.offsetParent === null) return;
+        var slip = Math.min(window.innerHeight * 0.2, 160);
+        Array.prototype.forEach.call(paras, function (p) {
+          var fig = p.querySelector(":scope > .about-fig");
+          var before = fig && fig.previousSibling;
+          if (!before) return;
+          var range = document.createRange();
+          range.selectNodeContents(before);
+          var rects = range.getClientRects();
+          if (!rects.length) return;
+          var wait = fig.getBoundingClientRect().top - rects[rects.length - 1].top - slip;
+          if (wait > 0) p.style.paddingTop = Math.round(wait) + "px";
+        });
+      }
+      function queue() { if (!queued) { queued = true; requestAnimationFrame(align); } }
       place();
+      if (wide) {
+        if (wide.addEventListener) wide.addEventListener("change", place);
+        else if (wide.addListener) wide.addListener(place);
+      }
+      window.addEventListener("resize", queue);
+      window.addEventListener("nl:lang", queue);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(queue);
+      window.addEventListener("load", queue);
     });
+  })();
+
+  // On a wide screen the essay's figures hang in the rail's column, so the
+  // rail folds up while the essay is read and comes back down for 设备 and
+  // 联系方式 (Newton asked, 2026-10-15; site.css draws the fold). It folds
+  // once it has stuck under the bar, and opens again when the next heading
+  // has come up to where it hangs and no figure is behind it. It also tells
+  // site.css its height (--rail-h), the room kept clear above the first
+  // figure. In English, whose story is still empty, it never folds.
+  (function aboutRailFold() {
+    var body = document.querySelector(".about-body.has-figures");
+    var rail = body && body.querySelector(".about-rail");
+    if (!rail || !window.matchMedia) return;
+    var wide = window.matchMedia("(min-width: 1001px)"), queued = false;
+    function update() {
+      queued = false;
+      var height = rail.offsetHeight, fold = false;
+      body.style.setProperty("--rail-h", height + "px");
+      if (wide.matches) {
+        var top = parseFloat(getComputedStyle(rail).top) || 0, bottom = top + height + 24;
+        if (body.getBoundingClientRect().top < top - 1) {
+          var prose = Array.prototype.filter.call(body.querySelectorAll(".about-prose"), function (el) {
+            return el.offsetParent !== null;
+          })[0];
+          var next = prose && prose.querySelectorAll(":scope > h2")[1];
+          var edge = next ? next.getBoundingClientRect().top : prose ? prose.getBoundingClientRect().bottom : 0;
+          fold = edge > bottom;
+          Array.prototype.forEach.call(body.querySelectorAll(".about-fig"), function (f) {
+            var r = f.getBoundingClientRect();
+            if (r.height && r.top < bottom && r.bottom > top) fold = true;
+          });
+        }
+      }
+      rail.classList.toggle("is-folded", fold);
+    }
+    function queue() { if (!queued) { queued = true; requestAnimationFrame(update); } }
+    window.addEventListener("scroll", queue, { passive: true });
+    window.addEventListener("resize", queue);
+    window.addEventListener("nl:lang", queue);
+    window.addEventListener("load", queue);
+    update();
   })();
 
   /* ---------- Chinese text ---------------------------------------------- */
