@@ -775,6 +775,12 @@ unless you pass `--strip-exif` or `--allow-gps`. Use `--dry-run` first when
 unsure. It is the reason masters never end up in the repo — always import
 through it rather than copying files into `images/` by hand.
 
+**Film scans** (California in Film): the files' EXIF describes the camera
+that digitised the negative (an R5 Mark II and a 100mm macro), not the film
+camera, and their dates are the scan date. Import them with `--strip-exif`,
+so no technical line shows, and give the collection its `date` from his
+folder name ("2024.9" = September 2024).
+
 `build.py` never overwrites hand-authored text (`title`, `location`, `date`,
 `caption`, `collection`). It only refreshes mechanical fields — dimensions,
 EXIF, thumbnail paths. To re-derive a field, delete it from `photos.json` and
