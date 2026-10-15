@@ -7,7 +7,7 @@
 <meta name="description" content="Things Newton Liu has built alongside the photography, starting with eBird Explorer.">
 <meta name="theme-color" content="#121212">
 <script>try{if(localStorage.getItem("theme")==="white"){document.documentElement.dataset.theme="light";var m=document.querySelector('meta[name="theme-color"]');if(m)m.content="#ffffff"}}catch(e){}</script>
-<link rel="stylesheet" href="assets/site.css?v=2caea90f">
+<link rel="stylesheet" href="assets/site.css?v=abc05a6c">
 </head>
 
 <body data-page="prose" data-base="">
@@ -36,7 +36,7 @@
     <aside class="about-rail">
       <h1 class="about-title" data-edit="projects.title">Projects</h1>
       <p class="about-name" data-edit="projects.name">Newton Liu</p>
-      <nav class="about-jump" aria-label="Projects">
+      <nav class="about-jump projects-jump" aria-label="Projects">
         <a href="#ebird-explorer">eBird Explorer</a>
         <a href="#shoot-planner">Photography Planner</a>
         <a href="#retreat-finder">Retreat Finder</a>
@@ -46,11 +46,9 @@
 
     <div class="projects">
       <article class="project" id="ebird-explorer">
-        <p class="project-kicker" data-edit="projects.ebird.kicker">Web app · 2026</p>
+        <p class="project-kicker"><span data-edit="projects.ebird.kicker">Web app · 2026</span><span class="project-status" data-edit="projects.ebird.status">Under construction</span></p>
         <h2 class="project-title">eBird Explorer</h2>
-        <p class="project-blurb" data-edit="projects.ebird.blurb" data-edit-lines>A trip planner built on eBird’s live data. For each trip, it lists the birds I still need, where they’ve been reported lately, and which hotspots hold the most of them, so a day in the field goes where the birds are.
-
-I built it for my own trips, from Alaska and Quebec to Puerto Rico and Oaxaca.</p>
+        <p class="project-blurb" data-edit="projects.ebird.blurb" data-edit-lines>A birding trip planner built on eBird’s live data. For a given area, users input target species and the engine searches for where they’ve been reported lately, and which hotspots hold the most of them, generating an actionable plan for birders.</p>
         <p class="project-actions">
           <a class="text-link" href="https://ebird-explorer.onrender.com">Open the app &rarr;</a>
           <span class="project-note" data-edit="projects.ebird.note">Password required</span>
@@ -60,7 +58,7 @@ I built it for my own trips, from Alaska and Quebec to Puerto Rico and Oaxaca.</
           <img src="images/_projects/ebird-explorer/area-plan.webp"
                srcset="images/_projects/ebird-explorer/1440/area-plan.webp 1440w, images/_projects/ebird-explorer/area-plan.webp 2880w"
                sizes="(max-width: 1000px) 100vw, min(62vw, 67rem)"
-               alt="eBird Explorer's Area Plan for Quebec: six trip areas across the top, Trois-Rivières picked, and its hotspots ranked by how many target birds each has reported."
+               alt="eBird Explorer's Area Plan for Quebec: six trip areas across the top, Trois-Rivières picked, and its hotspots ranked by how many target birds each has reported, each bird listed under its hotspot."
                width="2880" height="1800" decoding="async">
           <figcaption data-edit="projects.ebird.shot1">Area plan: every hotspot in an area, ranked by how many target birds it holds</figcaption>
         </figure>
@@ -69,18 +67,16 @@ I built it for my own trips, from Alaska and Quebec to Puerto Rico and Oaxaca.</
           <img src="images/_projects/ebird-explorer/matrix.webp"
                srcset="images/_projects/ebird-explorer/1440/matrix.webp 1440w, images/_projects/ebird-explorer/matrix.webp 2880w"
                sizes="(max-width: 1000px) 100vw, min(62vw, 67rem)"
-               alt="eBird Explorer's Species Matrix: target birds down the side, Quebec trip areas across the top, each cell marked Reliable, Possible or No reports with its checklist rate."
+               alt="eBird Explorer's Species Matrix: target birds down the side, Quebec trip areas across the top, each cell marked Reliable, Possible, No reports or Not enough, with its checklist rate."
                width="2880" height="1800" loading="lazy" decoding="async">
           <figcaption data-edit="projects.ebird.shot2">Species matrix: each bird against each area, by its share of complete checklists</figcaption>
         </figure>
       </article>
 
       <article class="project" id="shoot-planner">
-        <p class="project-kicker" data-edit="projects.shootplanner.kicker">Web app · 2026</p>
+        <p class="project-kicker"><span data-edit="projects.shootplanner.kicker">Web app · 2026</span><span class="project-status" data-edit="projects.shootplanner.status">Under construction</span></p>
         <h2 class="project-title">Photography Planner</h2>
-        <p class="project-blurb" data-edit="projects.shootplanner.blurb" data-edit-lines>A planner for landscape photography. Pick a date and a base, and it scores my saved spots for sunrise, sunset, golden light, soft light, fog, stars and aurora from free forecast, tide and space-weather data. Then it builds the day: when to wake, where to drive, and a backup for each session, with the reasons behind every score.
-
-It started with a stormy week in Charlevoix, Quebec, in October 2026, and works wherever I travel.</p>
+        <p class="project-blurb" data-edit="projects.shootplanner.blurb" data-edit-lines>A planner for landscape photography. Pick a date and a base, and it searches for and scores photography spots for different times of day and different elements (sunrise, sunset, golden light, soft light, fog, stars and aurora) using forecast, tide and space-weather data. Then it builds the day: when to wake, where to drive, and a backup for each session, with the reasons behind every score. It started with a stormy week in Charlevoix, Quebec, in October 2026.</p>
         <p class="project-actions">
           <a class="text-link" href="shoot-planner/">Open the app &rarr;</a>
           <span class="project-note" data-edit="projects.shootplanner.note">Open to view</span>
@@ -115,11 +111,9 @@ It started with a stormy week in Charlevoix, Quebec, in October 2026, and works 
       </article>
 
       <article class="project" id="retreat-finder">
-        <p class="project-kicker" data-edit="projects.retreatfinder.kicker">Web app · 2026</p>
+        <p class="project-kicker"><span data-edit="projects.retreatfinder.kicker">Web app · 2026</span><span class="project-status" data-edit="projects.retreatfinder.status">Under construction</span></p>
         <h2 class="project-title">Retreat Finder</h2>
-        <p class="project-blurb" data-edit="projects.retreatfinder.blurb" data-edit-lines>A finder for places to stay on photography trips. Claude searches Airbnb, VRBO, Booking.com and hosts’ own sites and reads each listing. The app scores every place against my taste: a view from where I sit, good design, a real desk, quiet. It shows the evidence behind each judgement, remembers every place I’ve turned down and why, and tracks prices for exact dates.
-
-I built it for my own trips, so it opens to a sign-in.</p>
+        <p class="project-blurb" data-edit="projects.retreatfinder.blurb" data-edit-lines>A finder for places to stay on trips. Claude searches Airbnb, VRBO, Booking.com and hosts’ own sites and reads each listing. The app scores every place against a curated taste: views, designs, workspace, solitude, etc. It shows the evidence behind each judgement, remembers every rejected place and why, and tracks prices for exact dates.</p>
         <p class="project-actions">
           <a class="text-link" href="retreat-finder/">Open the app &rarr;</a>
           <span class="project-note" data-edit="projects.retreatfinder.note">Passphrase required</span>
@@ -127,9 +121,9 @@ I built it for my own trips, so it opens to a sign-in.</p>
       </article>
 
       <article class="project" id="site-ranking">
-        <p class="project-kicker" data-edit="projects.siteranking.kicker">Web app · 2026</p>
+        <p class="project-kicker"><span data-edit="projects.siteranking.kicker">Web app · 2026</span><span class="project-status" data-edit="projects.siteranking.status">Under construction</span></p>
         <h2 class="project-title">Site Ranking</h2>
-        <p class="project-blurb" data-edit="projects.siteranking.blurb" data-edit-lines>A personal ranking of the eBird hotspots I’ve birded. Each visit gets a score for the quality of the birds, the number of species and the experience; head-to-head comparisons then put every site in order within its tier, so the list says which places were really the best.
+        <p class="project-blurb" data-edit="projects.siteranking.blurb" data-edit-lines>Inspired by the viral food ranking app Beli, this is a personal ranking system of the eBird hotspots a user has birded. Each visit gets a score for the quality of the birds, the number of species and the experience; then, pairwise comparisons put every site in order within its tier, so the list says which places were really the best.
 
 It runs alongside eBird Explorer and shares its sign-in.</p>
         <p class="project-actions">
@@ -152,7 +146,7 @@ It runs alongside eBird Explorer and shares its sign-in.</p>
   </div>
 </footer>
 
-<script src="assets/site.js?v=04901f06"></script>
+<script src="assets/site.js?v=f7acac9a"></script>
 <script src="assets/edit.js?v=c63f7eb5"></script>
 </body>
 </html>

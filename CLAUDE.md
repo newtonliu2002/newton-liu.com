@@ -630,6 +630,17 @@ other copy (eBird Explorer's key is `ebird`; its id and image folder are
 `ebird-explorer`); the name, the link and the alt text are written in the
 HTML, so the rail's jump link can't fall out of step with an edited name.
 The blurb is `data-edit-lines` and shows a blank line as a paragraph gap.
+The blurbs are Newton's own words (2026-10-15): fix only plain typos and
+tell him each change, as with collection blurbs.
+
+Each kicker is two keys: `projects.<key>.kicker` ("Web app · 2026") and
+`projects.<key>.status` ("Under construction", in the accent; Newton asked
+that all four say so). Empty a status and its separator goes with it. The
+rail's links light up for the project being read (`projectsRail()` in
+site.js sets `aria-current="location"`; `.projects-jump` in site.css draws
+the nav's accent square beside it). A link that has just been clicked stays
+lit until the reader scrolls. The eBird Explorer session edits this page; the
+other projects' chats send it their changes.
 
 Screenshots are page furniture like the About band, written into the HTML:
 `images/_projects/<project>/<name>.webp` (2880 wide, taken at 1440×900 at

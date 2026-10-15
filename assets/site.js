@@ -372,6 +372,57 @@
     more();
   })();
 
+  // Projects: the rail lights the project being read (aria-current, styled
+  // in site.css). That is the last one whose top has passed 40% of the way
+  // down the window, the first until then, and the last once the page can
+  // scroll no further, since a short last project never reaches the line.
+  // A rail link just followed (or the page's own #hash) stays lit while the
+  // smooth scroll runs and after it lands, even at the foot of the page,
+  // until the reader scrolls on their own.
+  (function projectsRail() {
+    var nav = document.querySelector(".projects-jump");
+    var projects = document.querySelectorAll(".projects > .project[id]");
+    if (!nav || !projects.length) return;
+    var links = {};
+    Array.prototype.forEach.call(nav.querySelectorAll('a[href^="#"]'), function (a) {
+      links[a.getAttribute("href").slice(1)] = a;
+    });
+    var current = null, pinned = null, queued = false;
+    function light(id) {
+      if (id === current) return;
+      if (current && links[current]) links[current].removeAttribute("aria-current");
+      current = id;
+      if (links[id]) links[id].setAttribute("aria-current", "location");
+    }
+    function update() {
+      queued = false;
+      if (pinned) return light(pinned);
+      var line = window.innerHeight * 0.4, pick = projects[0];
+      for (var i = 0; i < projects.length; i++) {
+        if (projects[i].getBoundingClientRect().top <= line) pick = projects[i];
+      }
+      var doc = document.documentElement;
+      if (window.innerHeight + window.pageYOffset >= doc.scrollHeight - 2) pick = projects[projects.length - 1];
+      light(pick.id);
+    }
+    function queue() { if (!queued) { queued = true; requestAnimationFrame(update); } }
+    function unpin() { if (pinned) { pinned = null; queue(); } }
+    nav.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest('a[href^="#"]');
+      if (a && links[a.getAttribute("href").slice(1)]) { pinned = a.getAttribute("href").slice(1); queue(); }
+    });
+    ["wheel", "touchstart", "keydown", "mousedown"].forEach(function (type) {
+      window.addEventListener(type, function (e) {
+        if (type === "mousedown" && nav.contains(e.target)) return;   // the click above pins instead
+        unpin();
+      }, { passive: true });
+    });
+    window.addEventListener("scroll", queue, { passive: true });
+    window.addEventListener("resize", queue);
+    if (location.hash && links[location.hash.slice(1)]) pinned = location.hash.slice(1);
+    update();
+  })();
+
   /* ---------- Chinese text ---------------------------------------------- */
 
   // Any Chinese on the site, a blurb today or a title, subtitle or caption

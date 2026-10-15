@@ -1284,6 +1284,28 @@ body.lb-open { overflow: hidden; }
 }
 .project-kicker { margin: 0; }
 
+/* Every project is still being built, and says so after its kicker, in the
+   accent ("progress"). The dot is drawn here so an emptied status leaves
+   no stray separator; the second `content` keeps it from being read out. */
+.project-status { color: var(--accent); }
+.project-status::before {
+  content: "·"; content: "·" / "";
+  margin: 0 .55em; color: var(--text-faint);
+}
+.project-status:empty::before { content: none; }
+
+/* The project being read is lit in the rail (site.js projectsRail): full
+   ink, and the nav's 4×4 accent square hung in the gutter to its left so
+   the label doesn't shift as it comes and goes. */
+.projects-jump a { position: relative; }
+.projects-jump a[aria-current] { color: var(--text); }
+.projects-jump a[aria-current]::before {
+  content: "";
+  position: absolute; right: 100%; top: 50%;
+  margin: -2px 8px 0 0;
+  border: 2px solid var(--accent);
+}
+
 .project-title {
   margin: var(--s3) 0 0;
   font: 500 var(--t-h2)/1.1 var(--sans);
