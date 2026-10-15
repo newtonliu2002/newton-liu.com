@@ -13324,8 +13324,8 @@
       "collection": "california-film",
       "location": "",
       "date": "",
-      "width": 4000,
-      "height": 4000,
+      "width": 3970,
+      "height": 3970,
       "exif": {},
       "variants": [
         {
@@ -13341,7 +13341,7 @@
           "src": "images/_thumbs/2400/california-film/U2A0291.jpg"
         },
         {
-          "w": 4000,
+          "w": 3970,
           "src": "images/california-film/U2A0291.jpg"
         }
       ],
