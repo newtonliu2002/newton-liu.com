@@ -355,8 +355,8 @@ English text in a `<span data-zh-run>`. A paragraph in a page of prose
 (`[data-edit-rich]`) that is mostly Chinese counts as Chinese too, so the
 About essay's paragraph quoting an English sentence keeps the typewriter.
 `.gallery-blurb:lang(zh)` and `.about-prose p:lang(zh)` only set the size,
-leading and colour; an English line on an About page that opens in Chinese
-(the sign-off) takes the same face without being marked Chinese.
+leading and colour; an English paragraph straight after a Chinese one (the
+essay's sign-off) takes the same face without being marked Chinese.
 
 ## The gallery layout (packed grid)
 
@@ -617,7 +617,11 @@ text.json, mirrored in about.html so nothing else shows while text.json
 loads). Its "（figure N）" marks are his, for photographs he is sending: each
 goes where its mark is. Its Hasselblad note links to The Desert West (his
 yes). Unlike an English page it has no larger opening paragraph: one size
-throughout (Newton asked). Edit it only as with a blurb.
+throughout (Newton asked). Edit it only as with a blurb. Its rail is the
+order he asked for, My story, Gear, Contact, built from the prose's
+headings (`<h2 id="my-story">`; Gear waits for his words), and lights the
+section being read as Projects' does: `railLights()` in site.js, opted into
+by the rail's `data-follow`.
 
 Both use the gallery's vocabulary rather than the old centred `.prose` block: a
 sticky left rail carrying the page label and jump links, a right-hand column of
@@ -661,10 +665,11 @@ tell him each change, as with collection blurbs.
 Each kicker is two keys: `projects.<key>.kicker` ("Web app · 2026") and
 `projects.<key>.status` ("Under construction", in the accent; Newton asked
 that all four say so). Empty a status and its separator goes with it. The
-rail's links light up for the project being read (`projectsRail()` in
-site.js sets `aria-current="location"`; `.projects-jump` in site.css draws
-the nav's accent square beside it). A link that has just been clicked stays
-lit until the reader scrolls. The eBird Explorer session edits this page; the
+rail's links light up for the project being read (`railLights()` in
+site.js, shared with About, sets `aria-current="location"`;
+`.about-jump a[aria-current]` in site.css draws the nav's accent square
+beside it). A link that has just been clicked stays lit until the reader
+scrolls. The eBird Explorer session edits this page; the
 other projects' chats send it their changes.
 
 Screenshots are page furniture like the About band, written into the HTML:

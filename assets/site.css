@@ -1221,10 +1221,10 @@ body.lb-open { overflow: hidden; }
   hanging-punctuation: allow-end;
 }
 .about-prose > p:first-child:lang(zh) { margin-bottom: 1.5em; color: var(--text-body); }
-/* An English line in a page that opens in Chinese (the sign-off) takes the
+/* An English line straight after Chinese (the essay's sign-off) takes the
    same typewriter and size, as it does at the end of a Chinese blurb; its
-   lang stays English. */
-.about-prose:has(> p:first-child:lang(zh)) > p:not(:lang(zh)) {
+   lang stays English. An English section after a heading keeps the sans. */
+.about-prose p:lang(zh) + p:not(:lang(zh)) {
   font: 400 var(--t-zh-body)/1.9 var(--zh);
   letter-spacing: .05em;
   -webkit-font-smoothing: auto;
@@ -1313,12 +1313,12 @@ body.lb-open { overflow: hidden; }
 }
 .project-status:empty::before { content: none; }
 
-/* The project being read is lit in the rail (site.js projectsRail): full
-   ink, and the nav's 4×4 accent square hung in the gutter to its left so
-   the label doesn't shift as it comes and goes. */
-.projects-jump a { position: relative; }
-.projects-jump a[aria-current] { color: var(--text); }
-.projects-jump a[aria-current]::before {
+/* The part being read is lit in the rail (site.js railLights; Projects and
+   About): full ink, and the nav's 4×4 accent square hung in the
+   gutter to its left so the label doesn't shift as it comes and goes. */
+.about-jump a { position: relative; }
+.about-jump a[aria-current] { color: var(--text); }
+.about-jump a[aria-current]::before {
   content: "";
   position: absolute; right: 100%; top: 50%;
   margin: -2px 8px 0 0;
