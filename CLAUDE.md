@@ -84,10 +84,14 @@ Guangxi, Yunnan, Sri Lanka. A collection not in it never passes (it still
 shows on hover and in the list): Big Bend, New England, Arizona and
 California, for now, and a new collection until it is added. A landing starts
 at the top; after a drag, a gallery or a flight home the order picks up at the
-first card still to come. Where the next card's pin is past the middle
-before the card up has had its 4.5 s (the West: six cards within 15°), the
-spin slows, to 35% at most (`PASS_BRAKE*`, eased in `spinStep()`; Newton
-approved), so every card comes up near its pin. Plates are laptop-layout
+first card still to come. Where cards crowd (the West: six within 15°, each
+up for 4.5 s) the spin slows ahead of time, to one even pace that brings
+every card up within 6° of its pin (`passPace()`, `PASS_LATE`, looking
+`PASS_LOOK` = 30° ahead): from about Florida it eases down to about 60%,
+holds through the West and eases back after The Snowy West, changing by
+`PASS_EASE` of full speed a second at most, never below 35% (`PASS_BRAKE`).
+Newton approved the slowing and found the first, last-moment brake too
+abrupt (2026-10-15). Plates are laptop-layout
 only, so phones get the spin without them. Over a long stretch with no pin near the middle (the
 Pacific after Hawai'i, Arabia and the Sahara after Sri Lanka, the Atlantic
 after Morocco) the spin eases up to

@@ -68,11 +68,14 @@
   var PASS_ORDER = ["morocco", "ecuador", "peru", "florida", "galapagos", "rio-grande",
     "colorado-nebraska", "desert-west", "yellowstone", "alberta-bc-yukon", "california-film",
     "snowy-west", "alaska", "hawaii", "malaysia", "guangxi", "yunnan", "sri-lanka"];
-  // Where the next card's pin is already past the middle while the card up
-  // has its 4.5 s (the West: six cards within 15°), the spin slows, down to
-  // PASS_BRAKE of its pace by 13° past (a PASS_BRAKE_SPAN-degree ramp), so no
-  // card is left far behind its pin.
-  var PASS_BRAKE = .35, PASS_BRAKE_SPAN = 20;
+  // Where cards crowd (the West: six within 15°, each wanting its 4.5 s) the
+  // spin slows ahead of time to one even pace that brings every card up by
+  // PASS_LATE degrees past its pin. It looks PASS_LOOK degrees ahead, so it
+  // eases down from about Florida, holds through the West and eases back up
+  // after The Snowy West, its pace changing by PASS_EASE of full speed a
+  // second at most (Newton found a last-moment brake too abrupt). Never
+  // slower than PASS_BRAKE of full speed.
+  var PASS_BRAKE = .35, PASS_LATE = 6, PASS_LOOK = 30, PASS_EASE = .15;
   var SPIN_RESUME = 1000, SPIN_RAMP = 800;
   var HOVER_DELAY = 120, TURN_DELAY = 450;
   var DWELL = 6000, DWELL_REDUCED = 8000;
@@ -1910,8 +1913,8 @@
      PASS_DWELL at least. The next one comes up once its pin is due, from
      PASS_AHEAD before the middle; where nothing is near the middle
      (gapBoost), as soon as its pin comes into view (PASS_REACH), once the
-     card up is on its way out. Where the next pin is past the middle before
-     the card up has had its time, the spin slows for it (passBrake). A
+     card up is on its way out. Where cards crowd, the spin eases to the pace
+     that gives each its time near its pin (passPace, passBrake). A
      landing starts at the top of the order; after anything else (a return
      from a gallery, a drag, a flight home, a stack pointed at) the order
      picks up at the first card whose pin hasn't yet passed the middle and
@@ -1952,12 +1955,9 @@
     }
     var s = passNext >= 0 ? passOrder[passNext] : null, p = s && at[s];
     var d = s ? wrap180(c.lng - (p ? p.ll : bySlug[s].lead.ll)[0]) : 0;   // > 0: still to come, left of the middle
-    passBrakeTo = 1;
+    passBrakeTo = passPace(c.lng, t);
     // The card up keeps its time while its pin is in view.
-    if (passing && at[passing] && t - passedAt < PASS_DWELL) {
-      if (s && d < 0) passBrakeTo = Math.max(PASS_BRAKE, 1 + d / PASS_BRAKE_SPAN);
-      return;
-    }
+    if (passing && at[passing] && t - passedAt < PASS_DWELL) return;
     var due = p && (first ? Math.abs(d) <= PASS_KEEP : d <= PASS_AHEAD ||
       gapBoost(c.lng) > 1 && d <= PASS_REACH && (cur === null || cur < -PASS_BEHIND));
     if (due) {
@@ -1979,6 +1979,23 @@
       }
       passSlot.push(lng);
     });
+  }
+  // The pace (a share of the spin's own there) at which every card coming up
+  // within PASS_LOOK has its turn by PASS_LATE past its pin: the k-th card
+  // to come can't show until the card up and the k before it have had their
+  // PASS_DWELL each. Where they are far apart, full pace.
+  function passPace(lng, t) {
+    var n = passOrder.length, v = Infinity;
+    if (passNext < 0) return 1;
+    var rest = passing ? Math.max(0, PASS_DWELL - (t - passedAt)) : 0;
+    var ahead = wrap180(lng - passSlot[passNext]);
+    for (var k = 0; k < n; k++) {
+      var i = (passNext + k) % n, wait = rest + k * PASS_DWELL;
+      if (k) ahead += ((passSlot[(i + n - 1) % n] - passSlot[i]) % 360 + 360) % 360;
+      if (ahead > PASS_LOOK) break;
+      if (wait > 0) v = Math.min(v, (wrap180(lng - bySlug[passOrder[i]].lead.ll[0]) + PASS_LATE) * 1000 / wait);
+    }
+    return v === Infinity ? 1 : clamp(v / (SPIN * gapBoost(lng)), PASS_BRAKE, 1);
   }
   // The pin that carries each collection's card: its own, or the stack it is in.
   function passPins() {
@@ -2644,8 +2661,8 @@
     if (!spinV || (COARSE && t - lastSpin < 33)) return;   // phones: 30 updates a second
     var c = map.getCenter(), step = Math.min(t - lastSpin, 100);
     lastSpin = t;
-    // Slowing for a crowd of cards (passStep sets the pace) eases in and out over about half a second.
-    passBrake += (passBrakeTo - passBrake) * Math.min(1, step / 500);
+    // The pace for a crowd of cards (passStep sets it) changes gently: PASS_EASE a second at most.
+    passBrake += clamp(passBrakeTo - passBrake, -PASS_EASE * step / 1000, PASS_EASE * step / 1000);
     map.jumpTo({ center: [c.lng - SPIN * gapBoost(c.lng) * passBrake * spinV * step / 1000, c.lat] }, { gSpin: 1 });
   }
   function gapBoost(lng) {
