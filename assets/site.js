@@ -372,6 +372,168 @@
     more();
   })();
 
+  /* ---------- Chinese text ---------------------------------------------- */
+
+  // Any Chinese on the site, a blurb today or a title, subtitle or caption
+  // later, is set in the typewriter pairing (--zh and :lang(zh), site.css).
+  // It only has to be marked lang="zh-Hans", which also gets it simplified
+  // glyphs, Chinese punctuation and a Chinese voice in a screen reader.
+  // A text with more Han characters than Latin letters is marked whole, so
+  // its English words and its sign-off are typed too; Chinese inside English
+  // gets a span of its own. Pages keep writing text after they load (the
+  // gallery header from collections.json, the globe's cards), so this
+  // watches the page instead of being called from every place that writes,
+  // and a text that turns English again loses the mark. It only undoes marks
+  // it made (data-zh, data-zh-run) and leaves alone anything given a language
+  // by hand. Text being typed in ?edit is never split: a field that becomes
+  // editable loses its spans, or English typed after a Chinese word would
+  // land inside one, so Chinese inside English shows in the system face
+  // until the page is reloaded. The web fonts for devices without Songti
+  // load the first time Chinese turns up, so a page without any never asks
+  // for them.
+  (function chineseText() {
+    var FONTS = "https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Noto+Serif+SC:wght@400;700&display=swap";
+    var HAN = /[㐀-鿿豈-﫿]/;
+    var HAN_ALL = /[㐀-鿿豈-﫿]/g;
+    var LATIN_ALL = /[A-Za-z]/g;
+    // A run: Han characters with the Chinese punctuation around them.
+    var RUN = /[　-〿＀-￯]*[㐀-鿿豈-﫿][　-〿㐀-鿿豈-﫿＀-￯]*/g;
+    var SKIP = /^(SCRIPT|STYLE|NOSCRIPT|TEMPLATE|TEXTAREA|TITLE|OPTION)$/;
+    var XHTML = "http://www.w3.org/1999/xhtml";
+    var fontsAsked = false;
+
+    function mostlyChinese(text) {
+      return (text.match(HAN_ALL) || []).length > (text.match(LATIN_ALL) || []).length;
+    }
+
+    function askFonts() {
+      if (fontsAsked) return;
+      fontsAsked = true;
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = FONTS;
+      document.head.appendChild(link);
+    }
+
+    // The elements holding Chinese text under (or at) a node.
+    function holders(node, into) {
+      if (node.nodeType === 3) {
+        if (node.parentElement && HAN.test(node.data)) into.push(node.parentElement);
+        return;
+      }
+      if (node.nodeType !== 1) return;
+      var walk = document.createTreeWalker(node, NodeFilter.SHOW_TEXT), t;
+      while ((t = walk.nextNode())) {
+        if (t.parentElement && HAN.test(t.data)) into.push(t.parentElement);
+      }
+    }
+
+    function wrap(textNode) {
+      var s = textNode.data, at = 0, m;
+      var frag = document.createDocumentFragment();
+      RUN.lastIndex = 0;
+      while ((m = RUN.exec(s))) {
+        if (m.index > at) frag.appendChild(document.createTextNode(s.slice(at, m.index)));
+        var span = el("span");
+        span.lang = "zh-Hans";
+        span.setAttribute("data-zh-run", "");
+        span.textContent = m[0];
+        frag.appendChild(span);
+        at = m.index + m[0].length;
+      }
+      if (at < s.length) frag.appendChild(document.createTextNode(s.slice(at)));
+      textNode.parentNode.replaceChild(frag, textNode);
+    }
+
+    function settle(p) {
+      if (!p.isConnected || p.hasAttribute("data-zh-run")) return;
+      if (SKIP.test(p.nodeName) || p.namespaceURI !== XHTML) return;
+      var text = p.textContent;
+      if (p.hasAttribute("data-zh")) {
+        if (mostlyChinese(text)) return;
+        // Turned English: unmark it, then mark any Chinese still inside.
+        p.removeAttribute("lang");
+        p.removeAttribute("data-zh");
+        var inner = [];
+        holders(p, inner);
+        inner.forEach(settle);
+        return;
+      }
+      if (!HAN.test(text)) return;
+      var given = p.closest("[lang]");
+      var lang = given ? given.getAttribute("lang") : "";
+      if (/^zh/i.test(lang)) { askFonts(); return; }   // inside Chinese already
+      if (lang && !/^en/i.test(lang)) return;          // another language, by hand
+      if (given !== p && mostlyChinese(text)) {
+        p.lang = "zh-Hans";
+        p.setAttribute("data-zh", "");
+        askFonts();
+        return;
+      }
+      if (p.isContentEditable) return;
+      for (var n = p.firstChild, next; n; n = next) {
+        next = n.nextSibling;
+        if (n.nodeType === 3 && HAN.test(n.data)) wrap(n);
+      }
+      askFonts();
+    }
+
+    function settleAll(list) {
+      list.forEach(function (p, i) { if (list.indexOf(p) === i) settle(p); });
+    }
+
+    function unwrap(run) {
+      var p = run.parentNode;
+      if (!p) return;
+      p.replaceChild(document.createTextNode(run.textContent), run);
+      p.normalize();
+    }
+
+    var first = [];
+    holders(document.body, first);
+    settleAll(first);
+
+    if (!window.MutationObserver) return;
+    new MutationObserver(function (records) {
+      var marked = [], fresh = [];
+      records.forEach(function (r) {
+        var at = r.type === "characterData" ? r.target.parentElement : r.target;
+        if (!at) return;
+        if (r.type === "attributes") {
+          // contenteditable: ?edit armed this field, or let it go.
+          if (at.isContentEditable) {
+            Array.prototype.forEach.call(at.querySelectorAll("[data-zh-run]"), unwrap);
+          }
+          holders(at, fresh);
+          return;
+        }
+        if (at.hasAttribute("data-zh-run")) {   // text written into a span: start over
+          var host = at.parentElement;
+          unwrap(at);
+          if (host) fresh.push(host);
+          return;
+        }
+        // Every mark around the change, as an inner text turning English can
+        // tip the one around it too.
+        for (var w = at.closest("[data-zh]"); w; w = w.parentElement && w.parentElement.closest("[data-zh]")) {
+          marked.push(w);
+        }
+        if (r.type === "characterData") holders(r.target, fresh);
+        else for (var i = 0; i < r.addedNodes.length; i++) holders(r.addedNodes[i], fresh);
+      });
+      // Marks that may have to come off go first, outermost first, so the
+      // Chinese inside a text that turned English is found again below.
+      marked.sort(function (a, b) {
+        return a === b ? 0 : a.compareDocumentPosition(b) & 4 ? -1 : 1;
+      });
+      settleAll(marked);
+      settleAll(fresh);
+    }).observe(document.body, {
+      childList: true, characterData: true, subtree: true,
+      attributes: true, attributeFilter: ["contenteditable"]
+    });
+  })();
+
   /* ---------- home ---------------------------------------------------- */
 
   function renderHome(collections, photos) {
@@ -916,16 +1078,8 @@
       document.title = meta.title + " — Newton Liu Photography";
     }
     if (subEl)   subEl.textContent   = meta.subtitle || "";
-    if (blurbEl) {
-      blurbEl.textContent = meta.blurb || "";
-      // A blurb written mostly in Chinese is marked as Chinese, so the browser
-      // takes simplified glyphs and Chinese punctuation for it (site.css) and
-      // a screen reader reads it in a Chinese voice.
-      var han = (meta.blurb || "").match(/[㐀-鿿]/g) || [];
-      var latin = (meta.blurb || "").match(/[A-Za-z]/g) || [];
-      if (han.length > latin.length) blurbEl.lang = "zh-Hans";
-      else blurbEl.removeAttribute("lang");
-    }
+    // A title, subtitle or blurb in Chinese marks itself (chineseText, above).
+    if (blurbEl) blurbEl.textContent = meta.blurb || "";
 
     shown = photos.filter(function (p) { return p.collection === slug; });
 

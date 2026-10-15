@@ -331,9 +331,14 @@ wrote it: fix only plain typos, and tell him each change. A blurb can have
 several paragraphs; separate them with a blank line (`\n\n`), which the page
 shows as the gap (`white-space: pre-line`) and edit mode keeps on save.
 A single `\n` is a plain line break with no gap. He may write a blurb in
-Chinese (Alaska's is): put it in as written, untranslated. `site.js` marks
-a blurb that is mostly Chinese `lang="zh-Hans"`, and `site.css` then sets
-it in a Chinese face first (`.gallery-blurb:lang(zh)`).
+Chinese (Alaska's is): put it in as written, untranslated. Any Chinese on
+the site, in a blurb, title, subtitle or anything else, is set in the
+typewriter pairing he chose (American Typewriter for its Latin, Song for the
+characters: `--zh` and `:lang(zh)` in `site.css`). Nothing needs doing per
+text: `chineseText` in `site.js` watches the page and marks a text that is
+mostly Chinese `lang="zh-Hans"` (`data-zh`), and wraps Chinese inside
+English text in a `<span data-zh-run>`. `.gallery-blurb:lang(zh)` only
+sets a Chinese blurb's size, leading and colour.
 
 ## The gallery layout (packed grid)
 

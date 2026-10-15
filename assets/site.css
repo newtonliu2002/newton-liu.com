@@ -67,7 +67,16 @@
      label, date and number. Nothing on the site is set smaller than 11px. */
   --sans:  "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --mono:  "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  --serif: var(--sans);   /* legacy name; no serif remains */
+  --serif: var(--sans);   /* legacy name; no serif remains in English */
+  /* Chinese, wherever it appears: Song characters, with the English words,
+     numbers and sign-offs among them in American Typewriter, like a page off
+     a typewriter. Macs have both built in. iPhones have American Typewriter
+     and fetch Noto Serif SC; other devices fetch Courier Prime and Noto Serif
+     SC. site.js asks Google Fonts for those only on a page with Chinese.
+     "ZH Punct" (with :lang(zh), near the end) is the Song face for the
+     few punctuation marks Chinese shares with English. */
+  --zh:    "ZH Punct", "American Typewriter", "Courier Prime", "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", "Noto Serif SC", serif;
+  --t-zh-body: 16.5px;  /* a Chinese blurb: line-height 1.9 */
   --t-label: 11px;  /* mono, uppercase, .14–.24em, line-height 16px: the absolute minimum anywhere */
   --t-meta:  12px;  /* mono: EXIF, numbers, tabular-nums */
   --t-ui:    13px;  /* nav, buttons */
@@ -664,11 +673,16 @@ body[data-page="globe"] .nav-menu-list { border-top: 1px solid var(--hairline); 
   color: var(--text-dim);
   white-space: pre-line;
 }
-/* A blurb in Chinese (site.js marks it lang="zh-Hans") is set in a Chinese
-   face first, so its quotes, ellipses and the odd English word come from the
-   same face as the characters around them rather than from Geist. */
+/* A blurb in Chinese takes the typewriter pairing from :lang(zh) (at the end
+   of this file), a touch larger and with more air between lines. It's ragged
+   right because a typewriter can't justify, so every character keeps the same
+   pitch. Safari hangs a closing 。or ，past the edge rather than wrapping it. */
 .gallery-blurb:lang(zh) {
-  font-family: "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei", var(--sans);
+  font-size: var(--t-zh-body);
+  line-height: 1.9;
+  color: var(--text-body);
+  text-align: start;
+  hanging-punctuation: allow-end;
 }
 
 /* All optional — collapse rather than leaving a gap. */
@@ -1490,6 +1504,42 @@ body.is-editing .about-rail { top: calc(var(--nl-bar-h) + var(--masthead-h) + 2r
 
 @media (max-width: 640px) {
   .nl-bar-hint { display: none; }
+}
+
+/* ==========================================================================
+   Chinese. site.js marks every text that is mostly Chinese lang="zh-Hans"
+   (Chinese inside English gets a span of its own), including text added
+   later, and this sets it in the --zh pairing. The two !importants are there
+   because this has to beat each component's own face and tracking, globe.css
+   included, which loads after this file. text-autospace leaves a small gap
+   between Chinese and Latin (Chrome 140+, Safari 18.4+). Smoothing back on
+   auto gives the thin Song strokes a slightly inkier weight on a Mac.
+   ========================================================================== */
+
+:lang(zh) {
+  font-family: var(--zh) !important;
+  letter-spacing: .05em !important;
+  text-autospace: normal;
+  -webkit-font-smoothing: auto;
+}
+
+/* Chinese inside English. The span takes no box of its own, so it can't
+   split a flex row (the globe's list) into columns, and with leading 1 its
+   different face can't stretch the English line around it. */
+[data-zh-run] { display: contents; line-height: 1; }
+
+/* The punctuation Chinese shares with English (the · in a name, the ——
+   dash, the …… ellipsis) would otherwise come from American Typewriter,
+   which sets …… low on the line and breaks —— in two. This lends just those
+   characters, inside --zh only, a Song face, or a Mincho one (iPhone) when
+   no Song face is installed. */
+@font-face {
+  font-family: "ZH Punct";
+  src: local("Songti SC"), local("STSongti-SC-Regular"), local("STSong"),
+       local("Noto Serif CJK SC"), local("NotoSerifCJKsc-Regular"),
+       local("Source Han Serif SC"), local("SourceHanSerifSC-Regular"),
+       local("Hiragino Mincho ProN W3"), local("HiraMinProN-W3"), local("SimSun");
+  unicode-range: U+00B7, U+2014-2015, U+2026;
 }
 
 /* ==========================================================================
