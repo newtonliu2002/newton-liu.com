@@ -614,13 +614,22 @@ the photographs reached that in October 2026 (Peru). Since then:
 
 **About is Newton's own essay, in Chinese** (2026-10-15; `about.prose` in
 text.json, mirrored in about.html so nothing else shows while text.json
-loads). Its "（figure N）" marks are his, for photographs he is sending: each
+loads). **About has a Chinese and an English version**, switched by 中文 /
+English in its rail (site.js `aboutLanguage()`): everything marked
+`data-lang="zh"` or `"en"` (titles, rails, prose: `about.prose` and
+`about.proseEn`, `about.title` 关于 and `about.titleEn`). Chinese unless the
+visitor picks English; the pick is kept in localStorage `aboutLang`, applied
+before the first paint by a line in about.html's head, and a link into the
+other version (`#gear-en`) opens it. Newton wanted everything in Chinese for
+now: the English My story is left empty for him to write, and the titles
+are for screen readers only (he wanted the page to open on My story). Gear
+is the same list in both, with 哈苏 / 佳能 / 大疆 for the makers in Chinese. Its "（figure N）" marks are his, for photographs he is sending: each
 goes where its mark is. Its Hasselblad note links to The Desert West (his
 yes). Unlike an English page it has no larger opening paragraph: one size
 throughout (Newton asked). Edit it only as with a blurb. Its rail is the
-order he asked for, My story, Gear, Contact, built from the prose's
-headings (`<h2 id="my-story">`, `<h2 id="gear">`: his kit in his order,
-under the makers' full names, 2026-10-15), and lights the
+order he asked for, 我的故事 / My story, 设备 / Gear, 联系方式 / Contact,
+built from each version's headings (`my-story`, `gear`; `my-story-en`,
+`gear-en`: his kit in his order, under the makers' full names), and lights the
 section being read as Projects' does: `railLights()` in site.js, opted into
 by the rail's `data-follow`.
 

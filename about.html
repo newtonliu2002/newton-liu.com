@@ -7,7 +7,8 @@
 <meta name="description" content="About Newton Liu, bird and wildlife photographer.">
 <meta name="theme-color" content="#121212">
 <script>try{if(localStorage.getItem("theme")==="white"){document.documentElement.dataset.theme="light";var m=document.querySelector('meta[name="theme-color"]');if(m)m.content="#ffffff"}}catch(e){}</script>
-<link rel="stylesheet" href="assets/site.css?v=10d30f73">
+<script>try{if(localStorage.getItem("aboutLang")==="en")document.documentElement.dataset.aboutLang="en"}catch(e){}</script>
+<link rel="stylesheet" href="assets/site.css?v=83fa49ca">
 </head>
 
 <body data-page="prose" data-base="">
@@ -44,18 +45,32 @@
 
   <div class="wrap-wide about-body">
     <aside class="about-rail">
-      <h1 class="about-title" data-edit="about.title">About</h1>
+      <!-- Chinese unless the visitor picks English (the buttons below; site.js
+           aboutLanguage). Each version is everything marked data-lang. The
+           titles are for screen readers only: Newton wanted the page to open
+           on My story. -->
+      <h1 class="about-title" data-lang="zh" data-edit="about.title">关于</h1>
+      <h1 class="about-title" data-lang="en" data-edit="about.titleEn">About</h1>
       <p class="about-name" data-edit="about.name">Newton Liu</p>
-      <nav class="about-jump" data-jump-from=".about-prose" data-follow>
-        <a href="#my-story">My story</a>
-        <a href="#gear">Gear</a>
+      <div class="about-lang" role="group" aria-label="Language / 语言">
+        <button type="button" data-set-lang="zh" aria-pressed="true">中文</button>
+        <button type="button" data-set-lang="en" aria-pressed="false">English</button>
+      </div>
+      <nav class="about-jump" data-lang="zh" data-jump-from="#about-zh" data-follow>
+        <a href="#my-story">我的故事</a>
+        <a href="#gear">设备</a>
+        <a href="contact.html">联系方式</a>
+      </nav>
+      <nav class="about-jump" data-lang="en" data-jump-from="#about-en" data-follow>
+        <a href="#my-story-en">My story</a>
+        <a href="#gear-en">Gear</a>
         <a href="contact.html">Contact</a>
       </nav>
     </aside>
 
-    <div class="about-prose" data-edit="about.prose" data-edit-rich
+    <div class="about-prose" id="about-zh" data-lang="zh" data-edit="about.prose" data-edit-rich
          data-edit-hint="Write the page">
-      <h2 id="my-story">My story</h2>
+      <h2 id="my-story">我的故事</h2>
 
       <p>我的摄影经历要从2015年说起。我的母亲为我报名参加了一个去斯里兰卡的自然观察活动。于是我拿起了家里放着的一台2010年的佳能550D（figure 1），在斯里兰卡的几天里，拍了上千张鸟类和其他动物的照片。</p>
 
@@ -83,16 +98,35 @@
 
       <p>那个在McDonald湖边的早晨、那个与雷鸟共同度过的下午、那个在犹他Arches国家公园的黄昏（figure 9）……我明白了：对我来说，摄影在于记忆，在于和大自然一起创造那些终身难忘的记忆。</p>
 
-      <p>Quebec City, QC, Canada<br>
-        Thu Oct 15, 2026, 4:22 PM</p>
+      <p>Quebec City, QC, Canada<br>Thu Oct 15, 2026, 4:22 PM</p>
 
-      <h2 id="gear">Gear</h2>
+      <h2 id="gear">设备</h2>
+      <ul>
+        <li>哈苏X2D II 100C</li>
+        <li>哈苏XCD 35-100mm F2.8-4 E</li>
+        <li>哈苏XCD 20-35mm F3.2-4.5 E</li>
+        <li>哈苏501CM</li>
+        <li>哈苏CF 80mm f/2.8</li>
+        <li>佳能EOS R5 Mark II</li>
+        <li>佳能EOS R6 Mark II</li>
+        <li>佳能RF20mm F1.4 L VCM</li>
+        <li>佳能RF70-200mm F2.8 L IS USM</li>
+        <li>佳能RF100-500mm F4.5-7.1 L IS USM</li>
+        <li>大疆Mavic 4 Pro</li>
+      </ul>
+    </div>
+
+    <div class="about-prose" id="about-en" data-lang="en" data-edit="about.proseEn" data-edit-rich
+         data-edit-hint="Write the English page">
+      <h2 id="my-story-en">My story</h2>
+
+      <h2 id="gear-en">Gear</h2>
       <ul>
         <li>Hasselblad X2D II 100C</li>
         <li>Hasselblad XCD 35-100mm F2.8-4 E</li>
         <li>Hasselblad XCD 20-35mm F3.2-4.5 E</li>
         <li>Hasselblad 501CM</li>
-        <li>Carl Zeiss Planar CF 80mm F2.8 T*</li>
+        <li>Hasselblad CF 80mm f/2.8</li>
         <li>Canon EOS R5 Mark II</li>
         <li>Canon EOS R6 Mark II</li>
         <li>Canon RF20mm F1.4 L VCM</li>
@@ -115,7 +149,7 @@
   </div>
 </footer>
 
-<script src="assets/site.js?v=24fda18f"></script>
+<script src="assets/site.js?v=0cfb2043"></script>
 <script src="assets/edit.js?v=c63f7eb5"></script>
 </body>
 </html>

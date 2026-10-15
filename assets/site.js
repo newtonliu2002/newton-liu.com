@@ -424,6 +424,7 @@
     });
     window.addEventListener("scroll", queue, { passive: true });
     window.addEventListener("resize", queue);
+    window.addEventListener("nl:lang", queue);                         // About switched language
     if (window.MutationObserver) new MutationObserver(queue).observe(nav, { childList: true });
     if (location.hash) pinned = location.hash.slice(1);
     update();
@@ -437,6 +438,44 @@
       return source ? source.querySelectorAll("h2[id], h3[id]") : [];
     });
   });
+
+  // About in Chinese or English: the rail's 中文 / English buttons show one
+  // version (everything marked data-lang) and hide the other (site.css).
+  // Chinese unless the visitor picks English. The pick is remembered, and a
+  // one-line script in about.html's head applies it before the first paint;
+  // a link to a part of the other version (about.html#gear-en) opens that one.
+  (function aboutLanguage() {
+    var buttons = document.querySelectorAll("[data-set-lang]");
+    if (!buttons.length) return;
+    var root = document.documentElement;
+    function set(lang, keep) {
+      if (lang === "en") root.setAttribute("data-about-lang", "en");
+      else root.removeAttribute("data-about-lang");
+      Array.prototype.forEach.call(buttons, function (b) {
+        b.setAttribute("aria-pressed", String(b.getAttribute("data-set-lang") === lang));
+      });
+      if (keep) { try { localStorage.setItem("aboutLang", lang); } catch (e) {} }
+      window.dispatchEvent(new Event("nl:lang"));
+    }
+    function hashed() {   // the version the URL's #part is in, if any
+      var target = null;
+      try { target = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1))); } catch (e) {}
+      var version = target && target.closest("[data-lang]");
+      return version ? version.getAttribute("data-lang") : null;
+    }
+    var first = hashed();
+    set(first || root.getAttribute("data-about-lang") || "zh", !!first);
+    window.addEventListener("hashchange", function () {
+      var lang = hashed();
+      if (lang && lang !== (root.getAttribute("data-about-lang") || "zh")) {
+        set(lang, true);
+        document.getElementById(decodeURIComponent(location.hash.slice(1))).scrollIntoView();
+      }
+    });
+    Array.prototype.forEach.call(buttons, function (b) {
+      b.addEventListener("click", function () { set(b.getAttribute("data-set-lang"), true); });
+    });
+  })();
 
   /* ---------- Chinese text ---------------------------------------------- */
 
