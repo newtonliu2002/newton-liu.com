@@ -914,7 +914,16 @@
       document.title = meta.title + " — Newton Liu Photography";
     }
     if (subEl)   subEl.textContent   = meta.subtitle || "";
-    if (blurbEl) blurbEl.textContent = meta.blurb || "";
+    if (blurbEl) {
+      blurbEl.textContent = meta.blurb || "";
+      // A blurb written mostly in Chinese is marked as Chinese, so the browser
+      // takes simplified glyphs and Chinese punctuation for it (site.css) and
+      // a screen reader reads it in a Chinese voice.
+      var han = (meta.blurb || "").match(/[㐀-鿿]/g) || [];
+      var latin = (meta.blurb || "").match(/[A-Za-z]/g) || [];
+      if (han.length > latin.length) blurbEl.lang = "zh-Hans";
+      else blurbEl.removeAttribute("lang");
+    }
 
     shown = photos.filter(function (p) { return p.collection === slug; });
 

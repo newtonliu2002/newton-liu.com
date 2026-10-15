@@ -330,6 +330,10 @@ same reason — they're his words to write. When he sends one, put it in as he
 wrote it: fix only plain typos, and tell him each change. A blurb can have
 several paragraphs; separate them with a blank line (`\n\n`), which the page
 shows as the gap (`white-space: pre-line`) and edit mode keeps on save.
+A single `\n` is a plain line break with no gap. He may write a blurb in
+Chinese (Alaska's is): put it in as written, untranslated. `site.js` marks
+a blurb that is mostly Chinese `lang="zh-Hans"`, and `site.css` then sets
+it in a Chinese face first (`.gallery-blurb:lang(zh)`).
 
 ## The gallery layout (packed grid)
 

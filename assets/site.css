@@ -664,6 +664,12 @@ body[data-page="globe"] .nav-menu-list { border-top: 1px solid var(--hairline); 
   color: var(--text-dim);
   white-space: pre-line;
 }
+/* A blurb in Chinese (site.js marks it lang="zh-Hans") is set in a Chinese
+   face first, so its quotes, ellipses and the odd English word come from the
+   same face as the characters around them rather than from Geist. */
+.gallery-blurb:lang(zh) {
+  font-family: "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei", var(--sans);
+}
 
 /* All optional — collapse rather than leaving a gap. */
 .gallery-date:empty, .gallery-sub:empty, .gallery-blurb:empty { display: none; }
