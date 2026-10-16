@@ -515,8 +515,7 @@
         31070, 30591, 30917, 18705, 11306, 5791, 2506, 1374, 1016],
       // The ten biggest trips: where (his names, 2026-10-16), the month (and
       // the last month, if another), days (and which, in English and
-      // Chinese), images a day, cameras, images (each shutter press once,
-      // of tripsOf).
+      // Chinese), images a day, cameras, images (each shutter press once).
       trips: [
         ["Galápagos & Ecuador", "2023-08", null, 14, ["Aug 3–16", "8月3–16日"], 3177, "R5 + R6 II", 44477],
         ["Sri Lanka", "2024-11", null, 10, null, 3804, "R5 II + R6 II", 38042],
@@ -529,7 +528,6 @@
         ["Canada & Alaska", "2026-05", "2026-06", 26, null, 686, "R5 II + X2D II", 17842],
         ["Arizona", "2025-01", null, 7, null, 2391, "R5 II", 16740]
       ],
-      tripsOf: 499880,
       // Days in the field (2026-10-16): by year from 2016, by month all years
       // combined, and the longest run of days in a row (twice).
       field: {
@@ -602,9 +600,8 @@
         monthShort: function (i) { return MON[i].charAt(0); }, allYears: "all years combined",
         byYear: "Photos by year", byMonth: "Photos by month, all years combined", byCountry: "Photos by country/territory",
         allAria: "All photos, by year, month and country",
-        bigTrip: "Biggest trip", perDay: "Most per day", topTrips: "Top 10 trips",
+        bigTrip: "Biggest trip", perDay: "Most per day",
         days: function (n) { return n + " days"; },
-        topOf: function (a, b) { return fmt(a) + " of " + fmt(b) + " images"; },
         byTrip: "Images by trip, top 10",
         trip: function (t) { return t[3] + " days" + (t[4] ? " (" + t[4][0] + ")" : "") + " · " + fmt(t[5]) + "/day · " + t[6]; },
         tripTotal: "Total, top 10 (each shutter press once)",
@@ -643,9 +640,8 @@
         monthShort: function (i) { return String(i + 1); }, allYears: "历年合计",
         byYear: "每年的照片数（万张）", byMonth: "一年中每个月的照片数（历年合计，万张）", byCountry: "各国家/地区的照片数",
         allAria: "全部照片：按年份、月份和国家/地区",
-        bigTrip: "拍得最多的一次旅行", perDay: "日均最多", topTrips: "前十次旅行",
+        bigTrip: "拍得最多的一次旅行", perDay: "日均最多",
         days: function (n) { return n + "天"; },
-        topOf: function (a, b) { return fmt(b) + "张中的" + fmt(a) + "张"; },
         byTrip: "拍得最多的十次旅行",
         trip: function (t) { return t[3] + "天" + (t[4] ? "（" + t[4][1] + "）" : "") + " · 每天" + fmt(t[5]) + "张 · " + t[6]; },
         tripTotal: "十次合计（每按一次快门计一张）",
@@ -1049,8 +1045,7 @@
       function when(t) { return L.months(t[1], t[2]); }
       var bt = Block(box, {
         cls: "trip", label: L.bigTrip, n: top[7], ctx: top[0] + " · " + when(top),
-        dials: [[L.perDay, fmt(D.mostPerDay.n), D.mostPerDay.where + " · " + L.days(D.mostPerDay.days)],
-                [L.topTrips, Math.round(topSum / D.tripsOf * 100) + "%", L.topOf(topSum, D.tripsOf)]],
+        dials: [[L.perDay, fmt(D.mostPerDay.n), D.mostPerDay.where + " · " + L.days(D.mostPerDay.days)]],
         aria: L.tripAria
       });
       bt.list(L.byTrip, D.trips.map(function (t) {
@@ -1132,8 +1127,11 @@
   // On a narrow screen each figure follows its paragraph (or heading), and a
   // mark scrolls to it. All of it is placed again whenever the prose is
   // rewritten or the window crosses 1000px, so the figures follow Newton's
-  // marks through his edits; a mark with no figure stays plain text. None in
-  // ?edit, or they would be saved into the essay.
+  // marks through his edits; a mark with no figure stays plain text. A
+  // figure that is only <div data-figure="1" data-goto="numbers"> has no
+  // photograph: its mark links to that part of the page (图1, his photo
+  // count, became the numbers section, 2026-10-16). None in ?edit, or they
+  // would be saved into the essay.
   (function aboutFigures() {
     var tpl = document.querySelector("template[data-figures-for]");
     var prose = tpl && document.querySelector(tpl.getAttribute("data-figures-for"));
@@ -1171,7 +1169,7 @@
             frag.appendChild(document.createTextNode(s.slice(at, m.index)));
             var a = document.createElement("a");
             a.className = "fig-mark";
-            a.href = "#figure-" + key;
+            a.href = figure(key).hasAttribute("data-goto") ? "#" + figure(key).getAttribute("data-goto") : "#figure-" + key;
             a.setAttribute("data-figure", key);
             a.textContent = m[0];
             frag.appendChild(a);
@@ -1200,6 +1198,7 @@
           var key = a.getAttribute("data-figure");
           if (seen[key]) return;   // a mark written twice shows its photograph once
           seen[key] = true;
+          if (figure(key).hasAttribute("data-goto")) return;
           var fig = figure(key).cloneNode(true);
           fig.id = "figure-" + key;
           items.push({ key: key, fig: fig, mark: a, beside: fig.hasAttribute("data-beside") });

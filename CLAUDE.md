@@ -662,7 +662,11 @@ counting on it.
 **The figures** (Newton sent them 2026-10-15) are numbered 图1–图8 in
 reading order, in his text as "（图3）" and under each photograph, and the
 files match (`images/_about/fig-3.jpg` is 图3; there is no figure 1 of the
-old numbering, he dropped it). They wait in a
+old numbering, he dropped it). 图1, his photo-count chart, was taken out
+on 2026-10-16 when the numbers section below took its place: the template
+keeps `<div data-figure="1" data-goto="numbers">`, so his "（图1）" links
+to that section (a figure with data-goto has no photograph; its mark jumps
+to the id it names). They wait in a
 `<template data-figures-for="#about-zh">` beside the prose, one
 `<figure class="about-fig" lang="en" data-figure="3">` each, captioned
 `<figcaption lang="zh-Hans">图3</figcaption>` (the figure is `lang="en"` for
