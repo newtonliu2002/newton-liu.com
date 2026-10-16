@@ -752,29 +752,7 @@
     // Esc closes it.
     body.addEventListener("click", function (e) {
       var img = e.target.closest && e.target.closest(".about-fig img");
-      if (!img) return;
-      var back = document.activeElement;
-      var box = document.createElement("div");
-      box.className = "fig-zoom";
-      box.setAttribute("role", "dialog");
-      box.setAttribute("aria-label", img.alt);
-      box.tabIndex = -1;
-      var big = document.createElement("img");
-      big.alt = img.alt;
-      big.sizes = "100vw";
-      big.srcset = img.srcset;
-      big.src = img.src;
-      box.appendChild(big);
-      function close() {
-        if (box.parentNode) box.parentNode.removeChild(box);
-        document.removeEventListener("keydown", key, true);
-        if (back && back.focus) back.focus();
-      }
-      function key(ev) { if (ev.key === "Escape") { ev.preventDefault(); close(); } }
-      box.addEventListener("click", close);
-      document.addEventListener("keydown", key, true);
-      document.body.appendChild(box);
-      box.focus();
+      if (img) zoom(img.src, img.srcset, img.alt);
     });
 
     window.addEventListener("scroll", queue, { passive: true });
@@ -786,6 +764,41 @@
     else if (wide.addListener) wide.addListener(place);
     place();
   })();
+
+  // The full-screen view: one picture on the ground, a click or Esc closes
+  // it. The About figures use it, and so does any link with class "zoom"
+  // (the XHS handle opens his profile card, 2026-10-16); without the script
+  // that link simply opens the picture.
+  function zoom(src, srcset, alt) {
+    var back = document.activeElement;
+    var box = document.createElement("div");
+    box.className = "fig-zoom";
+    box.setAttribute("role", "dialog");
+    box.setAttribute("aria-label", alt);
+    box.tabIndex = -1;
+    var big = document.createElement("img");
+    big.alt = alt;
+    if (srcset) { big.sizes = "100vw"; big.srcset = srcset; }
+    big.src = src;
+    box.appendChild(big);
+    function close() {
+      if (box.parentNode) box.parentNode.removeChild(box);
+      document.removeEventListener("keydown", key, true);
+      if (back && back.focus) back.focus();
+    }
+    function key(ev) { if (ev.key === "Escape") { ev.preventDefault(); close(); } }
+    box.addEventListener("click", close);
+    document.addEventListener("keydown", key, true);
+    document.body.appendChild(box);
+    box.focus();
+  }
+
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a.zoom");
+    if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    zoom(a.href, "", a.textContent);
+  });
 
   /* ---------- Chinese text ---------------------------------------------- */
 
