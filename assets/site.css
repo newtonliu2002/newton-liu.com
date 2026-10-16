@@ -1873,6 +1873,8 @@ body.lb-open { overflow: hidden; }
 @container pnb (max-width: 460px) {
   .photo-numbers .nb-dials { grid-template-columns: 1fr 1fr; }
   .photo-numbers .nb-dial:nth-child(3):last-child { grid-column: 1 / -1; }
+  /* The longest run's note (twice: when and when) takes the room it needs. */
+  .photo-numbers .nb-field .nb-dials { grid-template-columns: auto auto; }
 }
 @container pnb (max-width: 330px) {
   .photo-numbers .nb-dials { grid-template-columns: 1fr; }
@@ -1903,6 +1905,10 @@ body.lb-open { overflow: hidden; }
   .photo-numbers .nb-list { grid-column: 2; grid-row: 1; }
   .photo-numbers .nb-year { grid-column: 1; grid-row: 2; }
   .photo-numbers .nb-month { grid-column: 2; grid-row: 2; }
+  /* Days in the field: the numeral and dials beside years over months. */
+  .photo-numbers .nb-field .nb-inst { grid-row: 1 / span 2; }
+  .photo-numbers .nb-field .nb-year { grid-column: 2; grid-row: 1; }
+  .photo-numbers .nb-field .nb-month { grid-column: 2; grid-row: 2; }
   .photo-numbers .nb-day .nb-hour { grid-column: 1 / -1; grid-row: 1; }
   .photo-numbers .nb-day .nb-inst, .photo-numbers .nb-day .nb-list { grid-row: 2; }
   .photo-numbers .nb-num { font-size: clamp(56px, 9cqi, 100px); }

@@ -727,8 +727,8 @@ country that opens: DRILL, COUNTS and PROVINCES.
 **如果把我的摄影经历数据化 / The quantification of my photography career**
 (Newton's titles, 2026-10-16; "numbers" in the code) is a section of its own
 between the essay's sign-off and 设备 / Gear: his counts as charts in the 图1
-"Readout" look (all photos by country/territory, year and month; his ten
-biggest trips; photos by hour of day and the busiest days; the busiest clock
+"Readout" look (all photos by country/territory, year and month; days in
+the field by year and month; his ten biggest trips; photos by hour of day and the busiest days; the busiest clock
 hour and single hours), every word in the version's own language (places
 keep their English names; rough counts are 54k in English, in 万 in
 Chinese, the unit in the title). Its heading is in the prose (`#numbers`,

@@ -483,8 +483,8 @@
   // the prose is rewritten (edit.js lays data/text.json over it, and its
   // sanitiser would strip a chart's box out of the essay, so the box is
   // never part of the text). None in ?edit, or they would be saved into it.
-  // Four blocks: all photos (one large numeral, by country, year and
-  // month), the trips (the biggest, with the top ten), the hours of the day
+  // Five blocks: all photos (one large numeral, by country, year and
+  // month), the days in the field (by year and month), the trips (the biggest, with the top ten), the hours of the day
   // (with the busiest days), and the busiest clock hour (with the busiest
   // single hours), in the words of the version it is in. Every bar carries
   // a rough count under it (54k); pointing at, tapping or focusing a bar or
@@ -530,6 +530,14 @@
         ["Arizona", "2025-01", null, 7, null, 2391, "R5 II", 16740]
       ],
       tripsOf: 499880,
+      // Days in the field (2026-10-16): by year from 2016, by month all years
+      // combined, and the longest run of days in a row (twice).
+      field: {
+        from: "2016-02", to: "2026-10",
+        years: [35, 32, 11, 0, 2, 24, 60, 79, 58, 71, 74],
+        months: [41, 25, 19, 30, 49, 50, 43, 38, 9, 26, 40, 76],
+        run: { days: 14, when: ["2023-08", "2025-01"] }
+      },
       mostPerDay: { n: 7274, where: "Colombia", days: 4 },
       busiestHour: { hour: 7, n: 54191 },   // the hour of day, all days
       busiestDay: 10195,
@@ -605,7 +613,13 @@
         byHour: "Photos by hour of day", topDays: "Busiest days",
         dayAria: "Photos by hour of day, and the busiest days",
         peak: "Busiest clock hour", topHours: "Busiest single hours",
-        peakAria: "The busiest clock hour, and the busiest single hours"
+        peakAria: "The busiest clock hour, and the busiest single hours",
+        field: "Days in the field", run: "Longest run", mostYear: "Most in a year",
+        span: function (a, b) { return T.en.months(a) + " – " + T.en.months(b); },
+        twice: function (w) { return "twice: " + w.map(function (m) { return T.en.months(m); }).join(", "); },
+        fieldByYear: "Days in the field by year", fieldByMonth: "Days in the field by month, all years combined",
+        fieldShare: function (p) { return p + " of all days in the field"; },
+        fieldAria: "Days in the field, by year and month"
       },
       zh: {
         rough: function (n) { return !n ? "0" : n < 500 ? "<0.1" : (n / 10000).toFixed(1); },
@@ -640,7 +654,13 @@
         byHour: "一天中每个小时的照片数（万张）", topDays: "拍得最多的十天",
         dayAria: "每个小时的照片数，以及拍得最多的十天",
         peak: "拍得最多的一小时", topHours: "拍得最多的十个小时",
-        peakAria: "拍得最多的一小时，以及拍得最多的十个小时"
+        peakAria: "拍得最多的一小时，以及拍得最多的十个小时",
+        field: "外拍天数", run: "最长连续外拍", mostYear: "一年最多",
+        span: function (a, b) { return T.zh.months(a) + "–" + T.zh.months(b); },
+        twice: function (w) { return "两次：" + w.map(function (m) { return T.zh.months(m); }).join("、"); },
+        fieldByYear: "每年的外拍天数", fieldByMonth: "一年中每个月的外拍天数（历年合计）",
+        fieldShare: function (p) { return "占全部外拍天数的" + p; },
+        fieldAria: "外拍天数：按年份和月份"
       }
     };
 
@@ -998,7 +1018,33 @@
       }), "country");
       b1.wire();
 
-      // ---- 2. The trips: the biggest, and the top ten ------------------------
+      // ---- 2. Days in the field: by year and by month ------------------------
+      // Counts small enough to write in full under each bar.
+      var F = D.field, fTotal = F.years.reduce(function (a, n) { return a + n; }, 0), fTop = 0;
+      F.years.forEach(function (n, i) { if (n > F.years[fTop]) fTop = i; });
+      function fShare(n) {
+        var p = n / fTotal * 100;
+        return L.fieldShare(!n ? "0%" : p.toFixed(1) + "%");
+      }
+      var bf = Block(box, {
+        cls: "field", label: L.field, n: fTotal, ctx: L.span(F.from, F.to),
+        dials: [[L.run, L.days(F.run.days), L.twice(F.run.when)],
+                [L.mostYear, L.days(F.years[fTop]), L.year(D.years[0][0] + fTop)]],
+        aria: L.fieldAria
+      });
+      bf.bars(L.fieldByYear, F.years.map(function (n, i) {
+        var y = D.years[0][0] + i, s = String(y);
+        return { tick: L.yearTick(y), short: "’" + s.slice(2), label: L.year(y), n: n, xk: String(n),
+          ctx: fShare(n), aria: L.year(y) + L.sep + L.days(n) };
+      }), "year");
+      bf.bars(L.fieldByMonth, F.months.map(function (n, i) {
+        var name = L.monthName(i);
+        return { tick: L.monthTick(i), short: L.monthShort(i), label: name, suf: L.allYears, n: n, xk: String(n),
+          ctx: fShare(n), aria: name + ", " + L.allYears + L.sep + L.days(n) };
+      }), "month");
+      bf.wire();
+
+      // ---- 3. The trips: the biggest, and the top ten ------------------------
       var top = D.trips[0], topSum = D.trips.reduce(function (a, t) { return a + t[7]; }, 0);
       function when(t) { return L.months(t[1], t[2]); }
       var bt = Block(box, {
@@ -1014,7 +1060,7 @@
       }), "trips", [L.tripTotal, L.images(topSum)]);
       bt.wire();
 
-      // ---- 3. The hours of the day, and the busiest days ---------------------
+      // ---- 4. The hours of the day, and the busiest days ---------------------
       var b2 = Block(box, {
         cls: "day", label: L.topHour, n: D.busiestHour.n, ctx: L.hour(D.busiestHour.hour),
         dials: [[L.topDay, fmt(D.busiestDay)],
@@ -1032,7 +1078,7 @@
       }), "days");
       b2.wire();
 
-      // ---- 4. The busiest clock hour, and the busiest single hours -----------
+      // ---- 5. The busiest clock hour, and the busiest single hours -----------
       var b3 = Block(box, {
         cls: "peak", label: L.peak, n: D.busiestClockHour.n, ctx: L.when(D.busiestClockHour.date, D.busiestClockHour.hour),
         aria: L.peakAria
@@ -1045,7 +1091,7 @@
 
       // Two columns or one follows the box (the English box is display:none,
       // so width 0, until English is picked).
-      var blocks = [b1, bt, b2, b3];
+      var blocks = [b1, bf, bt, b2, b3];
       function fit() {
         var wide = box.getBoundingClientRect().width >= WIDE;
         blocks.forEach(function (b) { b.arrange(wide); });
