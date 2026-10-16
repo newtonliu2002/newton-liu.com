@@ -524,7 +524,7 @@
         ["Florida", "2023-11", null, 9, null, 3435, "R5 + R6 II", 30918],
         ["Puerto Rico and US Virgin Islands", "2025-02", null, 10, null, 2913, "R5 II", 29132],
         ["Colombia", "2025-10", null, 4, null, 7274, "R5 II + R6 II", 29096],
-        ["Texas and Nuevo Leon", "2026-05", null, 13, null, 2168, "R5 II", 28184],
+        ["Texas & Nuevo León", "2026-05", null, 13, null, 2168, "R5 II", 28184],
         ["Morocco", "2026-03", null, 6, null, 4458, "R5 II", 26751],
         ["Canada & Alaska", "2026-05", "2026-06", 26, null, 686, "R5 II + X2D II", 17842],
         ["Arizona", "2025-01", null, 7, null, 2391, "R5 II", 16740]
@@ -592,7 +592,7 @@
         year: function (y) { return String(y); }, yearTick: function (y) { return String(y); },
         monthName: function (i) { return MONTH[i]; }, monthTick: function (i) { return MON[i]; },
         monthShort: function (i) { return MON[i].charAt(0); }, allYears: "all years combined",
-        byYear: "Photos by year", byMonth: "Photos by month", byCountry: "Photos by country/territory",
+        byYear: "Photos by year", byMonth: "Photos by month, all years combined", byCountry: "Photos by country/territory",
         allAria: "All photos, by year, month and country",
         bigTrip: "Biggest trip", perDay: "Most per day", topTrips: "Top 10 trips",
         days: function (n) { return n + " days"; },
@@ -626,8 +626,8 @@
         topYear: "拍得最多的一年", topMonth: "拍得最多的月份",
         year: function (y) { return y + "年"; }, yearTick: function (y) { return String(y); },
         monthName: function (i) { return (i + 1) + "月"; }, monthTick: function (i) { return (i + 1) + "月"; },
-        monthShort: function (i) { return String(i + 1); }, allYears: "各年合计",
-        byYear: "每年的照片数（万张）", byMonth: "每月的照片数（万张）", byCountry: "各国家/地区的照片数",
+        monthShort: function (i) { return String(i + 1); }, allYears: "历年合计",
+        byYear: "每年的照片数（万张）", byMonth: "一年中每个月的照片数（历年合计，万张）", byCountry: "各国家/地区的照片数",
         allAria: "全部照片：按年份、月份和国家/地区",
         bigTrip: "拍得最多的一次旅行", perDay: "日均最多", topTrips: "前十次旅行",
         days: function (n) { return n + "天"; },
@@ -957,7 +957,11 @@
         (wide ? listSecs.concat(barSecs) : charts).forEach(function (c) { blk.appendChild(c); });
       }
 
-      return { bars: bars, list: list, wire: wire, arrange: arrange };
+      // The numeral and dials under the chart built so far (the hours of
+      // the day: Newton wanted the big number beneath them).
+      function under() { blk.appendChild(inst); }
+
+      return { bars: bars, list: list, wire: wire, arrange: arrange, under: under };
     }
 
     function build(box, h) {
@@ -1012,16 +1016,16 @@
 
       // ---- 3. The hours of the day, and the busiest days ---------------------
       var b2 = Block(box, {
-        cls: "day",
-        dials: [[L.topHour, L.hour(D.busiestHour.hour) + " · " + fmt(D.busiestHour.n)],
-                [L.topDay, fmt(D.busiestDay)],
+        cls: "day", label: L.topHour, n: D.busiestHour.n, ctx: L.hour(D.busiestHour.hour),
+        dials: [[L.topDay, fmt(D.busiestDay)],
                 [L.topMinute, fmt(D.busiestMinute)]],
         aria: L.dayAria
       });
       b2.bars(L.byHour, D.hours.map(function (n, i) {
         return { tick: L.hour(i), short: L.hourShort(i), label: L.hour(i), n: n, xk: L.rough(n),
-          aria: L.hour(i) + L.sep + L.n(n) };
+          ctx: share(n), aria: L.hour(i) + L.sep + L.n(n) };
       }), "hour");
+      b2.under();   // the big number under the hours, then the busiest days
       b2.list(L.topDays, D.busiestDays.map(function (d) {
         var day = L.date(d[0], true);
         return { p: day, s: d[1], n: d[2], label: day, aria: day + ", " + d[1] + L.sep + L.n(d[2]) };

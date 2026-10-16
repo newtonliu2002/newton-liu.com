@@ -1588,8 +1588,10 @@ body.lb-open { overflow: hidden; }
   padding-top: clamp(12px, 2.6cqi, 16px);
   border-top: 1px solid var(--hairline-soft, var(--b-line));
 }
-/* With no numeral above them (the hours of the day), they open the block. */
+/* With no numeral above them, they open the block. Under a chart (the
+   hours of the day), the numeral and dials keep a chart's distance from it. */
 .photo-numbers .nb-inst > .nb-dials:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+.photo-numbers .nb-chart + .nb-inst { margin-top: clamp(30px, 7cqi, 44px); }
 .photo-numbers .nb-dial { display: flex; flex-direction: column; min-width: 0; }
 .photo-numbers .nb-dv {
   margin: 4px 0 2px -.03em;
@@ -1896,7 +1898,7 @@ body.lb-open { overflow: hidden; }
     align-items: start;
   }
   .photo-numbers .nb-block + .nb-block { margin-top: clamp(80px, 10cqi, 120px); }
-  .photo-numbers .nb-block > .nb-chart { margin-top: 0; }
+  .photo-numbers .nb-block > :is(.nb-chart, .nb-inst) { margin-top: 0; }
   .photo-numbers .nb-inst { grid-column: 1; grid-row: 1; }
   .photo-numbers .nb-list { grid-column: 2; grid-row: 1; }
   .photo-numbers .nb-year { grid-column: 1; grid-row: 2; }
@@ -1941,6 +1943,14 @@ body.lb-open { overflow: hidden; }
     z-index: 1;
   }
   .about-body.has-figures .about-prose > p + h2[id^="numbers"] { margin-top: max(10rem, 36vh); }
+}
+/* Its title is for the contents list (and a screen reader); on the page
+   the hairline alone opens it (Newton, 2026-10-16). */
+.about-body .about-prose[data-lang] > h2[id^="numbers"] {
+  font-size: 0 !important;
+  line-height: 0;
+  color: transparent;
+  margin-bottom: 0;
 }
 
 /* ---------- Projects (projects.html) -----------------------------------
