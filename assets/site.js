@@ -538,8 +538,6 @@
       },
       mostPerDay: { n: 7274, where: "Colombia", days: 4 },
       busiestHour: { hour: 7, n: 54191 },   // the hour of day, all days
-      busiestDay: 10195,
-      busiestMinute: 458,
       busiestDays: [
         ["2025-10-12", "Colombia", 10195],
         ["2023-11-25", "Florida", 9354],
@@ -552,7 +550,6 @@
         ["2025-08-23", "Quebec", 6927],
         ["2025-10-11", "Colombia", 6740]
       ],
-      busiestClockHour: { date: "2026-03-11", hour: 17, n: 2838 },
       // date, the hour it began, where, cameras, photos
       busiestHours: [
         ["2026-03-11", 17, "Morocco", "R5 II", 2838],
@@ -606,7 +603,7 @@
         trip: function (t) { return t[3] + " days" + (t[4] ? " (" + t[4][0] + ")" : "") + " · " + fmt(t[5]) + "/day · " + t[6]; },
         tripTotal: "Total, top 10 (each shutter press once)",
         tripAria: "The biggest trips, top 10",
-        topHour: "Busiest hour", topDay: "Busiest day", topMinute: "Busiest minute",
+        topHour: "Busiest hour", topDay: "Busiest day",
         byHour: "Photos by hour of day", topDays: "Busiest days",
         dayAria: "Photos by hour of day, and the busiest days",
         peak: "Busiest clock hour", topHours: "Busiest single hours",
@@ -637,8 +634,8 @@
         topYear: "拍得最多的一年", topMonth: "拍得最多的月份",
         year: function (y) { return y + "年"; }, yearTick: function (y) { return String(y); },
         monthName: function (i) { return (i + 1) + "月"; }, monthTick: function (i) { return (i + 1) + "月"; },
-        monthShort: function (i) { return String(i + 1); }, allYears: "历年合计",
-        byYear: "每年的照片数（万张）", byMonth: "一年中每个月的照片数（历年合计，万张）", byCountry: "各国家/地区的照片数",
+        monthShort: function (i) { return String(i + 1); }, allYears: "历年总计",
+        byYear: "每年的照片数（万张）", byMonth: "一年中每个月的照片数（历年总计，万张）", byCountry: "各国家/地区的照片数",
         allAria: "全部照片：按年份、月份和国家/地区",
         bigTrip: "拍得最多的一次旅行", perDay: "日均最多",
         days: function (n) { return n + "天"; },
@@ -646,15 +643,15 @@
         trip: function (t) { return t[3] + "天" + (t[4] ? "（" + t[4][1] + "）" : "") + " · 每天" + fmt(t[5]) + "张 · " + t[6]; },
         tripTotal: "十次合计（每按一次快门计一张）",
         tripAria: "拍得最多的十次旅行",
-        topHour: "拍得最多的时段", topDay: "拍得最多的一天", topMinute: "拍得最多的一分钟",
-        byHour: "一天中每个小时的照片数（万张）", topDays: "拍得最多的十天",
+        topHour: "拍得最多的时段（历年总计）", topDay: "拍得最多的一天",
+        byHour: "一天中每个小时的照片数（历年总计，万张）", topDays: "拍得最多的十天",
         dayAria: "每个小时的照片数，以及拍得最多的十天",
         peak: "拍得最多的一小时", topHours: "拍得最多的十个小时",
         peakAria: "拍得最多的一小时，以及拍得最多的十个小时",
-        field: "外拍天数", run: "最长连续外拍", mostYear: "一年最多",
+        field: "外拍天数（历年总计）", run: "最长连续外拍", mostYear: "一年最多",
         span: function (a, b) { return T.zh.months(a) + "–" + T.zh.months(b); },
         twice: function (w) { return "两次：" + w.map(function (m) { return T.zh.months(m); }).join("、"); },
-        fieldByYear: "每年的外拍天数", fieldByMonth: "一年中每个月的外拍天数（历年合计）",
+        fieldByYear: "每年的外拍天数", fieldByMonth: "一年中每个月的外拍天数（历年总计）",
         fieldShare: function (p) { return "占全部外拍天数的" + p; },
         fieldAria: "外拍天数：按年份和月份"
       }
@@ -1058,8 +1055,7 @@
       // ---- 4. The hours of the day, and the busiest days ---------------------
       var b2 = Block(box, {
         cls: "day", label: L.topHour, n: D.busiestHour.n, ctx: L.hour(D.busiestHour.hour),
-        dials: [[L.topDay, fmt(D.busiestDay)],
-                [L.topMinute, fmt(D.busiestMinute)]],
+        dials: [[L.topDay, fmt(D.busiestDays[0][2]), L.date(D.busiestDays[0][0], true) + " · " + D.busiestDays[0][1]]],
         aria: L.dayAria
       });
       b2.bars(L.byHour, D.hours.map(function (n, i) {
@@ -1075,7 +1071,8 @@
 
       // ---- 5. The busiest clock hour, and the busiest single hours -----------
       var b3 = Block(box, {
-        cls: "peak", label: L.peak, n: D.busiestClockHour.n, ctx: L.when(D.busiestClockHour.date, D.busiestClockHour.hour),
+        cls: "peak", label: L.peak, n: D.busiestHours[0][4],
+        ctx: L.when(D.busiestHours[0][0], D.busiestHours[0][1]) + " · " + D.busiestHours[0][2],
         aria: L.peakAria
       });
       b3.list(L.topHours, D.busiestHours.map(function (r) {
