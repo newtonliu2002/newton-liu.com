@@ -724,6 +724,20 @@ downloads the Natural Earth outlines once into `_arrange/geo-src/`, and
 restamps the data-src. New counts: edit COUNTS there and rerun; another
 country that opens: DRILL, COUNTS and PROVINCES.
 
+**My photography in numbers** (我的摄影数据, Newton, 2026-10-16) is a section
+of its own between the essay's sign-off and 设备 / Gear: his counts as charts
+in the 图1 "Readout" look (all photos by country/territory, year and month;
+his ten biggest trips; photos by hour of day and the busiest days; the
+busiest clock hour and single hours). Its heading is in the prose (`#numbers`,
+`#numbers-en`, in about.html and data/text.json); site.js `photoNumbers`
+builds the charts in a box right after it, with the counts inline in that
+function (edit.js's sanitiser drops a `<div>`, so the box is never in the
+text). New counts: edit `D` there. The template's `<div data-section="numbers"
+data-blank>` empties the stage for it: on a wide screen the charts take the
+width from the contents to the text's edge, the essay's last figure leaves
+before they come up and the Gear photograph waits until they have gone up
+past it. Newton: they must never overlap.
+
 The older `.prose`/`.prose h1` rules are still in `site.css` but nothing uses
 them now. They're the fallback if a plain text page is ever wanted.
 
