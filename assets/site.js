@@ -568,7 +568,8 @@
       });
       each(tpl.content.querySelectorAll("[data-section]"), function (t) {
         var name = t.getAttribute("data-section");
-        if (staged) items.push({ key: t.getAttribute("data-figure"), fig: t.cloneNode(true), section: name });
+        if (staged) items.push({ key: t.getAttribute("data-figure"), fig: t.cloneNode(true), section: name,
+          beside: t.hasAttribute("data-beside") });
         else each(headings(name), function (h) { h.parentNode.insertBefore(t.cloneNode(true), h.nextSibling); });
       });
       if (staged && items.length) {
@@ -594,10 +595,12 @@
     // Every figure the stage's full width, or its full height for one too
     // tall for that (an upright, the square Hasselblad, a chart), centred
     // across the column then (Newton asked, 2026-10-15).
-    // A figure marked data-beside (图1, Newton asked) sits higher, between
-    // the contents and the text, from the top of the rail.
+    // A figure marked data-beside (图1 and the Gear photograph, Newton
+    // asked) sits beside the contents, between them and the text, from the
+    // top of the rail; the rest have the whole column, the contents folded.
     function size() {
       if (stage) {
+        rail.style.height = "";   // measured at its full height
         var W = stage.clientWidth, H = stage.clientHeight;
         var nav = Array.prototype.filter.call(rail.querySelectorAll(".about-jump"), function (n) {
           return n.offsetParent !== null;
@@ -693,6 +696,22 @@
         it.fig.classList.toggle("is-in", n >= 0);
         it.fig.classList.toggle("is-current", i === current);
       });
+      // The contents stay up beside 图1 and the Gear photograph (and before
+      // any figure); they fold away for the rest.
+      var folded = current >= 0 && !items[current].beside;
+      rail.classList.toggle("is-folded", folded);
+      // With the contents up the rail is only as tall as they and the figure
+      // beside them, or at the foot of the page the end of the essay's
+      // column would push it, contents and all, up under the bar.
+      if (folded) rail.style.height = "";
+      else {
+        var nav = Array.prototype.filter.call(rail.querySelectorAll(".about-jump"), function (n) {
+          return n.offsetParent !== null;
+        })[0];
+        var need = nav ? nav.offsetTop + nav.offsetHeight : 0;
+        if (current >= 0) need = Math.max(need, items[current].h);
+        rail.style.height = Math.ceil(need) + "px";
+      }
       var lit = essay && current >= 0 && items[current].mark ? items[current].key : null;
       each(prose.querySelectorAll("a.fig-mark"), function (a) {
         a.classList.toggle("is-current", a.getAttribute("data-figure") === lit);

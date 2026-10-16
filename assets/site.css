@@ -1383,33 +1383,39 @@ body.lb-open { overflow: hidden; }
   .about-body.has-figures > .about-rail { grid-column: 1; grid-row: 1; }
   .about-body.has-figures > .about-prose { grid-column: 2; grid-row: 1; width: min(62ch, 52cqi); }
 
-  /* The rail keeps its contents in view (Newton asked) and fills the
-     window's height; the stage takes the rest of it, under the contents.
-     Figures moving out at the top are clipped at its edge. */
-  .about-rail.has-stage {
-    display: flex;
-    flex-direction: column;
-    height: calc(100svh - var(--masthead-h) - 4rem);
+  /* The rail fills the window's height and holds the stage over all of
+     it. Beside 图1 and the Gear photograph its contents stay up; while any
+     other figure is shown they fold away (.is-folded) and the figure has
+     the whole column (Newton asked, 2026-10-16). Figures moving out at the
+     top are clipped at the column's edge. */
+  .about-rail.has-stage { height: calc(100svh - var(--masthead-h) - 4rem); }
+  .about-rail.has-stage > :not(.about-stage):not(.about-beside) {
+    transition: opacity var(--d-slow) var(--ease), transform var(--d-slow) var(--ease), visibility 0s;
+  }
+  .about-rail.has-stage.is-folded:not(:focus-within) > :not(.about-stage):not(.about-beside) {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity var(--d-slow) var(--ease), transform var(--d-slow) var(--ease), visibility 0s var(--d-slow);
   }
   .about-stage {
-    position: relative;
-    flex: 1 1 auto;
-    min-height: 0;
-    margin-top: var(--s6);
+    position: absolute;
+    inset: 0;
     overflow: hidden;
+    pointer-events: none;
   }
   .about-stage .about-fig {
     position: absolute; top: 0; left: 0;
     margin: 0;
     opacity: 0;
-    pointer-events: none;
     transform: translateY(var(--y, 100vh));
     transition: transform .7s var(--ease), opacity .5s var(--ease);
   }
   .about-stage .about-fig.is-in { opacity: 1; pointer-events: auto; }
   .about-stage .about-fig.is-current figcaption { color: var(--text); }
-  /* 图1 sits higher, between the contents and the text (Newton asked):
-     from the rail's top, right of the contents (site.js sets left). */
+  /* 图1 and the Gear photograph sit beside the contents, between them and
+     the text (Newton asked): from the rail's top, right of the contents
+     (site.js sets left). */
   .about-beside { position: absolute; top: 0; right: 0; bottom: 0; pointer-events: none; }
   .about-beside .about-fig {
     position: absolute; top: 0; left: 0;
