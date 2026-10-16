@@ -682,11 +682,15 @@ by CSS only (`data-crop` on the figure, the crop's centre in the img's
 `object-position`; the files stay whole). Wide (over 1000px): the text sits
 against the right edge (`width: min(62ch, 52cqi)`), and the left column is
 a sticky `.about-stage`. Every figure is the column's full width (or its
-height, for one too tall for the window). It shows the figure whose mark
-the reading has passed (60% down the window) and the one before it, newer
-below, when both fit the window's height, else that one alone (one at a
-time on a laptop, at his choice of full width); at each mark they move up
-(`--y`). The mark being read is gold. Clicking a mark shows its figure in
+height, for one too tall for the window). It shows the current figure and
+the one before it, newer below, when both fit the window's height, else
+that one alone (one at a time on a laptop, at his choice of full width);
+at each turn they move up (`--y`). Each figure's turn is a scroll position
+from `spread()`: as near as can be to where its mark passes the reading
+line (60% down the window), but each held for a minimum stretch, none
+before the stage is up and all done before it goes. On a laptop that is
+nearly even spacing; without it 图1 was passed before the stage appeared
+(its mark is a line above 图2's) and 图8 never got a turn. The mark being read is gold. Clicking a mark shows its figure in
 the stage until the reader scrolls on; clicking a photograph opens it full
 screen, uncropped (`.fig-zoom`). The rail folds away while the stage is up
 and comes back once the essay's next heading reaches it. Narrow: each

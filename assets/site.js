@@ -587,6 +587,33 @@
       update();
     }
 
+    // When each figure comes in, as a scroll position: as near as can be to
+    // where the reading line passes its mark, but each held for at least
+    // `hold` of scrolling, none before the stage is up (`start`) and the
+    // last with its hold before it goes (`end`), so 图1 isn't passed before
+    // it is shown, marks a line apart (图1 and 图2) don't flash by, and 图8
+    // gets its turn. One at a time on a laptop, the essay has only about
+    // eight holds of scrolling, so the figures come nearly evenly spaced,
+    // each near its mark. Least squares under those limits: pool adjacent
+    // violators on each position less i × hold, clamped to the range.
+    function spread(marks, hold, start, end) {
+      var pools = [];
+      marks.forEach(function (m, i) {
+        pools.push({ sum: m - i * hold, n: 1 });
+        while (pools.length > 1) {
+          var a = pools[pools.length - 2], b = pools[pools.length - 1];
+          if (a.sum / a.n <= b.sum / b.n) break;
+          a.sum += b.sum; a.n += b.n; pools.pop();
+        }
+      });
+      var at = [];
+      pools.forEach(function (p) {
+        var c = Math.min(Math.max(start, p.sum / p.n), end - marks.length * hold);
+        for (var k = 0; k < p.n; k++) at.push(c + at.length * hold);
+      });
+      return at;
+    }
+
     function update() {
       queued = false;
       var fold = false, reading = !!stage && prose.offsetParent !== null;
@@ -604,9 +631,20 @@
       }
       rail.classList.toggle("is-folded", fold);
       if (!stage) return;
-      var on = reading && fold, line = window.innerHeight * 0.6, current = -1;
+      var on = reading && fold, current = -1;
       stage.classList.toggle("is-on", on);
-      items.forEach(function (it, i) { if (it.mark.getBoundingClientRect().top < line) current = i; });
+      // The stage is up from where the rail sticks (start) until the next
+      // heading reaches it (end); every figure gets a turn in between.
+      var scrolled = window.pageYOffset, line = window.innerHeight * 0.6;
+      var railTop = parseFloat(getComputedStyle(rail).top) || 0, band = railTop + rail.offsetHeight + 24;
+      var start = scrolled + body.getBoundingClientRect().top - railTop;
+      var after = prose.querySelectorAll(":scope > h2")[1];
+      var end = Math.min(scrolled + (after ? after.getBoundingClientRect().top : prose.getBoundingClientRect().bottom) - band,
+        document.documentElement.scrollHeight - window.innerHeight);   // a tall window may not scroll that far
+      var hold = Math.max(1, Math.min(Math.max(160, window.innerHeight * 0.25), (end - start) / items.length));
+      var from = spread(items.map(function (it) { return scrolled + it.mark.getBoundingClientRect().top - line; }),
+        hold, start, end);
+      from.forEach(function (at, i) { if (scrolled >= at - 1) current = i; });
       if (pinned >= 0) current = pinned;
       var H = stage.clientHeight, gap = 32, at = Math.max(0, current), shown = [at];
       if (items.length > 1) {
