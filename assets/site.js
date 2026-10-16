@@ -586,7 +586,8 @@
     }
 
     // Every figure the stage's full width, or its full height for one too
-    // tall for that (an upright, a chart on a short window).
+    // tall for that (an upright, the square Hasselblad, a chart), centred
+    // across the column then (Newton asked, 2026-10-15).
     function size() {
       if (stage) {
         var W = stage.clientWidth, H = stage.clientHeight;
@@ -594,8 +595,10 @@
           var img = it.fig.querySelector("img");
           var r = it.fig.hasAttribute("data-crop") ? 2 / 3 : img.getAttribute("height") / img.getAttribute("width");
           it.fig.style.width = W + "px";
-          var cap = it.fig.offsetHeight - img.offsetHeight;
-          if (W * r + cap > H) it.fig.style.width = Math.floor((H - cap) / r) + "px";
+          var cap = it.fig.offsetHeight - img.offsetHeight, w = W;
+          if (W * r + cap > H) w = Math.floor((H - cap) / r);
+          it.fig.style.width = w + "px";
+          it.fig.style.left = Math.floor((W - w) / 2) + "px";
           it.h = it.fig.offsetHeight;
         });
       }

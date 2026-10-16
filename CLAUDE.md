@@ -686,7 +686,7 @@ caption). Wide (over 1000px): the text sits against the right edge
 (`width: min(62ch, 52cqi)`); the rail keeps its contents in view and fills
 the window's height (`.has-stage`), and the `.about-stage` under the
 contents holds the figures, each the column's full width (or its height,
-for one too tall). It shows the current figure and the one before it,
+for one too tall, centred across the column). It shows the current figure and the one before it,
 newer below, when both fit, else that one alone (one at a time on a
 laptop); at each turn they move up (`--y`). Each essay figure's turn is a
 scroll position from `spread()`: as near as can be to where its mark passes
