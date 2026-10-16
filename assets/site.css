@@ -1375,23 +1375,29 @@ body.lb-open { overflow: hidden; }
 
 @media (min-width: 1001px) {
   /* Newton's layout (2026-10-15): the text against the right edge, the
-     left column a stage for the figures, each its full width, two at a
-     time when both fit the window's height (site.js places them, --y). A
+     left column the rail and, under it, a stage for the figures, each its
+     full width, two at a time when both fit (site.js places them, --y). A
      figure moves up as the reading passes its mark: in at the bottom, out
-     at the top. The stage shows while the rail is folded, the rail while
-     it isn't. */
+     at the top. */
   .about-body.has-figures { grid-template-columns: minmax(0, 1fr) auto; column-gap: clamp(2rem, 4vw, 4.5rem); }
   .about-body.has-figures > .about-rail { grid-column: 1; grid-row: 1; }
   .about-body.has-figures > .about-prose { grid-column: 2; grid-row: 1; width: min(62ch, 52cqi); }
 
-  .about-stage {
-    grid-column: 1; grid-row: 1; align-self: start;
-    position: sticky; top: calc(var(--masthead-h) + 2rem);
+  /* The rail keeps its contents in view (Newton asked) and fills the
+     window's height; the stage takes the rest of it, under the contents.
+     Figures moving out at the top are clipped at its edge. */
+  .about-rail.has-stage {
+    display: flex;
+    flex-direction: column;
     height: calc(100svh - var(--masthead-h) - 4rem);
-    visibility: hidden; opacity: 0;
-    transition: opacity var(--d-slow) var(--ease), visibility 0s var(--d-slow);
   }
-  .about-stage.is-on { visibility: visible; opacity: 1; transition: opacity var(--d-slow) var(--ease); }
+  .about-stage {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+    margin-top: var(--s6);
+    overflow: hidden;
+  }
   .about-stage .about-fig {
     position: absolute; top: 0; left: 0;
     margin: 0;
@@ -1402,21 +1408,6 @@ body.lb-open { overflow: hidden; }
   }
   .about-stage .about-fig.is-in { opacity: 1; pointer-events: auto; }
   .about-stage .about-fig.is-current figcaption { color: var(--text); }
-
-  /* The rail folds up while the stage is up and comes back down for 设备
-     and 联系方式 (Newton asked). It keeps its place in the grid, so
-     nothing moves; a key that lands in it opens it. The clip reaches past
-     the box for the lit square and focus rings. */
-  .about-rail {
-    clip-path: inset(-1rem -1rem -1rem -2rem);
-    transition: clip-path var(--d-slow) var(--ease), opacity var(--d-slow) var(--ease), visibility 0s;
-  }
-  .about-rail.is-folded:not(:focus-within) {
-    clip-path: inset(-1rem -1rem calc(100% + 1rem) -2rem);
-    opacity: 0;
-    visibility: hidden;
-    transition: clip-path var(--d-slow) var(--ease), opacity var(--d-slow) var(--ease), visibility 0s var(--d-slow);
-  }
 }
 
 @media (max-width: 1000px) {

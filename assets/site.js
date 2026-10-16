@@ -477,20 +477,19 @@
     });
   })();
 
-  // The About essay's figures (Newton's photographs for its "（figure N）"
-  // marks) wait in a <template data-figures-for> beside the prose, not in
-  // it: the prose is an editable slot that data/text.json rewrites, and
-  // edit.js's sanitiser would strip a figure out of it. Each mark that has a
-  // figure becomes a link to it. Newton numbers them 图1, 图2… (the older
-  // "（figure 2）" still counts). On a wide screen (his design, 2026-10-15)
-  // the figures are held in a stage in the left column, each the column's
-  // full width: the one whose mark is being read and the one before it, the
-  // newer below, when both fit the window's height, else that one alone; at
-  // each mark they move up, in at the bottom and out at the top. A mark
-  // clicked shows its figure
-  // there until the reader scrolls on, and a photograph clicked opens full
-  // screen. The rail folds away while the stage is up and comes back for 设备
-  // and 联系方式. On a narrow screen each figure follows its paragraph, and a
+  // The About essay's figures, Newton's photographs for its "（图1）" marks
+  // (the older "（figure 1）" still counts), wait in a <template
+  // data-figures-for> beside the prose, not in it: the prose is an editable
+  // slot that data/text.json rewrites, and edit.js's sanitiser would strip a
+  // figure out of it. Each mark that has a figure becomes a link to it. A
+  // figure with data-section belongs to a heading instead (his Hasselblad
+  // beside 设备 / Gear). On a wide screen (his design, 2026-10-15) the rail
+  // keeps its contents and holds a stage under them, each figure the
+  // column's full width: the current one and the one before it, the newer
+  // below, when both fit, else the current one alone; at each turn they move
+  // up, in at the bottom and out at the top. A mark clicked shows its figure
+  // until the reader scrolls on, and a photograph clicked opens full screen.
+  // On a narrow screen each figure follows its paragraph (or heading), and a
   // mark scrolls to it. All of it is placed again whenever the prose is
   // rewritten or the window crosses 1000px, so the figures follow Newton's
   // marks through his edits; a mark with no figure stays plain text. None in
@@ -506,8 +505,17 @@
     var watch = window.MutationObserver && new MutationObserver(place);
     var stage = null, items = [], pinned = -1, queued = false;
 
-    function figure(key) { return tpl.content.querySelector('[data-figure="' + key + '"]'); }
     function each(list, fn) { Array.prototype.forEach.call(list, fn); }
+    function figure(key) { return tpl.content.querySelector('[data-figure="' + key + '"]:not([data-section])'); }
+    // A section's heading in each version: #gear, #gear-en.
+    function headings(name) {
+      return body.querySelectorAll('.about-prose > h2[id="' + name + '"], .about-prose > h2[id="' + name + '-en"]');
+    }
+    function shownProse() {
+      return Array.prototype.filter.call(body.querySelectorAll(".about-prose"), function (el) {
+        return el.offsetParent !== null;
+      })[0] || null;
+    }
 
     function linkMarks() {
       each(prose.querySelectorAll(":scope > p"), function (p) {
@@ -539,28 +547,35 @@
 
     function place() {
       if (watch) watch.disconnect();
-      each(prose.querySelectorAll(".about-fig"), function (f) { f.parentNode.removeChild(f); });
+      each(body.querySelectorAll(".about-prose .about-fig"), function (f) { f.parentNode.removeChild(f); });
       if (stage) { stage.parentNode.removeChild(stage); stage = null; }
+      rail.classList.remove("has-stage");
       linkMarks();
       items = [];
-      var shown = {}, staged = wide.matches;
+      var seen = {}, staged = wide.matches;
       each(prose.querySelectorAll(":scope > p"), function (p) {
         var after = p;
         each(p.querySelectorAll("a.fig-mark"), function (a) {
           var key = a.getAttribute("data-figure");
-          if (shown[key]) return;   // a mark written twice shows its photograph once
-          shown[key] = true;
+          if (seen[key]) return;   // a mark written twice shows its photograph once
+          seen[key] = true;
           var fig = figure(key).cloneNode(true);
           fig.id = "figure-" + key;
           items.push({ key: key, fig: fig, mark: a });
           if (!staged) { prose.insertBefore(fig, after.nextSibling); after = fig; }
         });
       });
+      each(tpl.content.querySelectorAll("[data-section]"), function (t) {
+        var name = t.getAttribute("data-section");
+        if (staged) items.push({ key: t.getAttribute("data-figure"), fig: t.cloneNode(true), section: name });
+        else each(headings(name), function (h) { h.parentNode.insertBefore(t.cloneNode(true), h.nextSibling); });
+      });
       if (staged && items.length) {
         stage = document.createElement("div");
         stage.className = "about-stage";
         items.forEach(function (it) { stage.appendChild(it.fig); });
-        rail.parentNode.insertBefore(stage, rail.nextSibling);
+        rail.appendChild(stage);
+        rail.classList.add("has-stage");
         // The text's column settles when its fonts arrive, and the stage
         // with it, so the figures are sized again whenever it changes.
         if (window.ResizeObserver) new ResizeObserver(function () { requestAnimationFrame(size); }).observe(stage);
@@ -587,15 +602,14 @@
       update();
     }
 
-    // When each figure comes in, as a scroll position: as near as can be to
-    // where the reading line passes its mark, but each held for at least
-    // `hold` of scrolling, none before the stage is up (`start`) and the
-    // last with its hold before it goes (`end`), so 图1 isn't passed before
-    // it is shown, marks a line apart (图1 and 图2) don't flash by, and 图8
-    // gets its turn. One at a time on a laptop, the essay has only about
-    // eight holds of scrolling, so the figures come nearly evenly spaced,
-    // each near its mark. Least squares under those limits: pool adjacent
-    // violators on each position less i × hold, clamped to the range.
+    // When each essay figure comes in, as a scroll position: as near as can
+    // be to where the reading line passes its mark, but each held for at
+    // least `hold` of scrolling and all of them before `end` (where 设备
+    // takes over), so marks a line apart (图1 and 图2) don't flash by and 图8
+    // gets its turn; the figures after a cluster run a little late and catch
+    // up in the longer stretches between marks. Least squares under those
+    // limits: pool adjacent violators on each position less i × hold,
+    // clamped to the range.
     function spread(marks, hold, start, end) {
       var pools = [];
       marks.forEach(function (m, i) {
@@ -616,51 +630,43 @@
 
     function update() {
       queued = false;
-      var fold = false, reading = !!stage && prose.offsetParent !== null;
-      if (stage) {
-        var top = parseFloat(getComputedStyle(rail).top) || 0, bottom = top + rail.offsetHeight + 24;
-        if (body.getBoundingClientRect().top < top - 1) {
-          var shown = Array.prototype.filter.call(body.querySelectorAll(".about-prose"), function (el) {
-            return el.offsetParent !== null;
-          })[0];
-          var next = shown && shown.querySelectorAll(":scope > h2")[1];
-          var edge = next ? next.getBoundingClientRect().top : shown ? shown.getBoundingClientRect().bottom : 0;
-          fold = edge > bottom;
-        }
-        if (reading && pinned >= 0) fold = true;
-      }
-      rail.classList.toggle("is-folded", fold);
       if (!stage) return;
-      var on = reading && fold, current = -1;
-      stage.classList.toggle("is-on", on);
-      // The stage is up from where the rail sticks (start) until the next
-      // heading reaches it (end); every figure gets a turn in between.
+      var version = shownProse(), essay = version === prose, current = -1;
       var scrolled = window.pageYOffset, line = window.innerHeight * 0.6;
-      var railTop = parseFloat(getComputedStyle(rail).top) || 0, band = railTop + rail.offsetHeight + 24;
-      var start = scrolled + body.getBoundingClientRect().top - railTop;
-      var after = prose.querySelectorAll(":scope > h2")[1];
-      var end = Math.min(scrolled + (after ? after.getBoundingClientRect().top : prose.getBoundingClientRect().bottom) - band,
-        document.documentElement.scrollHeight - window.innerHeight);   // a tall window may not scroll that far
-      var hold = Math.max(1, Math.min(Math.max(160, window.innerHeight * 0.25), (end - start) / items.length));
-      var from = spread(items.map(function (it) { return scrolled + it.mark.getBoundingClientRect().top - line; }),
-        hold, start, end);
-      from.forEach(function (at, i) { if (scrolled >= at - 1) current = i; });
-      if (pinned >= 0) current = pinned;
-      var H = stage.clientHeight, gap = 32, at = Math.max(0, current), shown = [at];
-      if (items.length > 1) {
-        var pair = at > 0 ? [at - 1, at] : [0, 1];
-        if (items[pair[0]].h + gap + items[pair[1]].h <= H) shown = pair;
+      var last = document.documentElement.scrollHeight - window.innerHeight;
+      // A section's figure takes over once its heading reaches the reading
+      // line (or the page can't scroll that far).
+      var end = last;
+      items.forEach(function (it, i) {
+        if (!it.section) return;
+        var h = version && version.querySelector(':scope > h2[id^="' + it.section + '"]');
+        if (!h) return;
+        var at = Math.min(scrolled + h.getBoundingClientRect().top - line, last);
+        end = Math.min(end, at);
+        if (scrolled >= at - 1) current = i;
+      });
+      var marked = items.filter(function (it) { return it.mark; });
+      if (current < 0 && essay && marked.length) {
+        var hold = Math.max(1, Math.min(Math.max(160, window.innerHeight * 0.25), end / marked.length));
+        var from = spread(marked.map(function (it) { return scrolled + it.mark.getBoundingClientRect().top - line; }),
+          hold, 0, end);
+        current = 0;
+        from.forEach(function (at, i) { if (scrolled >= at - 1) current = i; });
       }
-      var y = Math.max(0, (H - shown.reduce(function (sum, i) { return sum + items[i].h; }, 0) - gap * (shown.length - 1)) / 2);
+      if (pinned >= 0) current = pinned;
+      var H = stage.clientHeight, gap = 32, shown = current < 0 ? [] : [current];
+      if (current > 0 && essay && items[current - 1].h + gap + items[current].h <= H) shown = [current - 1, current];
+      else if (current === 0 && essay && items.length > 1 && items[0].h + gap + items[1].h <= H) shown = [0, 1];
+      var y = shown.length ? Math.max(0, (H - shown.reduce(function (sum, i) { return sum + items[i].h; }, 0) - gap * (shown.length - 1)) / 2) : 0;
       items.forEach(function (it, i) {
         var n = shown.indexOf(i);
         if (n >= 0) { it.y = y; y += it.h + gap; }
-        else it.y = i < shown[0] ? -it.h - gap : H + gap;
+        else it.y = shown.length && i < shown[0] ? -it.h - gap : H + gap;
         it.fig.style.setProperty("--y", Math.round(it.y) + "px");
         it.fig.classList.toggle("is-in", n >= 0);
         it.fig.classList.toggle("is-current", i === current);
       });
-      var lit = on && current >= 0 ? items[current].key : null;
+      var lit = essay && current >= 0 && items[current].mark ? items[current].key : null;
       each(prose.querySelectorAll("a.fig-mark"), function (a) {
         a.classList.toggle("is-current", a.getAttribute("data-figure") === lit);
       });
@@ -673,7 +679,7 @@
       var a = e.target.closest && e.target.closest("a.fig-mark");
       if (!a) return;
       var key = a.getAttribute("data-figure"), i = -1;
-      items.forEach(function (it, n) { if (it.key === key) i = n; });
+      items.forEach(function (it, n) { if (it.mark && it.key === key) i = n; });
       if (i < 0) return;
       e.preventDefault();
       if (stage) { pinned = i; update(); }
@@ -714,7 +720,7 @@
 
     window.addEventListener("scroll", queue, { passive: true });
     window.addEventListener("resize", function () { requestAnimationFrame(size); });
-    window.addEventListener("nl:lang", queue);
+    window.addEventListener("nl:lang", function () { requestAnimationFrame(size); });
     window.addEventListener("load", queue);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(queue);
     if (wide.addEventListener) wide.addEventListener("change", place);
