@@ -678,10 +678,10 @@ Not in ?edit, or the links would be saved into the essay.
 
 Newton's design (2026-10-15): every photograph is 3:2 but the photo-count
 chart (图1), the upright Arches (图8) and the Gear photograph (图9 file,
-square). 图2, 4, 5 and 6 are his own 3:2 crops (2400×1600); 3 and 7 are cropped
+4:3). 图2, 4, 5 and 6 are his own 3:2 crops (2400×1600); 3 and 7 are cropped
 by CSS only (`data-crop`, the crop's centre in the img's `object-position`;
 the files stay whole). A figure with `data-section="gear"` belongs to the
-设备 / Gear heading, not to a mark: his Hasselblad 501CM (`fig-9.jpg`, no
+设备 / Gear heading, not to a mark: his Hasselblad 501CM (`fig-9.jpg`, 4:3, no
 caption). Wide (over 1000px): the text sits against the right edge
 (`width: min(62ch, 52cqi)`); the rail keeps its contents in view and fills
 the window's height (`.has-stage`), and the `.about-stage` under the
