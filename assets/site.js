@@ -672,6 +672,10 @@
           hold, start, end);
         current = 0;
         from.forEach(function (at, i) { if (scrolled >= at - 1) current = i; });
+        // Nothing until the reader reaches the essay: the first figure comes
+        // in once its mark is up in the window (Newton: not with the cover
+        // still filling the screen, but once 图1's line is on it).
+        if (current === 0 && marked[0].mark.getBoundingClientRect().top > window.innerHeight * 0.85) current = -1;
       }
       if (pinned >= 0) current = pinned;
       var H = stage.clientHeight, gap = 32, shown = current < 0 ? [] : [current];

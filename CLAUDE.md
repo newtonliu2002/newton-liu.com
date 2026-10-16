@@ -688,7 +688,8 @@ the window's height (`.has-stage`), and the `.about-stage` under the
 contents holds the figures, each the column's full width (or its height,
 for one too tall, centred across the column). A figure marked `data-beside` (图1, Newton asked) sits higher instead, in
 `.about-beside`: from the rail's top, between the contents and the text, so
-it is whole in view as the essay starts. It shows the current figure and the one before it,
+it is whole in view as the essay starts; it comes in only once its mark is
+up in the window (above 85%), not while the cover fills the screen. It shows the current figure and the one before it,
 newer below, when both fit, else that one alone (one at a time on a
 laptop); at each turn they move up (`--y`). Each essay figure's turn is a
 scroll position from `spread()`: as near as can be to where its mark passes
