@@ -1570,6 +1570,11 @@ body.lb-open { overflow: hidden; }
   text-overflow: ellipsis;
 }
 .photo-numbers .nb-label { color: var(--text-body); }
+/* The titles, a chart's and a numeral's, a size up from the other labels
+   (Newton, 2026-10-16); Chinese a size more, as it is on the rest of the
+   page. */
+.photo-numbers :is(.nb-title, .nb-label) { font-size: 12px; }
+[data-lang="zh"] .photo-numbers :is(.nb-title, .nb-label) { font-size: 13px; }
 .photo-numbers .nb-num {
   margin: clamp(6px, 1.6cqi, 12px) 0 clamp(8px, 2cqi, 14px) -.045em;
   font: 300 clamp(44px, 13.5cqi, 84px)/1 var(--sans);
@@ -1609,7 +1614,10 @@ body.lb-open { overflow: hidden; }
   -webkit-user-select: none;
   user-select: none;
 }
-.photo-numbers .nb-title { color: var(--text-body); white-space: nowrap; }
+/* A title that has to take two lines (a long one in a half column) keeps
+   its own leading, not the prose's. */
+.photo-numbers .nb-head { line-height: 18px; padding-bottom: 4px; }
+.photo-numbers .nb-title { color: var(--text-body); white-space: normal; line-height: 18px; }
 
 /* Vertical bars, each named and its rough count under the name. */
 .photo-numbers .nb-plot {
