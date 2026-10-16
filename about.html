@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#121212">
 <script>try{if(localStorage.getItem("theme")==="white"){document.documentElement.dataset.theme="light";var m=document.querySelector('meta[name="theme-color"]');if(m)m.content="#ffffff"}}catch(e){}</script>
 <script>try{if(localStorage.getItem("aboutLang")==="en")document.documentElement.dataset.aboutLang="en"}catch(e){}</script>
-<link rel="stylesheet" href="assets/site.css?v=6ad6d477">
+<link rel="stylesheet" href="assets/site.css?v=f9e05307">
 </head>
 
 <body data-page="prose" data-base="">
@@ -141,13 +141,9 @@
              width="1439" height="1649" loading="lazy" decoding="async">
         <figcaption lang="zh-Hans">图1：我拍摄的照片数量，按年份和月份（历年合计）统计。九月基本是空白：每年开学第一个月假装认真，哈哈。</figcaption>
       </figure>
-      <figure class="about-fig" lang="en" data-figure="2">
-        <img src="images/_about/fig-2.jpg"
-             srcset="images/_about/800/fig-2.jpg 800w, images/_about/1600/fig-2.jpg 1600w, images/_about/fig-2.jpg 2400w"
-             sizes="(max-width: 1000px) 100vw, min(58vw, 60rem)"
-             alt="Newton's eBird life list for the world: 1373 species observed, 622 complete checklists, 254 species with photos, on a map shaded by species per country."
-             width="2400" height="1600" loading="lazy" decoding="async">
-        <figcaption lang="zh-Hans">图2：我在全世界看到的鸟类统计。国家颜色越红代表看到的鸟种越多。</figcaption>
+      <figure class="about-fig" lang="en" data-figure="2" data-crop>
+        <div class="bird-map" data-src="data/birdmap.json?v=092e3dc8"></div>
+        <figcaption lang="zh-Hans">图2：我在全世界看到的鸟类统计。国家颜色越红代表看到的鸟种越多。这张地图可以互动：移到或点一下某个国家，就能看到具体的鸟种数；美国、加拿大、墨西哥和中国还能点进去，看各州、各省的数字。</figcaption>
       </figure>
       <figure class="about-fig" lang="en" data-figure="3" data-crop>
         <img src="images/_about/fig-3.jpg"
@@ -250,7 +246,7 @@
   </div>
 </footer>
 
-<script src="assets/site.js?v=57e4ce01"></script>
+<script src="assets/site.js?v=ecf90a62"></script>
 <script src="assets/edit.js?v=c63f7eb5"></script>
 </body>
 </html>

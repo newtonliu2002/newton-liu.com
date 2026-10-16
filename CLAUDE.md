@@ -710,6 +710,20 @@ scrolls on; clicking a photograph opens it full screen, uncropped
 Gear photograph follows the heading, in both versions), and a mark scrolls
 to it.
 
+**图2 is a map, not a photograph** (Newton, 2026-10-16): his eBird life list,
+the world by country shaded yellow→red like eBird's, a count on hover (tap on
+a phone), and the United States, Canada, Mexico and China opening into their
+states/provinces ("World" or Esc back out). eBird's own map can't be embedded:
+his profile asks anonymous visitors to sign in. The figure holds
+`<div class="bird-map" data-src="data/birdmap.json?v=…">`; site.js `birdMap`
+builds it (size() treats it as a 3:2 figure, `data-crop`), drawn in the
+ground's colours so it follows dark/light. `data/birdmap.json` (paths and
+counts) is built by `python3 -I tools/birdmap.py`, which holds the counts,
+typed in from his eBird profile (it is not public, so nothing fetches them),
+downloads the Natural Earth outlines once into `_arrange/geo-src/`, and
+restamps the data-src. New counts: edit COUNTS there and rerun; another
+country that opens: DRILL, COUNTS and PROVINCES.
+
 The older `.prose`/`.prose h1` rules are still in `site.css` but nothing uses
 them now. They're the fallback if a plain text page is ever wanted.
 

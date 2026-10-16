@@ -1374,6 +1374,87 @@ body.lb-open { overflow: hidden; }
 .fig-zoom:focus { outline: none; }
 .fig-zoom img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
 
+/* 图2, the eBird map (site.js birdMap). A 3:2 box like the photographs
+   beside it: a line of labels at the top, the map, the scale at the foot,
+   in the ground's own colours, so it is dark on the dark ground and light
+   on the light one (Newton, 2026-10-16); the shading is eBird's. */
+.bird-map {
+  --bm-land: color-mix(in srgb, var(--text) 11%, transparent);
+  --bm-edge: var(--bg);
+  --bm-sphere: color-mix(in srgb, var(--text) 9%, transparent);
+  --bm-ink: var(--text);
+  --bm-faint: var(--text-faint);
+  --bm-tip-bg: var(--bg);
+  --bm-tip-edge: color-mix(in srgb, var(--text) 18%, transparent);
+  --bm-hot: var(--text);
+  position: relative;
+  aspect-ratio: 3 / 2;
+  width: 100%;
+  overflow: hidden;
+  color: var(--bm-ink);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.bm-head, .bm-legend {
+  position: absolute; left: 0; right: 0;
+  display: flex; align-items: center; gap: .6em;
+  font: 400 var(--t-label)/16px var(--mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--bm-faint);
+}
+.bm-head { top: 0; }
+.bm-legend { bottom: 0; }
+.bm-legend i { display: block; width: 7.5em; height: 6px; border-radius: 3px; }
+.bm-crumb {
+  font: inherit; letter-spacing: inherit; text-transform: inherit;
+  color: inherit; background: none; border: 0; padding: 0; margin: 0;
+}
+.bm-crumb.is-link { color: var(--bm-ink); cursor: pointer; text-decoration: underline dotted; text-underline-offset: .3em; }
+.bm-crumb.is-link:hover { color: var(--accent); }
+.bm-crumb:disabled { cursor: default; }
+.bm-here:not(:empty)::before { content: "›"; margin-right: .6em; color: var(--bm-faint); }
+.bm-here { color: var(--bm-ink); }
+.bm-total { margin-left: auto; }
+
+.bm-views { position: absolute; left: 0; right: 0; top: 26px; bottom: 22px; }
+.bm-view {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  opacity: 0; visibility: hidden;
+  transition: opacity .34s var(--ease), visibility 0s .34s;
+  overflow: visible;
+}
+.bm-view.is-shown { opacity: 1; visibility: visible; transition: opacity .34s var(--ease); }
+.bm-outline { fill: none; stroke: var(--bm-sphere); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.bm-rest { fill: var(--bm-land); stroke: var(--bm-edge); stroke-width: .6; vector-effect: non-scaling-stroke; }
+.bm-shape, .bm-dot { stroke: var(--bm-edge); stroke-width: .6; vector-effect: non-scaling-stroke; }
+.bm-shape.is-hot, .bm-dot.is-hot { stroke: var(--bm-hot); stroke-width: 1.4; }
+.bird-map.is-moving .bm-shape { stroke-width: .4; }
+
+.bm-tip {
+  position: absolute; left: 0; top: 0;
+  display: grid; gap: 2px;
+  padding: 8px 11px 9px;
+  background: var(--bm-tip-bg);
+  border: 1px solid var(--bm-tip-edge);
+  border-radius: 4px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .18);
+  font: 400 13px/1.35 var(--sans);
+  color: var(--bm-ink);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .12s;
+  z-index: 2;
+}
+.bm-tip.is-on { opacity: 1; }
+.bm-tip b { font-weight: 600; }
+.bm-tip em:empty { display: none; }
+.bm-tip em { font: 400 var(--t-label)/16px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--bm-faint); font-style: normal; }
+
+/* In the stage the figures let the pointer through; this one takes it. */
+.about-stage .about-fig.is-in .bird-map { pointer-events: auto; }
+
 @media (min-width: 1001px) {
   /* Newton's layout (2026-10-15): the text against the right edge, the
      left column the rail and, under it, a stage for the figures, each its

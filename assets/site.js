@@ -619,7 +619,7 @@
         under.top = (nav ? nav.offsetTop + nav.offsetHeight : 0) + 32;
         under.h = Math.max(80, room - under.top);
         items.forEach(function (it) {
-          var img = it.fig.querySelector("img");
+          var img = it.fig.querySelector("img, .bird-map");
           var r = it.fig.hasAttribute("data-crop") ? 2 / 3 : img.getAttribute("height") / img.getAttribute("width");
           var aw = it.beside ? rail.clientWidth - left : W, ah = it.beside ? rail.clientHeight : it.under ? under.h : H;
           it.fig.style.width = aw + "px";
@@ -804,6 +804,222 @@
     e.preventDefault();
     zoom(a.href, "", a.textContent);
   });
+
+  /* ---------- About: the eBird map (图2) -------------------------------- */
+  // Newton's eBird life list on a map, the world by country, shaded from
+  // yellow to red by species (eBird's own scale). Hover a country for its
+  // count (on a phone, tap); the United States, Canada, Mexico and China open
+  // into their states and provinces. Paths and counts are data/birdmap.json,
+  // built by tools/birdmap.py from Natural Earth and his eBird profile. Each
+  // .bird-map is built when it appears: the About figures are cloned from
+  // their template whenever the layout changes. One look for both grounds,
+  // drawn in the page's own colours (Newton, 2026-10-16).
+  (function birdMap() {
+    var NS = "http://www.w3.org/2000/svg";
+    var STOPS = [[0, [234, 217, 138]], [0.5, [227, 154, 108]], [1, [214, 74, 90]]];
+    var cache = {};
+
+    function color(n, max) {
+      var t = max > 0 ? Math.min(1, n / max) : 0, i = t <= STOPS[1][0] ? 0 : 1;
+      var a = STOPS[i], b = STOPS[i + 1], u = (t - a[0]) / (b[0] - a[0]);
+      return "rgb(" + a[1].map(function (c, k) { return Math.round(c + (b[1][k] - c) * u); }).join(",") + ")";
+    }
+    function el(tag, cls, ns) {
+      var e = ns ? document.createElementNS(NS, tag) : document.createElement(tag);
+      if (cls) e.setAttribute("class", cls);
+      return e;
+    }
+    function load(src) {
+      if (!cache[src]) cache[src] = fetch(src).then(function (r) { return r.json(); });
+      return cache[src];
+    }
+    function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+
+    function build(box, data) {
+      var views = {}, current = "world", hot = null, armed = null, touch = false, busy = false;
+      box.textContent = "";
+      var head = el("div", "bm-head"), crumb = el("button", "bm-crumb"), here = el("span", "bm-here"),
+          total = el("span", "bm-total");
+      crumb.type = "button";
+      crumb.textContent = "World";
+      head.appendChild(crumb); head.appendChild(here); head.appendChild(total);
+      var stage = el("div", "bm-views"), legend = el("div", "bm-legend"),
+          lo = el("span"), bar = el("i"), hi = el("span");
+      lo.textContent = "0";
+      legend.appendChild(lo); legend.appendChild(bar); legend.appendChild(hi);
+      var tip = el("div", "bm-tip"), tipName = el("b"), tipN = el("span"), tipMore = el("em");
+      tip.appendChild(tipName); tip.appendChild(tipN); tip.appendChild(tipMore);
+      box.appendChild(head); box.appendChild(stage); box.appendChild(legend); box.appendChild(tip);
+      bar.style.background = "linear-gradient(90deg," + STOPS.map(function (s) {
+        return "rgb(" + s[1].join(",") + ") " + s[0] * 100 + "%"; }).join(",") + ")";
+
+      function view(key) {
+        if (views[key]) return views[key];
+        var v = data[key], max = 0;
+        v.shapes.forEach(function (s) { max = Math.max(max, s.n); });
+        var svg = el("svg", "bm-view", true);
+        svg.setAttribute("viewBox", "0 0 " + v.w + " " + v.h);
+        svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+        svg.setAttribute("role", "img");
+        svg.setAttribute("aria-label", data.names[key] + ": species observed by " + (key === "world" ? "country" : "state or province"));
+        if (v.outline) { var o = el("path", "bm-outline", true); o.setAttribute("d", v.outline); svg.appendChild(o); }
+        var rest = el("path", "bm-rest", true); rest.setAttribute("d", v.rest); svg.appendChild(rest);
+        var g = el("g", "bm-shapes", true);
+        v.shapes.slice().sort(function (a, b) { return a.n - b.n; }).forEach(function (s) {
+          var p = el("path", "bm-shape", true);
+          p.setAttribute("d", s.d);
+          p.setAttribute("fill", color(s.n, max));
+          p.setAttribute("data-k", s.k);
+          if (s.drill) p.setAttribute("data-drill", s.drill);
+          g.appendChild(p);
+          if (s.dot) {
+            var c = el("circle", "bm-dot", true);
+            c.setAttribute("cx", s.dot[0]); c.setAttribute("cy", s.dot[1]);
+            c.setAttribute("r", key === "world" ? 3.5 : 5);
+            c.setAttribute("fill", color(s.n, max));
+            c.setAttribute("data-k", s.k);
+            g.appendChild(c);
+          }
+        });
+        svg.appendChild(g);
+        stage.appendChild(svg);
+        var byK = {};
+        v.shapes.forEach(function (s) { byK[s.k] = s; });
+        return (views[key] = { svg: svg, max: max, byK: byK, data: v });
+      }
+
+      function label(key) {
+        var world = key === "world";
+        crumb.classList.toggle("is-link", !world);
+        crumb.disabled = world;
+        here.textContent = world ? "" : data.names[key];
+        var n = world ? data.total : views.world.byK[findDrill(key)].n;
+        total.textContent = fmt(n) + " species";
+        hi.textContent = fmt(views[key].max);
+      }
+      function findDrill(key) {
+        var k = null;
+        data.world.shapes.forEach(function (s) { if (s.drill === key) k = s.k; });
+        return k;
+      }
+
+      function setHot(t) {
+        if (hot === t) return;
+        if (hot) hot.classList.remove("is-hot");
+        hot = t;
+        if (hot) {
+          hot.classList.add("is-hot");
+          hot.parentNode.appendChild(hot);   // its outline above its neighbours'
+        }
+      }
+      function showTip(t, x, y) {
+        var v = views[current], s = v.byK[t.getAttribute("data-k")];
+        tipName.textContent = s.name;
+        tipN.textContent = fmt(s.n) + " species observed";
+        tipMore.textContent = s.drill ? (touch ? "Tap again for " : "Click for ") + s.parts : "";
+        tip.classList.add("is-on");
+        var r = box.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight;
+        var left = x - r.left + 14, top = y - r.top + 14;
+        if (left + w > r.width - 4) left = x - r.left - w - 14;
+        if (top + h > r.height - 4) top = y - r.top - h - 14;
+        tip.style.transform = "translate(" + Math.max(4, left) + "px," + Math.max(4, top) + "px)";
+      }
+      function hideTip() { tip.classList.remove("is-on"); setHot(null); armed = null; }
+
+      // The world eases in to the country's outline while its own map fades
+      // up; back out, the reverse.
+      function animate(svg, from, to, ms, done) {
+        var t0 = null;
+        function step(now) {
+          if (t0 === null) t0 = now;
+          var t = Math.min(1, (now - t0) / ms), e = t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+          svg.setAttribute("viewBox", from.map(function (a, i) { return a + (to[i] - a) * e; }).join(" "));
+          if (t < 1) requestAnimationFrame(step); else if (done) done();
+        }
+        requestAnimationFrame(step);
+      }
+      function boxOf(key) {
+        var shape = views.world.svg.querySelector('[data-drill="' + key + '"]'), b = shape.getBBox();
+        var W = data.world.w, H = data.world.h, ar = W / H, w = b.width * 1.08, h = b.height * 1.08;
+        if (w / h < ar) w = h * ar; else h = w / ar;
+        return [b.x + b.width / 2 - w / 2, b.y + b.height / 2 - h / 2, w, h];
+      }
+      function go(key) {
+        if (busy || key === current) return;
+        busy = true; hideTip();
+        var world = views.world, full = [0, 0, data.world.w, data.world.h];
+        var target = view(key === "world" ? current : key);
+        var into = key !== "world", zoomed = boxOf(into ? key : current);
+        target.svg.classList.add("is-shown");
+        box.classList.add("is-moving");
+        if (into) {
+          target.svg.style.opacity = 0;
+          animate(world.svg, full, zoomed, 520, function () {
+            world.svg.classList.remove("is-shown"); world.svg.setAttribute("viewBox", full.join(" "));
+            box.classList.remove("is-moving"); busy = false;
+          });
+          setTimeout(function () { target.svg.style.opacity = ""; world.svg.style.opacity = 0; }, 180);
+        } else {
+          world.svg.classList.add("is-shown");
+          world.svg.setAttribute("viewBox", zoomed.join(" "));
+          world.svg.style.opacity = 0;
+          requestAnimationFrame(function () {
+            target.svg.style.opacity = 0; world.svg.style.opacity = "";
+            animate(world.svg, zoomed, full, 520, function () {
+              target.svg.classList.remove("is-shown"); target.svg.style.opacity = "";
+              box.classList.remove("is-moving"); busy = false;
+            });
+          });
+        }
+        current = key;
+        label(key);
+      }
+
+      box.addEventListener("pointerdown", function (e) { touch = e.pointerType !== "mouse"; });
+      box.addEventListener("pointermove", function (e) {
+        if (e.pointerType !== "mouse" || busy) return;
+        var t = e.target.closest && e.target.closest("[data-k]");
+        if (!t || !box.contains(t)) { hideTip(); return; }
+        setHot(views[current].svg.querySelector('path[data-k="' + t.getAttribute("data-k") + '"]') || t);
+        showTip(t, e.clientX, e.clientY);
+        box.style.cursor = t.hasAttribute("data-drill") || views[current].byK[t.getAttribute("data-k")].drill ? "pointer" : "";
+      });
+      box.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") hideTip(); });
+      stage.addEventListener("click", function (e) {
+        if (busy) return;
+        var t = e.target.closest && e.target.closest("[data-k]");
+        if (!t) { hideTip(); return; }
+        var s = views[current].byK[t.getAttribute("data-k")];
+        if (touch && armed !== s.k) {
+          armed = s.k;
+          setHot(views[current].svg.querySelector('path[data-k="' + s.k + '"]') || t);
+          showTip(t, e.clientX, e.clientY);
+          return;
+        }
+        if (s.drill) go(s.drill);
+      });
+      crumb.addEventListener("click", function () { go("world"); });
+      box.addEventListener("keydown", function (e) { if (e.key === "Escape" && current !== "world") go("world"); });
+
+      view("world").svg.classList.add("is-shown");
+      label("world");
+      box.setAttribute("data-ready", "");
+    }
+
+    function init(box) {
+      if (box.hasAttribute("data-ready") || box.hasAttribute("data-loading")) return;
+      box.setAttribute("data-loading", "");
+      load(box.getAttribute("data-src")).then(function (data) {
+        box.removeAttribute("data-loading");
+        build(box, data);
+      });
+    }
+    function scan() {
+      Array.prototype.forEach.call(document.querySelectorAll(".bird-map:not([data-ready])"), init);
+    }
+    scan();
+    if (window.MutationObserver) new MutationObserver(scan).observe(document.body, { childList: true, subtree: true });
+  })();
 
   /* ---------- Chinese text ---------------------------------------------- */
 
