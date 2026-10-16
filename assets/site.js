@@ -483,9 +483,10 @@
   // the prose is rewritten (edit.js lays data/text.json over it, and its
   // sanitiser would strip a chart's box out of the essay, so the box is
   // never part of the text). None in ?edit, or they would be saved into it.
-  // Three blocks: all photos (one large numeral, by country, year and
-  // month), the hours of the day (with the busiest days), and the busiest
-  // clock hour (with the busiest single hours). Every bar carries a rough
+  // Four blocks: all photos (one large numeral, by country, year and
+  // month), the trips (the biggest, with the top ten), the hours of the day
+  // (with the busiest days), and the busiest clock hour (with the busiest
+  // single hours). Every bar carries a rough
   // count under it (54k); pointing at, tapping or focusing a bar or a row
   // reads it exactly: the bar's own count turns exact, and in the first
   // block the numeral reads it too, then settles back. In a wide box each
@@ -512,6 +513,22 @@
       // 12 am to 11 pm
       hours: [421, 361, 1003, 518, 1065, 3787, 22132, 54191, 50327, 48955, 51182, 51288, 32637, 27740, 20961,
         31070, 30591, 30917, 18705, 11306, 5791, 2506, 1374, 1016],
+      // The ten biggest trips: where, when, how long and with what, and
+      // images (each shutter press once, of 499,880). His names (2026-10-16).
+      trips: [
+        ["Galápagos & Ecuador", "Aug 2023", "14 days (Aug 3–16) · 3,177/day · R5 + R6 II", 44477],
+        ["Sri Lanka", "Nov 2024", "10 days · 3,804/day · R5 II + R6 II", 38042],
+        ["Yunnan", "Dec 2024", "8 days · 4,419/day · R5 II + R6 II", 35355],
+        ["Florida", "Nov 2023", "9 days · 3,435/day · R5 + R6 II", 30918],
+        ["Puerto Rico and US Virgin Islands", "Feb 2025", "10 days · 2,913/day · R5 II", 29132],
+        ["Colombia", "Oct 2025", "4 days · 7,274/day · R5 II + R6 II", 29096],
+        ["Texas and Nuevo Leon", "May 2026", "13 days · 2,168/day · R5 II", 28184],
+        ["Morocco", "Mar 2026", "6 days · 4,458/day · R5 II", 26751],
+        ["Canada & Alaska", "May–Jun 2026", "26 days · 686/day · R5 II + X2D II", 17842],
+        ["Arizona", "Jan 2025", "7 days · 2,391/day · R5 II", 16740]
+      ],
+      tripsOf: 499880,
+      mostPerDay: { n: 7274, where: "Colombia · 4 days" },
       busiestHour: { label: "7 am", n: 54191 },
       busiestDay: 10195,
       busiestMinute: 458,
@@ -571,7 +588,7 @@
     }
 
     // ---- One block: its readout (if it has one), its dials, its charts ----
-    // opt: { cls, label, n, ctx, dials: [[key, value]], aria, listFirst }
+    // opt: { cls, label, n, ctx, dials: [[key, value, note?]], aria, listFirst }
     function Block(box, opt) {
       var blk = el("section", "nb-block nb-" + opt.cls);
       blk.setAttribute("aria-label", opt.aria);
@@ -588,6 +605,7 @@
           var s = el("div", "nb-dial");
           s.appendChild(el("span", "nb-k", d[0]));
           s.appendChild(el("span", "nb-dv", d[1]));
+          if (d[2]) s.appendChild(el("span", "nb-note", d[2]));
           dials.appendChild(s);
         });
         inst.appendChild(dials);
@@ -662,11 +680,12 @@
         charts.push(sec); barSecs.push(sec);
       }
 
-      // Horizontal bars, one row each (countries, busiest days, busiest
-      // hours), the count written in the row. rows: { p, s, n, label, ctx,
-      // aria }. With a second line (s), the row is two lines: what and
-      // count above, where and the bar below.
-      function list(title, rows, kind) {
+      // Horizontal bars, one row each (countries, trips, busiest days,
+      // busiest hours), the count written in the row. rows: { p, s, n,
+      // label, ctx, aria }. With a second line (s), the row is two lines:
+      // what and count above, where and the bar below. foot: a closing
+      // [label, value] line under the list.
+      function list(title, rows, kind, foot) {
         var sec = el("div", "nb-chart nb-list nb-" + kind);
         head(sec, title);
         var ol = el("ol", "nb-rows");
@@ -695,6 +714,12 @@
         });
         group[0].el.tabIndex = 0;
         sec.appendChild(ol);
+        if (foot) {
+          var f = el("div", "nb-foot");
+          f.appendChild(el("span", "nb-k", foot[0]));
+          f.appendChild(el("span", "nb-fv", foot[1]));
+          sec.appendChild(f);
+        }
         blk.appendChild(sec);
         charts.push(sec); listSecs.push(sec);
       }
@@ -859,7 +884,7 @@
       bindDoc();
       box.setAttribute("role", "group");
       box.setAttribute("aria-label", "My photography in numbers: " + fmt(D.total) + " photos as of " + D.asOf +
-        ", by country, year, month and hour of day, with the busiest days and hours. Each bar and row reads out its number.");
+        ", by country, year, month, trip and hour of day, with the busiest days and hours. Each bar and row reads out its number.");
 
       // ---- 1. All photos: by country, year and month -------------------------
       var topYear = D.years.reduce(function (a, b) { return b[1] > a[1] ? b : a; });
@@ -886,7 +911,21 @@
       }), "country");
       b1.wire();
 
-      // ---- 2. The hours of the day, and the busiest days ---------------------
+      // ---- 2. The trips: the biggest, and the top ten ------------------------
+      var top = D.trips[0], topSum = D.trips.reduce(function (a, t) { return a + t[3]; }, 0);
+      var bt = Block(box, {
+        cls: "trip", label: "Biggest trip", n: top[3], ctx: top[0] + " · " + top[1],
+        dials: [["Most per day", fmt(D.mostPerDay.n), D.mostPerDay.where],
+                ["Top 10 trips", Math.round(topSum / D.tripsOf * 100) + "%", fmt(topSum) + " of " + fmt(D.tripsOf) + " images"]],
+        aria: "The biggest trips, top 10"
+      });
+      bt.list("Images by trip, top 10", D.trips.map(function (t) {
+        return { p: t[0] + " · " + t[1], s: t[2], n: t[3], label: t[0] + " · " + t[1], ctx: t[2],
+          aria: t[0] + ", " + t[1] + ", " + t[2] + ": " + fmt(t[3]) + " images" };
+      }), "trips", ["Total, top 10 (each shutter press once)", fmt(topSum) + " images"]);
+      bt.wire();
+
+      // ---- 3. The hours of the day, and the busiest days ---------------------
       var b2 = Block(box, {
         cls: "day",
         dials: [["Busiest hour", D.busiestHour.label + " · " + fmt(D.busiestHour.n)],
@@ -905,7 +944,7 @@
       }), "days");
       b2.wire();
 
-      // ---- 3. The busiest clock hour, and the busiest single hours -----------
+      // ---- 4. The busiest clock hour, and the busiest single hours -----------
       var b3 = Block(box, {
         cls: "peak", label: "Busiest clock hour", n: D.busiestClockHour.n, ctx: D.busiestClockHour.when,
         aria: "The busiest clock hour, and the busiest single hours"
@@ -918,7 +957,7 @@
 
       // Two columns or one follows the box (the English box is display:none,
       // so width 0, until English is picked).
-      var blocks = [b1, b2, b3];
+      var blocks = [b1, bt, b2, b3];
       function fit() {
         var wide = box.getBoundingClientRect().width >= WIDE;
         blocks.forEach(function (b) { b.arrange(wide); });
