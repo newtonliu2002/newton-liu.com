@@ -477,6 +477,473 @@
     });
   })();
 
+  // My photography in numbers (About; Newton's pick, the "Readout" look,
+  // 2026-10-16). Its heading is his, in the prose (#numbers, #numbers-en);
+  // the charts are built here, right under it, and built again whenever
+  // the prose is rewritten (edit.js lays data/text.json over it, and its
+  // sanitiser would strip a chart's box out of the essay, so the box is
+  // never part of the text). None in ?edit, or they would be saved into it.
+  // Three blocks: all photos (one large numeral, by country, year and
+  // month), the hours of the day (with the busiest days), and the busiest
+  // clock hour (with the busiest single hours). Every bar carries a rough
+  // count under it (54k); pointing at, tapping or focusing a bar or a row
+  // reads it exactly: the bar's own count turns exact, and in the first
+  // block the numeral reads it too, then settles back. In a wide box each
+  // block is two columns; the hours of the day then span both.
+  (function photoNumbers() {
+    var proses = document.querySelectorAll(".about-prose");
+    if (!proses.length || /[?&]edit\b/.test(location.search)) return;
+
+    // His counts, as he sent them (2026-10-16): photos by year, month and
+    // country as of Oct 15, 2026; the rest from his hour and day charts.
+    var D = {
+      asOf: "Oct 15, 2026",
+      total: 515443,
+      years: [[2016, 10638], [2017, 18225], [2018, 2554], [2019, 0], [2020, 44], [2021, 5995], [2022, 15001],
+        [2023, 128872], [2024, 119243], [2025, 119684], [2026, 93336]],
+      months: [["Jan", 26794], ["Feb", 51611], ["Mar", 36666], ["Apr", 24795], ["May", 49584], ["Jun", 27433],
+        ["Jul", 29116], ["Aug", 71760], ["Sep", 1227], ["Oct", 43006], ["Nov", 77057], ["Dec", 74408]],
+      monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+        "October", "November", "December"],
+      countries: [["United States", 190779], ["China", 64927], ["Ecuador", 44896], ["Puerto Rico", 39462],
+        ["Sri Lanka", 38353], ["Colombia", 29096], ["Morocco", 26751], ["Malaysia", 21759], ["Canada", 15097],
+        ["Peru", 11796], ["India", 10102], ["Nepal", 8069], ["Mexico", 4267], ["New Zealand", 2681],
+        ["Taiwan", 1759], ["Singapore", 1093], ["Japan", 15]],
+      // 12 am to 11 pm
+      hours: [421, 361, 1003, 518, 1065, 3787, 22132, 54191, 50327, 48955, 51182, 51288, 32637, 27740, 20961,
+        31070, 30591, 30917, 18705, 11306, 5791, 2506, 1374, 1016],
+      busiestHour: { label: "7 am", n: 54191 },
+      busiestDay: 10195,
+      busiestMinute: 458,
+      busiestDays: [
+        ["Sun, Oct 12, 2025", "Colombia", 10195],
+        ["Sat, Nov 25, 2023", "Florida", 9354],
+        ["Thu, Dec 5, 2024", "Yunnan", 8902],
+        ["Fri, Dec 6, 2024", "Yunnan", 8236],
+        ["Mon, Oct 13, 2025", "Colombia", 8174],
+        ["Thu, Mar 12, 2026", "Morocco", 7937],
+        ["Tue, Nov 12, 2024", "Sri Lanka", 7318],
+        ["Tue, Aug 15, 2023", "Mindo", 7311],
+        ["Sat, Aug 23, 2025", "Quebec", 6927],
+        ["Sat, Oct 11, 2025", "Colombia", 6740]
+      ],
+      busiestClockHour: { n: 2838, when: "Mar 11, 2026 · 5–6pm" },
+      busiestHours: [
+        ["Wed, Mar 11, 2026", "5pm–6pm", "Morocco", "R5 II", 2838],
+        ["Thu, Dec 5, 2024", "9am–10am", "Yunnan", "R5 II", 2693],
+        ["Sat, Oct 11, 2025", "10am–11am", "Colombia", "R5 II", 2509],
+        ["Thu, Dec 5, 2024", "3pm–4pm", "Yunnan", "R5 II", 2506],
+        ["Sat, Nov 25, 2023", "4pm–5pm", "Florida", "R5 + R6 II", 2462],
+        ["Thu, Dec 5, 2024", "10am–11am", "Yunnan", "R5 II", 2401],
+        ["Sun, Oct 27, 2024", "11am–12pm", "Guangxi", "R5 II + R6 II", 2393],
+        ["Sat, Nov 25, 2023", "5pm–6pm", "Florida", "R5 + R6 II", 2368],
+        ["Sun, Oct 12, 2025", "11am–12pm", "Colombia", "R5 II", 2338],
+        ["Wed, Dec 4, 2024", "4pm–5pm", "Yunnan", "R5 II", 2333]
+      ]
+    };
+
+    var RM = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : { matches: false };
+    var WIDE = 680;   // the box width at which blocks go two-column (site.css)
+    var bound = false;
+
+    function fmt(n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+    function rough(n) { return !n ? "0" : n < 1000 ? "<1k" : Math.round(n / 1000) + "k"; }
+    function share(n) {
+      var p = n / D.total * 100;
+      return (!n ? "0%" : p < 0.1 ? "<0.1%" : p.toFixed(1) + "%") + " of all photos";
+    }
+    function el(tag, cls, text) {
+      var e = document.createElement(tag);
+      if (cls) e.className = cls;
+      if (text != null) e.textContent = text;
+      return e;
+    }
+    function bindDoc() {
+      if (bound) return;
+      bound = true;
+      // A tap outside a block clears it (focus leaving does too, but a tap
+      // on plain text doesn't always move focus on a phone).
+      document.addEventListener("pointerdown", function (e) {
+        Array.prototype.forEach.call(document.querySelectorAll(".photo-numbers .nb-block.has-active"), function (b) {
+          if (!b.contains(e.target) && b._nbClear) b._nbClear();
+        });
+      }, true);
+    }
+
+    // ---- One block: its readout (if it has one), its dials, its charts ----
+    // opt: { cls, label, n, ctx, dials: [[key, value]], aria, listFirst }
+    function Block(box, opt) {
+      var blk = el("section", "nb-block nb-" + opt.cls);
+      blk.setAttribute("aria-label", opt.aria);
+      var inst = el("div", "nb-inst"), read = null, lab, num, ctx;
+      if (opt.n != null) {
+        read = el("div", "nb-read");
+        lab = el("div", "nb-label"); num = el("div", "nb-num"); ctx = el("div", "nb-ctx");
+        read.appendChild(lab); read.appendChild(num); read.appendChild(ctx);
+        inst.appendChild(read);
+      }
+      if (opt.dials) {
+        var dials = el("div", "nb-dials");
+        opt.dials.forEach(function (d) {
+          var s = el("div", "nb-dial");
+          s.appendChild(el("span", "nb-k", d[0]));
+          s.appendChild(el("span", "nb-dv", d[1]));
+          dials.appendChild(s);
+        });
+        inst.appendChild(dials);
+      }
+      blk.appendChild(inst);
+      box.appendChild(blk);
+
+      var charts = [], barSecs = [], listSecs = [];
+      var shownN = opt.n, anim = 0;
+      function setNum(n, ms) {
+        if (!read) return;
+        if (anim) cancelAnimationFrame(anim);
+        anim = 0;
+        if (!ms || RM.matches) { shownN = n; num.textContent = fmt(n); return; }
+        var from = shownN, t0 = null;
+        function step(now) {
+          if (t0 === null) t0 = now;
+          var t = Math.min(1, (now - t0) / ms), e = 1 - Math.pow(1 - t, 3);
+          shownN = from + (n - from) * e;
+          num.textContent = fmt(shownN);
+          anim = t < 1 ? requestAnimationFrame(step) : 0;
+        }
+        anim = requestAnimationFrame(step);
+      }
+
+      function head(sec, title) {
+        var h = el("div", "nb-head");
+        h.appendChild(el("span", "nb-title", title));
+        sec.appendChild(h);
+      }
+
+      // Vertical bars on a hairline (years, months, hours), each named and
+      // its rough count under it. rows: { tick, short, label, suf, n, ctx,
+      // aria }; short is the name in a narrow chart.
+      function bars(title, rows, kind) {
+        var sec = el("div", "nb-chart nb-bars nb-" + kind);
+        head(sec, title);
+        var plot = el("div", "nb-plot");
+        plot.setAttribute("role", "list");
+        plot.setAttribute("aria-label", title);
+        plot.style.setProperty("--n", rows.length);
+        var max = Math.max.apply(null, rows.map(function (r) { return r.n; }));
+        var group = [];
+        rows.forEach(function (r, i) {
+          var c = el("div", "nb-col");
+          c.setAttribute("role", "listitem");
+          c.tabIndex = -1;
+          c.setAttribute("aria-label", r.aria);
+          var well = el("div", "nb-well"), bar = el("div", "nb-bar");
+          var v = max ? r.n / max : 0;
+          bar.style.setProperty("--v", v);
+          bar.style.setProperty("--i", i);
+          if (r.n > 0 && v < 0.012) c.classList.add("is-tiny");
+          if (!r.n) c.classList.add("is-zero");
+          well.appendChild(bar);
+          var tick = el("div", "nb-tick");
+          tick.setAttribute("aria-hidden", "true");
+          tick.appendChild(el("span", "nb-full", r.tick));
+          tick.appendChild(el("span", "nb-short", r.short || r.tick));
+          var xk = el("div", "nb-xk"), xs = el("span", null, rough(r.n));
+          xk.setAttribute("aria-hidden", "true");
+          xk.appendChild(xs);
+          c.appendChild(well); c.appendChild(tick); c.appendChild(xk);
+          plot.appendChild(c);
+          var it = { el: c, label: r.label, suf: r.suf, n: r.n, ctx: r.ctx, group: group, i: i, xk: xs };
+          c._nb = it;
+          group.push(it);
+        });
+        group[0].el.tabIndex = 0;   // one stop per chart; the arrows move along it
+        sec.appendChild(plot);
+        blk.appendChild(sec);
+        charts.push(sec); barSecs.push(sec);
+      }
+
+      // Horizontal bars, one row each (countries, busiest days, busiest
+      // hours), the count written in the row. rows: { p, s, n, label, ctx,
+      // aria }. With a second line (s), the row is two lines: what and
+      // count above, where and the bar below.
+      function list(title, rows, kind) {
+        var sec = el("div", "nb-chart nb-list nb-" + kind);
+        head(sec, title);
+        var ol = el("ol", "nb-rows");
+        ol.setAttribute("aria-label", title);
+        var max = Math.max.apply(null, rows.map(function (r) { return r.n; }));
+        var group = [];
+        rows.forEach(function (r, i) {
+          var li = el("li", "nb-row" + (r.s ? " nb-two" : ""));
+          li.tabIndex = -1;
+          li.setAttribute("aria-label", r.aria);
+          li.appendChild(el("span", "nb-p", r.p));
+          if (r.s) li.appendChild(el("span", "nb-s", r.s));
+          var track = el("span", "nb-track"), bar = el("span", "nb-hbar");
+          var v = max ? r.n / max : 0;
+          bar.style.width = (v * 100) + "%";
+          if (r.n > 0 && v < 0.006) bar.style.minWidth = "1px";
+          bar.style.setProperty("--i", i);
+          track.setAttribute("aria-hidden", "true");
+          track.appendChild(bar);
+          li.appendChild(track);
+          li.appendChild(el("span", "nb-n", fmt(r.n)));
+          ol.appendChild(li);
+          var it = { el: li, label: r.label, n: r.n, ctx: r.ctx, group: group, i: i };
+          li._nb = it;
+          group.push(it);
+        });
+        group[0].el.tabIndex = 0;
+        sec.appendChild(ol);
+        blk.appendChild(sec);
+        charts.push(sec); listSecs.push(sec);
+      }
+
+      // ---- What is being read ---------------------------------------------
+      var hover = null, pin = null, shown = undefined, leaveT = 0;
+      function render(ms) {
+        var it = hover || pin;
+        if (it === shown) return;
+        if (shown) {
+          shown.el.classList.remove("is-active");
+          if (shown.xk) shown.xk.textContent = rough(shown.n);
+          shown.group.forEach(function (o) { o.el.classList.remove("is-near"); });
+        }
+        shown = it;
+        blk.classList.toggle("has-active", !!it);
+        if (it) {
+          it.el.classList.add("is-active");
+          // A bar's count turns exact; the counts beside it that it would
+          // run into step aside.
+          if (it.xk) {
+            it.xk.textContent = fmt(it.n);
+            var w = it.el.offsetWidth || 1, half = it.xk.offsetWidth / 2;
+            it.group.forEach(function (o) {
+              if (o !== it && Math.abs(o.i - it.i) * w < half + o.xk.offsetWidth / 2 + 8) o.el.classList.add("is-near");
+            });
+          }
+        }
+        if (!read) return;
+        if (it && it.ctx) {
+          lab.textContent = it.label;
+          if (it.suf) lab.appendChild(el("span", "nb-suf", " · " + it.suf));
+          ctx.textContent = it.ctx;
+          setNum(it.n, ms == null ? 240 : ms);
+        } else {
+          lab.textContent = opt.label;
+          ctx.textContent = opt.ctx;
+          setNum(opt.n, ms == null ? 240 : ms);
+        }
+      }
+      function clear() { hover = pin = null; clearTimeout(leaveT); render(); }
+      blk._nbClear = clear;
+      function itemOf(t) {
+        var c = t && t.closest ? t.closest(".nb-col, .nb-row") : null;
+        return c && blk.contains(c) ? c._nb : null;
+      }
+      function rove(it) {
+        it.group.forEach(function (o) { o.el.tabIndex = o === it ? 0 : -1; });
+      }
+
+      function wire() {
+        // Mouse: pointing reads a bar or row; off them it settles back (a
+        // moment later, so crossing from one chart to the next doesn't
+        // flicker).
+        blk.addEventListener("pointerover", function (e) {
+          if (e.pointerType !== "mouse") return;
+          var it = itemOf(e.target);
+          clearTimeout(leaveT);
+          if (it) { hover = it; render(); }
+          else if (hover) leaveT = setTimeout(function () { hover = null; render(); }, 140);
+        });
+        blk.addEventListener("pointerleave", function (e) {
+          if (e.pointerType !== "mouse") return;
+          clearTimeout(leaveT);
+          leaveT = setTimeout(function () { hover = null; render(); }, 140);
+        });
+        // Click or tap: holds it; the same one again lets go. On a phone the
+        // first tap reads it, a tap elsewhere clears it.
+        var wasPinned = null;
+        blk.addEventListener("pointerdown", function (e) {
+          var it = itemOf(e.target);
+          wasPinned = it && it === pin ? it : null;
+          if (!it && e.pointerType !== "mouse" && pin) clear();
+        });
+        blk.addEventListener("click", function (e) {
+          var it = itemOf(e.target);
+          if (!it) return;
+          if (wasPinned === it) { pin = null; hover = null; it.el.blur(); }
+          else { pin = it; rove(it); }
+          wasPinned = null;
+          render();
+        });
+        blk.addEventListener("focusin", function (e) {
+          var it = itemOf(e.target);
+          if (!it) return;
+          rove(it);
+          pin = it;
+          render();
+        });
+        blk.addEventListener("focusout", function (e) {
+          if (e.relatedTarget && blk.contains(e.relatedTarget)) return;
+          pin = null;
+          render();
+        });
+        // Keys: Tab gives one stop per chart; the arrows (either axis), Home
+        // and End move along it; Escape lets go.
+        blk.addEventListener("keydown", function (e) {
+          var it = itemOf(e.target);
+          if (e.key === "Escape") {
+            if (!hover && !pin) return;
+            hover = pin = null; render();
+            e.preventDefault();
+            return;
+          }
+          if (!it) return;
+          var g = it.group, to = null;
+          if (e.key === "ArrowRight" || e.key === "ArrowDown") to = g[Math.min(g.length - 1, it.i + 1)];
+          else if (e.key === "ArrowLeft" || e.key === "ArrowUp") to = g[Math.max(0, it.i - 1)];
+          else if (e.key === "Home") to = g[0];
+          else if (e.key === "End") to = g[g.length - 1];
+          else if (e.key === "Enter" || e.key === " ") { pin = it; render(); e.preventDefault(); return; }
+          else return;
+          e.preventDefault();
+          if (to === it) { pin = it; render(); return; }
+          rove(to);
+          to.el.focus();
+        });
+
+        // ---- Entrance --------------------------------------------------------
+        // Each chart's bars grow from their hairline, and the numeral counts
+        // up, once, when each is first really on screen. Skipped for reduced
+        // motion. (The English box is display:none until English is picked;
+        // its blocks wait until then.)
+        render(0);
+        if (RM.matches || !window.IntersectionObserver) return;
+        charts.forEach(function (c) { c.classList.add("nb-pre"); });
+        if (read && !hover && !pin) { shownN = 0; num.textContent = "0"; }
+        var io = new IntersectionObserver(function (es) {
+          es.forEach(function (en) {
+            if (!en.isIntersecting) return;
+            io.unobserve(en.target);
+            var t = en.target;
+            if (t === read) {
+              if (!hover && !pin) setNum(opt.n, 900);
+              return;
+            }
+            requestAnimationFrame(function () {
+              t.classList.add("nb-grow");
+              t.classList.remove("nb-pre");
+              setTimeout(function () { t.classList.remove("nb-grow"); }, 1600);
+            });
+          });
+        }, { threshold: 0.35 });
+        if (read) io.observe(read);
+        charts.forEach(function (c) { io.observe(c); });
+      }
+
+      // Wide, with listFirst: the ranked list first (it sits beside the
+      // numeral), then the bar charts below it, so Tab follows what is seen.
+      // Narrow: the order they were built in. Only moved when that changes.
+      var wideNow = false;
+      function arrange(wide) {
+        if (!opt.listFirst || wide === wideNow) return;
+        wideNow = wide;
+        (wide ? listSecs.concat(barSecs) : charts).forEach(function (c) { blk.appendChild(c); });
+      }
+
+      return { bars: bars, list: list, wire: wire, arrange: arrange };
+    }
+
+    function build(box) {
+      bindDoc();
+      box.setAttribute("role", "group");
+      box.setAttribute("aria-label", "My photography in numbers: " + fmt(D.total) + " photos as of " + D.asOf +
+        ", by country, year, month and hour of day, with the busiest days and hours. Each bar and row reads out its number.");
+
+      // ---- 1. All photos: by country, year and month -------------------------
+      var topYear = D.years.reduce(function (a, b) { return b[1] > a[1] ? b : a; });
+      var topMonth = 0;
+      D.months.forEach(function (m, i) { if (m[1] > D.months[topMonth][1]) topMonth = i; });
+      var b1 = Block(box, {
+        cls: "all", label: "Total photos", n: D.total, ctx: "As of " + D.asOf,
+        dials: [["Busiest year", String(topYear[0])], ["Busiest month", D.monthNames[topMonth]]],
+        aria: "All photos, by year, month and country", listFirst: true
+      });
+      b1.bars("Photos by year", D.years.map(function (y) {
+        var s = String(y[0]);
+        return { tick: s, short: "’" + s.slice(2), label: s, n: y[1], ctx: share(y[1]),
+          aria: s + ": " + fmt(y[1]) + " photos" };
+      }), "year");
+      b1.bars("Photos by month", D.months.map(function (m, i) {
+        var name = D.monthNames[i];
+        return { tick: m[0], short: m[0].charAt(0), label: name, suf: "all years combined", n: m[1], ctx: share(m[1]),
+          aria: name + ", all years combined: " + fmt(m[1]) + " photos" };
+      }), "month");
+      b1.list("Photos by country/territory", D.countries.map(function (c) {
+        return { p: c[0], n: c[1], label: c[0], ctx: share(c[1]),
+          aria: c[0] + ": " + fmt(c[1]) + " photos, " + share(c[1]) };
+      }), "country");
+      b1.wire();
+
+      // ---- 2. The hours of the day, and the busiest days ---------------------
+      var b2 = Block(box, {
+        cls: "day",
+        dials: [["Busiest hour", D.busiestHour.label + " · " + fmt(D.busiestHour.n)],
+                ["Busiest day", fmt(D.busiestDay)],
+                ["Busiest minute", fmt(D.busiestMinute)]],
+        aria: "Photos by hour of day, and the busiest days"
+      });
+      b2.bars("Photos by hour of day", D.hours.map(function (n, i) {
+        var h = (i % 12 || 12) + (i < 12 ? " am" : " pm");
+        return { tick: h, short: i % 12 ? String(i % 12) : h, label: h, n: n,
+          aria: h + ": " + fmt(n) + " photos" };
+      }), "hour");
+      b2.list("Busiest days", D.busiestDays.map(function (d) {
+        return { p: d[0], s: d[1], n: d[2], label: d[0],
+          aria: d[0] + ", " + d[1] + ": " + fmt(d[2]) + " photos" };
+      }), "days");
+      b2.wire();
+
+      // ---- 3. The busiest clock hour, and the busiest single hours -----------
+      var b3 = Block(box, {
+        cls: "peak", label: "Busiest clock hour", n: D.busiestClockHour.n, ctx: D.busiestClockHour.when,
+        aria: "The busiest clock hour, and the busiest single hours"
+      });
+      b3.list("Busiest single hours", D.busiestHours.map(function (h) {
+        return { p: h[0] + " · " + h[1], s: h[2] + " · " + h[3], n: h[4], label: h[0] + " · " + h[1], ctx: h[2] + " · " + h[3],
+          aria: h[0] + ", " + h[1] + ", " + h[2] + ", " + h[3] + ": " + fmt(h[4]) + " photos" };
+      }), "hours");
+      b3.wire();
+
+      // Two columns or one follows the box (the English box is display:none,
+      // so width 0, until English is picked).
+      var blocks = [b1, b2, b3];
+      function fit() {
+        var wide = box.getBoundingClientRect().width >= WIDE;
+        blocks.forEach(function (b) { b.arrange(wide); });
+      }
+      fit();
+      if (window.ResizeObserver) new ResizeObserver(fit).observe(box);
+      else window.addEventListener("resize", fit);
+    }
+
+    // A box right under each version's heading, whenever one is missing.
+    function scan() {
+      Array.prototype.forEach.call(document.querySelectorAll('.about-prose > h2[id="numbers"], .about-prose > h2[id="numbers-en"]'), function (h) {
+        var next = h.nextElementSibling;
+        if (next && next.classList.contains("photo-numbers")) return;
+        var box = el("div", "photo-numbers");
+        h.parentNode.insertBefore(box, h.nextSibling);
+        build(box);
+      });
+    }
+    if (window.MutationObserver) Array.prototype.forEach.call(proses, function (p) {
+      new MutationObserver(scan).observe(p, { childList: true });
+    });
+    scan();
+  })();
+
   // The About essay's figures, Newton's photographs for its "（图1）" marks
   // (the older "（figure 1）" still counts), wait in a <template
   // data-figures-for> beside the prose, not in it: the prose is an editable
@@ -568,6 +1035,9 @@
       });
       each(tpl.content.querySelectorAll("[data-section]"), function (t) {
         var name = t.getAttribute("data-section");
+        // A section marked data-blank (My photography in numbers) shows no
+        // figure: the stage empties and the contents come back up.
+        if (t.hasAttribute("data-blank")) { if (staged) items.push({ key: name, section: name, blank: true, h: 0 }); return; }
         if (staged) items.push({ key: t.getAttribute("data-figure"), fig: t.cloneNode(true), section: name,
           beside: t.hasAttribute("data-beside"), under: t.hasAttribute("data-under") });
         else each(headings(name), function (h) { h.parentNode.insertBefore(t.cloneNode(true), h.nextSibling); });
@@ -576,6 +1046,7 @@
         stage = document.createElement("div");
         stage.className = "about-stage";
         items.forEach(function (it) {
+          if (it.blank) return;
           if (!it.beside) return stage.appendChild(it.fig);
           if (!beside) { beside = document.createElement("div"); beside.className = "about-beside"; }
           beside.appendChild(it.fig);
@@ -601,6 +1072,7 @@
     // no lower than the rail can go at the foot of the page; the rest have
     // the whole column, the contents folded.
     function size() {
+      reach();
       if (stage) {
         rail.style.height = "";   // measured at its full height
         var W = stage.clientWidth, H = stage.clientHeight;
@@ -619,6 +1091,7 @@
         under.top = (nav ? nav.offsetTop + nav.offsetHeight : 0) + 32;
         under.h = Math.max(80, room - under.top);
         items.forEach(function (it) {
+          if (it.blank) return;
           var img = it.fig.querySelector("img, .bird-map");
           var r = it.fig.hasAttribute("data-crop") ? 2 / 3 : img.getAttribute("height") / img.getAttribute("width");
           var aw = it.beside ? rail.clientWidth - left : W, ah = it.beside ? rail.clientHeight : it.under ? under.h : H;
@@ -636,6 +1109,18 @@
         });
       }
       update();
+    }
+
+    // A wide section (My photography in numbers) takes the open width from
+    // the contents to the text's right edge: how far left of the text it
+    // reaches, a column gap clear of the contents (site.css --about-reach).
+    function reach() {
+      var nav = Array.prototype.filter.call(rail.querySelectorAll(".about-jump"), function (n) {
+        return n.offsetParent !== null;
+      })[0], text = shownProse();
+      if (!wide.matches || !nav || !text) return body.style.removeProperty("--about-reach");
+      var gap = parseFloat(getComputedStyle(body).columnGap) || 48;
+      body.style.setProperty("--about-reach", Math.max(0, Math.floor(text.getBoundingClientRect().left - nav.getBoundingClientRect().right - gap)) + "px");
     }
 
     // When each essay figure comes in, as a scroll position: as near as can
@@ -671,16 +1156,31 @@
       var scrolled = window.pageYOffset, line = window.innerHeight * 0.6;
       var last = document.documentElement.scrollHeight - window.innerHeight;
       // A section's figure takes over once its heading reaches the reading
-      // line (or the page can't scroll that far).
-      var end = last;
+      // line (or the page can't scroll that far), the lowest such heading
+      // on the page. A blank section (My photography in numbers) clears the
+      // stage sooner, while its heading is still a little below the window,
+      // so the figure before it is gone before its charts come up beside
+      // it; and it keeps the stage clear until its charts have gone up past
+      // the top of the Gear photograph under the contents (Newton: they must
+      // never overlap, 2026-10-16).
+      var end = last, lowest = -Infinity, clear = -1;
+      var below = items.filter(function (it) { return it.under; })[0];
+      var floor = rail.getBoundingClientRect().top + under.top + (below ? Math.max(0, (under.h - below.h) / 2) : 0) - 24;
       items.forEach(function (it, i) {
         if (!it.section) return;
         var h = version && version.querySelector(':scope > h2[id^="' + it.section + '"]');
         if (!h) return;
-        var at = Math.min(scrolled + h.getBoundingClientRect().top - line, last);
+        var top = h.getBoundingClientRect().top;
+        var at = Math.min(scrolled + top - (it.blank ? window.innerHeight * 1.1 : line), last);
         end = Math.min(end, at);
-        if (scrolled >= at - 1) current = i;
+        if (scrolled >= at - 1 && at >= lowest) { current = i; lowest = at; }
+        if (it.blank && scrolled >= at - 1) {
+          var foot = h;
+          while (foot.nextElementSibling && foot.nextElementSibling.tagName !== "H2") foot = foot.nextElementSibling;
+          if (foot.getBoundingClientRect().bottom > floor) clear = i;
+        }
       });
+      if (clear >= 0) current = clear;
       var marked = items.filter(function (it) { return it.mark; });
       if (current < 0 && essay && marked.length) {
         // None before the rail has stuck under the bar, so the first figure
@@ -698,13 +1198,14 @@
       }
       if (pinned >= 0) current = pinned;
       var H = stage.clientHeight, gap = 32, shown = current < 0 ? [] : [current];
-      function alone(i) { return items[i].beside || items[i].under; }
+      function alone(i) { return items[i].beside || items[i].under || items[i].blank; }
       function pairs(a, b) { return essay && !alone(a) && !alone(b) && items[a].h + gap + items[b].h <= H; }
       if (current > 0 && pairs(current - 1, current)) shown = [current - 1, current];
       else if (current === 0 && items.length > 1 && pairs(0, 1)) shown = [0, 1];
       var inStage = shown.filter(function (i) { return !alone(i); });
       var y = inStage.length ? Math.max(0, (H - inStage.reduce(function (sum, i) { return sum + items[i].h; }, 0) - gap * (inStage.length - 1)) / 2) : 0;
       items.forEach(function (it, i) {
+        if (it.blank) return;
         var n = shown.indexOf(i);
         if (it.beside) it.y = n >= 0 ? 0 : i < current ? -24 : 24;
         else if (it.under && n >= 0) it.y = under.top + Math.max(0, (under.h - it.h) / 2);
