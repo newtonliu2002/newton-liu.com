@@ -1330,54 +1330,79 @@ body.lb-open { overflow: hidden; }
 .about-prose[data-lang="zh"] .contact-list li { column-gap: 0; }
 
 /* The essay's figures (site.js aboutFigures), Newton's photographs for its
-   "（figure N）" marks. On a wide screen they hang in the left column, all
-   one width, each beside the line holding its mark (Newton asked,
-   2026-10-15), while the rail folds out of their way (aboutRailFold). Each
-   is a float inside its paragraph, pulled out of the text column by its
-   width plus the gap, so it takes no room from the text; clear: left puts
-   one that would overlap the one above below it, so a figure can slip down
-   from its mark but never up. A float the rail's height (--rail-h, from
-   aboutRailFold) goes first, so the rail and a figure never share the top
-   of the column, and the essay's next heading (设备) clears the last one.
-   35cqi and 38cqi are the grid's 1fr column, and that plus the gap,
-   measured on About's .about-body (.has-figures). Below 1000px a figure
-   follows its paragraph instead, the whole width, an upright stopping
-   short of the window's height. Either way the box takes its shape from
-   the img's width and height before the photograph loads (they're lazy),
-   or a jump to 设备 or 联系方式 would land short. The sizes hints in
-   about.html mirror this. */
+   "（figure N）" marks, each mark a link to its figure. Every photograph but
+   the two charts (2, 3) and the upright Arches (9) is shown at the
+   ptarmigan's 3:2 (figure 8; Newton asked, 2026-10-15), cropped here and
+   never in the file: data-crop on the figure, the crop's centre in its
+   img's object-position. A photograph clicked opens full screen, whole.
+   The box takes its shape before the photograph loads (lazy), from the img's
+   width and height or the crop, or a jump to 设备 would land short. */
 .about-body.has-figures { container-type: inline-size; }
 .about-fig { margin: var(--s6) 0 var(--s7); }
-.about-fig img { display: block; width: 100%; height: auto; }
+.about-fig img { display: block; width: 100%; height: auto; cursor: zoom-in; }
+.about-fig[data-crop] img { aspect-ratio: 3 / 2; object-fit: cover; }
 .about-fig figcaption {
   margin-top: var(--s3);
   font: 400 var(--t-label)/16px var(--mono);
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--text-faint);
+  transition: color var(--d-base) var(--ease);
 }
 
-@media (min-width: 1001px) {
-  .about-prose.has-figs::before {
-    content: "";
-    float: left;
-    width: 35cqi;
-    height: calc(var(--rail-h, 14rem) + var(--s6));
-    margin-left: -38cqi;
-  }
-  .about-prose.has-figs .about-fig {
-    float: left;
-    clear: left;
-    width: 35cqi;
-    margin: 0 0 var(--s6) -38cqi;
-  }
-  .about-prose.has-figs h2 ~ h2 { clear: left; }
+.about-prose a.fig-mark {
+  color: inherit;
+  text-decoration: underline dotted;
+  text-decoration-color: var(--text-faint);
+  text-underline-offset: .3em;
+  transition: color var(--d-base) var(--ease);
+}
+.about-prose a.fig-mark:hover,
+.about-prose a.fig-mark.is-current { color: var(--accent); text-decoration-color: currentColor; }
 
-  /* The rail folds up while the essay is read and comes back down for
-     设备 and 联系方式 (Newton asked; site.js aboutRailFold says when). It
-     keeps its place in the grid, so nothing moves; a key that lands in it
-     opens it. The clip reaches past the box for the lit square and focus
-     rings. */
+.fig-zoom {
+  position: fixed; inset: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+  padding: clamp(1rem, 4vw, 3rem);
+  background: var(--bg);
+  cursor: zoom-out;
+}
+.fig-zoom:focus { outline: none; }
+.fig-zoom img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+
+@media (min-width: 1001px) {
+  /* Newton's layout (2026-10-15): the text against the right edge, the
+     left column a stage for the figures, two at a time, sized by site.js
+     to the window's height (--pitch is one slot). A figure moves up a slot
+     as the reading passes its mark: in at the bottom, out at the top. The
+     stage shows while the rail is folded, the rail while it isn't. */
+  .about-body.has-figures { grid-template-columns: minmax(0, 1fr) auto; column-gap: clamp(2rem, 4vw, 4.5rem); }
+  .about-body.has-figures > .about-rail { grid-column: 1; grid-row: 1; }
+  .about-body.has-figures > .about-prose { grid-column: 2; grid-row: 1; width: min(62ch, 52cqi); }
+
+  .about-stage {
+    grid-column: 1; grid-row: 1; align-self: start;
+    position: sticky; top: calc(var(--masthead-h) + 2rem);
+    height: calc(100svh - var(--masthead-h) - 4rem);
+    visibility: hidden; opacity: 0;
+    transition: opacity var(--d-slow) var(--ease), visibility 0s var(--d-slow);
+  }
+  .about-stage.is-on { visibility: visible; opacity: 1; transition: opacity var(--d-slow) var(--ease); }
+  .about-stage .about-fig {
+    position: absolute; top: 0; left: 0;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(calc(var(--slot, 2) * var(--pitch, 50vh)));
+    transition: transform .7s var(--ease), opacity .5s var(--ease);
+  }
+  .about-stage .about-fig.is-in { opacity: 1; pointer-events: auto; }
+  .about-stage .about-fig.is-current figcaption { color: var(--text); }
+
+  /* The rail folds up while the stage is up and comes back down for 设备
+     and 联系方式 (Newton asked). It keeps its place in the grid, so
+     nothing moves; a key that lands in it opens it. The clip reaches past
+     the box for the lit square and focus rings. */
   .about-rail {
     clip-path: inset(-1rem -1rem -1rem -2rem);
     transition: clip-path var(--d-slow) var(--ease), opacity var(--d-slow) var(--ease), visibility 0s;
@@ -1393,7 +1418,7 @@ body.lb-open { overflow: hidden; }
 @media (max-width: 1000px) {
   .about-body { display: block; }
   .about-fig { width: 100cqi; }
-  .about-fig img {
+  .about-fig:not([data-crop]) img {
     max-height: calc(100svh - var(--masthead-h) - 6rem);
     object-fit: contain;
     object-position: left top;

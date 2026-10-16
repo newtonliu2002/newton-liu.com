@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#121212">
 <script>try{if(localStorage.getItem("theme")==="white"){document.documentElement.dataset.theme="light";var m=document.querySelector('meta[name="theme-color"]');if(m)m.content="#ffffff"}}catch(e){}</script>
 <script>try{if(localStorage.getItem("aboutLang")==="en")document.documentElement.dataset.aboutLang="en"}catch(e){}</script>
-<link rel="stylesheet" href="assets/site.css?v=98803f56">
+<link rel="stylesheet" href="assets/site.css?v=7c1543b9">
 </head>
 
 <body data-page="prose" data-base="">
@@ -126,14 +126,16 @@
 
     <!-- The essay's figures, Newton's photographs for its "（figure N）" marks.
          Kept out of the editable prose (edit.js would strip them from it):
-         site.js aboutFigures puts each beside the line holding its mark, in
-         the left column, or after its paragraph below 1000px. A figure whose
-         mark is gone from the text doesn't show. -->
+         site.js aboutFigures shows them two at a time in the left column as
+         the essay is read, or after their paragraphs below 1000px. data-crop
+         shows a photograph at 3:2 (the crop's centre in object-position); the
+         charts and the upright Arches stay whole. A figure whose mark is
+         gone from the text doesn't show. -->
     <template data-figures-for="#about-zh">
       <figure class="about-fig" lang="en" data-figure="2">
         <img src="images/_about/fig-2.png"
              srcset="images/_about/800/fig-2.png 698w, images/_about/fig-2.png 1439w"
-             sizes="(max-width: 1000px) min(100vw, calc((100vh - 10rem) * .87)), min(35vw, 37rem)"
+             sizes="(max-width: 1000px) min(100vw, calc((100vh - 10rem) * .87)), min(45vw, 42rem)"
              alt="Newton's photo count: 515,443 photos as of Oct 15, 2026. The busiest year was 2023, with 128,872 photos, and the busiest month November, with 77,057. Bar charts show photos by year from 2016 to 2026 and by month."
              width="1439" height="1649" loading="lazy" decoding="async">
         <figcaption>figure 2</figcaption>
@@ -141,47 +143,47 @@
       <figure class="about-fig" lang="en" data-figure="3">
         <img src="images/_about/fig-3.png"
              srcset="images/_about/800/fig-3.png 800w, images/_about/fig-3.png 2024w"
-             sizes="(max-width: 1000px) 100vw, min(35vw, 37rem)"
+             sizes="(max-width: 1000px) 100vw, min(45vw, 42rem)"
              alt="Newton's eBird life list for the world: 1373 species observed, 622 complete checklists, 254 species with photos, on a map shaded by species per country."
              width="2024" height="1372" loading="lazy" decoding="async">
         <figcaption>figure 3</figcaption>
       </figure>
-      <figure class="about-fig" lang="en" data-figure="4">
+      <figure class="about-fig" lang="en" data-figure="4" data-crop>
         <img src="images/_about/fig-4.jpg"
              srcset="images/_about/800/fig-4.jpg 800w, images/_about/1600/fig-4.jpg 1600w, images/_about/2400/fig-4.jpg 2400w, images/_about/fig-4.jpg 4000w"
-             sizes="(max-width: 1000px) 100vw, min(35vw, 37rem)"
+             sizes="(max-width: 1000px) 100vw, min(45vw, 42rem)"
              alt="Lake McDonald in Glacier National Park in winter: still grey water under low cloud, snow on the far shore, wet stones in the foreground."
              width="4000" height="2667" loading="lazy" decoding="async">
         <figcaption>figure 4</figcaption>
       </figure>
-      <figure class="about-fig" lang="en" data-figure="a">
-        <img src="images/_about/fig-a.jpg"
+      <figure class="about-fig" lang="en" data-figure="a" data-crop>
+        <img style="object-position: 50% 42%" src="images/_about/fig-a.jpg"
              srcset="images/_about/800/fig-a.jpg 800w, images/_about/1600/fig-a.jpg 1600w, images/_about/fig-a.jpg 2500w"
-             sizes="(max-width: 1000px) min(100vw, calc(100vh - 10rem)), min(35vw, 37rem)"
+             sizes="(max-width: 1000px) 100vw, min(45vw, 42rem)"
              alt="A male Bufflehead rising on the water to stretch its wings, in low golden light."
              width="2500" height="2500" loading="lazy" decoding="async">
         <figcaption>figure A</figcaption>
       </figure>
-      <figure class="about-fig" lang="en" data-figure="5">
-        <img src="images/_about/fig-5.jpg"
+      <figure class="about-fig" lang="en" data-figure="5" data-crop>
+        <img style="object-position: 55% 50%" src="images/_about/fig-5.jpg"
              srcset="images/_about/800/fig-5.jpg 800w, images/_about/1600/fig-5.jpg 1600w, images/_about/2400/fig-5.jpg 2400w, images/_about/fig-5.jpg 4000w"
-             sizes="(max-width: 1000px) 100vw, min(35vw, 37rem)"
+             sizes="(max-width: 1000px) 100vw, min(45vw, 42rem)"
              alt="Utqiagvik from above on a clear day: sheds, shipping containers, trucks and a dirt road along the edge of the Arctic Ocean."
              width="4000" height="2250" loading="lazy" decoding="async">
         <figcaption>figure 5</figcaption>
       </figure>
-      <figure class="about-fig" lang="en" data-figure="7">
-        <img src="images/_about/fig-7.jpg"
+      <figure class="about-fig" lang="en" data-figure="7" data-crop>
+        <img style="object-position: 50% 30%" src="images/_about/fig-7.jpg"
              srcset="images/_about/800/fig-7.jpg 800w, images/_about/1600/fig-7.jpg 1600w, images/_about/2400/fig-7.jpg 2400w, images/_about/fig-7.jpg 4000w"
-             sizes="(max-width: 1000px) 100vw, min(35vw, 37rem)"
+             sizes="(max-width: 1000px) 100vw, min(45vw, 42rem)"
              alt="Loveland Pass deep in snow, a ploughed road winding up between white mountains under a pale sun."
              width="4000" height="3000" loading="lazy" decoding="async">
         <figcaption>figure 7</figcaption>
       </figure>
-      <figure class="about-fig" lang="en" data-figure="8">
+      <figure class="about-fig" lang="en" data-figure="8" data-crop>
         <img src="images/_about/fig-8.jpg"
              srcset="images/_about/800/fig-8.jpg 800w, images/_about/1600/fig-8.jpg 1600w, images/_about/2400/fig-8.jpg 2400w, images/_about/fig-8.jpg 4000w"
-             sizes="(max-width: 1000px) 100vw, min(35vw, 37rem)"
+             sizes="(max-width: 1000px) 100vw, min(45vw, 42rem)"
              alt="A White-tailed Ptarmigan in white winter plumage, resting in the snow with its eyes closed, seen from very close."
              width="4000" height="2667" loading="lazy" decoding="async">
         <figcaption>figure 8</figcaption>
@@ -189,7 +191,7 @@
       <figure class="about-fig" lang="en" data-figure="9">
         <img src="images/_about/fig-9.jpg"
              srcset="images/_about/800/fig-9.jpg 640w, images/_about/1600/fig-9.jpg 1280w, images/_about/2400/fig-9.jpg 1920w, images/_about/fig-9.jpg 3200w"
-             sizes="(max-width: 1000px) min(100vw, calc((100vh - 10rem) * .8)), min(35vw, 37rem)"
+             sizes="(max-width: 1000px) min(100vw, calc((100vh - 10rem) * .8)), min(45vw, 42rem)"
              alt="Arches National Park at dusk: sandstone towers against a fading sky, car lights streaking along the road below."
              width="3200" height="4000" loading="lazy" decoding="async">
         <figcaption>figure 9</figcaption>
@@ -237,7 +239,7 @@
   </div>
 </footer>
 
-<script src="assets/site.js?v=1dc4ca1d"></script>
+<script src="assets/site.js?v=f94e9a26"></script>
 <script src="assets/edit.js?v=c63f7eb5"></script>
 </body>
 </html>

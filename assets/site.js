@@ -478,155 +478,199 @@
   })();
 
   // The About essay's figures (Newton's photographs for its "（figure N）"
-  // marks, 2026-10-15) wait in a <template data-figures-for> beside the
-  // prose, not in it: the prose is an editable slot that data/text.json
-  // rewrites, and edit.js's sanitiser would strip a figure out of it. On a
-  // wide screen each goes into its paragraph straight after its mark, and
-  // site.css hangs it in the left column beside that line (Newton asked,
-  // 2026-10-15); on a narrow one, where there is no left column, it goes
-  // after the paragraph. They are placed again whenever the prose is
-  // rewritten or the window crosses 1000px, so a figure follows its mark
-  // through Newton's edits; one whose mark is gone doesn't show. None in
-  // ?edit, or they would be saved into the essay as text.
+  // marks) wait in a <template data-figures-for> beside the prose, not in
+  // it: the prose is an editable slot that data/text.json rewrites, and
+  // edit.js's sanitiser would strip a figure out of it. Each mark that has a
+  // figure becomes a link to it. On a wide screen (Newton's design,
+  // 2026-10-15) the figures are held in a stage in the left column, two at a
+  // time: the one whose mark is being read and the one before it, the newer
+  // below, moving up a slot at each mark. A mark clicked shows its figure
+  // there until the reader scrolls on, and a photograph clicked opens full
+  // screen. The rail folds away while the stage is up and comes back for 设备
+  // and 联系方式. On a narrow screen each figure follows its paragraph, and a
+  // mark scrolls to it. All of it is placed again whenever the prose is
+  // rewritten or the window crosses 1000px, so the figures follow Newton's
+  // marks through his edits; a mark with no figure stays plain text. None in
+  // ?edit, or they would be saved into the essay.
   (function aboutFigures() {
-    if (/[?&]edit\b/.test(location.search)) return;
-    var MARK = /[（(]\s*figure\s+([0-9a-z]+)\s*[）)]/gi;
-    var wide = window.matchMedia && window.matchMedia("(min-width: 1001px)");
-    Array.prototype.forEach.call(document.querySelectorAll("template[data-figures-for]"), function (tpl) {
-      var prose = document.querySelector(tpl.getAttribute("data-figures-for"));
-      if (!prose) return;
-      var watch = window.MutationObserver && new MutationObserver(place);
-      // Where a mark ends: its text node and the offset in it (a mark split
-      // across an inline element still counts), and the paragraph's child
-      // holding that node, as a figure must not land inside a link.
-      function spot(p, at) {
-        var walk = document.createTreeWalker(p, NodeFilter.SHOW_TEXT), t, seen = 0;
-        while ((t = walk.nextNode())) {
-          if (seen + t.data.length >= at) {
-            var top = t;
-            while (top.parentNode !== p) top = top.parentNode;
-            return { node: t, offset: at - seen, top: top };
-          }
-          seen += t.data.length;
-        }
-        return null;
-      }
-      function place() {
-        if (watch) watch.disconnect();
-        Array.prototype.forEach.call(prose.querySelectorAll(".about-fig"), function (f) {
-          var host = f.parentNode;
-          host.removeChild(f);
-          host.normalize();
-        });
-        var shown = {}, any = false, inline = !!(wide && wide.matches);
-        Array.prototype.forEach.call(prose.querySelectorAll(":scope > p"), function (p) {
-          var found = [], m;
-          MARK.lastIndex = 0;
-          while ((m = MARK.exec(p.textContent))) {
-            var key = m[1].toLowerCase();
-            var fig = !shown[key] && tpl.content.querySelector('[data-figure="' + key + '"]');
-            if (!fig) continue;
-            shown[key] = true;
-            found.push({ fig: fig.cloneNode(true), at: m.index + m[0].length });
-          }
-          if (!found.length) return;
-          any = true;
-          if (!inline) {
-            var after = p;
-            found.forEach(function (f) { prose.insertBefore(f.fig, after.nextSibling); after = f.fig; });
-            return;
-          }
-          // The last mark first, so splitting a text node leaves the
-          // offsets of the marks before it where they were.
-          found.reverse().forEach(function (f) {
-            var s = spot(p, f.at);
-            if (!s) return p.insertBefore(f.fig, p.firstChild);
-            if (s.top !== s.node) return p.insertBefore(f.fig, s.top.nextSibling);
-            var rest = s.offset < s.node.data.length ? s.node.splitText(s.offset) : s.node.nextSibling;
-            p.insertBefore(f.fig, rest);
-          });
-        });
-        prose.classList.toggle("has-figs", any && inline);
-        if (watch) watch.observe(prose, { childList: true });
-        align();
-      }
-      // The photographs are far taller than the essay, so a figure stacked
-      // under the ones before it can fall well below its mark. When it would
-      // fall more than SLIP below the line holding its mark, its paragraph
-      // waits instead: padding above the paragraph brings the line down to
-      // the figure. Measured paragraph by paragraph, top down, as each wait
-      // moves everything after it, and again whenever the lines can rewrap.
-      var queued = false;
-      function align() {
-        queued = false;
-        var paras = prose.querySelectorAll(":scope > p");
-        Array.prototype.forEach.call(paras, function (p) { p.style.paddingTop = ""; });
-        if (!prose.classList.contains("has-figs") || prose.offsetParent === null) return;
-        var slip = Math.min(window.innerHeight * 0.2, 160);
-        Array.prototype.forEach.call(paras, function (p) {
-          var fig = p.querySelector(":scope > .about-fig");
-          var before = fig && fig.previousSibling;
-          if (!before) return;
-          var range = document.createRange();
-          range.selectNodeContents(before);
-          var rects = range.getClientRects();
-          if (!rects.length) return;
-          var wait = fig.getBoundingClientRect().top - rects[rects.length - 1].top - slip;
-          if (wait > 0) p.style.paddingTop = Math.round(wait) + "px";
-        });
-      }
-      function queue() { if (!queued) { queued = true; requestAnimationFrame(align); } }
-      place();
-      if (wide) {
-        if (wide.addEventListener) wide.addEventListener("change", place);
-        else if (wide.addListener) wide.addListener(place);
-      }
-      window.addEventListener("resize", queue);
-      window.addEventListener("nl:lang", queue);
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(queue);
-      window.addEventListener("load", queue);
-    });
-  })();
-
-  // On a wide screen the essay's figures hang in the rail's column, so the
-  // rail folds up while the essay is read and comes back down for 设备 and
-  // 联系方式 (Newton asked, 2026-10-15; site.css draws the fold). It folds
-  // once it has stuck under the bar, and opens again when the next heading
-  // has come up to where it hangs and no figure is behind it. It also tells
-  // site.css its height (--rail-h), the room kept clear above the first
-  // figure. In English, whose story is still empty, it never folds.
-  (function aboutRailFold() {
-    var body = document.querySelector(".about-body.has-figures");
+    var tpl = document.querySelector("template[data-figures-for]");
+    var prose = tpl && document.querySelector(tpl.getAttribute("data-figures-for"));
+    var body = prose && prose.closest(".about-body");
     var rail = body && body.querySelector(".about-rail");
-    if (!rail || !window.matchMedia) return;
-    var wide = window.matchMedia("(min-width: 1001px)"), queued = false;
+    if (!rail || !window.matchMedia || /[?&]edit\b/.test(location.search)) return;
+    var MARK = /[（(]\s*figure\s+([0-9a-z]+)\s*[）)]/gi;
+    var wide = window.matchMedia("(min-width: 1001px)");
+    var watch = window.MutationObserver && new MutationObserver(place);
+    var stage = null, items = [], pinned = -1, queued = false;
+
+    function figure(key) { return tpl.content.querySelector('[data-figure="' + key + '"]'); }
+    function each(list, fn) { Array.prototype.forEach.call(list, fn); }
+
+    function linkMarks() {
+      each(prose.querySelectorAll(":scope > p"), function (p) {
+        var walk = document.createTreeWalker(p, NodeFilter.SHOW_TEXT), nodes = [], t;
+        while ((t = walk.nextNode())) if (!t.parentNode.closest("a")) nodes.push(t);
+        nodes.forEach(function (t) {
+          var s = t.data, at = 0, m, frag = null;
+          MARK.lastIndex = 0;
+          while ((m = MARK.exec(s))) {
+            var key = m[1].toLowerCase();
+            if (!figure(key)) continue;
+            frag = frag || document.createDocumentFragment();
+            frag.appendChild(document.createTextNode(s.slice(at, m.index)));
+            var a = document.createElement("a");
+            a.className = "fig-mark";
+            a.href = "#figure-" + key;
+            a.setAttribute("data-figure", key);
+            a.textContent = m[0];
+            frag.appendChild(a);
+            at = m.index + m[0].length;
+          }
+          if (frag) {
+            frag.appendChild(document.createTextNode(s.slice(at)));
+            t.parentNode.replaceChild(frag, t);
+          }
+        });
+      });
+    }
+
+    function place() {
+      if (watch) watch.disconnect();
+      each(prose.querySelectorAll(".about-fig"), function (f) { f.parentNode.removeChild(f); });
+      if (stage) { stage.parentNode.removeChild(stage); stage = null; }
+      linkMarks();
+      items = [];
+      var shown = {}, staged = wide.matches;
+      each(prose.querySelectorAll(":scope > p"), function (p) {
+        var after = p;
+        each(p.querySelectorAll("a.fig-mark"), function (a) {
+          var key = a.getAttribute("data-figure");
+          if (shown[key]) return;   // a mark written twice shows its photograph once
+          shown[key] = true;
+          var fig = figure(key).cloneNode(true);
+          fig.id = "figure-" + key;
+          items.push({ key: key, fig: fig, mark: a });
+          if (!staged) { prose.insertBefore(fig, after.nextSibling); after = fig; }
+        });
+      });
+      if (staged && items.length) {
+        stage = document.createElement("div");
+        stage.className = "about-stage";
+        items.forEach(function (it) { stage.appendChild(it.fig); });
+        rail.parentNode.insertBefore(stage, rail.nextSibling);
+      }
+      pinned = -1;
+      if (watch) watch.observe(prose, { childList: true });
+      size();
+    }
+
+    // Two slots, one above the other, each half the stage's height less a
+    // caption. A photograph fills its slot's height or the column's width,
+    // whichever it reaches first, so every 3:2 photograph is one size.
+    function size() {
+      if (stage) {
+        var H = stage.clientHeight, W = stage.clientWidth, gap = 24;
+        var probe = items[0].fig;
+        probe.style.width = W + "px";
+        var cap = probe.offsetHeight - probe.querySelector("img").offsetHeight;
+        var slot = Math.max(80, (H - 2 * cap - gap) / 2);
+        items.forEach(function (it) {
+          var img = it.fig.querySelector("img");
+          var r = it.fig.hasAttribute("data-crop") ? 2 / 3 : img.getAttribute("height") / img.getAttribute("width");
+          it.fig.style.width = Math.floor(Math.min(W, slot / r)) + "px";
+        });
+        stage.style.setProperty("--pitch", Math.round(slot + cap + gap) + "px");
+      }
+      update();
+    }
+
     function update() {
       queued = false;
-      var height = rail.offsetHeight, fold = false;
-      body.style.setProperty("--rail-h", height + "px");
-      if (wide.matches) {
-        var top = parseFloat(getComputedStyle(rail).top) || 0, bottom = top + height + 24;
+      var fold = false, reading = !!stage && prose.offsetParent !== null;
+      if (stage) {
+        var top = parseFloat(getComputedStyle(rail).top) || 0, bottom = top + rail.offsetHeight + 24;
         if (body.getBoundingClientRect().top < top - 1) {
-          var prose = Array.prototype.filter.call(body.querySelectorAll(".about-prose"), function (el) {
+          var shown = Array.prototype.filter.call(body.querySelectorAll(".about-prose"), function (el) {
             return el.offsetParent !== null;
           })[0];
-          var next = prose && prose.querySelectorAll(":scope > h2")[1];
-          var edge = next ? next.getBoundingClientRect().top : prose ? prose.getBoundingClientRect().bottom : 0;
+          var next = shown && shown.querySelectorAll(":scope > h2")[1];
+          var edge = next ? next.getBoundingClientRect().top : shown ? shown.getBoundingClientRect().bottom : 0;
           fold = edge > bottom;
-          Array.prototype.forEach.call(body.querySelectorAll(".about-fig"), function (f) {
-            var r = f.getBoundingClientRect();
-            if (r.height && r.top < bottom && r.bottom > top) fold = true;
-          });
         }
+        if (reading && pinned >= 0) fold = true;
       }
       rail.classList.toggle("is-folded", fold);
+      if (!stage) return;
+      var on = reading && fold, line = window.innerHeight * 0.6, current = -1;
+      stage.classList.toggle("is-on", on);
+      items.forEach(function (it, i) { if (it.mark.getBoundingClientRect().top < line) current = i; });
+      if (pinned >= 0) current = pinned;
+      var first = Math.max(0, Math.min(items.length - 2, current - 1));
+      items.forEach(function (it, i) {
+        it.fig.style.setProperty("--slot", Math.max(-1, Math.min(2, i - first)));
+        it.fig.classList.toggle("is-in", i === first || i === first + 1);
+        it.fig.classList.toggle("is-current", i === current);
+      });
+      var lit = on && current >= 0 ? items[current].key : null;
+      each(prose.querySelectorAll("a.fig-mark"), function (a) {
+        a.classList.toggle("is-current", a.getAttribute("data-figure") === lit);
+      });
     }
+
     function queue() { if (!queued) { queued = true; requestAnimationFrame(update); } }
+    function unpin() { if (pinned >= 0) { pinned = -1; queue(); } }
+
+    prose.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest("a.fig-mark");
+      if (!a) return;
+      var key = a.getAttribute("data-figure"), i = -1;
+      items.forEach(function (it, n) { if (it.key === key) i = n; });
+      if (i < 0) return;
+      e.preventDefault();
+      if (stage) { pinned = i; update(); }
+      else items[i].fig.scrollIntoView({ block: "center" });
+    });
+    ["wheel", "touchmove", "keydown"].forEach(function (type) {
+      window.addEventListener(type, unpin, { passive: true });
+    });
+
+    // A photograph clicked opens full screen, the whole frame; a click or
+    // Esc closes it.
+    body.addEventListener("click", function (e) {
+      var img = e.target.closest && e.target.closest(".about-fig img");
+      if (!img) return;
+      var back = document.activeElement;
+      var box = document.createElement("div");
+      box.className = "fig-zoom";
+      box.setAttribute("role", "dialog");
+      box.setAttribute("aria-label", img.alt);
+      box.tabIndex = -1;
+      var big = document.createElement("img");
+      big.alt = img.alt;
+      big.sizes = "100vw";
+      big.srcset = img.srcset;
+      big.src = img.src;
+      box.appendChild(big);
+      function close() {
+        if (box.parentNode) box.parentNode.removeChild(box);
+        document.removeEventListener("keydown", key, true);
+        if (back && back.focus) back.focus();
+      }
+      function key(ev) { if (ev.key === "Escape") { ev.preventDefault(); close(); } }
+      box.addEventListener("click", close);
+      document.addEventListener("keydown", key, true);
+      document.body.appendChild(box);
+      box.focus();
+    });
+
     window.addEventListener("scroll", queue, { passive: true });
-    window.addEventListener("resize", queue);
+    window.addEventListener("resize", function () { requestAnimationFrame(size); });
     window.addEventListener("nl:lang", queue);
     window.addEventListener("load", queue);
-    update();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(queue);
+    if (wide.addEventListener) wide.addEventListener("change", place);
+    else if (wide.addListener) wide.addListener(place);
+    place();
   })();
 
   /* ---------- Chinese text ---------------------------------------------- */
