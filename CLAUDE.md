@@ -724,11 +724,14 @@ downloads the Natural Earth outlines once into `_arrange/geo-src/`, and
 restamps the data-src. New counts: edit COUNTS there and rerun; another
 country that opens: DRILL, COUNTS and PROVINCES.
 
-**My photography in numbers** (我的摄影数据, Newton, 2026-10-16) is a section
-of its own between the essay's sign-off and 设备 / Gear: his counts as charts
-in the 图1 "Readout" look (all photos by country/territory, year and month;
-his ten biggest trips; photos by hour of day and the busiest days; the
-busiest clock hour and single hours). Its heading is in the prose (`#numbers`,
+**如果把我的摄影经历数据化 / The quantification of my photography career**
+(Newton's titles, 2026-10-16; "numbers" in the code) is a section of its own
+between the essay's sign-off and 设备 / Gear: his counts as charts in the 图1
+"Readout" look (all photos by country/territory, year and month; his ten
+biggest trips; photos by hour of day and the busiest days; the busiest clock
+hour and single hours), every word in the version's own language (places
+keep their English names; rough counts are 54k in English, in 万 in
+Chinese, the unit in the title). Its heading is in the prose (`#numbers`,
 `#numbers-en`, in about.html and data/text.json); site.js `photoNumbers`
 builds the charts in a box right after it, with the counts inline in that
 function (edit.js's sanitiser drops a `<div>`, so the box is never in the

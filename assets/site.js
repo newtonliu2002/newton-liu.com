@@ -486,77 +486,162 @@
   // Four blocks: all photos (one large numeral, by country, year and
   // month), the trips (the biggest, with the top ten), the hours of the day
   // (with the busiest days), and the busiest clock hour (with the busiest
-  // single hours). Every bar carries a rough
-  // count under it (54k); pointing at, tapping or focusing a bar or a row
-  // reads it exactly: the bar's own count turns exact, and in the first
-  // block the numeral reads it too, then settles back. In a wide box each
+  // single hours), in the words of the version it is in. Every bar carries
+  // a rough count under it (54k); pointing at, tapping or focusing a bar or
+  // a row reads it exactly: the bar's own count turns exact, and a block's
+  // numeral reads it too, then settles back. In a wide box each
   // block is two columns; the hours of the day then span both.
   (function photoNumbers() {
     var proses = document.querySelectorAll(".about-prose");
     if (!proses.length || /[?&]edit\b/.test(location.search)) return;
 
     // His counts, as he sent them (2026-10-16): photos by year, month and
-    // country as of Oct 15, 2026; the rest from his hour and day charts.
+    // country as of Oct 15, 2026; the rest from his hour, day and trip
+    // charts. Dates and hours are kept as numbers and set in English or
+    // Chinese below (T).
     var D = {
-      asOf: "Oct 15, 2026",
+      asOf: "2026-10-15",
       total: 515443,
       years: [[2016, 10638], [2017, 18225], [2018, 2554], [2019, 0], [2020, 44], [2021, 5995], [2022, 15001],
         [2023, 128872], [2024, 119243], [2025, 119684], [2026, 93336]],
-      months: [["Jan", 26794], ["Feb", 51611], ["Mar", 36666], ["Apr", 24795], ["May", 49584], ["Jun", 27433],
-        ["Jul", 29116], ["Aug", 71760], ["Sep", 1227], ["Oct", 43006], ["Nov", 77057], ["Dec", 74408]],
-      monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September",
-        "October", "November", "December"],
+      // January to December, all years combined
+      months: [26794, 51611, 36666, 24795, 49584, 27433, 29116, 71760, 1227, 43006, 77057, 74408],
       countries: [["United States", 190779], ["China", 64927], ["Ecuador", 44896], ["Puerto Rico", 39462],
         ["Sri Lanka", 38353], ["Colombia", 29096], ["Morocco", 26751], ["Malaysia", 21759], ["Canada", 15097],
         ["Peru", 11796], ["India", 10102], ["Nepal", 8069], ["Mexico", 4267], ["New Zealand", 2681],
         ["Taiwan", 1759], ["Singapore", 1093], ["Japan", 15]],
-      // 12 am to 11 pm
+      // 0 to 23 (12 am to 11 pm)
       hours: [421, 361, 1003, 518, 1065, 3787, 22132, 54191, 50327, 48955, 51182, 51288, 32637, 27740, 20961,
         31070, 30591, 30917, 18705, 11306, 5791, 2506, 1374, 1016],
-      // The ten biggest trips: where, when, how long and with what, and
-      // images (each shutter press once, of 499,880). His names (2026-10-16).
+      // The ten biggest trips: where (his names, 2026-10-16), the month (and
+      // the last month, if another), days (and which, in English and
+      // Chinese), images a day, cameras, images (each shutter press once,
+      // of tripsOf).
       trips: [
-        ["Galápagos & Ecuador", "Aug 2023", "14 days (Aug 3–16) · 3,177/day · R5 + R6 II", 44477],
-        ["Sri Lanka", "Nov 2024", "10 days · 3,804/day · R5 II + R6 II", 38042],
-        ["Yunnan", "Dec 2024", "8 days · 4,419/day · R5 II + R6 II", 35355],
-        ["Florida", "Nov 2023", "9 days · 3,435/day · R5 + R6 II", 30918],
-        ["Puerto Rico and US Virgin Islands", "Feb 2025", "10 days · 2,913/day · R5 II", 29132],
-        ["Colombia", "Oct 2025", "4 days · 7,274/day · R5 II + R6 II", 29096],
-        ["Texas and Nuevo Leon", "May 2026", "13 days · 2,168/day · R5 II", 28184],
-        ["Morocco", "Mar 2026", "6 days · 4,458/day · R5 II", 26751],
-        ["Canada & Alaska", "May–Jun 2026", "26 days · 686/day · R5 II + X2D II", 17842],
-        ["Arizona", "Jan 2025", "7 days · 2,391/day · R5 II", 16740]
+        ["Galápagos & Ecuador", "2023-08", null, 14, ["Aug 3–16", "8月3–16日"], 3177, "R5 + R6 II", 44477],
+        ["Sri Lanka", "2024-11", null, 10, null, 3804, "R5 II + R6 II", 38042],
+        ["Yunnan", "2024-12", null, 8, null, 4419, "R5 II + R6 II", 35355],
+        ["Florida", "2023-11", null, 9, null, 3435, "R5 + R6 II", 30918],
+        ["Puerto Rico and US Virgin Islands", "2025-02", null, 10, null, 2913, "R5 II", 29132],
+        ["Colombia", "2025-10", null, 4, null, 7274, "R5 II + R6 II", 29096],
+        ["Texas and Nuevo Leon", "2026-05", null, 13, null, 2168, "R5 II", 28184],
+        ["Morocco", "2026-03", null, 6, null, 4458, "R5 II", 26751],
+        ["Canada & Alaska", "2026-05", "2026-06", 26, null, 686, "R5 II + X2D II", 17842],
+        ["Arizona", "2025-01", null, 7, null, 2391, "R5 II", 16740]
       ],
       tripsOf: 499880,
-      mostPerDay: { n: 7274, where: "Colombia · 4 days" },
-      busiestHour: { label: "7 am", n: 54191 },
+      mostPerDay: { n: 7274, where: "Colombia", days: 4 },
+      busiestHour: { hour: 7, n: 54191 },   // the hour of day, all days
       busiestDay: 10195,
       busiestMinute: 458,
       busiestDays: [
-        ["Sun, Oct 12, 2025", "Colombia", 10195],
-        ["Sat, Nov 25, 2023", "Florida", 9354],
-        ["Thu, Dec 5, 2024", "Yunnan", 8902],
-        ["Fri, Dec 6, 2024", "Yunnan", 8236],
-        ["Mon, Oct 13, 2025", "Colombia", 8174],
-        ["Thu, Mar 12, 2026", "Morocco", 7937],
-        ["Tue, Nov 12, 2024", "Sri Lanka", 7318],
-        ["Tue, Aug 15, 2023", "Mindo", 7311],
-        ["Sat, Aug 23, 2025", "Quebec", 6927],
-        ["Sat, Oct 11, 2025", "Colombia", 6740]
+        ["2025-10-12", "Colombia", 10195],
+        ["2023-11-25", "Florida", 9354],
+        ["2024-12-05", "Yunnan", 8902],
+        ["2024-12-06", "Yunnan", 8236],
+        ["2025-10-13", "Colombia", 8174],
+        ["2026-03-12", "Morocco", 7937],
+        ["2024-11-12", "Sri Lanka", 7318],
+        ["2023-08-15", "Mindo", 7311],
+        ["2025-08-23", "Quebec", 6927],
+        ["2025-10-11", "Colombia", 6740]
       ],
-      busiestClockHour: { n: 2838, when: "Mar 11, 2026 · 5–6pm" },
+      busiestClockHour: { date: "2026-03-11", hour: 17, n: 2838 },
+      // date, the hour it began, where, cameras, photos
       busiestHours: [
-        ["Wed, Mar 11, 2026", "5pm–6pm", "Morocco", "R5 II", 2838],
-        ["Thu, Dec 5, 2024", "9am–10am", "Yunnan", "R5 II", 2693],
-        ["Sat, Oct 11, 2025", "10am–11am", "Colombia", "R5 II", 2509],
-        ["Thu, Dec 5, 2024", "3pm–4pm", "Yunnan", "R5 II", 2506],
-        ["Sat, Nov 25, 2023", "4pm–5pm", "Florida", "R5 + R6 II", 2462],
-        ["Thu, Dec 5, 2024", "10am–11am", "Yunnan", "R5 II", 2401],
-        ["Sun, Oct 27, 2024", "11am–12pm", "Guangxi", "R5 II + R6 II", 2393],
-        ["Sat, Nov 25, 2023", "5pm–6pm", "Florida", "R5 + R6 II", 2368],
-        ["Sun, Oct 12, 2025", "11am–12pm", "Colombia", "R5 II", 2338],
-        ["Wed, Dec 4, 2024", "4pm–5pm", "Yunnan", "R5 II", 2333]
+        ["2026-03-11", 17, "Morocco", "R5 II", 2838],
+        ["2024-12-05", 9, "Yunnan", "R5 II", 2693],
+        ["2025-10-11", 10, "Colombia", "R5 II", 2509],
+        ["2024-12-05", 15, "Yunnan", "R5 II", 2506],
+        ["2023-11-25", 16, "Florida", "R5 + R6 II", 2462],
+        ["2024-12-05", 10, "Yunnan", "R5 II", 2401],
+        ["2024-10-27", 11, "Guangxi", "R5 II + R6 II", 2393],
+        ["2023-11-25", 17, "Florida", "R5 + R6 II", 2368],
+        ["2025-10-12", 11, "Colombia", "R5 II", 2338],
+        ["2024-12-04", 16, "Yunnan", "R5 II", 2333]
       ]
+    };
+
+    // Each version's words: the English page's in English, the Chinese
+    // page's in Chinese (Newton, 2026-10-16; places keep their English
+    // names). A bar's rough count is 54k in English, and in Chinese in
+    // 万 (ten thousand), the unit named once in the chart's title.
+    function ymd(iso) { var p = iso.split("-").map(Number); return { y: p[0], m: p[1] - 1, d: p[2] || 1, w: new Date(Date.UTC(p[0], p[1] - 1, p[2] || 1)).getUTCDay() }; }
+    var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var MONTH = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
+      "November", "December"];
+    function ap(h) { return (h % 12 || 12) + (h % 24 < 12 ? "am" : "pm"); }
+    var T = {
+      en: {
+        rough: function (n) { return !n ? "0" : n < 1000 ? "<1k" : Math.round(n / 1000) + "k"; },
+        share: function (p) { return p + " of all photos"; },
+        n: function (n) { return fmt(n) + " photos"; },
+        images: function (n) { return fmt(n) + " images"; },
+        sep: ": ",
+        date: function (iso, weekday) {
+          var t = ymd(iso);
+          return (weekday ? ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][t.w] + ", " : "") + MON[t.m] + " " + t.d + ", " + t.y;
+        },
+        months: function (a, b) { var t = ymd(a); return MON[t.m] + (b ? "–" + MON[ymd(b).m] : "") + " " + t.y; },
+        hour: function (h) { return (h % 12 || 12) + (h < 12 ? " am" : " pm"); },
+        hourShort: function (h) { return h % 12 ? String(h % 12) : T.en.hour(h); },
+        range: function (h) { return ap(h) + "–" + ap(h + 1); },
+        when: function (iso, h) { return T.en.date(iso) + " · " + (h % 12 || 12) + "–" + ap(h + 1); },
+        total: "Total photos", asOf: "As of ",
+        topYear: "Busiest year", topMonth: "Busiest month",
+        year: function (y) { return String(y); }, yearTick: function (y) { return String(y); },
+        monthName: function (i) { return MONTH[i]; }, monthTick: function (i) { return MON[i]; },
+        monthShort: function (i) { return MON[i].charAt(0); }, allYears: "all years combined",
+        byYear: "Photos by year", byMonth: "Photos by month", byCountry: "Photos by country/territory",
+        allAria: "All photos, by year, month and country",
+        bigTrip: "Biggest trip", perDay: "Most per day", topTrips: "Top 10 trips",
+        days: function (n) { return n + " days"; },
+        topOf: function (a, b) { return fmt(a) + " of " + fmt(b) + " images"; },
+        byTrip: "Images by trip, top 10",
+        trip: function (t) { return t[3] + " days" + (t[4] ? " (" + t[4][0] + ")" : "") + " · " + fmt(t[5]) + "/day · " + t[6]; },
+        tripTotal: "Total, top 10 (each shutter press once)",
+        tripAria: "The biggest trips, top 10",
+        topHour: "Busiest hour", topDay: "Busiest day", topMinute: "Busiest minute",
+        byHour: "Photos by hour of day", topDays: "Busiest days",
+        dayAria: "Photos by hour of day, and the busiest days",
+        peak: "Busiest clock hour", topHours: "Busiest single hours",
+        peakAria: "The busiest clock hour, and the busiest single hours"
+      },
+      zh: {
+        rough: function (n) { return !n ? "0" : n < 500 ? "<0.1" : (n / 10000).toFixed(1); },
+        share: function (p) { return "占全部照片的" + p; },
+        n: function (n) { return fmt(n) + "张"; },
+        images: function (n) { return fmt(n) + "张"; },
+        sep: "：",
+        date: function (iso, weekday) {
+          var t = ymd(iso);
+          return t.y + "年" + (t.m + 1) + "月" + t.d + "日" + (weekday ? " 周" + "日一二三四五六".charAt(t.w) : "");
+        },
+        months: function (a, b) { var t = ymd(a); return t.y + "年" + (t.m + 1) + (b ? "–" + (ymd(b).m + 1) : "") + "月"; },
+        hour: function (h) { return h + "点"; },
+        hourShort: function (h) { return String(h); },
+        range: function (h) { return h + "–" + (h + 1) + "点"; },
+        when: function (iso, h) { return T.zh.date(iso) + " · " + T.zh.range(h); },
+        total: "照片总数", asOf: "截至",
+        topYear: "拍得最多的一年", topMonth: "拍得最多的月份",
+        year: function (y) { return y + "年"; }, yearTick: function (y) { return String(y); },
+        monthName: function (i) { return (i + 1) + "月"; }, monthTick: function (i) { return (i + 1) + "月"; },
+        monthShort: function (i) { return String(i + 1); }, allYears: "各年合计",
+        byYear: "每年的照片数（万张）", byMonth: "每月的照片数（万张）", byCountry: "各国家/地区的照片数",
+        allAria: "全部照片：按年份、月份和国家/地区",
+        bigTrip: "拍得最多的一次旅行", perDay: "日均最多", topTrips: "前十次旅行",
+        days: function (n) { return n + "天"; },
+        topOf: function (a, b) { return fmt(b) + "张中的" + fmt(a) + "张"; },
+        byTrip: "拍得最多的十次旅行",
+        trip: function (t) { return t[3] + "天" + (t[4] ? "（" + t[4][1] + "）" : "") + " · 每天" + fmt(t[5]) + "张 · " + t[6]; },
+        tripTotal: "十次合计（每按一次快门计一张）",
+        tripAria: "拍得最多的十次旅行",
+        topHour: "拍得最多的时段", topDay: "拍得最多的一天", topMinute: "拍得最多的一分钟",
+        byHour: "一天中每个小时的照片数（万张）", topDays: "拍得最多的十天",
+        dayAria: "每个小时的照片数，以及拍得最多的十天",
+        peak: "拍得最多的一小时", topHours: "拍得最多的十个小时",
+        peakAria: "拍得最多的一小时，以及拍得最多的十个小时"
+      }
     };
 
     var RM = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : { matches: false };
@@ -564,11 +649,6 @@
     var bound = false;
 
     function fmt(n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
-    function rough(n) { return !n ? "0" : n < 1000 ? "<1k" : Math.round(n / 1000) + "k"; }
-    function share(n) {
-      var p = n / D.total * 100;
-      return (!n ? "0%" : p < 0.1 ? "<0.1%" : p.toFixed(1) + "%") + " of all photos";
-    }
     function el(tag, cls, text) {
       var e = document.createElement(tag);
       if (cls) e.className = cls;
@@ -638,8 +718,8 @@
       }
 
       // Vertical bars on a hairline (years, months, hours), each named and
-      // its rough count under it. rows: { tick, short, label, suf, n, ctx,
-      // aria }; short is the name in a narrow chart.
+      // its rough count under it. rows: { tick, short, label, suf, n, xk,
+      // ctx, aria }; short is the name in a narrow chart, xk the rough count.
       function bars(title, rows, kind) {
         var sec = el("div", "nb-chart nb-bars nb-" + kind);
         head(sec, title);
@@ -665,12 +745,12 @@
           tick.setAttribute("aria-hidden", "true");
           tick.appendChild(el("span", "nb-full", r.tick));
           tick.appendChild(el("span", "nb-short", r.short || r.tick));
-          var xk = el("div", "nb-xk"), xs = el("span", null, rough(r.n));
+          var xk = el("div", "nb-xk"), xs = el("span", null, r.xk);
           xk.setAttribute("aria-hidden", "true");
           xk.appendChild(xs);
           c.appendChild(well); c.appendChild(tick); c.appendChild(xk);
           plot.appendChild(c);
-          var it = { el: c, label: r.label, suf: r.suf, n: r.n, ctx: r.ctx, group: group, i: i, xk: xs };
+          var it = { el: c, label: r.label, suf: r.suf, n: r.n, ctx: r.ctx, group: group, i: i, xk: xs, rough: r.xk };
           c._nb = it;
           group.push(it);
         });
@@ -731,7 +811,7 @@
         if (it === shown) return;
         if (shown) {
           shown.el.classList.remove("is-active");
-          if (shown.xk) shown.xk.textContent = rough(shown.n);
+          if (shown.xk) shown.xk.textContent = shown.rough;
           shown.group.forEach(function (o) { o.el.classList.remove("is-near"); });
         }
         shown = it;
@@ -880,78 +960,82 @@
       return { bars: bars, list: list, wire: wire, arrange: arrange };
     }
 
-    function build(box) {
+    function build(box, h) {
       bindDoc();
+      var version = h.closest("[data-lang]"), L = T[version && version.getAttribute("data-lang") === "zh" ? "zh" : "en"];
+      function share(n) {
+        var p = n / D.total * 100;
+        return L.share(!n ? "0%" : p < 0.1 ? "<0.1%" : p.toFixed(1) + "%");
+      }
       box.setAttribute("role", "group");
-      box.setAttribute("aria-label", "My photography in numbers: " + fmt(D.total) + " photos as of " + D.asOf +
-        ", by country, year, month, trip and hour of day, with the busiest days and hours. Each bar and row reads out its number.");
+      box.setAttribute("aria-labelledby", h.id);
 
       // ---- 1. All photos: by country, year and month -------------------------
       var topYear = D.years.reduce(function (a, b) { return b[1] > a[1] ? b : a; });
       var topMonth = 0;
-      D.months.forEach(function (m, i) { if (m[1] > D.months[topMonth][1]) topMonth = i; });
+      D.months.forEach(function (n, i) { if (n > D.months[topMonth]) topMonth = i; });
       var b1 = Block(box, {
-        cls: "all", label: "Total photos", n: D.total, ctx: "As of " + D.asOf,
-        dials: [["Busiest year", String(topYear[0])], ["Busiest month", D.monthNames[topMonth]]],
-        aria: "All photos, by year, month and country", listFirst: true
+        cls: "all", label: L.total, n: D.total, ctx: L.asOf + L.date(D.asOf),
+        dials: [[L.topYear, String(topYear[0])], [L.topMonth, L.monthName(topMonth)]],
+        aria: L.allAria, listFirst: true
       });
-      b1.bars("Photos by year", D.years.map(function (y) {
+      b1.bars(L.byYear, D.years.map(function (y) {
         var s = String(y[0]);
-        return { tick: s, short: "’" + s.slice(2), label: s, n: y[1], ctx: share(y[1]),
-          aria: s + ": " + fmt(y[1]) + " photos" };
+        return { tick: L.yearTick(y[0]), short: "’" + s.slice(2), label: L.year(y[0]), n: y[1], xk: L.rough(y[1]),
+          ctx: share(y[1]), aria: L.year(y[0]) + L.sep + L.n(y[1]) };
       }), "year");
-      b1.bars("Photos by month", D.months.map(function (m, i) {
-        var name = D.monthNames[i];
-        return { tick: m[0], short: m[0].charAt(0), label: name, suf: "all years combined", n: m[1], ctx: share(m[1]),
-          aria: name + ", all years combined: " + fmt(m[1]) + " photos" };
+      b1.bars(L.byMonth, D.months.map(function (n, i) {
+        var name = L.monthName(i);
+        return { tick: L.monthTick(i), short: L.monthShort(i), label: name, suf: L.allYears, n: n, xk: L.rough(n),
+          ctx: share(n), aria: name + ", " + L.allYears + L.sep + L.n(n) };
       }), "month");
-      b1.list("Photos by country/territory", D.countries.map(function (c) {
-        return { p: c[0], n: c[1], label: c[0], ctx: share(c[1]),
-          aria: c[0] + ": " + fmt(c[1]) + " photos, " + share(c[1]) };
+      b1.list(L.byCountry, D.countries.map(function (c) {
+        return { p: c[0], n: c[1], label: c[0], ctx: share(c[1]), aria: c[0] + L.sep + L.n(c[1]) + ", " + share(c[1]) };
       }), "country");
       b1.wire();
 
       // ---- 2. The trips: the biggest, and the top ten ------------------------
-      var top = D.trips[0], topSum = D.trips.reduce(function (a, t) { return a + t[3]; }, 0);
+      var top = D.trips[0], topSum = D.trips.reduce(function (a, t) { return a + t[7]; }, 0);
+      function when(t) { return L.months(t[1], t[2]); }
       var bt = Block(box, {
-        cls: "trip", label: "Biggest trip", n: top[3], ctx: top[0] + " · " + top[1],
-        dials: [["Most per day", fmt(D.mostPerDay.n), D.mostPerDay.where],
-                ["Top 10 trips", Math.round(topSum / D.tripsOf * 100) + "%", fmt(topSum) + " of " + fmt(D.tripsOf) + " images"]],
-        aria: "The biggest trips, top 10"
+        cls: "trip", label: L.bigTrip, n: top[7], ctx: top[0] + " · " + when(top),
+        dials: [[L.perDay, fmt(D.mostPerDay.n), D.mostPerDay.where + " · " + L.days(D.mostPerDay.days)],
+                [L.topTrips, Math.round(topSum / D.tripsOf * 100) + "%", L.topOf(topSum, D.tripsOf)]],
+        aria: L.tripAria
       });
-      bt.list("Images by trip, top 10", D.trips.map(function (t) {
-        return { p: t[0] + " · " + t[1], s: t[2], n: t[3], label: t[0] + " · " + t[1], ctx: t[2],
-          aria: t[0] + ", " + t[1] + ", " + t[2] + ": " + fmt(t[3]) + " images" };
-      }), "trips", ["Total, top 10 (each shutter press once)", fmt(topSum) + " images"]);
+      bt.list(L.byTrip, D.trips.map(function (t) {
+        var what = t[0] + " · " + when(t);
+        return { p: what, s: L.trip(t), n: t[7], label: what, ctx: L.trip(t),
+          aria: what + ", " + L.trip(t) + L.sep + L.images(t[7]) };
+      }), "trips", [L.tripTotal, L.images(topSum)]);
       bt.wire();
 
       // ---- 3. The hours of the day, and the busiest days ---------------------
       var b2 = Block(box, {
         cls: "day",
-        dials: [["Busiest hour", D.busiestHour.label + " · " + fmt(D.busiestHour.n)],
-                ["Busiest day", fmt(D.busiestDay)],
-                ["Busiest minute", fmt(D.busiestMinute)]],
-        aria: "Photos by hour of day, and the busiest days"
+        dials: [[L.topHour, L.hour(D.busiestHour.hour) + " · " + fmt(D.busiestHour.n)],
+                [L.topDay, fmt(D.busiestDay)],
+                [L.topMinute, fmt(D.busiestMinute)]],
+        aria: L.dayAria
       });
-      b2.bars("Photos by hour of day", D.hours.map(function (n, i) {
-        var h = (i % 12 || 12) + (i < 12 ? " am" : " pm");
-        return { tick: h, short: i % 12 ? String(i % 12) : h, label: h, n: n,
-          aria: h + ": " + fmt(n) + " photos" };
+      b2.bars(L.byHour, D.hours.map(function (n, i) {
+        return { tick: L.hour(i), short: L.hourShort(i), label: L.hour(i), n: n, xk: L.rough(n),
+          aria: L.hour(i) + L.sep + L.n(n) };
       }), "hour");
-      b2.list("Busiest days", D.busiestDays.map(function (d) {
-        return { p: d[0], s: d[1], n: d[2], label: d[0],
-          aria: d[0] + ", " + d[1] + ": " + fmt(d[2]) + " photos" };
+      b2.list(L.topDays, D.busiestDays.map(function (d) {
+        var day = L.date(d[0], true);
+        return { p: day, s: d[1], n: d[2], label: day, aria: day + ", " + d[1] + L.sep + L.n(d[2]) };
       }), "days");
       b2.wire();
 
       // ---- 4. The busiest clock hour, and the busiest single hours -----------
       var b3 = Block(box, {
-        cls: "peak", label: "Busiest clock hour", n: D.busiestClockHour.n, ctx: D.busiestClockHour.when,
-        aria: "The busiest clock hour, and the busiest single hours"
+        cls: "peak", label: L.peak, n: D.busiestClockHour.n, ctx: L.when(D.busiestClockHour.date, D.busiestClockHour.hour),
+        aria: L.peakAria
       });
-      b3.list("Busiest single hours", D.busiestHours.map(function (h) {
-        return { p: h[0] + " · " + h[1], s: h[2] + " · " + h[3], n: h[4], label: h[0] + " · " + h[1], ctx: h[2] + " · " + h[3],
-          aria: h[0] + ", " + h[1] + ", " + h[2] + ", " + h[3] + ": " + fmt(h[4]) + " photos" };
+      b3.list(L.topHours, D.busiestHours.map(function (r) {
+        var what = L.date(r[0], true) + " · " + L.range(r[1]), where = r[2] + " · " + r[3];
+        return { p: what, s: where, n: r[4], label: what, ctx: where, aria: what + ", " + where + L.sep + L.n(r[4]) };
       }), "hours");
       b3.wire();
 
@@ -974,7 +1058,7 @@
         if (next && next.classList.contains("photo-numbers")) return;
         var box = el("div", "photo-numbers");
         h.parentNode.insertBefore(box, h.nextSibling);
-        build(box);
+        build(box, h);
       });
     }
     if (window.MutationObserver) Array.prototype.forEach.call(proses, function (p) {

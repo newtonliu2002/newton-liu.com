@@ -1859,6 +1859,12 @@ body.lb-open { overflow: hidden; }
   .photo-numbers .nb-month .nb-full { display: none; }
   .photo-numbers .nb-month .nb-short { display: inline; }
 }
+/* In Chinese "10月" is wider than "Oct": the month's number alone sooner
+   (the title says 每月). */
+@container nbc (max-width: 400px) {
+  [data-lang="zh"] .photo-numbers .nb-month .nb-full { display: none; }
+  [data-lang="zh"] .photo-numbers .nb-month .nb-short { display: inline; }
+}
 @container nbc (max-width: 300px) {
   .photo-numbers .nb-year .nb-tick { letter-spacing: .06em; padding-left: .06em; }
 }
