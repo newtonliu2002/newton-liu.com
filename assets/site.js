@@ -1124,11 +1124,8 @@
   // On a narrow screen each figure follows its paragraph (or heading), and a
   // mark scrolls to it. All of it is placed again whenever the prose is
   // rewritten or the window crosses 1000px, so the figures follow Newton's
-  // marks through his edits; a mark with no figure stays plain text. A
-  // figure that is only <div data-figure="1" data-goto="numbers"> has no
-  // photograph: its mark links to that part of the page (图1, his photo
-  // count, became the numbers section, 2026-10-16). None in ?edit, or they
-  // would be saved into the essay.
+  // marks through his edits; a mark with no figure stays plain text. None in
+  // ?edit, or they would be saved into the essay.
   (function aboutFigures() {
     var tpl = document.querySelector("template[data-figures-for]");
     var prose = tpl && document.querySelector(tpl.getAttribute("data-figures-for"));
@@ -1166,7 +1163,7 @@
             frag.appendChild(document.createTextNode(s.slice(at, m.index)));
             var a = document.createElement("a");
             a.className = "fig-mark";
-            a.href = figure(key).hasAttribute("data-goto") ? "#" + figure(key).getAttribute("data-goto") : "#figure-" + key;
+            a.href = "#figure-" + key;
             a.setAttribute("data-figure", key);
             a.textContent = m[0];
             frag.appendChild(a);
@@ -1195,7 +1192,6 @@
           var key = a.getAttribute("data-figure");
           if (seen[key]) return;   // a mark written twice shows its photograph once
           seen[key] = true;
-          if (figure(key).hasAttribute("data-goto")) return;
           var fig = figure(key).cloneNode(true);
           fig.id = "figure-" + key;
           items.push({ key: key, fig: fig, mark: a, beside: fig.hasAttribute("data-beside") });

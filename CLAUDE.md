@@ -666,11 +666,12 @@ counting on it.
 **The figures** (Newton sent them 2026-10-15) are numbered 图1–图8 in
 reading order, in his text as "（图3）" and under each photograph, and the
 files match (`images/_about/fig-3.jpg` is 图3; there is no figure 1 of the
-old numbering, he dropped it). 图1, his photo-count chart, was taken out
-on 2026-10-16 when the numbers section below took its place: the template
-keeps `<div data-figure="1" data-goto="numbers">`, so his "（图1）" links
-to that section (a figure with data-goto has no photograph; its mark jumps
-to the id it names). They wait in a
+old numbering, he dropped it). On 2026-10-16 his photo-count chart (then
+图1) gave way to the numbers section below, and at his word the rest were
+renumbered 图1–图7: the files kept their old numbers (图1 is the bird map,
+which has no file; `fig-3.jpg` is now 图2, … `fig-8.jpg` 图7); the
+Gear photograph is still `data-figure="9"`. The essay's photo count
+(五十一万余张) links to `#numbers` instead of a mark. They wait in a
 `<template data-figures-for="#about-zh">` beside the prose, one
 `<figure class="about-fig" lang="en" data-figure="3">` each, captioned
 `<figcaption lang="zh-Hans">图3</figcaption>` (the figure is `lang="en"` for
