@@ -1330,9 +1330,9 @@ body.lb-open { overflow: hidden; }
 .about-prose[data-lang="zh"] .contact-list li { column-gap: 0; }
 
 /* The essay's figures (site.js aboutFigures), Newton's photographs for its
-   "（figure N）" marks, each mark a link to its figure. Every photograph but
-   the two charts (2, 3) and the upright Arches (9) is shown at the
-   ptarmigan's 3:2 (figure 8; Newton asked, 2026-10-15), cropped here and
+   "（图N）" marks, each mark a link to its figure. Every photograph but
+   the two charts (图1, 图2) and the upright Arches (图8) is shown at the
+   ptarmigan's 3:2 (图7; Newton asked, 2026-10-15), cropped here and
    never in the file: data-crop on the figure, the crop's centre in its
    img's object-position. A photograph clicked opens full screen, whole.
    The box takes its shape before the photograph loads (lazy), from the img's
@@ -1349,6 +1349,9 @@ body.lb-open { overflow: hidden; }
   color: var(--text-faint);
   transition: color var(--d-base) var(--ease);
 }
+/* Newton's 图1, 图2… : Chinese, so the typewriter from :lang(zh), at the
+   rail's Chinese label size. */
+.about-fig figcaption:lang(zh) { font-size: 13px; text-transform: none; }
 
 .about-prose a.fig-mark {
   color: inherit;
@@ -1372,10 +1375,11 @@ body.lb-open { overflow: hidden; }
 
 @media (min-width: 1001px) {
   /* Newton's layout (2026-10-15): the text against the right edge, the
-     left column a stage for the figures, two at a time, sized by site.js
-     to the window's height (--pitch is one slot). A figure moves up a slot
-     as the reading passes its mark: in at the bottom, out at the top. The
-     stage shows while the rail is folded, the rail while it isn't. */
+     left column a stage for the figures, each its full width, two at a
+     time when both fit the window's height (site.js places them, --y). A
+     figure moves up as the reading passes its mark: in at the bottom, out
+     at the top. The stage shows while the rail is folded, the rail while
+     it isn't. */
   .about-body.has-figures { grid-template-columns: minmax(0, 1fr) auto; column-gap: clamp(2rem, 4vw, 4.5rem); }
   .about-body.has-figures > .about-rail { grid-column: 1; grid-row: 1; }
   .about-body.has-figures > .about-prose { grid-column: 2; grid-row: 1; width: min(62ch, 52cqi); }
@@ -1393,7 +1397,7 @@ body.lb-open { overflow: hidden; }
     margin: 0;
     opacity: 0;
     pointer-events: none;
-    transform: translateY(calc(var(--slot, 2) * var(--pitch, 50vh)));
+    transform: translateY(var(--y, 100vh));
     transition: transform .7s var(--ease), opacity .5s var(--ease);
   }
   .about-stage .about-fig.is-in { opacity: 1; pointer-events: auto; }

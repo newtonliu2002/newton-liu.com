@@ -481,10 +481,13 @@
   // marks) wait in a <template data-figures-for> beside the prose, not in
   // it: the prose is an editable slot that data/text.json rewrites, and
   // edit.js's sanitiser would strip a figure out of it. Each mark that has a
-  // figure becomes a link to it. On a wide screen (Newton's design,
-  // 2026-10-15) the figures are held in a stage in the left column, two at a
-  // time: the one whose mark is being read and the one before it, the newer
-  // below, moving up a slot at each mark. A mark clicked shows its figure
+  // figure becomes a link to it. Newton numbers them 图1, 图2… (the older
+  // "（figure 2）" still counts). On a wide screen (his design, 2026-10-15)
+  // the figures are held in a stage in the left column, each the column's
+  // full width: the one whose mark is being read and the one before it, the
+  // newer below, when both fit the window's height, else that one alone; at
+  // each mark they move up, in at the bottom and out at the top. A mark
+  // clicked shows its figure
   // there until the reader scrolls on, and a photograph clicked opens full
   // screen. The rail folds away while the stage is up and comes back for 设备
   // and 联系方式. On a narrow screen each figure follows its paragraph, and a
@@ -498,7 +501,7 @@
     var body = prose && prose.closest(".about-body");
     var rail = body && body.querySelector(".about-rail");
     if (!rail || !window.matchMedia || /[?&]edit\b/.test(location.search)) return;
-    var MARK = /[（(]\s*figure\s+([0-9a-z]+)\s*[）)]/gi;
+    var MARK = /[（(]\s*(?:figure\s+|图\s*)([0-9a-z]+)\s*[）)]/gi;
     var wide = window.matchMedia("(min-width: 1001px)");
     var watch = window.MutationObserver && new MutationObserver(place);
     var stage = null, items = [], pinned = -1, queued = false;
@@ -558,28 +561,28 @@
         stage.className = "about-stage";
         items.forEach(function (it) { stage.appendChild(it.fig); });
         rail.parentNode.insertBefore(stage, rail.nextSibling);
+        // The text's column settles when its fonts arrive, and the stage
+        // with it, so the figures are sized again whenever it changes.
+        if (window.ResizeObserver) new ResizeObserver(function () { requestAnimationFrame(size); }).observe(stage);
       }
       pinned = -1;
       if (watch) watch.observe(prose, { childList: true });
       size();
     }
 
-    // Two slots, one above the other, each half the stage's height less a
-    // caption. A photograph fills its slot's height or the column's width,
-    // whichever it reaches first, so every 3:2 photograph is one size.
+    // Every figure the stage's full width, or its full height for one too
+    // tall for that (an upright, a chart on a short window).
     function size() {
       if (stage) {
-        var H = stage.clientHeight, W = stage.clientWidth, gap = 24;
-        var probe = items[0].fig;
-        probe.style.width = W + "px";
-        var cap = probe.offsetHeight - probe.querySelector("img").offsetHeight;
-        var slot = Math.max(80, (H - 2 * cap - gap) / 2);
+        var W = stage.clientWidth, H = stage.clientHeight;
         items.forEach(function (it) {
           var img = it.fig.querySelector("img");
           var r = it.fig.hasAttribute("data-crop") ? 2 / 3 : img.getAttribute("height") / img.getAttribute("width");
-          it.fig.style.width = Math.floor(Math.min(W, slot / r)) + "px";
+          it.fig.style.width = W + "px";
+          var cap = it.fig.offsetHeight - img.offsetHeight;
+          if (W * r + cap > H) it.fig.style.width = Math.floor((H - cap) / r) + "px";
+          it.h = it.fig.offsetHeight;
         });
-        stage.style.setProperty("--pitch", Math.round(slot + cap + gap) + "px");
       }
       update();
     }
@@ -605,10 +608,18 @@
       stage.classList.toggle("is-on", on);
       items.forEach(function (it, i) { if (it.mark.getBoundingClientRect().top < line) current = i; });
       if (pinned >= 0) current = pinned;
-      var first = Math.max(0, Math.min(items.length - 2, current - 1));
+      var H = stage.clientHeight, gap = 32, at = Math.max(0, current), shown = [at];
+      if (items.length > 1) {
+        var pair = at > 0 ? [at - 1, at] : [0, 1];
+        if (items[pair[0]].h + gap + items[pair[1]].h <= H) shown = pair;
+      }
+      var y = Math.max(0, (H - shown.reduce(function (sum, i) { return sum + items[i].h; }, 0) - gap * (shown.length - 1)) / 2);
       items.forEach(function (it, i) {
-        it.fig.style.setProperty("--slot", Math.max(-1, Math.min(2, i - first)));
-        it.fig.classList.toggle("is-in", i === first || i === first + 1);
+        var n = shown.indexOf(i);
+        if (n >= 0) { it.y = y; y += it.h + gap; }
+        else it.y = i < shown[0] ? -it.h - gap : H + gap;
+        it.fig.style.setProperty("--y", Math.round(it.y) + "px");
+        it.fig.classList.toggle("is-in", n >= 0);
         it.fig.classList.toggle("is-current", i === current);
       });
       var lit = on && current >= 0 ? items[current].key : null;

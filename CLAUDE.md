@@ -659,31 +659,35 @@ profile stays): his phone shots carry GPS. The hook's GPS check reads only a
 JPEG's first EXIF block, not PNGs, so strip before committing rather than
 counting on it.
 
-**The figures** (Newton sent them 2026-10-15; figure 1 still to come) wait in
-a `<template data-figures-for="#about-zh">` beside the prose, one
-`<figure class="about-fig" lang="en" data-figure="4">` each, captioned with
-his "figure 4" (`lang="en"`, or the caption takes the Chinese typewriter
-from the text around it). They can't live in the prose: it is an editable
-slot that text.json rewrites, and edit.js's sanitiser would strip them. A
-new figure is one more `<figure>` in the template whose `data-figure` is the
-mark's number or letter. site.js `aboutFigures()` turns each mark that has a
-figure into a link (`a.fig-mark`) and places the figures, again whenever the
-prose is rewritten or the window crosses 1000px, so they follow Newton's
-marks through his edits; a mark with no figure stays plain text, a figure
-whose mark is gone doesn't show. Not in ?edit, or the links would be saved
-into the essay.
+**The figures** (Newton sent them 2026-10-15) are numbered 图1–图8 in
+reading order, in his text as "（图3）" and under each photograph, and the
+files match (`images/_about/fig-3.jpg` is 图3; there is no figure 1 of the
+old numbering, he dropped it). They wait in a
+`<template data-figures-for="#about-zh">` beside the prose, one
+`<figure class="about-fig" lang="en" data-figure="3">` each, captioned
+`<figcaption lang="zh-Hans">图3</figcaption>` (the figure is `lang="en"` for
+its English alt text). They can't live in the prose: it is an editable slot
+that text.json rewrites, and edit.js's sanitiser would strip them. A new
+figure is one more `<figure>` in the template whose `data-figure` is the
+mark's number. site.js `aboutFigures()` turns each mark that has a figure
+into a link (`a.fig-mark`; the older "（figure 3）" form still counts) and
+places the figures, again whenever the prose is rewritten or the window
+crosses 1000px, so they follow Newton's marks through his edits; a mark
+with no figure stays plain text, a figure whose mark is gone doesn't show.
+Not in ?edit, or the links would be saved into the essay.
 
-Newton's design (2026-10-15): every photograph but the two charts (2, 3)
-and the upright Arches (9) is shown at the ptarmigan's 3:2, cropped by CSS
-only (`data-crop` on the figure, the crop's centre in the img's
+Newton's design (2026-10-15): every photograph but the two charts (图1, 图2)
+and the upright Arches (图8) is shown at the ptarmigan's (图7) 3:2, cropped
+by CSS only (`data-crop` on the figure, the crop's centre in the img's
 `object-position`; the files stay whole). Wide (over 1000px): the text sits
 against the right edge (`width: min(62ch, 52cqi)`), and the left column is
-a sticky `.about-stage` showing two figures at a time: the one whose mark
+a sticky `.about-stage`. Every figure is the column's full width (or its
+height, for one too tall for the window). It shows the figure whose mark
 the reading has passed (60% down the window) and the one before it, newer
-below, each moving up a slot (`--slot`, `--pitch`) at the next mark. JS
-sizes them so two fit the window's height; every 3:2 photograph is one
-size. The mark being read is gold. Clicking a mark shows its figure in the
-stage until the reader scrolls on; clicking a photograph opens it full
+below, when both fit the window's height, else that one alone (one at a
+time on a laptop, at his choice of full width); at each mark they move up
+(`--y`). The mark being read is gold. Clicking a mark shows its figure in
+the stage until the reader scrolls on; clicking a photograph opens it full
 screen, uncropped (`.fig-zoom`). The rail folds away while the stage is up
 and comes back once the essay's next heading reaches it. Narrow: each
 figure follows its paragraph at full width, and a mark scrolls to it.
