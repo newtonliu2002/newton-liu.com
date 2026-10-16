@@ -623,9 +623,14 @@
           var r = it.fig.hasAttribute("data-crop") ? 2 / 3 : img.getAttribute("height") / img.getAttribute("width");
           var aw = it.beside ? rail.clientWidth - left : W, ah = it.beside ? rail.clientHeight : it.under ? under.h : H;
           it.fig.style.width = aw + "px";
-          var cap = it.fig.offsetHeight - img.offsetHeight, w = aw;
-          if (aw * r + cap > ah) w = Math.floor((ah - cap) / r);
-          it.fig.style.width = w + "px";
+          // A caption wraps to more lines as the figure narrows, so fit
+          // twice, the second time with the caption at the narrower width.
+          var w = aw;
+          for (var k = 0; k < 2; k++) {
+            var cap = it.fig.offsetHeight - img.offsetHeight;
+            if (aw * r + cap > ah) w = Math.min(w, Math.floor((ah - cap) / r));
+            it.fig.style.width = w + "px";
+          }
           it.fig.style.left = Math.floor((aw - w) / 2) + "px";
           it.h = it.fig.offsetHeight;
         });

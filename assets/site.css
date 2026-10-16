@@ -1349,9 +1349,10 @@ body.lb-open { overflow: hidden; }
   color: var(--text-faint);
   transition: color var(--d-base) var(--ease);
 }
-/* Newton's 图1, 图2… : Chinese, so the typewriter from :lang(zh), at the
-   rail's Chinese label size. */
-.about-fig figcaption:lang(zh) { font-size: 13px; text-transform: none; }
+/* Newton's captions, "图1：…" : Chinese, so the typewriter from :lang(zh),
+   at the rail's Chinese label size; whole sentences, so open enough to
+   read over two or three lines. */
+.about-fig figcaption:lang(zh) { font-size: 13px; line-height: 1.7; letter-spacing: .06em; text-transform: none; }
 
 .about-prose a.fig-mark {
   color: inherit;
