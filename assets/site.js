@@ -503,7 +503,7 @@
     var MARK = /[（(]\s*(?:figure\s+|图\s*)([0-9a-z]+)\s*[）)]/gi;
     var wide = window.matchMedia("(min-width: 1001px)");
     var watch = window.MutationObserver && new MutationObserver(place);
-    var stage = null, beside = null, items = [], pinned = -1, queued = false;
+    var stage = null, beside = null, items = [], pinned = -1, queued = false, under = { top: 0, h: 0 };
 
     function each(list, fn) { Array.prototype.forEach.call(list, fn); }
     function figure(key) { return tpl.content.querySelector('[data-figure="' + key + '"]:not([data-section])'); }
@@ -569,7 +569,7 @@
       each(tpl.content.querySelectorAll("[data-section]"), function (t) {
         var name = t.getAttribute("data-section");
         if (staged) items.push({ key: t.getAttribute("data-figure"), fig: t.cloneNode(true), section: name,
-          beside: t.hasAttribute("data-beside") });
+          beside: t.hasAttribute("data-beside"), under: t.hasAttribute("data-under") });
         else each(headings(name), function (h) { h.parentNode.insertBefore(t.cloneNode(true), h.nextSibling); });
       });
       if (staged && items.length) {
@@ -595,9 +595,11 @@
     // Every figure the stage's full width, or its full height for one too
     // tall for that (an upright, the square Hasselblad, a chart), centred
     // across the column then (Newton asked, 2026-10-15).
-    // A figure marked data-beside (图1 and the Gear photograph, Newton
-    // asked) sits beside the contents, between them and the text, from the
-    // top of the rail; the rest have the whole column, the contents folded.
+    // A figure marked data-beside (图1, Newton asked) sits beside the
+    // contents, between them and the text, from the top of the rail; one
+    // marked data-under (the Gear photograph) fills the space under them,
+    // no lower than the rail can go at the foot of the page; the rest have
+    // the whole column, the contents folded.
     function size() {
       if (stage) {
         rail.style.height = "";   // measured at its full height
@@ -607,10 +609,19 @@
         })[0];
         var left = nav ? nav.offsetLeft + nav.offsetWidth + 32 : Math.round(W / 2);
         if (beside) beside.style.left = left + "px";
+        // The rail sticks only as far as the end of the essay's column, so
+        // at the foot of the page it has room for this much before it is
+        // pushed up under the bar.
+        var end = body.getBoundingClientRect().bottom + window.pageYOffset - (parseFloat(getComputedStyle(body).paddingBottom) || 0)
+          - (document.documentElement.scrollHeight - window.innerHeight);
+        // (It may rise 24px towards the bar, and stops 32px above the footer.)
+        var room = Math.min(H, end - (parseFloat(getComputedStyle(rail).top) || 0) + 24 - 32);
+        under.top = (nav ? nav.offsetTop + nav.offsetHeight : 0) + 32;
+        under.h = Math.max(80, room - under.top);
         items.forEach(function (it) {
           var img = it.fig.querySelector("img");
           var r = it.fig.hasAttribute("data-crop") ? 2 / 3 : img.getAttribute("height") / img.getAttribute("width");
-          var aw = it.beside ? rail.clientWidth - left : W, ah = it.beside ? rail.clientHeight : H;
+          var aw = it.beside ? rail.clientWidth - left : W, ah = it.beside ? rail.clientHeight : it.under ? under.h : H;
           it.fig.style.width = aw + "px";
           var cap = it.fig.offsetHeight - img.offsetHeight, w = aw;
           if (aw * r + cap > ah) w = Math.floor((ah - cap) / r);
@@ -682,14 +693,16 @@
       }
       if (pinned >= 0) current = pinned;
       var H = stage.clientHeight, gap = 32, shown = current < 0 ? [] : [current];
-      function pairs(a, b) { return essay && !items[a].beside && !items[b].beside && items[a].h + gap + items[b].h <= H; }
+      function alone(i) { return items[i].beside || items[i].under; }
+      function pairs(a, b) { return essay && !alone(a) && !alone(b) && items[a].h + gap + items[b].h <= H; }
       if (current > 0 && pairs(current - 1, current)) shown = [current - 1, current];
       else if (current === 0 && items.length > 1 && pairs(0, 1)) shown = [0, 1];
-      var inStage = shown.filter(function (i) { return !items[i].beside; });
+      var inStage = shown.filter(function (i) { return !alone(i); });
       var y = inStage.length ? Math.max(0, (H - inStage.reduce(function (sum, i) { return sum + items[i].h; }, 0) - gap * (inStage.length - 1)) / 2) : 0;
       items.forEach(function (it, i) {
         var n = shown.indexOf(i);
         if (it.beside) it.y = n >= 0 ? 0 : i < current ? -24 : 24;
+        else if (it.under && n >= 0) it.y = under.top + Math.max(0, (under.h - it.h) / 2);
         else if (n >= 0) { it.y = y; y += it.h + gap; }
         else it.y = shown.length && i < shown[0] ? -it.h - gap : H + gap;
         it.fig.style.setProperty("--y", Math.round(it.y) + "px");
@@ -698,7 +711,7 @@
       });
       // The contents stay up beside 图1 and the Gear photograph (and before
       // any figure); they fold away for the rest.
-      var folded = current >= 0 && !items[current].beside;
+      var folded = current >= 0 && !alone(current);
       rail.classList.toggle("is-folded", folded);
       // With the contents up the rail is only as tall as they and the figure
       // beside them, or at the foot of the page the end of the essay's
@@ -709,7 +722,7 @@
           return n.offsetParent !== null;
         })[0];
         var need = nav ? nav.offsetTop + nav.offsetHeight : 0;
-        if (current >= 0) need = Math.max(need, items[current].h);
+        if (current >= 0) need = items[current].under ? under.top + under.h + 32 : Math.max(need, items[current].h);
         rail.style.height = Math.ceil(need) + "px";
       }
       var lit = essay && current >= 0 && items[current].mark ? items[current].key : null;

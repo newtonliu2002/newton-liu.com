@@ -1382,9 +1382,14 @@ body.lb-open { overflow: hidden; }
   .about-body.has-figures { grid-template-columns: minmax(0, 1fr) auto; column-gap: clamp(2rem, 4vw, 4.5rem); }
   .about-body.has-figures > .about-rail { grid-column: 1; grid-row: 1; }
   .about-body.has-figures > .about-prose { grid-column: 2; grid-row: 1; width: min(62ch, 52cqi); }
+  /* The page's closing space is the text column's own, not .about-body's,
+     so the rail (which sticks only as far as the grid reaches) keeps that
+     much more room at the foot of the page for the Gear photograph. */
+  .about-body.has-figures { padding-bottom: 0; }
+  .about-body.has-figures > .about-prose { padding-bottom: clamp(4rem, 12vh, 8rem); }
 
   /* The rail fills the window's height and holds the stage over all of
-     it. Beside 图1 and the Gear photograph its contents stay up; while any
+     it. With 图1 and the Gear photograph its contents stay up; while any
      other figure is shown they fold away (.is-folded) and the figure has
      the whole column (Newton asked, 2026-10-16). Figures moving out at the
      top are clipped at the column's edge. */
@@ -1413,9 +1418,9 @@ body.lb-open { overflow: hidden; }
   }
   .about-stage .about-fig.is-in { opacity: 1; pointer-events: auto; }
   .about-stage .about-fig.is-current figcaption { color: var(--text); }
-  /* 图1 and the Gear photograph sit beside the contents, between them and
-     the text (Newton asked): from the rail's top, right of the contents
-     (site.js sets left). */
+  /* 图1 sits beside the contents, between them and the text (Newton
+     asked): from the rail's top, right of the contents (site.js sets left).
+     The Gear photograph sits in the stage under the contents. */
   .about-beside { position: absolute; top: 0; right: 0; bottom: 0; pointer-events: none; }
   .about-beside .about-fig {
     position: absolute; top: 0; left: 0;

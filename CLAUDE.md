@@ -682,14 +682,18 @@ chart (图1), the upright Arches (图8) and the Gear photograph (图9 file,
 by CSS only (`data-crop`, the crop's centre in the img's `object-position`;
 the files stay whole). A figure with `data-section="gear"` belongs to the
 设备 / Gear heading, not to a mark: his Hasselblad 501CM (`fig-9.jpg`, 4:3, no
-caption). Wide (over 1000px): the text sits against the right edge
+caption, `data-under`). Wide (over 1000px): the text sits against the right edge
 (`width: min(62ch, 52cqi)`); the rail keeps its contents in view and fills
 the window's height (`.has-stage`), and the `.about-stage` over all of it
 holds the figures, each the column's full width (or its height, for one
-too tall, centred across the column). Newton (2026-10-16): beside 图1 and
-the Gear photograph (both `data-beside`) the contents stay up and the rail
-is only as tall as they need; for every other figure the contents fold
-away (`.is-folded`) and the figure has the whole column. A figure marked `data-beside` (图1, Newton asked) sits higher instead, in
+too tall, centred across the column). Newton (2026-10-16): with 图1 and
+the Gear photograph the contents stay up, and the rail is only as tall as
+it needs; for every other figure the contents fold away (`.is-folded`) and
+the figure has the whole column. 图1 (`data-beside`) sits beside the
+contents; the Gear photograph (`data-under`) fills the space under them,
+sized so that at the foot of the page, where the rail can stick only as
+far as the grid reaches, it ends 32px above the footer (the page's closing
+space is the text column's padding, not .about-body's, to give it room). A figure marked `data-beside` (图1, Newton asked) sits higher instead, in
 `.about-beside`: from the rail's top, between the contents and the text, so
 it is whole in view as the essay starts; it comes in only once its mark is
 up in the window (above 85%), not while the cover fills the screen. It shows the current figure and the one before it,
