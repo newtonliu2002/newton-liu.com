@@ -79,7 +79,7 @@ order (`PASS_ORDER`, 2026-10-15), which he set by local time, each card's
 clock the same as or earlier than the one before (Florida and the Rio Grande
 run an hour ahead in US summer time; he took that): Morocco, Ecuador, Peru,
 Florida, Galápagos, Rio Grande, Grouse Country, Desert West, Yellowstone,
-Canadian West, California in Film, Snowy West, Alaska, Hawai'i, Malaysia,
+Canadian West, Catalina in Film, Snowy West, Alaska, Hawai'i, Malaysia,
 Guangxi, Yunnan, Sri Lanka. A collection not in it never passes (it still
 shows on hover and in the list): Big Bend, New England, Arizona and
 California, for now, and a new collection until it is added. A landing starts
@@ -471,7 +471,7 @@ how Malaysia's owl keeps its feet. A panorama never reaches the cap, so it is
 never cut; a 3:2 frame on a wide window loses up to about a fifth of its
 height; a near-square frame would lose far more, so it makes a poor opener.
 An upright opener is not bled: it stays centred, capped at 88vh, uncropped.
-So is a square one (ratio up to 1.05): California in Film's 6×6 frame lost
+So is a square one (ratio up to 1.05): Catalina in Film's 6×6 frame lost
 too much to the trim, and Newton said "just leave it square" (2026-10-14).
 Its collection also has `"opener": "whole"`, which only drops the pull-up
 for an upright or square, so the frame starts below the bar instead of
@@ -912,7 +912,7 @@ unless you pass `--strip-exif` or `--allow-gps`. Use `--dry-run` first when
 unsure. It is the reason masters never end up in the repo — always import
 through it rather than copying files into `images/` by hand.
 
-**Film scans** (California in Film): the files' EXIF describes the camera
+**Film scans** (Catalina in Film): the files' EXIF describes the camera
 that digitised the negative (an R5 Mark II and a 100mm macro), not the film
 camera, and their dates are the scan date. Import them with `--strip-exif`,
 so no technical line shows, and give the collection its `date` from his
