@@ -1267,7 +1267,7 @@ body.lb-open { overflow: hidden; }
 
 .about-prose > *:first-child { margin-top: 0; }
 
-.about-prose a, .contact-list a {
+.about-prose a, .contact-list a, .gallery-blurb a {
   color: var(--text);
   text-decoration-line: underline;
   text-decoration-thickness: 1px;
@@ -1275,7 +1275,7 @@ body.lb-open { overflow: hidden; }
   text-underline-offset: 4px;
   transition: text-decoration-color var(--d-fast) var(--ease);
 }
-.about-prose a:hover, .contact-list a:hover { text-decoration-color: var(--accent); }
+.about-prose a:hover, .contact-list a:hover, .gallery-blurb a:hover { text-decoration-color: var(--accent); }
 
 /* Reuses .contact-list from the old prose rules; the rhythm here is set by
    the paragraph above it. */

@@ -344,7 +344,11 @@ same reason — they're his words to write. When he sends one, put it in as he
 wrote it: fix only plain typos, and tell him each change. A blurb can have
 several paragraphs; separate them with a blank line (`\n\n`), which the page
 shows as the gap (`white-space: pre-line`) and edit mode keeps on save.
-A single `\n` is a plain line break with no gap. He may write a blurb in
+A single `\n` is a plain line break with no gap. A link is written in the
+blurb as `[words](address)` (site.js `blurbText`; an address on this site
+from the root, `collections/desert-west/`; only web and mail addresses
+link; ?edit shows and keeps the raw text). Catalina in Film's essay links
+501CM and The Desert West this way (2026-10-16). He may write a blurb in
 Chinese (Alaska's is): put it in as written, untranslated. Any Chinese on
 the site, in a blurb, title, subtitle or anything else, is set in the
 typewriter pairing he chose (American Typewriter for its Latin, Song for the

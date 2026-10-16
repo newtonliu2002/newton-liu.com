@@ -2389,6 +2389,33 @@
     }, { passive: true });
   }
 
+  // A blurb is plain text, its blank lines the paragraph breaks, and a link
+  // written in it as [words](address) (Newton's links in the Catalina in
+  // Film essay, 2026-10-16). An address on this site is written from the
+  // site's root (collections/desert-west/) and found from this page; only
+  // web and mail addresses link. ?edit seeds the slot with the raw text
+  // (edit.js), so a link survives an edit there.
+  function blurbText(el, text) {
+    var LINK = /\[([^\]\n]+)\]\(([^()\s]+)\)/g, at = 0, m;
+    var base = document.body.getAttribute("data-base") || "";
+    el.textContent = "";
+    while ((m = LINK.exec(text))) {
+      var href = m[2];
+      if (!/^(https?:|mailto:)/i.test(href)) {
+        if (/^[a-z][a-z0-9+.-]*:/i.test(href)) continue;   // javascript: and the like stay text
+        if (href.charAt(0) !== "#" && href.charAt(0) !== "/") href = base + href;
+      }
+      el.appendChild(document.createTextNode(text.slice(at, m.index)));
+      var a = document.createElement("a");
+      a.href = href;
+      a.textContent = m[1];
+      if (/^https?:/i.test(href)) a.rel = "noopener";
+      el.appendChild(a);
+      at = m.index + m[0].length;
+    }
+    el.appendChild(document.createTextNode(text.slice(at)));
+  }
+
   function renderGallery(collections, photos) {
     var slug = body.dataset.collection;
     var meta = collections.filter(function (c) { return c.slug === slug; })[0] || {};
@@ -2405,7 +2432,7 @@
     }
     if (subEl)   subEl.textContent   = meta.subtitle || "";
     // A title, subtitle or blurb in Chinese marks itself (chineseText, above).
-    if (blurbEl) blurbEl.textContent = meta.blurb || "";
+    if (blurbEl) blurbText(blurbEl, meta.blurb || "");
 
     shown = photos.filter(function (p) { return p.collection === slug; });
 
