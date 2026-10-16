@@ -1408,6 +1408,17 @@ body.lb-open { overflow: hidden; }
   }
   .about-stage .about-fig.is-in { opacity: 1; pointer-events: auto; }
   .about-stage .about-fig.is-current figcaption { color: var(--text); }
+  /* 图1 sits higher, between the contents and the text (Newton asked):
+     from the rail's top, right of the contents (site.js sets left). */
+  .about-beside { position: absolute; top: 0; right: 0; bottom: 0; pointer-events: none; }
+  .about-beside .about-fig {
+    position: absolute; top: 0; left: 0;
+    margin: 0;
+    opacity: 0;
+    transform: translateY(var(--y, 24px));
+    transition: transform .7s var(--ease), opacity .5s var(--ease);
+  }
+  .about-beside .about-fig.is-in { opacity: 1; pointer-events: auto; }
 }
 
 @media (max-width: 1000px) {

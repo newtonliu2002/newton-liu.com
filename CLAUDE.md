@@ -686,12 +686,15 @@ caption). Wide (over 1000px): the text sits against the right edge
 (`width: min(62ch, 52cqi)`); the rail keeps its contents in view and fills
 the window's height (`.has-stage`), and the `.about-stage` under the
 contents holds the figures, each the column's full width (or its height,
-for one too tall, centred across the column). It shows the current figure and the one before it,
+for one too tall, centred across the column). A figure marked `data-beside` (图1, Newton asked) sits higher instead, in
+`.about-beside`: from the rail's top, between the contents and the text, so
+it is whole in view as the essay starts. It shows the current figure and the one before it,
 newer below, when both fit, else that one alone (one at a time on a
 laptop); at each turn they move up (`--y`). Each essay figure's turn is a
 scroll position from `spread()`: as near as can be to where its mark passes
 the reading line (60% down the window), each held for a minimum stretch,
-all before the Gear heading reaches the line, where the Gear photograph
+none before the rail sticks (图1 holds until then), all before the Gear
+heading reaches the line, where the Gear photograph
 takes over (in English, whose story is empty, it is the only one). The mark
 being read is gold. Clicking a mark shows its figure until the reader
 scrolls on; clicking a photograph opens it full screen, uncropped

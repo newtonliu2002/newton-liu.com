@@ -503,7 +503,7 @@
     var MARK = /[（(]\s*(?:figure\s+|图\s*)([0-9a-z]+)\s*[）)]/gi;
     var wide = window.matchMedia("(min-width: 1001px)");
     var watch = window.MutationObserver && new MutationObserver(place);
-    var stage = null, items = [], pinned = -1, queued = false;
+    var stage = null, beside = null, items = [], pinned = -1, queued = false;
 
     function each(list, fn) { Array.prototype.forEach.call(list, fn); }
     function figure(key) { return tpl.content.querySelector('[data-figure="' + key + '"]:not([data-section])'); }
@@ -549,6 +549,7 @@
       if (watch) watch.disconnect();
       each(body.querySelectorAll(".about-prose .about-fig"), function (f) { f.parentNode.removeChild(f); });
       if (stage) { stage.parentNode.removeChild(stage); stage = null; }
+      if (beside) { beside.parentNode.removeChild(beside); beside = null; }
       rail.classList.remove("has-stage");
       linkMarks();
       items = [];
@@ -561,7 +562,7 @@
           seen[key] = true;
           var fig = figure(key).cloneNode(true);
           fig.id = "figure-" + key;
-          items.push({ key: key, fig: fig, mark: a });
+          items.push({ key: key, fig: fig, mark: a, beside: fig.hasAttribute("data-beside") });
           if (!staged) { prose.insertBefore(fig, after.nextSibling); after = fig; }
         });
       });
@@ -573,8 +574,13 @@
       if (staged && items.length) {
         stage = document.createElement("div");
         stage.className = "about-stage";
-        items.forEach(function (it) { stage.appendChild(it.fig); });
+        items.forEach(function (it) {
+          if (!it.beside) return stage.appendChild(it.fig);
+          if (!beside) { beside = document.createElement("div"); beside.className = "about-beside"; }
+          beside.appendChild(it.fig);
+        });
         rail.appendChild(stage);
+        if (beside) rail.appendChild(beside);
         rail.classList.add("has-stage");
         // The text's column settles when its fonts arrive, and the stage
         // with it, so the figures are sized again whenever it changes.
@@ -588,17 +594,25 @@
     // Every figure the stage's full width, or its full height for one too
     // tall for that (an upright, the square Hasselblad, a chart), centred
     // across the column then (Newton asked, 2026-10-15).
+    // A figure marked data-beside (图1, Newton asked) sits higher, between
+    // the contents and the text, from the top of the rail.
     function size() {
       if (stage) {
         var W = stage.clientWidth, H = stage.clientHeight;
+        var nav = Array.prototype.filter.call(rail.querySelectorAll(".about-jump"), function (n) {
+          return n.offsetParent !== null;
+        })[0];
+        var left = nav ? nav.offsetLeft + nav.offsetWidth + 32 : Math.round(W / 2);
+        if (beside) beside.style.left = left + "px";
         items.forEach(function (it) {
           var img = it.fig.querySelector("img");
           var r = it.fig.hasAttribute("data-crop") ? 2 / 3 : img.getAttribute("height") / img.getAttribute("width");
-          it.fig.style.width = W + "px";
-          var cap = it.fig.offsetHeight - img.offsetHeight, w = W;
-          if (W * r + cap > H) w = Math.floor((H - cap) / r);
+          var aw = it.beside ? rail.clientWidth - left : W, ah = it.beside ? rail.clientHeight : H;
+          it.fig.style.width = aw + "px";
+          var cap = it.fig.offsetHeight - img.offsetHeight, w = aw;
+          if (aw * r + cap > ah) w = Math.floor((ah - cap) / r);
           it.fig.style.width = w + "px";
-          it.fig.style.left = Math.floor((W - w) / 2) + "px";
+          it.fig.style.left = Math.floor((aw - w) / 2) + "px";
           it.h = it.fig.offsetHeight;
         });
       }
@@ -650,20 +664,26 @@
       });
       var marked = items.filter(function (it) { return it.mark; });
       if (current < 0 && essay && marked.length) {
-        var hold = Math.max(1, Math.min(Math.max(160, window.innerHeight * 0.25), end / marked.length));
+        // None before the rail has stuck under the bar, so the first figure
+        // has its turn while the stage comes into view and after.
+        var start = Math.max(0, scrolled + body.getBoundingClientRect().top - (parseFloat(getComputedStyle(rail).top) || 0));
+        var hold = Math.max(1, Math.min(Math.max(160, window.innerHeight * 0.25), (end - start) / marked.length));
         var from = spread(marked.map(function (it) { return scrolled + it.mark.getBoundingClientRect().top - line; }),
-          hold, 0, end);
+          hold, start, end);
         current = 0;
         from.forEach(function (at, i) { if (scrolled >= at - 1) current = i; });
       }
       if (pinned >= 0) current = pinned;
       var H = stage.clientHeight, gap = 32, shown = current < 0 ? [] : [current];
-      if (current > 0 && essay && items[current - 1].h + gap + items[current].h <= H) shown = [current - 1, current];
-      else if (current === 0 && essay && items.length > 1 && items[0].h + gap + items[1].h <= H) shown = [0, 1];
-      var y = shown.length ? Math.max(0, (H - shown.reduce(function (sum, i) { return sum + items[i].h; }, 0) - gap * (shown.length - 1)) / 2) : 0;
+      function pairs(a, b) { return essay && !items[a].beside && !items[b].beside && items[a].h + gap + items[b].h <= H; }
+      if (current > 0 && pairs(current - 1, current)) shown = [current - 1, current];
+      else if (current === 0 && items.length > 1 && pairs(0, 1)) shown = [0, 1];
+      var inStage = shown.filter(function (i) { return !items[i].beside; });
+      var y = inStage.length ? Math.max(0, (H - inStage.reduce(function (sum, i) { return sum + items[i].h; }, 0) - gap * (inStage.length - 1)) / 2) : 0;
       items.forEach(function (it, i) {
         var n = shown.indexOf(i);
-        if (n >= 0) { it.y = y; y += it.h + gap; }
+        if (it.beside) it.y = n >= 0 ? 0 : i < current ? -24 : 24;
+        else if (n >= 0) { it.y = y; y += it.h + gap; }
         else it.y = shown.length && i < shown[0] ? -it.h - gap : H + gap;
         it.fig.style.setProperty("--y", Math.round(it.y) + "px");
         it.fig.classList.toggle("is-in", n >= 0);
