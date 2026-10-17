@@ -139,7 +139,7 @@
     "Entries": "篇目", "No. {n}": "第{n}篇", "Route map": "路线图", "Map unavailable": "地图无法显示",
     "Hide map": "隐藏地图", "Show map": "显示地图", "Not on the map": "不在地图上",
     "Pause video": "暂停视频", "Play video": "播放视频", "Video": "视频",
-    "Date to come": "日期待定", "Dates to come": "日期待定",
+    "Date to come": "日期待定", "weekday doesn't match the date": "星期与日期不符", "Dates to come": "日期待定",
     "Placeholder": "占位", "Cover": "封面", "Photo": "照片", "Text": "文字",
     "Shown in the local preview only": "仅在本地预览中显示",
     "A photograph or a short video to come": "照片或短视频待补",

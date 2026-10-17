@@ -141,11 +141,11 @@
 
   /* ---------- the entry format (SPEC: entries/<id>.txt) ----------------
 
-       title: 雨
-       date: 2026-10-07
-       time: 15:50
-       place: Quebec City
-       where: Old Port
+       title: 法语
+       date: 10.12.2026 周一          (or 2026-10-12)
+       time: 8:00 AM                  (or 08:00)
+       place: Tadoussac               (the pin, for the map)
+       where: Tadoussac, QC, Canada   (the place line as he wrote it)
        ---
        the body
 
@@ -169,12 +169,27 @@
       if (ok) start = i + 1; else head = {};
       break;
     }
+    var when = dateLine(head.date || "");
     return {
       id: id,
-      title: head.title || "", date: head.date || "", time: head.time || "",
-      place: head.place || "", where: head.where || "",
+      title: head.title || "", date: when.date, dateAsWritten: when.written, dayClash: when.clash,
+      time: head.time || "", place: head.place || "", where: head.where || "",
       blocks: parseBody(lines.slice(start))
     };
+  }
+
+  // The date as he writes it, "10.12.2026 周一" (month.day.year), shows as
+  // written; the map and the nav read it as 2026-10-12. If his weekday and
+  // the date disagree, the local preview says so rather than guessing which
+  // one is right.
+  function dateLine(s) {
+    if (day(s)) return { date: s, written: "", clash: false };
+    var m = /^(\d{1,2})\.(\d{1,2})\.(\d{4})(?!\d)/.exec(s);
+    if (!m) return { date: "", written: "", clash: false };
+    var iso = m[3] + "-" + pad(+m[1]) + "-" + pad(+m[2]), d = day(iso);
+    if (!d) return { date: "", written: s, clash: false };
+    var w = /(?:周|星期|礼拜)([日天一二三四五六])/.exec(s);
+    return { date: iso, written: s, clash: !!w && "日一二三四五六".indexOf(w[1] === "天" ? "日" : w[1]) !== d.getDay() };
   }
 
   // Paragraphs (a blank line between), and groups of media lines (one
@@ -500,34 +515,33 @@
     art.tabIndex = -1;
     var head = art.appendChild(el("header", "jn-entry-head"));
 
-    // No. 02 · Tuesday, October 7 · 3:50 PM
-    var kick = head.appendChild(el("p", "jn-kicker"));
-    var parts = [el("span", "jn-no", number(e))];
+    // His heading, line by line as he writes it:
+    //   2. 法语
+    //   10.12.2026 周一
+    //   Tadoussac, QC, Canada
+    //   8:00 AM
+    // The number comes from the reading order. A date written 2026-10-12, a
+    // time written 08:00 and an empty "where" fall back to the page's own
+    // wording (Monday, October 12 · 8:00 AM · the pin's name).
+    var h2 = head.appendChild(el("h2", "jn-title"));
+    h2.appendChild(el("span", "jn-no", e.no + ". "));
+    h2.appendChild(el("span", null, e.title));
+
+    var lines = head.appendChild(el("p", "jn-lines"));
+    function line(node) { lines.appendChild(node).classList.add("jn-line"); return node; }
     var d = day(e.date);
     if (d) {
-      var time = el("time", null, dayText(d));
+      var time = line(el("time", null, e.dateAsWritten || dayText(d)));
       time.setAttribute("datetime", e.date);
-      parts.push(time);
+      if (e.dayClash && LOCAL) time.appendChild(el("span", "jn-hold-text", " " + t("weekday doesn't match the date")));
+    } else if (e.dateAsWritten) {
+      line(el("span", null, e.dateAsWritten));
     } else if (LOCAL) {
-      parts.push(el("span", "jn-hold-text", t("Date to come")));
+      line(el("span", "jn-hold-text", t("Date to come")));
     }
-    var tt = timeText(e.time);
-    if (tt) parts.push(el("span", "jn-time", tt));
-    parts.forEach(function (p, i) {
-      if (i) kick.appendChild(el("span", "jn-dot", " · ")).setAttribute("aria-hidden", "true");
-      kick.appendChild(p);
-    });
-
-    var h2 = head.appendChild(el("h2", "jn-title"));
-    S.text(h2, e.title);
-
-    // The pin's name (Chinese for the cities), then his own finer words.
-    if (e.place || e.where) {
-      var pl = head.appendChild(el("p", "jn-place"));
-      if (e.place) pl.appendChild(el("span", "jn-pin", S.pin(e.place)));
-      if (e.place && e.where) pl.appendChild(el("span", "jn-dot", ZH ? " · " : " — "));
-      if (e.where) pl.appendChild(el("span", "jn-where", e.where));
-    }
+    if (e.where || e.place) line(el("span", e.where ? "jn-where" : "jn-pin", e.where || S.pin(e.place)));
+    var tt = timeText(e.time) || e.time;
+    if (tt) line(el("span", "jn-time", tt));
 
     var text = art.appendChild(el("div", "jn-text"));
     var words = e.blocks.filter(function (b) { return b.type === "p"; })

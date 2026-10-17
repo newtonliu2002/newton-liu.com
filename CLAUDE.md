@@ -932,11 +932,12 @@ entry's address (`#rain`), never its date, so several entries can share a day
 and a place.
 
 ```
-title: 雨
-date: 2026-10-07        ISO; empty = "date to come" (a placeholder, local only)
-time: 15:50             optional, 24-hour; shown 3:50 PM / 下午3:50; empty = no time
-place: Quebec City      a pin name from places.json; empty = not on the map, still listed
-where: Old Port         optional, his own finer words, shown after the place
+title: 法语
+date: 10.12.2026 周一            his line, shown as written (month.day.year); or ISO
+                                2026-10-12, shown Monday, October 12; empty = "date to come"
+time: 8:00 AM                   his line, shown as written; 24-hour 08:00 shows 8:00 AM
+place: Tadoussac                a pin name from places.json; empty = not on the map, still listed
+where: Tadoussac, QC, Canada    his place line, shown as written; empty = the pin's name
 ---
 The body. A blank line separates paragraphs; a single newline is a line
 break kept as written (poems, dialogue); leading spaces and 全角空格 stay.
@@ -955,7 +956,7 @@ paragraph that really begins with "@" is written "\@". Media go before the
 text, after it or between paragraphs, wherever the lines are. Paths are from
 the repo's root and go through `NLSite.url()` (R2 live, disk locally); a
 `@photo` that is a photograph in data/photos.json uses its record (its sizes
-and lightbox line). The weekday is worked out from `date`. His text is never
+and lightbox line). The heading is his, line by line: "2. 法语", then date, place and time under it, as he wrote them (he asked to keep them, 2026-10-17). The closing date/time line he ends each draft with is left out. If his weekday disagrees with the date, the local preview flags it. His text is never
 translated, rewritten or invented: put it in exactly as sent, line breaks
 and short paragraphs included. Anything that looks wrong (a typo, a date
 whose weekday doesn't match his) is pointed out to him, not fixed.

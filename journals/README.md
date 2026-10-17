@@ -18,11 +18,11 @@ placeholders included; the live site shows only what is real.
 2. Write it like this:
 
    ```
-   title: 雨
-   date: 2026-10-07
-   time:
-   place: Quebec City
-   where: Old Port
+   title: 法语
+   date: 10.12.2026 周一
+   time: 8:00 AM
+   place: Tadoussac
+   where: Tadoussac, QC, Canada
    ---
    Your text. A blank line starts a new paragraph.
    A single line break stays a line break, for poems and dialogue.
@@ -30,12 +30,13 @@ placeholders included; the live site shows only what is real.
    @photo images/_journals/quebec/IMG_0001.jpg | a caption, if you want one
    ```
 
-   `time` is optional (24-hour, `15:50`); leave it empty and no time shows.
-   `place` is one of the trip's pins (as on the globe) and puts the entry on
-   the map; `where` is your own finer words. Places you only mention in the
+   `date`, `time` and `where` show exactly as you write them, under the
+   title. `time` is optional; leave it empty and no time shows. `place` is
+   one of the trip's pins (as on the globe) and puts the entry on the map;
+   it isn't shown when `where` is filled in. Places you only mention in the
    text never go on the map.
 3. Add its name to `"entries"` in `journal.json`, where it falls in the
-   reading order: `"entries": ["french", "rain", "fjord"]`.
+   reading order: `"entries": ["rain", "french", "fjord"]`.
 4. An English version, if you write one: `entries/fjord.en.txt` in the same
    format, and its name in `"english"` in `journal.json`
    (`"english": ["fjord"]`). It shows when the site is in English; an entry

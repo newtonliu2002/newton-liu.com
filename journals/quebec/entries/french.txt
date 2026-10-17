@@ -1,8 +1,8 @@
 title: 法语
-date: 2026-10-12
-time: 08:00
+date: 10.12.2026 周一
+time: 8:00 AM
 place: Tadoussac
-where:
+where: Tadoussac, QC, Canada
 ---
 我刚刚拍了一个多小时的日出，走进一家镇上的咖啡店。“Est-ce que vous avez une café noir ?”（你有黑咖啡吗？）我的法语讲得不算太好。“Oui, un café noir.”（有，一杯黑咖啡。）店员回应道。他可能不是有意纠正我，但我意识到我的法语又说错了。我以为café是阴性，所以用une。但店员用的是un，café是阳性。
 

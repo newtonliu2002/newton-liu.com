@@ -350,13 +350,7 @@ body[data-page="journal"] {
   border-top: 1px solid var(--hairline);
 }
 .jn-entry-head { margin-bottom: clamp(28px, 4vh, 44px); }
-.jn-kicker {
-  margin: 0 0 var(--s4);
-  font: 400 var(--t-label)/16px var(--mono); letter-spacing: .14em; text-transform: uppercase;
-  font-variant-numeric: tabular-nums;
-  color: var(--text-faint);
-}
-.jn-no { color: var(--text-dim); }
+.jn-no { color: var(--text-faint); }
 .jn-entry.is-current .jn-no { color: var(--accent); }
 .jn-title {
   margin: 0 0 var(--s3);
@@ -365,11 +359,16 @@ body[data-page="journal"] {
   text-wrap: balance;
 }
 .jn-title:lang(zh) { font-weight: 400; font-size: clamp(30px, 1.1vw + 18px, 38px); line-height: 1.3; }
-.jn-place {
+/* His date, place and time under the title, one to a line, in his own
+   capitals and order. */
+.jn-lines {
   margin: 0;
-  font: 400 var(--t-label)/18px var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  font: 400 13px/22px var(--mono); letter-spacing: .04em;
+  font-variant-numeric: tabular-nums;
   color: var(--text-dim);
 }
+.jn-line { display: block; }
+.jn-line:lang(zh) { font-size: 14px; }   /* the typewriter face runs small beside Geist Mono */
 .jn-dot { color: var(--text-faint); }
 
 /* His paragraphs: a blank line between them in his file, a line break kept
@@ -434,12 +433,12 @@ body[data-page="journal"] {
    The mono labels are 11px capitals; Song at 11px is too small to read, so
    in Chinese they take About's 13px (the spans the readout's 北纬 / 西经 sit
    in, and a whole label that turned Chinese). */
-:is(.jn-kicker, .jn-place, .jn-day-date, .jn-nav-place, .jn-readout, .jn-cover-month,
+:is(.jn-day-date, .jn-nav-place, .jn-readout, .jn-cover-month,
     .jn-cover-dates, .jn-map-toggle, .jn-hold-label, .jn-bar-no) :is([lang|="zh"], [data-zh-run]),
-:is(.jn-kicker, .jn-place, .jn-day-date, .jn-nav-place, .jn-readout, .jn-cover-month,
+:is(.jn-day-date, .jn-nav-place, .jn-readout, .jn-cover-month,
     .jn-cover-dates, .jn-map-toggle, .jn-hold-label, .jn-bar-no):lang(zh) { font-size: 13px; }
 .jn-cover-month:lang(zh), .jn-cover-dates:lang(zh) { font-size: 14px; }
-.jn-place:lang(zh), .jn-nav-place:lang(zh) { word-break: keep-all; }
+.jn-lines:lang(zh), .jn-nav-place:lang(zh) { word-break: keep-all; }
 
 @media print {
   .jn-panel, .jn-bar, .jn-cover-play { display: none !important; }
