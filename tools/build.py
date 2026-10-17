@@ -354,8 +354,8 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
     </a>
     <nav class="nav">
       <a href="../../#collections" aria-current="page">Work</a>
-      <a href="../../projects.html">Projects</a>
       <a href="../../about.html">About</a>
+      <a href="../../projects.html">Projects</a>
       <a href="../../contact.html">Contact</a>
     </nav>
   </div>
@@ -385,8 +385,8 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   <div class="wrap footer-inner">
     <p>&copy; <span data-year>2026</span> Newton Liu. All photographs are my own.</p>
     <p class="footer-links">
-      <a href="../../projects.html">Projects</a>
       <a href="../../about.html">About</a>
+      <a href="../../projects.html">Projects</a>
       <a href="../../contact.html">Contact</a>
     </p>
   </div>
