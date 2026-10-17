@@ -1867,7 +1867,7 @@
   // the far right, over the local time.
   function plateTitle(c) {
     var t = plate.appendChild(el("p", "g-plate-title", c.title));
-    if (c.written) t.insertBefore(noteMark(), t.firstChild);
+    if (c.written) t.appendChild(noteMark());
   }
   function crowdPlate(p) {
     if (!L.app || COARSE) return;
@@ -2324,12 +2324,15 @@
      ------------------------------------------------------------------ */
 
   // The note mark: a collection Newton has written something for (a blurb
-  // on its page) shows a few lines of text beside its name, in the list, on
-  // the plate and on the card (Newton, 2026-10-16).
+  // on its page) shows a small scroll beside its name, in the list, and at
+  // the right end of its name's line on the plate and the card (Newton's
+  // pick of eight, 2026-10-16).
   function noteMark() {
     var s = el("span", "g-note");
     s.title = LABELS.written;
-    s.innerHTML = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1 3.5h10M1 6.5h10M1 9.5h6" fill="none" stroke="currentColor" stroke-width="1"/></svg>';
+    s.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' +
+      '<path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/>' +
+      '<path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg>';
     return s;
   }
 
@@ -2354,7 +2357,8 @@
       n.textContent = parts[k] || "";
       n.hidden = !parts[k];
     }
-    if (c.written) { var ttl = $(".g-card-title"); ttl.insertBefore(noteMark(), ttl.firstChild); }
+    if (c.written) $(".g-card-title").appendChild(noteMark());
+    card.classList.toggle("is-written", !!c.written);
     cardCol = c;
     var ct = $(".g-card-time"), foot = $(".g-card-foot");
     if (ct) { ct.textContent = colTime(c); ct.hidden = !ct.textContent; }

@@ -313,12 +313,15 @@ body.is-editing .g-tour + .g-readout { border: 0; }
    Beside its name in the list; at the far right of its name on the plate
    and the card, over the local time. */
 .g-note { display: inline-flex; flex: none; color: var(--text-faint); transition: color var(--d-base) var(--ease); }
-.g-note svg { display: block; width: 12px; height: 12px; }
+.g-note svg { display: block; width: 13px; height: 13px; }
 .g-row-title .g-note { margin-left: 9px; }
 .g-row.is-lit .g-note, .g-row.is-passing .g-note, .g-row[aria-current="true"] .g-note { color: var(--text-dim); }
-.g-plate-title, .g-card-title { display: flow-root; }
-.g-plate-title .g-note { float: right; margin: 4px 0 0 10px; }
-.g-card-title .g-note { float: right; margin: 9px 0 0 12px; }
+/* On a card the name and the mark share a line: the mark at its right end,
+   sitting on the name's baseline, a hair lower to centre on the capitals. */
+.g-plate-title, .g-card-title { display: flex; align-items: baseline; gap: 10px; }
+.g-plate-title .g-note, .g-card-title .g-note { margin-left: auto; transform: translateY(1px); }
+.g-card-title .g-note { transform: translateY(-3px); }
+.g-card-title .g-note svg { width: 16px; height: 16px; }
 .g-row[role="button"] { cursor: pointer; }      /* a place waiting for its photographs: flies there, no gallery */
 
 /* A region: a mono caps heading with the stacked pin's mark (a crosshair in
@@ -484,9 +487,11 @@ body.is-editing .g-tour + .g-readout { border: 0; }
   .g-card-go { flex: none; gap: 8px; height: auto; padding: 0; border: 0; justify-content: flex-start; }
   .g-card-go::after { display: none; }
   .g-card .g-card-close { position: absolute; top: 0; right: 0; border: 0; }
-  /* Its title is clamped to two lines, so the note mark stands apart, at
-     the right over the local time. */
-  .g-card-title .g-note { position: absolute; right: 14px; bottom: 34px; float: none; margin: 0; }
+  /* Its title is clamped to two lines, so the note mark is set at the end
+     of the title's line, left of the close button, the title kept clear. */
+  .g-card-title .g-note { position: absolute; right: 46px; top: 14px; margin: 0; transform: none; }
+  .g-card-title .g-note svg { width: 13px; height: 13px; }
+  .g-card.is-written .g-card-body { padding-right: 68px; }
 
   /* Two lines at most, in the sans so they fit, each credit kept whole. */
   .g-stage .maplibregl-ctrl-top-right { right: 16px; top: 8px; max-width: 72%; text-align: right; }
