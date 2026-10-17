@@ -1,6 +1,8 @@
 {
   "sizes": {
     "images/_journals/quebec/cover.jpg": [2400, 886],
+    "images/_journals/quebec/owl-1.jpg": [2400, 1800],
+    "images/_journals/quebec/owl-2.jpg": [2400, 1800],
     "images/_journals/quebec/french-cafe-window.jpg": [1800, 2400],
     "images/_journals/quebec/french-dawn.jpg": [2400, 886],
     "images/_journals/quebec/french-ferry.jpg": [2400, 886],
@@ -11,6 +13,8 @@
   },
   "exif": {
     "images/_journals/quebec/cover.jpg": {"camera": "Hasselblad X2D II 100C", "lens": "XCD 35-100E@35", "focal": "35mm", "aperture": "f/9.5", "shutter": "1/10s", "iso": "100"},
+    "images/_journals/quebec/owl-1.jpg": {"camera": "Hasselblad X2D II 100C", "lens": "XCD 35-100E@100", "focal": "100mm", "aperture": "f/4", "shutter": "1/45s", "iso": "200"},
+    "images/_journals/quebec/owl-2.jpg": {"camera": "Hasselblad X2D II 100C", "lens": "XCD 35-100E@100", "focal": "100mm", "aperture": "f/4", "shutter": "2s", "iso": "1600"},
     "images/_journals/quebec/french-cafe-window.jpg": {"camera": "Hasselblad X2D II 100C", "lens": "XCD 35-100E@100", "focal": "100mm", "aperture": "f/8", "shutter": "1/180s", "iso": "200"},
     "images/_journals/quebec/french-dawn.jpg": {"camera": "Hasselblad X2D II 100C", "lens": "XCD 20-35E@35", "focal": "35mm", "aperture": "f/4.8", "shutter": "1/20s", "iso": "200"},
     "images/_journals/quebec/french-ferry.jpg": {"camera": "Hasselblad L3D-100c", "focal": "14mm", "aperture": "f/2.8", "shutter": "1/100s", "iso": "800"},
@@ -18,5 +22,9 @@
     "images/_journals/quebec/sea-1.jpg": {"camera": "Hasselblad X2D II 100C", "lens": "XCD 35-100E@100", "focal": "100mm", "aperture": "f/4.8", "shutter": "1/125s", "iso": "200"},
     "images/_journals/quebec/sea-3.jpg": {"camera": "Hasselblad X2D II 100C", "lens": "XCD 35-100E@35", "focal": "35mm", "aperture": "f/6.8", "shutter": "1/90s", "iso": "100"},
     "images/_journals/quebec/sea-2.jpg": {"camera": "Hasselblad X2D II 100C", "lens": "XCD 35-100E@100", "focal": "100mm", "aperture": "f/6.8", "shutter": "1/60s", "iso": "100"}
+  },
+  "birds": {
+    "images/_journals/quebec/owl-1.jpg": {"caption": "Northern Saw-whet Owl", "sci": "Aegolius acadicus", "ebird": "nswowl", "zh": "棕榈鬼鸮"},
+    "images/_journals/quebec/owl-2.jpg": {"caption": "Northern Saw-whet Owl", "sci": "Aegolius acadicus", "ebird": "nswowl", "zh": "棕榈鬼鸮"}
   }
 }

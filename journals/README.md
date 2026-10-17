@@ -54,6 +54,9 @@ placeholders included; the live site shows only what is real.
 3. In the entry, one line per photo or video, where it should appear:
    `@photo images/_journals/quebec/IMG_0001.jpg | caption` or
    `@video images/_journals/quebec/clip.mp4 | poster images/_journals/quebec/clip.jpg | caption`.
+   A bird can be named at the end: `| bird: Northern Saw-whet Owl` (its
+   English eBird name); enlarged, it shows the English, Latin and Chinese
+   names and the eBird link.
    Lines with no blank line between them sit together (two uprights side
    by side). A photo already in a collection can be used by its own path,
    such as `images/quebec/0Z9A0001.jpg`.

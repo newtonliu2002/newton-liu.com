@@ -921,8 +921,8 @@ side, 2026-10-17); `month` ("October 2026", through `NLSite.date`); optional `da
 `dates.to` (ISO; Newton wants no range on the cover, 2026-10-17, so Quebec has none); `cover` (`type`
 "placeholder", "photo" or "video", `src`, a video's `poster`, `alt`, and
 `"fit": "whole"` to show a landscape photo in its own proportions, nothing
-cut, rather than filling the window; Quebec's is whole, Newton's ask,
-2026-10-17);
+cut, rather than filling the window; Quebec's fills the window: Newton
+tried whole and went back, 2026-10-17);
 `route`, the visits in travel order (`{ "place": <a pin name>, "date": "" }`;
 repeats and several a day allowed); `entries`, the reading order;
 `english`, the entries that also have an English version,
@@ -955,7 +955,14 @@ break kept as written (poems, dialogue); leading spaces and 全角空格 stay.
 ```
 
 A line starting `## ` is a heading inside the entry (his parts, "4.1海和我"),
-his words after the `##`; a leading number is set apart in grey. A line
+his words after the `##`; a leading number is set apart in grey. A photo
+line may end `| bird: <English eBird name>` (`@photo … | 被放走后的猫头鹰 |
+bird: Northern Saw-whet Owl`): build.py looks the name up in the eBird
+taxonomy (`_arrange/geo-src/`, as for the collections; a species eBird has
+no Chinese name for takes `ZH_BIRD_NAMES` in build.py) and writes
+`media.json` "birds", and the lightbox shows the bird line the collections
+show: English, *Latin*, the eBird link, and the Chinese name first in
+Chinese. A line
 starting `@photo`, `@video` or `@placeholder` is media; media lines
 with no blank line between them are one group, laid out together (two
 uprights side by side, a landscape the column's width; nothing cropped). A

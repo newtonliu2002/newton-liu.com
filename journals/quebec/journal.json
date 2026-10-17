@@ -3,18 +3,18 @@
   "title": "Quebéc",
   "titleZh": "魁北克",
   "month": "October 2026",
-  "cover": { "type": "photo", "src": "images/_journals/quebec/cover.jpg", "fit": "whole", "poster": "", "alt": "" },
+  "cover": { "type": "photo", "src": "images/_journals/quebec/cover.jpg", "poster": "", "alt": "" },
   "route": [
     { "place": "Montreal", "date": "2026-10-08" },
     { "place": "L'Anse-Saint-Jean", "date": "" },
     { "place": "Saguenay", "date": "" },
-    { "place": "Tadoussac", "date": "2026-10-12" },
+    { "place": "Tadoussac", "date": "2026-10-11" },
     { "place": "Baie-Saint-Paul", "date": "" },
     { "place": "Parc national des Hautes-Gorges-de-la-Rivière-Malbaie", "date": "" },
     { "place": "Baie-Saint-Paul", "date": "" },
     { "place": "Parc national des Grands-Jardins", "date": "" },
     { "place": "Ottawa/Gatineau", "date": "" }
   ],
-  "entries": ["quebec-and-me", "french", "rain", "sea"],
+  "entries": ["quebec-and-me", "owl", "french", "rain", "sea"],
   "english": []
 }

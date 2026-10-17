@@ -238,6 +238,7 @@
     parts.slice(1).forEach(function (p) {
       var m = /^poster\s+(.+)$/i.exec(p);
       if (kind === "video" && m && !item.poster) item.poster = cleanPath(m[1]);
+      else if (/^bird\s*:/i.test(p)) return;   // "bird: Northern Saw-whet Owl": named in media.json by build.py
       else words.push(p);
     });
     item.caption = words.join(" | ");
@@ -263,6 +264,7 @@
   var photoBySrc = {};
   var shapes = {};        // media.json: { path: [width, height] }
   var cameras = {};       // media.json: { path: { camera, lens, focal, aperture, shutter, iso } }
+  var birds = {};         // media.json: { path: { caption, sci, ebird, zh } }, a bird's names
   var list = [];          // the entries as drawn, in reading order
   var byId = {};
   var pins = [], pinByName = {};
@@ -326,6 +328,7 @@
       journal = r[0] || {};
       shapes = (r[3] && r[3].sizes) || {};
       cameras = (r[3] && r[3].exif) || {};
+      birds = (r[3] && r[3].birds) || {};
       var routes = r[1], photos = (r[2] && r[2].photos) || [];
       photos.forEach(function (p) { if (p && p.src) photoBySrc[p.src] = p; });
       pins = (place.pins || []).map(function (p) {
@@ -732,6 +735,11 @@
     var view = rec ? copy(rec) : { src: item.src };
     if (!rec && own(shapes, item.src) && cell._ar) { view.width = shapes[item.src][0]; view.height = shapes[item.src][1]; }
     if (!rec && own(cameras, item.src)) view.exif = cameras[item.src];   // the camera line when enlarged
+    // A bird's names under it, as in the collections: English, Latin, the
+    // eBird link, and its Chinese name first in Chinese.
+    if (!rec && own(birds, item.src)) ["caption", "sci", "ebird", "zh"].forEach(function (k) {
+      if (birds[item.src][k]) view[k] = birds[item.src][k];
+    });
     view.alt = img.alt;
     var at = e.photos.length;
     e.photos.push(view);

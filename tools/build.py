@@ -32,6 +32,7 @@ automatically if unavailable).
 """
 
 import argparse
+import csv
 import hashlib
 import importlib.util
 import json
@@ -693,10 +694,18 @@ def journal_shapes(folder):
             sizes[key] = [int(size[0]), int(size[1])]
         elif isinstance(old.get(key), list):
             sizes[key] = old[key]
+    try:
+        with open(out, "r", encoding="utf-8") as fh:
+            old_birds = json.load(fh).get("birds") or {}
+    except (OSError, ValueError, AttributeError):
+        old_birds = {}
+    birds = journal_birds(folder, old_birds)
     rows = ["    {}: [{}, {}]".format(json.dumps(k, ensure_ascii=False), *v) for k, v in sizes.items()]
     cams = ["    {}: {}".format(json.dumps(k, ensure_ascii=False), json.dumps(v, ensure_ascii=False)) for k, v in exif.items()]
+    names = ["    {}: {}".format(json.dumps(k, ensure_ascii=False), json.dumps(v, ensure_ascii=False)) for k, v in birds.items()]
     text = ('{\n  "sizes": {' + ("\n" + ",\n".join(rows) + "\n  " if rows else "") + "},\n"
-            '  "exif": {' + ("\n" + ",\n".join(cams) + "\n  " if cams else "") + "}\n}\n")
+            '  "exif": {' + ("\n" + ",\n".join(cams) + "\n  " if cams else "") + "},\n"
+            '  "birds": {' + ("\n" + ",\n".join(names) + "\n  " if names else "") + "}\n}\n")
     try:
         with open(out, "r", encoding="utf-8") as fh:
             if fh.read() == text:
@@ -706,6 +715,65 @@ def journal_shapes(folder):
     with open(out, "w", encoding="utf-8") as fh:
         fh.write(text)
     return len(sizes), True
+
+
+# A bird with no Chinese name in eBird's zh_SIM taxonomy: the standard
+# mainland name, checked (棕榈鬼鸮 is also Newton's own word for it).
+ZH_BIRD_NAMES = {"nswowl": "棕榈鬼鸮"}
+
+
+def bird_names(english):
+    """{caption, sci, ebird, zh} for an English eBird name, from the eBird
+    taxonomy in _arrange/geo-src/ (local only); None if it isn't there."""
+    src = os.path.join(ROOT, "_arrange", "geo-src")
+    try:
+        with open(os.path.join(src, "ebird-taxonomy.csv"), encoding="utf-8") as fh:
+            row = next((r for r in csv.DictReader(fh)
+                        if r["COMMON_NAME"].lower() == english.lower() and r["CATEGORY"] == "species"), None)
+    except OSError:
+        return None
+    if not row:
+        return None
+    out = {"caption": row["COMMON_NAME"], "sci": row["SCIENTIFIC_NAME"], "ebird": row["SPECIES_CODE"]}
+    zh = ZH_BIRD_NAMES.get(out["ebird"])
+    try:
+        with open(os.path.join(src, "ebird-taxonomy-zh_SIM.csv"), encoding="utf-8") as fh:
+            for r in csv.DictReader(fh):
+                if r["SPECIES_CODE"] == out["ebird"] and r["COMMON_NAME"] != out["caption"]:
+                    zh = r["COMMON_NAME"]
+                    break
+    except OSError:
+        pass
+    if zh:
+        out["zh"] = zh
+    return out
+
+
+def journal_birds(folder, old):
+    """{path: names} for each journal photo whose line says "bird: <English
+    name>"; a name the taxonomy can't be read for keeps what media.json had."""
+    out = {}
+    entries = os.path.join(folder, "entries")
+    for name in sorted(os.listdir(entries)) if os.path.isdir(entries) else []:
+        if not name.endswith(".txt"):
+            continue
+        with open(os.path.join(entries, name), encoding="utf-8-sig") as fh:
+            for line in fh:
+                m = re.match(r"@photo\s+(.*)$", line.rstrip())
+                if not m:
+                    continue
+                parts = [p.strip() for p in m.group(1).split("|")]
+                bird = next((re.sub(r"^bird\s*:\s*", "", p, flags=re.I) for p in parts[1:]
+                             if re.match(r"bird\s*:", p, re.I)), "")
+                if not bird:
+                    continue
+                key = parts[0]
+                names = bird_names(bird) or (old.get(key) if isinstance(old.get(key), dict) else None)
+                if names:
+                    out[key] = names
+                else:
+                    print("  {}: no eBird species called {!r}".format(name, bird))
+    return out
 
 
 def all_journal_shapes():
