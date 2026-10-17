@@ -219,8 +219,9 @@ keyed by the collection's slug, after the usual collections.json entry:
   row, passing card or card) until his photographs come. Their entries stay
   in places.json and routes.json; taking a slug out of the list brings it
   back. **Quebec** (October 2026, his route, 2026-10-16) waits the same way
-  but shows: Montreal, La Mauricie, Quebec City, Fjord-du-Saguenay (pin at
-  Baie-Éternité), Saguenay, Tadoussac, Baie-Saint-Paul, Hautes-Gorges, back
+  but shows: Montreal, L'Anse-Saint-Jean, Saguenay, Tadoussac (his route as
+  driven, 2026-10-17: no La Mauricie, Quebec City or Fjord-du-Saguenay park
+  pin), Baie-Saint-Paul, Hautes-Gorges, back
   through Baie-Saint-Paul (one pin for a place passed twice, his rule),
   Grands-Jardins, Ottawa/Gatineau (his name for it); park pins sit on the park road. Its passing card
   comes first, before Ecuador's.

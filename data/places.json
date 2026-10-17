@@ -330,9 +330,7 @@
       "journal": { "href": "journals/quebec/", "draft": true },
       "pins": [
         { "name": "Montreal", "lat": 45.50, "lng": -73.57 },
-        { "name": "Parc national de la Mauricie", "lat": 46.77, "lng": -72.95 },
-        { "name": "Quebec City", "lat": 46.81, "lng": -71.21 },
-        { "name": "Parc national du Fjord-du-Saguenay", "lat": 48.30, "lng": -70.34 },
+        { "name": "L'Anse-Saint-Jean", "lat": 48.24, "lng": -70.20 },
         { "name": "Saguenay", "lat": 48.41, "lng": -71.07 },
         { "name": "Tadoussac", "lat": 48.14, "lng": -69.72 },
         { "name": "Baie-Saint-Paul", "lat": 47.44, "lng": -70.51 },

@@ -6,9 +6,7 @@
   "cover": { "type": "placeholder", "src": "", "poster": "", "alt": "" },
   "route": [
     { "place": "Montreal", "date": "2026-10-08" },
-    { "place": "Parc national de la Mauricie", "date": "" },
-    { "place": "Quebec City", "date": "" },
-    { "place": "Parc national du Fjord-du-Saguenay", "date": "" },
+    { "place": "L'Anse-Saint-Jean", "date": "" },
     { "place": "Saguenay", "date": "" },
     { "place": "Tadoussac", "date": "2026-10-12" },
     { "place": "Baie-Saint-Paul", "date": "" },
