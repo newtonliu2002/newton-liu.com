@@ -11855,38 +11855,6 @@
       "ebird": "rufpri1"
     },
     {
-      "src": "images/guangxi-guangdong/2022-2.jpg",
-      "title": "2022 2",
-      "collection": "guangxi-guangdong",
-      "location": "",
-      "date": "",
-      "width": 2500,
-      "height": 1667,
-      "exif": {},
-      "variants": [
-        {
-          "w": 800,
-          "src": "images/_thumbs/800/guangxi-guangdong/2022-2.jpg"
-        },
-        {
-          "w": 1600,
-          "src": "images/_thumbs/1600/guangxi-guangdong/2022-2.jpg"
-        },
-        {
-          "w": 2400,
-          "src": "images/_thumbs/2400/guangxi-guangdong/2022-2.jpg"
-        },
-        {
-          "w": 2500,
-          "src": "images/guangxi-guangdong/2022-2.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/guangxi-guangdong/2022-2.jpg",
-      "caption": "Red-vented Bulbul",
-      "sci": "Pycnonotus cafer",
-      "ebird": "revbul"
-    },
-    {
       "src": "images/guangxi-guangdong/U2A6681.jpg",
       "title": "U2A6681",
       "collection": "guangxi-guangdong",
