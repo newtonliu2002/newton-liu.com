@@ -565,6 +565,19 @@
       ]
     };
 
+    // The places in Chinese, for the Chinese page (Newton, 2026-10-17: every
+    // place name in Chinese there; Mindo is 厄瓜多尔). English keeps D's.
+    var ZH_PLACE = {
+      "United States": "美国", "China": "中国", "Ecuador": "厄瓜多尔", "Puerto Rico": "波多黎各",
+      "Sri Lanka": "斯里兰卡", "Colombia": "哥伦比亚", "Morocco": "摩洛哥", "Malaysia": "马来西亚",
+      "Canada": "加拿大", "Peru": "秘鲁", "India": "印度", "Nepal": "尼泊尔", "Mexico": "墨西哥",
+      "New Zealand": "新西兰", "Taiwan": "台湾", "Singapore": "新加坡", "Japan": "日本",
+      "Galápagos & Ecuador": "加拉帕戈斯群岛和厄瓜多尔", "Yunnan": "云南", "Florida": "佛罗里达",
+      "Puerto Rico and US Virgin Islands": "波多黎各和美属维尔京群岛",
+      "Texas & Nuevo León": "得克萨斯和新莱昂", "Canada & Alaska": "加拿大和阿拉斯加",
+      "Arizona": "亚利桑那", "Quebec": "魁北克", "Guangxi": "广西", "Mindo": "厄瓜多尔"
+    };
+
     // Each version's words: the English page's in English, the Chinese
     // page's in Chinese (Newton, 2026-10-16; places keep their English
     // names). A bar's rough count is 54k in English, and in Chinese in
@@ -581,6 +594,7 @@
         n: function (n) { return fmt(n) + " photos"; },
         images: function (n) { return fmt(n) + " images"; },
         photos: "photos", dayUnit: "days",       // the unit beside a big number
+        place: function (p) { return p; },
         sep: ": ",
         date: function (iso) {
           var t = ymd(iso);
@@ -622,6 +636,7 @@
         n: function (n) { return fmt(n) + "张"; },
         images: function (n) { return fmt(n) + "张"; },
         photos: "张", dayUnit: "天",
+        place: function (p) { return ZH_PLACE[p] || p; },
         sep: "：",
         date: function (iso) {
           var t = ymd(iso);
@@ -1013,7 +1028,8 @@
           ctx: share(n), aria: name + ", " + L.allYears + L.sep + L.n(n) };
       }), "month");
       b1.list(L.byCountry, D.countries.map(function (c) {
-        return { p: c[0], n: c[1], label: c[0], ctx: share(c[1]), aria: c[0] + L.sep + L.n(c[1]) + ", " + share(c[1]) };
+        var where = L.place(c[0]);
+        return { p: where, n: c[1], label: where, ctx: share(c[1]), aria: where + L.sep + L.n(c[1]) + ", " + share(c[1]) };
       }), "country");
       b1.wire();
 
@@ -1047,12 +1063,12 @@
       var top = D.trips[0], topSum = D.trips.reduce(function (a, t) { return a + t[7]; }, 0);
       function when(t) { return L.months(t[1], t[2]); }
       var bt = Block(box, {
-        cls: "trip", label: L.bigTrip, n: top[7], unit: L.photos, ctx: top[0] + " · " + when(top),
-        dials: [[L.perDay, fmt(D.mostPerDay.n), D.mostPerDay.where + " · " + L.days(D.mostPerDay.days), L.photos]],
+        cls: "trip", label: L.bigTrip, n: top[7], unit: L.photos, ctx: L.place(top[0]) + " · " + when(top),
+        dials: [[L.perDay, fmt(D.mostPerDay.n), L.place(D.mostPerDay.where) + " · " + L.days(D.mostPerDay.days), L.photos]],
         aria: L.tripAria
       });
       bt.list(L.byTrip, D.trips.map(function (t) {
-        var what = t[0] + " · " + when(t);
+        var what = L.place(t[0]) + " · " + when(t);
         return { p: what, s: L.trip(t), n: t[7], label: what, ctx: L.trip(t),
           aria: what + ", " + L.trip(t) + L.sep + L.images(t[7]) };
       }), "trips", [L.tripTotal, L.images(topSum)]);
@@ -1061,7 +1077,7 @@
       // ---- 4. The hours of the day, and the busiest days ---------------------
       var b2 = Block(box, {
         cls: "day", label: L.topHour, n: D.busiestHour.n, unit: L.photos, ctx: L.hour(D.busiestHour.hour),
-        dials: [[L.topDay, fmt(D.busiestDays[0][2]), L.date(D.busiestDays[0][0]) + " · " + D.busiestDays[0][1], L.photos]],
+        dials: [[L.topDay, fmt(D.busiestDays[0][2]), L.date(D.busiestDays[0][0]) + " · " + L.place(D.busiestDays[0][1]), L.photos]],
         aria: L.dayAria
       });
       b2.bars(L.byHour, D.hours.map(function (n, i) {
@@ -1071,18 +1087,19 @@
       b2.under();   // the big number under the hours, then the busiest days
       b2.list(L.topDays, D.busiestDays.map(function (d) {
         var day = L.date(d[0]);
-        return { p: day, s: d[1], n: d[2], label: day, aria: day + ", " + d[1] + L.sep + L.n(d[2]) };
+        var where = L.place(d[1]);
+        return { p: day, s: where, n: d[2], label: day, aria: day + ", " + where + L.sep + L.n(d[2]) };
       }), "days");
       b2.wire();
 
       // ---- 5. The busiest clock hour, and the busiest single hours -----------
       var b3 = Block(box, {
         cls: "peak", label: L.peak, n: D.busiestHours[0][4], unit: L.photos,
-        ctx: L.when(D.busiestHours[0][0], D.busiestHours[0][1]) + " · " + D.busiestHours[0][2],
+        ctx: L.when(D.busiestHours[0][0], D.busiestHours[0][1]) + " · " + L.place(D.busiestHours[0][2]),
         aria: L.peakAria
       });
       b3.list(L.topHours, D.busiestHours.map(function (r) {
-        var what = L.date(r[0]) + " · " + L.range(r[1]), where = r[2] + " · " + r[3];
+        var what = L.date(r[0]) + " · " + L.range(r[1]), where = L.place(r[2]) + " · " + r[3];
         return { p: what, s: where, n: r[4], label: what, ctx: where, aria: what + ", " + where + L.sep + L.n(r[4]) };
       }), "hours");
       b3.wire();

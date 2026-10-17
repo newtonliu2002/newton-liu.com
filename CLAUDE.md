@@ -760,8 +760,9 @@ pinned in MATCH; Morocco's map leaves out Western Sahara (SKIP).
 between the essay's sign-off and 设备 / Gear: his counts as charts in the 图1
 "Readout" look (all photos by country/territory, year and month; days in
 the field by year and month; his ten biggest trips; photos by hour of day and the busiest days; the busiest clock
-hour and single hours), every word in the version's own language (places
-keep their English names; rough counts are 54k in English, in 万 in
+hour and single hours), every word in the version's own language (place
+names too: Chinese on the Chinese page from 2026-10-17, `ZH_PLACE`, where
+Mindo is 厄瓜多尔; rough counts are 54k in English, in 万 in
 Chinese, the unit in the title). Its heading is in the prose (`#numbers`,
 `#numbers-en`, in about.html and data/text.json); site.js `photoNumbers`
 builds the charts in a box right after it, with the counts inline in that
