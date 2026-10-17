@@ -13463,6 +13463,31 @@
         }
       ],
       "thumb": "images/_thumbs/1600/california-film/U2A0301.jpg"
+    },
+    {
+      "src": "images/california-film/501CM.jpg",
+      "title": "501CM",
+      "collection": "california-film",
+      "location": "",
+      "date": "",
+      "width": 2000,
+      "height": 1500,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/california-film/501CM.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/california-film/501CM.jpg"
+        },
+        {
+          "w": 2000,
+          "src": "images/california-film/501CM.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/california-film/501CM.jpg"
     }
   ]
 }

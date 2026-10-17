@@ -952,7 +952,8 @@ through it rather than copying files into `images/` by hand.
 that digitised the negative (an R5 Mark II and a 100mm macro), not the film
 camera, and their dates are the scan date. Import them with `--strip-exif`,
 so no technical line shows, and give the collection its `date` from his
-folder name ("2024.9" = September 2024).
+folder name ("2026.9" = September 2026; Newton corrected it from 2024 on
+2026-10-16, so it now sits last in the oldest-first order).
 
 `build.py` never overwrites hand-authored text (`title`, `location`, `date`,
 `caption`, `collection`). It only refreshes mechanical fields — dimensions,
