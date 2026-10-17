@@ -569,7 +569,7 @@
     // page's in Chinese (Newton, 2026-10-16; places keep their English
     // names). A bar's rough count is 54k in English, and in Chinese in
     // 万 (ten thousand), the unit named once in the chart's title.
-    function ymd(iso) { var p = iso.split("-").map(Number); return { y: p[0], m: p[1] - 1, d: p[2] || 1, w: new Date(Date.UTC(p[0], p[1] - 1, p[2] || 1)).getUTCDay() }; }
+    function ymd(iso) { var p = iso.split("-").map(Number); return { y: p[0], m: p[1] - 1, d: p[2] || 1 }; }
     var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     var MONTH = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
       "November", "December"];
@@ -580,10 +580,11 @@
         share: function (p) { return p + " of all photos"; },
         n: function (n) { return fmt(n) + " photos"; },
         images: function (n) { return fmt(n) + " images"; },
+        photos: "photos", dayUnit: "days",       // the unit beside a big number
         sep: ": ",
-        date: function (iso, weekday) {
+        date: function (iso) {
           var t = ymd(iso);
-          return (weekday ? ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][t.w] + ", " : "") + MON[t.m] + " " + t.d + ", " + t.y;
+          return MON[t.m] + " " + t.d + ", " + t.y;
         },
         months: function (a, b) { var t = ymd(a); return MON[t.m] + (b ? "–" + MON[ymd(b).m] : "") + " " + t.y; },
         hour: function (h) { return (h % 12 || 12) + (h < 12 ? " am" : " pm"); },
@@ -620,10 +621,11 @@
         share: function (p) { return "占全部照片的" + p; },
         n: function (n) { return fmt(n) + "张"; },
         images: function (n) { return fmt(n) + "张"; },
+        photos: "张", dayUnit: "天",
         sep: "：",
-        date: function (iso, weekday) {
+        date: function (iso) {
           var t = ymd(iso);
-          return t.y + "年" + (t.m + 1) + "月" + t.d + "日" + (weekday ? " 周" + "日一二三四五六".charAt(t.w) : "");
+          return t.y + "年" + (t.m + 1) + "月" + t.d + "日";
         },
         months: function (a, b) { var t = ymd(a); return t.y + "年" + (t.m + 1) + (b ? "–" + (ymd(b).m + 1) : "") + "月"; },
         hour: function (h) { return h + "点"; },
@@ -681,14 +683,17 @@
     }
 
     // ---- One block: its readout (if it has one), its dials, its charts ----
-    // opt: { cls, label, n, ctx, dials: [[key, value, note?]], aria, listFirst }
+    // opt: { cls, label, n, unit, ctx, dials: [[key, value, note?, unit?]], aria, listFirst }
     function Block(box, opt) {
       var blk = el("section", "nb-block nb-" + opt.cls);
       blk.setAttribute("aria-label", opt.aria);
-      var inst = el("div", "nb-inst"), read = null, lab, num, ctx;
+      var inst = el("div", "nb-inst"), read = null, lab, num, val, ctx;
       if (opt.n != null) {
         read = el("div", "nb-read");
         lab = el("div", "nb-label"); num = el("div", "nb-num"); ctx = el("div", "nb-ctx");
+        // The number and its unit (Newton: "this needs a unit"); only the number changes.
+        val = num.appendChild(el("span", "nb-val"));
+        if (opt.unit) num.appendChild(el("span", "nb-unit", opt.unit));
         read.appendChild(lab); read.appendChild(num); read.appendChild(ctx);
         inst.appendChild(read);
       }
@@ -697,7 +702,8 @@
         opt.dials.forEach(function (d) {
           var s = el("div", "nb-dial");
           s.appendChild(el("span", "nb-k", d[0]));
-          s.appendChild(el("span", "nb-dv", d[1]));
+          var dv = s.appendChild(el("span", "nb-dv", d[1]));
+          if (d[3]) dv.appendChild(el("span", "nb-unit", d[3]));
           if (d[2]) s.appendChild(el("span", "nb-note", d[2]));
           dials.appendChild(s);
         });
@@ -712,13 +718,13 @@
         if (!read) return;
         if (anim) cancelAnimationFrame(anim);
         anim = 0;
-        if (!ms || RM.matches) { shownN = n; num.textContent = fmt(n); return; }
+        if (!ms || RM.matches) { shownN = n; val.textContent = fmt(n); return; }
         var from = shownN, t0 = null;
         function step(now) {
           if (t0 === null) t0 = now;
           var t = Math.min(1, (now - t0) / ms), e = 1 - Math.pow(1 - t, 3);
           shownN = from + (n - from) * e;
-          num.textContent = fmt(shownN);
+          val.textContent = fmt(shownN);
           anim = t < 1 ? requestAnimationFrame(step) : 0;
         }
         anim = requestAnimationFrame(step);
@@ -939,7 +945,7 @@
         render(0);
         if (RM.matches || !window.IntersectionObserver) return;
         charts.forEach(function (c) { c.classList.add("nb-pre"); });
-        if (read && !hover && !pin) { shownN = 0; num.textContent = "0"; }
+        if (read && !hover && !pin) { shownN = 0; val.textContent = "0"; }
         var io = new IntersectionObserver(function (es) {
           es.forEach(function (en) {
             if (!en.isIntersecting) return;
@@ -992,7 +998,7 @@
       var topMonth = 0;
       D.months.forEach(function (n, i) { if (n > D.months[topMonth]) topMonth = i; });
       var b1 = Block(box, {
-        cls: "all", label: L.total, n: D.total, ctx: L.asOf + L.date(D.asOf),
+        cls: "all", label: L.total, n: D.total, unit: L.photos, ctx: L.asOf + L.date(D.asOf),
         dials: [[L.topYear, String(topYear[0])], [L.topMonth, L.monthName(topMonth)]],
         aria: L.allAria, listFirst: true
       });
@@ -1020,7 +1026,7 @@
         return L.fieldShare(!n ? "0%" : p.toFixed(1) + "%");
       }
       var bf = Block(box, {
-        cls: "field", label: L.field, n: fTotal, ctx: L.span(F.from, F.to),
+        cls: "field", label: L.field, n: fTotal, unit: L.dayUnit, ctx: L.span(F.from, F.to),
         dials: [[L.run, L.days(F.run.days), L.twice(F.run.when)],
                 [L.mostYear, L.days(F.years[fTop]), L.year(D.years[0][0] + fTop)]],
         aria: L.fieldAria
@@ -1041,8 +1047,8 @@
       var top = D.trips[0], topSum = D.trips.reduce(function (a, t) { return a + t[7]; }, 0);
       function when(t) { return L.months(t[1], t[2]); }
       var bt = Block(box, {
-        cls: "trip", label: L.bigTrip, n: top[7], ctx: top[0] + " · " + when(top),
-        dials: [[L.perDay, fmt(D.mostPerDay.n), D.mostPerDay.where + " · " + L.days(D.mostPerDay.days)]],
+        cls: "trip", label: L.bigTrip, n: top[7], unit: L.photos, ctx: top[0] + " · " + when(top),
+        dials: [[L.perDay, fmt(D.mostPerDay.n), D.mostPerDay.where + " · " + L.days(D.mostPerDay.days), L.photos]],
         aria: L.tripAria
       });
       bt.list(L.byTrip, D.trips.map(function (t) {
@@ -1054,8 +1060,8 @@
 
       // ---- 4. The hours of the day, and the busiest days ---------------------
       var b2 = Block(box, {
-        cls: "day", label: L.topHour, n: D.busiestHour.n, ctx: L.hour(D.busiestHour.hour),
-        dials: [[L.topDay, fmt(D.busiestDays[0][2]), L.date(D.busiestDays[0][0], true) + " · " + D.busiestDays[0][1]]],
+        cls: "day", label: L.topHour, n: D.busiestHour.n, unit: L.photos, ctx: L.hour(D.busiestHour.hour),
+        dials: [[L.topDay, fmt(D.busiestDays[0][2]), L.date(D.busiestDays[0][0]) + " · " + D.busiestDays[0][1], L.photos]],
         aria: L.dayAria
       });
       b2.bars(L.byHour, D.hours.map(function (n, i) {
@@ -1064,19 +1070,19 @@
       }), "hour");
       b2.under();   // the big number under the hours, then the busiest days
       b2.list(L.topDays, D.busiestDays.map(function (d) {
-        var day = L.date(d[0], true);
+        var day = L.date(d[0]);
         return { p: day, s: d[1], n: d[2], label: day, aria: day + ", " + d[1] + L.sep + L.n(d[2]) };
       }), "days");
       b2.wire();
 
       // ---- 5. The busiest clock hour, and the busiest single hours -----------
       var b3 = Block(box, {
-        cls: "peak", label: L.peak, n: D.busiestHours[0][4],
+        cls: "peak", label: L.peak, n: D.busiestHours[0][4], unit: L.photos,
         ctx: L.when(D.busiestHours[0][0], D.busiestHours[0][1]) + " · " + D.busiestHours[0][2],
         aria: L.peakAria
       });
       b3.list(L.topHours, D.busiestHours.map(function (r) {
-        var what = L.date(r[0], true) + " · " + L.range(r[1]), where = r[2] + " · " + r[3];
+        var what = L.date(r[0]) + " · " + L.range(r[1]), where = r[2] + " · " + r[3];
         return { p: what, s: where, n: r[4], label: what, ctx: where, aria: what + ", " + where + L.sep + L.n(r[4]) };
       }), "hours");
       b3.wire();

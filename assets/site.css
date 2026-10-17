@@ -1584,6 +1584,16 @@ body.lb-open { overflow: hidden; }
   color: var(--text);
 }
 
+/* A number's unit (张 / photos, 天 / days): small, on its baseline, dimmer. */
+.photo-numbers .nb-unit {
+  margin-left: .22em;
+  font-size: max(13px, .2em);
+  font-weight: 400;
+  letter-spacing: .02em;
+  color: var(--text-dim);
+}
+.photo-numbers .nb-dv .nb-unit { margin-left: .3em; font-size: 13px; }
+
 /* The dials: a block's headline figures, a size down from the numeral. */
 .photo-numbers .nb-dials {
   display: grid;
