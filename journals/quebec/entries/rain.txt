@@ -26,4 +26,4 @@ where: Tadoussac, QC, Canada
 
 船开了。我拿出相机，在海上回过头，对着镇子拍。我发现，我喜欢这场雨。
 
-@photo images/_journals/quebec/rain-1.jpg
+@photo images/_journals/quebec/rain-1.jpg | 镇上的标志性酒店：Hotel Tadoussac

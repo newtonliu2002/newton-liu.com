@@ -3,7 +3,7 @@
   "title": "Quebec",
   "titleZh": "魁北克",
   "month": "October 2026",
-  "cover": { "type": "placeholder", "src": "", "poster": "", "alt": "" },
+  "cover": { "type": "photo", "src": "images/_journals/quebec/cover.jpg", "poster": "", "alt": "" },
   "route": [
     { "place": "Montreal", "date": "2026-10-08" },
     { "place": "L'Anse-Saint-Jean", "date": "" },

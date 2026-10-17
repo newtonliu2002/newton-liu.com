@@ -327,7 +327,7 @@
       "tz": "America/Toronto",
       "bearing": 20,
       "pitch": 0,
-      "journal": { "href": "journals/quebec/", "draft": true },
+      "journal": { "href": "journals/quebec/", "draft": false },
       "pins": [
         { "name": "Montreal", "lat": 45.50, "lng": -73.57 },
         { "name": "L'Anse-Saint-Jean", "lat": 48.24, "lng": -70.20 },

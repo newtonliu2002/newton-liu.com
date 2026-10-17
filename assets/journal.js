@@ -262,6 +262,7 @@
   var journal = null;
   var photoBySrc = {};
   var shapes = {};        // media.json: { path: [width, height] }
+  var cameras = {};       // media.json: { path: { camera, lens, focal, aperture, shutter, iso } }
   var list = [];          // the entries as drawn, in reading order
   var byId = {};
   var pins = [], pinByName = {};
@@ -324,6 +325,7 @@
     ]).then(function (r) {
       journal = r[0] || {};
       shapes = (r[3] && r[3].sizes) || {};
+      cameras = (r[3] && r[3].exif) || {};
       var routes = r[1], photos = (r[2] && r[2].photos) || [];
       photos.forEach(function (p) { if (p && p.src) photoBySrc[p.src] = p; });
       pins = (place.pins || []).map(function (p) {
@@ -721,6 +723,7 @@
     img.alt = item.caption || t("Photograph");
     var view = rec ? copy(rec) : { src: item.src };
     if (!rec && own(shapes, item.src) && cell._ar) { view.width = shapes[item.src][0]; view.height = shapes[item.src][1]; }
+    if (!rec && own(cameras, item.src)) view.exif = cameras[item.src];   // the camera line when enlarged
     view.alt = img.alt;
     var at = e.photos.length;
     e.photos.push(view);

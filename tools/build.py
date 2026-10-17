@@ -664,7 +664,12 @@ def journal_shapes(folder):
             old = json.load(fh).get("sizes") or {}
     except (OSError, ValueError, AttributeError):
         old = {}
-    sizes = {}
+    try:
+        with open(out, "r", encoding="utf-8") as fh:
+            old_exif = json.load(fh).get("exif") or {}
+    except (OSError, ValueError, AttributeError):
+        old_exif = {}
+    sizes, exif = {}, {}
     for key in upload.trip_media(folder, name):
         if key in sizes or key.startswith("/") or ".." in key:
             continue
@@ -675,14 +680,23 @@ def journal_shapes(folder):
                 size = video_size(path)
             else:
                 size = read_size(path)
-                if size and read_exif(path).get("orientation") in (5, 6, 7, 8):
+                fields = read_exif(path)
+                if size and fields.get("orientation") in (5, 6, 7, 8):
                     size = (size[1], size[0])             # shown turned, as browsers do
+                # The camera line under the photograph when it's enlarged, as
+                # a collection's photographs have from photos.json.
+                if format_exif(fields):
+                    exif[key] = format_exif(fields)
+        elif isinstance(old_exif.get(key), dict):
+            exif[key] = old_exif[key]
         if size and size[0] and size[1]:
             sizes[key] = [int(size[0]), int(size[1])]
         elif isinstance(old.get(key), list):
             sizes[key] = old[key]
     rows = ["    {}: [{}, {}]".format(json.dumps(k, ensure_ascii=False), *v) for k, v in sizes.items()]
-    text = '{\n  "sizes": {' + ("\n" + ",\n".join(rows) + "\n  " if rows else "") + "}\n}\n"
+    cams = ["    {}: {}".format(json.dumps(k, ensure_ascii=False), json.dumps(v, ensure_ascii=False)) for k, v in exif.items()]
+    text = ('{\n  "sizes": {' + ("\n" + ",\n".join(rows) + "\n  " if rows else "") + "},\n"
+            '  "exif": {' + ("\n" + ",\n".join(cams) + "\n  " if cams else "") + "}\n}\n")
     try:
         with open(out, "r", encoding="utf-8") as fh:
             if fh.read() == text:

@@ -34,7 +34,6 @@ where: Tadoussac, QC, Canada
 我说，有点冷。
 
 @photo images/_journals/quebec/sea-1.jpg
-
-@photo images/_journals/quebec/sea-2.jpg
-
 @photo images/_journals/quebec/sea-3.jpg
+
+@photo images/_journals/quebec/sea-2.jpg | 我用破碎的塑料创造的一些构图

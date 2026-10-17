@@ -45,7 +45,8 @@ placeholders included; the live site shows only what is real.
 
 ## Add or replace a photo, a video or the cover
 
-1. Export it without location: a photo as JPEG, about 2400 px on the long
+1. Export it without location (keep the camera info: it shows under the
+   photo when it's enlarged): a photo as JPEG, about 2400 px on the long
    side; a video as MP4 (H.264, 1080p at most) plus a JPEG of one frame as
    its poster. Phones put the location into videos too: export with
    location removed.
@@ -74,10 +75,10 @@ The route is `"route"` in `journal.json`, in the order you travelled:
 appears twice. A brand-new place needs its pin in `data/places.json` (and
 its road in `data/routes.json`) first; ask Claude.
 
-## Go live
+## Live or not
 
-In `data/places.json`, under `quebec`, change
-`"journal": { "href": "journals/quebec/", "draft": true }` to
-`"draft": false`. Then the page, the globe card's "Journal →" and the
-collection's link all go live together. Until then visitors see only a
-one-line "not published yet".
+Quebec's journal is live. The switch is in `data/places.json`, under
+`quebec`: `"journal": { "href": "journals/quebec/", "draft": false }`.
+`"draft": true` takes the page, the globe card's "Journal →" and the
+collection's link down together, and visitors see a one-line "not
+published yet" instead.
