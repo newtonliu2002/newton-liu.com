@@ -373,6 +373,14 @@ body[data-page="journal"] {
 
 /* His paragraphs: a blank line between them in his file, a line break kept
    where he made one (poems, dialogue), his indents kept. */
+/* A heading inside an entry ("4.1海和我"): smaller than the title, with air
+   above it so it reads as a new part of the same day. */
+.jn-sub {
+  margin: 2.4em 0 .9em;
+  font: 500 20px/1.4 var(--sans); color: var(--text);
+}
+.jn-sub:lang(zh), .jn-text:lang(zh) .jn-sub { font-weight: 400; font-size: 21px; }
+.jn-sub-no { margin-right: .45em; color: var(--text-faint); }
 .jn-p {
   max-width: 38em; margin: 0 0 1.25em;
   font: 400 17px/1.75 var(--sans); color: var(--text-body);

@@ -30,7 +30,8 @@ placeholders included; the live site shows only what is real.
    @photo images/_journals/quebec/IMG_0001.jpg | a caption, if you want one
    ```
 
-   `date`, `time` and `where` show exactly as you write them, under the
+   A line starting `## ` is a heading inside the entry, such as
+   `## 4.1海和我`. `date`, `time` and `where` show exactly as you write them, under the
    title. `time` is optional; leave it empty and no time shows. `place` is
    one of the trip's pins (as on the globe) and puts the entry on the map;
    it isn't shown when `where` is filled in. Places you only mention in the

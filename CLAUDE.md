@@ -947,9 +947,12 @@ break kept as written (poems, dialogue); leading spaces and 全角空格 stay.
 @placeholder photo | what goes here
 @placeholder video | what goes here
 @placeholder text | what goes here
+## 4.1海和我
 ```
 
-A line starting `@photo`, `@video` or `@placeholder` is media; media lines
+A line starting `## ` is a heading inside the entry (his parts, "4.1海和我"),
+his words after the `##`; a leading number is set apart in grey. A line
+starting `@photo`, `@video` or `@placeholder` is media; media lines
 with no blank line between them are one group, laid out together (two
 uprights side by side, a landscape the column's width; nothing cropped). A
 paragraph that really begins with "@" is written "\@". Media go before the

@@ -148,6 +148,7 @@
        where: Tadoussac, QC, Canada   (the place line as he wrote it)
        ---
        the body
+       ## 4.1海和我        (a heading inside the entry)
 
      The lines above the --- are read only if every one of them is a
      "key: value" line, so a body that happens to hold a --- of its own
@@ -211,7 +212,10 @@
         return;
       }
       endGroup();
-      if (line.charAt(0) === "\\" && line.charAt(1) === "@") line = line.slice(1);   // "\@" is a literal @
+      // "## 4.1海和我": a heading inside the entry, his words after the ##.
+      var h = /^##\s+(.+)$/.exec(line);
+      if (h) { endPara(); blocks.push({ type: "h", text: h[1] }); return; }
+      if (line.charAt(0) === "\\" && (line.charAt(1) === "@" || line.charAt(1) === "#")) line = line.slice(1);   // "\@", "\#" are literal
       (para = para || []).push(line);
     });
     endPara();
@@ -553,6 +557,12 @@
     e.buttons = [];
     e.blocks.forEach(function (b) {
       if (b.type === "p") text.appendChild(el("p", "jn-p", b.text));
+      else if (b.type === "h") {
+        // "4.1海和我": the number set apart as the entry's own is, his words kept whole.
+        var hn = /^(\d+(?:\.\d+)+\.?)\s*(.*)$/.exec(b.text), h3 = text.appendChild(el("h3", "jn-sub"));
+        if (hn && hn[2]) { h3.appendChild(el("span", "jn-sub-no", hn[1])); h3.appendChild(el("span", null, hn[2])); }
+        else h3.textContent = b.text;
+      }
       else if (b.type === "note") { if (LOCAL) text.appendChild(holdNote(b.item.note, true)); }
       else if (b.type === "media") {
         var g = drawGroup(b.items, e);
