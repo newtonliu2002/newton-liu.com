@@ -68,7 +68,7 @@
   // in the list): New England and California, for now.
   var PASS_ORDER = ["morocco", "quebec", "ecuador", "peru", "florida", "galapagos", "rio-grande",
     "colorado-nebraska", "desert-west", "yellowstone", "alberta-bc-yukon", "california-film",
-    "snowy-west", "alaska", "hawaii", "malaysia", "yunnan", "sri-lanka"];
+    "snowy-west", "alaska", "hawaii", "malaysia", "guangxi-guangdong", "yunnan", "sri-lanka"];
   // Where cards crowd (the West: six within 15°, each wanting its 4.5 s) the
   // spin slows ahead of time to one even pace that brings every card up by
   // PASS_LATE degrees past its pin. It looks PASS_LOOK degrees ahead, so it

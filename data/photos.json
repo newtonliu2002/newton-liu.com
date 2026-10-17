@@ -10838,35 +10838,34 @@
       "thumb": "images/_thumbs/1600/california/3.jpg"
     },
     {
-      "src": "images/new-england/2022-12-Maine-5.jpg",
-      "title": "2022-12-Maine-5",
+      "src": "images/new-england/2022-74.jpg",
+      "title": "2022 74",
       "collection": "new-england",
       "location": "",
-      "date": "2022-12-20",
+      "date": "",
       "width": 2500,
       "height": 1667,
-      "exif": {
-        "lens": "EF600mm f/4L IS III USM"
-      },
+      "exif": {},
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/new-england/2022-12-Maine-5.jpg"
+          "src": "images/_thumbs/800/new-england/2022-74.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/new-england/2022-12-Maine-5.jpg"
+          "src": "images/_thumbs/1600/new-england/2022-74.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/new-england/2022-12-Maine-5.jpg"
+          "src": "images/_thumbs/2400/new-england/2022-74.jpg"
         },
         {
           "w": 2500,
-          "src": "images/new-england/2022-12-Maine-5.jpg"
+          "src": "images/new-england/2022-74.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/new-england/2022-12-Maine-5.jpg"
+      "thumb": "images/_thumbs/1600/new-england/2022-74.jpg",
+      "featured": true
     },
     {
       "src": "images/new-england/2022-12-Maine-3.jpg",
@@ -11014,33 +11013,35 @@
       "thumb": "images/_thumbs/1600/new-england/13.jpg"
     },
     {
-      "src": "images/new-england/2022-74.jpg",
-      "title": "2022 74",
+      "src": "images/new-england/2022-12-Maine-5.jpg",
+      "title": "2022-12-Maine-5",
       "collection": "new-england",
       "location": "",
-      "date": "",
+      "date": "2022-12-20",
       "width": 2500,
       "height": 1667,
-      "exif": {},
+      "exif": {
+        "lens": "EF600mm f/4L IS III USM"
+      },
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/new-england/2022-74.jpg"
+          "src": "images/_thumbs/800/new-england/2022-12-Maine-5.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/new-england/2022-74.jpg"
+          "src": "images/_thumbs/1600/new-england/2022-12-Maine-5.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/new-england/2022-74.jpg"
+          "src": "images/_thumbs/2400/new-england/2022-12-Maine-5.jpg"
         },
         {
           "w": 2500,
-          "src": "images/new-england/2022-74.jpg"
+          "src": "images/new-england/2022-12-Maine-5.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/new-england/2022-74.jpg"
+      "thumb": "images/_thumbs/1600/new-england/2022-12-Maine-5.jpg"
     },
     {
       "src": "images/new-england/Inde-4.jpg",
@@ -11567,6 +11568,493 @@
         }
       ],
       "thumb": "images/_thumbs/1600/california-film/B0003461.jpg"
+    },
+    {
+      "src": "images/guangxi-guangdong/6-3.jpg",
+      "title": "6 3",
+      "collection": "guangxi-guangdong",
+      "location": "",
+      "date": "",
+      "width": 2500,
+      "height": 1667,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi-guangdong/6-3.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi-guangdong/6-3.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi-guangdong/6-3.jpg"
+        },
+        {
+          "w": 2500,
+          "src": "images/guangxi-guangdong/6-3.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/6-3.jpg",
+      "featured": true
+    },
+    {
+      "src": "images/guangxi-guangdong/U2A7998.jpg",
+      "title": "U2A7998",
+      "collection": "guangxi-guangdong",
+      "location": "",
+      "date": "2024-10-27",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/4000s",
+        "iso": "3200"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi-guangdong/U2A7998.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi-guangdong/U2A7998.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi-guangdong/U2A7998.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/guangxi-guangdong/U2A7998.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A7998.jpg"
+    },
+    {
+      "src": "images/guangxi-guangdong/7.jpg",
+      "title": "7",
+      "collection": "guangxi-guangdong",
+      "location": "",
+      "date": "2023-03-20",
+      "width": 2500,
+      "height": 1667,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi-guangdong/7.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi-guangdong/7.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi-guangdong/7.jpg"
+        },
+        {
+          "w": 2500,
+          "src": "images/guangxi-guangdong/7.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/7.jpg"
+    },
+    {
+      "src": "images/guangxi-guangdong/U2A3552.jpg",
+      "title": "U2A3552",
+      "collection": "guangxi-guangdong",
+      "location": "",
+      "date": "2024-10-26",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/640s",
+        "iso": "5000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi-guangdong/U2A3552.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi-guangdong/U2A3552.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi-guangdong/U2A3552.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/guangxi-guangdong/U2A3552.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A3552.jpg"
+    },
+    {
+      "src": "images/guangxi-guangdong/4-2-copy.jpg",
+      "title": "4 2 Copy",
+      "collection": "guangxi-guangdong",
+      "location": "",
+      "date": "2023-03-20",
+      "width": 1975,
+      "height": 2962,
+      "exif": {},
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/guangxi-guangdong/4-2-copy.jpg"
+        },
+        {
+          "w": 1067,
+          "src": "images/_thumbs/1600/guangxi-guangdong/4-2-copy.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/2400/guangxi-guangdong/4-2-copy.jpg"
+        },
+        {
+          "w": 1975,
+          "src": "images/guangxi-guangdong/4-2-copy.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/4-2-copy.jpg"
+    },
+    {
+      "src": "images/guangxi-guangdong/6-4.jpg",
+      "title": "6 4",
+      "collection": "guangxi-guangdong",
+      "location": "",
+      "date": "",
+      "width": 2500,
+      "height": 1668,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi-guangdong/6-4.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi-guangdong/6-4.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi-guangdong/6-4.jpg"
+        },
+        {
+          "w": 2500,
+          "src": "images/guangxi-guangdong/6-4.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/6-4.jpg"
+    },
+    {
+      "src": "images/guangxi-guangdong/U2A4684.jpg",
+      "title": "U2A4684",
+      "collection": "guangxi-guangdong",
+      "location": "",
+      "date": "2024-10-26",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/1600s",
+        "iso": "400"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi-guangdong/U2A4684.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi-guangdong/U2A4684.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi-guangdong/U2A4684.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/guangxi-guangdong/U2A4684.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A4684.jpg"
+    },
+    {
+      "src": "images/guangxi-guangdong/U2A9418.jpg",
+      "title": "U2A9418",
+      "collection": "guangxi-guangdong",
+      "location": "",
+      "date": "2024-10-27",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/5000s",
+        "iso": "4000"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi-guangdong/U2A9418.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi-guangdong/U2A9418.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi-guangdong/U2A9418.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/guangxi-guangdong/U2A9418.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A9418.jpg"
+    },
+    {
+      "src": "images/guangxi-guangdong/5.jpg",
+      "title": "5",
+      "collection": "guangxi-guangdong",
+      "location": "",
+      "date": "2023-11-26",
+      "width": 2500,
+      "height": 1668,
+      "exif": {
+        "lens": "RF100-500mm F4.5-7.1 L IS USM"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi-guangdong/5.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi-guangdong/5.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi-guangdong/5.jpg"
+        },
+        {
+          "w": 2500,
+          "src": "images/guangxi-guangdong/5.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/5.jpg"
+    },
+    {
+      "src": "images/guangxi-guangdong/2022-2.jpg",
+      "title": "2022 2",
+      "collection": "guangxi-guangdong",
+      "location": "",
+      "date": "",
+      "width": 2500,
+      "height": 1667,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi-guangdong/2022-2.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi-guangdong/2022-2.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi-guangdong/2022-2.jpg"
+        },
+        {
+          "w": 2500,
+          "src": "images/guangxi-guangdong/2022-2.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/2022-2.jpg"
+    },
+    {
+      "src": "images/guangxi-guangdong/U2A6681.jpg",
+      "title": "U2A6681",
+      "collection": "guangxi-guangdong",
+      "location": "",
+      "date": "2024-10-27",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/400s",
+        "iso": "6400"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi-guangdong/U2A6681.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi-guangdong/U2A6681.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi-guangdong/U2A6681.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/guangxi-guangdong/U2A6681.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A6681.jpg"
+    },
+    {
+      "src": "images/guangxi-guangdong/6-1.jpg",
+      "title": "6 1",
+      "collection": "guangxi-guangdong",
+      "location": "",
+      "date": "2023-03-12",
+      "width": 2500,
+      "height": 1668,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi-guangdong/6-1.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi-guangdong/6-1.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi-guangdong/6-1.jpg"
+        },
+        {
+          "w": 2500,
+          "src": "images/guangxi-guangdong/6-1.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/6-1.jpg"
+    },
+    {
+      "src": "images/guangxi-guangdong/U2A8129.jpg",
+      "title": "U2A8129",
+      "collection": "guangxi-guangdong",
+      "location": "",
+      "date": "2024-10-27",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/4000s",
+        "iso": "3200"
+      },
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi-guangdong/U2A8129.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi-guangdong/U2A8129.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi-guangdong/U2A8129.jpg"
+        },
+        {
+          "w": 4000,
+          "src": "images/guangxi-guangdong/U2A8129.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A8129.jpg"
+    },
+    {
+      "src": "images/guangxi-guangdong/U2A7382.jpg",
+      "title": "U2A7382",
+      "collection": "guangxi-guangdong",
+      "location": "",
+      "date": "2024-10-27",
+      "width": 2668,
+      "height": 4000,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/2000s",
+        "iso": "2500"
+      },
+      "variants": [
+        {
+          "w": 533,
+          "src": "images/_thumbs/800/guangxi-guangdong/U2A7382.jpg"
+        },
+        {
+          "w": 1067,
+          "src": "images/_thumbs/1600/guangxi-guangdong/U2A7382.jpg"
+        },
+        {
+          "w": 1601,
+          "src": "images/_thumbs/2400/guangxi-guangdong/U2A7382.jpg"
+        },
+        {
+          "w": 2668,
+          "src": "images/guangxi-guangdong/U2A7382.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A7382.jpg"
+    },
+    {
+      "src": "images/guangxi-guangdong/6-2.jpg",
+      "title": "6 2",
+      "collection": "guangxi-guangdong",
+      "location": "",
+      "date": "",
+      "width": 2500,
+      "height": 1667,
+      "exif": {},
+      "variants": [
+        {
+          "w": 800,
+          "src": "images/_thumbs/800/guangxi-guangdong/6-2.jpg"
+        },
+        {
+          "w": 1600,
+          "src": "images/_thumbs/1600/guangxi-guangdong/6-2.jpg"
+        },
+        {
+          "w": 2400,
+          "src": "images/_thumbs/2400/guangxi-guangdong/6-2.jpg"
+        },
+        {
+          "w": 2500,
+          "src": "images/guangxi-guangdong/6-2.jpg"
+        }
+      ],
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/6-2.jpg"
     }
   ]
 }

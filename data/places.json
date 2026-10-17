@@ -209,6 +209,16 @@
         { "name": "Kandy", "lat": 7.29, "lng": 80.64 }
       ]
     },
+    "guangxi-guangdong": {
+      "status": "draft",
+      "region": "Asia",
+      "where": "China",
+      "tz": "Asia/Shanghai",
+      "pins": [
+        { "name": "Shenzhen", "lat": 22.54, "lng": 114.06 },
+        { "name": "Nonggang National Nature Reserve", "lat": 22.45, "lng": 106.95 }
+      ]
+    },
     "yunnan": {
       "status": "draft",
       "region": "Asia",
