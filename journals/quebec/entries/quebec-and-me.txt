@@ -2,7 +2,7 @@ title: 魁北克和我
 date: 10.8.2026 周四
 time: 11:00 AM
 place: Montreal
-where: Montréal
+where: Montreal, QC, Canada
 ---
 2025年八月七日，5:00 AM，北大西洋，巴哈马，Andros岛，25.175780, -78.027091。
 

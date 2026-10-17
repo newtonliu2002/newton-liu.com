@@ -1655,6 +1655,19 @@ body.lb-open { overflow: hidden; }
   color: var(--text-body);
 }
 .photo-numbers .nb-note { letter-spacing: .1em; }
+/* The biggest trip's one dial, the most in a day (Colombia), is a numeral
+   the size of the one above it, its label and note dressed the same
+   (Newton, 2026-10-17). */
+.photo-numbers .nb-trip .nb-k { font-size: 12px; color: var(--text-body); }
+[data-lang="zh"] .photo-numbers .nb-trip .nb-k { font-size: 13px; }
+.photo-numbers .nb-trip .nb-dv {
+  margin: clamp(6px, 1.6cqi, 12px) 0 clamp(8px, 2cqi, 14px) -.045em;
+  font: 300 clamp(44px, 13.5cqi, 84px)/1 var(--sans);
+  letter-spacing: -.025em;
+  white-space: nowrap;
+  color: var(--text);
+}
+.photo-numbers .nb-trip .nb-dv .nb-unit { margin-left: .22em; font-size: max(13px, .2em); }
 
 /* ---- The charts ------------------------------------------------------------ */
 .photo-numbers .nb-chart {
@@ -1968,7 +1981,7 @@ body.lb-open { overflow: hidden; }
   .photo-numbers .nb-field .nb-month { grid-column: 2; grid-row: 2; }
   .photo-numbers .nb-day .nb-hour { grid-column: 1 / -1; grid-row: 1; }
   .photo-numbers .nb-day .nb-inst, .photo-numbers .nb-day .nb-list { grid-row: 2; }
-  .photo-numbers .nb-num { font-size: clamp(56px, 9cqi, 100px); }
+  .photo-numbers .nb-num, .photo-numbers .nb-trip .nb-dv { font-size: clamp(56px, 9cqi, 100px); }
   /* Dials at their own widths, wrapping when the column runs out. */
   .photo-numbers .nb-dials {
     display: flex;
