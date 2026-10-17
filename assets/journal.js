@@ -408,7 +408,6 @@
     month.textContent = S.date(journal.month || "");
     var range = rangeText(journal.dates && journal.dates.from, journal.dates && journal.dates.to);
     if (range) dates.textContent = range;
-    else if (LOCAL) { dates.textContent = t("Dates to come"); dates.classList.add("jn-hold-text"); }
     if (!month.textContent) month.hidden = true;
     if (!dates.textContent) dates.hidden = true;
 

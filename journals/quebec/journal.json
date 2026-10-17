@@ -3,7 +3,6 @@
   "title": "Quebec",
   "titleZh": "魁北克",
   "month": "October 2026",
-  "dates": { "from": "", "to": "" },
   "cover": { "type": "placeholder", "src": "", "poster": "", "alt": "" },
   "route": [
     { "place": "Montreal", "date": "2026-10-08" },
@@ -18,6 +17,6 @@
     { "place": "Parc national des Grands-Jardins", "date": "" },
     { "place": "Ottawa/Gatineau", "date": "" }
   ],
-  "entries": ["me-and-quebec", "french", "rain"],
+  "entries": ["quebec-and-me", "french", "rain"],
   "english": []
 }
