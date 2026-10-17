@@ -29,6 +29,7 @@
     tour: "Tour", tourTip: "Tour",
     overview: "Back to overview", overviewTip: "Overview",
     view: "View collection", arrow: "→", prev: "‹", next: "›", close: "×",
+    written: "With writing",
     index: "Index", load: "Load globe",
     unavailable: "Globe unavailable. The collections are listed here.",
     noData: "Couldn't load the collections.",
@@ -1034,6 +1035,8 @@
       var date = typeof c.date === "string" ? c.date : derived;   // "" hides it
       var col = {
         slug: c.slug, title: c.title || c.slug, sub: c.subtitle || "", date: date,
+        // Newton has written something for it (its blurb): it carries the note mark.
+        written: !!(c.blurb && String(c.blurb).trim()),
         // A list of places ("Maine · Massachusetts") breaks only after a dot.
         where: (pl.where || "").replace(/ · /g, "\u00a0· "), zoom: pl.zoom, sensitive: !!pl.sensitive, i: i, opener: opener,
         // Its time zone (places.json `tz`, IANA), for the local time on its plate and card.
@@ -1100,7 +1103,8 @@
       else { a.setAttribute("role", "button"); a.tabIndex = 0; li.hidden = true; }
       a.setAttribute("data-slug", c.slug);
       a.appendChild(el("span", "g-row-mark")).setAttribute("aria-hidden", "true");
-      a.appendChild(el("span", "g-row-title", c.title));
+      var t = a.appendChild(el("span", "g-row-title", c.title));
+      if (c.written) { t.appendChild(noteMark()); t.appendChild(el("span", "g-sr", ", " + LABELS.written.toLowerCase())); }
       if (visited[c.slug]) a.classList.add("is-visited");
       c.row = a;
       li.appendChild(a);
@@ -1847,7 +1851,7 @@
       NL.responsive(img, c.opener, PLATE_SIZES);
       plate.appendChild(img);
     }
-    plate.appendChild(el("p", "g-plate-title", c.title));
+    plateTitle(c);
     // The local time floats right after the place, so it ends its last
     // line when there is room, and takes a line of its own when there is not.
     var time = colTime(c);
@@ -1859,6 +1863,12 @@
     plateCol = c;
     openPlate(at || c.lead.p);
   }
+  // A collection's name on the plate, its note mark (if it has writing) at
+  // the far right, over the local time.
+  function plateTitle(c) {
+    var t = plate.appendChild(el("p", "g-plate-title", c.title));
+    if (c.written) t.insertBefore(noteMark(), t.firstChild);
+  }
   function crowdPlate(p) {
     if (!L.app || COARSE) return;
     if (passing) endPass();
@@ -1866,7 +1876,7 @@
     crowd = p;
     plate.textContent = "";
     plate.classList.add("is-text");        // titles only, each set apart, the plate as wide as they need
-    [p.slug].concat(p.stack).forEach(function (s) { plate.appendChild(el("p", "g-plate-title", bySlug[s].title)); });
+    [p.slug].concat(p.stack).forEach(function (s) { plateTitle(bySlug[s]); });
     openPlate(p);
   }
   function openPlate(p) {
@@ -2313,6 +2323,16 @@
      THE CARD
      ------------------------------------------------------------------ */
 
+  // The note mark: a collection Newton has written something for (a blurb
+  // on its page) shows a few lines of text beside its name, in the list, on
+  // the plate and on the card (Newton, 2026-10-16).
+  function noteMark() {
+    var s = el("span", "g-note");
+    s.title = LABELS.written;
+    s.innerHTML = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1 3.5h10M1 6.5h10M1 9.5h6" fill="none" stroke="currentColor" stroke-width="1"/></svg>';
+    return s;
+  }
+
   function fillCard(c) {
     var media = $(".g-card-media");
     media.textContent = "";
@@ -2334,6 +2354,7 @@
       n.textContent = parts[k] || "";
       n.hidden = !parts[k];
     }
+    if (c.written) { var ttl = $(".g-card-title"); ttl.insertBefore(noteMark(), ttl.firstChild); }
     cardCol = c;
     var ct = $(".g-card-time"), foot = $(".g-card-foot");
     if (ct) { ct.textContent = colTime(c); ct.hidden = !ct.textContent; }

@@ -309,6 +309,16 @@ body.is-editing .g-tour + .g-readout { border: 0; }
 .g-row.is-recent { animation: g-recent 2.4s var(--ease) both; }
 @keyframes g-recent { from { box-shadow: inset 2px 0 0 var(--accent); } to { box-shadow: inset 2px 0 0 transparent; } }
 .g-row-title { font: 500 var(--t-row)/20px var(--sans); }
+/* The note mark (globe.js noteMark): a collection with Newton's writing.
+   Beside its name in the list; at the far right of its name on the plate
+   and the card, over the local time. */
+.g-note { display: inline-flex; flex: none; color: var(--text-faint); transition: color var(--d-base) var(--ease); }
+.g-note svg { display: block; width: 12px; height: 12px; }
+.g-row-title .g-note { margin-left: 9px; }
+.g-row.is-lit .g-note, .g-row.is-passing .g-note, .g-row[aria-current="true"] .g-note { color: var(--text-dim); }
+.g-plate-title, .g-card-title { display: flow-root; }
+.g-plate-title .g-note { float: right; margin: 4px 0 0 10px; }
+.g-card-title .g-note { float: right; margin: 9px 0 0 12px; }
 .g-row[role="button"] { cursor: pointer; }      /* a place waiting for its photographs: flies there, no gallery */
 
 /* A region: a mono caps heading with the stacked pin's mark (a crosshair in
@@ -474,6 +484,9 @@ body.is-editing .g-tour + .g-readout { border: 0; }
   .g-card-go { flex: none; gap: 8px; height: auto; padding: 0; border: 0; justify-content: flex-start; }
   .g-card-go::after { display: none; }
   .g-card .g-card-close { position: absolute; top: 0; right: 0; border: 0; }
+  /* Its title is clamped to two lines, so the note mark stands apart, at
+     the right over the local time. */
+  .g-card-title .g-note { position: absolute; right: 14px; bottom: 34px; float: none; margin: 0; }
 
   /* Two lines at most, in the sans so they fit, each credit kept whole. */
   .g-stage .maplibregl-ctrl-top-right { right: 16px; top: 8px; max-width: 72%; text-align: right; }
