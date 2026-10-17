@@ -185,7 +185,8 @@
       "thumb": "images/_thumbs/1600/alaska/BU2A6298.jpg",
       "caption": "Horned Puffin",
       "sci": "Fratercula corniculata",
-      "ebird": "horpuf"
+      "ebird": "horpuf",
+      "zh": "角海鹦"
     },
     {
       "src": "images/alaska/AU2A4490.jpg",
@@ -412,7 +413,8 @@
       "thumb": "images/_thumbs/1600/alaska/BU2A6918.jpg",
       "caption": "Horned Puffin",
       "sci": "Fratercula corniculata",
-      "ebird": "horpuf"
+      "ebird": "horpuf",
+      "zh": "角海鹦"
     },
     {
       "src": "images/alaska/BU2A7015.jpg",
@@ -567,7 +569,8 @@
       "thumb": "images/_thumbs/1600/alaska/BU2A8206.jpg",
       "caption": "Spectacled Eider",
       "sci": "Somateria fischeri",
-      "ebird": "speeid"
+      "ebird": "speeid",
+      "zh": "白眶绒鸭"
     },
     {
       "src": "images/alaska/B0002480.jpg",
@@ -714,7 +717,8 @@
       "thumb": "images/_thumbs/1600/alaska/U2A5499.jpg",
       "caption": "Wilson's Warbler",
       "sci": "Cardellina pusilla",
-      "ebird": "wlswar"
+      "ebird": "wlswar",
+      "zh": "黑头威森莺"
     },
     {
       "src": "images/alaska/BU2A5973.jpg",
@@ -753,7 +757,8 @@
       "thumb": "images/_thumbs/1600/alaska/BU2A5973.jpg",
       "caption": "Black-backed Woodpecker",
       "sci": "Picoides arcticus",
-      "ebird": "bkbwoo"
+      "ebird": "bkbwoo",
+      "zh": "黑背三趾啄木鸟"
     },
     {
       "src": "images/alaska/B0002198.jpg",
@@ -972,7 +977,8 @@
       "thumb": "images/_thumbs/1600/alaska/U2A6259.jpg",
       "caption": "Semipalmated Sandpiper",
       "sci": "Calidris pusilla",
-      "ebird": "semsan"
+      "ebird": "semsan",
+      "zh": "半蹼滨鹬"
     },
     {
       "src": "images/alaska/AU2A2403.jpg",
@@ -1011,7 +1017,8 @@
       "thumb": "images/_thumbs/1600/alaska/AU2A2403.jpg",
       "caption": "Bald Eagle",
       "sci": "Haliaeetus leucocephalus",
-      "ebird": "baleag"
+      "ebird": "baleag",
+      "zh": "白头海雕"
     },
     {
       "src": "images/alaska/B0003018.jpg",
@@ -1338,7 +1345,8 @@
       "thumb": "images/_thumbs/1600/alaska/B0002021.jpg",
       "caption": "Bald Eagle",
       "sci": "Haliaeetus leucocephalus",
-      "ebird": "baleag"
+      "ebird": "baleag",
+      "zh": "白头海雕"
     },
     {
       "src": "images/alaska/B0002383.jpg",
@@ -1413,7 +1421,8 @@
       "thumb": "images/_thumbs/1600/florida/E05A7372.jpg",
       "caption": "American White Pelican",
       "sci": "Pelecanus erythrorhynchos",
-      "ebird": "amwpel"
+      "ebird": "amwpel",
+      "zh": "美洲鹈鹕"
     },
     {
       "src": "images/florida/I05A0009.jpg",
@@ -1572,7 +1581,8 @@
       "thumb": "images/_thumbs/1600/florida/G05A9496.jpg",
       "caption": "Snowy Egret",
       "sci": "Egretta thula",
-      "ebird": "snoegr"
+      "ebird": "snoegr",
+      "zh": "雪鹭"
     },
     {
       "src": "images/florida/E05A4847.jpg",
@@ -1687,7 +1697,8 @@
       "thumb": "images/_thumbs/1600/florida/C05A0580.jpg",
       "caption": "Willet",
       "sci": "Tringa semipalmata",
-      "ebird": "willet1"
+      "ebird": "willet1",
+      "zh": "斑翅鹬"
     },
     {
       "src": "images/florida/E05A45422.jpg",
@@ -1759,7 +1770,8 @@
       "thumb": "images/_thumbs/1600/florida/2022-60.jpg",
       "caption": "Double-crested Cormorant",
       "sci": "Nannopterum auritum",
-      "ebird": "doccor"
+      "ebird": "doccor",
+      "zh": "角鸬鹚"
     },
     {
       "src": "images/florida/E05A4422.jpg",
@@ -1918,7 +1930,8 @@
       "thumb": "images/_thumbs/1600/florida/05A5711.jpg",
       "caption": "Black Skimmer",
       "sci": "Rynchops niger",
-      "ebird": "blkski"
+      "ebird": "blkski",
+      "zh": "黑剪嘴鸥"
     },
     {
       "src": "images/florida/E05A6133.jpg",
@@ -1957,7 +1970,8 @@
       "thumb": "images/_thumbs/1600/florida/E05A6133.jpg",
       "caption": "American White Pelican",
       "sci": "Pelecanus erythrorhynchos",
-      "ebird": "amwpel"
+      "ebird": "amwpel",
+      "zh": "美洲鹈鹕"
     },
     {
       "src": "images/florida/E05A7084.jpg",
@@ -1996,7 +2010,8 @@
       "thumb": "images/_thumbs/1600/florida/E05A7084.jpg",
       "caption": "American White Pelican",
       "sci": "Pelecanus erythrorhynchos",
-      "ebird": "amwpel"
+      "ebird": "amwpel",
+      "zh": "美洲鹈鹕"
     },
     {
       "src": "images/florida/E05A7130.jpg",
@@ -2035,7 +2050,8 @@
       "thumb": "images/_thumbs/1600/florida/E05A7130.jpg",
       "caption": "American White Pelican",
       "sci": "Pelecanus erythrorhynchos",
-      "ebird": "amwpel"
+      "ebird": "amwpel",
+      "zh": "美洲鹈鹕"
     },
     {
       "src": "images/florida/ZL-1674.jpg",
@@ -2190,7 +2206,8 @@
       "thumb": "images/_thumbs/1600/florida/05A6776.jpg",
       "caption": "Pied-billed Grebe",
       "sci": "Podilymbus podiceps",
-      "ebird": "pibgre"
+      "ebird": "pibgre",
+      "zh": "斑嘴巨䴙䴘"
     },
     {
       "src": "images/florida/E05A7152.jpg",
@@ -2229,7 +2246,8 @@
       "thumb": "images/_thumbs/1600/florida/E05A7152.jpg",
       "caption": "American White Pelican",
       "sci": "Pelecanus erythrorhynchos",
-      "ebird": "amwpel"
+      "ebird": "amwpel",
+      "zh": "美洲鹈鹕"
     },
     {
       "src": "images/florida/D05A8136.jpg",
@@ -2268,7 +2286,8 @@
       "thumb": "images/_thumbs/1600/florida/D05A8136.jpg",
       "caption": "American White Pelican",
       "sci": "Pelecanus erythrorhynchos",
-      "ebird": "amwpel"
+      "ebird": "amwpel",
+      "zh": "美洲鹈鹕"
     },
     {
       "src": "images/florida/G05A9424.jpg",
@@ -2307,7 +2326,8 @@
       "thumb": "images/_thumbs/1600/florida/G05A9424.jpg",
       "caption": "Snowy Egret",
       "sci": "Egretta thula",
-      "ebird": "snoegr"
+      "ebird": "snoegr",
+      "zh": "雪鹭"
     },
     {
       "src": "images/florida/C05A1452.jpg",
@@ -2346,7 +2366,8 @@
       "thumb": "images/_thumbs/1600/florida/C05A1452.jpg",
       "caption": "Marbled Godwit",
       "sci": "Limosa fedoa",
-      "ebird": "margod"
+      "ebird": "margod",
+      "zh": "云斑塍鹬"
     },
     {
       "src": "images/florida/E05A6204.jpg",
@@ -2385,7 +2406,8 @@
       "thumb": "images/_thumbs/1600/florida/E05A6204.jpg",
       "caption": "American White Pelican",
       "sci": "Pelecanus erythrorhynchos",
-      "ebird": "amwpel"
+      "ebird": "amwpel",
+      "zh": "美洲鹈鹕"
     },
     {
       "src": "images/florida/05A9810-2.jpg",
@@ -2424,7 +2446,8 @@
       "thumb": "images/_thumbs/1600/florida/05A9810-2.jpg",
       "caption": "Brown Pelican",
       "sci": "Pelecanus occidentalis",
-      "ebird": "brnpel"
+      "ebird": "brnpel",
+      "zh": "褐鹈鹕"
     },
     {
       "src": "images/florida/05A9756-2.jpg",
@@ -2543,7 +2566,8 @@
       "thumb": "images/_thumbs/1600/florida/05A8842.jpg",
       "caption": "Anhinga",
       "sci": "Anhinga anhinga",
-      "ebird": "anhing"
+      "ebird": "anhing",
+      "zh": "美洲蛇鹈"
     },
     {
       "src": "images/florida/E05A5602.jpg",
@@ -2582,7 +2606,8 @@
       "thumb": "images/_thumbs/1600/florida/E05A5602.jpg",
       "caption": "American White Pelican",
       "sci": "Pelecanus erythrorhynchos",
-      "ebird": "amwpel"
+      "ebird": "amwpel",
+      "zh": "美洲鹈鹕"
     },
     {
       "src": "images/florida/2022-61.jpg",
@@ -2614,7 +2639,8 @@
       "thumb": "images/_thumbs/1600/florida/2022-61.jpg",
       "caption": "Double-crested Cormorant",
       "sci": "Nannopterum auritum",
-      "ebird": "doccor"
+      "ebird": "doccor",
+      "zh": "角鸬鹚"
     },
     {
       "src": "images/florida/E05A7351.jpg",
@@ -2653,7 +2679,8 @@
       "thumb": "images/_thumbs/1600/florida/E05A7351.jpg",
       "caption": "American White Pelican",
       "sci": "Pelecanus erythrorhynchos",
-      "ebird": "amwpel"
+      "ebird": "amwpel",
+      "zh": "美洲鹈鹕"
     },
     {
       "src": "images/florida/D05A8954.jpg",
@@ -2766,7 +2793,8 @@
       "thumb": "images/_thumbs/1600/malaysia/2-1.jpg",
       "caption": "Bornean Peacock-Pheasant",
       "sci": "Polyplectron schleiermacheri",
-      "ebird": "bopphe1"
+      "ebird": "bopphe1",
+      "zh": "加里曼丹孔雀雉"
     },
     {
       "src": "images/malaysia/Inde-5.jpg",
@@ -2893,7 +2921,8 @@
       "thumb": "images/_thumbs/1600/malaysia/8-1.jpg",
       "caption": "Black-crowned Pitta",
       "sci": "Erythropitta ussheri",
-      "ebird": "bkhpit1"
+      "ebird": "bkhpit1",
+      "zh": "黑头八色鸫"
     },
     {
       "src": "images/malaysia/8-2.jpg",
@@ -2925,7 +2954,8 @@
       "thumb": "images/_thumbs/1600/malaysia/8-2.jpg",
       "caption": "Black-crowned Pitta",
       "sci": "Erythropitta ussheri",
-      "ebird": "bkhpit1"
+      "ebird": "bkhpit1",
+      "zh": "黑头八色鸫"
     },
     {
       "src": "images/malaysia/8-3.jpg",
@@ -2957,7 +2987,8 @@
       "thumb": "images/_thumbs/1600/malaysia/8-3.jpg",
       "caption": "Black-crowned Pitta",
       "sci": "Erythropitta ussheri",
-      "ebird": "bkhpit1"
+      "ebird": "bkhpit1",
+      "zh": "黑头八色鸫"
     },
     {
       "src": "images/malaysia/12-3.jpg",
@@ -2989,7 +3020,8 @@
       "thumb": "images/_thumbs/1600/malaysia/12-3.jpg",
       "caption": "Orange-bellied Flowerpecker",
       "sci": "Dicaeum trigonostigma",
-      "ebird": "orbflo1"
+      "ebird": "orbflo1",
+      "zh": "橙腹啄花鸟"
     },
     {
       "src": "images/malaysia/10-2.jpg",
@@ -3113,7 +3145,8 @@
       "caption": "White-crowned Hornbill",
       "focus": "center bottom",
       "sci": "Berenicornis comatus",
-      "ebird": "whchor2"
+      "ebird": "whchor2",
+      "zh": "白冠犀鸟"
     },
     {
       "src": "images/malaysia/10-3.jpg",
@@ -3274,7 +3307,8 @@
       "thumb": "images/_thumbs/1600/malaysia/15.jpg",
       "caption": "Rufous-winged Philentoma",
       "sci": "Philentoma pyrhoptera",
-      "ebird": "ruwphi2"
+      "ebird": "ruwphi2",
+      "zh": "棕翅王䴗"
     },
     {
       "src": "images/malaysia/7-3.jpg",
@@ -3306,7 +3340,8 @@
       "thumb": "images/_thumbs/1600/malaysia/7-3.jpg",
       "caption": "Black-and-red Broadbill",
       "sci": "Cymbirhynchus macrorhynchos",
-      "ebird": "barbro1"
+      "ebird": "barbro1",
+      "zh": "黑红阔嘴鸟"
     },
     {
       "src": "images/malaysia/9.jpg",
@@ -3371,7 +3406,8 @@
       "thumb": "images/_thumbs/1600/malaysia/11.jpg",
       "caption": "Green Iora",
       "sci": "Aegithina viridissima",
-      "ebird": "greior2"
+      "ebird": "greior2",
+      "zh": "绿雀鹎"
     },
     {
       "src": "images/malaysia/2022-7.jpg",
@@ -3403,7 +3439,8 @@
       "thumb": "images/_thumbs/1600/malaysia/2022-7.jpg",
       "caption": "Sunda Frogmouth",
       "sci": "Batrachostomus cornutus",
-      "ebird": "sunfro1"
+      "ebird": "sunfro1",
+      "zh": "巽他蟆口鸱"
     },
     {
       "src": "images/galapagos/7-1.jpg",
@@ -3435,7 +3472,8 @@
       "thumb": "images/_thumbs/1600/galapagos/7-1.jpg",
       "caption": "Brown Pelican",
       "sci": "Pelecanus occidentalis",
-      "ebird": "brnpel"
+      "ebird": "brnpel",
+      "zh": "褐鹈鹕"
     },
     {
       "src": "images/galapagos/8.jpg",
@@ -3496,7 +3534,8 @@
       "thumb": "images/_thumbs/1600/galapagos/21.jpg",
       "caption": "Lava Gull",
       "sci": "Leucophaeus fuliginosus",
-      "ebird": "lavgul1"
+      "ebird": "lavgul1",
+      "zh": "岩鸥"
     },
     {
       "src": "images/galapagos/11-3.jpg",
@@ -3528,7 +3567,8 @@
       "thumb": "images/_thumbs/1600/galapagos/11-3.jpg",
       "caption": "Blue-footed Booby",
       "sci": "Sula nebouxii",
-      "ebird": "bfoboo"
+      "ebird": "bfoboo",
+      "zh": "蓝脚鲣鸟"
     },
     {
       "src": "images/galapagos/6.jpg",
@@ -3618,7 +3658,8 @@
       "thumb": "images/_thumbs/1600/galapagos/11-2.jpg",
       "caption": "Galapagos Penguin",
       "sci": "Spheniscus mendiculus",
-      "ebird": "galpen1"
+      "ebird": "galpen1",
+      "zh": "加岛企鹅"
     },
     {
       "src": "images/galapagos/12-2.jpg",
@@ -3683,7 +3724,8 @@
       "thumb": "images/_thumbs/1600/galapagos/12-4.jpg",
       "caption": "American Oystercatcher",
       "sci": "Haematopus palliatus",
-      "ebird": "ameoys"
+      "ebird": "ameoys",
+      "zh": "美洲斑蛎鹬"
     },
     {
       "src": "images/galapagos/13.jpg",
@@ -3715,7 +3757,8 @@
       "thumb": "images/_thumbs/1600/galapagos/13.jpg",
       "caption": "American Oystercatcher",
       "sci": "Haematopus palliatus",
-      "ebird": "ameoys"
+      "ebird": "ameoys",
+      "zh": "美洲斑蛎鹬"
     },
     {
       "src": "images/galapagos/14-3.jpg",
@@ -3748,7 +3791,8 @@
       "caption": "Brown Pelican",
       "focus": "left center",
       "sci": "Pelecanus occidentalis",
-      "ebird": "brnpel"
+      "ebird": "brnpel",
+      "zh": "褐鹈鹕"
     },
     {
       "src": "images/galapagos/5-1.jpg",
@@ -3847,7 +3891,8 @@
       "caption": "White-cheeked Pintail",
       "focus": "right center",
       "sci": "Anas bahamensis",
-      "ebird": "whcpin"
+      "ebird": "whcpin",
+      "zh": "白脸针尾鸭"
     },
     {
       "src": "images/galapagos/4-1.jpg",
@@ -3879,7 +3924,8 @@
       "thumb": "images/_thumbs/1600/galapagos/4-1.jpg",
       "caption": "Mangrove Yellow Warbler",
       "sci": "Setophaga petechia",
-      "ebird": "manwar1"
+      "ebird": "manwar1",
+      "zh": "黄林莺"
     },
     {
       "src": "images/galapagos/19-1.jpg",
@@ -4176,7 +4222,8 @@
       "thumb": "images/_thumbs/1600/galapagos/20.jpg",
       "caption": "Galapagos Mockingbird",
       "sci": "Mimus parvulus",
-      "ebird": "galmoc1"
+      "ebird": "galmoc1",
+      "zh": "加岛嘲鸫"
     },
     {
       "src": "images/galapagos/22.jpg",
@@ -4208,7 +4255,8 @@
       "thumb": "images/_thumbs/1600/galapagos/22.jpg",
       "caption": "Brown Pelican",
       "sci": "Pelecanus occidentalis",
-      "ebird": "brnpel"
+      "ebird": "brnpel",
+      "zh": "褐鹈鹕"
     },
     {
       "src": "images/galapagos/10.jpg",
@@ -4240,7 +4288,8 @@
       "thumb": "images/_thumbs/1600/galapagos/10.jpg",
       "caption": "Galapagos Flycatcher",
       "sci": "Myiarchus magnirostris",
-      "ebird": "galfly1"
+      "ebird": "galfly1",
+      "zh": "大嘴蝇霸鹟"
     },
     {
       "src": "images/galapagos/7-3.jpg",
@@ -4272,7 +4321,8 @@
       "thumb": "images/_thumbs/1600/galapagos/7-3.jpg",
       "caption": "Brown Pelican",
       "sci": "Pelecanus occidentalis",
-      "ebird": "brnpel"
+      "ebird": "brnpel",
+      "zh": "褐鹈鹕"
     },
     {
       "src": "images/galapagos/7-2.jpg",
@@ -4304,7 +4354,8 @@
       "thumb": "images/_thumbs/1600/galapagos/7-2.jpg",
       "caption": "Brown Pelican",
       "sci": "Pelecanus occidentalis",
-      "ebird": "brnpel"
+      "ebird": "brnpel",
+      "zh": "褐鹈鹕"
     },
     {
       "src": "images/colorado-nebraska/7.jpg",
@@ -4336,7 +4387,8 @@
       "thumb": "images/_thumbs/1600/colorado-nebraska/7.jpg",
       "caption": "Greater Sage-Grouse",
       "sci": "Centrocercus urophasianus",
-      "ebird": "saggro"
+      "ebird": "saggro",
+      "zh": "艾草松鸡"
     },
     {
       "src": "images/colorado-nebraska/15.jpg",
@@ -4397,7 +4449,8 @@
       "thumb": "images/_thumbs/1600/colorado-nebraska/3-2.jpg",
       "caption": "White-tailed Ptarmigan",
       "sci": "Lagopus leucura",
-      "ebird": "whtpta1"
+      "ebird": "whtpta1",
+      "zh": "白尾雷鸟"
     },
     {
       "src": "images/colorado-nebraska/1.jpg",
@@ -4429,7 +4482,8 @@
       "thumb": "images/_thumbs/1600/colorado-nebraska/1.jpg",
       "caption": "White-tailed Ptarmigan",
       "sci": "Lagopus leucura",
-      "ebird": "whtpta1"
+      "ebird": "whtpta1",
+      "zh": "白尾雷鸟"
     },
     {
       "src": "images/colorado-nebraska/4-5.jpg",
@@ -4461,7 +4515,8 @@
       "thumb": "images/_thumbs/1600/colorado-nebraska/4-5.jpg",
       "caption": "White-tailed Ptarmigan",
       "sci": "Lagopus leucura",
-      "ebird": "whtpta1"
+      "ebird": "whtpta1",
+      "zh": "白尾雷鸟"
     },
     {
       "src": "images/colorado-nebraska/4-2.jpg",
@@ -4493,7 +4548,8 @@
       "thumb": "images/_thumbs/1600/colorado-nebraska/4-2.jpg",
       "caption": "White-tailed Ptarmigan",
       "sci": "Lagopus leucura",
-      "ebird": "whtpta1"
+      "ebird": "whtpta1",
+      "zh": "白尾雷鸟"
     },
     {
       "src": "images/colorado-nebraska/CO-NE-17.jpg",
@@ -4525,7 +4581,8 @@
       "thumb": "images/_thumbs/1600/colorado-nebraska/CO-NE-17.jpg",
       "caption": "White-tailed Ptarmigan",
       "sci": "Lagopus leucura",
-      "ebird": "whtpta1"
+      "ebird": "whtpta1",
+      "zh": "白尾雷鸟"
     },
     {
       "src": "images/colorado-nebraska/CO-NE-24.jpg",
@@ -4557,7 +4614,8 @@
       "thumb": "images/_thumbs/1600/colorado-nebraska/CO-NE-24.jpg",
       "caption": "Greater Sage-Grouse",
       "sci": "Centrocercus urophasianus",
-      "ebird": "saggro"
+      "ebird": "saggro",
+      "zh": "艾草松鸡"
     },
     {
       "src": "images/colorado-nebraska/8-3.jpg",
@@ -4589,7 +4647,8 @@
       "thumb": "images/_thumbs/1600/colorado-nebraska/8-3.jpg",
       "caption": "Greater Sage-Grouse",
       "sci": "Centrocercus urophasianus",
-      "ebird": "saggro"
+      "ebird": "saggro",
+      "zh": "艾草松鸡"
     },
     {
       "src": "images/colorado-nebraska/8-1.jpg",
@@ -4621,7 +4680,8 @@
       "thumb": "images/_thumbs/1600/colorado-nebraska/8-1.jpg",
       "caption": "Greater Sage-Grouse",
       "sci": "Centrocercus urophasianus",
-      "ebird": "saggro"
+      "ebird": "saggro",
+      "zh": "艾草松鸡"
     },
     {
       "src": "images/colorado-nebraska/9-1.jpg",
@@ -4653,7 +4713,8 @@
       "thumb": "images/_thumbs/1600/colorado-nebraska/9-1.jpg",
       "caption": "Greater Sage-Grouse",
       "sci": "Centrocercus urophasianus",
-      "ebird": "saggro"
+      "ebird": "saggro",
+      "zh": "艾草松鸡"
     },
     {
       "src": "images/colorado-nebraska/9-2.jpg",
@@ -4685,7 +4746,8 @@
       "thumb": "images/_thumbs/1600/colorado-nebraska/9-2.jpg",
       "caption": "Greater Sage-Grouse",
       "sci": "Centrocercus urophasianus",
-      "ebird": "saggro"
+      "ebird": "saggro",
+      "zh": "艾草松鸡"
     },
     {
       "src": "images/colorado-nebraska/9-3.jpg",
@@ -4717,7 +4779,8 @@
       "thumb": "images/_thumbs/1600/colorado-nebraska/9-3.jpg",
       "caption": "Greater Sage-Grouse",
       "sci": "Centrocercus urophasianus",
-      "ebird": "saggro"
+      "ebird": "saggro",
+      "zh": "艾草松鸡"
     },
     {
       "src": "images/colorado-nebraska/9-4.jpg",
@@ -4749,7 +4812,8 @@
       "thumb": "images/_thumbs/1600/colorado-nebraska/9-4.jpg",
       "caption": "Greater Sage-Grouse",
       "sci": "Centrocercus urophasianus",
-      "ebird": "saggro"
+      "ebird": "saggro",
+      "zh": "艾草松鸡"
     },
     {
       "src": "images/colorado-nebraska/6.jpg",
@@ -4781,7 +4845,8 @@
       "thumb": "images/_thumbs/1600/colorado-nebraska/6.jpg",
       "caption": "Greater Sage-Grouse",
       "sci": "Centrocercus urophasianus",
-      "ebird": "saggro"
+      "ebird": "saggro",
+      "zh": "艾草松鸡"
     },
     {
       "src": "images/colorado-nebraska/11-1.jpg",
@@ -4813,7 +4878,8 @@
       "thumb": "images/_thumbs/1600/colorado-nebraska/11-1.jpg",
       "caption": "Sharp-tailed Grouse",
       "sci": "Tympanuchus phasianellus",
-      "ebird": "shtgro"
+      "ebird": "shtgro",
+      "zh": "尖尾松鸡"
     },
     {
       "src": "images/colorado-nebraska/13.jpg",
@@ -4845,7 +4911,8 @@
       "thumb": "images/_thumbs/1600/colorado-nebraska/13.jpg",
       "caption": "Greater Prairie-Chicken",
       "sci": "Tympanuchus cupido",
-      "ebird": "grpchi"
+      "ebird": "grpchi",
+      "zh": "草原松鸡"
     },
     {
       "src": "images/colorado-nebraska/12-1.jpg",
@@ -4877,7 +4944,8 @@
       "thumb": "images/_thumbs/1600/colorado-nebraska/12-1.jpg",
       "caption": "Greater Prairie-Chicken",
       "sci": "Tympanuchus cupido",
-      "ebird": "grpchi"
+      "ebird": "grpchi",
+      "zh": "草原松鸡"
     },
     {
       "src": "images/colorado-nebraska/2-2.jpg",
@@ -4909,7 +4977,8 @@
       "thumb": "images/_thumbs/1600/colorado-nebraska/2-2.jpg",
       "caption": "Sharp-tailed Grouse",
       "sci": "Tympanuchus phasianellus",
-      "ebird": "shtgro"
+      "ebird": "shtgro",
+      "zh": "尖尾松鸡"
     },
     {
       "src": "images/colorado-nebraska/14-1.jpg",
@@ -4941,7 +5010,8 @@
       "thumb": "images/_thumbs/1600/colorado-nebraska/14-1.jpg",
       "caption": "Greater Prairie-Chicken",
       "sci": "Tympanuchus cupido",
-      "ebird": "grpchi"
+      "ebird": "grpchi",
+      "zh": "草原松鸡"
     },
     {
       "src": "images/desert-west/DJI-20251228074312-0042-D.jpg",
@@ -5746,7 +5816,8 @@
       "thumb": "images/_thumbs/1600/yellowstone/U2A6934.jpg",
       "caption": "American Dipper",
       "sci": "Cinclus mexicanus",
-      "ebird": "amedip"
+      "ebird": "amedip",
+      "zh": "美洲河乌"
     },
     {
       "src": "images/yellowstone/U2A7585.jpg",
@@ -5785,7 +5856,8 @@
       "thumb": "images/_thumbs/1600/yellowstone/U2A7585.jpg",
       "caption": "Ruffed Grouse",
       "sci": "Bonasa umbellus",
-      "ebird": "rufgro"
+      "ebird": "rufgro",
+      "zh": "披肩榛鸡"
     },
     {
       "src": "images/snowy-west/05A9934.jpg",
@@ -5824,7 +5896,8 @@
       "thumb": "images/_thumbs/1600/snowy-west/05A9934.jpg",
       "caption": "Canada Jay",
       "sci": "Perisoreus canadensis",
-      "ebird": "gryjay"
+      "ebird": "gryjay",
+      "zh": "灰噪鸦"
     },
     {
       "src": "images/snowy-west/05A2596.jpg",
@@ -5863,7 +5936,8 @@
       "thumb": "images/_thumbs/1600/snowy-west/05A2596.jpg",
       "caption": "Western Bluebird",
       "sci": "Sialia mexicana",
-      "ebird": "wesblu"
+      "ebird": "wesblu",
+      "zh": "西蓝鸲"
     },
     {
       "src": "images/snowy-west/05A2448.jpg",
@@ -5938,7 +6012,8 @@
       "thumb": "images/_thumbs/1600/snowy-west/05A0702.jpg",
       "caption": "Trumpeter Swan",
       "sci": "Cygnus buccinator",
-      "ebird": "truswa"
+      "ebird": "truswa",
+      "zh": "黑嘴天鹅"
     },
     {
       "src": "images/snowy-west/05A0762.jpg",
@@ -5977,7 +6052,8 @@
       "thumb": "images/_thumbs/1600/snowy-west/05A0762.jpg",
       "caption": "Trumpeter Swan",
       "sci": "Cygnus buccinator",
-      "ebird": "truswa"
+      "ebird": "truswa",
+      "zh": "黑嘴天鹅"
     },
     {
       "src": "images/snowy-west/05A1271.jpg",
@@ -6372,7 +6448,8 @@
       "thumb": "images/_thumbs/1600/ecuador/Ecuador-2.jpg",
       "caption": "Andean Cock-of-the-rock",
       "sci": "Rupicola peruvianus",
-      "ebird": "andcot1"
+      "ebird": "andcot1",
+      "zh": "安第斯冠伞鸟"
     },
     {
       "src": "images/ecuador/Ecuador-41.jpg",
@@ -6404,7 +6481,8 @@
       "thumb": "images/_thumbs/1600/ecuador/Ecuador-41.jpg",
       "caption": "Glistening-green Tanager",
       "sci": "Chlorochrysa phoenicotis",
-      "ebird": "glgtan1"
+      "ebird": "glgtan1",
+      "zh": "辉绿雀"
     },
     {
       "src": "images/ecuador/Ecuador-14.jpg",
@@ -6436,7 +6514,8 @@
       "thumb": "images/_thumbs/1600/ecuador/Ecuador-14.jpg",
       "caption": "White-necked Jacobin",
       "sci": "Florisuga mellivora",
-      "ebird": "whnjac1"
+      "ebird": "whnjac1",
+      "zh": "白颈蜂鸟"
     },
     {
       "src": "images/ecuador/Ecuador-23.jpg",
@@ -6468,7 +6547,8 @@
       "thumb": "images/_thumbs/1600/ecuador/Ecuador-23.jpg",
       "caption": "Rose-faced Parrot",
       "sci": "Pyrilia pulchra",
-      "ebird": "rofpar2"
+      "ebird": "rofpar2",
+      "zh": "粉脸鹦哥"
     },
     {
       "src": "images/ecuador/Ecuador-43.jpg",
@@ -6500,7 +6580,8 @@
       "thumb": "images/_thumbs/1600/ecuador/Ecuador-43.jpg",
       "caption": "Black-chinned Mountain Tanager",
       "sci": "Anisognathus notabilis",
-      "ebird": "bcmtan2"
+      "ebird": "bcmtan2",
+      "zh": "黑颏岭裸鼻雀"
     },
     {
       "src": "images/ecuador/Ecuador-11.jpg",
@@ -6532,7 +6613,8 @@
       "thumb": "images/_thumbs/1600/ecuador/Ecuador-11.jpg",
       "caption": "Chestnut-crowned Antpitta",
       "sci": "Grallaria ruficapilla",
-      "ebird": "chcant2"
+      "ebird": "chcant2",
+      "zh": "栗顶蚁鸫"
     },
     {
       "src": "images/ecuador/Ecuador-12.jpg",
@@ -6564,7 +6646,8 @@
       "thumb": "images/_thumbs/1600/ecuador/Ecuador-12.jpg",
       "caption": "Golden-headed Quetzal",
       "sci": "Pharomachrus auriceps",
-      "ebird": "gohque1"
+      "ebird": "gohque1",
+      "zh": "金头绿咬鹃"
     },
     {
       "src": "images/ecuador/Ecuador-59.jpg",
@@ -6596,7 +6679,8 @@
       "thumb": "images/_thumbs/1600/ecuador/Ecuador-59.jpg",
       "caption": "Violet-tailed Sylph",
       "sci": "Aglaiocercus coelestis",
-      "ebird": "vitsyl1"
+      "ebird": "vitsyl1",
+      "zh": "紫长尾蜂鸟"
     },
     {
       "src": "images/ecuador/Ecuador-74.jpg",
@@ -6628,7 +6712,8 @@
       "thumb": "images/_thumbs/1600/ecuador/Ecuador-74.jpg",
       "caption": "Blue-necked Tanager",
       "sci": "Stilpnia cyanicollis",
-      "ebird": "blntan1"
+      "ebird": "blntan1",
+      "zh": "蓝颈靓唐纳雀"
     },
     {
       "src": "images/ecuador/Ecuador-48.jpg",
@@ -6660,7 +6745,8 @@
       "thumb": "images/_thumbs/1600/ecuador/Ecuador-48.jpg",
       "caption": "Velvet-purple Coronet",
       "sci": "Boissonneaua jardini",
-      "ebird": "vepcor1"
+      "ebird": "vepcor1",
+      "zh": "紫冕蜂鸟"
     },
     {
       "src": "images/ecuador/Ecuador-76.jpg",
@@ -6692,7 +6778,8 @@
       "thumb": "images/_thumbs/1600/ecuador/Ecuador-76.jpg",
       "caption": "Rufous Motmot",
       "sci": "Baryphthengus martii",
-      "ebird": "rufmot1"
+      "ebird": "rufmot1",
+      "zh": "棕翠鴗"
     },
     {
       "src": "images/ecuador/Ecuador-8.jpg",
@@ -6724,7 +6811,8 @@
       "thumb": "images/_thumbs/1600/ecuador/Ecuador-8.jpg",
       "caption": "Ochre-breasted Antpitta",
       "sci": "Grallaricula flavirostris",
-      "ebird": "ocbant1"
+      "ebird": "ocbant1",
+      "zh": "赭胸蚁鸫"
     },
     {
       "src": "images/ecuador/Ecuador-79.jpg",
@@ -6756,7 +6844,8 @@
       "thumb": "images/_thumbs/1600/ecuador/Ecuador-79.jpg",
       "caption": "Sparkling Violetear",
       "sci": "Colibri coruscans",
-      "ebird": "spvear1"
+      "ebird": "spvear1",
+      "zh": "辉紫耳蜂鸟"
     },
     {
       "src": "images/ecuador/Ecuador-44.jpg",
@@ -6788,7 +6877,8 @@
       "thumb": "images/_thumbs/1600/ecuador/Ecuador-44.jpg",
       "caption": "Violet-tailed Sylph",
       "sci": "Aglaiocercus coelestis",
-      "ebird": "vitsyl1"
+      "ebird": "vitsyl1",
+      "zh": "紫长尾蜂鸟"
     },
     {
       "src": "images/ecuador/Ecuador-19.jpg",
@@ -6820,7 +6910,8 @@
       "thumb": "images/_thumbs/1600/ecuador/Ecuador-19.jpg",
       "caption": "Orange-bellied Euphonia",
       "sci": "Euphonia xanthogaster",
-      "ebird": "orbeup1"
+      "ebird": "orbeup1",
+      "zh": "橙腹歌雀"
     },
     {
       "src": "images/ecuador/Ecuador-71.jpg",
@@ -6852,7 +6943,8 @@
       "thumb": "images/_thumbs/1600/ecuador/Ecuador-71.jpg",
       "caption": "Flame-faced Tanager",
       "sci": "Tangara parzudakii",
-      "ebird": "flftan1"
+      "ebird": "flftan1",
+      "zh": "火脸靓唐纳雀"
     },
     {
       "src": "images/ecuador/Ecuador-72.jpg",
@@ -6884,7 +6976,8 @@
       "thumb": "images/_thumbs/1600/ecuador/Ecuador-72.jpg",
       "caption": "White-whiskered Hermit",
       "sci": "Phaethornis yaruqui",
-      "ebird": "whwher1"
+      "ebird": "whwher1",
+      "zh": "白须隐蜂鸟"
     },
     {
       "src": "images/ecuador/Ecuador-24.jpg",
@@ -6916,7 +7009,8 @@
       "thumb": "images/_thumbs/1600/ecuador/Ecuador-24.jpg",
       "caption": "Crimson-rumped Toucanet",
       "sci": "Aulacorhynchus haematopygus",
-      "ebird": "crrtou1"
+      "ebird": "crrtou1",
+      "zh": "绯腰巨嘴鸟"
     },
     {
       "src": "images/ecuador/Ecuador-78.jpg",
@@ -6948,7 +7042,8 @@
       "thumb": "images/_thumbs/1600/ecuador/Ecuador-78.jpg",
       "caption": "Rufous Motmot",
       "sci": "Baryphthengus martii",
-      "ebird": "rufmot1"
+      "ebird": "rufmot1",
+      "zh": "棕翠鴗"
     },
     {
       "src": "images/ecuador/Ecuador-31.jpg",
@@ -6980,7 +7075,8 @@
       "thumb": "images/_thumbs/1600/ecuador/Ecuador-31.jpg",
       "caption": "Violet-tailed Sylph",
       "sci": "Aglaiocercus coelestis",
-      "ebird": "vitsyl1"
+      "ebird": "vitsyl1",
+      "zh": "紫长尾蜂鸟"
     },
     {
       "src": "images/hawaii/1.jpg",
@@ -7070,7 +7166,8 @@
       "thumb": "images/_thumbs/1600/hawaii/2-2.jpg",
       "caption": "Black-necked Stilt",
       "sci": "Himantopus mexicanus",
-      "ebird": "bknsti"
+      "ebird": "bknsti",
+      "zh": "黑颈长脚鹬"
     },
     {
       "src": "images/hawaii/4-3.jpg",
@@ -7164,7 +7261,8 @@
       "thumb": "images/_thumbs/1600/hawaii/9-1.jpg",
       "caption": "Hawaii Amakihi",
       "sci": "Chlorodrepanis virens",
-      "ebird": "hawama"
+      "ebird": "hawama",
+      "zh": "夏威夷绿雀"
     },
     {
       "src": "images/hawaii/14-1.jpg",
@@ -7230,7 +7328,8 @@
       "thumb": "images/_thumbs/1600/hawaii/3.jpg",
       "caption": "Hawaiian Goose",
       "sci": "Branta sandvicensis",
-      "ebird": "hawgoo"
+      "ebird": "hawgoo",
+      "zh": "夏威夷黑雁"
     },
     {
       "src": "images/hawaii/11-1.jpg",
@@ -7262,7 +7361,8 @@
       "thumb": "images/_thumbs/1600/hawaii/11-1.jpg",
       "caption": "Hawaii Akepa",
       "sci": "Loxops coccineus",
-      "ebird": "akepa1"
+      "ebird": "akepa1",
+      "zh": "红管舌雀"
     },
     {
       "src": "images/hawaii/2-1.jpg",
@@ -7294,7 +7394,8 @@
       "thumb": "images/_thumbs/1600/hawaii/2-1.jpg",
       "caption": "Black-necked Stilt",
       "sci": "Himantopus mexicanus",
-      "ebird": "bknsti"
+      "ebird": "bknsti",
+      "zh": "黑颈长脚鹬"
     },
     {
       "src": "images/hawaii/5.jpg",
@@ -7326,7 +7427,8 @@
       "thumb": "images/_thumbs/1600/hawaii/5.jpg",
       "caption": "Kauai Elepaio",
       "sci": "Chasiempis sclateri",
-      "ebird": "elepai5"
+      "ebird": "elepai5",
+      "zh": "考岛蚋鹟"
     },
     {
       "src": "images/hawaii/9-3.jpg",
@@ -7358,7 +7460,8 @@
       "thumb": "images/_thumbs/1600/hawaii/9-3.jpg",
       "caption": "Hawaii Creeper",
       "sci": "Loxops mana",
-      "ebird": "hawcre"
+      "ebird": "hawcre",
+      "zh": "夏威夷悬木雀"
     },
     {
       "src": "images/hawaii/16-1.jpg",
@@ -7423,7 +7526,8 @@
       "thumb": "images/_thumbs/1600/hawaii/12.jpg",
       "caption": "Hawaiian Goose",
       "sci": "Branta sandvicensis",
-      "ebird": "hawgoo"
+      "ebird": "hawgoo",
+      "zh": "夏威夷黑雁"
     },
     {
       "src": "images/hawaii/11-2.jpg",
@@ -7455,7 +7559,8 @@
       "thumb": "images/_thumbs/1600/hawaii/11-2.jpg",
       "caption": "Hawaiian Goose",
       "sci": "Branta sandvicensis",
-      "ebird": "hawgoo"
+      "ebird": "hawgoo",
+      "zh": "夏威夷黑雁"
     },
     {
       "src": "images/hawaii/9-2.jpg",
@@ -7516,7 +7621,8 @@
       "thumb": "images/_thumbs/1600/hawaii/7-2.jpg",
       "caption": "Black-necked Stilt",
       "sci": "Himantopus mexicanus",
-      "ebird": "bknsti"
+      "ebird": "bknsti",
+      "zh": "黑颈长脚鹬"
     },
     {
       "src": "images/hawaii/4-2.jpg",
@@ -7581,7 +7687,8 @@
       "thumb": "images/_thumbs/1600/hawaii/8.jpg",
       "caption": "Hawaiian Coot",
       "sci": "Fulica alai",
-      "ebird": "hawcoo"
+      "ebird": "hawcoo",
+      "zh": "夏威夷骨顶"
     },
     {
       "src": "images/yunnan/45-1.jpg",
@@ -8669,7 +8776,8 @@
       "thumb": "images/_thumbs/1600/sri-lanka/20-2.jpg",
       "caption": "Sri Lanka Blue-Magpie",
       "sci": "Urocissa ornata",
-      "ebird": "ceymag1"
+      "ebird": "ceymag1",
+      "zh": "斯里兰卡蓝鹊"
     },
     {
       "src": "images/sri-lanka/22-1.jpg",
@@ -8701,7 +8809,8 @@
       "thumb": "images/_thumbs/1600/sri-lanka/22-1.jpg",
       "caption": "Sri Lanka Junglefowl",
       "sci": "Gallus lafayettii",
-      "ebird": "ceyjun1"
+      "ebird": "ceyjun1",
+      "zh": "蓝喉原鸡"
     },
     {
       "src": "images/sri-lanka/43.jpg",
@@ -8766,7 +8875,8 @@
       "thumb": "images/_thumbs/1600/sri-lanka/51-2.jpg",
       "caption": "Yellow-eared Bulbul",
       "sci": "Pycnonotus penicillatus",
-      "ebird": "yeebul1"
+      "ebird": "yeebul1",
+      "zh": "黄耳鹎"
     },
     {
       "src": "images/sri-lanka/30.jpg",
@@ -8798,7 +8908,8 @@
       "thumb": "images/_thumbs/1600/sri-lanka/30.jpg",
       "caption": "Yellow-browed Bulbul",
       "sci": "Acritillas indica",
-      "ebird": "yebbul3"
+      "ebird": "yebbul3",
+      "zh": "黄眉鹎"
     },
     {
       "src": "images/sri-lanka/40-2.jpg",
@@ -8859,7 +8970,8 @@
       "thumb": "images/_thumbs/1600/sri-lanka/23.jpg",
       "caption": "Sri Lanka Junglefowl",
       "sci": "Gallus lafayettii",
-      "ebird": "ceyjun1"
+      "ebird": "ceyjun1",
+      "zh": "蓝喉原鸡"
     },
     {
       "src": "images/sri-lanka/54-1.jpg",
@@ -9044,7 +9156,8 @@
       "thumb": "images/_thumbs/1600/sri-lanka/21.jpg",
       "caption": "Spot-winged Thrush",
       "sci": "Geokichla spiloptera",
-      "ebird": "spwthr1"
+      "ebird": "spwthr1",
+      "zh": "斑翅地鸫"
     },
     {
       "src": "images/sri-lanka/2-3.jpg",
@@ -9109,7 +9222,8 @@
       "thumb": "images/_thumbs/1600/sri-lanka/25-1.jpg",
       "caption": "Chestnut-backed Owlet",
       "sci": "Glaucidium castanotum",
-      "ebird": "chbowl1"
+      "ebird": "chbowl1",
+      "zh": "栗背鸺鹠"
     },
     {
       "src": "images/sri-lanka/16-4.jpg",
@@ -9207,7 +9321,8 @@
       "thumb": "images/_thumbs/1600/sri-lanka/13.jpg",
       "caption": "Yellow-fronted Barbet",
       "sci": "Psilopogon flavifrons",
-      "ebird": "yefbar1"
+      "ebird": "yefbar1",
+      "zh": "黄额拟啄木鸟"
     },
     {
       "src": "images/sri-lanka/14-3.jpg",
@@ -9239,7 +9354,8 @@
       "thumb": "images/_thumbs/1600/sri-lanka/14-3.jpg",
       "caption": "Red-backed Flameback",
       "sci": "Dinopium psarodes",
-      "ebird": "bkrfla2"
+      "ebird": "bkrfla2",
+      "zh": "红背三趾啄木鸟"
     },
     {
       "src": "images/sri-lanka/4-3.jpg",
@@ -9304,7 +9420,8 @@
       "thumb": "images/_thumbs/1600/sri-lanka/16-3.jpg",
       "caption": "Orange Minivet",
       "sci": "Pericrocotus flammeus",
-      "ebird": "scamin3"
+      "ebird": "scamin3",
+      "zh": "赤黄山椒鸟"
     },
     {
       "src": "images/sri-lanka/1.jpg",
@@ -9336,7 +9453,8 @@
       "thumb": "images/_thumbs/1600/sri-lanka/1.jpg",
       "caption": "Sri Lanka White-eye",
       "sci": "Zosterops ceylonensis",
-      "ebird": "ceywhe1"
+      "ebird": "ceywhe1",
+      "zh": "斯里兰卡绣眼鸟"
     },
     {
       "src": "images/sri-lanka/16-2.jpg",
@@ -9368,7 +9486,8 @@
       "thumb": "images/_thumbs/1600/sri-lanka/16-2.jpg",
       "caption": "Layard's Parakeet",
       "sci": "Psittacula calthrapae",
-      "ebird": "laypar1"
+      "ebird": "laypar1",
+      "zh": "艳绿领鹦鹉"
     },
     {
       "src": "images/sri-lanka/48-2.jpg",
@@ -9400,7 +9519,8 @@
       "thumb": "images/_thumbs/1600/sri-lanka/48-2.jpg",
       "caption": "Dark-fronted Babbler",
       "sci": "Dumetia atriceps",
-      "ebird": "dafbab1"
+      "ebird": "dafbab1",
+      "zh": "黑头鹛"
     },
     {
       "src": "images/sri-lanka/18.jpg",
@@ -9432,7 +9552,8 @@
       "thumb": "images/_thumbs/1600/sri-lanka/18.jpg",
       "caption": "White-browed Bulbul",
       "sci": "Pycnonotus luteolus",
-      "ebird": "whbbul2"
+      "ebird": "whbbul2",
+      "zh": "白眉鹎"
     },
     {
       "src": "images/sri-lanka/6.jpg",
@@ -9464,7 +9585,8 @@
       "thumb": "images/_thumbs/1600/sri-lanka/6.jpg",
       "caption": "Tricolored Munia",
       "sci": "Lonchura malacca",
-      "ebird": "trimun"
+      "ebird": "trimun",
+      "zh": "黑头文鸟"
     },
     {
       "src": "images/sri-lanka/34-3.jpg",
@@ -9496,7 +9618,8 @@
       "thumb": "images/_thumbs/1600/sri-lanka/34-3.jpg",
       "caption": "Jungle Owlet",
       "sci": "Glaucidium radiatum",
-      "ebird": "junowl1"
+      "ebird": "junowl1",
+      "zh": "丛林鸺鹠"
     },
     {
       "src": "images/sri-lanka/16-1.jpg",
@@ -9528,7 +9651,8 @@
       "thumb": "images/_thumbs/1600/sri-lanka/16-1.jpg",
       "caption": "Purple-rumped Sunbird",
       "sci": "Leptocoma zeylonica",
-      "ebird": "pursun3"
+      "ebird": "pursun3",
+      "zh": "紫腰花蜜鸟"
     },
     {
       "src": "images/sri-lanka/45-1.jpg",
@@ -10002,7 +10126,8 @@
       "thumb": "images/_thumbs/1600/alberta-bc-yukon/U2A9270.jpg",
       "caption": "Song Sparrow",
       "sci": "Melospiza melodia",
-      "ebird": "sonspa"
+      "ebird": "sonspa",
+      "zh": "歌带鹀"
     },
     {
       "src": "images/alberta-bc-yukon/05A8151.jpg",
@@ -10113,7 +10238,8 @@
       "thumb": "images/_thumbs/1600/alberta-bc-yukon/05A8331.jpg",
       "caption": "Ruffed Grouse",
       "sci": "Bonasa umbellus",
-      "ebird": "rufgro"
+      "ebird": "rufgro",
+      "zh": "披肩榛鸡"
     },
     {
       "src": "images/alberta-bc-yukon/05A8122.jpg",
@@ -10584,7 +10710,8 @@
       "thumb": "images/_thumbs/1600/peru/GZLG4668.jpg",
       "caption": "Bluish-fronted Jacamar",
       "sci": "Galbula cyanescens",
-      "ebird": "blfjac1"
+      "ebird": "blfjac1",
+      "zh": "蓝额鹟䴕"
     },
     {
       "src": "images/peru/EZLE1651.jpg",
@@ -10770,7 +10897,8 @@
       "thumb": "images/_thumbs/1600/peru/ZL-7051.jpg",
       "caption": "White-faced Whistling-Duck",
       "sci": "Dendrocygna viduata",
-      "ebird": "wfwduc1"
+      "ebird": "wfwduc1",
+      "zh": "白脸树鸭"
     },
     {
       "src": "images/peru/ZL-7793.jpg",
@@ -10809,7 +10937,8 @@
       "thumb": "images/_thumbs/1600/peru/ZL-7793.jpg",
       "caption": "Inca Tern",
       "sci": "Larosterna inca",
-      "ebird": "incter1"
+      "ebird": "incter1",
+      "zh": "印加燕鸥"
     },
     {
       "src": "images/peru/ZL-9087.jpg",
@@ -10848,7 +10977,8 @@
       "thumb": "images/_thumbs/1600/peru/ZL-9087.jpg",
       "caption": "Inca Tern",
       "sci": "Larosterna inca",
-      "ebird": "incter1"
+      "ebird": "incter1",
+      "zh": "印加燕鸥"
     },
     {
       "src": "images/peru/ZL-7754.jpg",
@@ -10887,7 +11017,8 @@
       "thumb": "images/_thumbs/1600/peru/ZL-7754.jpg",
       "caption": "Inca Tern",
       "sci": "Larosterna inca",
-      "ebird": "incter1"
+      "ebird": "incter1",
+      "zh": "印加燕鸥"
     },
     {
       "src": "images/peru/HZLH1837.jpg",
@@ -10926,7 +11057,8 @@
       "thumb": "images/_thumbs/1600/peru/HZLH1837.jpg",
       "caption": "Bearded Mountaineer",
       "sci": "Oreonympha nobilis",
-      "ebird": "beamou1"
+      "ebird": "beamou1",
+      "zh": "须蜂鸟"
     },
     {
       "src": "images/peru/HZLH1393.jpg",
@@ -10965,7 +11097,8 @@
       "thumb": "images/_thumbs/1600/peru/HZLH1393.jpg",
       "caption": "Black-tailed Trainbearer",
       "sci": "Lesbia victoriae",
-      "ebird": "blttra1"
+      "ebird": "blttra1",
+      "zh": "黑带尾蜂鸟"
     },
     {
       "src": "images/peru/AZLA0107.jpg",
@@ -11004,7 +11137,8 @@
       "thumb": "images/_thumbs/1600/peru/AZLA0107.jpg",
       "caption": "Sparkling Violetear",
       "sci": "Colibri coruscans",
-      "ebird": "spvear1"
+      "ebird": "spvear1",
+      "zh": "辉紫耳蜂鸟"
     },
     {
       "src": "images/peru/EZLE1063.jpg",
@@ -11163,7 +11297,8 @@
       "thumb": "images/_thumbs/1600/california/2022-1-California-1.jpg",
       "caption": "Island Scrub-Jay",
       "sci": "Aphelocoma insularis",
-      "ebird": "issjay"
+      "ebird": "issjay",
+      "zh": "圣岛丛鸦"
     },
     {
       "src": "images/california/2022-43.jpg",
@@ -11226,7 +11361,8 @@
       "thumb": "images/_thumbs/1600/california/2022-6-California-9-3.jpg",
       "caption": "Western Gull",
       "sci": "Larus occidentalis",
-      "ebird": "wesgul"
+      "ebird": "wesgul",
+      "zh": "西美鸥"
     },
     {
       "src": "images/california/2022-44.jpg",
@@ -11258,7 +11394,8 @@
       "thumb": "images/_thumbs/1600/california/2022-44.jpg",
       "caption": "Dark-eyed Junco",
       "sci": "Junco hyemalis",
-      "ebird": "daejun"
+      "ebird": "daejun",
+      "zh": "暗眼灯草鹀"
     },
     {
       "src": "images/california/2022-6-California-2.jpg",
@@ -11290,7 +11427,8 @@
       "thumb": "images/_thumbs/1600/california/2022-6-California-2.jpg",
       "caption": "Yellow-rumped Warbler",
       "sci": "Setophaga coronata",
-      "ebird": "yerwar"
+      "ebird": "yerwar",
+      "zh": "黄腰林莺"
     },
     {
       "src": "images/california/2022-6-California-5.jpg",
@@ -11322,7 +11460,8 @@
       "thumb": "images/_thumbs/1600/california/2022-6-California-5.jpg",
       "caption": "White-headed Woodpecker",
       "sci": "Leuconotopicus albolarvatus",
-      "ebird": "whhwoo"
+      "ebird": "whhwoo",
+      "zh": "白头啄木鸟"
     },
     {
       "src": "images/california/2022-6-California-8.jpg",
@@ -11418,7 +11557,8 @@
       "thumb": "images/_thumbs/1600/california/2022-6-California-1.jpg",
       "caption": "California Scrub-Jay",
       "sci": "Aphelocoma californica",
-      "ebird": "cowscj1"
+      "ebird": "cowscj1",
+      "zh": "西丛鸦"
     },
     {
       "src": "images/california/2022-6-California-3.jpg",
@@ -11452,7 +11592,8 @@
       "thumb": "images/_thumbs/1600/california/2022-6-California-3.jpg",
       "caption": "Yellow-rumped Warbler",
       "sci": "Setophaga coronata",
-      "ebird": "yerwar"
+      "ebird": "yerwar",
+      "zh": "黄腰林莺"
     },
     {
       "src": "images/california/2022-23.jpg",
@@ -11484,7 +11625,8 @@
       "thumb": "images/_thumbs/1600/california/2022-23.jpg",
       "caption": "Say's Phoebe",
       "sci": "Sayornis saya",
-      "ebird": "saypho"
+      "ebird": "saypho",
+      "zh": "棕腹长尾霸鹟"
     },
     {
       "src": "images/california/2022-1-California-2.jpg",
@@ -11545,7 +11687,8 @@
       "thumb": "images/_thumbs/1600/california/2022-47.jpg",
       "caption": "Dark-eyed Junco",
       "sci": "Junco hyemalis",
-      "ebird": "daejun"
+      "ebird": "daejun",
+      "zh": "暗眼灯草鹀"
     },
     {
       "src": "images/california/2.jpg",
@@ -11577,7 +11720,8 @@
       "thumb": "images/_thumbs/1600/california/2.jpg",
       "caption": "Steller's Jay",
       "sci": "Cyanocitta stelleri",
-      "ebird": "stejay"
+      "ebird": "stejay",
+      "zh": "暗冠蓝鸦"
     },
     {
       "src": "images/california/3.jpg",
@@ -11709,7 +11853,8 @@
       "thumb": "images/_thumbs/1600/new-england/11-2.jpg",
       "caption": "Piping Plover",
       "sci": "Charadrius melodus",
-      "ebird": "pipplo"
+      "ebird": "pipplo",
+      "zh": "笛鸻"
     },
     {
       "src": "images/new-england/2022-12-Cape-May-6.jpg",
@@ -11741,7 +11886,8 @@
       "thumb": "images/_thumbs/1600/new-england/2022-12-Cape-May-6.jpg",
       "caption": "American Oystercatcher",
       "sci": "Haematopus palliatus",
-      "ebird": "ameoys"
+      "ebird": "ameoys",
+      "zh": "美洲斑蛎鹬"
     },
     {
       "src": "images/new-england/2022-12-Maine-6.jpg",
@@ -11973,7 +12119,8 @@
       "thumb": "images/_thumbs/1600/new-england/2022-12-Cape-May-8.jpg",
       "caption": "American Oystercatcher",
       "sci": "Haematopus palliatus",
-      "ebird": "ameoys"
+      "ebird": "ameoys",
+      "zh": "美洲斑蛎鹬"
     },
     {
       "src": "images/new-england/11-1.jpg",
@@ -12005,7 +12152,8 @@
       "thumb": "images/_thumbs/1600/new-england/11-1.jpg",
       "caption": "Piping Plover",
       "sci": "Charadrius melodus",
-      "ebird": "pipplo"
+      "ebird": "pipplo",
+      "zh": "笛鸻"
     },
     {
       "src": "images/new-england/10.jpg",
@@ -12037,7 +12185,8 @@
       "thumb": "images/_thumbs/1600/new-england/10.jpg",
       "caption": "Red-winged Blackbird",
       "sci": "Agelaius phoeniceus",
-      "ebird": "rewbla"
+      "ebird": "rewbla",
+      "zh": "红翅黑鹂"
     },
     {
       "src": "images/new-england/9-3.jpg",
@@ -12135,7 +12284,8 @@
       "thumb": "images/_thumbs/1600/new-england/12.jpg",
       "caption": "Piping Plover",
       "sci": "Charadrius melodus",
-      "ebird": "pipplo"
+      "ebird": "pipplo",
+      "zh": "笛鸻"
     },
     {
       "src": "images/new-england/2022-12-Cape-May-9.jpg",
@@ -12200,7 +12350,8 @@
       "thumb": "images/_thumbs/1600/new-england/2022-12-Cape-May-5.jpg",
       "caption": "American Oystercatcher",
       "sci": "Haematopus palliatus",
-      "ebird": "ameoys"
+      "ebird": "ameoys",
+      "zh": "美洲斑蛎鹬"
     },
     {
       "src": "images/new-england/2022-12-Maine-1.jpg",

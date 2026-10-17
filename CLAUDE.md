@@ -358,7 +358,9 @@ field, kept by every rebuild) prints on its own line under the camera line
 linked to ebird.org/species/<`ebird` code>, both from the eBird taxonomy
 (`_arrange/geo-src/ebird-taxonomy.csv`). `zh` is its Chinese name, from
 eBird's own zh_SIM taxonomy (`_arrange/geo-src/ebird-taxonomy-zh_SIM.csv`,
-looked up by the `ebird` code); in Chinese the line reads 中文名, English,
+looked up by the `ebird` code; where eBird has no Chinese name, about 100
+species, the standard mainland name was looked up and checked twice, and
+Striated Heron has none); in Chinese the line reads 中文名, English,
 *Latin*. Every collection has them (2026-10-17): each ID checked against his
 eBird species for that trip's regions and confirmed by a second, independent
 look. Uncertain ones were left unnamed and listed for Newton (downy chicks,
