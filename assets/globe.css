@@ -178,20 +178,20 @@ body[data-page="globe"] .masthead { position: static; background: var(--space); 
 /* ---------- Plate: the hover preview (app layout, fine pointers) ------- */
 
 .g-plate {
-  position: absolute; left: 0; top: 0; z-index: 3; width: 300px; padding-bottom: 14px; pointer-events: none;
+  position: absolute; left: 0; top: 0; z-index: 3; width: 250px; padding-bottom: 12px; pointer-events: none;
   opacity: 0; clip-path: inset(0 0 100% 0); transition: opacity var(--d-fast) var(--ease), clip-path 0s var(--d-fast);
 }
 .g-plate.is-live { pointer-events: auto; cursor: pointer; }   /* the passing card: click to fly there */
 .g-plate.is-on { opacity: 1; clip-path: inset(0); transition: opacity .28s var(--ease-out), clip-path .28s var(--ease-out); }
 .g-plate img { display: block; width: 100%; height: auto; background: var(--bg-raised); }
-/* 300px wide, the photograph and its words a size up from the first 200
-   (Newton: just bigger, 2026-10-16). */
-.g-plate p { margin: 0; padding: 0 14px; }
-.g-plate p:first-of-type { padding-top: 12px; }
-.g-plate-title { font: 500 17px/22px var(--sans); color: var(--text); }
+/* 250px wide, between the first 200 and a 300 that was too big (Newton,
+   2026-10-16). */
+.g-plate p { margin: 0; padding: 0 12px; }
+.g-plate p:first-of-type { padding-top: 10px; }
+.g-plate-title { font: 500 15px/20px var(--sans); color: var(--text); }
 .g-plate-where { margin-top: 2px !important; font-size: 12px; letter-spacing: .12em; color: var(--text-faint); }
-.g-plate.is-text { width: max-content; max-width: 340px; }      /* a stack: titles only, set apart */
-.g-plate.is-text .g-plate-title + .g-plate-title { margin: 8px 14px 0; padding: 8px 0 0; border-top: 1px solid var(--hairline-soft); }
+.g-plate.is-text { width: max-content; max-width: 290px; }      /* a stack: titles only, set apart */
+.g-plate.is-text .g-plate-title + .g-plate-title { margin: 7px 12px 0; padding: 7px 0 0; border-top: 1px solid var(--hairline-soft); }
 
 /* ---------- Card ---------------------------------------------------------
    Presentation only (aria-hidden, nothing focusable): the list is the

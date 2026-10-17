@@ -134,9 +134,9 @@
 
   // The card's photograph is the card's width on a laptop, and the width of
   // the screen less its margins on a phone, where the card leads with it;
-  // the plate is always 300px. See .g-card and .g-plate in globe.css.
+  // the plate is always 250px. See .g-card and .g-plate in globe.css.
   var CARD_SIZES = "(min-width: 1024px) max(360px, min(520px, 34vw)), min(440px, 100vw - 32px)";
-  var PLATE_SIZES = "300px";
+  var PLATE_SIZES = "250px";
 
   function query(q) { return !!(window.matchMedia && window.matchMedia(q).matches); }
   var COARSE = query("(pointer: coarse)");
@@ -1833,7 +1833,7 @@
 
   /* ---------- the plate: a small preview beside the pin ------------------- */
 
-  var plateFor = null, crowd = null, plateH = 0, plateW = 300, plateBox = null;
+  var plateFor = null, crowd = null, plateH = 0, plateW = 250, plateBox = null;
 
   function showPlate(c, at) {
     if (!L.app || COARSE || !c.pins.length) { hidePlate(); return; }
