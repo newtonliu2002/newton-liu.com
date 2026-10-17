@@ -181,6 +181,23 @@
       "Fairbanks": "费尔班克斯", "Rabat": "拉巴特", "Agadir": "阿加迪尔", "Guelmim": "盖勒敏",
       "Montreal": "蒙特利尔", "Quebec City": "魁北克市",
       "Ottawa/Gatineau": "渥太华/加蒂诺", "Craig": "克雷格",
+      // the national parks in the US and Canada (Newton, 2026-10-17); not
+      // Quebec's own parcs nationaux, which keep their French names
+      "Acadia National Park": "阿卡迪亚国家公园", "Arches National Park": "拱门国家公园",
+      "Banff National Park": "班夫国家公园", "Big Bend National Park": "大弯曲国家公园",
+      "Black Canyon of the Gunnison National Park": "甘尼森黑峡谷国家公园",
+      "Channel Islands National Park": "海峡群岛国家公园", "Crater Lake National Park": "火山口湖国家公园",
+      "Denali National Park": "德纳里国家公园", "Everglades National Park": "大沼泽地国家公园",
+      "Glacier Bay National Park": "冰川湾国家公园", "Glacier National Park": "冰川国家公园",
+      "Grand Teton National Park": "大提顿国家公园", "Great Sand Dunes National Park": "大沙丘国家公园",
+      "Jasper National Park": "贾斯珀国家公园", "Katmai National Park": "卡特迈国家公园",
+      "Kenai Fjords National Park": "基奈峡湾国家公园", "Kluane National Park": "克卢恩国家公园",
+      "Parc national de la Mauricie": "莫里西国家公园", "Mesa Verde National Park": "弗德台地国家公园",
+      "Mount Rainier National Park": "雷尼尔山国家公园", "Saguaro National Park": "巨人柱国家公园",
+      "Sequoia & Kings Canyon National Parks": "红杉 & 国王峡谷国家公园",
+      "Theodore Roosevelt National Park": "西奥多·罗斯福国家公园",
+      "Waterton Lakes National Park": "沃特顿湖国家公园", "Yellowstone National Park": "黄石国家公园",
+      "Yosemite National Park": "优胜美地国家公园",
       // everything in China
       "Shenzhen Bay": "深圳湾", "Nonggang National Nature Reserve": "弄岗国家级自然保护区",
       "Gaoligong Mountains": "高黎贡山", "Dali": "大理", "Lijiang": "丽江", "Shangri-La": "香格里拉"
