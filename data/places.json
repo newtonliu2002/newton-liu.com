@@ -329,14 +329,14 @@
       "pitch": 0,
       "pins": [
         { "name": "Montreal", "lat": 45.50, "lng": -73.57 },
-        { "name": "La Mauricie National Park", "lat": 46.77, "lng": -72.95 },
+        { "name": "Parc national de la Mauricie", "lat": 46.77, "lng": -72.95 },
         { "name": "Quebec City", "lat": 46.81, "lng": -71.21 },
-        { "name": "Fjord-du-Saguenay National Park", "lat": 48.30, "lng": -70.34 },
+        { "name": "Parc national du Fjord-du-Saguenay", "lat": 48.30, "lng": -70.34 },
         { "name": "Saguenay", "lat": 48.41, "lng": -71.07 },
         { "name": "Tadoussac", "lat": 48.14, "lng": -69.72 },
         { "name": "Baie-Saint-Paul", "lat": 47.44, "lng": -70.51 },
-        { "name": "Hautes-Gorges-de-la-Rivière-Malbaie National Park", "lat": 47.89, "lng": -70.48 },
-        { "name": "Grands-Jardins National Park", "lat": 47.68, "lng": -70.83 },
+        { "name": "Parc national des Hautes-Gorges-de-la-Rivière-Malbaie", "lat": 47.89, "lng": -70.48 },
+        { "name": "Parc national des Grands-Jardins", "lat": 47.68, "lng": -70.83 },
         { "name": "Ottawa/Gatineau", "lat": 45.42, "lng": -75.69 }
       ]
     }

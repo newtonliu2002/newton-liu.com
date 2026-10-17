@@ -425,6 +425,9 @@ West, The Desert West, The Snowy West, Birds of the Rio Grande), the card's
 2023年5月、2024年12月), the local time (下午3:50), the readout ("北纬
 45.5000° · 西经 73.5700°", the words in their own spans so the digits stay
 mono), and the pins: every pin in China, and elsewhere the cities only.
+Not Quebec's small towns (Saguenay, Tadoussac, Baie-Saint-Paul): they stay
+in French, and its park pins are named in French in both languages (Parc
+national du Fjord-du-Saguenay…). Cape May, Ouray and Sanibel & Fort Myers stay English (Newton, 2026-10-17).
 **Not translated:** the About essay, blurbs, notes, the Contact page's sentence
 (its list labels do go Chinese, 邮箱： and so on: contactLabels() in site.js,
 re-run when edit.js rewrites the slot), gallery subtitles, "Newton Liu",

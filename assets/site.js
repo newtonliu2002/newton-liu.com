@@ -175,12 +175,12 @@
     },
     pins: {
       // cities
-      "Monterey": "蒙特雷", "Monterrey": "蒙特雷", "Cape May": "开普梅", "Sanibel & Fort Myers": "萨尼贝尔 & 迈尔斯堡",
+      "Monterey": "蒙特雷", "Monterrey": "蒙特雷",
       "Vancouver": "温哥华", "Lima": "利马", "Cusco": "库斯科", "Matara": "马塔拉", "Nuwara Eliya": "努沃勒埃利耶",
       "Kandy": "康提", "Sedona": "塞多纳", "Phoenix": "凤凰城", "Juneau": "朱诺", "Utqiagvik": "乌特恰维克",
       "Fairbanks": "费尔班克斯", "Rabat": "拉巴特", "Agadir": "阿加迪尔", "Guelmim": "盖勒敏",
-      "Montreal": "蒙特利尔", "Quebec City": "魁北克市", "Saguenay": "萨格奈", "Tadoussac": "塔杜萨克",
-      "Ottawa/Gatineau": "渥太华/加蒂诺", "Baie-Saint-Paul": "拜圣保罗", "Craig": "克雷格", "Ouray": "乌雷",
+      "Montreal": "蒙特利尔", "Quebec City": "魁北克市",
+      "Ottawa/Gatineau": "渥太华/加蒂诺", "Craig": "克雷格",
       // everything in China
       "Shenzhen Bay": "深圳湾", "Nonggang National Nature Reserve": "弄岗国家级自然保护区",
       "Gaoligong Mountains": "高黎贡山", "Dali": "大理", "Lijiang": "丽江", "Shangri-La": "香格里拉"
