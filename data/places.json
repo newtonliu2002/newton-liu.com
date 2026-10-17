@@ -321,8 +321,6 @@
     "quebec": {
       "status": "draft",
       "region": "North America",
-      "title": "Quebec",
-      "date": "October 2026",
       "where": "",
       "tz": "America/Toronto",
       "bearing": 20,

@@ -370,6 +370,35 @@
         "SS"
       ],
       "opener": "whole"
+    },
+    {
+      "slug": "quebec",
+      "title": "Quebec",
+      "subtitle": "",
+      "blurb": "",
+      "journal": "journals/quebec/",
+      "layout": [
+        "J2",
+        "W",
+        "J2",
+        "W",
+        "J2",
+        "L",
+        "J3",
+        "W",
+        "J2",
+        "W",
+        "J2",
+        "W",
+        "J2",
+        "J2",
+        "W",
+        "J2",
+        "J2",
+        "J3",
+        "W"
+      ],
+      "opener": "whole"
     }
   ]
 }

@@ -218,8 +218,9 @@ keyed by the collection's slug, after the usual collections.json entry:
   keeps Morocco and the Rio Grande off the globe entirely (no pins, road,
   row, passing card or card) until his photographs come. Their entries stay
   in places.json and routes.json; taking a slug out of the list brings it
-  back. **Quebec** (October 2026, his route, 2026-10-16) waits the same way
-  but shows: Montreal, L'Anse-Saint-Jean, Saguenay, Tadoussac (his route as
+  back. **Quebec** (October 2026) has its photographs now (2026-10-17: the
+  collection `quebec`, 33 frames, his journal linked from its rail and
+  card); its pins and road: Montreal, L'Anse-Saint-Jean, Saguenay, Tadoussac (his route as
   driven, 2026-10-17: no La Mauricie, Quebec City or Fjord-du-Saguenay park
   pin), Baie-Saint-Paul, Hautes-Gorges, back
   through Baie-Saint-Paul (one pin for a place passed twice, his rule),
