@@ -1049,6 +1049,10 @@
         at: pl.coords && typeof pl.coords.lat === "number" && typeof pl.coords.lng === "number" ? [pl.coords.lat, pl.coords.lng] : null,
         // Its heading in the list (places.json `region`; the order is its `regions`).
         region: typeof pl.region === "string" ? pl.region : "",
+        // A several-pin arrival's own turn and tilt (places.json `bearing` and
+        // `pitch`, degrees); never turned past 45°, so north stays roughly up.
+        bearing: typeof pl.bearing === "number" ? clamp(pl.bearing, -45, 45) : 0,
+        pitch: typeof pl.pitch === "number" ? clamp(pl.pitch, 0, 60) : null,
         href: c.waiting ? null : BASE + "collections/" + c.slug + "/", pins: [],
         // The road it took (data/routes.json), drawn in place of the arcs between pins.
         route: rt && rt.length > 1 && rt.every(function (q) { return q && typeof q[0] === "number" && typeof q[1] === "number"; }) ? rt : null
@@ -2094,14 +2098,41 @@
     map.setPadding({ top: 0, right: 0, bottom: 0, left: 0 });
     var cam = map.cameraForBounds(b, { padding: pad });
     map.setPadding(keep);
+    // A long, thin trip may arrive turned (places.json `bearing`) so it lies
+    // along the free area's longer side, and comes closer by turnedFit()'s
+    // gain. A phone's squarer band can fit it a little wider; its names
+    // still find more room there turned than north up.
+    var t = cam && c.bearing ? turnedFit(c, pad) : null;
     // The 3.2 floor keeps a laptop arrival close; a phone's small stage
     // follows the fit, so a wide spread (Alaska) still lands above the card.
     // A laptop frames the places close (room for their names beside the
     // card); a phone's short band above the card keeps a wider margin.
-    var zoom = cam ? clamp(cam.zoom - (L.app ? .15 : .45), L.app ? 3.2 : Math.min(3.2, L.zO + .2), 7.4) : 4, y0 = merc(b.getSouth()), y1 = merc(b.getNorth());
+    var zoom = cam ? clamp(cam.zoom + (t ? t.gain : 0) - (L.app ? .15 : .45), L.app ? 3.2 : Math.min(3.2, L.zO + .2), 7.4) : 4, y0 = merc(b.getSouth()), y1 = merc(b.getNorth());
     if (c.sensitive) zoom = Math.min(zoom, SENSITIVE_ZOOM);
-    var mid = [(b.getWest() + b.getEast()) / 2, (2 * Math.atan(Math.exp((y0 + y1) / 2)) - Math.PI / 2) / rad];
-    return { center: mid, zoom: zoom, pitch: 32, bearing: 0, padding: pad };
+    var mid = t ? t.mid : [(b.getWest() + b.getEast()) / 2, (2 * Math.atan(Math.exp((y0 + y1) / 2)) - Math.PI / 2) / rad];
+    // A lower `pitch` (places.json) squeezes the far end of the trip less.
+    return { center: mid, zoom: zoom, pitch: c.pitch == null ? 32 : c.pitch, bearing: t ? c.bearing : 0, padding: pad };
+  }
+  // cameraForBounds turns only the corners of the bounds, which for a
+  // diagonal trip frames it wider, not closer. So the places and road are
+  // turned themselves, measured flat in Mercator as cameraForBounds
+  // measures: how much closer they fit turned than north up (in zoom
+  // levels), and their middle once turned.
+  function turnedFit(c, pad) {
+    var w = L.w - pad.left - pad.right, h = L.h - pad.top - pad.bottom;
+    if (w <= 0 || h <= 0) return null;
+    var pts = c.pins.map(function (p) { return p.ll; }).concat(c.route || []);
+    function box(cs, sn) {
+      var x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+      pts.forEach(function (q) {
+        var e = q[0] * rad, n = merc(q[1]), x = e * cs - n * sn, y = e * sn + n * cs;
+        x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y);
+      });
+      return { s: Math.min(w / Math.max(x1 - x0, 1e-9), h / Math.max(y1 - y0, 1e-9)), x: (x0 + x1) / 2, y: (y0 + y1) / 2 };
+    }
+    var a = c.bearing * rad, cs = Math.cos(a), sn = Math.sin(a), flat = box(1, 0), t = box(cs, sn);
+    var e = t.x * cs + t.y * sn, n = t.y * cs - t.x * sn;
+    return { gain: Math.log(t.s / flat.s) / Math.LN2, mid: [e / rad, (2 * Math.atan(Math.exp(n)) - Math.PI / 2) / rad] };
   }
 
   function select(slug, from) {

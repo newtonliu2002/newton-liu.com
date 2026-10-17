@@ -190,6 +190,11 @@ keyed by the collection's slug, after the usual collections.json entry:
   are in Nebraska. `coords` ({lat, lng}, four decimals) is what
   the console reads while the collection passes; without it, its first pin. `zoom` (optional, single-pin only) sets how close the camera
   arrives. `sensitive: true` keeps it back at zoom 7 (the sage-grouse leks).
+  `bearing` and `pitch` (optional, several pins only, degrees) turn and tilt
+  the arrival: Quebec's long south-west to north-east trip arrives turned 20°
+  (45° at most, north stays roughly up) and flat (0, not the usual 32°), so it
+  lies along the tall free space between the list and the card and its six
+  Saguenay and Charlevoix pins spread out (`turnedFit()`).
 - `status` is `"draft"` until Newton has confirmed the row.
 - `region` is the heading a collection is listed under; the top-level
   `regions` array orders the headings. Hawai'i is North America (Newton's
