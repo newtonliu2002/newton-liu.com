@@ -341,7 +341,7 @@ Two switches at the top of `assets/site.js` control all of this:
 ```js
 var CAPTIONS = {
   grid:     { title: false, location: false },
-  lightbox: { title: false, location: false, date: false, exif: true }
+  lightbox: { title: false, location: false, date: false, exif: true, caption: true }
 };
 
 var EXIF_FIELDS = ["camera", "lens", "aperture", "shutter", "iso"];
@@ -350,6 +350,11 @@ var EXIF_FIELDS = ["camera", "lens", "aperture", "shutter", "iso"];
 Flip a `CAPTIONS` field to `true` and that line reappears immediately — no
 rebuild, no re-import. `grid` is the caption over a thumbnail on hover;
 `lightbox` is the block under the enlarged photograph.
+
+**Bird names.** A photograph's `caption` in `data/photos.json` (an authored
+field, kept by every rebuild) prints on its own line under the camera line
+(`.lb-name`). Guangxi & Guangdong has them (2026-10-17), Newton's names or
+ones checked against his eBird lists for those trips; the butterfly has none.
 
 `EXIF_FIELDS` sets which technical values print and in what order. Missing
 values are skipped, which is why drone frames show fewer items — their

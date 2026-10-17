@@ -402,6 +402,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
       <h2 class="lb-title"></h2>
       <p class="lb-meta"></p>
       <p class="lb-exif"></p>
+      <p class="lb-name"></p>
     </figcaption>
   </figure>
 </div>

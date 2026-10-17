@@ -837,14 +837,19 @@ body[data-page="globe"] .nav-menu-list { border-top: 1px solid var(--hairline); 
   margin: 0; color: var(--text-dim);
   font: 400 var(--t-meta)/1.5 var(--mono); letter-spacing: .02em;
 }
-/* The one line of text the site ever prints with a photograph. */
+/* The camera line, and under it the bird's name where one is given. */
 .lb-exif {
   margin: 0.4rem 0 0; color: var(--text-faint);
   font: 400 var(--t-meta)/1.5 var(--mono);
   letter-spacing: .02em;
   font-variant-numeric: tabular-nums;
 }
-.lb-title:empty, .lb-meta:empty, .lb-exif:empty { display: none; }
+.lb-name {
+  margin: 0.15rem 0 0; color: var(--text-dim);
+  font: 400 var(--t-meta)/1.5 var(--mono);
+  letter-spacing: .02em;
+}
+.lb-title:empty, .lb-meta:empty, .lb-exif:empty, .lb-name:empty { display: none; }
 
 /* No caption at all — give the photograph the room back. */
 .lightbox.is-bare .lb-figure { gap: 0; }

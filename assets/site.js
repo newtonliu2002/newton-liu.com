@@ -28,6 +28,8 @@
        location  where it was taken
        date      when it was taken
        exif      camera, lens, focal length, aperture, shutter, ISO
+       caption   the bird's name, under the camera line, where photos.json
+                 gives a photograph one ("caption")
 
      `grid` controls the caption that slides up over a thumbnail on hover;
      `lightbox` controls the block under the enlarged photograph. A field
@@ -35,7 +37,7 @@
      ------------------------------------------------------------------ */
   var CAPTIONS = {
     grid:     { title: false, location: false },
-    lightbox: { title: false, location: false, date: false, exif: true }
+    lightbox: { title: false, location: false, date: false, exif: true, caption: true }
   };
 
   // Which EXIF fields print, and in what order. Any field that's missing from
@@ -1946,7 +1948,7 @@
 
   /* ---------- gallery -------------------------------------------------- */
 
-  var lightbox, lbImage, lbTitle, lbMeta, lbExif;
+  var lightbox, lbImage, lbTitle, lbMeta, lbExif, lbName;
   var shown = [];      // photos currently in the grid — what the arrows walk
   var index = -1;
   var isOpen = false;
@@ -2327,11 +2329,13 @@
     lbTitle.textContent = (CAPTIONS.lightbox.title && photo.title) || "";
     lbMeta.textContent = metaLine(photo);
     lbExif.textContent = exifLine(photo);
+    if (lbName) lbName.textContent = (CAPTIONS.lightbox.caption && photo.caption) || "";
 
     // With every caption off there is no text block, so let the photograph
     // use the height the caption would have taken.
     lightbox.classList.toggle("is-bare",
-      !lbTitle.textContent && !lbMeta.textContent && !lbExif.textContent);
+      !lbTitle.textContent && !lbMeta.textContent && !lbExif.textContent &&
+      !(lbName && lbName.textContent));
 
     // Warm the neighbours so arrowing through feels instant.
     [index + 1, index - 1].forEach(function (n) {
@@ -2372,6 +2376,7 @@
     lbTitle = lightbox.querySelector(".lb-title");
     lbMeta  = lightbox.querySelector(".lb-meta");
     lbExif  = lightbox.querySelector(".lb-exif");
+    lbName  = lightbox.querySelector(".lb-name");
 
     lightbox.querySelector(".lb-close").addEventListener("click", function () { close(false); });
     lightbox.querySelector(".lb-prev").addEventListener("click", function () { show(index - 1); });

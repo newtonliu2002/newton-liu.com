@@ -11604,6 +11604,7 @@
         }
       ],
       "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A3552.jpg",
+      "caption": "Nonggang Babbler",
       "featured": true
     },
     {
@@ -11640,7 +11641,8 @@
           "src": "images/guangxi-guangdong/U2A7998.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A7998.jpg"
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A7998.jpg",
+      "caption": "Chestnut-capped Babbler"
     },
     {
       "src": "images/guangxi-guangdong/7.jpg",
@@ -11669,7 +11671,8 @@
           "src": "images/guangxi-guangdong/7.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/guangxi-guangdong/7.jpg"
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/7.jpg",
+      "caption": "Little Egret"
     },
     {
       "src": "images/guangxi-guangdong/6-3.jpg",
@@ -11698,7 +11701,8 @@
           "src": "images/guangxi-guangdong/6-3.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/guangxi-guangdong/6-3.jpg"
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/6-3.jpg",
+      "caption": "Black-faced Spoonbill"
     },
     {
       "src": "images/guangxi-guangdong/4-2-copy.jpg",
@@ -11727,7 +11731,8 @@
           "src": "images/guangxi-guangdong/4-2-copy.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/guangxi-guangdong/4-2-copy.jpg"
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/4-2-copy.jpg",
+      "caption": "Pied Avocet"
     },
     {
       "src": "images/guangxi-guangdong/6-4.jpg",
@@ -11756,7 +11761,8 @@
           "src": "images/guangxi-guangdong/6-4.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/guangxi-guangdong/6-4.jpg"
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/6-4.jpg",
+      "caption": "Black-tailed Godwit"
     },
     {
       "src": "images/guangxi-guangdong/U2A4684.jpg",
@@ -11792,7 +11798,8 @@
           "src": "images/guangxi-guangdong/U2A4684.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A4684.jpg"
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A4684.jpg",
+      "caption": "Bar-backed Partridge"
     },
     {
       "src": "images/guangxi-guangdong/U2A9418.jpg",
@@ -11828,38 +11835,8 @@
           "src": "images/guangxi-guangdong/U2A9418.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A9418.jpg"
-    },
-    {
-      "src": "images/guangxi-guangdong/5.jpg",
-      "title": "5",
-      "collection": "guangxi-guangdong",
-      "location": "",
-      "date": "2023-11-26",
-      "width": 2500,
-      "height": 1668,
-      "exif": {
-        "lens": "RF100-500mm F4.5-7.1 L IS USM"
-      },
-      "variants": [
-        {
-          "w": 800,
-          "src": "images/_thumbs/800/guangxi-guangdong/5.jpg"
-        },
-        {
-          "w": 1600,
-          "src": "images/_thumbs/1600/guangxi-guangdong/5.jpg"
-        },
-        {
-          "w": 2400,
-          "src": "images/_thumbs/2400/guangxi-guangdong/5.jpg"
-        },
-        {
-          "w": 2500,
-          "src": "images/guangxi-guangdong/5.jpg"
-        }
-      ],
-      "thumb": "images/_thumbs/1600/guangxi-guangdong/5.jpg"
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A9418.jpg",
+      "caption": "Rufescent Prinia"
     },
     {
       "src": "images/guangxi-guangdong/2022-2.jpg",
@@ -11888,7 +11865,8 @@
           "src": "images/guangxi-guangdong/2022-2.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/guangxi-guangdong/2022-2.jpg"
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/2022-2.jpg",
+      "caption": "Red-vented Bulbul"
     },
     {
       "src": "images/guangxi-guangdong/U2A6681.jpg",
@@ -11953,7 +11931,8 @@
           "src": "images/guangxi-guangdong/6-1.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/guangxi-guangdong/6-1.jpg"
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/6-1.jpg",
+      "caption": "Black-winged Stilt"
     },
     {
       "src": "images/guangxi-guangdong/U2A8129.jpg",
@@ -11989,7 +11968,8 @@
           "src": "images/guangxi-guangdong/U2A8129.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A8129.jpg"
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A8129.jpg",
+      "caption": "Rufescent Prinia"
     },
     {
       "src": "images/guangxi-guangdong/U2A7382.jpg",
@@ -12025,7 +12005,8 @@
           "src": "images/guangxi-guangdong/U2A7382.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A7382.jpg"
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A7382.jpg",
+      "caption": "Red-whiskered Bulbul"
     },
     {
       "src": "images/guangxi-guangdong/6-2.jpg",
@@ -12054,7 +12035,8 @@
           "src": "images/guangxi-guangdong/6-2.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/guangxi-guangdong/6-2.jpg"
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/6-2.jpg",
+      "caption": "Black-faced Spoonbill"
     }
   ]
 }
