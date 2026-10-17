@@ -15,3 +15,5 @@ where: Tadoussac, QC, Canada
 @photo images/_journals/quebec/french-cafe-window.jpg | 咖啡店的窗外
 
 @photo images/_journals/quebec/french-dawn.jpg | 黎明
+
+@photo images/_journals/quebec/french-ferry.jpg | 衔接Tadoussac和公路的渡轮

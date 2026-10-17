@@ -36,3 +36,5 @@ where: Tadoussac, QC, Canada
 @photo images/_journals/quebec/sea-1.jpg
 
 @photo images/_journals/quebec/sea-2.jpg
+
+@photo images/_journals/quebec/sea-3.jpg
