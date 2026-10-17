@@ -12,4 +12,4 @@ where: Tadoussac, QC, Canada
 
 这次我对了。
 
-@placeholder photo | 照片待补 (Newton will send)
+@photo images/_journals/quebec/tadoussac-cafe-window.jpg | 咖啡店的窗外
