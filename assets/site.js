@@ -515,7 +515,8 @@
         31070, 30591, 30917, 18705, 11306, 5791, 2506, 1374, 1016],
       // The ten biggest trips: where (his names, 2026-10-16), the month (and
       // the last month, if another), days (and which, in English and
-      // Chinese), images a day, cameras, images (each shutter press once).
+      // Chinese; no longer shown), images a day, cameras (no longer shown),
+      // images (each shutter press once).
       trips: [
         ["Galápagos & Ecuador", "2023-08", null, 14, ["Aug 3–16", "8月3–16日"], 3177, "R5 + R6 II", 44477],
         ["Sri Lanka", "2024-11", null, 10, null, 3804, "R5 II + R6 II", 38042],
@@ -536,7 +537,7 @@
         months: [41, 25, 19, 30, 49, 50, 43, 38, 9, 26, 40, 76],
         run: { days: 14, when: ["2023-08", "2025-01"] }
       },
-      mostPerDay: { n: 7274, where: "Colombia", days: 4 },
+      mostPerDay: { n: 7274, where: "Colombia", when: "2025-10" },
       busiestHour: { hour: 7, n: 54191 },   // the hour of day, all days
       busiestDays: [
         ["2025-10-12", "Colombia", 10195],
@@ -550,7 +551,7 @@
         ["2025-08-23", "Quebec", 6927],
         ["2025-10-11", "Colombia", 6740]
       ],
-      // date, the hour it began, where, cameras, photos
+      // date, the hour it began, where, cameras (no longer shown), photos
       busiestHours: [
         ["2026-03-11", 17, "Morocco", "R5 II", 2838],
         ["2024-12-05", 9, "Yunnan", "R5 II", 2693],
@@ -572,9 +573,9 @@
       "Sri Lanka": "斯里兰卡", "Colombia": "哥伦比亚", "Morocco": "摩洛哥", "Malaysia": "马来西亚",
       "Canada": "加拿大", "Peru": "秘鲁", "India": "印度", "Nepal": "尼泊尔", "Mexico": "墨西哥",
       "New Zealand": "新西兰", "Taiwan": "台湾", "Singapore": "新加坡", "Japan": "日本",
-      "Galápagos & Ecuador": "加拉帕戈斯群岛和厄瓜多尔", "Yunnan": "云南", "Florida": "佛罗里达",
-      "Puerto Rico and US Virgin Islands": "波多黎各和美属维尔京群岛",
-      "Texas & Nuevo León": "得克萨斯和新莱昂", "Canada & Alaska": "加拿大和阿拉斯加",
+      "Galápagos & Ecuador": "加拉帕戈斯群岛 & 厄瓜多尔", "Yunnan": "云南", "Florida": "佛罗里达",
+      "Puerto Rico and US Virgin Islands": "波多黎各 & 美属维尔京群岛",
+      "Texas & Nuevo León": "得克萨斯 & 新莱昂", "Canada & Alaska": "加拿大 & 阿拉斯加",
       "Arizona": "亚利桑那", "Quebec": "魁北克", "Guangxi": "广西", "Mindo": "厄瓜多尔"
     };
 
@@ -615,8 +616,7 @@
         bigTrip: "Biggest trip", perDay: "Most per day",
         days: function (n) { return n + " days"; },
         byTrip: "Images by trip, top 10",
-        trip: function (t) { return t[3] + " days" + (t[4] ? " (" + t[4][0] + ")" : "") + " · " + fmt(t[5]) + "/day · " + t[6]; },
-        tripTotal: "Total, top 10 (each shutter press once)",
+        trip: function (t) { return t[3] + " days · " + fmt(t[5]) + "/day"; },
         tripAria: "The biggest trips, top 10",
         topHour: "Busiest hour", topDay: "Busiest day",
         byHour: "Photos by hour of day", topDays: "Busiest days",
@@ -656,9 +656,8 @@
         allAria: "全部照片：按年份、月份和国家/地区",
         bigTrip: "拍得最多的一次旅行", perDay: "日均最多",
         days: function (n) { return n + "天"; },
-        byTrip: "拍得最多的十次旅行",
-        trip: function (t) { return t[3] + "天" + (t[4] ? "（" + t[4][1] + "）" : "") + " · 每天" + fmt(t[5]) + "张 · " + t[6]; },
-        tripTotal: "十次合计（每按一次快门计一张）",
+        byTrip: "拍得最多的十次旅行（张）",
+        trip: function (t) { return t[3] + "天 · 平均每天" + fmt(t[5]) + "张"; },
         tripAria: "拍得最多的十次旅行",
         topHour: "拍得最多的时段（历年总计）", topDay: "拍得最多的一天",
         byHour: "一天中每个小时的照片数（历年总计，万张）", topDays: "拍得最多的十天",
@@ -1060,18 +1059,18 @@
       bf.wire();
 
       // ---- 3. The trips: the biggest, and the top ten ------------------------
-      var top = D.trips[0], topSum = D.trips.reduce(function (a, t) { return a + t[7]; }, 0);
+      var top = D.trips[0];
       function when(t) { return L.months(t[1], t[2]); }
       var bt = Block(box, {
         cls: "trip", label: L.bigTrip, n: top[7], unit: L.photos, ctx: L.place(top[0]) + " · " + when(top),
-        dials: [[L.perDay, fmt(D.mostPerDay.n), L.place(D.mostPerDay.where) + " · " + L.days(D.mostPerDay.days), L.photos]],
+        dials: [[L.perDay, fmt(D.mostPerDay.n), L.place(D.mostPerDay.where) + " · " + L.months(D.mostPerDay.when), L.photos]],
         aria: L.tripAria
       });
       bt.list(L.byTrip, D.trips.map(function (t) {
         var what = L.place(t[0]) + " · " + when(t);
         return { p: what, s: L.trip(t), n: t[7], label: what, ctx: L.trip(t),
           aria: what + ", " + L.trip(t) + L.sep + L.images(t[7]) };
-      }), "trips", [L.tripTotal, L.images(topSum)]);
+      }), "trips");
       bt.wire();
 
       // ---- 4. The hours of the day, and the busiest days ---------------------
@@ -1099,7 +1098,7 @@
         aria: L.peakAria
       });
       b3.list(L.topHours, D.busiestHours.map(function (r) {
-        var what = L.date(r[0]) + " · " + L.range(r[1]), where = L.place(r[2]) + " · " + r[3];
+        var what = L.date(r[0]) + " · " + L.range(r[1]), where = L.place(r[2]);
         return { p: what, s: where, n: r[4], label: what, ctx: where, aria: what + ", " + where + L.sep + L.n(r[4]) };
       }), "hours");
       b3.wire();
