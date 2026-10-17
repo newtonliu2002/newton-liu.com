@@ -1471,12 +1471,12 @@
     zoom(a.href, "", a.textContent);
   });
 
-  /* ---------- About: the eBird map (图2) -------------------------------- */
+  /* ---------- About: the eBird map (图1) -------------------------------- */
   // Newton's eBird life list on a map, the world by country, shaded from
   // yellow to red by species (eBird's own scale). Hover a country for its
-  // count (on a phone, tap); the United States, Canada, Mexico and China open
-  // into their states and provinces. Paths and counts are data/birdmap.json,
-  // built by tools/birdmap.py from Natural Earth and his eBird profile. Each
+  // count (on a phone, tap); every country he has birded in opens into its
+  // states, provinces or regions. Paths and counts are data/birdmap.json,
+  // built by tools/birdmap.py from Natural Earth and his eBird export. Each
   // .bird-map is built when it appears: the About figures are cloned from
   // their template whenever the layout changes. One look for both grounds,
   // drawn in the page's own colours (Newton, 2026-10-16).

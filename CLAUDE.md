@@ -734,19 +734,26 @@ scrolls on; clicking a photograph opens it full screen, uncropped
 Gear photograph follows the heading, in both versions), and a mark scrolls
 to it.
 
-**图2 is a map, not a photograph** (Newton, 2026-10-16): his eBird life list,
+**图1 is a map, not a photograph** (Newton, 2026-10-16): his eBird life list,
 the world by country shaded yellow→red like eBird's, a count on hover (tap on
-a phone), and the United States, Canada, Mexico and China opening into their
-states/provinces ("World" or Esc back out). eBird's own map can't be embedded:
+a phone), and every country he has birded in opening into its states,
+provinces or other first-level regions (all of them since 2026-10-16, his
+"full map"; "World" or Esc back out). eBird's own map can't be embedded:
 his profile asks anonymous visitors to sign in. The figure holds
 `<div class="bird-map" data-src="data/birdmap.json?v=…">`; site.js `birdMap`
 builds it (size() treats it as a 3:2 figure, `data-crop`), drawn in the
 ground's colours so it follows dark/light. `data/birdmap.json` (paths and
-counts) is built by `python3 -I tools/birdmap.py`, which holds the counts,
-typed in from his eBird profile (it is not public, so nothing fetches them),
-downloads the Natural Earth outlines once into `_arrange/geo-src/`, and
-restamps the data-src. New counts: edit COUNTS there and rerun; another
-country that opens: DRILL, COUNTS and PROVINCES.
+counts) is built by `python3 -I tools/birdmap.py`, which counts his eBird
+export (My eBird → Download my data; by default the copy in his Desktop
+Portfolio Website folder, never committed: it holds every checklist's
+coordinates, used only on this Mac to match regions to outlines) the way
+eBird does, by the public eBird taxonomy. On 2026-10-16 it matched his
+profile's world total and every country but Malaysia (PROFILE overrides
+that one). It downloads the outlines once into `_arrange/geo-src/` and
+restamps the data-src. New counts: a fresh export, then rerun; a new
+country: one line in COUNTRIES. Puerto Rico's municipalities and the Virgin
+Islands come from us-atlas's counties; two border cases in Puerto Rico are
+pinned in MATCH; Morocco's map leaves out Western Sahara (SKIP).
 
 **如果把我的摄影经历数据化 / The quantification of my photography career**
 (Newton's titles, 2026-10-16; "numbers" in the code) is a section of its own

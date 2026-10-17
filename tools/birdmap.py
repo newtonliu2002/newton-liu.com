@@ -1,65 +1,100 @@
 #!/usr/bin/env python3
-"""Build data/birdmap.json, the About essay's 图2: Newton's eBird life list on
-a map, the world by country and the United States, Canada, Mexico and China
-by state/province.
+"""Build data/birdmap.json, the About essay's bird map: Newton's eBird life
+list on a map, the world by country, and every country he has birded in
+opening into its states, provinces or other first-level regions.
 
-    python3 -I tools/birdmap.py
+    python3 -I tools/birdmap.py [path/to/MyEBirdData.csv]
 
-The counts are typed in below from his eBird profile (My eBird → Profile,
-"Species by country" and each country's "Species by state/province"); his
-profile is not public, so nothing here fetches them. When they change, edit
-COUNTS and run this again. To let another country open into its states, add
-it to DRILL and COUNTS and name its Natural Earth file in PROVINCES.
+The counts come from his eBird export (My eBird → Download my data), by
+default the copy in his Portfolio Website folder. The export holds every
+checklist's place and coordinates; none of that leaves this Mac. The
+coordinates are used here only to tell which region outline a checklist
+falls in where eBird's region codes and Natural Earth's differ, and only
+the counts per country and region are written. Never commit the export.
+
+A sighting counts as eBird counts it, by the eBird taxonomy (downloaded
+once, public): a species, or a subspecies group or form of one, counted as
+its species; Feral Pigeon counts as Rock Pigeon; other domestic types,
+"sp.", slashes and hybrids don't. On 2026-10-16 this matched his profile's
+world total (1,373) and every country but Malaysia (see PROFILE).
 
 The outlines are Natural Earth (public domain): world-atlas's 50m countries,
-us-atlas's Albers USA states (Alaska and Hawaii inset, like eBird's), and
-Natural Earth's admin-1 provinces. They are downloaded once into _arrange/
-geo-src/ (git-ignored; the 10m provinces are 40 MB), projected, simplified
-to about a third of a pixel and written as SVG paths. The page's data-src
-stamp is refreshed in about.html so the new file is fetched.
+us-atlas's Albers USA states (Alaska and Hawaii inset, like eBird's) and its
+counties for Puerto Rico's municipalities and the Virgin Islands, and Natural Earth's admin-1
+provinces for the rest. They are downloaded once into _arrange/geo-src/
+(git-ignored; the 10m provinces are 40 MB), projected, simplified to about a
+third of a pixel and written as SVG paths. The page's data-src stamp is
+refreshed in about.html so the new file is fetched.
+
+A new country: add it to COUNTRIES (its world-atlas id, eBird's name for it,
+and what it opens into) and run this again.
 """
-import hashlib, json, math, os, re, sys, urllib.request
+import csv, hashlib, json, math, os, re, sys, urllib.request
+from collections import Counter, defaultdict
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "_arrange", "geo-src")
 OUT = os.path.join(ROOT, "data", "birdmap.json")
+EXPORT = os.path.expanduser("~/Desktop/Photography/Portfolio Website/MyEBirdData.csv")
 SOURCES = {
     "countries-50m.json": "https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-50m.json",
     "states-albers-10m.json": "https://cdn.jsdelivr.net/npm/us-atlas@3.0.1/states-albers-10m.json",
+    "counties-10m.json": "https://cdn.jsdelivr.net/npm/us-atlas@3.0.1/counties-10m.json",
     "adm1-50m.geojson": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_1_states_provinces.geojson",
     "adm1-10m.geojson": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_admin_1_states_provinces.geojson",
+    "ebird-taxonomy.csv": "https://api.ebird.org/v2/ref/taxonomy/ebird?fmt=csv",
 }
 
-TOTAL = 1373   # his world life list (not the sum of the countries)
-COUNTS = {     # 2026-10-16
-  "world": {"124": ("Canada", 91), "840": ("United States", 435), "504": ("Morocco", 91),
-            "484": ("Mexico", 150), "156": ("China", 260), "392": ("Japan", 1),
-            "144": ("Sri Lanka", 176), "218": ("Ecuador", 152), "458": ("Malaysia", 117),
-            "604": ("Peru", 114), "170": ("Colombia", 93), "630": ("Puerto Rico", 84),
-            "554": ("New Zealand", 39), "850": ("Virgin Islands (U.S.)", 19),
-            "702": ("Singapore", 16), "044": ("Bahamas", 3), "116": ("Cambodia", 1)},
-  "US": {"Alaska": 124, "Texas": 130, "Colorado": 56, "New Mexico": 64, "Florida": 96,
-         "Idaho": 12, "North Carolina": 12, "Virginia": 32, "New York": 5, "Montana": 8,
-         "District of Columbia": 3, "Louisiana": 2, "Massachusetts": 77, "Utah": 19,
-         "Alabama": 1, "California": 130, "Arizona": 106, "Maine": 34, "Hawaii": 28,
-         "New Jersey": 24, "Wyoming": 20, "Nebraska": 19, "Washington": 10,
-         "New Hampshire": 6, "Oregon": 2},
-  "CA": {"Quebec": 62, "Alberta": 19, "Yukon": 23, "British Columbia": 15},
-  "MX": {"Nuevo León": 80, "Yucatán": 87},
-  "CN": {"Guangdong": 47, "Shanghai": 3, "Zhejiang": 1, "Yunnan": 106, "Sichuan": 67,
-         "Qinghai": 65, "Guangxi": 25, "Hebei": 7, "Ningxia": 4, "Hainan": 3, "Jiangxi": 1},
+# eBird's country code: its world-atlas id, eBird's name for it, and what it
+# opens into (None: it doesn't open; Singapore's export has no regions).
+COUNTRIES = {
+    "US": ("840", "United States", "states"),
+    "CA": ("124", "Canada", "provinces and territories"),
+    "MX": ("484", "Mexico", "states"),
+    "CN": ("156", "China", "provinces"),
+    "MA": ("504", "Morocco", "regions"),
+    "JP": ("392", "Japan", "prefectures"),
+    "LK": ("144", "Sri Lanka", "districts"),
+    "EC": ("218", "Ecuador", "provinces"),
+    "MY": ("458", "Malaysia", "states"),
+    "PE": ("604", "Peru", "regions"),
+    "CO": ("170", "Colombia", "departments"),
+    "PR": ("630", "Puerto Rico", "municipalities"),
+    "NZ": ("554", "New Zealand", "regions"),
+    "VI": ("850", "Virgin Islands (U.S.)", "islands"),
+    "SG": ("702", "Singapore", None),
+    "BS": ("044", "Bahamas", "districts"),
+    "KH": ("116", "Cambodia", "provinces"),
 }
-DRILL = {"840": "US", "124": "CA", "484": "MX", "156": "CN"}
-NAMES = {"world": "World", "US": "United States", "CA": "Canada", "MX": "Mexico", "CN": "China"}
-# What a country opens into, for the hint under its count.
-PARTS = {"US": "states", "CA": "provinces and territories", "MX": "states", "CN": "provinces"}
-# Country: (Natural Earth file, its adm0_a3, name field, Albers lon0, lat1, lat2)
-PROVINCES = {
-    "CA": ("adm1-50m.geojson", "CAN", "name_en", -96, 49, 77),
-    "MX": ("adm1-10m.geojson", "MEX", "name", -102, 17.5, 29.5),
-    "CN": ("adm1-50m.geojson", "CHN", "name_en", 105, 25, 47),
-}
-EBIRD_NAME = {"Yukon": "Yukon Territory"}   # where eBird's name differs
+# Where his eBird profile counts differently from the export (2026-10-16:
+# Malaysia shows 117 there, 118 here, all of them in Sabah).
+PROFILE = {"MY": 117, "MY-12": 117}
+# Outlines left off a country's map: Morocco's two regions in Western Sahara,
+# which eBird and the world map keep apart.
+SKIP = {"MA-15", "MA-16"}
+COUNTY_FIPS = {"PR": "72", "VI": "78"}   # us-atlas's counties: municipalities, islands
+NE50 = {"CA", "CN"}       # Natural Earth's coarser provinces are enough here
+# Albers (lon0, lat1, lat2) for the big countries; the rest are drawn plain,
+# longitude scaled by the cosine of their middle latitude.
+ALBERS = {"CA": (-96, 49, 77), "MX": (-102, 17.5, 29.5), "CN": (105, 25, 47)}
+NAME_FIELD = {"MA": "name"}      # Morocco's own spelling ("Souss - Massa - Draâ")
+# eBird regions whose checklists sit on a border or a coast, where the
+# outlines can't tell (Guajataca is on the Quebradillas–Isabela line; the
+# Maricao forest spans Maricao and San Germán).
+MATCH = {"PR-QB": "Quebradillas", "PR-SG": "San Germán"}
+EBIRD_NAME = {"Yukon": "Yukon Territory", "Saint John": "St. John", "Saint Thomas": "St. Thomas",
+              "Saint Croix": "St. Croix"}   # where eBird's name differs
+USPS = {"AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas", "CA": "California",
+        "CO": "Colorado", "CT": "Connecticut", "DE": "Delaware", "DC": "District of Columbia",
+        "FL": "Florida", "GA": "Georgia", "HI": "Hawaii", "ID": "Idaho", "IL": "Illinois",
+        "IN": "Indiana", "IA": "Iowa", "KS": "Kansas", "KY": "Kentucky", "LA": "Louisiana",
+        "ME": "Maine", "MD": "Maryland", "MA": "Massachusetts", "MI": "Michigan", "MN": "Minnesota",
+        "MS": "Mississippi", "MO": "Missouri", "MT": "Montana", "NE": "Nebraska", "NV": "Nevada",
+        "NH": "New Hampshire", "NJ": "New Jersey", "NM": "New Mexico", "NY": "New York",
+        "NC": "North Carolina", "ND": "North Dakota", "OH": "Ohio", "OK": "Oklahoma", "OR": "Oregon",
+        "PA": "Pennsylvania", "RI": "Rhode Island", "SC": "South Carolina", "SD": "South Dakota",
+        "TN": "Tennessee", "TX": "Texas", "UT": "Utah", "VT": "Vermont", "VA": "Virginia",
+        "WA": "Washington", "WV": "West Virginia", "WI": "Wisconsin", "WY": "Wyoming"}
 TOL = 0.35          # simplification, in output pixels
 MIN_AREA = 0.6      # rings smaller than this (px²) are dropped
 DOT_AREA = 14       # a counted shape smaller than this also gets a dot
@@ -195,14 +230,14 @@ def clean(rings, keep_one=False):
     if not out and keep_one and rings: out = [max(rings, key=area)]
     return out
 
-def view(shapes, w, h, counts, names, extra=None):
+def view(shapes, w, h, counts, names, drills=None, extra=None):
     """Counted shapes get a path each; the rest of the land is one path."""
-    rest, items = [], []
+    rest, items, drills = [], [], drills or {}
     for k, rings in shapes.items():
         if k in counts:
             rs = clean(rings, True)
             it = {"k": k, "name": names.get(k, k), "n": counts[k], "d": path(rs)}
-            if k in DRILL: it["drill"] = DRILL[k]; it["parts"] = PARTS[DRILL[k]]
+            if k in drills: it["drill"], it["parts"] = drills[k]
             if sum(area(r) for r in rs) < DOT_AREA:
                 cx, cy = centroid(rings); it["dot"] = [round(cx, 1), round(cy, 1)]
             items.append(it)
@@ -214,10 +249,93 @@ def view(shapes, w, h, counts, names, extra=None):
     return v
 
 
+# ---- the counts --------------------------------------------------------
+def counts(export):
+    """Species per country and per region, and each region's checklist
+    positions (for matching outlines only; never written)."""
+    tax = {t["SCIENTIFIC_NAME"]: t for t in csv.DictReader(open(os.path.join(SRC, "ebird-taxonomy.csv"), encoding="utf-8"))}
+    world, country, region, where = set(), defaultdict(set), defaultdict(set), defaultdict(set)
+    for r in csv.DictReader(open(export, encoding="utf-8")):
+        code = r["State/Province"]; cc = code.split("-")[0]
+        try: where[code].add((float(r["Longitude"]), float(r["Latitude"])))
+        except ValueError: pass
+        t = tax.get(r["Scientific Name"])
+        if t is None: raise SystemExit("not in the eBird taxonomy: %s (%s)" % (r["Scientific Name"], r["Common Name"]))
+        if t["CATEGORY"] == "species": sp = t["SPECIES_CODE"]
+        elif t["CATEGORY"] in ("issf", "form", "intergrade") or r["Common Name"] == "Rock Pigeon (Feral Pigeon)": sp = t["REPORT_AS"]
+        else: continue
+        if not sp: continue
+        world.add(sp); country[cc].add(sp)
+        if code.split("-", 1)[-1] and "-" in code: region[code].add(sp)
+    n = lambda k, v: PROFILE.get(k, len(v))
+    return len(world), {k: n(k, v) for k, v in country.items()}, {k: n(k, v) for k, v in region.items()}, where
+
+
+# ---- regions -----------------------------------------------------------
+def inside(rings, x, y):
+    hit = False
+    for r in rings:
+        for i in range(len(r)):
+            (x0, y0), (x1, y1) = r[i - 1], r[i]
+            if (y0 > y) != (y1 > y) and x < (x1 - x0) * (y - y0) / (y1 - y0) + x0: hit = not hit
+    return hit
+
+def label(p, field):
+    name = p.get(field) or p.get("name") or p.get("name_en") or p.get("iso_3166_2") or ""
+    name = re.sub(r"\s+(Department|Departament|Prefecture|Province)$", "", name).replace(" - ", "-")
+    return EBIRD_NAME.get(name, name)
+
+def outlines(cc, load):
+    """A country's regions in longitude and latitude, keyed by ISO code
+    (Natural Earth's) or name; Peru's Lima and Lima Province share PE-LIM
+    and so become one, as eBird has them."""
+    groups = {}
+    if cc in COUNTY_FIPS:      # finer than Natural Earth's for these islands
+        t = load("counties-10m.json"); ll = topo_arcs(t, lambda x, y: (x, y))
+        for g in t["objects"]["counties"]["geometries"]:
+            if str(g.get("id", "")).startswith(COUNTY_FIPS[cc]):
+                groups.setdefault(g["properties"]["name"], {"name": g["properties"]["name"], "rings": []})["rings"] += topo_rings(g, ll)
+        return groups
+    field = NAME_FIELD.get(cc, "name_en")
+    for f in load("adm1-50m.geojson" if cc in NE50 else "adm1-10m.geojson")["features"]:
+        p = f["properties"]
+        if p.get("iso_a2") != cc: continue
+        iso = p.get("iso_3166_2") or ""
+        if iso in SKIP: continue
+        key = iso if iso and not iso.endswith("~") else label(p, field)
+        geom = f["geometry"]; polys = geom["coordinates"] if geom["type"] == "MultiPolygon" else [geom["coordinates"]]
+        g = groups.setdefault(key, {"name": label(p, field), "rings": []})
+        g["rings"] += [[(lon, lat) for lon, lat in ring] for poly in polys for ring in poly]
+    return groups
+
+def match(cc, groups, regions, where):
+    """eBird's region code → its outline: the same ISO code, else the
+    outline most of its checklists fall in (China's codes are numbers,
+    Puerto Rico's municipalities and the Virgin Islands have none)."""
+    out = {}
+    for code in sorted(c for c in regions if c.startswith(cc + "-")):
+        if code in groups: out[code] = code; continue
+        if MATCH.get(code) in groups: out[code] = MATCH[code]; continue
+        votes = Counter(k for x, y in where[code] for k, g in groups.items() if inside(g["rings"], x, y))
+        if not votes:   # on a coast the outline is too coarse to hold (Nassau): the nearest
+            near = lambda k: min((x - a) ** 2 + (y - b) ** 2 for x, y in where[code] for r in groups[k]["rings"] for a, b in r)
+            votes = Counter([min(groups, key=near)])
+        out[code] = votes.most_common(1)[0][0]
+    taken = Counter(out.values())
+    assert all(v == 1 for v in taken.values()), "two eBird regions in one outline: %s" % taken
+    return out
+
+
 def build():
     fetch()
-    load = lambda n: json.load(open(os.path.join(SRC, n), encoding="utf-8"))
-    data = {"names": NAMES, "total": TOTAL}
+    export = sys.argv[1] if len(sys.argv) > 1 else EXPORT
+    total, by_country, by_region, where = counts(export)
+    unknown = set(by_country) - set(COUNTRIES)
+    assert not unknown, "add to COUNTRIES: %s" % sorted(unknown)
+    files = {}
+    load = lambda n: files.get(n) or files.setdefault(n, json.load(open(os.path.join(SRC, n), encoding="utf-8")))
+    opens = {cc for cc in by_country if COUNTRIES[cc][2] and any(c.startswith(cc + "-") for c in by_region)}
+    data = {"names": dict([("world", "World")] + [(cc, COUNTRIES[cc][1]) for cc in sorted(opens)]), "total": total}
 
     # The world: Natural Earth projection, 960 wide, simplified arc by arc.
     w = load("countries-50m.json")
@@ -234,28 +352,36 @@ def build():
             rs += [px] if parts is None else [dp([proj(*p) for p in part], TOL) for part in parts]
         if rs: shapes.setdefault(g.get("id") or g["properties"]["name"], []).extend(rs)
     sphere = [proj(-180, lat) for lat in range(-90, 91)] + [proj(180, lat) for lat in range(90, -91, -1)]
-    data["world"] = view(shapes, 960, round(2 * oy, 1), {k: v[1] for k, v in COUNTS["world"].items()},
-                         {k: v[0] for k, v in COUNTS["world"].items()}, {"outline": path([sphere])})
+    data["world"] = view(shapes, 960, round(2 * oy, 1),
+                         {COUNTRIES[cc][0]: n for cc, n in by_country.items()},
+                         {COUNTRIES[cc][0]: COUNTRIES[cc][1] for cc in by_country},
+                         {COUNTRIES[cc][0]: (cc, COUNTRIES[cc][2]) for cc in opens},
+                         {"outline": path([sphere])})
 
-    # The United States, already in Albers USA at 975 x 610.
-    u = load("states-albers-10m.json")
-    arcs = [dp(a, TOL) for a in topo_arcs(u, lambda x, y: (x, y))]
-    shapes = {g["properties"]["name"]: topo_rings(g, arcs) for g in u["objects"]["states"]["geometries"]}
-    data["US"] = view(shapes, 975, 610, COUNTS["US"], {})
-
-    # The rest: Natural Earth provinces, Albers, simplified ring by ring.
-    files = {}
-    for code, (fname, a3, field, lon0, lat1, lat2) in PROVINCES.items():
-        src = files.get(fname) or files.setdefault(fname, load(fname))
-        pr, raw = albers(lon0, lat1, lat2), {}
-        for f in src["features"]:
-            p = f["properties"]
-            if p.get("adm0_a3") != a3 or not p.get(field): continue
-            g = f["geometry"]; polys = g["coordinates"] if g["type"] == "MultiPolygon" else [g["coordinates"]]
-            raw.setdefault(p[field], []).extend([pr(lon, lat) for lon, lat in ring] for poly in polys for ring in poly)
+    for cc in sorted(opens):
+        mine = {c: n for c, n in by_region.items() if c.startswith(cc + "-")}
+        if cc == "US":
+            # Already in Albers USA at 975 x 610.
+            u = load("states-albers-10m.json")
+            arcs = [dp(a, TOL) for a in topo_arcs(u, lambda x, y: (x, y))]
+            shapes = {g["properties"]["name"]: topo_rings(g, arcs) for g in u["objects"]["states"]["geometries"]}
+            data["US"] = view(shapes, 975, 610, {USPS[c[3:]]: n for c, n in mine.items()}, {})
+            continue
+        groups = outlines(cc, load)
+        to = match(cc, groups, mine, where)
+        print("%s  %s" % (cc, ", ".join("%s → %s (%d)" % (c, groups[k]["name"], mine[c]) for c, k in sorted(to.items()))))
+        raw = {k: g["rings"] for k, g in groups.items()}
+        xs = [x for rs in raw.values() for r in rs for x, _ in r]
+        if max(xs) - min(xs) > 180:           # across the antimeridian (New Zealand's Chatham Islands)
+            raw = {k: [[(x + 360 if x < 0 else x, y) for x, y in r] for r in rs] for k, rs in raw.items()}
+        if cc in ALBERS: pr = albers(*ALBERS[cc])
+        else:
+            ys = [y for rs in raw.values() for r in rs for _, y in r]
+            k = math.cos(math.radians((min(ys) + max(ys)) / 2)); pr = lambda lon, lat, k=k: (lon * k, -lat)
+        raw = {key: [[pr(x, y) for x, y in r] for r in rs] for key, rs in raw.items()}
         tf, h = fit(raw, 900)
-        shapes = {k: [dp([tf(p) for p in r], TOL) for r in rs] for k, rs in raw.items()}
-        data[code] = view(shapes, 900, h, COUNTS[code], {k: EBIRD_NAME.get(k, k) for k in shapes})
+        shapes = {key: [dp([tf(p) for p in r], TOL) for r in rs] for key, rs in raw.items()}
+        data[cc] = view(shapes, 900, h, {to[c]: n for c, n in mine.items()}, {key: g["name"] for key, g in groups.items()})
 
     blob = json.dumps(data, separators=(",", ":"), ensure_ascii=False)
     open(OUT, "w", encoding="utf-8").write(blob)
@@ -264,11 +390,11 @@ def build():
     html = open(page, encoding="utf-8").read()
     html2 = re.sub(r'data/birdmap\.json(\?v=[0-9a-f]+)?', "data/birdmap.json?v=" + stamp, html)
     if html2 != html: open(page, "w", encoding="utf-8").write(html2)
-    for k in ["world", "US"] + list(PROVINCES):
+    for k in ["world"] + sorted(opens):
         v = data[k]
         print("%-5s %4s x %-6s %3d KB  dots: %s" % (k, v["w"], v["h"], len(json.dumps(v)) // 1024,
               [s["name"] for s in v["shapes"] if "dot" in s]))
-    print("data/birdmap.json", len(blob) // 1024, "KB, stamp", stamp)
+    print("world total", total, "; data/birdmap.json", len(blob) // 1024, "KB, stamp", stamp)
 
 
 if __name__ == "__main__":
