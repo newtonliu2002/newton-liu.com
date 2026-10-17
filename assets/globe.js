@@ -65,10 +65,10 @@
   var PASS_DWELL = 4500, PASS_AHEAD = 6, PASS_BEHIND = 15, PASS_KEEP = 40, PASS_REACH = 60;
   // Newton's running order (2026-10-15), from a landing's first card round to the
   // last. A collection not in it has no passing card (it still shows on hover and
-  // in the list): Big Bend, New England, Arizona and California, for now.
+  // in the list): New England and California, for now.
   var PASS_ORDER = ["morocco", "quebec", "ecuador", "peru", "florida", "galapagos", "rio-grande",
     "colorado-nebraska", "desert-west", "yellowstone", "alberta-bc-yukon", "california-film",
-    "snowy-west", "alaska", "hawaii", "malaysia", "guangxi", "yunnan", "sri-lanka"];
+    "snowy-west", "alaska", "hawaii", "malaysia", "yunnan", "sri-lanka"];
   // Where cards crowd (the West: six within 15°, each wanting its 4.5 s) the
   // spin slows ahead of time to one even pace that brings every card up by
   // PASS_LATE degrees past its pin. It looks PASS_LOOK degrees ahead, so it

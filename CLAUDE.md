@@ -80,8 +80,8 @@ clock the same as or earlier than the one before (Florida and the Rio Grande
 run an hour ahead in US summer time; he took that): Morocco, Quebec, Ecuador, Peru,
 Florida, Galápagos, Rio Grande, Grouse Country, Desert West, Yellowstone,
 Canadian West, Catalina in Film, Snowy West, Alaska, Hawai'i, Malaysia,
-Guangxi, Yunnan, Sri Lanka. A collection not in it never passes (it still
-shows on hover and in the list): Big Bend, New England, Arizona and
+Yunnan, Sri Lanka. A collection not in it never passes (it still
+shows on hover and in the list): New England and
 California, for now, and a new collection until it is added. A landing starts
 at the top; after a drag, a gallery or a flight home the order picks up at the
 first card still to come. Where cards crowd (the West: six within 15°, each
@@ -313,9 +313,19 @@ Dates appear **once per collection**, under the gallery heading ("December
 dates in the manifest by `collectionDate()` in `site.js`, so it stays correct
 as photographs are added. Set `"date"` on a collection in
 `data/collections.json` to override it with fixed text — Galápagos, Ecuador,
-Malaysia, Arizona, Yunnan, Sri Lanka and Guangxi do, since their files carry no capture dates, and so does any page
+Malaysia, Yunnan and Sri Lanka do, since their files carry no capture dates, and so does any page
 that spans separate trips ("January 2024, December 2025"), which the derived
 range would misreport — or to `""` to show no date at all.
+
+**Cut collections** (Newton, 2026-10-17: Guangxi, Big Bend, Arizona). Off
+the site entirely: no entry in collections.json, no photographs in
+photos.json, no page. Their photographs wait in `images/_cut/<slug>/` (and
+`images/_cut/_thumbs/`), which the scanner skips, and stay in R2; their
+places.json and routes.json entries stay too (a place with no collection and
+no `title` is ignored). To bring one back: move its folders back into
+`images/`, restore its collections.json entry (and its photos.json order)
+from git history before the cut, run build.py, and add it back to
+PASS_ORDER if it should pass.
 
 The order of `data/collections.json` is the order of the pins' arrival on
 the globe, and the Index (work.html) shows it reversed, newest first
