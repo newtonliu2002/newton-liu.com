@@ -1901,7 +1901,9 @@
     if (!collections.length) { status(grid, "No collections defined yet."); return; }
 
     grid.textContent = "";
-    collections.forEach(function (c) {
+    // Newest trip first (Newton, 2026-10-17); collections.json stays oldest
+    // first, the order the globe's pins arrive in.
+    collections.slice().reverse().forEach(function (c) {
       var shots = byCollection[c.slug] || [];
       var cover = c.cover
         ? photos.filter(function (p) { return p.src === c.cover; })[0] || { src: c.cover }

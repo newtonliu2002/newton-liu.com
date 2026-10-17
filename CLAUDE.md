@@ -317,8 +317,9 @@ Malaysia, Arizona, Yunnan, Sri Lanka and Guangxi do, since their files carry no 
 that spans separate trips ("January 2024, December 2025"), which the derived
 range would misreport — or to `""` to show no date at all.
 
-The order of `data/collections.json` is the order of the Index (work.html)
-and of the pins' arrival on the globe: **oldest trip first, by each
+The order of `data/collections.json` is the order of the pins' arrival on
+the globe, and the Index (work.html) shows it reversed, newest first
+(Newton, 2026-10-17): **oldest trip first in the file, by each
 collection's earliest date**. A new collection goes in by that rule. (The
 globe's own list is A to Z within each region; see "The globe".) Only
 collections with photographs are listed (the globe page's one exception is
