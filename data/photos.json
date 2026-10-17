@@ -974,7 +974,11 @@
           "src": "images/alaska/U2A6259.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/alaska/U2A6259.jpg"
+      "thumb": "images/_thumbs/1600/alaska/U2A6259.jpg",
+      "caption": "Semipalmated Sandpiper",
+      "sci": "Calidris pusilla",
+      "ebird": "semsan",
+      "zh": "Semipalmated Sandpiper"
     },
     {
       "src": "images/alaska/AU2A2403.jpg",
@@ -2119,7 +2123,11 @@
           "src": "images/florida/05A6867-2.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/florida/05A6867-2.jpg"
+      "thumb": "images/_thumbs/1600/florida/05A6867-2.jpg",
+      "caption": "Western Sandpiper",
+      "sci": "Calidris mauri",
+      "ebird": "wessan",
+      "zh": "西方滨鹬"
     },
     {
       "src": "images/florida/05A8599.jpg",
@@ -2515,7 +2523,11 @@
           "src": "images/florida/05A6888-2.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/florida/05A6888-2.jpg"
+      "thumb": "images/_thumbs/1600/florida/05A6888-2.jpg",
+      "caption": "Western Sandpiper",
+      "sci": "Calidris mauri",
+      "ebird": "wessan",
+      "zh": "西方滨鹬"
     },
     {
       "src": "images/florida/05A8842.jpg",
@@ -3038,7 +3050,11 @@
           "src": "images/malaysia/10-2.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/malaysia/10-2.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/10-2.jpg",
+      "caption": "Baya Weaver",
+      "sci": "Ploceus philippinus",
+      "ebird": "baywea1",
+      "zh": "黄胸织雀"
     },
     {
       "src": "images/malaysia/6-1.jpg",
@@ -3420,7 +3436,11 @@
           "src": "images/malaysia/2022-7.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/malaysia/2022-7.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/2022-7.jpg",
+      "caption": "Sunda Frogmouth",
+      "sci": "Batrachostomus cornutus",
+      "ebird": "sunfro1",
+      "zh": "Sunda Frogmouth"
     },
     {
       "src": "images/galapagos/7-1.jpg",
@@ -4822,7 +4842,11 @@
           "src": "images/colorado-nebraska/6.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/colorado-nebraska/6.jpg"
+      "thumb": "images/_thumbs/1600/colorado-nebraska/6.jpg",
+      "caption": "Greater Sage-Grouse",
+      "sci": "Centrocercus urophasianus",
+      "ebird": "saggro",
+      "zh": "Sage Grouse"
     },
     {
       "src": "images/colorado-nebraska/11-1.jpg",
@@ -7433,7 +7457,11 @@
           "src": "images/hawaii/9-3.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/hawaii/9-3.jpg"
+      "thumb": "images/_thumbs/1600/hawaii/9-3.jpg",
+      "caption": "Hawaii Creeper",
+      "sci": "Loxops mana",
+      "ebird": "hawcre",
+      "zh": "Hawaii Creeper"
     },
     {
       "src": "images/hawaii/16-1.jpg",
@@ -8085,7 +8113,11 @@
           "src": "images/yunnan/31-2.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/yunnan/31-2.jpg"
+      "thumb": "images/_thumbs/1600/yunnan/31-2.jpg",
+      "caption": "Black-throated Sunbird",
+      "sci": "Aethopyga saturata",
+      "ebird": "bltsun1",
+      "zh": "黑胸太阳鸟"
     },
     {
       "src": "images/yunnan/3.jpg",
@@ -8609,7 +8641,11 @@
           "src": "images/yunnan/Yunnan-94.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/yunnan/Yunnan-94.jpg"
+      "thumb": "images/_thumbs/1600/yunnan/Yunnan-94.jpg",
+      "caption": "Long-tailed Shrike",
+      "sci": "Lanius schach",
+      "ebird": "lotshr1",
+      "zh": "棕背伯劳"
     },
     {
       "src": "images/yunnan/38-4.jpg",
@@ -9414,7 +9450,11 @@
           "src": "images/sri-lanka/1.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sri-lanka/1.jpg"
+      "thumb": "images/_thumbs/1600/sri-lanka/1.jpg",
+      "caption": "Sri Lanka White-eye",
+      "sci": "Zosterops ceylonensis",
+      "ebird": "ceywhe1",
+      "zh": "Sri Lanka White-eye"
     },
     {
       "src": "images/sri-lanka/16-2.jpg",
@@ -9819,7 +9859,11 @@
           "src": "images/sri-lanka/37.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sri-lanka/37.jpg"
+      "thumb": "images/_thumbs/1600/sri-lanka/37.jpg",
+      "caption": "Changeable Hawk-Eagle",
+      "sci": "Nisaetus cirrhatus",
+      "ebird": "y00839",
+      "zh": "凤头鹰雕"
     },
     {
       "src": "images/alberta-bc-yukon/05A8946.jpg",
@@ -11873,7 +11917,11 @@
           "src": "images/new-england/2022-12-Maine-6.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/new-england/2022-12-Maine-6.jpg"
+      "thumb": "images/_thumbs/1600/new-england/2022-12-Maine-6.jpg",
+      "caption": "American Herring Gull",
+      "sci": "Larus smithsonianus",
+      "ebird": "amhgul1",
+      "zh": "美洲银鸥"
     },
     {
       "src": "images/new-england/13.jpg",
