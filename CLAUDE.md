@@ -77,7 +77,7 @@ resting on the card, a drag, keyboard focus in the list, the tour, reduced
 motion and an off-screen globe stop it. The cards come in Newton's running
 order (`PASS_ORDER`, 2026-10-15), which he set by local time, each card's
 clock the same as or earlier than the one before (Florida and the Rio Grande
-run an hour ahead in US summer time; he took that): Morocco, Ecuador, Peru,
+run an hour ahead in US summer time; he took that): Morocco, Quebec, Ecuador, Peru,
 Florida, Galápagos, Rio Grande, Grouse Country, Desert West, Yellowstone,
 Canadian West, Catalina in Film, Snowy West, Alaska, Hawai'i, Malaysia,
 Guangxi, Yunnan, Sri Lanka. A collection not in it never passes (it still
@@ -205,10 +205,16 @@ keyed by the collection's slug, after the usual collections.json entry:
   not on the Index or any other page.
   When the photographs come, add the collections.json entry as usual (in
   oldest-first order); the `title` and `date` here are then ignored and can go.
-  **Hidden for now** (Newton, 2026-10-16): `SHOW_WAITING = false` in globe.js
-  keeps both off the globe entirely (no pins, road, row, passing card or
-  card; the first card is Ecuador's) until his photographs come. Their
-  entries stay in places.json and routes.json; `true` brings them back.
+  **Hidden for now** (Newton, 2026-10-16): `HIDE_WAITING` in globe.js
+  keeps Morocco and the Rio Grande off the globe entirely (no pins, road,
+  row, passing card or card) until his photographs come. Their entries stay
+  in places.json and routes.json; taking a slug out of the list brings it
+  back. **Quebec** (October 2026, his route, 2026-10-16) waits the same way
+  but shows: Montreal, La Mauricie, Quebec City, Fjord-du-Saguenay (pin at
+  Baie-Éternité), Saguenay, Tadoussac, Baie-Saint-Paul, Hautes-Gorges, back
+  through Baie-Saint-Paul (one pin for a place passed twice, his rule),
+  Grands-Jardins, Ottawa; park pins sit on the park road. Its passing card
+  comes first, before Ecuador's.
 - **Roads (optional): `data/routes.json`.** A collection whose line should
   follow the roads Newton drove (The Canadian West: the Alaska and
   Stewart–Cassiar Highways) has `waypoints` there ([lat, lng], driving order,
