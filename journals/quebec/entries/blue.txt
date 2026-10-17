@@ -11,3 +11,5 @@ where: Baie-Saint-Paul, QC, Canada
 秋天的魁北克的色调是什么？针叶的深绿，秋叶的红与黄，岩壁的灰，圣劳伦斯河的深蓝。
 
 但有一种颜色，不属于任何一个地方：日落后的蓝调。
+
+@photo images/_journals/quebec/blue-1.jpg
