@@ -334,6 +334,7 @@
         { "name": "Baie-Saint-Paul", "lat": 47.44, "lng": -70.51 },
         { "name": "Parc national des Hautes-Gorges-de-la-Rivière-Malbaie", "lat": 47.89, "lng": -70.48 },
         { "name": "Parc national des Grands-Jardins", "lat": 47.68, "lng": -70.83 },
+        { "name": "Parc national de la Mauricie", "lat": 46.77, "lng": -72.95 },
         { "name": "Ottawa/Gatineau", "lat": 45.42, "lng": -75.69 }
       ]
     }

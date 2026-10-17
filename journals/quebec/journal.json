@@ -13,8 +13,9 @@
     { "place": "Parc national des Hautes-Gorges-de-la-Rivière-Malbaie", "date": "2026-10-13" },
     { "place": "Baie-Saint-Paul", "date": "" },
     { "place": "Parc national des Grands-Jardins", "date": "" },
+    { "place": "Parc national de la Mauricie", "date": "2026-10-15" },
     { "place": "Ottawa/Gatineau", "date": "" }
   ],
-  "entries": ["quebec-and-me", "owl", "french", "rain", "sea", "blue", "snow"],
+  "entries": ["quebec-and-me", "owl", "french", "rain", "sea", "blue", "snow", "moon"],
   "english": []
 }
