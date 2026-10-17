@@ -13052,35 +13052,36 @@
       "zh": "黑脸琵鹭"
     },
     {
-      "src": "images/quebec/DJI-20261009060641-0170-D.jpg",
-      "title": "DJI-20261009060641-0170-D",
+      "src": "images/quebec/B0004601.jpg",
+      "title": "B0004601",
       "collection": "quebec",
       "location": "",
-      "date": "2026-10-09",
+      "date": "2026-10-14",
       "width": 2400,
-      "height": 1350,
+      "height": 886,
       "exif": {
-        "camera": "Hasselblad L3D-100c",
-        "focal": "14mm",
-        "aperture": "f/2.8",
-        "shutter": "1/100s",
-        "iso": "100"
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 35-100E@35",
+        "focal": "35mm",
+        "aperture": "f/8",
+        "shutter": "1/60s",
+        "iso": "50"
       },
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/quebec/DJI-20261009060641-0170-D.jpg"
+          "src": "images/_thumbs/800/quebec/B0004601.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/quebec/DJI-20261009060641-0170-D.jpg"
+          "src": "images/_thumbs/1600/quebec/B0004601.jpg"
         },
         {
           "w": 2400,
-          "src": "images/quebec/DJI-20261009060641-0170-D.jpg"
+          "src": "images/quebec/B0004601.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/quebec/DJI-20261009060641-0170-D.jpg"
+      "thumb": "images/_thumbs/1600/quebec/B0004601.jpg"
     },
     {
       "src": "images/quebec/B0004434.jpg",
@@ -13179,36 +13180,35 @@
       "thumb": "images/_thumbs/1600/quebec/B0004545.jpg"
     },
     {
-      "src": "images/quebec/B0004610.jpg",
-      "title": "B0004610",
+      "src": "images/quebec/DJI-20261009060516-0167-D.jpg",
+      "title": "DJI-20261009060516-0167-D",
       "collection": "quebec",
       "location": "",
-      "date": "2026-10-14",
+      "date": "2026-10-09",
       "width": 886,
       "height": 2400,
       "exif": {
-        "camera": "Hasselblad X2D II 100C",
-        "lens": "XCD 35-100E@100",
-        "focal": "100mm",
-        "aperture": "f/8",
-        "shutter": "1/45s",
-        "iso": "50"
+        "camera": "DJI FC9284",
+        "focal": "19mm",
+        "aperture": "f/2.8",
+        "shutter": "1/120s",
+        "iso": "100"
       },
       "variants": [
         {
           "w": 295,
-          "src": "images/_thumbs/800/quebec/B0004610.jpg"
+          "src": "images/_thumbs/800/quebec/DJI-20261009060516-0167-D.jpg"
         },
         {
           "w": 590,
-          "src": "images/_thumbs/1600/quebec/B0004610.jpg"
+          "src": "images/_thumbs/1600/quebec/DJI-20261009060516-0167-D.jpg"
         },
         {
           "w": 886,
-          "src": "images/quebec/B0004610.jpg"
+          "src": "images/quebec/DJI-20261009060516-0167-D.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/quebec/B0004610.jpg"
+      "thumb": "images/_thumbs/1600/quebec/DJI-20261009060516-0167-D.jpg"
     },
     {
       "src": "images/quebec/B0004695.jpg",
@@ -13980,35 +13980,36 @@
       "thumb": "images/_thumbs/1600/quebec/B0003525.jpg"
     },
     {
-      "src": "images/quebec/DJI-20261009060516-0167-D.jpg",
-      "title": "DJI-20261009060516-0167-D",
+      "src": "images/quebec/B0004610.jpg",
+      "title": "B0004610",
       "collection": "quebec",
       "location": "",
-      "date": "2026-10-09",
+      "date": "2026-10-14",
       "width": 886,
       "height": 2400,
       "exif": {
-        "camera": "DJI FC9284",
-        "focal": "19mm",
-        "aperture": "f/2.8",
-        "shutter": "1/120s",
-        "iso": "100"
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 35-100E@100",
+        "focal": "100mm",
+        "aperture": "f/8",
+        "shutter": "1/45s",
+        "iso": "50"
       },
       "variants": [
         {
           "w": 295,
-          "src": "images/_thumbs/800/quebec/DJI-20261009060516-0167-D.jpg"
+          "src": "images/_thumbs/800/quebec/B0004610.jpg"
         },
         {
           "w": 590,
-          "src": "images/_thumbs/1600/quebec/DJI-20261009060516-0167-D.jpg"
+          "src": "images/_thumbs/1600/quebec/B0004610.jpg"
         },
         {
           "w": 886,
-          "src": "images/quebec/DJI-20261009060516-0167-D.jpg"
+          "src": "images/quebec/B0004610.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/quebec/DJI-20261009060516-0167-D.jpg"
+      "thumb": "images/_thumbs/1600/quebec/B0004610.jpg"
     },
     {
       "src": "images/quebec/DJI-20261012080547-0086-D.jpg",
@@ -14074,36 +14075,35 @@
       "thumb": "images/_thumbs/1600/quebec/B0004381.jpg"
     },
     {
-      "src": "images/quebec/B0004601.jpg",
-      "title": "B0004601",
+      "src": "images/quebec/DJI-20261009060641-0170-D.jpg",
+      "title": "DJI-20261009060641-0170-D",
       "collection": "quebec",
       "location": "",
-      "date": "2026-10-14",
+      "date": "2026-10-09",
       "width": 2400,
-      "height": 886,
+      "height": 1350,
       "exif": {
-        "camera": "Hasselblad X2D II 100C",
-        "lens": "XCD 35-100E@35",
-        "focal": "35mm",
-        "aperture": "f/8",
-        "shutter": "1/60s",
-        "iso": "50"
+        "camera": "Hasselblad L3D-100c",
+        "focal": "14mm",
+        "aperture": "f/2.8",
+        "shutter": "1/100s",
+        "iso": "100"
       },
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/quebec/B0004601.jpg"
+          "src": "images/_thumbs/800/quebec/DJI-20261009060641-0170-D.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/quebec/B0004601.jpg"
+          "src": "images/_thumbs/1600/quebec/DJI-20261009060641-0170-D.jpg"
         },
         {
           "w": 2400,
-          "src": "images/quebec/B0004601.jpg"
+          "src": "images/quebec/DJI-20261009060641-0170-D.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/quebec/B0004601.jpg"
+      "thumb": "images/_thumbs/1600/quebec/DJI-20261009060641-0170-D.jpg"
     }
   ]
 }

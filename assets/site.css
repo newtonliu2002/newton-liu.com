@@ -364,7 +364,7 @@ a   { color: inherit; }
 .nav {
   display: flex; align-items: center; gap: var(--s6);
 }
-.nav a {
+.nav a, .nav-tab {
   position: relative;
   display: inline-flex; align-items: center;
   padding: 15.5px 8px;                /* 13 + 31 = a 44px target, and room for the focus ring */
@@ -375,9 +375,12 @@ a   { color: inherit; }
   white-space: nowrap;
   transition: color var(--d-fast) var(--ease);
 }
-.nav a:hover, .nav a[aria-current="page"] { color: var(--text); }
+/* A tab with no page of its own (Journals): a button that opens its menu,
+   dressed as the links beside it, with the plain arrow, as it goes nowhere. */
+.nav-tab { appearance: none; background: none; border: 0; cursor: default; }
+.nav a:hover, .nav a[aria-current="page"], .nav-tab:hover, .nav-tab.is-current { color: var(--text); }
 /* A 4×4 square made of borders, not a fill, so forced-colours mode keeps it. */
-.nav a[aria-current="page"]::before {
+.nav a[aria-current="page"]::before, .nav-tab.is-current::before {
   content: "";
   position: absolute; right: 100%; top: 50%;
   margin: -2px 0 0 0;                 /* 8px of the link's own padding sits between */
@@ -440,9 +443,11 @@ a   { color: inherit; }
    when the landing's bar is static (below 1024px wide or 620px tall). */
 .nav-drop { position: relative; display: inline-flex; align-items: center; }
 .nav-menu { display: none; }
-@media (hover: hover) and (min-width: 621px) {
+/* Hung from the bar wherever the nav is one row (not a phone); shown by
+   pointing (below) or, for a tab with no page, by a click or tap
+   (.is-open, site.js), which is how a touch screen opens Journals. */
+@media (min-width: 621px) {
   .nav-drop { z-index: var(--z-masthead); }
-  .nav-drop:hover > a, .nav-drop:has(:focus-visible) > a { color: var(--text); }   /* lit while its menu is open */
   .nav-menu {
     display: block;
     position: absolute; top: 100%; left: -16px;
@@ -454,6 +459,15 @@ a   { color: inherit; }
   /* The Chinese tabs are short, so 项目 sits near the right end of the bar:
      its menu hangs from the tab's right edge, or it runs off the page. */
   :root[data-site-lang="zh"] .nav-menu { left: auto; right: -16px; }
+  .nav-drop.is-open > .nav-tab { color: var(--text); }
+  .nav .nav-drop.is-open .nav-menu {
+    visibility: visible; opacity: 1;
+    transition: opacity var(--d-fast) var(--ease), visibility 0s;
+  }
+}
+@media (hover: hover) and (min-width: 621px) {
+  .nav-drop:hover > a, .nav-drop:has(:focus-visible) > a,
+  .nav-drop:hover > .nav-tab, .nav-drop:has(:focus-visible) > .nav-tab { color: var(--text); }   /* lit while its menu is open */
   .nav-drop:hover .nav-menu, .nav-drop:has(:focus-visible) .nav-menu {
     visibility: visible; opacity: 1;
     transition: opacity var(--d-fast) var(--ease), visibility 0s;
@@ -521,8 +535,16 @@ body[data-page="globe"] .nav-menu-list { border-top: 1px solid var(--hairline); 
   }
   /* The scrolling row would clip a ring drawn outside the link, so here it
      is drawn just inside, clear of the letters thanks to the padding. */
-  .nav a:focus-visible, .theme-toggle:focus-visible, .lang-toggle:focus-visible { outline-offset: -2px; }
-  .nav a[aria-current="page"]::before { position: static; margin: -1px 8px 0 0; }
+  .nav a:focus-visible, .nav-tab:focus-visible, .theme-toggle:focus-visible, .lang-toggle:focus-visible { outline-offset: -2px; }
+  .nav a[aria-current="page"]::before, .nav-tab.is-current::before { position: static; margin: -1px 8px 0 0; }
+  /* A tapped Journals opens its menu inline, in the row after it: the
+     entries as tabs of their own, a short rule before them. */
+  .nav-drop.is-open { gap: 22px; }
+  .nav-drop.is-open > .nav-tab { color: var(--text); }
+  .nav-drop.is-open .nav-menu { display: inline-flex; align-items: center; }
+  .nav-drop.is-open .nav-menu::before { content: ""; width: 12px; border-top: 1px solid var(--text-faint); margin-right: 22px; }
+  .nav-drop.is-open .nav-menu-list { display: flex; gap: 22px; padding: 0; border: 0; background: none; min-width: 0; }
+  .nav .nav-drop.is-open .nav-menu a { padding: 15.5px 8px; margin-inline: -8px; line-height: 13px; }
   /* Centred on the wordmark row: 44px tall from the top padding, like the
      wordmark, its square flush with the right edge of the page. */
   .masthead-inner { position: relative; }

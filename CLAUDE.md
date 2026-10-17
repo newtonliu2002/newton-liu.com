@@ -21,6 +21,7 @@ Adding 200 photos should change zero lines of HTML.
 index.html                  landing page — the globe and the collections list
 work.html                   the same collections as a grid of covers ("Index")
 about.html, contact.html    prose pages
+academia.html               a prose page waiting for Newton's words (academia.prose)
 projects.html               things built alongside the photography (eBird Explorer)
 collections/<slug>/index.html   one stub per collection (generated; ~15 lines)
 assets/site.css             ALL styling — design tokens in :root at the top
@@ -915,8 +916,8 @@ build.py's `stamp_root_pages` restamps every `journals/*/index.html` along
 with the five root pages (the four journal assets are in `ASSETS`).
 
 **journal.json.** `place` is the key into data/places.json and
-data/routes.json; `title` ("Quebéc", his spelling, 2026-10-17) in English and `titleZh` (魁北克) in
-Chinese, one at a time on the cover and in the tab title ("Quebéc Journal",
+data/routes.json; `title` ("Québec", Newton's spelling, 2026-10-17, as the collection's) in English and `titleZh` (魁北克) in
+Chinese, one at a time on the cover and in the tab title ("Québec Journal",
 "魁北克游记"; Newton wanted English and Chinese versions, not the two side by
 side, 2026-10-17); `month` ("October 2026", through `NLSite.date`); optional `dates.from` and
 `dates.to` (ISO; Newton wants no range on the cover, 2026-10-17, so Quebec has none); `cover` (`type`
@@ -1070,8 +1071,19 @@ Screenshots are page furniture like the About band, written into the HTML:
 they're small). Their `sizes` mirrors the column: the page width below
 1000px, else 62vw up to the 108rem wrap.
 
-The tab is in the nav of every page: the four hand-written pages, this one,
-and `PAGE_TEMPLATE` in build.py for the collection pages.
+The tab is in the nav of every page: the hand-written pages, this one,
+the journal pages, and `PAGE_TEMPLATE` in build.py for the collection pages.
+
+**The nav, in order** (Newton, 2026-10-17): Work · About · Journals ·
+Academia · Projects · Contact. **Journals** is not a link (he wanted it
+unclickable): `<button class="nav-tab" data-menu="journals">`, keyed in
+`NAV_MENUS` by its `data-menu`, whose one entry is Québec
+(journals/quebec/; `zh` gives 魁北克). Pointing opens it as for Projects;
+a click or tap opens and shuts it (`.is-open`, `aria-expanded`), so a touch
+screen gets it too, and on a phone it opens inline in the scrolling nav row
+after a short rule. On a journal page the tab is current (`.is-current`,
+the amber square) and its entry `aria-current`. A new journal is one entry
+there. **Academia** links to academia.html, empty until he writes it.
 
 **The drop-down.** Pointing at the Projects tab (or tabbing onto it) drops
 a menu under it with "eBird Explorer ↗", which opens the app itself, not

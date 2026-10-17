@@ -412,6 +412,8 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
     <nav class="nav">
       <a href="../../#collections" aria-current="page">Work</a>
       <a href="../../about.html">About</a>
+      <button type="button" class="nav-tab" data-menu="journals">Journals</button>
+      <a href="../../academia.html">Academia</a>
       <a href="../../projects.html">Projects</a>
       <a href="../../contact.html">Contact</a>
     </nav>
@@ -510,10 +512,10 @@ def asset_stamps():
 
 
 def stamp_root_pages(stamps):
-    """Refresh ?v= on the hand-written pages: the five at the root and every
+    """Refresh ?v= on the hand-written pages: the six at the root and every
     journal's page. Returns how many changed."""
     changed = 0
-    pages = ["index.html", "work.html", "projects.html", "about.html", "contact.html"]
+    pages = ["index.html", "work.html", "projects.html", "about.html", "contact.html", "academia.html"]
     journals = os.path.join(ROOT, "journals")
     if os.path.isdir(journals):
         pages += sorted(os.path.join("journals", d, "index.html") for d in os.listdir(journals)

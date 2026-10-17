@@ -52,6 +52,11 @@
      laptop with a mouse; phones and touch screens just follow the tab to
      its page. Each entry goes straight where its href says, so eBird
      Explorer opens the app itself, not the Projects page.
+     A tab with no page of its own (Journals: Newton wanted it unclickable,
+     2026-10-17) is a <button class="nav-tab" data-menu="journals"> keyed by
+     its data-menu: a click or tap opens and shuts its menu, so it works on
+     a phone too, where the menu opens inline in the nav row. "zh" is an
+     entry's label in Chinese.
      ------------------------------------------------------------------ */
   var NAV_MENUS = {
     "projects.html": [
@@ -59,6 +64,9 @@
       { label: "Photography Planner", href: "shoot-planner/" },
       { label: "Retreat Finder", href: "retreat-finder/" },
       { label: "Site Ranking", href: "https://ebird-explorer.onrender.com/site-ranking" }
+    ],
+    "journals": [
+      { label: "Québec", zh: "魁北克", href: "journals/quebec/" }
     ]
   };
 
@@ -97,6 +105,7 @@
   var ZH_UI = {
     // the bar, the footer, the page titles
     "Primary": "主导航", "Work": "作品", "About": "关于", "Projects": "项目", "Contact": "联系",
+    "Journals": "游记", "Academia": "学术", "Academia — Newton Liu Photography": "学术 — Newton Liu Photography",
     // "Newton Liu Photography" stays English in both (Newton, 2026-10-17)
     "Skip to collections": "跳到作品集", "Skip to photographs": "跳到照片",
     "Newton Liu. All photographs are my own.": "Newton Liu。所有照片均为本人拍摄。",
@@ -154,6 +163,7 @@
     "home.heroTitle": "鸟类、野生动物，以及它们栖息的地方。",
     "home.heroSub": "从加拉帕戈斯群岛到东喜马拉雅的野外摄影。",
     "contact.title": "联系方式",
+    "academia.title": "学术",
     "projects.title": "项目",
     "projects.ebird.kicker": "网页应用 · 2026", "projects.shootplanner.kicker": "网页应用 · 2026",
     "projects.retreatfinder.kicker": "网页应用 · 2026", "projects.siteranking.kicker": "网页应用 · 2026",
@@ -175,7 +185,7 @@
   var ZH_PLACES = {
     titles: {
       "Alaska": "阿拉斯加", "California": "加利福尼亚", "Florida": "佛罗里达", "Hawai'i": "夏威夷",
-      "New England": "新英格兰", "Quebec": "魁北克", "Ecuador": "厄瓜多尔", "Galápagos": "加拉帕戈斯群岛",
+      "New England": "新英格兰", "Québec": "魁北克", "Ecuador": "厄瓜多尔", "Galápagos": "加拉帕戈斯群岛",
       "Peru": "秘鲁", "Guangxi & Guangdong": "广西 & 广东", "Malaysia": "马来西亚", "Sri Lanka": "斯里兰卡",
       "Yunnan": "云南", "Yellowstone & North Dakota": "黄石 & 北达科他", "Morocco": "摩洛哥",
       "Guangxi": "广西", "Arizona": "亚利桑那", "Big Bend": "大弯曲"
@@ -589,10 +599,12 @@
   // show the menu while the pointer or focus is anywhere inside the pair.
   // An off-site entry gets a small ↗ so it's clear it leaves the site.
   (function navMenus() {
-    var links = document.querySelectorAll(".nav > a");
+    var links = document.querySelectorAll(".nav > a, .nav > .nav-tab");
     for (var i = 0; i < links.length; i++) {
       var a = links[i];
-      var page = (a.getAttribute("href") || "").split(/[?#]/)[0].split("/").pop();
+      var button = a.tagName === "BUTTON";
+      var page = button ? a.getAttribute("data-menu") || ""
+                        : (a.getAttribute("href") || "").split(/[?#]/)[0].split("/").pop();
       if (!page || !Object.prototype.hasOwnProperty.call(NAV_MENUS, page)) continue;
       var items = NAV_MENUS[page];
       if (!items || !items.length) continue;
@@ -603,6 +615,7 @@
       var menu = el("span", "nav-menu");
       var list = el("ul", "nav-menu-list");
       list.setAttribute("aria-label", a.textContent);
+      if (button) opensOnClick(wrap, a, menu, "nav-menu-" + page);
       items.forEach(function (item) {
         var li = el("li");
         var link = el("a");
@@ -610,7 +623,8 @@
         // An on-site href is written from the site's root ("shoot-planner/"),
         // so it is read from this page's base, as getJSON does.
         link.href = offSite || item.href.charAt(0) === "/" ? item.href : BASE + item.href;
-        link.textContent = item.label;
+        if (!offSite && link.pathname === location.pathname) link.setAttribute("aria-current", "page");
+        link.textContent = LANG === "zh" && item.zh ? item.zh : item.label;
         if (offSite) {
           var out = el("span", "nav-menu-out");
           out.setAttribute("aria-hidden", "true");
@@ -622,6 +636,28 @@
       });
       menu.appendChild(list);
       wrap.appendChild(menu);
+    }
+
+    // A tab with no page: a click or tap opens its menu and the next one
+    // shuts it, as does a click anywhere else or Esc. On a laptop pointing
+    // still opens it as for the others; leaving lets it go again.
+    function opensOnClick(wrap, tab, menu, id) {
+      menu.id = id;
+      tab.setAttribute("aria-controls", id);
+      tab.setAttribute("aria-expanded", "false");
+      function set(open) {
+        wrap.classList.toggle("is-open", open);
+        tab.setAttribute("aria-expanded", open ? "true" : "false");
+        if (open) wrap.classList.remove("is-shut");
+        // A phone's nav row scrolls sideways: bring the opened entries into it.
+        if (open && window.matchMedia("(max-width: 620px)").matches) {
+          menu.scrollIntoView({ block: "nearest", inline: "nearest" });
+        }
+      }
+      tab.addEventListener("click", function () { set(!wrap.classList.contains("is-open")); });
+      document.addEventListener("click", function (e) { if (!wrap.contains(e.target)) set(false); });
+      wrap.addEventListener("keydown", function (e) { if (e.key === "Escape" || e.key === "Esc") set(false); });
+      wrap.addEventListener("mouseleave", function () { if (window.matchMedia("(hover: hover)").matches) set(false); });
     }
 
     // Esc shuts an open menu; it opens again once the pointer and focus have
@@ -925,7 +961,7 @@
         ["2026-03-12", "Morocco", 7937],
         ["2024-11-12", "Sri Lanka", 7318],
         ["2023-08-15", "Mindo", 7311],
-        ["2025-08-23", "Quebec", 6927],
+        ["2025-08-23", "Québec", 6927],
         ["2025-10-11", "Colombia", 6740]
       ],
       // date, the hour it began, where, cameras (no longer shown), photos
@@ -953,7 +989,7 @@
       "Galápagos & Ecuador": "加拉帕戈斯群岛 & 厄瓜多尔", "Yunnan": "云南", "Florida": "佛罗里达",
       "Puerto Rico and US Virgin Islands": "波多黎各 & 美属维尔京群岛",
       "Texas & Nuevo León": "得克萨斯 & 新莱昂", "Canada & Alaska": "加拿大 & 阿拉斯加",
-      "Arizona": "亚利桑那", "Quebec": "魁北克", "Guangxi": "广西", "Mindo": "厄瓜多尔"
+      "Arizona": "亚利桑那", "Québec": "魁北克", "Guangxi": "广西", "Mindo": "厄瓜多尔"
     };
 
     // Each version's words: the English page's in English, the Chinese

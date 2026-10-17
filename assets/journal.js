@@ -366,7 +366,7 @@
   function render(entries, path) {
     // One title in each language (Newton: an English and a Chinese
     // version, not the two side by side).
-    var title = (ZH && journal.titleZh) || journal.title || "Quebec";
+    var title = (ZH && journal.titleZh) || journal.title || "Québec";
     document.title = t("{title} Journal — Newton Liu Photography", { title: title });
 
     drawCover(title);
