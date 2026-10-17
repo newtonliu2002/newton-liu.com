@@ -213,7 +213,7 @@ keyed by the collection's slug, after the usual collections.json entry:
   but shows: Montreal, La Mauricie, Quebec City, Fjord-du-Saguenay (pin at
   Baie-Éternité), Saguenay, Tadoussac, Baie-Saint-Paul, Hautes-Gorges, back
   through Baie-Saint-Paul (one pin for a place passed twice, his rule),
-  Grands-Jardins, Ottawa; park pins sit on the park road. Its passing card
+  Grands-Jardins, Ottawa/Gatineau (his name for it); park pins sit on the park road. Its passing card
   comes first, before Ecuador's.
 - **Roads (optional): `data/routes.json`.** A collection whose line should
   follow the roads Newton drove (The Canadian West: the Alaska and

@@ -325,7 +325,7 @@
         { "name": "Baie-Saint-Paul", "lat": 47.44, "lng": -70.51 },
         { "name": "Hautes-Gorges-de-la-Rivière-Malbaie National Park", "lat": 47.89, "lng": -70.48 },
         { "name": "Grands-Jardins National Park", "lat": 47.68, "lng": -70.83 },
-        { "name": "Ottawa", "lat": 45.42, "lng": -75.69 }
+        { "name": "Ottawa/Gatineau", "lat": 45.42, "lng": -75.69 }
       ]
     }
   }
