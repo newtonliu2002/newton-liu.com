@@ -11570,33 +11570,40 @@
       "thumb": "images/_thumbs/1600/california-film/B0003461.jpg"
     },
     {
-      "src": "images/guangxi-guangdong/6-3.jpg",
-      "title": "6 3",
+      "src": "images/guangxi-guangdong/U2A3552.jpg",
+      "title": "U2A3552",
       "collection": "guangxi-guangdong",
       "location": "",
-      "date": "",
-      "width": 2500,
-      "height": 1667,
-      "exif": {},
+      "date": "2024-10-26",
+      "width": 4000,
+      "height": 2668,
+      "exif": {
+        "camera": "Canon EOS R5m2",
+        "lens": "EF600mm f/4L IS III USM",
+        "focal": "600mm",
+        "aperture": "f/4",
+        "shutter": "1/640s",
+        "iso": "5000"
+      },
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/guangxi-guangdong/6-3.jpg"
+          "src": "images/_thumbs/800/guangxi-guangdong/U2A3552.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/guangxi-guangdong/6-3.jpg"
+          "src": "images/_thumbs/1600/guangxi-guangdong/U2A3552.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/guangxi-guangdong/6-3.jpg"
+          "src": "images/_thumbs/2400/guangxi-guangdong/U2A3552.jpg"
         },
         {
-          "w": 2500,
-          "src": "images/guangxi-guangdong/6-3.jpg"
+          "w": 4000,
+          "src": "images/guangxi-guangdong/U2A3552.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/guangxi-guangdong/6-3.jpg",
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A3552.jpg",
       "featured": true
     },
     {
@@ -11665,40 +11672,33 @@
       "thumb": "images/_thumbs/1600/guangxi-guangdong/7.jpg"
     },
     {
-      "src": "images/guangxi-guangdong/U2A3552.jpg",
-      "title": "U2A3552",
+      "src": "images/guangxi-guangdong/6-3.jpg",
+      "title": "6 3",
       "collection": "guangxi-guangdong",
       "location": "",
-      "date": "2024-10-26",
-      "width": 4000,
-      "height": 2668,
-      "exif": {
-        "camera": "Canon EOS R5m2",
-        "lens": "EF600mm f/4L IS III USM",
-        "focal": "600mm",
-        "aperture": "f/4",
-        "shutter": "1/640s",
-        "iso": "5000"
-      },
+      "date": "",
+      "width": 2500,
+      "height": 1667,
+      "exif": {},
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/guangxi-guangdong/U2A3552.jpg"
+          "src": "images/_thumbs/800/guangxi-guangdong/6-3.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/guangxi-guangdong/U2A3552.jpg"
+          "src": "images/_thumbs/1600/guangxi-guangdong/6-3.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/guangxi-guangdong/U2A3552.jpg"
+          "src": "images/_thumbs/2400/guangxi-guangdong/6-3.jpg"
         },
         {
-          "w": 4000,
-          "src": "images/guangxi-guangdong/U2A3552.jpg"
+          "w": 2500,
+          "src": "images/guangxi-guangdong/6-3.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A3552.jpg"
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/6-3.jpg"
     },
     {
       "src": "images/guangxi-guangdong/4-2-copy.jpg",
