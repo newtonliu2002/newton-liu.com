@@ -97,12 +97,13 @@
   var ZH_UI = {
     // the bar, the footer, the page titles
     "Primary": "主导航", "Work": "作品", "About": "关于", "Projects": "项目", "Contact": "联系",
-    "Photography": "摄影", "Skip to collections": "跳到作品集", "Skip to photographs": "跳到照片",
+    // "Newton Liu Photography" stays English in both (Newton, 2026-10-17)
+    "Skip to collections": "跳到作品集", "Skip to photographs": "跳到照片",
     "Newton Liu. All photographs are my own.": "Newton Liu。所有照片均为本人拍摄。",
     "White background": "白色背景", "Black background": "黑色背景",
     "Newton Liu — Bird, Wildlife & Landscape Photography": "Newton Liu — 鸟类、野生动物与风光摄影",
-    "{title} — Newton Liu Photography": "{title} — Newton Liu 摄影",
-    "Contact — Newton Liu Photography": "联系方式 — Newton Liu 摄影",
+    "{title} — Newton Liu Photography": "{title} — Newton Liu Photography",
+    "Contact — Newton Liu Photography": "联系方式 — Newton Liu Photography",
     // the Index, the galleries, the lightbox
     "Collections": "作品集", "Globe": "地球仪", "Index": "目录", "Loading…": "加载中…",
     "More about the work →": "了解更多 →",

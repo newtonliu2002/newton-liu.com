@@ -435,7 +435,8 @@ in French, and its park pins are named in French in both languages (Parc
 national du Fjord-du-Saguenay…). Cape May, Ouray and Sanibel & Fort Myers stay English. The national parks in
 the US, Canada, Sri Lanka, Morocco and Mexico (every national park pin) do go Chinese (La Mauricie too, a federal park), but not
 Quebec's provincial three (Newton, 2026-10-17).
-**Not translated:** the About essay, blurbs, notes, the Contact page's sentence
+**Not translated:** "Newton Liu Photography" (the wordmark and the end of
+the tab titles, his call 2026-10-17), the About essay, blurbs, notes, the Contact page's sentence
 (its list labels do go Chinese, 邮箱： and so on: contactLabels() in site.js,
 re-run when edit.js rewrites the slot), gallery subtitles, "Newton Liu",
 project names, the meta description and og tags, the dial, the map's own
