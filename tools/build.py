@@ -59,10 +59,11 @@ VARIANT_QUALITY = 85
 
 # Fields a human may edit; never overwritten once set. `focus` is a CSS
 # object-position ("center bottom") for a photograph the grid has to crop.
-# `caption` is the bird's English name, `sci` its scientific name and `ebird`
-# its eBird species code (ebird.org/species/<code>).
+# `caption` is the bird's English name, `sci` its scientific name, `ebird`
+# its eBird species code (ebird.org/species/<code>) and `zh` its Chinese name
+# (eBird's zh_SIM, shown first in the lightbox when the site is in Chinese).
 AUTHORED_FIELDS = ("title", "location", "date", "caption", "collection", "featured",
-                   "focus", "sci", "ebird")
+                   "focus", "sci", "ebird", "zh")
 
 
 # --------------------------------------------------------------------------
@@ -339,6 +340,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 <meta name="description" content="{title} — photographs by Newton Liu.">
 <meta name="theme-color" content="#121212">
 <script>try{{if(localStorage.getItem("theme")==="white"){{document.documentElement.dataset.theme="light";var m=document.querySelector('meta[name="theme-color"]');if(m)m.content="#ffffff"}}}}catch(e){{}}</script>
+<script>try{{if(localStorage.getItem("lang")==="zh"&&!/[?&]edit\\b/.test(location.search))document.documentElement.setAttribute("data-site-lang","zh")}}catch(e){{}}</script>
 <link rel="stylesheet" href="../../assets/site.css?v={v_css}">
 </head>
 

@@ -62,6 +62,133 @@
     ]
   };
 
+  /* ------------------------------------------------------------------
+     中 / EN — the site in Simplified Chinese (Newton, 2026-10-17). The
+     switch at the far right of the nav saves the choice (localStorage
+     "lang") and reloads; a line in every page's <head> sets
+     <html data-site-lang="zh"> before the first paint, and everything below
+     reads it through NLSite.lang(). <html lang> stays "en": only the texts
+     that turn Chinese are marked (chineseText, below), so his English
+     titles, the Latin names and the instruments keep their own type.
+     ?edit is always English, so no Chinese is ever saved into text.json.
+
+     Only the words around the work are translated. His essays, blurbs,
+     notes and the Contact page's words stay as he wrote them, and so do
+     his own titles (Catalina in Film, Grouse Country, The Snowy West…): a
+     title missing from ZH_PLACES.titles simply stays English.
+
+     ZH_UI     the interface, keyed by the English as it is written, with
+               {placeholders}. A label he rewrites in English drops back to
+               English until it has a line here.
+     ZH_EDIT   [data-edit] slots translated by their key: the Projects page
+               (his blurbs in Chinese, given 2026-10-17) and the landing's
+               taglines. A blurb he rewrites in English needs its Chinese
+               rewritten here too.
+     ZH_PLACES collection titles, list regions, the card's "where" parts,
+               and the pins that go Chinese: every pin in China, and
+               elsewhere the cities only (parks, reserves, islands, rivers
+               and roads stay English). A new place is one line in the
+               right group. Pins, titles and where-parts are kept apart
+               because the same name can be both (Hawai'i Island is a pin,
+               and stays English there, and a where-part, which doesn't).
+     Bird names are in data/photos.json ("zh", beside caption, sci and
+     ebird), from eBird's zh_SIM taxonomy.
+     ------------------------------------------------------------------ */
+  var ZH_UI = {
+    // the bar, the footer, the page titles
+    "Primary": "主导航", "Work": "作品", "About": "关于", "Projects": "项目", "Contact": "联系",
+    "Photography": "摄影", "Skip to collections": "跳到作品集", "Skip to photographs": "跳到照片",
+    "Newton Liu. All photographs are my own.": "Newton Liu。所有照片均为本人拍摄。",
+    "White background": "白色背景", "Black background": "黑色背景",
+    "Newton Liu — Bird, Wildlife & Landscape Photography": "Newton Liu — 鸟类、野生动物与风光摄影",
+    "{title} — Newton Liu Photography": "{title} — Newton Liu 摄影",
+    "Contact — Newton Liu Photography": "联系方式 — Newton Liu 摄影",
+    // the Index, the galleries, the lightbox
+    "Collections": "作品集", "Globe": "地球仪", "Index": "目录", "Loading…": "加载中…",
+    "More about the work →": "了解更多 →",
+    "← All collections": "← 全部作品集", "Loading photographs…": "正在加载照片…",
+    "Photographs from this trip haven't been added yet.": "这次旅行的照片尚未添加。",
+    "No collections defined yet.": "还没有作品集。",
+    "Couldn't load the site data. {err}": "无法加载网站数据。{err}",
+    "Photograph viewer": "照片查看器", "Close viewer": "关闭查看器",
+    "Previous photograph": "上一张照片", "Next photograph": "下一张照片",
+    "View photograph {n} of {total} larger": "放大查看第{n}张照片（共{total}张）",
+    "View {title} larger": "放大查看：{title}",
+    "Photograph from {collection}": "{collection}的照片", "Photograph": "照片",
+    "photographed at {location}": "摄于{location}",
+    // Projects (the names stay English)
+    "Open the app →": "打开应用 →",
+    // the globe (globe.js LABELS)
+    "Tour": "导览", "Back to overview": "返回总览", "Overview": "总览",
+    "View collection": "查看作品集", "With writing": "附有文字", ", with writing": "，附有文字",
+    "Load globe": "加载地球仪", "Globe unavailable. The collections are listed here.": "地球仪无法显示。作品集都在列表里。",
+    "Couldn't load the collections.": "作品集加载失败。",
+    "Showing {title}.": "正在显示{title}。", "Select again to open the collection.": "再次选择即可打开作品集。",
+    "Tour started.": "导览已开始。", "Tour ended.": "导览已结束。",
+    "Globe unavailable": "地球仪无法显示", "Globe not loaded": "地球仪未加载", "Tour · ": "导览 · ",
+    "Use two fingers to turn the globe": "用双指转动地球仪",
+    "Use Ctrl + scroll to zoom the map": "按住 Ctrl 并滚动以缩放地图",
+    "Use ⌘ + scroll to zoom the map": "按住 ⌘ 并滚动以缩放地图"
+  };
+
+  var ZH_EDIT = {
+    "home.heroTitle": "鸟类、野生动物，以及它们栖息的地方。",
+    "home.heroSub": "从加拉帕戈斯群岛到东喜马拉雅的野外摄影。",
+    "contact.title": "联系方式",
+    "projects.title": "项目",
+    "projects.ebird.kicker": "网页应用 · 2026", "projects.shootplanner.kicker": "网页应用 · 2026",
+    "projects.retreatfinder.kicker": "网页应用 · 2026", "projects.siteranking.kicker": "网页应用 · 2026",
+    "projects.ebird.status": "建设中", "projects.shootplanner.status": "建设中",
+    "projects.retreatfinder.status": "建设中", "projects.siteranking.status": "建设中",
+    "projects.ebird.note": "需要密码", "projects.shootplanner.note": "需要密码",
+    "projects.retreatfinder.note": "需要密码", "projects.siteranking.note": "需要密码",
+    "projects.ebird.blurb": "一个基于 eBird 实时数据的观鸟行程规划工具。用户选定一个区域并输入目标鸟种，引擎会搜索它们最近在哪里被报告过、哪些热点能找到最多的目标鸟种，并为观鸟者生成一份切实可行的计划。",
+    "projects.ebird.shot1": "区域计划：区域内的所有热点，按能找到的目标鸟种数量排序",
+    "projects.ebird.shot2": "鸟种矩阵：每种鸟在每个区域的情况，以它在完整清单中所占的比例衡量",
+    "projects.shootplanner.blurb": "一个风光摄影规划工具。选定日期和落脚点，它会结合天气预报、潮汐和空间天气数据，针对一天中的不同时段和不同元素（日出、日落、金色光线、柔光、雾、星空和极光）搜索拍摄点并打分。然后它会安排好一整天：几点起床、开车去哪里、每个时段的备选方案，以及每个分数背后的理由。它始于2026年10月在魁北克夏洛瓦度过的一个风雨交加的星期。",
+    "projects.shootplanner.shot1": "每日计划：几点起床，然后每个时段的首选和备选，并附上理由",
+    "projects.shootplanner.shot2": "拍摄点详情：当天逐小时的各层云量、雾和雨，对照日月的升落",
+    "projects.shootplanner.shot3": "地图：每个拍摄点都标出它当天的最高分",
+    "projects.retreatfinder.blurb": "一个为旅途寻找住处的工具。Claude 会搜索 Airbnb、VRBO、Booking.com 以及房东自己的网站，并逐一阅读每个房源。应用会根据一套精心整理的偏好为每个住处打分：景观、设计、工作空间、清静程度等。它会展示每项判断背后的依据，记住每一个被否决的住处及其原因，并追踪具体日期的价格。",
+    "projects.siteranking.blurb": "受热门美食排名应用 Beli 启发，这是一个为用户去过的 eBird 观鸟热点打造的个人排名系统。每次到访都会按鸟的质量、鸟种数量和体验打分；然后通过两两比较，把每个地点在所属档次内排出先后，让这份榜单说明哪些地方才是真正最好的。\n\n它与 eBird Explorer 一同运行，共用同一个登录。"
+  };
+
+  var ZH_PLACES = {
+    titles: {
+      "Alaska": "阿拉斯加", "California": "加利福尼亚", "Florida": "佛罗里达", "Hawai'i": "夏威夷",
+      "New England": "新英格兰", "Quebec": "魁北克", "Ecuador": "厄瓜多尔", "Galápagos": "加拉帕戈斯群岛",
+      "Peru": "秘鲁", "Guangxi & Guangdong": "广西 & 广东", "Malaysia": "马来西亚", "Sri Lanka": "斯里兰卡",
+      "Yunnan": "云南", "Yellowstone & North Dakota": "黄石 & 北达科他", "Morocco": "摩洛哥",
+      "Guangxi": "广西", "Arizona": "亚利桑那", "Big Bend": "大弯曲"
+    },
+    regions: { "North America": "北美洲", "South America": "南美洲", "Asia": "亚洲", "Africa": "非洲" },
+    // A whole line first ("Sabah, Borneo" reads the other way round in
+    // Chinese), else each part between the dots.
+    where: {
+      "Sabah, Borneo": "婆罗洲沙巴",
+      "Maine": "缅因", "Massachusetts": "马萨诸塞", "New Jersey": "新泽西", "Texas": "得克萨斯",
+      "Hawai'i Island": "夏威夷岛", "Kaua'i": "考爱岛", "Maui": "毛伊岛", "O'ahu": "瓦胡岛",
+      "Colorado": "科罗拉多", "Idaho": "爱达荷", "Montana": "蒙大拿", "Oregon": "俄勒冈",
+      "Washington": "华盛顿州", "North Dakota": "北达科他", "Wyoming": "怀俄明", "New Mexico": "新墨西哥",
+      "Utah": "犹他", "Alberta": "艾伯塔", "British Columbia": "不列颠哥伦比亚", "Yukon": "育空",
+      "China": "中国", "Nebraska": "内布拉斯加", "Nuevo León": "新莱昂"
+    },
+    pins: {
+      // cities
+      "Monterey": "蒙特雷", "Monterrey": "蒙特雷", "Cape May": "开普梅", "Sanibel & Fort Myers": "萨尼贝尔 & 迈尔斯堡",
+      "Vancouver": "温哥华", "Lima": "利马", "Cusco": "库斯科", "Matara": "马塔拉", "Nuwara Eliya": "努沃勒埃利耶",
+      "Kandy": "康提", "Sedona": "塞多纳", "Phoenix": "凤凰城", "Juneau": "朱诺", "Utqiagvik": "乌特恰维克",
+      "Fairbanks": "费尔班克斯", "Rabat": "拉巴特", "Agadir": "阿加迪尔", "Guelmim": "盖勒敏",
+      "Montreal": "蒙特利尔", "Quebec City": "魁北克市", "Saguenay": "萨格奈", "Tadoussac": "塔杜萨克",
+      "Ottawa/Gatineau": "渥太华/加蒂诺", "Baie-Saint-Paul": "拜圣保罗", "Craig": "克雷格", "Ouray": "乌雷",
+      // everything in China
+      "Shenzhen Bay": "深圳湾", "Nonggang National Nature Reserve": "弄岗国家级自然保护区",
+      "Gaoligong Mountains": "高黎贡山", "Dali": "大理", "Lijiang": "丽江", "Shangri-La": "香格里拉"
+    }
+  };
+  var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+    "October", "November", "December"];
+
   var body = document.body;
   var BASE = body.dataset.base || "";
   var PAGE = body.dataset.page || "";
@@ -173,13 +300,16 @@
     if (!m) return value;                       // freeform dates pass through
     var d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
     if (isNaN(d.getTime())) return value;
-    return d.toLocaleDateString(undefined, { day: "numeric", month: "long", year: "numeric" });
+    if (lang() === "zh") return d.getFullYear() + "年" + (d.getMonth() + 1) + "月" + d.getDate() + "日";
+    return d.toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" });
   }
 
   // The date printed under a gallery's heading — one line for the whole
   // collection rather than a date on every photograph. Derived from the
   // capture dates in the manifest, so it stays right as photographs are
   // added. Set "date" on the collection in data/collections.json to override.
+  // Always in English, like the dates written in collections.json: a page
+  // shows either kind through dateText() below, which turns both Chinese.
   function collectionDate(photos) {
     var dates = photos
       .map(function (p) { return p.date; })
@@ -195,12 +325,12 @@
     var last = parse(dates[dates.length - 1]);
 
     var monthYear = { month: "long", year: "numeric" };
-    var full = function (d) { return d.toLocaleDateString(undefined, monthYear); };
+    var full = function (d) { return d.toLocaleDateString("en-US", monthYear); };
 
     if (first.getFullYear() === last.getFullYear()) {
       if (first.getMonth() === last.getMonth()) return full(last);
       // Same year, different months: "October – December 2025"
-      return first.toLocaleDateString(undefined, { month: "long" }) + " – " + full(last);
+      return first.toLocaleDateString("en-US", { month: "long" }) + " – " + full(last);
     }
     return full(first) + " – " + full(last);
   }
@@ -220,10 +350,10 @@
 
   function altFor(photo) {
     if (CAPTIONS.lightbox.title && photo.title) {
-      return [photo.title, photo.location && "photographed at " + photo.location]
-        .filter(Boolean).join(", ");
+      return [photo.title, photo.location && tr("photographed at {location}", { location: photo.location })]
+        .filter(Boolean).join(lang() === "zh" ? "，" : ", ");
     }
-    return collectionName ? "Photograph from " + collectionName : "Photograph";
+    return collectionName ? tr("Photograph from {collection}", { collection: placeName(collectionName) }) : tr("Photograph");
   }
 
   function status(container, message) {
@@ -233,10 +363,180 @@
     container.appendChild(p);
   }
 
+  /* ---------- 中 / EN: the language (ZH_UI, ZH_EDIT, ZH_PLACES) ---------- */
+
+  var EDIT_MODE = /[?&]edit\b/.test(location.search);
+  var HAN_ALL = /[㐀-鿿豈-﫿]/g;
+
+  // "zh" or "en". The <head> line sets the attribute before the first
+  // paint; a page without that line (an old preview) reads the stored
+  // choice instead. ?edit is English whatever was chosen.
+  var LANG = (function () {
+    var root = document.documentElement;
+    if (EDIT_MODE) { root.removeAttribute("data-site-lang"); return "en"; }
+    if (root.getAttribute("data-site-lang") === "zh") return "zh";
+    try {
+      if (localStorage.getItem("lang") === "zh") { root.setAttribute("data-site-lang", "zh"); return "zh"; }
+    } catch (e) {}
+    return "en";
+  })();
+  function lang() { return LANG; }
+
+  function fill(s, vars) {
+    return !vars ? s : s.replace(/\{(\w+)\}/g, function (m, k) {
+      return Object.prototype.hasOwnProperty.call(vars, k) ? String(vars[k]) : m;
+    });
+  }
+  function own(map, key) { return Object.prototype.hasOwnProperty.call(map, key) ? map[key] : null; }
+
+  // The interface's words: the Chinese when there is one, else the English.
+  function tr(english, vars) {
+    var zh = LANG === "zh" ? own(ZH_UI, english) : null;
+    return fill(zh || english, vars);
+  }
+  // A [data-edit] slot's text: by its key (ZH_EDIT), then by its words.
+  function slotText(key, english) {
+    if (LANG !== "zh") return english;
+    return own(ZH_EDIT, key) || own(ZH_UI, String(english).replace(/\s+/g, " ").trim()) || english;
+  }
+  function zhPlace(english) {
+    return own(ZH_PLACES.titles, english) || own(ZH_PLACES.pins, english) || own(ZH_PLACES.where, english) || english;
+  }
+  function inLang(map) {
+    return function (english) { return LANG === "zh" && english ? own(map, english) || english : english; };
+  }
+  var placeName = inLang(ZH_PLACES.titles), regionName = inLang(ZH_PLACES.regions), pinName = inLang(ZH_PLACES.pins);
+  // "Maine · Massachusetts · New Jersey", part by part, the dots kept.
+  function whereLine(line) {
+    if (LANG !== "zh" || !line) return line;
+    return own(ZH_PLACES.where, line) || line.split(" · ").map(function (part) {
+      return own(ZH_PLACES.where, part) || part;
+    }).join(" · ");
+  }
+
+  // The dates as collections.json and places.json write them, in Chinese:
+  // "October 2026" 2026年10月, "February – March 2023" 2023年2–3月,
+  // "December 2023 – January 2024" 2023年12月–2024年1月, a list joined with
+  // 、. A date that reads any other way stays as written.
+  function dateText(s) {
+    if (LANG !== "zh" || !s) return s;
+    var MY = "(" + MONTHS.join("|") + ")(?: (\\d{4}))?";
+    var one = new RegExp("^" + MY + "(?: – " + MY + ")?$");
+    var out = [], ok = true;
+    s.split(/\s*,\s*|\s+\/\s+/).forEach(function (item) {
+      // [_, month, year?, month to?, its year?]
+      var m = one.exec(item.trim());
+      if (!m || (m[3] ? !m[4] : !m[2])) { ok = false; return; }
+      var m1 = MONTHS.indexOf(m[1]) + 1;
+      if (!m[3]) { out.push(m[2] + "年" + m1 + "月"); return; }
+      var m2 = MONTHS.indexOf(m[3]) + 1, y2 = m[4], y1 = m[2] || y2;
+      out.push(y1 === y2 ? y1 + "年" + m1 + "–" + m2 + "月" : y1 + "年" + m1 + "月–" + y2 + "年" + m2 + "月");
+    });
+    return ok && out.length ? out.join("、") : s;
+  }
+
+  // Writes a text and marks it Chinese, or unmarks it, at once: code that
+  // measures what it has just written (the globe's plate and readout)
+  // can't wait for chineseText's observer, a moment later. The marks are
+  // chineseText's own (lang plus data-zh), so it can undo them as usual.
+  function mostlyHan(s) {
+    return (s.match(HAN_ALL) || []).length > (s.match(/[A-Za-z]/g) || []).length;
+  }
+  function setText(node, s) {
+    node.textContent = s == null ? "" : s;
+    var zh = mostlyHan(node.textContent);
+    if (zh && (!node.hasAttribute("lang") || node.hasAttribute("data-zh"))) {
+      node.lang = "zh-Hans";
+      node.setAttribute("data-zh", "");
+    } else if (!zh && node.hasAttribute("data-zh")) {
+      node.removeAttribute("lang");
+      node.removeAttribute("data-zh");
+    }
+    return node;
+  }
+
+  // Saves the choice and reloads: every page draws itself in the language
+  // it opens in, so nothing has to be redrawn in place. Storage blocked
+  // (some private windows): the switch can't hold, so it does nothing.
+  function setLang(l) {
+    try { localStorage.setItem("lang", l === "zh" ? "zh" : "en"); } catch (e) { return; }
+    location.reload();
+  }
+
   // Shared with assets/globe.js so the landing resolves photograph URLs and
-  // picks image sizes exactly as the galleries do (and follows the R2 switch).
+  // picks image sizes exactly as the galleries do (and follows the R2 switch),
+  // and speaks the same language.
   window.NLSite = { url: url, responsive: responsive, collectionDate: collectionDate,
-                    aspectOf: aspectOf, getJSON: getJSON };
+                    aspectOf: aspectOf, getJSON: getJSON,
+                    lang: lang, t: tr, slot: slotText, place: placeName, zhPlace: zhPlace, region: regionName,
+                    pin: pinName, where: whereLine, date: dateText, text: setText, setLang: setLang };
+
+  // The page's own words in Chinese, before the first paint (this script
+  // runs at the end of <body>, ahead of any paint on a normal load): the
+  // bar, the footer, the skip link, the gallery's back link and heading,
+  // the status lines, aria labels and the tab's title. A text node is
+  // translated where ZH_UI has it, so a link's arrow or the footer's year
+  // stays as it is; a [data-edit] slot goes by its key (edit.js asks the
+  // same of NLSite when text.json arrives). Never the prose, never ?edit.
+  // Until it has run, site.css keeps these hidden in Chinese, so English
+  // can't flash (data-i18n-ready).
+  (function chrome() {
+    var root = document.documentElement;
+    if (LANG !== "zh") return;
+    var SCOPE = ".skip-link, .masthead, .footer, .back-link, .grid-status, .view-switch, .g-list-head," +
+                " .g-list-status, .g-fallback, .project-actions, .about-jump:not([data-lang])";
+    Array.prototype.forEach.call(document.querySelectorAll(SCOPE), function (box) {
+      var walk = document.createTreeWalker(box, NodeFilter.SHOW_TEXT), n, todo = [];
+      while ((n = walk.nextNode())) todo.push(n);
+      todo.forEach(function (n) {
+        if (n.parentElement && n.parentElement.closest("[data-edit]")) return;
+        var key = n.data.replace(/\s+/g, " ").trim(), zh = key && own(ZH_UI, key);
+        if (zh) n.data = n.data.match(/^\s*/)[0] + zh + n.data.match(/\s*$/)[0];
+      });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[aria-label], [title]"), function (n) {
+      ["aria-label", "title"].forEach(function (a) {
+        var v = n.getAttribute(a), zh = v && own(ZH_UI, v);
+        if (zh) n.setAttribute(a, zh);
+      });
+    });
+    // The one-line slots (titles, taglines, Projects' words); edit.js lays
+    // text.json over them later and translates the same way.
+    Array.prototype.forEach.call(document.querySelectorAll("[data-edit]:not([data-edit-rich])"), function (n) {
+      var english = n.hasAttribute("data-edit-lines")
+        ? n.innerHTML.replace(/<br\s*\/?>/gi, "\n").replace(/<[^>]*>/g, "").replace(/[ \t]*\n[ \t]*/g, "\n").replace(/[ \t]+/g, " ").trim()
+        : n.textContent;
+      var zh = slotText(n.getAttribute("data-edit"), english);
+      if (zh !== english) n.textContent = zh;
+    });
+    // A collection page's heading, before collections.json arrives.
+    var h = document.querySelector(".gallery-title");
+    if (h) h.textContent = placeName(h.textContent.trim());
+    var m = /^(.*) — Newton Liu Photography$/.exec(document.title);
+    document.title = own(ZH_UI, document.title) ||
+      (m ? tr("{title} — Newton Liu Photography", { title: placeName(own(ZH_UI, m[1]) || m[1]) }) : document.title);
+    root.setAttribute("data-i18n-ready", "");
+  })();
+
+  // Contact's list labels ("Email:") sit inside its prose slot, which edit.js
+  // rewrites from text.json after load, so they are put into Chinese again
+  // whenever that slot changes. Only the label before each link: the
+  // sentence above it and the handles stay as written.
+  (function contactLabels() {
+    if (LANG !== "zh") return;
+    var slot = document.querySelector('[data-edit="contact.prose"]');
+    if (!slot) return;
+    var ZH = { "Email:": "邮箱：", "Instagram:": "Instagram：", "Threads:": "Threads：",
+               "eBird:": "eBird：", "XHS:": "XHS：" };
+    function run() {
+      Array.prototype.forEach.call(slot.querySelectorAll(".contact-list li"), function (li) {
+        var n = li.firstChild, key = n && n.nodeType === 3 && n.data.trim();
+        if (key && own(ZH, key)) n.data = ZH[key];
+      });
+    }
+    run();
+    new MutationObserver(run).observe(slot, { childList: true });
+  })();
 
   Array.prototype.forEach.call(document.querySelectorAll("[data-year]"), function (n) {
     n.textContent = String(new Date().getFullYear());
@@ -324,11 +624,11 @@
       '<circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
       '<path d="M8 1.5a6.5 6.5 0 0 0 0 13z" fill="currentColor"/></svg>';
     // One fixed name; aria-pressed says whether White is on.
-    btn.setAttribute("aria-label", "White background");
+    btn.setAttribute("aria-label", tr("White background"));
     function sync() {
       var light = root.dataset.theme === "light";
       btn.setAttribute("aria-pressed", light ? "true" : "false");
-      btn.title = light ? "Black background" : "White background";
+      btn.title = light ? tr("Black background") : tr("White background");
     }
     function set(light) {
       if (light) root.dataset.theme = "light"; else delete root.dataset.theme;
@@ -350,11 +650,37 @@
       if (light !== (root.dataset.theme === "light")) set(light);
     });
     sync();
+
+    // 中 / EN, after it at the far right (Newton, 2026-10-17): it names the
+    // language it switches to, "中" in English and "EN" in Chinese, under
+    // one fixed name. Not in ?edit, which is always English. A page
+    // brought back by the Back button in the other language reloads.
+    var langBtn = null;
+    if (!EDIT_MODE) {
+      langBtn = el("button", "lang-toggle");
+      langBtn.type = "button";
+      langBtn.setAttribute("aria-label", "中文 / English");
+      if (LANG === "zh") { langBtn.textContent = "EN"; langBtn.lang = "en"; langBtn.title = "English"; }
+      else { langBtn.textContent = "中"; langBtn.lang = "zh-Hans"; langBtn.title = "中文"; }
+      langBtn.addEventListener("click", function () { setLang(LANG === "zh" ? "en" : "zh"); });
+      window.addEventListener("pageshow", function (e) {
+        if (!e.persisted) return;
+        var saved;
+        try { saved = localStorage.getItem("lang") === "zh" ? "zh" : "en"; } catch (err) { return; }
+        if (saved !== LANG) location.reload();
+      });
+    }
+
     // At the end of the nav; on a phone the nav is a row that scrolls
-    // sideways and could carry the switch out of sight, so there it moves up
-    // to the right of the wordmark instead (site.css, the 620px block).
+    // sideways and could carry the switches out of sight, so there they move
+    // up to the right of the wordmark instead (site.css, the 620px block).
+    // Both are appended each time, so 中 / EN always stays last.
     var phone = window.matchMedia ? window.matchMedia("(max-width: 620px)") : null;
-    function place() { (phone && phone.matches ? nav.parentNode : nav).appendChild(btn); }
+    function place() {
+      var to = phone && phone.matches ? nav.parentNode : nav;
+      to.appendChild(btn);
+      if (langBtn) to.appendChild(langBtn);
+    }
     place();
     if (phone && phone.addEventListener) phone.addEventListener("change", place);
     else if (phone && phone.addListener) phone.addListener(place);
@@ -442,22 +768,30 @@
     });
   });
 
-  // About in Chinese or English: the rail's 中文 / English buttons show one
-  // version (everything marked data-lang) and hide the other (site.css).
-  // Chinese unless the visitor picks English. The pick is remembered, and a
-  // one-line script in about.html's head applies it before the first paint;
-  // a link to a part of the other version (about.html#gear-en) opens that one.
+  // About in Chinese or English: each version is everything marked
+  // data-lang, and site.css shows one (html[data-about-lang="en"]) and hides
+  // the other. The site's 中 / EN switch picks it (Newton, 2026-10-17; the
+  // rail's own 中文 / English buttons went), but only once there is an
+  // English story to read: until #my-story-en is followed by more than the
+  // next heading, About stays Chinese in both, as it always opened. A link
+  // to a part of the other version (about.html#gear-en) opens that one, for
+  // that visit only. The English page is watched, since edit.js rewrites it
+  // from text.json after the first paint; "nl:lang" tells the rail and the
+  // figures whenever the version changes.
   (function aboutLanguage() {
-    var buttons = document.querySelectorAll("[data-set-lang]");
-    if (!buttons.length) return;
-    var root = document.documentElement;
-    function set(lang, keep) {
-      if (lang === "en") root.setAttribute("data-about-lang", "en");
+    if (!document.querySelector(".about-prose[data-lang]")) return;
+    try { localStorage.removeItem("aboutLang"); } catch (e) {}   // the old buttons' choice
+    var root = document.documentElement, byHash = null;
+    function storyWritten() {
+      var h = document.getElementById("my-story-en"), next = h && h.nextElementSibling;
+      return !!next && next.tagName !== "H2";
+    }
+    function shown() { return root.getAttribute("data-about-lang") === "en" ? "en" : "zh"; }
+    function apply(force) {
+      var v = byHash || (LANG === "en" && storyWritten() ? "en" : "zh");
+      if (v === shown() && !force) return;
+      if (v === "en") root.setAttribute("data-about-lang", "en");
       else root.removeAttribute("data-about-lang");
-      Array.prototype.forEach.call(buttons, function (b) {
-        b.setAttribute("aria-pressed", String(b.getAttribute("data-set-lang") === lang));
-      });
-      if (keep) { try { localStorage.setItem("aboutLang", lang); } catch (e) {} }
       window.dispatchEvent(new Event("nl:lang"));
     }
     function hashed() {   // the version the URL's #part is in, if any
@@ -466,18 +800,17 @@
       var version = target && target.closest("[data-lang]");
       return version ? version.getAttribute("data-lang") : null;
     }
-    var first = hashed();
-    set(first || root.getAttribute("data-about-lang") || "zh", !!first);
+    byHash = hashed();
+    apply(true);
     window.addEventListener("hashchange", function () {
-      var lang = hashed();
-      if (lang && lang !== (root.getAttribute("data-about-lang") || "zh")) {
-        set(lang, true);
-        document.getElementById(decodeURIComponent(location.hash.slice(1))).scrollIntoView();
-      }
+      var v = hashed();
+      if (!v || v === shown()) return;
+      byHash = v;
+      apply();
+      document.getElementById(decodeURIComponent(location.hash.slice(1))).scrollIntoView();
     });
-    Array.prototype.forEach.call(buttons, function (b) {
-      b.addEventListener("click", function () { set(b.getAttribute("data-set-lang"), true); });
-    });
+    var en = document.getElementById("about-en");
+    if (en && window.MutationObserver) new MutationObserver(function () { apply(); }).observe(en, { childList: true });
   })();
 
   // My photography in numbers (About; Newton's pick, the "Readout" look,
@@ -1794,6 +2127,7 @@
 
     function settle(p) {
       if (!p.isConnected || p.hasAttribute("data-zh-run")) return;
+      if (p.closest(".lang-toggle")) return;   // its 中 alone doesn't fetch fonts
       if (SKIP.test(p.nodeName) || p.namespaceURI !== XHTML) return;
       var text = p.textContent;
       if (p.hasAttribute("data-zh")) {
@@ -1901,7 +2235,7 @@
       (byCollection[p.collection] = byCollection[p.collection] || []).push(p);
     });
 
-    if (!collections.length) { status(grid, "No collections defined yet."); return; }
+    if (!collections.length) { status(grid, tr("No collections defined yet.")); return; }
 
     grid.textContent = "";
     // Newest trip first (Newton, 2026-10-17); collections.json stays oldest
@@ -1934,7 +2268,7 @@
       // work, not a tally.
       var bodyEl = el("div", "card-body");
       var title = el("h3", "card-title");
-      title.textContent = c.title;
+      title.textContent = placeName(c.title);       // his own titles stay English (ZH_PLACES)
       bodyEl.appendChild(title);
 
       if (c.subtitle) {
@@ -1967,7 +2301,8 @@
   }
 
   // The bird's English name, its scientific name beside it, the pair a link
-  // to the species on eBird when photos.json carries the code.
+  // to the species on eBird when photos.json carries the code. In Chinese
+  // its Chinese name ("zh", eBird's zh_SIM) comes first, then the two.
   function nameLine(photo) {
     lbName.textContent = "";
     if (!CAPTIONS.lightbox.caption || !photo.caption) return;
@@ -1978,6 +2313,7 @@
       to.target = "_blank";
       to.rel = "noopener";
     }
+    if (LANG === "zh" && photo.zh) setText(to.appendChild(el("span", "lb-zh")), photo.zh);
     to.appendChild(document.createTextNode(photo.caption));
     if (photo.sci) to.appendChild(el("i", "lb-sci")).textContent = photo.sci;
     if (photo.ebird) {
@@ -2188,8 +2524,8 @@
     var tile = el("button", "tile");
     tile.type = "button";
     tile.setAttribute("aria-label", CAPTIONS.grid.title && photo.title
-      ? "View " + photo.title + " larger"
-      : "View photograph " + (index + 1) + " of " + total + " larger");
+      ? tr("View {title} larger", { title: photo.title })
+      : tr("View photograph {n} of {total} larger", { n: index + 1, total: total }));
 
     var img = el("img");
     responsive(img, photo, sizes || tileSizes(1), photo.thumb || photo.src);
@@ -2270,7 +2606,7 @@
       // An empty collection has no opener either — otherwise the page starts
       // with a tall band of nothing above the message.
       if (lead) lead.hidden = true;
-      status(grid, "Photographs from this trip haven't been added yet.");
+      status(grid, tr("Photographs from this trip haven't been added yet."));
       return;
     }
     if (lead) lead.hidden = false;
@@ -2474,8 +2810,8 @@
     var blurbEl = document.querySelector(".gallery-blurb");
 
     if (titleEl && meta.title) {
-      titleEl.textContent = meta.title;
-      document.title = meta.title + " — Newton Liu Photography";
+      titleEl.textContent = placeName(meta.title);
+      document.title = tr("{title} — Newton Liu Photography", { title: placeName(meta.title) });
     }
     if (subEl)   subEl.textContent   = meta.subtitle || "";
     // A title, subtitle or blurb in Chinese marks itself (chineseText, above).
@@ -2486,7 +2822,7 @@
     // A collection's own "date" overrides the one derived from capture dates;
     // an empty one ("date": "") hides the line altogether.
     if (dateEl) dateEl.textContent =
-      typeof meta.date === "string" ? meta.date : collectionDate(shown);
+      dateText(typeof meta.date === "string" ? meta.date : collectionDate(shown));
 
     // "opener": "whole" shows the opening photograph entire, below the bar,
     // rather than trimmed to the window. See .book-lead.is-whole in site.css.
@@ -2512,6 +2848,6 @@
       // Nearly always this: opened as a file:// URL, where fetch is blocked.
       status(target, location.protocol === "file:"
         ? "Open this site through a local server, not by double-clicking the file — run: python3 -m http.server 8000"
-        : "Couldn't load the site data. " + err.message);
+        : tr("Couldn't load the site data. {err}", { err: err.message }));
     });
 })();

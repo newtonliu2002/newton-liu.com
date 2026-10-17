@@ -404,8 +404,25 @@ a   { color: inherit; }
 .theme-toggle::after  { width: 0; border-left: 7px solid currentColor; }
 .theme-toggle[aria-pressed="true"]::after { left: 22px; }
 
+/* 中 / EN, after the ground switch at the far right of the nav (site.js):
+   the language it switches to, "中" or "EN", in the switch's dim ink, on
+   the same finger-sized target. "中" is marked Chinese, so it takes the
+   typewriter's Song. */
+.lang-toggle {
+  position: relative; flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  appearance: none; background: none; border: 0; cursor: pointer;
+  min-width: 44px; height: 44px; padding: 0; margin: -15px;
+  font: 400 var(--t-ui)/1 var(--mono); letter-spacing: .08em;
+  color: var(--text-dim);
+  transition: color var(--d-fast) var(--ease);
+}
+.lang-toggle:hover { color: var(--text); }
+.lang-toggle:lang(zh) { font-size: 14px; }
+
 @media (max-width: 1023px) {
   .nav { gap: var(--s5); }
+  .nav > .lang-toggle { margin-left: -9px; }   /* boxes meet, not overlap */
 }
 
 /* Nav drop-down (NAV_MENUS in site.js): a tab that has one is wrapped in
@@ -434,6 +451,9 @@ a   { color: inherit; }
     visibility: hidden; opacity: 0;
     transition: opacity var(--d-fast) var(--ease) 180ms, visibility 0s linear 300ms;
   }
+  /* The Chinese tabs are short, so 项目 sits near the right end of the bar:
+     its menu hangs from the tab's right edge, or it runs off the page. */
+  :root[data-site-lang="zh"] .nav-menu { left: auto; right: -16px; }
   .nav-drop:hover .nav-menu, .nav-drop:has(:focus-visible) .nav-menu {
     visibility: visible; opacity: 1;
     transition: opacity var(--d-fast) var(--ease), visibility 0s;
@@ -467,11 +487,11 @@ body[data-page="globe"] .nav-menu-list { border-top: 1px solid var(--hairline); 
    link or a .nav-drop around one, and the switch at the end isn't one, so
    the count is the fifth child that isn't the switch. */
 @media (min-width: 621px) and (max-width: 1023px) {
-  .masthead:has(.nav > :nth-child(5):not(.theme-toggle)) { position: static; }
-  .masthead-inner:has(.nav > :nth-child(5):not(.theme-toggle)) { flex-wrap: wrap; row-gap: 0; padding-top: var(--s1); }
-  .masthead-inner:has(.nav > :nth-child(5):not(.theme-toggle)) .nav { flex-basis: 100%; }
-  body:has(.nav > :nth-child(5):not(.theme-toggle))[data-page="gallery"] .book-lead { margin-top: 0; }
-  body:has(.nav > :nth-child(5):not(.theme-toggle)) .about-band { margin-top: 0; }
+  .masthead:has(.nav > :nth-child(5):not(.theme-toggle):not(.lang-toggle)) { position: static; }
+  .masthead-inner:has(.nav > :nth-child(5):not(.theme-toggle):not(.lang-toggle)) { flex-wrap: wrap; row-gap: 0; padding-top: var(--s1); }
+  .masthead-inner:has(.nav > :nth-child(5):not(.theme-toggle):not(.lang-toggle)) .nav { flex-basis: 100%; }
+  body:has(.nav > :nth-child(5):not(.theme-toggle):not(.lang-toggle))[data-page="gallery"] .book-lead { margin-top: 0; }
+  body:has(.nav > :nth-child(5):not(.theme-toggle):not(.lang-toggle)) .about-band { margin-top: 0; }
 }
 
 /* Phones: two static rows, wordmark then nav. The nav row runs to the
@@ -501,7 +521,7 @@ body[data-page="globe"] .nav-menu-list { border-top: 1px solid var(--hairline); 
   }
   /* The scrolling row would clip a ring drawn outside the link, so here it
      is drawn just inside, clear of the letters thanks to the padding. */
-  .nav a:focus-visible, .theme-toggle:focus-visible { outline-offset: -2px; }
+  .nav a:focus-visible, .theme-toggle:focus-visible, .lang-toggle:focus-visible { outline-offset: -2px; }
   .nav a[aria-current="page"]::before { position: static; margin: -1px 8px 0 0; }
   /* Centred on the wordmark row: 44px tall from the top padding, like the
      wordmark, its square flush with the right edge of the page. */
@@ -509,6 +529,13 @@ body[data-page="globe"] .nav-menu-list { border-top: 1px solid var(--hairline); 
   .masthead-inner > .theme-toggle {
     position: absolute; top: calc(var(--s1) + 15px); right: var(--edge);
   }
+  /* 中 / EN takes the corner, its letters flush with the page's right
+     edge, and the ground switch steps in beside it. */
+  .masthead-inner > .lang-toggle {
+    position: absolute; top: var(--s1); right: calc(var(--edge) - 15px);
+    min-width: 44px; margin: 0; padding-right: 15px; justify-content: flex-end;
+  }
+  .masthead-inner:has(> .lang-toggle) > .theme-toggle { right: calc(var(--edge) + 44px); }
 }
 
 /* ---------- Work index (work.html) -------------------------------------
@@ -1291,9 +1318,9 @@ body.lb-open { overflow: hidden; }
 .about-prose .contact-list { margin: 0 0 var(--s4); }
 
 /* About in Chinese or English (Newton asked, 2026-10-15). Each version is
-   everything marked data-lang; Chinese shows unless the visitor picks English
-   (html[data-about-lang="en"], set by the rail's buttons, site.js
-   aboutLanguage). Only About carries data-lang, so these touch no other page. */
+   everything marked data-lang; Chinese shows unless html[data-about-lang="en"]
+   (site.js aboutLanguage: the site in English and an English story written).
+   Only About carries data-lang, so these touch no other page. */
 :root[data-about-lang="en"] [data-lang="zh"],
 :root:not([data-about-lang="en"]) [data-lang="en"] { display: none; }
 
@@ -1303,31 +1330,9 @@ body.lb-open { overflow: hidden; }
   overflow: hidden; clip-path: inset(50%); white-space: nowrap;
 }
 
-/* 中文 / English: the rail's mono labels, the one showing in full ink with
-   the nav's accent square in the gap before it. */
-.about-lang { display: flex; gap: var(--s5); margin-top: var(--s4); }
-.about-lang button {
-  position: relative;
-  min-height: 32px; padding: 0;
-  border: 0; background: none; cursor: pointer;
-  font: 400 var(--t-label)/16px var(--mono);
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-  transition: color var(--d-fast) var(--ease);
-}
-.about-lang button:hover, .about-lang button[aria-pressed="true"] { color: var(--text); }
-.about-lang button[aria-pressed="true"]::before {
-  content: "";
-  position: absolute; right: 100%; top: 50%;
-  margin: -2px 8px 0 0;
-  border: 2px solid var(--accent);
-}
-@media (pointer: coarse) { .about-lang button { min-height: 44px; } }
-
 /* Characters at the labels' 11px are too small to read: About's Chinese
-   labels (the rail, 中文, the section heads) are a size up. */
-.about-jump[data-lang] a:lang(zh), .about-lang button:lang(zh),
+   labels (the rail, the section heads) are a size up. */
+.about-jump[data-lang] a:lang(zh),
 .about-prose[data-lang] h2:lang(zh) { font-size: 13px; }
 
 /* The Chinese gear list in the essay's size, like its paragraphs. */
@@ -2273,6 +2278,36 @@ body.is-editing .about-rail { top: calc(var(--nl-bar-h) + var(--masthead-h) + 2r
    split a flex row (the globe's list) into columns, and with leading 1 its
    different face can't stretch the English line around it. */
 [data-zh-run] { display: contents; line-height: 1; }
+
+/* The site in Chinese (中 / EN; <html data-site-lang="zh">, never lang).
+   The mono labels are 11px capitals with wide tracking, and Song at 11px
+   is too small to read: in Chinese they take About's 13px (the uppercase
+   does nothing to characters, and :lang(zh) above sets the tracking). */
+:is(.wordmark-sub, .skip-link, .back-link, .gallery-date, .grid-status, .view-switch a,
+    .view-switch [aria-current], .footer-links a, .about-teaser .section-title,
+    .about-jump a, .project-kicker span, .project-note, .project-shot figcaption,
+    .g-list-title, .g-region-name, .g-pin-label, .g-card-where, .g-card-date, .g-card-go-label,
+    .g-index-link, .g-readout, .g-plate-where, .g-list-status, .g-fallback p, .g-load,
+    .text-link, .g-card-time, .g-plate-time, .g-stage .maplibregl-cooperative-gesture-screen):lang(zh) { font-size: 13px; }
+/* Contact's labels in Chinese end in a full-width ：, which brings its own space. */
+:root[data-site-lang="zh"] [data-edit="contact.prose"] .contact-list li { column-gap: 0; }
+/* The readout's 北纬 / 西经 are spans in the mono line, the digits left as they are. */
+.g-readout [lang|="zh"] { font-size: 13px; }
+/* A Chinese line of places breaks only between places, never inside a name. */
+.g-plate-where:lang(zh), .g-card-where:lang(zh) { word-break: keep-all; }
+/* The bird's Chinese name, before the English and the Latin. */
+.lb-zh { margin-right: .7em; font-size: 13px; }
+
+/* Until site.js has put the page's own words into Chinese (it does before
+   the first paint on a normal load), they stay hidden rather than flash
+   English; if it never runs, they show anyway after 1.5 s. */
+:root[data-site-lang="zh"]:not([data-i18n-ready]) :is(.nav, .wordmark-sub, .footer, .back-link,
+    .gallery-title, .grid-status, .g-list-head, .g-list-status, .view-switch, .project-actions,
+    [data-edit]:not([data-edit-rich])) {
+  visibility: hidden;
+  animation: nl-show 0s 1.5s forwards;
+}
+@keyframes nl-show { to { visibility: visible; } }
 
 /* The punctuation Chinese shares with English (the · in a name, the ——
    dash, the …… ellipsis) would otherwise come from American Typewriter,

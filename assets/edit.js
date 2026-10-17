@@ -82,12 +82,17 @@
 
   /* ---- job 1: overlay text.json --------------------------------------- */
 
+  // In Chinese (site.js 中 / EN) a one-line slot takes its Chinese from
+  // NLSite.slot, by its key or its words, so text.json's English never
+  // overwrites it; prose is never translated. ?edit is always English
+  // (NLSite.slot hands the value straight back), so no Chinese is saved.
   function applyText(text) {
+    var NL = window.NLSite;
     slots().forEach(function (slot) {
       if (!Object.prototype.hasOwnProperty.call(text, slot.key)) return;
       var value = text[slot.key];
       if (slot.rich) slot.node.innerHTML = clean(value);
-      else slot.node.textContent = value;
+      else slot.node.textContent = NL && NL.slot && !EDITING ? NL.slot(slot.key, value) : value;
     });
   }
 

@@ -293,8 +293,9 @@ library or the data fail to load, or the device has no WebGL2, the list
 still works on its own; under Save-Data the globe waits for "Load globe".
 
 globe.js reads photographs only through `window.NLSite` (exported by
-site.js: `url`, `responsive`, `collectionDate`, `aspectOf`, `getJSON`), so
-the landing resolves image URLs exactly as the galleries do. Each passing
+site.js: `url`, `responsive`, `collectionDate`, `aspectOf`, `getJSON`, and
+the language calls, see "中 / EN"), so the landing resolves image URLs
+exactly as the galleries do. Each passing
 card loads its collection's opening photograph at plate size (200px) as it
 crosses; otherwise no photograph is requested until a row or pin is
 pointed at. Every label globe.js puts on
@@ -355,7 +356,10 @@ rebuild, no re-import. `grid` is the caption over a thumbnail on hover;
 field, kept by every rebuild) prints on its own line under the camera line
 (`.lb-name`), with `sci` (scientific name, italic) beside it and the pair
 linked to ebird.org/species/<`ebird` code>, both from the eBird taxonomy
-(`_arrange/geo-src/ebird-taxonomy.csv`). Guangxi & Guangdong has them (2026-10-17), Newton's names or
+(`_arrange/geo-src/ebird-taxonomy.csv`). `zh` is its Chinese name, from
+eBird's own zh_SIM taxonomy (`_arrange/geo-src/ebird-taxonomy-zh_SIM.csv`,
+looked up by the `ebird` code); in Chinese the line reads 中文名, English,
+*Latin*. Guangxi & Guangdong has them (2026-10-17), Newton's names or
 ones checked against his eBird lists for those trips; the butterfly has none.
 
 `EXIF_FIELDS` sets which technical values print and in what order. Missing
@@ -394,6 +398,75 @@ About essay's paragraph quoting an English sentence keeps the typewriter.
 `.gallery-blurb:lang(zh)` and `.about-prose p:lang(zh)` only set the size,
 leading and colour; an English paragraph straight after a Chinese one (the
 essay's sign-off) takes the same face without being marked Chinese.
+
+## 中 / EN (the site in Chinese)
+
+**A switch at the far right of the nav, on every page** (Newton,
+2026-10-17): "中" in English, "EN" in Chinese, one fixed name ("中文 /
+English"). English by default. A click saves `localStorage.lang`
+(`"zh"`/`"en"`) and reloads; a line in every page's `<head>` (the five root
+pages and `PAGE_TEMPLATE`, where its braces are doubled and its `\b` is
+written `\\b`) sets `<html data-site-lang="zh">` before the first paint.
+**Never `lang` on `<html>`, never `data-lang`** (About's versions use that
+as an ancestor selector): `<html lang="en">` stays, and only the texts that
+turn Chinese are marked (`chineseText`), so his English titles, the Latin
+names, the EXIF and the instruments keep their own type. **`?edit` is
+always English** and hides the switch, so no Chinese is ever saved into
+text.json or collections.json. A page brought back by Back in the other
+language reloads.
+
+**What is translated:** the interface (nav, footer, skip and back links,
+statuses, aria labels, tab titles, the globe's words, the Projects page's
+kickers, statuses, notes, captions, "Open the app →" and blurbs, the
+landing's two taglines), the collection titles that are place names (his
+own titles stay English: Catalina in Film, Grouse Country, The Canadian
+West, The Desert West, The Snowy West, Birds of the Rio Grande), the card's
+"where" lines, region headings, dates ("May 2023, December 2024" →
+2023年5月、2024年12月), the local time (下午3:50), the readout ("北纬
+45.5000° · 西经 73.5700°", the words in their own spans so the digits stay
+mono), and the pins: every pin in China, and elsewhere the cities only.
+**Not translated:** the About essay, blurbs, notes, the Contact page's sentence
+(its list labels do go Chinese, 邮箱： and so on: contactLabels() in site.js,
+re-run when edit.js rewrites the slot), gallery subtitles, "Newton Liu",
+project names, the meta description and og tags, the dial, the map's own
+labels and credit, the bird map. The list keeps the English A–Z order (it
+also sets the card's ‹ ›, the tour and the passing order), and all keys
+(`title`, pin `name`, `lead`, slugs) stay English: globe.js shows `name`,
+`where`, `date` and a pin's `label`.
+
+**Where it lives: the top of site.js**, after `NAV_MENUS`:
+- `ZH_UI`: interface words keyed by the English as written, with
+  `{placeholders}`. A label he rewrites drops back to English until it has a
+  line here.
+- `ZH_EDIT`: `[data-edit]` slots by key (Projects, the landing's taglines,
+  `contact.title`). **A Projects blurb rewritten in English needs its
+  Chinese rewritten here too.**
+- `ZH_PLACES`: `titles`, `regions`, `where` (a whole line, else each part
+  between " · "), `pins`. They are separate because one name can be two
+  things (Hawai'i Island is an island pin, which stays English, and a
+  where-part, which doesn't). **A new place** is one line in the right
+  group; a pin that should stay English simply isn't listed. About's
+  numbers keep their own `ZH_PLACE` inside `photoNumbers` (Mindo is 厄瓜多尔
+  there only).
+- **A new bird name:** its `zh` in photos.json beside `caption`, `sci` and
+  `ebird`, from the zh_SIM taxonomy by its code.
+
+**The API, `window.NLSite`:** `lang()` ("zh"/"en", always "en" in ?edit),
+`t(english, vars)`, `slot(key, english)`, `place(title)`, `region(name)`,
+`pin(name)`, `where(line)`, `date(str)` (a date it can't read stays as
+written), `zhPlace(english)` (Chinese regardless), `text(el, s)` (writes and
+marks Chinese at once, for code that measures what it just wrote: the
+globe's plate and readout), `setLang(l)`. `collectionDate()` is always
+English (`en-US`); shown dates go through `date()`.
+
+**First paint.** site.js's `chrome()` translates the page's own words
+synchronously, before navMenus (which copies the Projects tab's text into
+its menu's label), then sets `data-i18n-ready`; until then site.css keeps
+those parts hidden in Chinese (shown anyway after 1.5 s if the script never
+runs). edit.js's `applyText` goes through `NLSite.slot`, so text.json's
+English never overwrites a translated slot. **Type:** Chinese labels take
+About's 13px (the block after `[data-zh-run]` in site.css), the forced .05em
+tracking stays, and Chinese never goes into SVG.
 
 ## The gallery layout (packed grid)
 
@@ -651,15 +724,21 @@ the photographs reached that in October 2026 (Peru). Since then:
 
 **About is Newton's own essay, in Chinese** (2026-10-15; `about.prose` in
 text.json, mirrored in about.html so nothing else shows while text.json
-loads). **About has a Chinese and an English version**, switched by 中文 /
-English in its rail (site.js `aboutLanguage()`): everything marked
+loads). **About has a Chinese and an English version**: everything marked
 `data-lang="zh"` or `"en"` (titles, rails, prose: `about.prose` and
-`about.proseEn`, `about.title` 关于 and `about.titleEn`). Chinese unless the
-visitor picks English; the pick is kept in localStorage `aboutLang`, applied
-before the first paint by a line in about.html's head, and a link into the
-other version (`#gear-en`) opens it. Newton wanted everything in Chinese for
-now: the English My story is left empty for him to write, and the titles
-are for screen readers only (he wanted the page to open on My story). Gear
+`about.proseEn`, `about.title` 关于 and `about.titleEn`). The site's 中 / EN
+switch picks it (site.js `aboutLanguage()`; the rail's own 中文 / English
+buttons went on 2026-10-17), by one rule: English only when the site is in
+English **and** an English story exists (`#my-story-en` is followed by more
+than the next heading). Until Newton writes it, About shows the Chinese
+version in both languages, exactly as it always opened; when he does, keep
+the about.html mirror up to date so the choice is right at the first paint
+(the English page is also watched, since text.json lands later). A link into
+the other version (`#gear-en`) opens it for that visit only. To edit the
+English page in ?edit, open `about.html?edit#my-story-en`. The old
+`aboutLang` key is removed on sight. The essay is never translated, and the
+bird map (图1) stays English. The titles are for screen readers only (he
+wanted the page to open on My story). Gear
 is the same list in both, with 哈苏 / 佳能 / 大疆 for the makers in Chinese. Its "（figure N）" marks are his, and stay in the text as he typed
 them; his photographs for them (see below) show after the paragraph holding
 each mark. Its Hasselblad note links to The Desert West (his
@@ -845,7 +924,7 @@ block in site.css. Laptop layout with a mouse only (`hover: hover` and
 over 620px): on a phone the nav row scrolls sideways and would clip it,
 and a touch screen can't point, so there the tab just opens this page.
 Because a tab may now be a `.nav-drop` rather than a bare link, the
-five-item wrap rule counts `.nav > :nth-child(5):not(.theme-toggle)`.
+five-item wrap rule counts `.nav > :nth-child(5):not(.theme-toggle):not(.lang-toggle)`.
 Keyboard focus opens it (`:has(:focus-visible)`, so focus left by a mouse
 click doesn't hold it open) and Esc shuts it, sending focus back to the
 tab. `.nav-drop` carries the masthead's z-index, because the landing's bar
@@ -934,7 +1013,11 @@ saving needs the token, and they don't have it.
   The stored word is `"white"`, not `"light"`, because the old white/gray
   switch saved `"light"` for its white, and those visitors should open in
   Black like everyone else. Its button keeps one name ("White background")
-  and `aria-pressed` says whether White is on.
+  and `aria-pressed` says whether White is on. The 中 / EN switch sits after
+  it, last in the nav (on a phone, in the top-right corner with the ground
+  switch beside it); see "中 / EN". Both are appended by `themeToggle()`'s
+  `place()`, so the language stays last, and the five-tab wrap rule skips
+  both (`:not(.theme-toggle):not(.lang-toggle)`).
   White's tokens are the `:root[data-theme="light"]` block in site.css; a
   colour token added to `:root` needs a White value there too. On the
   landing, out at the globe, both grounds show the same day-and-night globe
@@ -986,8 +1069,10 @@ so no technical line shows, and give the collection its `date` from his
 folder name ("2026.9" = September 2026; Newton corrected it from 2024 on
 2026-10-16, so it now sits last in the oldest-first order).
 
-`build.py` never overwrites hand-authored text (`title`, `location`, `date`,
-`caption`, `collection`). It only refreshes mechanical fields — dimensions,
+`build.py` never overwrites hand-authored text (`AUTHORED_FIELDS`: `title`,
+`location`, `date`, `caption`, `collection`, `featured`, `focus`, `sci`,
+`ebird`, `zh`). A new hand-edited field must be added there, or the next
+build drops it. It only refreshes mechanical fields — dimensions,
 EXIF, thumbnail paths. To re-derive a field, delete it from `photos.json` and
 rebuild.
 
@@ -1009,5 +1094,4 @@ rebuild.
 
 - Print sales. GitHub Pages cannot do checkout; when it matters, the plan is a
   Stripe Payment Link or Shopify buy button embedded into the static page.
-- Chinese translation (the old site had `/about-cn`).
 - The cinematography/documentary section.

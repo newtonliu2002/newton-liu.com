@@ -25,11 +25,13 @@
      ------------------------------------------------------------------ */
   // The two toggles keep one name and say their state with aria-pressed;
   // only the tooltips change.
+  // In Chinese each goes through NLSite.t (site.js ZH_UI, keyed by the
+  // English here), all but the compass letters, which only the dial uses.
   var LABELS = {
     tour: "Tour", tourTip: "Tour",
     overview: "Back to overview", overviewTip: "Overview",
     view: "View collection", arrow: "→", prev: "‹", next: "›", close: "×",
-    written: "With writing",
+    written: "With writing", writtenSr: ", with writing",
     index: "Index", load: "Load globe",
     unavailable: "Globe unavailable. The collections are listed here.",
     noData: "Couldn't load the collections.",
@@ -37,6 +39,7 @@
     tourStarted: "Tour started.", tourEnded: "Tour ended.",
     rOverview: "Overview", rUnavailable: "Globe unavailable", rDeferred: "Globe not loaded", rTour: "Tour · ",
     gestures: "Use two fingers to turn the globe",
+    gesturesWin: "Use Ctrl + scroll to zoom the map", gesturesMac: "Use ⌘ + scroll to zoom the map",
     north: "N", south: "S", east: "E", west: "W"
   };
 
@@ -233,6 +236,12 @@
   var body = document.body;
   var NL = window.NLSite;
   var BASE = body.dataset.base || "";
+  // The site's language (中 / EN, site.js): "zh" or "en", fixed for the
+  // visit, since the switch reloads the page.
+  var ZH = !!(NL && NL.lang && NL.lang() === "zh");
+  if (ZH) Object.keys(LABELS).forEach(function (k) { if (!/^(north|south|east|west)$/.test(k)) LABELS[k] = NL.t(LABELS[k]); });
+  // Writes a text, marked Chinese at once if it is (NLSite.text).
+  function setText(n, s) { if (NL && NL.text) NL.text(n, s); else n.textContent = s; return n; }
   var stage = $("#g-stage"), mapEl = $("#g-map"), ring = $(".g-ring"), starsEl = $(".g-stars");
   var listEl = $("#g-list"), panel = $(".g-panel"), live = $("#g-live"), readEl = $(".g-readout");
   var card = $(".g-card"), plate = $(".g-plate"), consoleEl = $(".g-console");
@@ -1037,12 +1046,16 @@
       var opener = shots.filter(function (p) { return p.featured; })[0] || shots[0] || null;
       var derived = NL && shots.length ? NL.collectionDate(shots) : "";
       var date = typeof c.date === "string" ? c.date : derived;   // "" hides it
+      // `title` and the pins' `name` stay English: they are keys (the list's
+      // order, `lead`, labelsOn). `name`, `where`, `date` and a pin's
+      // `label` are what the page shows, Chinese in Chinese (site.js).
       var col = {
-        slug: c.slug, title: c.title || c.slug, sub: c.subtitle || "", date: date,
+        slug: c.slug, title: c.title || c.slug, sub: c.subtitle || "", date: NL ? NL.date(date) : date,
+        name: NL ? NL.place(c.title || c.slug) : c.title || c.slug,
         // Newton has written something for it (its blurb): it carries the note mark.
         written: !!(c.blurb && String(c.blurb).trim()),
         // A list of places ("Maine · Massachusetts") breaks only after a dot.
-        where: (pl.where || "").replace(/ · /g, "\u00a0· "), zoom: pl.zoom, sensitive: !!pl.sensitive, i: i, opener: opener,
+        where: (NL ? NL.where(pl.where || "") : pl.where || "").replace(/ · /g, "\u00a0· "), zoom: pl.zoom, sensitive: !!pl.sensitive, i: i, opener: opener,
         // Its time zone (places.json `tz`, IANA), for the local time on its plate and card.
         tz: typeof pl.tz === "string" ? pl.tz : "",
         // What the console reads while this collection passes (places.json `coords`).
@@ -1058,7 +1071,7 @@
         route: rt && rt.length > 1 && rt.every(function (q) { return q && typeof q[0] === "number" && typeof q[1] === "number"; }) ? rt : null
       };
       (pl.pins || []).forEach(function (p) {
-        if (typeof p.lat === "number" && typeof p.lng === "number") col.pins.push({ name: p.name || "", ll: [p.lng, p.lat] });
+        if (typeof p.lat === "number" && typeof p.lng === "number") col.pins.push({ name: p.name || "", label: NL ? NL.pin(p.name || "") : p.name || "", ll: [p.lng, p.lat] });
       });
       // The pin that stands for it out at the globe (places.json `lead`, a pin's name); else the first.
       col.lead = col.pins.filter(function (p) { return p.name === pl.lead; })[0] || col.pins[0] || null;
@@ -1097,7 +1110,7 @@
       if (name) {
         var h = el("h3", "g-region-head");
         h.appendChild(el("span", "g-region-mark")).setAttribute("aria-hidden", "true");
-        h.appendChild(el("span", "g-region-name", name));
+        h.appendChild(el("span", "g-region-name", NL ? NL.region(name) : name));
         h.appendChild(el("span", "g-region-rule")).setAttribute("aria-hidden", "true");
         g.appendChild(h);
       }
@@ -1111,8 +1124,8 @@
       else { a.setAttribute("role", "button"); a.tabIndex = 0; li.hidden = true; }
       a.setAttribute("data-slug", c.slug);
       a.appendChild(el("span", "g-row-mark")).setAttribute("aria-hidden", "true");
-      var t = a.appendChild(el("span", "g-row-title", c.title));
-      if (c.written) { t.appendChild(noteMark()); t.appendChild(el("span", "g-sr", ", " + LABELS.written.toLowerCase())); }
+      var t = a.appendChild(setText(el("span", "g-row-title"), c.name));
+      if (c.written) { t.appendChild(noteMark()); t.appendChild(el("span", "g-sr", LABELS.writtenSr)); }
       if (visited[c.slug]) a.classList.add("is-visited");
       c.row = a;
       li.appendChild(a);
@@ -1439,7 +1452,10 @@
         // only warns, after every gesture over terrain): measured, the
         // arrivals frame identically without it.
         centerClampedToGround: false,
-        locale: { "CooperativeGesturesHandler.MobileHelpText": LABELS.gestures }
+        locale: ZH ? { "CooperativeGesturesHandler.MobileHelpText": LABELS.gestures,
+                       "CooperativeGesturesHandler.WindowsHelpText": LABELS.gesturesWin,
+                       "CooperativeGesturesHandler.MacHelpText": LABELS.gesturesMac }
+                   : { "CooperativeGesturesHandler.MobileHelpText": LABELS.gestures }
       });
     } catch (e) { fail(); return; }               // no WebGL2, most often
     map.setPadding(L.pad);
@@ -1566,7 +1582,7 @@
         e.setAttribute("aria-hidden", "true");
         e.setAttribute("data-slug", c.slug);
         e.innerHTML = '<i class="g-pin-in"><i class="g-pin-x"></i><i class="g-pin-ring"></i><i class="g-pin-af"></i><i class="g-pin-label"></i></i>';
-        e.querySelector(".g-pin-label").textContent = pp.name;
+        setText(e.querySelector(".g-pin-label"), pp.label);
         if (visited[c.slug]) e.classList.add("is-visited");
         var p = { c: c, slug: c.slug, pi: pi, lead: pp === c.lead, ll: pp.ll, el: e, show: true, xy: null, stack: null, label: 0, lw: 0 };
         p.marker = new ml.Marker({ element: e, anchor: "center", opacityWhenCovered: "0" }).setLngLat(pp.ll).addTo(map);
@@ -1592,6 +1608,15 @@
         pp.p = p;
       });
     });
+    // A Chinese name is measured in whatever face is there; on a device
+    // without Songti the web font arrives later (chineseText asks for it),
+    // so the names are measured again once it has.
+    if (ZH && document.fonts && document.fonts.addEventListener) {
+      document.fonts.addEventListener("loadingdone", function () {
+        pins.forEach(function (p) { p.lw = p.lw2 = 0; });
+        dirty = true;
+      });
+    }
   }
 
   function pinHover(p) {
@@ -1864,7 +1889,7 @@
     // line when there is room, and takes a line of its own when there is not.
     var time = colTime(c);
     if (c.where || time) {
-      var where = el("p", "g-plate-where", c.where);
+      var where = setText(el("p", "g-plate-where"), c.where);
       if (time) where.appendChild(el("span", "g-plate-time", time));
       plate.appendChild(where);
     }
@@ -1874,7 +1899,7 @@
   // A collection's name on the plate, its note mark (if it has writing) at
   // the far right, over the local time.
   function plateTitle(c) {
-    var t = plate.appendChild(el("p", "g-plate-title", c.title));
+    var t = plate.appendChild(setText(el("p", "g-plate-title"), c.name));
     if (c.written) t.appendChild(noteMark());
   }
   function crowdPlate(p) {
@@ -2185,7 +2210,7 @@
     geo = null;
     wireStart = now();
     dirty = true;
-    say(LABELS.showing.replace("{title}", c.title) + (how === "row" && c.href ? " " + LABELS.again : ""));
+    say(LABELS.showing.replace("{title}", c.name) + (how === "row" && c.href ? " " + LABELS.again : ""));
     try { history.replaceState(null, "", "#" + c.slug); } catch (e) {}
     if (!visited[c.slug]) {
       visited[c.slug] = 1;
@@ -2333,7 +2358,8 @@
   function clockAt(tz) {
     if (!tz || !window.Intl) return "";
     try {
-      var f = clockFmt[tz] || (clockFmt[tz] = new Intl.DateTimeFormat("en-US", { timeZone: tz, hour: "numeric", minute: "2-digit", hour12: true }));
+      // Chinese: 下午3:50, the same 12 hours with 上午 / 下午 before them.
+      var f = clockFmt[tz] || (clockFmt[tz] = new Intl.DateTimeFormat(ZH ? "zh-CN" : "en-US", { timeZone: tz, hour: "numeric", minute: "2-digit", hour12: true }));
       return f.format(new Date(skyTime())).replace(/\s+/g, "\u00a0");   // AM/PM never wraps away from the time
     } catch (e) { return ""; }
   }
@@ -2386,10 +2412,10 @@
       NL.responsive(img, c.opener, CARD_SIZES);
       media.appendChild(img);
     }
-    var parts = { title: c.title, where: c.where, date: c.date, sub: c.sub };
+    var parts = { title: c.name, where: c.where, date: c.date, sub: c.sub };
     for (var k in parts) {
       var n = $(".g-card-" + k);
-      n.textContent = parts[k] || "";
+      setText(n, parts[k] || "");
       n.hidden = !parts[k];
     }
     if (c.written) $(".g-card-title").appendChild(noteMark());
@@ -2650,7 +2676,7 @@
       // ground switch, and the panel: no number runs under them.
       var s = stage.getBoundingClientRect(), range = document.createRange();
       dial.shut = [];
-      [".wordmark", ".masthead .theme-toggle", ".g-panel"].concat(Array.prototype.slice.call(document.querySelectorAll(".masthead .nav > a, .masthead .nav-drop > a")))
+      [".wordmark", ".masthead .theme-toggle", ".masthead .lang-toggle", ".g-panel"].concat(Array.prototype.slice.call(document.querySelectorAll(".masthead .nav > a, .masthead .nav-drop > a")))
         .forEach(function (n) {
           if (typeof n === "string") n = $(n);
           else { range.selectNodeContents(n); n = range; }
@@ -2829,20 +2855,30 @@
      READOUT AND ANNOUNCEMENTS
      ------------------------------------------------------------------ */
 
-  // [lat, lng], or where the camera is looking, to `dp` decimals (four).
+  // [lat, lng], or where the camera is looking, to `dp` decimals (four):
+  // "45.5000° N · 73.5700° W", or in Chinese "北纬 45.5000° · 西经 73.5700°".
+  // Written into the readout: the Chinese words in spans of their own, so
+  // the digits keep the console's mono and only the words are marked.
   function coords(at, dp) {
     var c = at ? { lat: at[0], lng: at[1] } : map.getCenter(), lng = wrap180(c.lng);
     if (dp === undefined) dp = 4;
-    return Math.abs(c.lat).toFixed(dp) + "° " + (c.lat >= 0 ? LABELS.north : LABELS.south) + " · " +
-           Math.abs(lng).toFixed(dp) + "° " + (lng >= 0 ? LABELS.east : LABELS.west);
+    var la = Math.abs(c.lat).toFixed(dp) + "°", lo = Math.abs(lng).toFixed(dp) + "°";
+    setText(readEl, ZH ? "" : la + " " + (c.lat >= 0 ? LABELS.north : LABELS.south) + " · " +
+                              lo + " " + (lng >= 0 ? LABELS.east : LABELS.west));
+    if (!ZH) return;
+    [[c.lat >= 0 ? "北纬" : "南纬", " " + la + " · "], [lng >= 0 ? "东经" : "西经", " " + lo]].forEach(function (part) {
+      var w = readEl.appendChild(el("span", null, part[0]));
+      w.lang = "zh-Hans";
+      readEl.appendChild(document.createTextNode(part[1]));
+    });
   }
   function readout() {
-    var s, h = lit && bySlug[lit], a = active && bySlug[active];
+    var s = null, h = lit && bySlug[lit], a = active && bySlug[active];
     if (failed) s = LABELS.rUnavailable;
     else if (deferred && !map) s = LABELS.rDeferred;
     else if (!ready) s = "";
-    else if (h && lit !== active) s = h.title + (h.where && !plateFor ? " — " + h.where : "");   // the plate shows it already
-    else if (a) s = (state === "selecting" ? "→ " : "") + a.title;
+    else if (h && lit !== active) s = h.name + (h.where && !plateFor ? (ZH ? " · " : " — ") + h.where : "");   // the plate shows it already
+    else if (a) s = (state === "selecting" ? "→ " : "") + a.name;
     else if (state === "returning") s = LABELS.rOverview;
     // Out at the globe, the place of the collection passing (or last passed);
     // the camera's own position while the visitor drags or zooms in.
@@ -2850,12 +2886,11 @@
       // Four decimals, or as many as the bar has room for (a narrow phone).
       var at = passAt && !held.drag && inOverview() ? passAt : null;
       for (var dp = 4; dp >= 1; dp--) {
-        readEl.textContent = coords(at, dp);
+        coords(at, dp);
         if (readEl.scrollWidth <= readEl.clientWidth) break;
       }
-      s = readEl.textContent;
     }
-    readEl.textContent = s;
+    if (s !== null) setText(readEl, s);
     if (tour) readEl.insertBefore(el("b", null, LABELS.rTour), readEl.firstChild);
   }
 

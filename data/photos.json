@@ -11607,7 +11607,8 @@
       "caption": "Nonggang Babbler",
       "featured": true,
       "sci": "Stachyris nonggangensis",
-      "ebird": "nonbab1"
+      "ebird": "nonbab1",
+      "zh": "弄岗穗鹛"
     },
     {
       "src": "images/guangxi-guangdong/U2A7998.jpg",
@@ -11646,7 +11647,8 @@
       "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A7998.jpg",
       "caption": "Chestnut-capped Babbler",
       "sci": "Timalia pileata",
-      "ebird": "chcbab1"
+      "ebird": "chcbab1",
+      "zh": "红顶鹛"
     },
     {
       "src": "images/guangxi-guangdong/7.jpg",
@@ -11678,7 +11680,8 @@
       "thumb": "images/_thumbs/1600/guangxi-guangdong/7.jpg",
       "caption": "Little Egret",
       "sci": "Egretta garzetta",
-      "ebird": "litegr"
+      "ebird": "litegr",
+      "zh": "白鹭"
     },
     {
       "src": "images/guangxi-guangdong/6-3.jpg",
@@ -11710,7 +11713,8 @@
       "thumb": "images/_thumbs/1600/guangxi-guangdong/6-3.jpg",
       "caption": "Black-faced Spoonbill",
       "sci": "Platalea minor",
-      "ebird": "blfspo1"
+      "ebird": "blfspo1",
+      "zh": "黑脸琵鹭"
     },
     {
       "src": "images/guangxi-guangdong/4-2-copy.jpg",
@@ -11742,7 +11746,8 @@
       "thumb": "images/_thumbs/1600/guangxi-guangdong/4-2-copy.jpg",
       "caption": "Pied Avocet",
       "sci": "Recurvirostra avosetta",
-      "ebird": "pieavo1"
+      "ebird": "pieavo1",
+      "zh": "反嘴鹬"
     },
     {
       "src": "images/guangxi-guangdong/6-4.jpg",
@@ -11774,7 +11779,8 @@
       "thumb": "images/_thumbs/1600/guangxi-guangdong/6-4.jpg",
       "caption": "Black-tailed Godwit",
       "sci": "Limosa limosa",
-      "ebird": "bktgod"
+      "ebird": "bktgod",
+      "zh": "黑尾塍鹬"
     },
     {
       "src": "images/guangxi-guangdong/U2A4684.jpg",
@@ -11813,7 +11819,8 @@
       "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A4684.jpg",
       "caption": "Bar-backed Partridge",
       "sci": "Arborophila brunneopectus",
-      "ebird": "babpar1"
+      "ebird": "babpar1",
+      "zh": "褐胸山鹧鸪"
     },
     {
       "src": "images/guangxi-guangdong/U2A9418.jpg",
@@ -11852,7 +11859,8 @@
       "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A9418.jpg",
       "caption": "Rufescent Prinia",
       "sci": "Prinia rufescens",
-      "ebird": "rufpri1"
+      "ebird": "rufpri1",
+      "zh": "暗冕山鹪莺"
     },
     {
       "src": "images/guangxi-guangdong/U2A6681.jpg",
@@ -11920,7 +11928,8 @@
       "thumb": "images/_thumbs/1600/guangxi-guangdong/6-1.jpg",
       "caption": "Black-winged Stilt",
       "sci": "Himantopus himantopus",
-      "ebird": "bkwsti"
+      "ebird": "bkwsti",
+      "zh": "黑翅长脚鹬"
     },
     {
       "src": "images/guangxi-guangdong/U2A8129.jpg",
@@ -11959,7 +11968,8 @@
       "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A8129.jpg",
       "caption": "Rufescent Prinia",
       "sci": "Prinia rufescens",
-      "ebird": "rufpri1"
+      "ebird": "rufpri1",
+      "zh": "暗冕山鹪莺"
     },
     {
       "src": "images/guangxi-guangdong/U2A7382.jpg",
@@ -11998,7 +12008,8 @@
       "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A7382.jpg",
       "caption": "Red-whiskered Bulbul",
       "sci": "Pycnonotus jocosus",
-      "ebird": "rewbul"
+      "ebird": "rewbul",
+      "zh": "红耳鹎"
     },
     {
       "src": "images/guangxi-guangdong/6-2.jpg",
@@ -12030,7 +12041,8 @@
       "thumb": "images/_thumbs/1600/guangxi-guangdong/6-2.jpg",
       "caption": "Black-faced Spoonbill",
       "sci": "Platalea minor",
-      "ebird": "blfspo1"
+      "ebird": "blfspo1",
+      "zh": "黑脸琵鹭"
     }
   ]
 }
