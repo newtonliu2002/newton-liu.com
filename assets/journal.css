@@ -23,7 +23,7 @@ body[data-page="journal"] {
   --jn-ctrl-line:    rgba(255,255,255,.34);
   --jn-mat:          #121212;                 /* round an upright cover photograph */
   --jn-col:  46rem;                           /* the reading column (photographs at its full width) */
-  --jn-gap:  8px;                             /* between photographs in a group */
+  --jn-gap:  16px;                            /* between photographs in a group (8px until Newton asked for more, 2026-10-17) */
   --jn-cap:  min(80vh, 760px);                /* the tallest a row of photographs may stand */
   --jn-zh:   17px;                            /* a Chinese entry's body */
   --jn-top:  calc(var(--masthead-h) + 1px);   /* the foot of the sticky bar */
@@ -438,6 +438,13 @@ body[data-page="journal"] {
    and sit off to its left. */
 .jn-cell { flex: calc(var(--ar, 1.5) * 100) 1 0; min-width: 0; margin: 0; }
 .jn-row:has(> .jn-cell + .jn-cell) { --jn-cap: calc(100vh - var(--jn-top)); }
+/* A lone upright stands as big as it would beside a twin of its own shape,
+   never smaller than the usual cap: 《月、夜》's vertical matches 《雪》's
+   two (Newton, 2026-10-17); a 3:4 upright keeps the cap. */
+.jn-row:not(:has(> .jn-cell + .jn-cell)) {
+  max-width: max(var(--jn-cap) * var(--s, 1.5),
+                 min((100% - var(--jn-gap)) / 2, (100vh - var(--jn-top)) * var(--s, 1.5)));
+}
 .jn-frame {
   position: relative; display: block; width: 100%;
   aspect-ratio: var(--ar, 1.5);
