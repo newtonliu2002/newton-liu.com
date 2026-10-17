@@ -30,6 +30,9 @@ assets/globe.css, globe.js  the globe landing only (see "The globe" below)
 assets/edit.js              the words layer — applies data/text.json, and
                             turns the page editable when the URL says ?edit
 data/collections.json       hand-edited: trip titles, blurbs, order, covers
+                            (`cover`: the photo on the Index card AND the globe's card and
+                            passing card; a file outside the gallery, such as
+                            images/_covers/quebec-B0003848.jpg, also gives `coverSize`)
 data/places.json            hand-edited: where each collection sits on the globe
 data/photos.json            GENERATED — do not hand-edit structure, but
                             hand-edited text fields are preserved on rebuild

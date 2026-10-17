@@ -1067,6 +1067,15 @@
     collections.forEach(function (c, i) {
       var shots = byCol[c.slug] || [], pl = places[c.slug] || {}, rt = (routes[c.slug] || {}).path;
       var opener = shots.filter(function (p) { return p.featured; })[0] || shots[0] || null;
+      // The card's photograph (and the passing card's): collections.json
+      // `cover` when it names one, as on the Index, else the opener. A cover
+      // that isn't one of the gallery's photographs gives its size in
+      // `coverSize` ([width, height]). Québec's is a frame made for it
+      // (Newton, 2026-10-17).
+      var cover = typeof c.cover === "string" && c.cover
+        ? shots.filter(function (p) { return p.src === c.cover; })[0] ||
+          { src: c.cover, width: (c.coverSize || [])[0], height: (c.coverSize || [])[1] }
+        : opener;
       var derived = NL && shots.length ? NL.collectionDate(shots) : "";
       var date = typeof c.date === "string" ? c.date : derived;   // "" hides it
       // `title` and the pins' `name` stay English: they are keys (the list's
@@ -1078,7 +1087,7 @@
         // Newton has written something for it (its blurb): it carries the note mark.
         written: !!(c.blurb && String(c.blurb).trim()),
         // A list of places ("Maine · Massachusetts") breaks only after a dot.
-        where: (NL ? NL.where(pl.where || "") : pl.where || "").replace(/ · /g, "\u00a0· "), zoom: pl.zoom, sensitive: !!pl.sensitive, i: i, opener: opener,
+        where: (NL ? NL.where(pl.where || "") : pl.where || "").replace(/ · /g, "\u00a0· "), zoom: pl.zoom, sensitive: !!pl.sensitive, i: i, opener: opener, cover: cover,
         // Its time zone (places.json `tz`, IANA), for the local time on its plate and card.
         tz: typeof pl.tz === "string" ? pl.tz : "",
         // What the console reads while this collection passes (places.json `coords`).
@@ -1901,13 +1910,13 @@
   function showPlate(c, at) {
     if (!L.app || COARSE || !c.pins.length) { hidePlate(); return; }
     plate.textContent = "";
-    plate.classList.toggle("is-text", !c.opener);   // no photograph yet: the title alone
-    if (c.opener && NL) {
+    plate.classList.toggle("is-text", !c.cover);    // no photograph yet: the title alone
+    if (c.cover && NL) {
       var img = el("img");
       img.alt = "";
       img.draggable = false;               // a drag on the passing card isn't a drag of its photo
-      img.style.aspectRatio = NL.aspectOf(c.opener).toFixed(4);
-      NL.responsive(img, c.opener, PLATE_SIZES);
+      img.style.aspectRatio = NL.aspectOf(c.cover).toFixed(4);
+      NL.responsive(img, c.cover, PLATE_SIZES);
       plate.appendChild(img);
     }
     plateTitle(c);
@@ -2356,9 +2365,9 @@
 
   var prefetched = {}, warmed = {};
   function prefetch(c) {
-    if (!c || !c.opener || !NL || prefetched[c.slug]) return;
+    if (!c || !c.cover || !NL || prefetched[c.slug]) return;
     prefetched[c.slug] = 1;
-    NL.responsive(new Image(), c.opener, CARD_SIZES);
+    NL.responsive(new Image(), c.cover, CARD_SIZES);
   }
   function warm(c) {
     if (SAVE_DATA || warmed[c.slug] || active !== c.slug || !NL || !c.href) return;
@@ -2435,13 +2444,13 @@
     journalLink.hidden = !(c.href && c.journal);      // both: the journal as the quieter second link
     if (c.href && c.journal) journalLink.href = c.journal;
     else journalLink.removeAttribute("href");
-    if (c.opener && NL) {
+    if (c.cover && NL) {
       var img = el("img");
       img.alt = "";
       img.decoding = "async";
-      img.style.aspectRatio = NL.aspectOf(c.opener).toFixed(4);
+      img.style.aspectRatio = NL.aspectOf(c.cover).toFixed(4);
       img.addEventListener("load", function () { img.classList.add("is-loaded"); });
-      NL.responsive(img, c.opener, CARD_SIZES);
+      NL.responsive(img, c.cover, CARD_SIZES);
       media.appendChild(img);
     }
     var parts = { title: c.name, where: c.where, date: c.date, sub: c.sub };

@@ -377,6 +377,8 @@
       "subtitle": "",
       "blurb": "",
       "journal": "journals/quebec/",
+      "cover": "images/_covers/quebec-B0003848.jpg",
+      "coverSize": [1600, 1200],
       "layout": [
         "J2",
         "W",

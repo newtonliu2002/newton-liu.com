@@ -2320,7 +2320,8 @@
     collections.slice().reverse().forEach(function (c) {
       var shots = byCollection[c.slug] || [];
       var cover = c.cover
-        ? photos.filter(function (p) { return p.src === c.cover; })[0] || { src: c.cover }
+        ? photos.filter(function (p) { return p.src === c.cover; })[0] ||
+          { src: c.cover, width: (c.coverSize || [])[0], height: (c.coverSize || [])[1] }
         : shots[0];
 
       var card = el("a", "collection-card" + (shots.length ? "" : " is-empty"));
