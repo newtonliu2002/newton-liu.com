@@ -755,7 +755,7 @@ country: one line in COUNTRIES. Puerto Rico's municipalities and the Virgin
 Islands come from us-atlas's counties; two border cases in Puerto Rico are
 pinned in MATCH; Morocco's map leaves out Western Sahara (SKIP).
 
-**如果把我的摄影经历数据化 / The quantification of my photography career**
+**如果数据化我的摄影经历 / The quantification of my photography career**
 (Newton's titles, 2026-10-16; "numbers" in the code) is a section of its own
 between the essay's sign-off and 设备 / Gear: his counts as charts in the 图1
 "Readout" look (all photos by country/territory, year and month; days in
