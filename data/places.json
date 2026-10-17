@@ -215,7 +215,7 @@
       "where": "China",
       "tz": "Asia/Shanghai",
       "pins": [
-        { "name": "Shenzhen", "lat": 22.54, "lng": 114.06 },
+        { "name": "Shenzhen Bay", "lat": 22.51, "lng": 113.96 },
         { "name": "Nonggang National Nature Reserve", "lat": 22.45, "lng": 106.95 }
       ]
     },

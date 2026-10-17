@@ -80,7 +80,7 @@ clock the same as or earlier than the one before (Florida and the Rio Grande
 run an hour ahead in US summer time; he took that): Morocco, Quebec, Ecuador, Peru,
 Florida, Galápagos, Rio Grande, Grouse Country, Desert West, Yellowstone,
 Canadian West, Catalina in Film, Snowy West, Alaska, Hawai'i, Malaysia,
-Guangxi & Guangdong (Shenzhen's card), Yunnan, Sri Lanka. A collection not in it never passes (it still
+Guangxi & Guangdong (Shenzhen Bay's card), Yunnan, Sri Lanka. A collection not in it never passes (it still
 shows on hover and in the list): New England and
 California, for now, and a new collection until it is added. A landing starts
 at the top; after a drag, a gallery or a flight home the order picks up at the
