@@ -1,9 +1,15 @@
 title: 法语
-date:
-time:
-place:
+date: 2026-10-12
+time: 08:00
+place: Tadoussac
 where:
 ---
-@placeholder text | 正文待补 (Newton will send)
+我刚刚拍了一个多小时的日出，走进一家镇上的咖啡店。“Est-ce que vous avez une café noir ?”（你有黑咖啡吗？）我的法语讲得不算太好。“Oui, un café noir.”（有，一杯黑咖啡。）店员回应道。他可能不是有意纠正我，但我意识到我的法语又说错了。我以为café是阴性，所以用une。但店员用的是un，café是阳性。
+
+我从来都记不住法语词的阴阳性。前一天，我也是通过这样的教训明白了poutine是阴性。那如果以e结尾的poutine是阴性，我认为café也是阴性，不是很自然吗？
+
+“Et un muffin.”（和一个muffin）我补充道。Muffin应该是个借自英语的词，那我怎么知道它的阴阳性？既然它不是e结尾，那我就猜阳性？
+
+这次我对了。
 
 @placeholder photo | 照片待补 (Newton will send)

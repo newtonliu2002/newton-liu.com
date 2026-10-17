@@ -11,13 +11,13 @@
     { "place": "Quebec City", "date": "" },
     { "place": "Parc national du Fjord-du-Saguenay", "date": "" },
     { "place": "Saguenay", "date": "" },
-    { "place": "Tadoussac", "date": "" },
+    { "place": "Tadoussac", "date": "2026-10-12" },
     { "place": "Baie-Saint-Paul", "date": "" },
     { "place": "Parc national des Hautes-Gorges-de-la-Rivière-Malbaie", "date": "" },
     { "place": "Baie-Saint-Paul", "date": "" },
     { "place": "Parc national des Grands-Jardins", "date": "" },
     { "place": "Ottawa/Gatineau", "date": "" }
   ],
-  "entries": ["french", "rain"],
+  "entries": ["rain", "french"],
   "english": []
 }
