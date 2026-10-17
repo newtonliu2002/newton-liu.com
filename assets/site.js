@@ -198,6 +198,9 @@
       "Theodore Roosevelt National Park": "西奥多·罗斯福国家公园",
       "Waterton Lakes National Park": "沃特顿湖国家公园", "Yellowstone National Park": "黄石国家公园",
       "Yosemite National Park": "优胜美地国家公园",
+      // and Sri Lanka's
+      "Yala National Park": "雅拉国家公园", "Bundala National Park": "本达拉国家公园",
+      "Horton Plains National Park": "霍顿平原国家公园",
       // everything in China
       "Shenzhen Bay": "深圳湾", "Nonggang National Nature Reserve": "弄岗国家级自然保护区",
       "Gaoligong Mountains": "高黎贡山", "Dali": "大理", "Lijiang": "丽江", "Shangri-La": "香格里拉"
