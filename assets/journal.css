@@ -417,7 +417,10 @@ body[data-page="journal"] {
    Rows of one to three frames at one height, each at its own shape (never
    cropped); journal.js decides the rows (rowsFor) and sets --ar on a frame
    and --s (the row's ratios added up) on a row. No row is taller than
-   --jn-cap: a lone upright stands centred, the column's full width never. */
+   --jn-cap: a lone upright stands centred, the column's full width never.
+   A row of two or more (two verticals side by side) may stand as tall as
+   the window under the bar, so it fills the column's width where it can
+   (Newton, 2026-10-17). */
 
 .jn-media {
   display: flex; flex-direction: column; gap: var(--jn-gap);
@@ -430,7 +433,11 @@ body[data-page="journal"] {
   max-width: calc(var(--jn-cap) * var(--s, 1.5) + var(--jn-gap) * var(--gaps, 0));
   margin-inline: auto;
 }
-.jn-cell { flex: var(--ar, 1.5) 1 0; min-width: 0; margin: 0; }
+/* Grow factors ×100: frames whose ratios add up to under 1 (a lone
+   upright, two verticals) would otherwise take only that share of the row
+   and sit off to its left. */
+.jn-cell { flex: calc(var(--ar, 1.5) * 100) 1 0; min-width: 0; margin: 0; }
+.jn-row:has(> .jn-cell + .jn-cell) { --jn-cap: calc(100vh - var(--jn-top)); }
 .jn-frame {
   position: relative; display: block; width: 100%;
   aspect-ratio: var(--ar, 1.5);
