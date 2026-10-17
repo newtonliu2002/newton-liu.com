@@ -121,10 +121,7 @@ body[data-page="journal"] {
   letter-spacing: -.025em;
   text-wrap: balance;
 }
-.jn-cover-slash { font-weight: 300; opacity: .5; margin: 0 .06em; }
-/* A phone: small enough that "Quebec / 魁北克" keeps to one line down to
-   about 340px (journal.js joins "Quebec" to its slash, so a narrower one
-   breaks after it). */
+/* A phone: a little smaller, so a longer title still keeps to one line. */
 @media (max-width: 400px) { .jn-cover-title { font-size: clamp(38px, 11.4vw, 46px); } }
 .jn-cover-month, .jn-cover-dates {
   margin: 0; font: 400 var(--t-meta)/18px var(--mono); letter-spacing: .16em; text-transform: uppercase;

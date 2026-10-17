@@ -18,5 +18,6 @@
     { "place": "Parc national des Grands-Jardins", "date": "" },
     { "place": "Ottawa/Gatineau", "date": "" }
   ],
-  "entries": ["french", "rain"]
+  "entries": ["french", "rain"],
+  "english": []
 }

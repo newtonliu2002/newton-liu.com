@@ -36,6 +36,10 @@ placeholders included; the live site shows only what is real.
    text never go on the map.
 3. Add its name to `"entries"` in `journal.json`, where it falls in the
    reading order: `"entries": ["french", "rain", "fjord"]`.
+4. An English version, if you write one: `entries/fjord.en.txt` in the same
+   format, and its name in `"english"` in `journal.json`
+   (`"english": ["fjord"]`). It shows when the site is in English; an entry
+   without one reads the same in both languages.
 
 ## Add or replace a photo, a video or the cover
 

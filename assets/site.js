@@ -104,6 +104,7 @@
     "Newton Liu — Bird, Wildlife & Landscape Photography": "Newton Liu — 鸟类、野生动物与风光摄影",
     "{title} — Newton Liu Photography": "{title} — Newton Liu Photography",
     "Contact — Newton Liu Photography": "联系方式 — Newton Liu Photography",
+    "{title} Journal — Newton Liu Photography": "{title}游记 — Newton Liu Photography",
     // the Index, the galleries, the lightbox
     "Collections": "作品集", "Globe": "地球仪", "Index": "目录", "Loading…": "加载中…",
     "More about the work →": "了解更多 →",

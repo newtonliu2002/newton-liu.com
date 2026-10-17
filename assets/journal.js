@@ -320,8 +320,15 @@
         seen[id] = true;
         return ok;
       });
+      // An entry Newton has also written in English (listed in "english")
+      // reads from entries/<id>.en.txt while the site is in English, as
+      // About's English page does; every other entry is the same in both.
+      var english = {};
+      (journal.english || []).forEach(function (id) { english[id] = true; });
       return Promise.all(ids.map(function (id) {
-        return getText(CONTENT + "entries/" + id + ".txt").then(function (raw) {
+        var file = CONTENT + "entries/" + id + ".txt";
+        var en = !ZH && own(english, id) ? CONTENT + "entries/" + id + ".en.txt" : null;
+        return (en ? getText(en).catch(function () { return getText(file); }) : getText(file)).then(function (raw) {
           return parseEntry(id, raw);
         }, function () {
           return { id: id, missing: true };
@@ -333,10 +340,12 @@
   /* ---------- drawing ---------------------------------------------------- */
 
   function render(entries, path) {
-    var title = journal.title || "Quebec", titleZh = journal.titleZh || "";
-    document.title = title + (titleZh ? " / " + titleZh : "") + " — Newton Liu Photography";
+    // One title in each language (Newton: an English and a Chinese
+    // version, not the two side by side).
+    var title = (ZH && journal.titleZh) || journal.title || "Quebec";
+    document.title = t("{title} Journal — Newton Liu Photography", { title: title });
 
-    drawCover(title, titleZh);
+    drawCover(title);
 
     var column = el("div", "jn-column");
     var n = 0;
@@ -375,14 +384,10 @@
 
   /* --- the cover --- */
 
-  function drawCover(title, titleZh) {
+  function drawCover(title) {
     var box = document.getElementById("jn-cover");
     var slot = box.querySelector(".jn-cover-media");
-    var h1 = box.querySelector(".jn-cover-title");
-    h1.textContent = title + "\u00a0";     // a no-break space: a narrow cover breaks after the slash, never before it
-    var slash = h1.appendChild(el("span", "jn-cover-slash", "/"));
-    slash.setAttribute("aria-hidden", "true");
-    if (titleZh) h1.appendChild(document.createTextNode(" " + titleZh));
+    S.text(box.querySelector(".jn-cover-title"), title);
 
     var month = box.querySelector(".jn-cover-month"), dates = box.querySelector(".jn-cover-dates");
     month.textContent = S.date(journal.month || "");

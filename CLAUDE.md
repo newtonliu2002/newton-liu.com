@@ -913,12 +913,19 @@ build.py's `stamp_root_pages` restamps every `journals/*/index.html` along
 with the five root pages (the four journal assets are in `ASSETS`).
 
 **journal.json.** `place` is the key into data/places.json and
-data/routes.json; `title` and `titleZh` always show together ("Quebec /
-魁北克"); `month` ("October 2026", through `NLSite.date`); `dates.from` and
+data/routes.json; `title` ("Quebec") in English and `titleZh` (魁北克) in
+Chinese, one at a time on the cover and in the tab title ("Quebec Journal",
+"魁北克游记"; Newton wanted English and Chinese versions, not the two side by
+side, 2026-10-17); `month` ("October 2026", through `NLSite.date`); `dates.from` and
 `dates.to` (ISO, empty until Newton sends them); `cover` (`type`
 "placeholder", "photo" or "video", `src`, a video's `poster`, `alt`);
 `route`, the visits in travel order (`{ "place": <a pin name>, "date": "" }`;
-repeats and several a day allowed); `entries`, the reading order.
+repeats and several a day allowed); `entries`, the reading order;
+`english`, the entries that also have an English version,
+`entries/<id>.en.txt` (the same format, complete in itself), which shows
+while the site is in English. Every other entry reads the same in both
+languages, as About's essay does until its English page exists. Newton's
+words are never translated for him.
 
 **An entry** (`entries/<id>.txt`, UTF-8). The id is the file's name and the
 entry's address (`#rain`), never its date, so several entries can share a day

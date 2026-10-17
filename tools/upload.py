@@ -182,16 +182,20 @@ def trip_media(folder, name):
         keys.append(cover.get("src"))
         if cover.get("type") == "video":
             keys.append(cover.get("poster"))
+    english = set(e for e in journal.get("english") or [] if isinstance(e, str))
     for eid in journal.get("entries") or []:
         # The page skips an id that isn't a plain name, so it shows nothing.
         if not isinstance(eid, str) or not re.match(r"[A-Za-z0-9][A-Za-z0-9_-]*$", eid):
             continue
-        entry = os.path.join(folder, "entries", eid + ".txt")
-        try:
-            with open(entry, "r", encoding="utf-8-sig") as fh:
-                keys.extend(entry_media(fh.read()))
-        except OSError:
-            continue                     # listed but not written yet: nothing to show
+        # Its English version (<id>.en.txt, when listed in "english") may
+        # show other media, so both count.
+        for suffix in (".txt", ".en.txt") if eid in english else (".txt",):
+            entry = os.path.join(folder, "entries", eid + suffix)
+            try:
+                with open(entry, "r", encoding="utf-8-sig") as fh:
+                    keys.extend(entry_media(fh.read()))
+            except OSError:
+                continue                 # listed but not written yet: nothing to show
     return [media_path(k) for k in keys if isinstance(k, str) and k.strip()]
 
 
