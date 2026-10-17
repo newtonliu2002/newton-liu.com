@@ -13465,29 +13465,36 @@
       "thumb": "images/_thumbs/1600/california-film/U2A0301.jpg"
     },
     {
-      "src": "images/california-film/501CM.jpg",
-      "title": "501CM",
+      "src": "images/california-film/B0003461.jpg",
+      "title": "B0003461",
       "collection": "california-film",
       "location": "",
-      "date": "",
-      "width": 2000,
-      "height": 1500,
-      "exif": {},
+      "date": "2026-08-24",
+      "width": 2400,
+      "height": 1800,
+      "exif": {
+        "camera": "Hasselblad X2D II 100C",
+        "lens": "XCD 35-100E@55",
+        "focal": "55mm",
+        "aperture": "f/4",
+        "shutter": "1/10s",
+        "iso": "50"
+      },
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/california-film/501CM.jpg"
+          "src": "images/_thumbs/800/california-film/B0003461.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/california-film/501CM.jpg"
+          "src": "images/_thumbs/1600/california-film/B0003461.jpg"
         },
         {
-          "w": 2000,
-          "src": "images/california-film/501CM.jpg"
+          "w": 2400,
+          "src": "images/california-film/B0003461.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/california-film/501CM.jpg"
+      "thumb": "images/_thumbs/1600/california-film/B0003461.jpg"
     }
   ]
 }
