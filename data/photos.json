@@ -7593,7 +7593,11 @@
           "src": "images/hawaii/9-2.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/hawaii/9-2.jpg"
+      "thumb": "images/_thumbs/1600/hawaii/9-2.jpg",
+      "caption": "Omao",
+      "sci": "Myadestes obscurus",
+      "ebird": "omao",
+      "zh": "夏威夷孤鸫"
     },
     {
       "src": "images/hawaii/7-2.jpg",
