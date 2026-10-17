@@ -359,8 +359,11 @@ linked to ebird.org/species/<`ebird` code>, both from the eBird taxonomy
 (`_arrange/geo-src/ebird-taxonomy.csv`). `zh` is its Chinese name, from
 eBird's own zh_SIM taxonomy (`_arrange/geo-src/ebird-taxonomy-zh_SIM.csv`,
 looked up by the `ebird` code); in Chinese the line reads 中文名, English,
-*Latin*. Guangxi & Guangdong has them (2026-10-17), Newton's names or
-ones checked against his eBird lists for those trips; the butterfly has none.
+*Latin*. Every collection has them (2026-10-17): each ID checked against his
+eBird species for that trip's regions and confirmed by a second, independent
+look. Uncertain ones were left unnamed and listed for Newton (downy chicks,
+distant flocks, silhouettes, Darwin's finches, birds off his eBird list at
+medium confidence); mammals, landscapes and the butterfly have none.
 
 `EXIF_FIELDS` sets which technical values print and in what order. Missing
 values are skipped, which is why drone frames show fewer items — their
