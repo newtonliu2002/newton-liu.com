@@ -9,12 +9,12 @@
     { "place": "L'Anse-Saint-Jean", "date": "" },
     { "place": "Saguenay", "date": "" },
     { "place": "Tadoussac", "date": "2026-10-11" },
-    { "place": "Baie-Saint-Paul", "date": "" },
+    { "place": "Baie-Saint-Paul", "date": "2026-10-12" },
     { "place": "Parc national des Hautes-Gorges-de-la-Rivière-Malbaie", "date": "2026-10-13" },
     { "place": "Baie-Saint-Paul", "date": "" },
     { "place": "Parc national des Grands-Jardins", "date": "" },
     { "place": "Ottawa/Gatineau", "date": "" }
   ],
-  "entries": ["quebec-and-me", "owl", "french", "rain", "sea", "snow"],
+  "entries": ["quebec-and-me", "owl", "french", "rain", "sea", "blue", "snow"],
   "english": []
 }
