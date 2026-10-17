@@ -1658,7 +1658,11 @@
           "src": "images/florida/E05A4607.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/florida/E05A4607.jpg"
+      "thumb": "images/_thumbs/1600/florida/E05A4607.jpg",
+      "caption": "Short-billed Dowitcher",
+      "sci": "Limnodromus griseus",
+      "ebird": "shbdow",
+      "zh": "短嘴半蹼鹬"
     },
     {
       "src": "images/florida/C05A0580.jpg",
@@ -9739,7 +9743,11 @@
           "src": "images/sri-lanka/9-1.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sri-lanka/9-1.jpg"
+      "thumb": "images/_thumbs/1600/sri-lanka/9-1.jpg",
+      "caption": "Flesh-footed Shearwater",
+      "sci": "Ardenna carneipes",
+      "ebird": "flfshe",
+      "zh": "淡足鹱"
     },
     {
       "src": "images/sri-lanka/36.jpg",
