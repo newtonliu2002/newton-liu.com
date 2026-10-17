@@ -129,7 +129,24 @@
     "Globe unavailable": "地球仪无法显示", "Globe not loaded": "地球仪未加载", "Tour · ": "导览 · ",
     "Use two fingers to turn the globe": "用双指转动地球仪",
     "Use Ctrl + scroll to zoom the map": "按住 Ctrl 并滚动以缩放地图",
-    "Use ⌘ + scroll to zoom the map": "按住 ⌘ 并滚动以缩放地图"
+    "Use ⌘ + scroll to zoom the map": "按住 ⌘ 并滚动以缩放地图",
+    // the travel journal (journals/<place>/, assets/journal.js); his entries
+    // themselves are never translated
+    "Journal": "游记", "Journal →": "游记 →", "Skip to the journal": "跳到游记",
+    "This journal isn't published yet.": "这篇游记尚未发布。", "See the collections →": "查看作品集 →",
+    "Couldn't load the journal. {err}": "游记加载失败。{err}",
+    "Entries": "篇目", "No. {n}": "第{n}篇", "Route map": "路线图", "Map unavailable": "地图无法显示",
+    "Hide map": "隐藏地图", "Show map": "显示地图", "Not on the map": "不在地图上",
+    "Pause video": "暂停视频", "Play video": "播放视频", "Video": "视频",
+    "Date to come": "日期待定", "Dates to come": "日期待定",
+    "Placeholder": "占位", "Cover": "封面", "Photo": "照片", "Text": "文字",
+    "Shown in the local preview only": "仅在本地预览中显示",
+    "A photograph or a short video to come": "照片或短视频待补",
+    "Couldn't load {file}": "无法加载 {file}",
+    // its route map (assets/journal-map.js LABELS)
+    "Zoom in": "放大", "Zoom out": "缩小",
+    "{place}: {title}": "{place}：{title}", "{place}: {n} entries": "{place}：{n}篇",
+    "Entries at {place}": "{place}的游记"
   };
 
   var ZH_EDIT = {
@@ -491,7 +508,8 @@
   window.NLSite = { url: url, responsive: responsive, collectionDate: collectionDate,
                     aspectOf: aspectOf, getJSON: getJSON,
                     lang: lang, t: tr, slot: slotText, place: placeName, zhPlace: zhPlace, region: regionName,
-                    pin: pinName, where: whereLine, date: dateText, text: setText, setLang: setLang };
+                    pin: pinName, where: whereLine, date: dateText, text: setText, setLang: setLang,
+                    viewer: viewer };
 
   // The page's own words in Chinese, before the first paint (this script
   // runs at the end of <body>, ahead of any paint on a normal load): the
@@ -2309,6 +2327,7 @@
   var shown = [];      // photos currently in the grid — what the arrows walk
   var index = -1;
   var isOpen = false;
+  var lbReturn = null; // where focus goes back to on close (NLSite.viewer)
 
   function exifLine(photo) {
     var e = photo.exif;
@@ -2705,11 +2724,14 @@
     // .lb-image is capped at roughly 80vh once the caption is allowed for.
     lbImage.removeAttribute("srcset");        // or the old one races the new
     responsive(lbImage, photo, cappedSizes(photo, 80));
-    lbImage.alt = altFor(photo);
+    lbImage.alt = photo.alt || altFor(photo);
     lbTitle.textContent = (CAPTIONS.lightbox.title && photo.title) || "";
     lbMeta.textContent = metaLine(photo);
     lbExif.textContent = exifLine(photo);
     if (lbName) nameLine(photo);
+
+    // One photograph alone (a journal entry's, NLSite.viewer): no arrows.
+    lightbox.classList.toggle("is-single", shown.length < 2);
 
     // With every caption off there is no text block, so let the photograph
     // use the height the caption would have taken.
@@ -2747,6 +2769,24 @@
     if (!fromPopstate && history.state && history.state.lb) {
       try { history.back(); } catch (e) { /* no-op */ }
     }
+    if (lbReturn) {
+      var back = lbReturn;
+      lbReturn = null;
+      try { back.focus({ preventScroll: true }); } catch (e) { /* gone */ }
+    }
+  }
+
+  // The same viewer for another page's photographs (the travel journal,
+  // assets/journal.js): `list` is what the arrows walk, photos.json records
+  // or { src, alt } for a file of the page's own, and `i` the one to open
+  // first. Keys, swipe, the Back gesture and the caption lines are the
+  // gallery's. Focus goes back to `from` (or whatever had it) on close.
+  function viewer(list, i, from) {
+    if (!lightbox) wireLightbox();
+    if (!lightbox || !list || !list.length) return;
+    shown = list;
+    lbReturn = from || document.activeElement;
+    open(Math.max(0, Math.min(list.length - 1, i || 0)));
   }
 
   function wireLightbox() {
@@ -2772,8 +2812,8 @@
     document.addEventListener("keydown", function (ev) {
       if (!isOpen) return;
       if (ev.key === "Escape") close(false);
-      else if (ev.key === "ArrowRight") show(index + 1);
-      else if (ev.key === "ArrowLeft") show(index - 1);
+      else if (ev.key === "ArrowRight" && shown.length > 1) show(index + 1);
+      else if (ev.key === "ArrowLeft" && shown.length > 1) show(index - 1);
       else return;
       ev.preventDefault();
     });
@@ -2789,7 +2829,7 @@
       var dx = ev.changedTouches[0].clientX - startX;
       var dy = ev.changedTouches[0].clientY - startY;
       // Horizontal intent only, and far enough not to be a stray tap.
-      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) show(dx < 0 ? index + 1 : index - 1);
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) && shown.length > 1) show(dx < 0 ? index + 1 : index - 1);
       startX = startY = null;
     }, { passive: true });
   }
@@ -2850,8 +2890,31 @@
     // rather than trimmed to the window. See .book-lead.is-whole in site.css.
     var lead = document.querySelector(".book-lead");
     if (lead) lead.classList.toggle("is-whole", meta.opener === "whole");
+    if (meta.journal) journalLink(slug, meta.journal);
     renderGrid(shown, meta.layout);
     wireLightbox();
+  }
+
+  // A trip with a travel journal ("journal": "journals/quebec/" on its
+  // collections.json entry) links to it from the rail: "Journal →". While
+  // the journal is a draft (data/places.json, places.<slug>.journal.draft)
+  // the link shows in the local preview only, as on the globe's card.
+  function journalLink(slug, href) {
+    var rail = document.querySelector(".book-rail");
+    if (!rail || rail.querySelector(".gallery-journal") || !/^journals\/[a-z0-9-]+\/$/.test(href)) return;
+    function add() {
+      var p = el("p", "gallery-journal");
+      var a = p.appendChild(el("a", "text-link"));
+      a.href = BASE + href;
+      a.textContent = tr("Journal →");
+      var blurb = rail.querySelector(".gallery-blurb");   // under the date, above his words
+      rail.insertBefore(p, blurb && blurb.parentNode === rail ? blurb : null);
+    }
+    if (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)) return add();
+    getJSON("data/places.json").then(function (data) {
+      var j = data && data.places && data.places[slug] && data.places[slug].journal;
+      if (j && j.draft === false) add();
+    }).catch(function () { /* no link, no harm */ });
   }
 
   /* ---------- boot ------------------------------------------------------ */

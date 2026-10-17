@@ -1,0 +1,451 @@
+/* ==========================================================================
+   newton-liu.com — a travel journal (journals/<place>/), on top of site.css.
+
+   Only jn-* classes, always under body[data-page="journal"] or .jn, plus
+   the masthead's hairline over the cover. Colours, type and motion are
+   site.css tokens; the few --jn-* below are this page's own: the ink and
+   shade over the cover photograph (the same on both grounds, since they sit
+   on a photograph, not on the ground) and the reading column's sizes, which
+   journal.js repeats in sizesFor() (change one, check the other).
+   The route map inside .jn-map is journal-map.css's.
+
+   Wide (1000px and up): the cover, then two columns, the map and the list
+   of entries sticky on the left, the entries scrolling on the right.
+   Narrow: one column: the cover, the map (it folds away), a bar with the
+   entry being read that opens the list, the entries.
+   ========================================================================== */
+
+body[data-page="journal"] {
+  --jn-on-photo:     #f4f4f1;                 /* words over the cover photograph */
+  --jn-on-photo-dim: rgba(244,244,241,.80);
+  --jn-scrim:        rgba(0,0,0,.58);         /* the soft shade under them */
+  --jn-ctrl-bg:      rgba(10,10,10,.42);      /* the cover's pause / play */
+  --jn-ctrl-line:    rgba(255,255,255,.34);
+  --jn-mat:          #121212;                 /* round an upright cover photograph */
+  --jn-col:  46rem;                           /* the reading column (photographs at its full width) */
+  --jn-gap:  8px;                             /* between photographs in a group */
+  --jn-cap:  min(80vh, 760px);                /* the tallest a row of photographs may stand */
+  --jn-zh:   17px;                            /* a Chinese entry's body */
+  --jn-top:  calc(var(--masthead-h) + 1px);   /* the foot of the sticky bar */
+  --jn-bar-h: 48px;                           /* the phone's entry bar */
+}
+@media (max-width: 620px) { body[data-page="journal"] { --jn-top: 0px; } }   /* the bar scrolls away here */
+/* journal.js keeps the reader's place by hand when a group of photographs
+   above changes shape (settleShape), the same in every browser, so the
+   browser's own scroll anchoring is off here rather than doubling it. */
+:root:has(body[data-page="journal"]), body[data-page="journal"] { overflow-anchor: none; }
+
+/* Nothing shows until journal.js has read the gate; then either the
+   journal or the one-line notice. */
+.jn.is-loading > *, .jn.is-gated > :not(.jn-gate) { display: none; }
+
+.jn-gate {
+  margin: 0; padding: clamp(4rem, 14vh, 9rem) var(--edge);
+  font: 400 var(--t-body)/1.7 var(--sans); color: var(--text-dim);
+}
+/* On a phone the link wraps under the sentence and lines up with it, the
+   space after the sentence (none after Chinese 。) its only gap; on a wider
+   window, where it stays on the line, a little more air. */
+@media (min-width: 621px) {
+  .jn-gate .text-link { margin-left: .35em; }
+  .jn-gate .text-link:lang(zh) { margin-left: 0; }
+}
+
+/* Anything the local preview shows in place of what Newton will send: a
+   dashed box with a small label. The live site never draws one. */
+.jn-hold {
+  display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px;
+  border: 1px dashed var(--hairline-strong);
+  padding: var(--s5); text-align: center; color: var(--text-faint);
+}
+.jn-hold-label {
+  margin: 0; font: 400 var(--t-label)/16px var(--mono); letter-spacing: .16em; text-transform: uppercase;
+  color: var(--text-dim);
+}
+.jn-hold-note { margin: 0; font: 400 var(--t-ui)/1.6 var(--sans); color: var(--text-faint); }
+.jn-hold-block { margin: 0 0 2em; min-height: 140px; }
+.jn-hold-text { text-decoration: underline dashed var(--hairline-strong); text-underline-offset: 4px; }
+
+/* ---------- The cover ------------------------------------------------------
+   Full bleed and a window tall, up behind the bar like a gallery's opener;
+   the words at its foot over a soft shade, so they read on any photograph. */
+
+.jn-cover {
+  position: relative;
+  height: 100vh; min-height: 440px;
+  overflow: hidden;
+  color: var(--text);
+}
+@supports (height: 1svh) { .jn-cover { height: 100svh; } }
+@media (min-width: 621px) {
+  .jn-cover { margin-top: calc(-1 * var(--jn-top)); }
+  body[data-page="journal"]:has(.jn-cover.has-media) .masthead { border-bottom-color: transparent; }
+}
+@media (max-width: 620px) {
+  .jn-cover { height: 78vh; min-height: 380px; }
+  @supports (height: 1svh) { .jn-cover { height: 78svh; } }
+}
+
+.jn-cover-media { position: absolute; inset: 0; }
+.jn-cover-media img, .jn-cover-video {
+  display: block; width: 100%; height: 100%; object-fit: cover;
+}
+.jn-cover.has-media { background: var(--bg-raised); color: var(--jn-on-photo); }
+.jn-cover.has-media::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(to top, var(--jn-scrim) 0%, color-mix(in srgb, var(--jn-scrim) 45%, transparent) 30%, transparent 58%);
+}
+
+/* An upright cover (journal.js, from its shape): whole and centred, below
+   the bar, as an upright gallery opener is, never cut to a band; on a dark
+   mat on both grounds, as the words over it are the photograph's ink. */
+.jn-cover.is-upright { background: var(--jn-mat); }
+.jn-cover.is-upright .jn-cover-media img, .jn-cover.is-upright .jn-cover-video { object-fit: contain; }
+@media (min-width: 621px) { .jn-cover.is-upright .jn-cover-media { top: var(--jn-top); } }
+
+/* The local preview's stand-in: a dashed box the size of the cover, below the bar. */
+.jn-cover-hold {
+  position: absolute; inset: calc(var(--jn-top) + var(--s4)) var(--edge) var(--s4);
+  justify-content: flex-start; align-items: flex-start; padding: var(--s5); text-align: left;
+}
+@media (max-width: 620px) { .jn-cover-hold { inset: var(--s4) var(--edge); } }
+
+.jn-cover-text {
+  position: absolute; z-index: 2;
+  left: var(--edge); right: var(--edge); bottom: clamp(40px, 9vh, 96px);
+}
+.jn-cover.is-hold .jn-cover-text { left: calc(var(--edge) + var(--s5)); bottom: calc(var(--s4) + var(--s6)); }
+.jn-cover-title {
+  margin: 0 0 var(--s5);
+  font: 500 clamp(46px, 6.2vw, 104px)/1 var(--sans);
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+.jn-cover-slash { font-weight: 300; opacity: .5; margin: 0 .06em; }
+/* A phone: small enough that "Quebec / 魁北克" keeps to one line down to
+   about 340px (journal.js joins "Quebec" to its slash, so a narrower one
+   breaks after it). */
+@media (max-width: 400px) { .jn-cover-title { font-size: clamp(38px, 11.4vw, 46px); } }
+.jn-cover-month, .jn-cover-dates {
+  margin: 0; font: 400 var(--t-meta)/18px var(--mono); letter-spacing: .16em; text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+.jn-cover-dates { margin-top: 4px; color: var(--text-dim); }
+.jn-cover.has-media .jn-cover-dates { color: var(--jn-on-photo-dim); }
+.jn-cover.has-media .jn-cover-text { text-shadow: 0 1px 18px rgba(0,0,0,.25); }
+
+/* No cover at all (the live site, should one be missing): just the words. */
+.jn-cover.is-plain { height: auto; min-height: 0; margin-top: 0; padding: clamp(4rem, 12vh, 8rem) 0 var(--s7); }
+.jn-cover.is-plain .jn-cover-text { position: static; padding-inline: var(--edge); }
+
+/* Pause / play, at the foot of the cover on the right. */
+.jn-cover-play {
+  position: absolute; z-index: 2; right: var(--edge); bottom: clamp(40px, 9vh, 96px);
+  width: 44px; height: 44px; padding: 0;
+  display: grid; place-items: center;
+  appearance: none; border: 1px solid var(--jn-ctrl-line); border-radius: 0;
+  background: var(--jn-ctrl-bg); color: var(--jn-on-photo); cursor: pointer;
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  transition: border-color var(--d-fast) var(--ease);
+}
+.jn-cover-play:hover { border-color: var(--jn-on-photo); }
+/* Two bars while it plays; a triangle while it rests. */
+.jn-cover-play::before {
+  content: ""; width: 10px; height: 12px;
+  border-left: 3px solid currentColor; border-right: 3px solid currentColor;
+  box-sizing: border-box;
+}
+.jn-cover-play.is-paused::before {
+  width: 0; height: 0; margin-left: 3px;
+  border-style: solid; border-color: transparent; border-width: 7px 0 7px 11px;
+  border-left-color: currentColor; border-right: 0;
+}
+
+/* ---------- The two columns -------------------------------------------- */
+
+.jn-column { max-width: var(--jn-col); }
+
+.jn-map { position: relative; width: 100%; }
+.jn-map.is-empty::after {
+  content: attr(data-empty);
+  position: absolute; inset: 0; display: grid; place-items: center;
+  border: 1px solid var(--hairline-soft);
+  font: 400 var(--t-label)/16px var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-faint);
+}
+.jn-readout {
+  display: flex; min-height: 26px;
+  margin: 0; padding-top: 10px;
+  font: 400 var(--t-label)/16px var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+/* One line: the place's name gives way (an ellipsis) before the coordinates do. */
+.jn-readout > * { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.jn-readout b { font-weight: inherit; color: var(--text-dim); }
+.jn-readout .jn-readout-at { flex: none; white-space: pre; }
+.jn-map-toggle { display: none; }
+
+@media (min-width: 1000px) {
+  /* As wide as the site's wrap (the masthead's), so on a very wide window
+     the text stays near the map rather than drifting away from it. */
+  .jn-body {
+    display: grid;
+    grid-template-columns: minmax(320px, min(40%, 40rem)) minmax(0, 1fr);
+    align-items: start;
+    max-width: var(--wrap-wide); margin-inline: auto;
+  }
+  .jn-panel {
+    position: sticky; top: var(--jn-top);
+    height: calc(100vh - var(--jn-top));
+    display: flex; flex-direction: column;
+    padding: var(--s6) clamp(24px, 2.5vw, 48px) var(--s5) var(--edge);
+    border-right: 1px solid var(--hairline-soft);
+  }
+  .jn-mapbox { flex: none; padding-bottom: var(--s4); border-bottom: 1px solid var(--hairline); }
+  /* Half the window, giving way before the list does in a short one, so
+     the list always shows four or five entries (450px at 900 tall, about
+     255px at 700, 180px at 600 and below). */
+  .jn-map { height: clamp(180px, min(50vh, 100vh - var(--jn-top) - 380px), 600px); }
+  .jn-navhome {
+    flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+    margin: 0 calc(-1 * var(--s4)); padding: var(--s1) var(--s4) 0;   /* room for the lit item's square */
+    scrollbar-width: thin; scrollbar-color: var(--hairline-strong) transparent;
+    /* an item half scrolled out fades at the edge rather than being cut */
+    -webkit-mask-image: linear-gradient(to bottom, transparent, var(--mask-solid) 20px, var(--mask-solid) calc(100% - 20px), transparent);
+            mask-image: linear-gradient(to bottom, transparent, var(--mask-solid) 20px, var(--mask-solid) calc(100% - 20px), transparent);
+  }
+  .jn-bar { display: none; }
+  .jn-entries { padding: clamp(64px, 12vh, 120px) var(--edge) clamp(96px, 18vh, 160px) clamp(32px, 4.5vw, 88px); }
+  .jn-column { margin-inline: auto; }
+  .jn-entry { scroll-margin-top: calc(var(--jn-top) + var(--s6)); }
+}
+/* Just past the breakpoint the panel and the margin give a little, so a
+   Chinese line still holds about 31 characters. */
+@media (min-width: 1000px) and (max-width: 1099px) {
+  .jn-body { grid-template-columns: minmax(320px, 37%) minmax(0, 1fr); }
+  .jn-entries { padding-left: 28px; }
+}
+
+/* ---------- The list of entries ---------------------------------------- */
+
+.jn-nav { padding: var(--s2) 0 var(--s5); }
+.jn-day-date {
+  margin: var(--s5) 0 var(--s2);
+  font: 400 var(--t-label)/16px var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-faint);
+}
+.jn-day-list { list-style: none; margin: 0; padding: 0; }
+.jn-nav-link {
+  position: relative;
+  display: grid; grid-template-columns: 2.4em minmax(0, 1fr); column-gap: var(--s2);
+  padding: 7px 0;
+  color: var(--text-dim); text-decoration: none;
+  transition: color var(--d-fast) var(--ease);
+}
+.jn-nav-link:hover { color: var(--text); }
+.jn-nav-no {
+  grid-row: 1 / span 2;
+  font: 400 var(--t-label)/22px var(--mono); letter-spacing: .08em; font-variant-numeric: tabular-nums;
+  color: var(--text-faint);
+}
+.jn-nav-title {
+  font: 400 var(--t-row)/22px var(--sans);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.jn-nav-title:lang(zh) { font-size: 15px; }
+.jn-nav-place {
+  font: 400 var(--t-label)/16px var(--mono); letter-spacing: .12em; text-transform: uppercase;
+  color: var(--text-faint);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+/* The entry being read: full ink, its number in the accent, and the nav's
+   4×4 accent square hung in the gutter to its left. */
+.jn-nav-link[aria-current] { color: var(--text); }
+.jn-nav-link[aria-current] .jn-nav-no { color: var(--accent); }
+.jn-nav-link[aria-current]::before {
+  content: ""; position: absolute; right: 100%; top: 16px;
+  margin-right: 6px; border: 2px solid var(--accent);
+}
+
+/* ---------- Narrow: one column ----------------------------------------- */
+
+@media (max-width: 999px) {
+  .jn-panel { padding: var(--s5) var(--edge) 0; }
+  .jn-navhome { display: none; }
+  .jn-map-toggle {
+    display: inline-flex; align-items: center; gap: var(--s2);
+    min-height: 44px; margin: -6px 0 var(--s1); padding: 0;
+    appearance: none; background: none; border: 0; cursor: pointer;
+    font: 400 var(--t-label)/16px var(--mono); letter-spacing: .14em; text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .jn-map-toggle:hover { color: var(--text); }
+  .jn-map-toggle::before {
+    content: ""; width: 7px; height: 7px; margin-top: -3px;
+    border-right: 1.25px solid currentColor; border-bottom: 1.25px solid currentColor;
+    transform: rotate(-135deg); transform-origin: 50% 50%;
+  }
+  .jn-map-toggle[aria-expanded="false"]::before { transform: rotate(45deg); margin-top: -6px; }
+  .jn-mapblock { max-width: var(--jn-col); }   /* the map's edges are the entries' */
+  .jn-mapblock.is-collapsed .jn-mapbox { display: none; }
+  .jn-map { height: clamp(220px, 62vw, 460px); }
+
+  .jn-bar {
+    position: sticky; top: var(--jn-top); z-index: calc(var(--z-masthead) - 1);
+    margin-top: var(--s5);
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+    border-block: 1px solid var(--hairline);
+  }
+  .jn-bar-btn {
+    display: flex; align-items: center; gap: var(--s3);
+    width: 100%; min-height: var(--jn-bar-h); padding: 0 var(--edge);
+    appearance: none; background: none; border: 0; cursor: pointer; text-align: left;
+    color: var(--text);
+  }
+  .jn-bar-no {
+    flex: none; font: 400 var(--t-label)/16px var(--mono); letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  .jn-bar-title {
+    flex: 1 1 auto; min-width: 0;
+    font: 400 var(--t-row)/20px var(--sans);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .jn-bar-title:lang(zh) { font-size: 15px; }
+  .jn-bar-caret {
+    flex: none; width: 8px; height: 8px; margin: -4px 2px 0 0;
+    border-right: 1.25px solid var(--text-dim); border-bottom: 1.25px solid var(--text-dim);
+    transform: rotate(45deg);
+  }
+  .jn-bar-btn[aria-expanded="true"] .jn-bar-caret { transform: rotate(-135deg); margin-top: 4px; }
+  /* --jn-room (journal.js openBar) keeps its foot inside the window; the
+     foot fades into the ground while there is more below it to scroll to. */
+  .jn-bar-list {
+    position: absolute; left: 0; right: 0; top: 100%;
+    max-height: min(64vh, 560px, var(--jn-room, 100vh)); overflow-y: auto; overscroll-behavior: contain;
+    padding: 0 var(--edge) var(--s3) calc(var(--edge) + var(--s3));
+    background: var(--bg);
+    border-bottom: 1px solid var(--hairline-strong);
+  }
+  .jn-bar-list::after {
+    content: ""; position: sticky; bottom: 0; display: block;
+    height: 28px; margin: -28px 0 0; pointer-events: none;
+    background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 0%, transparent), var(--bg));
+  }
+  .jn-bar-list[hidden] { display: none; }
+  .jn-bar-list .jn-nav-link { min-height: 44px; }
+
+  .jn-entries { padding: var(--s7) var(--edge) var(--s9); }
+  .jn-entry { scroll-margin-top: calc(var(--jn-top) + var(--jn-bar-h) + var(--s5)); }
+}
+
+/* ---------- An entry ----------------------------------------------------
+   Writing first: no boxes, a hairline between entries and plenty of air. */
+
+.jn-entry { outline: none; }
+.jn-entry + .jn-hold-block { margin-top: clamp(72px, 12vh, 128px); }
+.jn-entry + .jn-entry, .jn-entries .jn-hold-block + .jn-entry {
+  margin-top: clamp(72px, 12vh, 128px);
+  padding-top: clamp(56px, 9vh, 96px);
+  border-top: 1px solid var(--hairline);
+}
+.jn-entry-head { margin-bottom: clamp(28px, 4vh, 44px); }
+.jn-kicker {
+  margin: 0 0 var(--s4);
+  font: 400 var(--t-label)/16px var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-faint);
+}
+.jn-no { color: var(--text-dim); }
+.jn-entry.is-current .jn-no { color: var(--accent); }
+.jn-title {
+  margin: 0 0 var(--s3);
+  font: 500 var(--t-h2)/1.15 var(--sans); letter-spacing: -.015em;
+  color: var(--text);
+  text-wrap: balance;
+}
+.jn-title:lang(zh) { font-weight: 400; font-size: clamp(30px, 1.1vw + 18px, 38px); line-height: 1.3; }
+.jn-place {
+  margin: 0;
+  font: 400 var(--t-label)/18px var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-dim);
+}
+.jn-dot { color: var(--text-faint); }
+
+/* His paragraphs: a blank line between them in his file, a line break kept
+   where he made one (poems, dialogue), his indents kept. */
+.jn-p {
+  max-width: 38em; margin: 0 0 1.25em;
+  font: 400 17px/1.75 var(--sans); color: var(--text-body);
+  white-space: pre-wrap; overflow-wrap: break-word;
+  text-wrap: pretty;
+}
+/* Chinese: the site's pairing (American Typewriter + Song, from :lang(zh)
+   in site.css), a touch larger than About's, about 34 characters a line,
+   1.5em between paragraphs as on About (most of a line). Ragged right, as
+   a typewriter can't justify. */
+.jn-text:lang(zh) .jn-p, .jn-p:lang(zh) {
+  max-width: 36em; margin-bottom: 1.5em;
+  font-size: var(--jn-zh); line-height: 1.9;
+  text-align: start; hanging-punctuation: allow-end;
+  -webkit-font-smoothing: auto;
+}
+.jn-text > :last-child { margin-bottom: 0; }
+
+/* ---------- Media ---------------------------------------------------------
+   Rows of one to three frames at one height, each at its own shape (never
+   cropped); journal.js decides the rows (rowsFor) and sets --ar on a frame
+   and --s (the row's ratios added up) on a row. No row is taller than
+   --jn-cap: a lone upright stands centred, the column's full width never. */
+
+.jn-media {
+  display: flex; flex-direction: column; gap: var(--jn-gap);
+  margin: clamp(32px, 5vh, 48px) 0;
+}
+.jn-text > .jn-media:first-child { margin-top: 0; }
+.jn-row {
+  display: flex; align-items: flex-start; gap: var(--jn-gap);
+  width: 100%;
+  max-width: calc(var(--jn-cap) * var(--s, 1.5) + var(--jn-gap) * var(--gaps, 0));
+  margin-inline: auto;
+}
+.jn-cell { flex: var(--ar, 1.5) 1 0; min-width: 0; margin: 0; }
+.jn-frame {
+  position: relative; display: block; width: 100%;
+  aspect-ratio: var(--ar, 1.5);
+  padding: 0; border: 0; border-radius: 0;
+  background: var(--bg-raised);
+}
+.jn-frame img, .jn-frame video {
+  display: block; width: 100%; height: 100%; object-fit: contain;
+}
+.jn-open { cursor: zoom-in; --bk-len: 14px; --bk-inset: 8px; }
+.jn-open:hover { outline: 1px solid var(--tile-edge); outline-offset: -1px; }
+.jn-open:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.jn-cell.is-hold .jn-frame { display: flex; background: none; border: 1px dashed var(--hairline-strong); }
+.jn-caption {
+  margin: 10px 0 0;
+  font: 400 var(--t-ui)/1.6 var(--sans); color: var(--text-dim);
+  white-space: pre-wrap;
+}
+.jn-caption:lang(zh), .jn-text:lang(zh) .jn-caption { font-size: 14px; line-height: 1.75; }
+
+/* ---------- Chinese in the labels ------------------------------------------
+   The mono labels are 11px capitals; Song at 11px is too small to read, so
+   in Chinese they take About's 13px (the spans the readout's 北纬 / 西经 sit
+   in, and a whole label that turned Chinese). */
+:is(.jn-kicker, .jn-place, .jn-day-date, .jn-nav-place, .jn-readout, .jn-cover-month,
+    .jn-cover-dates, .jn-map-toggle, .jn-hold-label, .jn-bar-no) :is([lang|="zh"], [data-zh-run]),
+:is(.jn-kicker, .jn-place, .jn-day-date, .jn-nav-place, .jn-readout, .jn-cover-month,
+    .jn-cover-dates, .jn-map-toggle, .jn-hold-label, .jn-bar-no):lang(zh) { font-size: 13px; }
+.jn-cover-month:lang(zh), .jn-cover-dates:lang(zh) { font-size: 14px; }
+.jn-place:lang(zh), .jn-nav-place:lang(zh) { word-break: keep-all; }
+
+@media print {
+  .jn-panel, .jn-bar, .jn-cover-play { display: none !important; }
+  .jn-body { display: block; }
+  .jn-cover { height: auto; margin: 0; }
+}

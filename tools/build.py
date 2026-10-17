@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Scan images/ and regenerate data/photos.json + the per-collection pages.
+"""Scan images/ and regenerate data/photos.json + the per-collection pages
+(and each travel journal's media.json, the shapes of its media).
 
 Usage
 -----
@@ -32,6 +33,7 @@ automatically if unavailable).
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import os
 import re
@@ -146,6 +148,56 @@ def read_size(path):
             if head[:4] == b"RIFF" and head[8:12] == b"WEBP":
                 fh.seek(0)
                 return webp_size(fh.read(64))
+    except (OSError, struct.error, ValueError):
+        pass
+    return None
+
+
+def video_size(path):
+    """An MP4/QuickTime video's width and height as a browser shows it: the
+    first track with a picture (its tkhd), turned when its matrix turns it
+    (a phone's upright video is stored on its side). None if unreadable."""
+    try:
+        with open(path, "rb") as fh:
+            size = os.fstat(fh.fileno()).st_size
+
+            def boxes(start, end):
+                pos = start
+                while pos + 8 <= end:
+                    fh.seek(pos)
+                    head = fh.read(16)
+                    length, kind = struct.unpack(">I4s", head[:8])
+                    body = 8
+                    if length == 1:                  # a 64-bit size follows
+                        length, body = struct.unpack(">Q", head[8:16])[0], 16
+                    elif length == 0:                # runs to the end
+                        length = end - pos
+                    if length < body or pos + length > end:
+                        return
+                    yield kind, pos + body, pos + length
+                    pos += length
+
+            for kind, a, b in boxes(0, size):
+                if kind != b"moov":
+                    continue
+                for kind2, a2, b2 in boxes(a, b):
+                    if kind2 != b"trak":
+                        continue
+                    for kind3, a3, b3 in boxes(a2, b2):
+                        if kind3 != b"tkhd":
+                            continue
+                        fh.seek(a3)
+                        data = fh.read(min(b3 - a3, 96))
+                        at = 88 if data[:1] == b"\x01" else 76    # version 1 has 64-bit times
+                        if len(data) < at + 8:
+                            continue
+                        w, h = (v >> 16 for v in struct.unpack(">II", data[at:at + 8]))   # 16.16
+                        if not w or not h:
+                            continue                          # a sound track
+                        ma, mb = struct.unpack(">ii", data[at - 36:at - 28])
+                        if ma == 0 and mb != 0:               # turned a quarter
+                            w, h = h, w
+                        return w, h
     except (OSError, struct.error, ValueError):
         pass
     return None
@@ -434,10 +486,13 @@ def load_collections():
 # from an edit that didn't work, and you lose a round trip finding that out.
 # Every page therefore links its assets with ?v=<hash of the file>, so the URL
 # changes whenever the file does and no cache can hold the old one. The root
-# pages are hand-written, so their existing stamps are rewritten in place
-# rather than regenerated.
+# pages and the journal pages (journals/<trip>/index.html, which link
+# ../../assets/x?v=) are hand-written, so their existing stamps are rewritten
+# in place rather than regenerated. A page only gets a stamp it already has a
+# link for.
 
-ASSETS = ("site.css", "site.js", "edit.js", "globe.css", "globe.js")
+ASSETS = ("site.css", "site.js", "edit.js", "globe.css", "globe.js",
+          "journal.css", "journal.js", "journal-map.css", "journal-map.js")
 
 
 def asset_stamps():
@@ -454,9 +509,15 @@ def asset_stamps():
 
 
 def stamp_root_pages(stamps):
-    """Refresh ?v= on the hand-written pages. Returns how many changed."""
+    """Refresh ?v= on the hand-written pages: the five at the root and every
+    journal's page. Returns how many changed."""
     changed = 0
-    for page in ("index.html", "work.html", "projects.html", "about.html", "contact.html"):
+    pages = ["index.html", "work.html", "projects.html", "about.html", "contact.html"]
+    journals = os.path.join(ROOT, "journals")
+    if os.path.isdir(journals):
+        pages += sorted(os.path.join("journals", d, "index.html") for d in os.listdir(journals)
+                        if not d.startswith((".", "_")))
+    for page in pages:
         path = os.path.join(ROOT, page)
         if not os.path.exists(path):
             continue
@@ -464,8 +525,10 @@ def stamp_root_pages(stamps):
             html = fh.read()
         new = html
         for name, digest in stamps.items():
+            # Only a link's own path (after a quote or a slash), never a
+            # mention of the file in a comment.
             new = re.sub(
-                r"(assets/" + re.escape(name) + r")(\?v=[0-9a-f]+)?",
+                r"(?<=[\"'/])(assets/" + re.escape(name) + r")(\?v=[0-9a-f]+)?",
                 r"\1?v=" + digest, new)
         if new != html:
             with open(path, "w", encoding="utf-8") as fh:
@@ -578,6 +641,72 @@ def collect(make_thumbs=True):
     return seen + fresh
 
 
+# --------------------------------------------------------------------------
+# A travel journal's media: their shapes (journals/<trip>/media.json)
+# --------------------------------------------------------------------------
+# The width and height of every photograph, video and poster a journal
+# shows, so assets/journal.js gives each frame its shape before the file
+# arrives: the page doesn't shift as they come in, and a jump to an entry
+# lands where it was aimed. The files are the ones tools/upload.py reads for
+# the journal (its cover, and each listed entry's @photo, @video and
+# poster). A file missing on this machine keeps the shape it had.
+
+def journal_shapes(folder):
+    """Write <folder>/media.json for the journal in `folder`. Returns the
+    number of shapes it holds and whether the file changed."""
+    spec = importlib.util.spec_from_file_location("site_upload", os.path.join(ROOT, "tools", "upload.py"))
+    upload = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(upload)
+    name = os.path.relpath(os.path.join(folder, "journal.json"), ROOT)
+    out = os.path.join(folder, "media.json")
+    try:
+        with open(out, "r", encoding="utf-8") as fh:
+            old = json.load(fh).get("sizes") or {}
+    except (OSError, ValueError, AttributeError):
+        old = {}
+    sizes = {}
+    for key in upload.trip_media(folder, name):
+        if key in sizes or key.startswith("/") or ".." in key:
+            continue
+        path = os.path.join(ROOT, key)
+        size = None
+        if os.path.isfile(path):
+            if key.lower().endswith((".mp4", ".m4v", ".mov")):
+                size = video_size(path)
+            else:
+                size = read_size(path)
+                if size and read_exif(path).get("orientation") in (5, 6, 7, 8):
+                    size = (size[1], size[0])             # shown turned, as browsers do
+        if size and size[0] and size[1]:
+            sizes[key] = [int(size[0]), int(size[1])]
+        elif isinstance(old.get(key), list):
+            sizes[key] = old[key]
+    rows = ["    {}: [{}, {}]".format(json.dumps(k, ensure_ascii=False), *v) for k, v in sizes.items()]
+    text = '{\n  "sizes": {' + ("\n" + ",\n".join(rows) + "\n  " if rows else "") + "}\n}\n"
+    try:
+        with open(out, "r", encoding="utf-8") as fh:
+            if fh.read() == text:
+                return len(sizes), False
+    except OSError:
+        pass
+    with open(out, "w", encoding="utf-8") as fh:
+        fh.write(text)
+    return len(sizes), True
+
+
+def all_journal_shapes():
+    """journal_shapes() for every journals/<trip>/; a line for the report."""
+    root = os.path.join(ROOT, "journals")
+    done = []
+    if os.path.isdir(root):
+        for trip in sorted(os.listdir(root)):
+            folder = os.path.join(root, trip)
+            if os.path.isfile(os.path.join(folder, "journal.json")):
+                n, changed = journal_shapes(folder)
+                done.append("{} {}{}".format(trip, n, " (written)" if changed else ""))
+    return ", ".join(done) or "none"
+
+
 def main():
     ap = argparse.ArgumentParser(description="Rebuild data/photos.json from images/")
     ap.add_argument("--no-thumbs", action="store_true", help="skip thumbnails (also drops variants from photos.json; do not commit)")
@@ -626,6 +755,7 @@ def main():
     print("photos.json: {} photograph(s) — {}".format(
         len(photos), ", ".join("{} {}".format(v, k) for k, v in sorted(counts.items()))))
     print("collection pages: {} written, {} unchanged".format(pages, len(collections) - pages))
+    print("journal media shapes: " + all_journal_shapes())
     print("asset stamps: {} — {} root page(s) restamped".format(
         " ".join("{}={}".format(k, v) for k, v in sorted(stamps.items())), roots))
     if orphans:

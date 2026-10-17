@@ -923,6 +923,9 @@ body[data-page="globe"] .nav-menu-list { border-top: 1px solid var(--hairline); 
 .lb-prev  { left: 0;  padding-right: var(--lb-over); --bk-inset: 0 var(--lb-over) 0 0; }
 .lb-next  { right: 0; padding-left:  var(--lb-over); --bk-inset: 0 0 0 var(--lb-over); }
 
+/* One photograph alone (a journal entry's): nothing to step to. */
+.lightbox.is-single .lb-nav { display: none; }
+
 body.lb-open { overflow: hidden; }
 
 /* ---------- Responsive ---------------------------------------------------- */

@@ -16,8 +16,12 @@ script reads too, so the address is written down in exactly one place. The
 local preview still reads images/ on disk.
 
 The files are exactly the ones the site asks for: every photograph's original
-and smaller widths in data/photos.json, and any collection `cover` in
-data/collections.json. So run tools/build.py first.
+and smaller widths in data/photos.json, any collection `cover` in
+data/collections.json, and the travel journals' own photographs and videos
+(journals/<trip>/journal.json's cover and poster, and the @photo and @video
+lines, with a video's poster, in each entry it lists). So run tools/build.py
+first. Every file must sit under images/ (images/ is kept out of git), and be
+a type the site serves: JPEG, PNG, WebP, SVG, or MP4/MOV/M4V video.
 
 "In R2" means R2 answers a HEAD for the file's public URL with an ETag equal
 to the local file's MD5: the same bytes, not merely the same name. Files that
@@ -31,8 +35,10 @@ Uploads go through Cloudflare's own `wrangler` CLI, signed in once with
 token is stored in this repo or handled by this script.
 
 The GPS check from tools/import.py runs again on every file before it leaves
-the machine. Precise locations for nests, roosts and rarities must not be
-published; pass --allow-gps only for a photograph meant to carry them.
+the machine, and a video is refused if it says where it was filmed (phones
+write that into the file; see video_location()). Precise locations for nests,
+roosts and rarities must not be published; pass --allow-gps only for a file
+meant to carry them.
 
 Standard library only, plus wrangler (via npx) for uploading.
 """
@@ -43,10 +49,12 @@ import http.client
 import importlib.util
 import json
 import os
+import posixpath
 import re
 import shlex
 import shutil
 import subprocess
+import struct
 import sys
 import threading
 import time
@@ -58,6 +66,7 @@ from concurrent.futures import ThreadPoolExecutor
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MANIFEST = os.path.join(ROOT, "data", "photos.json")
 COLLECTIONS = os.path.join(ROOT, "data", "collections.json")
+JOURNALS = os.path.join(ROOT, "journals")
 SITE_JS = os.path.join(ROOT, "assets", "site.js")
 RECORD = os.path.join(ROOT, ".r2-uploaded.json")
 
@@ -65,8 +74,11 @@ BUCKET = "newton-liu-photos"
 # A day in browsers. A photograph replaced under the same name can therefore
 # show its old version for up to a day to someone who has already seen it.
 CACHE_CONTROL = "public, max-age=86400"
+# Also the types the site serves at all: anything else is refused up front.
 CONTENT_TYPES = {".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png",
-                 ".webp": "image/webp", ".svg": "image/svg+xml"}
+                 ".webp": "image/webp", ".svg": "image/svg+xml",
+                 ".mp4": "video/mp4", ".m4v": "video/mp4", ".mov": "video/quicktime"}
+VIDEO_TYPES = (".mp4", ".m4v", ".mov")
 
 # Cloudflare's API allows about 1,200 requests per five minutes, and each
 # upload is a handful of them, so uploads go three at a time. The public
@@ -102,7 +114,88 @@ def public_base():
     return m.group(1)
 
 
-def referenced(manifest, collections):
+def media_path(path):
+    """A media path as the journal page reads it (journal.js cleanPath):
+    from the repo's root, a leading "./" dropped."""
+    path = path.strip()
+    return path[2:] if path.startswith("./") else path
+
+
+def entry_media(text):
+    """The files one journal entry (journals/<trip>/entries/<id>.txt) shows,
+    read the way assets/journal.js parseEntry() reads it: the path on each
+    line of the body that starts "@photo" or "@video" in its first column,
+    and a video's "poster <path>". Placeholders ask for nothing; "\\@"
+    starts a paragraph. The lines above the first --- are the head only if
+    each is a "key: value" line; otherwise the whole file is the body."""
+    lines = re.sub(r"\r\n?", "\n", text).split("\n")
+    for i, line in enumerate(lines):
+        if line.strip() != "---":
+            continue
+        if all(not l.strip() or re.match(r"\s*[A-Za-z]+\s*:", l) for l in lines[:i]):
+            lines = lines[i + 1:]
+        break
+    keys = []
+    for line in lines:
+        m = re.match(r"@(photo|video)(?:\s+(.*))?$", line.rstrip(" \t"))
+        if not m:
+            continue
+        parts = [part.strip() for part in (m.group(2) or "").split("|")]
+        keys.append(media_path(parts[0]))
+        if m.group(1) == "video":
+            for part in parts[1:]:
+                poster = re.match(r"poster\s+(.+)$", part, re.I)
+                if poster:
+                    keys.append(media_path(poster.group(1)))
+                    break
+    return keys
+
+
+def journal_media(journals):
+    """Every file the travel journals ask for: for each journals/<trip>/
+    journal.json, its cover (`src`, and a video cover's `poster`) and the
+    media in each entry it lists. A journal.json that can't be read stops
+    everything, because its page is broken too."""
+    keys = []
+    if not os.path.isdir(journals):
+        return keys
+    for trip in sorted(os.listdir(journals)):
+        folder = os.path.join(journals, trip)
+        if os.path.isfile(os.path.join(folder, "journal.json")):
+            keys.extend(trip_media(folder, "journals/{}/journal.json".format(trip)))
+    return keys
+
+
+def trip_media(folder, name):
+    """The files one journal asks for (a folder holding journal.json and
+    entries/; `name` is how its journal.json is called in a message). Also
+    read by tools/build.py, which records their shapes in the folder's
+    media.json."""
+    keys = []
+    try:
+        with open(os.path.join(folder, "journal.json"), "r", encoding="utf-8") as fh:
+            journal = json.load(fh)
+    except (OSError, ValueError) as exc:
+        sys.exit("Couldn't read {}: {}".format(name, exc))
+    cover = journal.get("cover") or {}
+    if isinstance(cover, dict) and cover.get("type") in ("photo", "video"):
+        keys.append(cover.get("src"))
+        if cover.get("type") == "video":
+            keys.append(cover.get("poster"))
+    for eid in journal.get("entries") or []:
+        # The page skips an id that isn't a plain name, so it shows nothing.
+        if not isinstance(eid, str) or not re.match(r"[A-Za-z0-9][A-Za-z0-9_-]*$", eid):
+            continue
+        entry = os.path.join(folder, "entries", eid + ".txt")
+        try:
+            with open(entry, "r", encoding="utf-8-sig") as fh:
+                keys.extend(entry_media(fh.read()))
+        except OSError:
+            continue                     # listed but not written yet: nothing to show
+    return [media_path(k) for k in keys if isinstance(k, str) and k.strip()]
+
+
+def referenced(manifest, collections, journals=JOURNALS):
     """Every file the site asks for, in order, without repeats."""
     with open(manifest, "r", encoding="utf-8") as fh:
         photos = json.load(fh).get("photos", [])
@@ -116,8 +209,102 @@ def referenced(manifest, collections):
             keys.extend(c.get("cover") for c in json.load(fh).get("collections", []))
     except (OSError, ValueError):
         pass
+    keys.extend(journal_media(journals))
     seen = set()
     return [k for k in keys if k and not (k in seen or seen.add(k))]
+
+
+# --------------------------------------------------------------------------
+# Where a file was made. A JPEG's EXIF GPS is tools/import.py's check. A
+# video says where it was filmed in its metadata: iPhones write
+# com.apple.quicktime.location.ISO6709, Android phones a ©xyz atom, both in
+# the moov box; some cameras write XMP GPS fields or a GPS track (GoPro's
+# gpmd, DJI's djmd). A video that can't be read is refused too: nothing
+# leaves the machine unchecked.
+
+# Searched for in every top-level box but the media data (mdat), whose
+# compressed frames would match four bytes by chance now and then.
+VIDEO_BOX_SIGNS = (
+    (b"\xa9xyz", "a location (the ©xyz atom phones write)"),
+    (b"loci", "a location (a 3GPP loci box)"),
+    (b"gpmd", "a GPS track (GoPro gpmd)"),
+    (b"djmd", "a flight record with GPS (DJI djmd)"),
+    (b"camm", "a camera-motion track, which can carry GPS (camm)"),
+)
+# Long enough to search the whole file for, the media data included (a
+# subtitle track of GPS readings lives there).
+VIDEO_TEXT_SIGNS = (
+    (b"com.apple.quicktime.location", "a location (com.apple.quicktime.location.ISO6709, as iPhones write it)"),
+    (b"GPSLatitude", "GPS coordinates (GPSLatitude, in its XMP or EXIF)"),
+    (b"GPSCoordinates", "GPS coordinates (GPSCoordinates)"),
+    (b"ExifGPS", "GPS coordinates (ExifGPS)"),
+    (b"[latitude", "GPS readings in a subtitle track"),
+)
+
+
+def scan(fh, start, end, signs):
+    """The first of `signs` found in bytes start..end of the file, or None."""
+    keep = max(len(sign) for sign, _ in signs) - 1
+    fh.seek(start)
+    tail = b""
+    pos = start
+    while pos < end:
+        block = fh.read(min(8 << 20, end - pos))
+        if not block:
+            break
+        pos += len(block)
+        buf = tail + block
+        for sign, what in signs:
+            if sign in buf:
+                return what
+        tail = buf[-keep:]
+    return None
+
+
+def video_location(path):
+    """Why this video can't be published (it says where it was filmed, or it
+    can't be read as MP4/QuickTime), or None if it is fine."""
+    try:
+        size = os.path.getsize(path)
+        with open(path, "rb") as fh:
+            boxes, pos = [], 0
+            while pos < size:
+                fh.seek(pos)
+                head = fh.read(16)
+                if len(head) < 8:
+                    return "isn't a complete MP4/QuickTime file"
+                length, kind = struct.unpack(">I4s", head[:8])
+                body = 8
+                if length == 1:              # a 64-bit size follows
+                    if len(head) < 16:
+                        return "isn't a complete MP4/QuickTime file"
+                    length, body = struct.unpack(">Q", head[8:16])[0], 16
+                elif length == 0:            # runs to the end of the file
+                    length = size - pos
+                if length < body or pos + length > size:
+                    return "isn't a readable MP4/QuickTime file"
+                boxes.append((kind, pos + body, pos + length))
+                pos += length
+            if not any(kind == b"moov" for kind, _, _ in boxes):
+                return "isn't a complete MP4/QuickTime file (no moov box)"
+            for kind, a, b in boxes:
+                if kind != b"mdat":
+                    found = scan(fh, a, b, VIDEO_BOX_SIGNS + VIDEO_TEXT_SIGNS)
+                    if found:
+                        return "carries " + found
+            found = scan(fh, 0, size, VIDEO_TEXT_SIGNS)
+            if found:
+                return "carries " + found
+    except OSError as exc:
+        return "couldn't be read ({})".format(exc)
+    return None
+
+
+def location_problem(path, has_gps):
+    """Why this file can't be published as it is, or None."""
+    if os.path.splitext(path)[1].lower() in VIDEO_TYPES:
+        return video_location(path)
+    return "carries GPS coordinates" if has_gps(path) else None
 
 
 def md5_of(path):
@@ -320,13 +507,33 @@ def main():
     mode.add_argument("--download", action="store_true",
                       help="fetch files missing from images/ back from R2")
     ap.add_argument("--allow-gps", action="store_true",
-                    help="upload photographs that carry GPS coordinates")
+                    help="upload photographs and videos that carry a location")
     ap.add_argument("--manifest", default=MANIFEST, help=argparse.SUPPRESS)
     ap.add_argument("--collections", default=COLLECTIONS, help=argparse.SUPPRESS)
+    ap.add_argument("--journals", default=JOURNALS, help=argparse.SUPPRESS)
     args = ap.parse_args()
 
     base = public_base()
-    keys = referenced(args.manifest, args.collections)
+    keys = referenced(args.manifest, args.collections, args.journals)
+
+    # A journal's media paths are typed by hand: each must be a plain path
+    # from the repo's root into images/ (gitignored, so it stays out of git)...
+    astray = [k for k in keys if not k.startswith("images/") or posixpath.normpath(k) != k]
+    if astray:
+        print("These paths aren't files under images/, written from the repo's root "
+              "(like images/_journals/quebec/IMG_0001.jpg). Fix them where they are written:")
+        for key in astray[:20]:
+            print("  " + key)
+        return 1
+    # ... and a type the site serves.
+    odd = [k for k in keys if os.path.splitext(k)[1].lower() not in CONTENT_TYPES]
+    if odd:
+        print("These aren't a type the site serves ({}). Export a photograph as JPEG "
+              "and a video as H.264 MP4:".format(" ".join(sorted(CONTENT_TYPES))))
+        for key in odd[:20]:
+            print("  " + key)
+        return 1
+
     absent = [k for k in keys if not os.path.isfile(os.path.join(ROOT, k))]
 
     if args.download:
@@ -361,7 +568,8 @@ def main():
                 print("  " + key)
             if any(answers[k][0] == 0 for k in lost):
                 print("(R2 couldn't be reached for some of them; the network may be down.)")
-            print("Run tools/build.py if photographs were removed on purpose, or re-import them.")
+            print("Run tools/build.py if photographs were removed on purpose, or re-import them "
+                  "(a journal's: fix the entry or journal.json that names them).")
             return 1
 
     absent_set = set(absent)
@@ -406,13 +614,16 @@ def main():
 
     if not args.allow_gps:
         has_gps = load_has_gps()
-        located = [k for k in need if has_gps(os.path.join(ROOT, k))]
+        problems = [(k, location_problem(os.path.join(ROOT, k), has_gps)) for k in need]
+        located = [(k, why) for k, why in problems if why]
         if located:
-            print("Refusing to upload {} file(s) carrying GPS coordinates:".format(len(located)))
-            for key in located[:20]:
-                print("  " + key)
+            print("Refusing to upload {} file(s) that carry a location or can't be checked:".format(
+                len(located)))
+            for key, why in located[:20]:
+                print("  {}: {}".format(key, why))
             print("Re-export them without location data (Lightroom: Export > Metadata > "
-                  "Remove Location Info), or pass --allow-gps if they are meant to be public.")
+                  "Remove Location Info; a video: e.g. ffmpeg -i in.mov -map_metadata -1 "
+                  "-c copy out.mp4), or pass --allow-gps if they are meant to be public.")
             return 1
 
     total = sum(os.path.getsize(os.path.join(ROOT, k)) for k in need)

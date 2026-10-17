@@ -1,0 +1,9 @@
+title: 法语
+date:
+time:
+place:
+where:
+---
+@placeholder text | 正文待补 (Newton will send)
+
+@placeholder photo | 照片待补 (Newton will send)

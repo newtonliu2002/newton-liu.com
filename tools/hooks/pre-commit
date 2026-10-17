@@ -9,7 +9,11 @@
 # 2. The About and Projects images do go into public history, so no GPS in
 #    them (the check reads JPEG EXIF; the Projects screenshots are WebP).
 # 3. No data/photos.json or data/collections.json pointing at files R2
-#    doesn't have yet: the live site would show them as broken images.
+#    doesn't have yet: the live site would show them as broken images. The
+#    same for a travel journal (journals/<trip>/journal.json and its
+#    entries/), whose photographs and videos are in R2 too.
+# 4. No photographs or videos inside journals/: a journal's own media go in
+#    images/_journals/<trip>/ (gitignored) and up to R2 with upload.py.
 
 cd "$(git rev-parse --show-toplevel)" || exit 1
 
@@ -22,6 +26,14 @@ if [ -n "$stray" ]; then
   echo "pre-commit: image files are staged, but photographs don't go in git:" >&2
   echo "$stray" | head -10 | sed 's/^/  /' >&2
   echo "Unstage them (git restore --staged images) and run python3 tools/upload.py." >&2
+  exit 1
+fi
+
+media=$(staged -- journals | grep -iE '\.(jpe?g|png|webp|gif|heic|heif|avif|tiff?|mp4|m4v|mov|avi|webm)$')
+if [ -n "$media" ]; then
+  echo "pre-commit: photographs or videos are staged inside journals/, but they don't go in git:" >&2
+  echo "$media" | head -10 | sed 's/^/  /' >&2
+  echo "Unstage them, move them to images/_journals/<trip>/ and run python3 tools/upload.py." >&2
   exit 1
 fi
 
@@ -38,16 +50,19 @@ sys.exit(1 if bad else 0)
 ' || exit 1
 fi
 
-if git diff --cached --name-only | grep -qxE 'data/(photos|collections)\.json'; then
-  # Check the versions being committed, not whatever is in the working tree.
+if git diff --cached --name-only | grep -qxE 'data/(photos|collections)\.json|journals/[^/]+/journal\.json|journals/[^/]+/entries/.+'; then
+  # Check the versions being committed, not whatever is in the working tree:
+  # the two data files, and the journals as they are in the index.
   tmp=$(mktemp -d) || exit 1
   git show :data/photos.json > "$tmp/photos.json" 2>/dev/null
   git show :data/collections.json > "$tmp/collections.json" 2>/dev/null
-  python3 tools/upload.py --check --manifest "$tmp/photos.json" --collections "$tmp/collections.json"
+  git ls-files -z -- journals | git checkout-index -z --stdin --prefix="$tmp/" || { rm -rf "$tmp"; exit 1; }
+  python3 tools/upload.py --check --manifest "$tmp/photos.json" --collections "$tmp/collections.json" \
+    --journals "$tmp/journals"
   status=$?
   rm -rf "$tmp"
   if [ $status -ne 0 ]; then
-    echo "pre-commit: run  python3 tools/upload.py  first, then commit again." >&2
+    echo "pre-commit: fix what upload.py reported above (usually: run  python3 tools/upload.py  first), then commit again." >&2
     exit 1
   fi
 fi

@@ -1,0 +1,167 @@
+/* ==========================================================================
+   newton-liu.com — a travel journal's route map (assets/journal-map.js),
+   on top of site.css and journal.css.
+
+   Only jm-* classes, all inside .jm, which journal-map.js puts in the
+   page's map box (.jn-map, sized by journal.css) and which fills it. The
+   pins, labels and credit are the globe's (globe.css .g-pin, .g-pin-label,
+   the attribution), at panel size. Colours are site.css tokens, or, for
+   what is drawn over the map, the --jm-* colours just below; the map's own
+   are PALETTE in journal-map.js, and the two must agree.
+   ========================================================================== */
+
+.jm {
+  --jm-land:      #161616;                 /* PALETTE.black.land: the box before the tiles, and the plain drawing */
+  --jm-ink:       #fff;                    /* full strength: a pin pointed at, focused or lit */
+  --jm-pin:       rgba(242,242,242,.85);   /* a pin's crosshair */
+  --jm-pin-quiet: rgba(242,242,242,.4);    /* a place with nothing to read */
+  --jm-route:     rgba(255,255,255,.42);   /* PALETTE.black.route: the road still to come */
+  --jm-label-bg:  rgba(5,5,5,.7);          /* behind a place's name */
+  --jm-attrib-bg: rgba(5,5,5,.78);         /* behind the map credits */
+  position: relative; width: 100%; height: 100%; overflow: hidden; background: var(--jm-land);
+}
+:root[data-theme="light"] .jm {
+  --jm-land:      #dededa;
+  --jm-ink:       #000;
+  --jm-pin:       rgba(27,28,32,.85);
+  --jm-pin-quiet: rgba(27,28,32,.45);
+  --jm-route:     rgba(0,0,0,.42);
+  --jm-label-bg:  rgba(244,244,242,.8);
+  --jm-attrib-bg: rgba(244,244,242,.85);
+}
+.jm-stage, .jm-pins { position: absolute; inset: 0; }
+.jm-pins { pointer-events: none; }
+.jm-pins > * { pointer-events: auto; }
+
+/* The mono labels: names, credit, list dates, zoom buttons. */
+.jm-pin-label, .jm .maplibregl-ctrl-attrib, .jm-credit, .jm-item-date, .jm-zoom-btn {
+  margin: 0; font: 400 var(--t-label)/16px var(--mono); letter-spacing: .14em; text-transform: uppercase;
+}
+
+/* ---------- Pins: the globe's crosshair -------------------------------
+   1px arms round a 4px gap and a 2px dot, in a 28px hit area (44px on a
+   touch screen). MapLibre owns the root's position and transform, so the
+   drawing sits in children placed round --c, the hit area's centre. Lit
+   (the entry being read): the dot and closing corner brackets in the
+   accent. A place with nothing to read is a smaller, fainter mark that
+   can't be clicked. */
+
+.jm-pin {
+  position: absolute; left: 0; top: 0; display: block; width: 28px; height: 28px; margin: 0; padding: 0;
+  border: 0; border-radius: 0; background: none; color: inherit; font: inherit; cursor: pointer; --c: 14px;
+  -webkit-tap-highlight-color: transparent;
+}
+@media (pointer: coarse) { .jm-pin { width: 44px; height: 44px; --c: 22px; } }
+.jm-pins .jm-pin { margin: calc(-1 * var(--c)) 0 0 calc(-1 * var(--c)); }   /* the plain drawing places the centre */
+.jm-pin i { position: absolute; display: block; pointer-events: none; }
+.jm-pin-x {
+  left: calc(var(--c) - 7.5px); top: calc(var(--c) - 7.5px); width: 15px; height: 15px;
+  --k: var(--jm-pin); --dot: var(--k); --a: 3.5px;
+  background: linear-gradient(var(--k) 0 0) 7px calc(5.5px - var(--a)) / 1px var(--a),
+    linear-gradient(var(--k) 0 0) 7px 9.5px / 1px var(--a), linear-gradient(var(--k) 0 0) calc(5.5px - var(--a)) 7px / var(--a) 1px,
+    linear-gradient(var(--k) 0 0) 9.5px 7px / var(--a) 1px, linear-gradient(var(--dot) 0 0) 6.5px 6.5px / 2px 2px;
+  background-repeat: no-repeat;
+}
+.jm-pin:hover .jm-pin-x, .jm-pin:focus-visible .jm-pin-x, .jm-pin.is-open .jm-pin-x, .jm-pin.is-active .jm-pin-x { --k: var(--jm-ink); --a: 5px; }
+.jm-pin.is-active .jm-pin-x { --dot: var(--accent); }
+.jm-pin.is-quiet { cursor: default; pointer-events: none; }
+.jm-pin.is-quiet .jm-pin-x { --k: var(--jm-pin-quiet); --a: 2px; }
+.jm-pin:hover, .jm-pin:focus-visible, .jm-pin.is-open { z-index: 3; }
+.jm-pin.is-active { z-index: 2; }
+.jm-pin:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; }
+
+/* Corner brackets, site.css's .bk at pin scale: on the lit pin only. */
+.jm-pin-af {
+  left: calc(var(--c) - 10px); top: calc(var(--c) - 10px); width: 20px; height: 20px; opacity: 0;
+  --l: 6px; --w: 1.5px; --bc: var(--accent);
+  background: linear-gradient(var(--bc) 0 0) 0 0 / var(--l) var(--w), linear-gradient(var(--bc) 0 0) 0 0 / var(--w) var(--l),
+    linear-gradient(var(--bc) 0 0) 100% 0 / var(--l) var(--w), linear-gradient(var(--bc) 0 0) 100% 0 / var(--w) var(--l),
+    linear-gradient(var(--bc) 0 0) 0 100% / var(--l) var(--w), linear-gradient(var(--bc) 0 0) 0 100% / var(--w) var(--l),
+    linear-gradient(var(--bc) 0 0) 100% 100% / var(--l) var(--w), linear-gradient(var(--bc) 0 0) 100% 100% / var(--w) var(--l);
+  background-repeat: no-repeat;
+  transition: opacity var(--d-base) var(--ease);
+}
+.jm-pin.is-active .jm-pin-af { opacity: 1; animation: jm-af var(--d-base) var(--ease-out) both; }
+@keyframes jm-af { from { left: calc(var(--c) - 16px); top: calc(var(--c) - 16px); width: 32px; height: 32px; opacity: 0; } }
+
+/* A place's name: right of the pin, else left, above or below (the side
+   is journal-map.js's layout()); none where it would cover another. */
+.jm-pin-label {
+  position: absolute; left: calc(var(--c) + 11px); top: var(--c); transform: translateY(-50%);
+  padding: 2px 6px; white-space: nowrap; text-align: left; background: var(--jm-label-bg); color: var(--text-dim);
+  pointer-events: none; visibility: hidden; opacity: 0;
+  transition: opacity var(--d-base) var(--ease), visibility 0s var(--d-base), color var(--d-base) var(--ease);
+}
+.jm-pin.has-label .jm-pin-label { visibility: visible; opacity: 1; transition: opacity var(--d-base) var(--ease), visibility 0s, color var(--d-base) var(--ease); }
+.jm-pin.is-left .jm-pin-label { left: auto; right: calc(100% - var(--c) + 11px); text-align: right; }
+.jm-pin.is-up .jm-pin-label, .jm-pin.is-down .jm-pin-label { left: calc(var(--c) + var(--dx, 0px)); text-align: center; }
+.jm-pin.is-up .jm-pin-label { top: calc(var(--c) - 10px); transform: translate(-50%, -100%); }
+.jm-pin.is-down .jm-pin-label { top: calc(var(--c) + 10px); transform: translateX(-50%); }
+.jm-pin:hover .jm-pin-label, .jm-pin:focus-visible .jm-pin-label { color: var(--text); }
+.jm-pin.is-active .jm-pin-label { color: var(--accent); }
+/* A Chinese name: site.css's 13px for Chinese labels, its own face. */
+.jm-pin-label:lang(zh) { font-size: 13px; letter-spacing: .05em; }
+
+/* ---------- The list beside a pin with several entries ---------------- */
+
+.jm-list {
+  position: absolute; z-index: 4; min-width: 150px; max-width: min(240px, calc(100% - 16px));
+  background-color: var(--panel); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border: 1px solid var(--hairline); animation: jm-fade var(--d-fast) var(--ease) both;
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .jm-list { background-color: var(--panel-solid); } }
+@media (prefers-reduced-transparency: reduce) { .jm-list { background-color: var(--panel-solid); } }
+@keyframes jm-fade { from { opacity: 0; } }
+.jm-list ul { list-style: none; margin: 0; padding: 4px 0; }
+.jm-item {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px; width: 100%; min-height: 36px;
+  margin: 0; padding: 8px 12px; border: 0; border-radius: 0; background: none; text-align: left; cursor: pointer;
+  font: 400 var(--t-ui)/1.35 var(--sans); color: var(--text-body); transition: background-color var(--d-fast) var(--ease), color var(--d-fast) var(--ease);
+}
+@media (pointer: coarse) { .jm-item { min-height: 44px; } }
+.jm-item:hover { background-color: var(--wash); color: var(--text); }
+.jm-item:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; color: var(--text); }
+.jm-item-title { min-width: 0; overflow-wrap: anywhere; }
+.jm-item-date { flex: none; color: var(--text-faint); }
+
+/* ---------- Zoom: two small squares, top left (a trip running south-west
+   to north-east leaves that corner free) --------------------------------- */
+
+.jm-zoom { position: absolute; z-index: 2; top: 8px; left: 8px; display: flex; flex-direction: column; }
+.jm-zoom-btn {
+  display: grid; place-items: center; width: 28px; height: 28px; margin: 0; padding: 0; cursor: pointer;
+  border: 1px solid var(--hairline); border-radius: 0; color: var(--text-dim); letter-spacing: 0; font-size: 14px;
+  background-color: var(--panel); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  transition: color var(--d-fast) var(--ease), background-color var(--d-fast) var(--ease);
+}
+.jm-zoom-btn + .jm-zoom-btn { border-top: 0; }
+@media (pointer: coarse) { .jm-zoom-btn { width: 44px; height: 44px; } }   /* a finger's 44px; on a phone the minus is how the whole trip comes back */
+.jm-zoom-btn:hover { color: var(--text); background-color: var(--panel-solid); }
+.jm-zoom-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; color: var(--text); }
+
+/* ---------- The credits: always shown, never collapsed ----------------- */
+
+.jm .maplibregl-ctrl-bottom-right { max-width: 100%; }
+.jm .maplibregl-ctrl-attrib, .jm-credit {
+  margin: 0 !important; padding: 2px 6px; letter-spacing: 0; text-transform: none; color: var(--text-faint);
+  background: var(--jm-attrib-bg); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.jm .maplibregl-ctrl-attrib-inner { line-height: 16px; }
+.jm .maplibregl-ctrl-attrib a, .jm-credit a { color: inherit; text-decoration: none; white-space: nowrap; }
+.jm .maplibregl-ctrl-attrib a:hover, .jm-credit a:hover { color: var(--text-dim); text-decoration: underline; }
+.jm-credit { position: absolute; z-index: 2; right: 0; bottom: 0; }
+/* On a touch screen each link answers a finger over about 24px, not just
+   its 14px line (an inline box's padding takes the tap, not the space). */
+@media (pointer: coarse) { .jm .maplibregl-ctrl-attrib a, .jm-credit a { padding-block: 5px; } }
+
+/* ---------- The plain drawing: the road on the bare ground ------------- */
+
+.jm-plain { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.jm-plain polyline { fill: none; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.jm-plain-route { stroke: var(--jm-route); stroke-width: 1.25; }
+.jm-plain-travelled { stroke: var(--accent); stroke-width: 2; }
+
+@media (prefers-reduced-motion: reduce) {
+  .jm-pin.is-active .jm-pin-af, .jm-list { animation: none; }
+  .jm-pin-label, .jm-pin-af { transition: none; }
+}

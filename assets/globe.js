@@ -30,7 +30,7 @@
   var LABELS = {
     tour: "Tour", tourTip: "Tour",
     overview: "Back to overview", overviewTip: "Overview",
-    view: "View collection", arrow: "→", prev: "‹", next: "›", close: "×",
+    view: "View collection", journal: "Journal", arrow: "→", prev: "‹", next: "›", close: "×",
     written: "With writing", writtenSr: ", with writing",
     index: "Index", load: "Load globe",
     unavailable: "Globe unavailable. The collections are listed here.",
@@ -84,6 +84,9 @@
   // pins, road, row or card (Newton, 2026-10-16, until the photographs come).
   // Take a slug out to bring it back. Quebec waits on the globe as usual.
   var HIDE_WAITING = ["morocco", "rio-grande"];
+  // The local preview (tools/serve.py) shows a travel journal still in draft
+  // (places.json `journal`, `draft: true`); the live site only once it is out.
+  var LOCAL = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
   var SPIN_RESUME = 1000, SPIN_RAMP = 800;
   var HOVER_DELAY = 120, TURN_DELAY = 450;
   var DWELL = 6000, DWELL_REDUCED = 8000;
@@ -265,6 +268,18 @@
   $(".g-card-prev").textContent = LABELS.prev;
   $(".g-card-next").textContent = LABELS.next;
   $(".g-card-close").textContent = LABELS.close;
+  // The journal's own link, for a collection that has both a gallery and a
+  // journal: a second, quieter line under the buttons (fillCard). A place
+  // with no gallery yet has its journal in "View collection"'s slot instead.
+  // Like the card's other links it is out of the tab order (the card is
+  // presentation only; see globe.css).
+  var journalLink = el("a", "g-card-journal");
+  journalLink.tabIndex = -1;
+  journalLink.hidden = true;
+  journalLink.appendChild(el("span", "g-card-journal-label", LABELS.journal));
+  journalLink.appendChild(document.createTextNode(" "));
+  journalLink.appendChild(el("span", "g-card-journal-arrow", LABELS.arrow));
+  if ($(".g-card-actions")) $(".g-card-actions").parentNode.insertBefore(journalLink, $(".g-card-actions").nextSibling);
 
   /* ---------- state ------------------------------------------------------ */
 
@@ -1031,6 +1046,14 @@
   // Grande, until their photographs come) joins the end: pins, road and
   // row, no photograph and no gallery (`href` null). Once collections.json
   // has it, that entry wins.
+  // places.json `journal` is { "href": "journals/quebec/", "draft": true }:
+  // its address from the site's root (the landing is at the root), and the
+  // one switch that publishes it. Only `"draft": false` puts the link live.
+  function journalHref(j) {
+    if (!j || typeof j.href !== "string" || !j.href) return null;
+    return j.draft === false || LOCAL ? BASE + j.href : null;
+  }
+
   function joinData(collections, photos, places, routes) {
     var byCol = {}, listed = {};
     photos.forEach(function (p) { (byCol[p.collection] = byCol[p.collection] || []).push(p); });
@@ -1067,6 +1090,9 @@
         bearing: typeof pl.bearing === "number" ? clamp(pl.bearing, -45, 45) : 0,
         pitch: typeof pl.pitch === "number" ? clamp(pl.pitch, 0, 60) : null,
         href: c.waiting ? null : BASE + "collections/" + c.slug + "/", pins: [],
+        // Its travel journal (places.json `journal`), once published; in the
+        // local preview while it is still a draft.
+        journal: journalHref(pl.journal),
         // The road it took (data/routes.json), drawn in place of the arcs between pins.
         route: rt && rt.length > 1 && rt.every(function (q) { return q && typeof q[0] === "number" && typeof q[1] === "number"; }) ? rt : null
       };
@@ -2398,11 +2424,17 @@
   }
 
   function fillCard(c) {
-    var media = $(".g-card-media");
+    var media = $(".g-card-media"), go = $(".g-card-go");
+    var solo = !c.href && c.journal;                  // no gallery yet, but a journal: it takes the gallery's slot
     media.textContent = "";
-    if (c.href) { media.href = c.href; $(".g-card-go").href = c.href; }
-    else { media.removeAttribute("href"); $(".g-card-go").removeAttribute("href"); }
+    if (c.href) { media.href = c.href; go.href = c.href; }
+    else { media.removeAttribute("href"); if (solo) go.href = solo; else go.removeAttribute("href"); }
     card.classList.toggle("is-waiting", !c.href);     // no gallery yet: no photograph, no "View collection"
+    card.classList.toggle("is-journal", !!solo);
+    setText($(".g-card-go-label"), solo ? LABELS.journal : LABELS.view);
+    journalLink.hidden = !(c.href && c.journal);      // both: the journal as the quieter second link
+    if (c.href && c.journal) journalLink.href = c.journal;
+    else journalLink.removeAttribute("href");
     if (c.opener && NL) {
       var img = el("img");
       img.alt = "";

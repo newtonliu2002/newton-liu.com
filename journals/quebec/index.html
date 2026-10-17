@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quebec / 魁北克 — Newton Liu Photography</title>
+<meta name="description" content="Quebec / 魁北克 — a travel journal by Newton Liu, October 2026.">
+<meta name="theme-color" content="#121212">
+<script>try{if(localStorage.getItem("theme")==="white"){document.documentElement.dataset.theme="light";var m=document.querySelector('meta[name="theme-color"]');if(m)m.content="#ffffff"}}catch(e){}</script>
+<script>try{if(localStorage.getItem("lang")==="zh"&&!/[?&]edit\b/.test(location.search))document.documentElement.setAttribute("data-site-lang","zh")}catch(e){}</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="../../assets/site.css?v=c21ba90e">
+<link rel="stylesheet" href="../../assets/journal.css?v=f2ac0faf">
+<link rel="stylesheet" href="../../assets/journal-map.css?v=7bb1f64d">
+</head>
+
+<!-- The Quebec travel journal: layout only. The words, the route and the
+     media are data: journal.json beside this file (the trip, its route and
+     the order of the entries) and entries/<id>.txt (one file per entry, its
+     id the #anchor). assets/journal.js reads them and draws the page;
+     assets/journal-map.js draws the route map. data-place is the key into
+     data/places.json, whose places.quebec.journal.draft decides whether a
+     visitor sees the journal or a one-line notice (the local preview always
+     sees it, placeholders included). -->
+<body data-page="journal" data-base="../../">
+
+<a class="skip-link" href="#jn-entries">Skip to the journal</a>
+
+<!-- #include: keep this header identical across pages -->
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <a class="wordmark" href="../../">
+      <span class="wordmark-name">Newton Liu</span>
+      <span class="wordmark-sub">Photography</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="../../#collections" aria-current="page">Work</a>
+      <a href="../../about.html">About</a>
+      <a href="../../projects.html">Projects</a>
+      <a href="../../contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="jn is-loading" id="jn" data-place="quebec">
+
+  <!-- Shown instead of everything below while the journal is a draft on
+       the live site. -->
+  <p class="jn-gate" hidden></p>
+
+  <header class="jn-cover" id="jn-cover">
+    <div class="jn-cover-media"></div>
+    <div class="jn-cover-text">
+      <h1 class="jn-cover-title">Quebec&nbsp;<span class="jn-cover-slash" aria-hidden="true">/</span> 魁北克</h1>
+      <p class="jn-cover-month"></p>
+      <p class="jn-cover-dates"></p>
+    </div>
+  </header>
+
+  <div class="jn-body">
+    <aside class="jn-panel">
+      <div class="jn-mapblock">
+        <button class="jn-map-toggle" type="button" aria-expanded="true" aria-controls="jn-mapbox"></button>
+        <div class="jn-mapbox" id="jn-mapbox">
+          <div class="jn-map" id="jn-map" role="region" aria-label="Route map"></div>
+          <p class="jn-readout" aria-live="off"></p>
+        </div>
+      </div>
+      <div class="jn-navhome"></div>
+    </aside>
+
+    <!-- Phones and narrow windows: the current entry, and the list of all
+         of them under it (the same nav, moved here by journal.js). -->
+    <div class="jn-bar" id="jn-bar">
+      <button class="jn-bar-btn" type="button" aria-expanded="false" aria-controls="jn-bar-list">
+        <span class="jn-bar-no"></span><span class="jn-bar-title"></span><span class="jn-bar-caret" aria-hidden="true"></span>
+      </button>
+      <div class="jn-bar-list" id="jn-bar-list" hidden></div>
+    </div>
+
+    <div class="jn-entries" id="jn-entries" tabindex="-1"></div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <p>&copy; <span data-year>2026</span> Newton Liu. All photographs are my own.</p>
+    <p class="footer-links">
+      <a href="../../about.html">About</a>
+      <a href="../../projects.html">Projects</a>
+      <a href="../../contact.html">Contact</a>
+    </p>
+  </div>
+</footer>
+
+<!-- The gallery's photo viewer (site.js NLSite.viewer); keep it the same
+     as PAGE_TEMPLATE's in tools/build.py. -->
+<div id="lightbox" class="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photograph viewer">
+  <button class="lb-close" type="button" aria-label="Close viewer">&times;</button>
+  <button class="lb-nav lb-prev" type="button" aria-label="Previous photograph">&#8249;</button>
+  <button class="lb-nav lb-next" type="button" aria-label="Next photograph">&#8250;</button>
+  <figure class="lb-figure">
+    <img class="lb-image" alt="">
+    <figcaption class="lb-caption">
+      <h2 class="lb-title"></h2>
+      <p class="lb-meta"></p>
+      <p class="lb-exif"></p>
+      <p class="lb-name"></p>
+    </figcaption>
+  </figure>
+</div>
+
+<!-- MapLibre, as on the landing (index.html): an ES module handed to the
+     page's ordinary scripts by events. Its stylesheet goes in ahead of the
+     site's own (the first ../../assets/ link), so the site's rules still
+     win; on Save-Data or 2G nothing loads until asked for. -->
+<script type="module">
+  var ML = "https://cdn.jsdelivr.net/npm/maplibre-gl@6.11.2/dist/maplibre-gl";
+  window.NLLoadMapLibre = function () {
+    var css = new Promise(function (ok, no) {
+      var l = document.createElement("link");
+      l.rel = "stylesheet"; l.href = ML + ".css"; l.onload = ok; l.onerror = no;
+      document.head.insertBefore(l, document.querySelector('link[href*="assets/"]'));
+    });
+    return Promise.all([import(ML + ".mjs"), css]).then(
+      function (r) { window.maplibregl = r[0]; dispatchEvent(new Event("maplibre:ready")); },
+      function ()  { dispatchEvent(new Event("maplibre:failed")); });
+  };
+  var c = navigator.connection;
+  if (c && (c.saveData || /(^|-)2g$/.test(c.effectiveType || ""))) dispatchEvent(new Event("maplibre:deferred"));
+  else window.NLLoadMapLibre();
+</script>
+<script src="../../assets/site.js?v=46321924"></script>
+<script src="../../assets/edit.js?v=59a5bab4"></script>
+<script src="../../assets/journal-map.js?v=23789a63"></script>
+<script src="../../assets/journal.js?v=9e332584"></script>
+</body>
+</html>

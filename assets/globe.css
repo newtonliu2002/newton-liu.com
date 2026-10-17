@@ -236,6 +236,22 @@ body[data-page="globe"] .masthead { position: static; background: var(--space); 
 .g-card.is-waiting .g-card-media { display: none; }
 .g-card-progress { position: absolute; left: 0; right: 0; bottom: -1px; z-index: 1; height: 1px; background: var(--accent); transform-origin: 0; transform: scaleX(0); opacity: 0; }
 .g-card.is-touring .g-card-progress { opacity: 1; }
+/* The travel journal (places.json `journal`; globe.js fillCard). A place
+   with no gallery yet shows "Journal →" in the gallery's slot (.is-journal);
+   a collection with both has it as a quieter line under the buttons. */
+.g-card.is-waiting.is-journal .g-card-go { visibility: visible; display: flex; }
+.g-card-journal {
+  display: inline-flex; gap: 8px; margin-top: 14px; color: var(--text-dim); text-decoration: none;
+  font: 400 var(--t-label)/16px var(--mono); letter-spacing: .14em; text-transform: uppercase; white-space: nowrap;
+  transition: color var(--d-fast) var(--ease);
+}
+.g-card-journal[hidden] { display: none; }
+.g-card-journal-arrow { transition: transform var(--d-fast) var(--ease); }
+@media (hover: hover) {
+  .g-card-journal:hover { color: var(--text); }
+  .g-card-journal:hover .g-card-journal-arrow { transform: translateX(4px); }
+}
+@media not all and (min-width: 1024px) and (min-height: 620px) { .g-card-journal { margin-top: 4px; } }
 
 /* ---------- Console: tour · readout · overview -------------------------- */
 
