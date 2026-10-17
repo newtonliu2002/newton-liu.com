@@ -205,6 +205,10 @@ keyed by the collection's slug, after the usual collections.json entry:
   not on the Index or any other page.
   When the photographs come, add the collections.json entry as usual (in
   oldest-first order); the `title` and `date` here are then ignored and can go.
+  **Hidden for now** (Newton, 2026-10-16): `SHOW_WAITING = false` in globe.js
+  keeps both off the globe entirely (no pins, road, row, passing card or
+  card; the first card is Ecuador's) until his photographs come. Their
+  entries stay in places.json and routes.json; `true` brings them back.
 - **Roads (optional): `data/routes.json`.** A collection whose line should
   follow the roads Newton drove (The Canadian West: the Alaska and
   Stewart–Cassiar Highways) has `waypoints` there ([lat, lng], driving order,

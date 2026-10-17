@@ -77,6 +77,10 @@
   // second at most (Newton found a last-moment brake too abrupt). Never
   // slower than PASS_BRAKE of full speed.
   var PASS_BRAKE = .35, PASS_LATE = 6, PASS_LOOK = 30, PASS_EASE = .15;
+  // A place waiting for its photographs (Morocco, the Rio Grande) stays off
+  // the globe for now: no pins, road, row or card (Newton, 2026-10-16, until
+  // the photographs come). true brings them all back.
+  var SHOW_WAITING = false;
   var SPIN_RESUME = 1000, SPIN_RAMP = 800;
   var HOVER_DELAY = 120, TURN_DELAY = 450;
   var DWELL = 6000, DWELL_REDUCED = 8000;
@@ -1024,7 +1028,7 @@
     collections.forEach(function (c) { listed[c.slug] = 1; });
     Object.keys(places).forEach(function (s) {
       var pl = places[s];
-      if (!listed[s] && pl && typeof pl.title === "string" && pl.title) {
+      if (SHOW_WAITING && !listed[s] && pl && typeof pl.title === "string" && pl.title) {
         collections = collections.concat([{ slug: s, title: pl.title, date: pl.date || "", waiting: true }]);
       }
     });
