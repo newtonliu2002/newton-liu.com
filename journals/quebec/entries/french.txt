@@ -12,6 +12,6 @@ where: Tadoussac, QC, Canada
 
 这次我对了。
 
-@photo images/_journals/quebec/tadoussac-cafe-window.jpg | 咖啡店的窗外
+@photo images/_journals/quebec/french-cafe-window.jpg | 咖啡店的窗外
 
-@photo images/_journals/quebec/tadoussac-dawn.jpg | 黎明
+@photo images/_journals/quebec/french-dawn.jpg | 黎明

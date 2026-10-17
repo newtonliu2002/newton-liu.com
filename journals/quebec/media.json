@@ -1,6 +1,9 @@
 {
   "sizes": {
-    "images/_journals/quebec/tadoussac-cafe-window.jpg": [1500, 2000],
-    "images/_journals/quebec/tadoussac-dawn.jpg": [2000, 738]
+    "images/_journals/quebec/french-cafe-window.jpg": [1800, 2400],
+    "images/_journals/quebec/french-dawn.jpg": [2400, 886],
+    "images/_journals/quebec/rain-1.jpg": [1800, 2400],
+    "images/_journals/quebec/sea-1.jpg": [1800, 2400],
+    "images/_journals/quebec/sea-2.jpg": [2400, 1800]
   }
 }

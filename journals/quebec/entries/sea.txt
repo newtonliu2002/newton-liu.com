@@ -32,3 +32,7 @@ where: Tadoussac, QC, Canada
 我的裤子全湿，海风从前后吹入船舱，我全身发抖。船员给我递了一杯热咖啡。我感觉好点。上岸后，有个路人问我观鲸好玩吗，值得去吗。
 
 我说，有点冷。
+
+@photo images/_journals/quebec/sea-1.jpg
+
+@photo images/_journals/quebec/sea-2.jpg
