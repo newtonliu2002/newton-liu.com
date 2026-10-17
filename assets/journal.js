@@ -427,8 +427,16 @@
       img.decoding = "async";
       img.setAttribute("fetchpriority", "high");
       img.alt = c.alt || "";
-      upright(photoBySrc[src] ? S.aspectOf(rec) : shapeOf(src));
+      var ar = photoBySrc[src] ? S.aspectOf(rec) : shapeOf(src);
+      upright(ar);
       img.addEventListener("load", function () { upright(img.naturalWidth / img.naturalHeight); });
+      // "fit": "whole" shows a landscape cover in its own proportions, the
+      // full width of the window and as tall as that makes it, nothing cut;
+      // without it the cover fills the window and is trimmed to fit.
+      if (c.fit === "whole" && !(ar > 0 && ar < 1)) {
+        box.classList.add("is-whole");
+        if (ar) slot.style.aspectRatio = String(ar);
+      }
       S.responsive(img, rec, "100vw");
       if (c.focus || rec.focus) img.style.objectPosition = c.focus || rec.focus;
       slot.appendChild(img);

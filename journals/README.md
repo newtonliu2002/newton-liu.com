@@ -58,8 +58,10 @@ placeholders included; the live site shows only what is real.
    by side). A photo already in a collection can be used by its own path,
    such as `images/quebec/0Z9A0001.jpg`.
 4. The cover is in `journal.json`:
-   `"cover": { "type": "photo", "src": "images/_journals/quebec/cover.jpg", "alt": "…" }`,
-   or `"type": "video"` with a `"poster"`.
+   `"cover": { "type": "photo", "src": "images/_journals/quebec/cover.jpg", "fit": "whole", "alt": "…" }`,
+   or `"type": "video"` with a `"poster"`. `"fit": "whole"` shows the photo
+   in its own proportions; leave it out and the cover fills the screen,
+   trimmed to fit.
 5. Run `python3 tools/build.py` (it notes each file's shape in
    `media.json` beside `journal.json`, so the page doesn't jump about as
    photos arrive), then `python3 tools/upload.py`. It refuses anything that

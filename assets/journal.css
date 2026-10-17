@@ -103,6 +103,20 @@ body[data-page="journal"] {
 .jn-cover.is-upright .jn-cover-media img, .jn-cover.is-upright .jn-cover-video { object-fit: contain; }
 @media (min-width: 621px) { .jn-cover.is-upright .jn-cover-media { top: var(--jn-top); } }
 
+/* A landscape cover shown whole ("fit": "whole" in journal.json): the
+   window's width, its own proportions, below the bar; the words at its foot
+   as on the full cover, and under it on a phone, where the band is thin. */
+.jn-cover.is-whole { height: auto; min-height: 0; margin-top: 0; }
+.jn-cover.is-whole .jn-cover-media { position: relative; inset: auto; }
+.jn-cover.is-whole .jn-cover-media img { height: auto; aspect-ratio: inherit; object-fit: contain; }
+.jn-cover.is-whole .jn-cover-text { bottom: clamp(24px, 4vw, 64px); }
+@media (max-width: 620px) {
+  .jn-cover.is-whole { background: none; color: var(--text); }
+  .jn-cover.is-whole::after { display: none; }
+  .jn-cover.is-whole .jn-cover-text { position: static; padding: var(--s6) var(--edge) 0; text-shadow: none; }
+  .jn-cover.is-whole .jn-cover-dates { color: var(--text-dim); }
+}
+
 /* The local preview's stand-in: a dashed box the size of the cover, below the bar. */
 .jn-cover-hold {
   position: absolute; inset: calc(var(--jn-top) + var(--s4)) var(--edge) var(--s4);
