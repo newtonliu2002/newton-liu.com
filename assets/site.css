@@ -849,6 +849,10 @@ body[data-page="globe"] .nav-menu-list { border-top: 1px solid var(--hairline); 
   font: 400 var(--t-meta)/1.5 var(--mono);
   letter-spacing: .02em;
 }
+.lb-name a { color: inherit; text-decoration: none; }
+.lb-name a:hover, .lb-name a:focus-visible { color: var(--text); text-decoration: underline; text-underline-offset: .2em; }
+.lb-sci { margin-left: .7em; font-style: italic; }
+.lb-out { margin-left: .4em; color: var(--text-faint); }
 .lb-title:empty, .lb-meta:empty, .lb-exif:empty, .lb-name:empty { display: none; }
 
 /* No caption at all — give the photograph the room back. */

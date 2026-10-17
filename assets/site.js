@@ -29,7 +29,8 @@
        date      when it was taken
        exif      camera, lens, focal length, aperture, shutter, ISO
        caption   the bird's name, under the camera line, where photos.json
-                 gives a photograph one ("caption")
+                 gives a photograph one ("caption"), with its scientific
+                 name ("sci") and a link to its eBird page ("ebird")
 
      `grid` controls the caption that slides up over a thumbnail on hover;
      `lightbox` controls the block under the enlarged photograph. A field
@@ -1965,6 +1966,27 @@
       .join("  ·  ");
   }
 
+  // The bird's English name, its scientific name beside it, the pair a link
+  // to the species on eBird when photos.json carries the code.
+  function nameLine(photo) {
+    lbName.textContent = "";
+    if (!CAPTIONS.lightbox.caption || !photo.caption) return;
+    var to = lbName;
+    if (photo.ebird) {
+      to = lbName.appendChild(el("a", "lb-ebird"));
+      to.href = "https://ebird.org/species/" + encodeURIComponent(photo.ebird);
+      to.target = "_blank";
+      to.rel = "noopener";
+    }
+    to.appendChild(document.createTextNode(photo.caption));
+    if (photo.sci) to.appendChild(el("i", "lb-sci")).textContent = photo.sci;
+    if (photo.ebird) {
+      var out = to.appendChild(el("span", "lb-out"));
+      out.textContent = "\u2197";
+      out.setAttribute("aria-hidden", "true");
+    }
+  }
+
   function metaLine(photo) {
     return [
       CAPTIONS.lightbox.location && photo.location,
@@ -2329,7 +2351,7 @@
     lbTitle.textContent = (CAPTIONS.lightbox.title && photo.title) || "";
     lbMeta.textContent = metaLine(photo);
     lbExif.textContent = exifLine(photo);
-    if (lbName) lbName.textContent = (CAPTIONS.lightbox.caption && photo.caption) || "";
+    if (lbName) nameLine(photo);
 
     // With every caption off there is no text block, so let the photograph
     // use the height the caption would have taken.

@@ -353,7 +353,9 @@ rebuild, no re-import. `grid` is the caption over a thumbnail on hover;
 
 **Bird names.** A photograph's `caption` in `data/photos.json` (an authored
 field, kept by every rebuild) prints on its own line under the camera line
-(`.lb-name`). Guangxi & Guangdong has them (2026-10-17), Newton's names or
+(`.lb-name`), with `sci` (scientific name, italic) beside it and the pair
+linked to ebird.org/species/<`ebird` code>, both from the eBird taxonomy
+(`_arrange/geo-src/ebird-taxonomy.csv`). Guangxi & Guangdong has them (2026-10-17), Newton's names or
 ones checked against his eBird lists for those trips; the butterfly has none.
 
 `EXIF_FIELDS` sets which technical values print and in what order. Missing

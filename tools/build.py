@@ -59,8 +59,10 @@ VARIANT_QUALITY = 85
 
 # Fields a human may edit; never overwritten once set. `focus` is a CSS
 # object-position ("center bottom") for a photograph the grid has to crop.
+# `caption` is the bird's English name, `sci` its scientific name and `ebird`
+# its eBird species code (ebird.org/species/<code>).
 AUTHORED_FIELDS = ("title", "location", "date", "caption", "collection", "featured",
-                   "focus")
+                   "focus", "sci", "ebird")
 
 
 # --------------------------------------------------------------------------

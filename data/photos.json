@@ -11605,7 +11605,9 @@
       ],
       "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A3552.jpg",
       "caption": "Nonggang Babbler",
-      "featured": true
+      "featured": true,
+      "sci": "Stachyris nonggangensis",
+      "ebird": "nonbab1"
     },
     {
       "src": "images/guangxi-guangdong/U2A7998.jpg",
@@ -11642,7 +11644,9 @@
         }
       ],
       "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A7998.jpg",
-      "caption": "Chestnut-capped Babbler"
+      "caption": "Chestnut-capped Babbler",
+      "sci": "Timalia pileata",
+      "ebird": "chcbab1"
     },
     {
       "src": "images/guangxi-guangdong/7.jpg",
@@ -11672,7 +11676,9 @@
         }
       ],
       "thumb": "images/_thumbs/1600/guangxi-guangdong/7.jpg",
-      "caption": "Little Egret"
+      "caption": "Little Egret",
+      "sci": "Egretta garzetta",
+      "ebird": "litegr"
     },
     {
       "src": "images/guangxi-guangdong/6-3.jpg",
@@ -11702,7 +11708,9 @@
         }
       ],
       "thumb": "images/_thumbs/1600/guangxi-guangdong/6-3.jpg",
-      "caption": "Black-faced Spoonbill"
+      "caption": "Black-faced Spoonbill",
+      "sci": "Platalea minor",
+      "ebird": "blfspo1"
     },
     {
       "src": "images/guangxi-guangdong/4-2-copy.jpg",
@@ -11732,7 +11740,9 @@
         }
       ],
       "thumb": "images/_thumbs/1600/guangxi-guangdong/4-2-copy.jpg",
-      "caption": "Pied Avocet"
+      "caption": "Pied Avocet",
+      "sci": "Recurvirostra avosetta",
+      "ebird": "pieavo1"
     },
     {
       "src": "images/guangxi-guangdong/6-4.jpg",
@@ -11762,7 +11772,9 @@
         }
       ],
       "thumb": "images/_thumbs/1600/guangxi-guangdong/6-4.jpg",
-      "caption": "Black-tailed Godwit"
+      "caption": "Black-tailed Godwit",
+      "sci": "Limosa limosa",
+      "ebird": "bktgod"
     },
     {
       "src": "images/guangxi-guangdong/U2A4684.jpg",
@@ -11799,7 +11811,9 @@
         }
       ],
       "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A4684.jpg",
-      "caption": "Bar-backed Partridge"
+      "caption": "Bar-backed Partridge",
+      "sci": "Arborophila brunneopectus",
+      "ebird": "babpar1"
     },
     {
       "src": "images/guangxi-guangdong/U2A9418.jpg",
@@ -11836,7 +11850,9 @@
         }
       ],
       "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A9418.jpg",
-      "caption": "Rufescent Prinia"
+      "caption": "Rufescent Prinia",
+      "sci": "Prinia rufescens",
+      "ebird": "rufpri1"
     },
     {
       "src": "images/guangxi-guangdong/2022-2.jpg",
@@ -11866,7 +11882,9 @@
         }
       ],
       "thumb": "images/_thumbs/1600/guangxi-guangdong/2022-2.jpg",
-      "caption": "Red-vented Bulbul"
+      "caption": "Red-vented Bulbul",
+      "sci": "Pycnonotus cafer",
+      "ebird": "revbul"
     },
     {
       "src": "images/guangxi-guangdong/U2A6681.jpg",
@@ -11932,7 +11950,9 @@
         }
       ],
       "thumb": "images/_thumbs/1600/guangxi-guangdong/6-1.jpg",
-      "caption": "Black-winged Stilt"
+      "caption": "Black-winged Stilt",
+      "sci": "Himantopus himantopus",
+      "ebird": "bkwsti"
     },
     {
       "src": "images/guangxi-guangdong/U2A8129.jpg",
@@ -11969,7 +11989,9 @@
         }
       ],
       "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A8129.jpg",
-      "caption": "Rufescent Prinia"
+      "caption": "Rufescent Prinia",
+      "sci": "Prinia rufescens",
+      "ebird": "rufpri1"
     },
     {
       "src": "images/guangxi-guangdong/U2A7382.jpg",
@@ -12006,7 +12028,9 @@
         }
       ],
       "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A7382.jpg",
-      "caption": "Red-whiskered Bulbul"
+      "caption": "Red-whiskered Bulbul",
+      "sci": "Pycnonotus jocosus",
+      "ebird": "rewbul"
     },
     {
       "src": "images/guangxi-guangdong/6-2.jpg",
@@ -12036,7 +12060,9 @@
         }
       ],
       "thumb": "images/_thumbs/1600/guangxi-guangdong/6-2.jpg",
-      "caption": "Black-faced Spoonbill"
+      "caption": "Black-faced Spoonbill",
+      "sci": "Platalea minor",
+      "ebird": "blfspo1"
     }
   ]
 }
