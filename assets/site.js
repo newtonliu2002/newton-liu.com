@@ -110,7 +110,7 @@
     "Skip to collections": "跳到作品集", "Skip to photographs": "跳到照片",
     "Newton Liu. All photographs are my own.": "Newton Liu。所有照片均为本人拍摄。",
     "White background": "白色背景", "Black background": "黑色背景",
-    "Newton Liu — Bird, Wildlife & Landscape Photography": "Newton Liu — 鸟类、野生动物与风光摄影",
+    // the home page's "Newton Liu — Photography" stays English too (Newton, 2026-10-18)
     "{title} — Newton Liu Photography": "{title} — Newton Liu Photography",
     "Contact — Newton Liu Photography": "联系方式 — Newton Liu Photography",
     "{title} Journal — Newton Liu Photography": "{title}游记 — Newton Liu Photography",
