@@ -883,12 +883,13 @@ body[data-page="globe"] .nav-menu-list { border-top: 1px solid var(--hairline); 
   margin: 0 0 0.25rem;
 }
 .lb-meta {
-  margin: 0; color: var(--text-dim);
+  margin: 0.15rem 0 0; color: var(--text-dim);
   font: 400 var(--t-meta)/1.5 var(--mono); letter-spacing: .02em;
 }
-/* The camera line, and under it the bird's name where one is given. */
+/* The camera line, under it the animal's name where one is given, then the
+   date (wireLightbox moves .lb-meta last). */
 .lb-exif {
-  margin: 0.4rem 0 0; color: var(--text-faint);
+  margin: 0; color: var(--text-faint);
   font: 400 var(--t-meta)/1.5 var(--mono);
   letter-spacing: .02em;
   font-variant-numeric: tabular-nums;

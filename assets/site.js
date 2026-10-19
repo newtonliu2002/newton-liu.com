@@ -2915,6 +2915,9 @@
     lbMeta  = lightbox.querySelector(".lb-meta");
     lbExif  = lightbox.querySelector(".lb-exif");
     lbName  = lightbox.querySelector(".lb-name");
+    // Under the photograph: the camera, the animal's name, then the date
+    // (Newton, 2026-10-19); the pages' markup has the date first.
+    if (lbMeta && lbName) lbName.parentNode.insertBefore(lbMeta, lbName.nextSibling);
 
     lightbox.querySelector(".lb-close").addEventListener("click", function () { close(false); });
     lightbox.querySelector(".lb-prev").addEventListener("click", function () { show(index - 1); });

@@ -375,7 +375,8 @@ rebuild, no re-import. `grid` is the caption over a thumbnail on hover;
 
 **Bird names.** A photograph's `caption` in `data/photos.json` (an authored
 field, kept by every rebuild) prints on its own line under the camera line
-(`.lb-name`), with `sci` (scientific name, italic) beside it and the pair
+(`.lb-name`), and the date under the name (camera, species, date: Newton,
+2026-10-19; wireLightbox moves `.lb-meta` last), with `sci` (scientific name, italic) beside it and the pair
 linked to ebird.org/species/<`ebird` code>, both from the eBird taxonomy
 (`_arrange/geo-src/ebird-taxonomy.csv`). `zh` is its Chinese name, from
 eBird's own zh_SIM taxonomy (`_arrange/geo-src/ebird-taxonomy-zh_SIM.csv`,
