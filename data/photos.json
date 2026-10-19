@@ -11721,7 +11721,11 @@
           "src": "images/california/2022-6-California-8.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/california/2022-6-California-8.jpg"
+      "thumb": "images/_thumbs/1600/california/2022-6-California-8.jpg",
+      "caption": "Brandt's Cormorant",
+      "sci": "Urile penicillatus",
+      "ebird": "bracor",
+      "zh": "加州鸬鹚"
     },
     {
       "src": "images/california/2022-6-California-6.jpg",

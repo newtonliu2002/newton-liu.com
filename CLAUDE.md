@@ -401,8 +401,13 @@ Lizard at genus level). 48 photographs, each ID made by one look and
 confirmed by a second, independent one, named only as far as the photograph
 supports (three caimans as Caiman, Caimaninae; the leafcutter ants with no
 genus; the Alaska Highway bison as Wood Bison by range). The uncaptioned
-birds that turned up (Darwin's finches, distant gulls, a Brandt's Cormorant
-in California's 2:1 frame…) were listed for him, not named.
+birds that turned up were listed for him; on his word ("if you can identify
+then apply") they had a second, closer pass on full-resolution crops against
+his eBird lists for the day. Only California's Brandt's Cormorant (加州鸬鹚,
+not in eBird's zh_SIM) could be named; the Florida peep roost (Dunlin and
+Western mixed), the Sri Lanka parakeet (a silhouette), the Skagit swans
+(Trumpeter or Tundra), the film gull and the distant gulls and specks stay
+unnamed, as do the Galápagos ground finches.
 
 `EXIF_FIELDS` sets which technical values print and in what order. Missing
 values are skipped, which is why drone frames show fewer items — their
