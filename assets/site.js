@@ -29,9 +29,10 @@
        location  where it was taken
        date      when it was taken
        exif      camera, lens, focal length, aperture, shutter, ISO
-       caption   the bird's name, under the camera line, where photos.json
+       caption   the animal's name, under the camera line, where photos.json
                  gives a photograph one ("caption"), with its scientific
-                 name ("sci") and a link to its eBird page ("ebird")
+                 name ("sci") and a link to its eBird page ("ebird") or
+                 Wikipedia ("wiki"); "also" names any others in the frame
 
      `grid` controls the caption that slides up over a thumbnail on hover;
      `lightbox` controls the block under the enlarged photograph. A field
@@ -39,7 +40,8 @@
      ------------------------------------------------------------------ */
   var CAPTIONS = {
     grid:     { title: false, location: false },
-    lightbox: { title: false, location: false, date: true, exif: true, caption: true }
+    // date off again (Newton, 2026-10-19, after trying it); the dates stay in photos.json
+    lightbox: { title: false, location: false, date: false, exif: true, caption: true }
   };
 
   // Which EXIF fields print, and in what order. Any field that's missing from

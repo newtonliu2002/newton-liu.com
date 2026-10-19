@@ -319,19 +319,20 @@ and switches (`STARS`, `TERRAIN_3D`) are just below it, and day and night's
 
 ## What's shown under a photograph
 
-**The day it was taken, then the technical line: camera, lens, aperture,
-shutter, ISO** (and a bird's names under it). No title, no filename, no
-location. This is deliberate — do not add them back without being asked.
+**The technical line: camera, lens, aperture, shutter, ISO, then a blank
+line and the animals' names.** No title, no filename, no location, no date.
+This is deliberate — do not add them back without being asked.
 The date line (`CAPTIONS.lightbox.date`, the photograph's `date`, from its
-EXIF when the filename gives none) was off until Newton asked for it on
-2026-10-19; it shows only where a date is known (208 of 410 then: Galápagos,
+EXIF when the filename gives none) was on for a day, 2026-10-19, at
+Newton's request, and off again the same day ("remove all the image
+dates"); it showed only where a date is known (208 of 410 then: Galápagos,
 Ecuador, Yunnan, Sri Lanka, Hawai'i, Colorado & Nebraska and most of
 Malaysia were exported without EXIF; their dates are to come from his
 Lightroom catalog). A journal's own photographs carry theirs in media.json
 (`exif.date`, from the file's DateTimeOriginal).
 
 Dates appear **once per collection**, under the gallery heading ("December
-2025"), and on a photograph only when it is enlarged. That line is derived from the capture
+2025"), and nowhere on a single photograph. That line is derived from the capture
 dates in the manifest by `collectionDate()` in `site.js`, so it stays correct
 as photographs are added. Set `"date"` on a collection in
 `data/collections.json` to override it with fixed text — Galápagos, Ecuador,
@@ -375,8 +376,11 @@ rebuild, no re-import. `grid` is the caption over a thumbnail on hover;
 
 **Bird names.** A photograph's `caption` in `data/photos.json` (an authored
 field, kept by every rebuild) prints on its own line under the camera line
-(`.lb-name`), and the date under the name (camera, species, date: Newton,
-2026-10-19; wireLightbox moves `.lb-meta` last), with `sci` (scientific name, italic) beside it and the pair
+(`.lb-name`), a blank line below the camera line (camera, species, and
+the date under the name when it is on: wireLightbox moves `.lb-meta` last;
+the date line was turned on and then off again on 2026-10-19, at Newton's
+word, so `CAPTIONS.lightbox.date` is false and the dates stay in
+photos.json), with `sci` (scientific name, italic) beside it and the pair
 linked to ebird.org/species/<`ebird` code>, both from the eBird taxonomy
 (`_arrange/geo-src/ebird-taxonomy.csv`). `zh` is its Chinese name, from
 eBird's own zh_SIM taxonomy (`_arrange/geo-src/ebird-taxonomy-zh_SIM.csv`,
