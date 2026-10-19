@@ -204,14 +204,16 @@
       "China": "中国", "Nebraska": "内布拉斯加", "Nuevo León": "新莱昂"
     },
     pins: {
-      // Major cities, fully Chinese. A smaller town keeps its own name
-      // (Tadoussac, Sedona, Fairbanks): it is simply not listed.
+      // Major cities, fully Chinese, and Fairbanks and Juneau (Newton,
+      // 2026-10-19). A smaller town keeps its own name (Tadoussac, Sedona):
+      // it is simply not listed.
       "Montreal": "蒙特利尔", "Quebec City": "魁北克市", "Ottawa/Gatineau": "渥太华/加蒂诺",
       "Vancouver": "温哥华", "Phoenix": "凤凰城", "Monterrey": "蒙特雷", "Lima": "利马", "Cusco": "库斯科",
-      "Rabat": "拉巴特", "Agadir": "阿加迪尔", "Kandy": "康提",
+      "Rabat": "拉巴特", "Agadir": "阿加迪尔", "Kandy": "康提", "Fairbanks": "费尔班克斯", "Juneau": "朱诺",
       // The best known, fully Chinese (Newton, 2026-10-19)
       "Yellowstone National Park": "黄石国家公园", "Yosemite National Park": "优胜美地国家公园",
-      "Banff National Park": "班夫国家公园", "Glacier National Park": "冰川国家公园", "Machu Picchu": "马丘比丘",
+      "Banff National Park": "班夫国家公园", "Grand Teton National Park": "大提顿国家公园",
+      "Glacier National Park": "冰川国家公园", "Machu Picchu": "马丘比丘",
       "Hawai'i Island": "夏威夷岛", "Kaua'i": "考爱岛", "Maui": "毛伊岛", "O'ahu": "瓦胡岛",
       // Everything else: its own name kept as written, only the generic
       // part in Chinese and at the end (专名保留，通名意译; Newton,
@@ -225,7 +227,7 @@
       "Black Canyon of the Gunnison National Park": "Black Canyon of the Gunnison国家公园",
       "Channel Islands National Park": "Channel Islands国家公园", "Crater Lake National Park": "Crater Lake国家公园",
       "Denali National Park": "Denali国家公园", "Everglades National Park": "Everglades国家公园",
-      "Glacier Bay National Park": "Glacier Bay国家公园", "Grand Teton National Park": "Grand Teton国家公园",
+      "Glacier Bay National Park": "Glacier Bay国家公园",
       "Great Sand Dunes National Park": "Great Sand Dunes国家公园", "Jasper National Park": "Jasper国家公园",
       "Katmai National Park": "Katmai国家公园", "Kenai Fjords National Park": "Kenai Fjords国家公园",
       "Kluane National Park": "Kluane国家公园", "Mesa Verde National Park": "Mesa Verde国家公园",

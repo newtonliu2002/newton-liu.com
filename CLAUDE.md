@@ -459,10 +459,11 @@ name whole (Crater Lake国家公园, Mount Rainier国家公园). A state or prov
 inside a name is Chinese as everywhere (阿拉斯加公路, 内布拉斯加国家森林).
 Quebec's parcs nationaux are 国家公园 too (his call: Canada recognises Quebec
 as a nation). Fully Chinese: everything in China, major cities (蒙特利尔,
-渥太华/加蒂诺, 利马, 凤凰城…), countries, states and provinces, and the best known
-(黄石, 优胜美地, 班夫, 冰川 as in his essay, 马丘比丘, 加拉帕戈斯群岛, Hawai'i's four
-islands). A small town with no generic part keeps its own name in both
-(Tadoussac, Saguenay, Sedona, Fairbanks, Cape May). His journal heading
+渥太华/加蒂诺, 利马, 凤凰城…) and Fairbanks and Juneau (费尔班克斯, 朱诺, his call),
+countries, states and provinces, and the best known (黄石, 优胜美地, 班夫, 大提顿,
+冰川 as in his essay, 马丘比丘, 加拉帕戈斯群岛, Hawai'i's four islands). A small
+town with no generic part keeps its own name in both (Tadoussac, Saguenay,
+Sedona, Cape May). His journal heading
 lines are never touched.
 **Not translated:** "Newton Liu Photography" (the wordmark and the end of
 the tab titles, his call 2026-10-17), the About essay, blurbs, notes, the Contact page's sentence
