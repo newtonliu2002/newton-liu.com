@@ -1,0 +1,239 @@
+/* ==========================================================================
+   newton-liu.com — the chess database (chess-games.html), on top of site.css.
+   The map (chess.html) is chess-map.css, on top of globe.css.
+
+   Only cg-* classes, under .chess. Colours, type and motion are site.css
+   tokens; the --cg-* below are this page's own: the board's squares and
+   pieces, a little lighter on the White ground.
+
+   The rail is the prose pages' (.about-rail), with the record under the
+   name and a jump list of tournaments. The column: his words (chessdb.prose),
+   then each tournament, newest first, and its games as rows: round, his
+   colour, opponent, points, the game on chess.com; a row with a PGN also
+   opens a board to step through under it. The section a map pin linked to
+   (.is-target) carries the nav's amber square before its name.
+   ========================================================================== */
+
+.chess {
+  --cg-light: #b3ada1;
+  --cg-dark:  #6c675e;
+  --cg-white: #fbfaf6;
+  --cg-white-edge: #1a1a1a;
+  --cg-black: #141414;
+  --cg-black-edge: rgba(255,255,255,.35);
+  --cg-coord-on-light: rgba(0,0,0,.55);
+  --cg-coord-on-dark:  rgba(255,255,255,.62);
+  --cg-last: color-mix(in srgb, var(--accent) 55%, transparent);
+}
+:root[data-theme="light"] .chess {
+  --cg-light: #e8e3d8;
+  --cg-dark:  #aaa396;
+  --cg-black-edge: rgba(255,255,255,.5);
+}
+
+.chess .cg-column { min-width: 0; }
+.chess .cg-intro:empty { display: none; }
+body.is-editing .chess .cg-intro:empty { display: block; }
+.chess .cg-intro { margin-bottom: var(--s7); }
+
+/* ---- the rail: the record, the tournaments ---------------------------- */
+
+.chess .cg-stats {
+  display: flex; flex-wrap: wrap; gap: var(--s4) var(--s5);
+  margin: var(--s6) 0 0; max-width: 15rem;
+}
+.chess .cg-stat { margin: 0; }
+.chess .cg-stat dt {
+  font: 400 var(--t-label)/16px var(--mono);
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-faint);
+}
+.chess .cg-stat dd {
+  margin: 2px 0 0;
+  font: 400 var(--t-lede)/1.2 var(--mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+.chess .cg-jump a { text-transform: none; letter-spacing: .02em; font-family: var(--sans); font-size: var(--t-ui); }
+
+/* ---- a tournament ------------------------------------------------------ */
+
+.chess .cg-event { scroll-margin-top: calc(var(--masthead-h) + 2rem); }
+.chess .cg-event + .cg-event { margin-top: var(--s8); }
+.chess .cg-name {
+  margin: 0;
+  font: 500 var(--t-h3)/1.25 var(--sans);
+  letter-spacing: -.01em;
+  color: var(--text);
+}
+.chess .cg-meta, .chess .cg-score {
+  display: flex; flex-wrap: wrap; gap: 0 var(--s3);
+  margin: var(--s2) 0 0;
+  font: 400 var(--t-meta)/1.6 var(--mono);
+  letter-spacing: .04em;
+  color: var(--text-dim);
+}
+.chess .cg-score { color: var(--text); }
+.chess .cg-meta > * + *::before, .chess .cg-score > * + *::before {
+  content: "\00B7"; display: inline-block; margin-right: var(--s3); color: var(--text-faint);
+}
+.chess .cg-link { color: inherit; text-decoration: underline; text-decoration-color: var(--hairline-strong); text-underline-offset: 3px; }
+.chess .cg-link:hover { text-decoration-color: var(--accent); }
+.chess .cg-tnote, .chess .cg-note {
+  margin: var(--s3) 0 0; max-width: 62ch;
+  font: 400 var(--t-body)/1.7 var(--sans); color: var(--text-body);
+}
+.chess .cg-note { margin: 0 0 var(--s3) calc(3rem + 14px + 2 * var(--s3)); font-size: var(--t-row); color: var(--text-dim); }
+
+.chess .cg-empty {
+  margin: 0;
+  font: 400 var(--t-label)/16px var(--mono);
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* ---- the games --------------------------------------------------------- */
+
+.chess .cg-games {
+  list-style: none; margin: var(--s5) 0 0; padding: 0;
+  border-top: 1px solid var(--hairline);
+}
+.chess .cg-game { border-bottom: 1px solid var(--hairline-soft); }
+.chess .cg-row {
+  display: grid;
+  grid-template-columns: 3rem 14px minmax(0, 1fr) 2.5rem 5.5rem 44px;
+  align-items: center; column-gap: var(--s3);
+  min-height: 44px; padding: var(--s1) 0;
+  font: 400 var(--t-row)/1.4 var(--sans); color: var(--text-body);
+}
+.chess .cg-round, .chess .cg-elo, .chess .cg-result {
+  font-family: var(--mono); font-variant-numeric: tabular-nums;
+}
+.chess .cg-round { font-size: var(--t-meta); letter-spacing: .08em; color: var(--text-faint); }
+/* His colour: a small square, filled for black, outlined for white. */
+.chess .cg-color { width: 10px; height: 10px; justify-self: center; }
+.chess .cg-color.is-white { border: 1px solid var(--text-dim); }
+.chess .cg-color.is-black { background: var(--text-dim); border: 1px solid var(--text-dim); }
+.chess .cg-opp { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); }
+.chess .cg-opp.is-bye { color: var(--text-faint); }
+.chess .cg-elo { margin-left: var(--s2); font-size: var(--t-meta); color: var(--text-faint); }
+.chess .cg-result { text-align: right; font-size: var(--t-row); color: var(--text-dim); }
+.chess .cg-result.is-win { color: var(--text); }
+.chess .cg-result.is-loss { color: var(--text-faint); }
+.chess .cg-linkcell { text-align: right; }
+.chess .cg-game-link {
+  display: inline-flex; align-items: center; min-height: 44px;
+  font: 400 var(--t-label)/16px var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-dim); text-decoration: none; white-space: nowrap;
+  transition: color var(--d-fast) var(--ease);
+}
+.chess .cg-game-link:hover { color: var(--text); }
+.chess .cg-game-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.chess .cg-board-toggle {
+  width: 44px; height: 44px; padding: 0;
+  appearance: none; background: none; border: 0; border-radius: 0;
+  font: 300 20px/1 var(--sans); color: var(--text-faint); cursor: pointer;
+  transition: color var(--d-fast) var(--ease), transform var(--d-fast) var(--ease);
+}
+.chess .cg-board-toggle:hover, .chess .cg-game.is-open .cg-board-toggle { color: var(--accent); }
+.chess .cg-game.is-open .cg-board-toggle { transform: rotate(45deg); }
+.chess .cg-board-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+/* The tournament a pin on the map pointed to. */
+.chess .cg-event.is-target .cg-name { position: relative; }
+.chess .cg-event.is-target .cg-name::before {
+  content: ""; position: absolute; right: 100%; top: 50%;
+  margin: -2px 10px 0 0; border: 2px solid var(--accent);
+}
+.chess .cg-maplink { margin: var(--s4) 0 0; font: 400 var(--t-label)/16px var(--mono); letter-spacing: .14em; text-transform: uppercase; }
+
+@media (max-width: 620px) {
+  .chess .cg-row { grid-template-columns: 2.25rem 14px minmax(0, 1fr) 2rem auto 36px; column-gap: var(--s2); }
+  .chess .cg-note { margin-left: 0; }
+  .chess .cg-board-toggle { width: 36px; }
+  .chess .cg-event.is-target .cg-name::before { position: static; display: inline-block; vertical-align: middle; margin: -4px 10px 0 0; }
+}
+
+/* ---- the board --------------------------------------------------------- */
+
+.chess .cg-viewer {
+  display: flex; flex-wrap: wrap; gap: var(--s5);
+  padding: var(--s3) 0 var(--s6);
+  outline: none;
+}
+.chess .cg-viewer[hidden] { display: none; }
+.chess .cg-board {
+  flex: 0 1 26rem; min-width: 0; max-width: 100%;
+  display: grid; grid-template: repeat(8, minmax(0, 1fr)) / repeat(8, minmax(0, 1fr));
+  aspect-ratio: 1;
+  container-type: inline-size;
+  align-self: flex-start;
+}
+.chess .cg-sq { position: relative; display: grid; place-items: center; min-height: 0; overflow: hidden; }
+.chess .cg-sq.is-light { background: var(--cg-light); }
+.chess .cg-sq.is-dark { background: var(--cg-dark); }
+.chess .cg-sq.is-last { box-shadow: inset 0 0 0 999px var(--cg-last); }
+.chess .cg-piece {
+  font: 400 10.4cqi/1 "Apple Symbols", "Segoe UI Symbol", "Noto Sans Symbols 2", "DejaVu Sans", serif;
+  user-select: none;
+}
+.chess .cg-piece.is-white {
+  color: var(--cg-white);
+  -webkit-text-stroke: .9px var(--cg-white-edge);
+  paint-order: stroke fill;
+}
+.chess .cg-piece.is-black {
+  color: var(--cg-black);
+  -webkit-text-stroke: .5px var(--cg-black-edge);
+  paint-order: stroke fill;
+}
+.chess .cg-rank, .chess .cg-file {
+  position: absolute;
+  font: 500 11px/1 var(--mono);
+}
+.chess .cg-rank { top: 3px; left: 3px; }
+.chess .cg-file { right: 3px; bottom: 3px; }
+.chess .is-light > .cg-rank, .chess .is-light > .cg-file { color: var(--cg-coord-on-light); }
+.chess .is-dark > .cg-rank, .chess .is-dark > .cg-file { color: var(--cg-coord-on-dark); }
+
+.chess .cg-side { flex: 1 1 14rem; min-width: 0; display: flex; flex-direction: column; gap: var(--s3); }
+.chess .cg-bar { display: flex; align-items: center; gap: var(--s1); }
+.chess .cg-step {
+  width: 36px; height: 36px; flex: none;
+  appearance: none; background: none; border: 1px solid var(--hairline-strong); border-radius: 0;
+  font: 400 16px/1 var(--mono); color: var(--text);
+  cursor: pointer;
+}
+.chess .cg-step:hover:not(:disabled) { background: var(--wash); }
+.chess .cg-step:disabled { color: var(--text-faint); border-color: var(--hairline); cursor: default; }
+.chess .cg-step:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.chess .cg-readout {
+  flex: 1; text-align: center;
+  font: 400 var(--t-meta)/1 var(--mono); letter-spacing: .04em;
+  color: var(--text-dim);
+}
+.chess .cg-moves {
+  list-style: none; margin: 0; padding: 0;
+  max-height: 20rem; overflow-y: auto;
+  position: relative;
+  font: 400 var(--t-meta)/1 var(--mono); font-variant-numeric: tabular-nums;
+  border-top: 1px solid var(--hairline-soft);
+}
+.chess .cg-moves li {
+  display: grid; grid-template-columns: 3rem 1fr 1fr; align-items: center;
+  border-bottom: 1px solid var(--hairline-soft);
+}
+.chess .cg-num { color: var(--text-faint); padding-left: var(--s1); }
+.chess .cg-move {
+  appearance: none; background: none; border: 0; border-radius: 0;
+  padding: 7px var(--s2); text-align: left;
+  font: inherit; color: var(--text-body); cursor: pointer;
+}
+.chess .cg-move:hover { color: var(--text); background: var(--wash); }
+.chess .cg-move.is-current { color: var(--on-accent); background: var(--accent); }
+.chess .cg-move:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.chess .cg-movenote, .chess .cg-broken {
+  margin: 0; font: 400 var(--t-row)/1.6 var(--sans); color: var(--text-body);
+}
+.chess .cg-broken { font: 400 var(--t-label)/16px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--text-faint); }
+.chess .cg-movenote[hidden] { display: none; }

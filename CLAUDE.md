@@ -23,6 +23,7 @@ work.html                   the same collections as a grid of covers ("Index")
 about.html, contact.html    prose pages
 academia.html               a prose page waiting for Newton's words (academia.prose)
 projects.html               things built alongside the photography (eBird Explorer)
+chess.html, chess-games.html   Chess: the tournament map and the games database (see "Chess")
 collections/<slug>/index.html   one stub per collection (generated; ~15 lines)
 assets/site.css             ALL styling — design tokens in :root at the top
 assets/site.js              renders the grid, the collection cards, the lightbox
@@ -1156,8 +1157,8 @@ they're small). Their `sizes` mirrors the column: the page width below
 The tab is in the nav of every page: the hand-written pages, this one,
 the journal pages, and `PAGE_TEMPLATE` in build.py for the collection pages.
 
-**The nav, in order** (Newton, 2026-10-17): Work · About · Journals ·
-Academia · Projects · Contact. **Journals** is not a link (he wanted it
+**The nav, in order** (Newton, 2026-10-17; Chess added 2026-10-19): Work ·
+About · Journals · Academia · Chess · Projects · Contact. **Journals** is not a link (he wanted it
 unclickable): `<button class="nav-tab" data-menu="journals">`, keyed in
 `NAV_MENUS` by its `data-menu`, whose one entry is Québec
 (journals/quebec/; `zh` gives 魁北克). Pointing opens it as for Projects;
@@ -1184,6 +1185,71 @@ click doesn't hold it open) and Esc shuts it, sending focus back to the
 tab. `.nav-drop` carries the masthead's z-index, because the landing's bar
 is static below 1024px wide or 620px tall and the menu would otherwise
 fall behind the globe's sticky stage.
+
+## Chess (chess.html, chess-games.html)
+
+Newton's chess tournaments (asked 2026-10-19). The **Chess** tab opens the
+map; pointing at it drops a menu (Map · Database, `NAV_MENUS["chess.html"]`
+in site.js).
+
+- **chess.html, the map**: a pin wherever he has played a tournament. He
+  plays mostly in the United States, so it is a flat (mercator) map framed
+  on the pins (the contiguous states while there are none), not the
+  landing's globe, but dressed as the landing: it links **globe.css** and
+  wears its g-* classes as they are (the glass panel and list, a year to a
+  heading, newest first; the crosshair pins; the plate; the console), with
+  the landing's map colours (`PALETTE` in chess-map.js, copied from
+  globe.js: keep the two alike) and no day and night. `assets/chess-map.js`
+  draws it, `assets/chess-map.css` adds the little a flat map needs.
+  Pointing at a pin or row lights it and shows its plate (name, place,
+  dates, score); a click on either opens the database at that tournament.
+  Tournaments within about a kilometre share one ringed pin; its click
+  opens the plate as their links (on a phone: the newest). The readout
+  counts tournaments and games, or reads the lit one's place and dates.
+- **chess-games.html, the database**: every tournament, newest first, one
+  section each, its `id` the anchor the pins link to
+  (`chess-games.html#<id>`; arriving there marks the section with the
+  nav's amber square). Each game is a row: round, his colour (outlined
+  square white, filled black), opponent and rating, his points (1, ½, 0),
+  **Game ↗** (its chess.com `link`) and, for a game with a PGN, **+** to
+  open a board under the row to step through (← → Home End). The rail: his
+  record (games, won, drawn, lost; byes aside) and latest rating, and the
+  tournaments as jump links. `assets/chess.js`, `assets/chess.css`. The PGN
+  reader is in chess.js, no library: it knows just enough of the rules to
+  place each move; a move it can't place ends the line there, with a note.
+- **Everything is `data/chess.json`**, hand-edited; Newton tells me where
+  and when each tournament was, and sends its games:
+
+```json
+{
+  "player": ["Newton Liu", "Liu, Newton"],
+  "tournaments": [
+    { "id": "philadelphia-open-2026", "name": "Philadelphia Open",
+      "where": "Philadelphia, PA", "lat": 39.9526, "lng": -75.1652,
+      "start": "2026-04-03", "end": "2026-04-05",
+      "section": "U1800", "timeControl": "G/90+30", "rounds": 7,
+      "rating": { "system": "USCF", "before": 1610, "after": 1652 },
+      "url": "<the crosstable, optional>", "note": "",
+      "games": [
+        { "round": 1, "color": "white", "opponent": "…", "opponentRating": 1700,
+          "result": "win", "link": "https://www.chess.com/game/live/…", "pgn": "", "note": "" },
+        { "round": 4, "bye": 0.5 }
+      ] }
+  ]
+}
+```
+
+  - `id` is permanent once live (it is the pin's link): lowercase words and
+    the year. Without one it is made from the name and start date.
+  - `lat`/`lng`: the city's centre, or the venue's if he names it, never a
+    home address. `where` is shown as written ("Philadelphia, PA").
+  - `result`: his word ("win", "draw", "loss") or a PGN result ("1-0") read
+    by `color`. A `pgn`'s tags fill in what an entry leaves out (colour by
+    `player`, opponent, ratings, result, round). `rounds` is the score's
+    denominator when he didn't play them all; otherwise the rows count.
+  - `rating.after` of the newest tournament with one is the rail's rating.
+- Chinese: the interface words are in ZH_UI (site.js, "Chess"); his
+  tournament names, places and opponents stay as written.
 
 ## Editing the words (?edit)
 

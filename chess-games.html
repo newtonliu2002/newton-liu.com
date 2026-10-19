@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chess Database — Newton Liu Photography</title>
+<meta name="description" content="Newton Liu: every game from his chess tournaments.">
+<meta name="theme-color" content="#121212">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<script>try{if(localStorage.getItem("theme")==="white"){document.documentElement.dataset.theme="light";var m=document.querySelector('meta[name="theme-color"]');if(m)m.content="#ffffff"}}catch(e){}</script>
+<script>try{if(localStorage.getItem("lang")==="zh"&&!/[?&]edit\b/.test(location.search))document.documentElement.setAttribute("data-site-lang","zh")}catch(e){}</script>
+<link rel="stylesheet" href="assets/site.css?v=dd15b671">
+<link rel="stylesheet" href="assets/chess.css?v=9dca2917">
+</head>
+
+<body data-page="prose" data-base="">
+
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <a class="wordmark" href="./">
+      <span class="wordmark-name">Newton Liu</span>
+      <span class="wordmark-sub">Photography</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html#collections">Work</a>
+      <a href="about.html">About</a>
+      <button type="button" class="nav-tab" data-menu="journals">Journals</button>
+      <a href="academia.html">Academia</a>
+      <a href="chess.html" aria-current="page">Chess</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- The database: every tournament, newest first, each a section whose
+       id the map's pins link to (chess-games.html#<id>). Layout only: the
+       games are data/chess.json, drawn by assets/chess.js (see CLAUDE.md,
+       "Chess"). The words above them are his to write: ?edit saves them to
+       data/text.json as chessdb.prose. -->
+  <div class="wrap-wide about-body is-bare chess">
+    <aside class="about-rail">
+      <h1 class="about-title" data-edit="chessdb.title">Database</h1>
+      <p class="about-name" data-edit="chessdb.name">Chess · Newton Liu</p>
+      <p class="cg-maplink"><a class="text-link" href="chess.html">Map <span aria-hidden="true">→</span></a></p>
+      <dl class="cg-stats" hidden></dl>
+      <nav class="about-jump cg-jump" aria-label="Tournaments" hidden></nav>
+    </aside>
+
+    <div class="cg-column">
+      <div class="about-prose cg-intro" data-edit="chessdb.prose" data-edit-rich
+           data-edit-hint="Write about your chess"></div>
+      <div class="cg-events" aria-live="polite">
+        <p class="cg-empty">Loading…</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <p>&copy; <span data-year>2026</span> Newton Liu. All photographs are my own.</p>
+    <p class="footer-links">
+      <a href="index.html#collections">Work</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </p>
+  </div>
+</footer>
+
+<script src="assets/site.js?v=fa3eed35"></script>
+<script src="assets/edit.js?v=59a5bab4"></script>
+<script src="assets/chess.js?v=3646e60f"></script>
+</body>
+</html>

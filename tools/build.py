@@ -416,6 +416,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
       <a href="../../about.html">About</a>
       <button type="button" class="nav-tab" data-menu="journals">Journals</button>
       <a href="../../academia.html">Academia</a>
+      <a href="../../chess.html">Chess</a>
       <a href="../../projects.html">Projects</a>
       <a href="../../contact.html">Contact</a>
     </nav>
@@ -497,7 +498,8 @@ def load_collections():
 # link for.
 
 ASSETS = ("site.css", "site.js", "edit.js", "globe.css", "globe.js",
-          "journal.css", "journal.js", "journal-map.css", "journal-map.js")
+          "journal.css", "journal.js", "journal-map.css", "journal-map.js",
+          "chess.css", "chess.js", "chess-map.css", "chess-map.js")
 
 
 def asset_stamps():
@@ -514,10 +516,10 @@ def asset_stamps():
 
 
 def stamp_root_pages(stamps):
-    """Refresh ?v= on the hand-written pages: the six at the root and every
+    """Refresh ?v= on the hand-written pages: the eight at the root and every
     journal's page. Returns how many changed."""
     changed = 0
-    pages = ["index.html", "work.html", "projects.html", "about.html", "contact.html", "academia.html"]
+    pages = ["index.html", "work.html", "projects.html", "about.html", "contact.html", "academia.html", "chess.html", "chess-games.html"]
     journals = os.path.join(ROOT, "journals")
     if os.path.isdir(journals):
         pages += sorted(os.path.join("journals", d, "index.html") for d in os.listdir(journals)

@@ -70,6 +70,11 @@
     ],
     "journals": [
       { label: "Québec", zh: "魁北克", href: "journals/quebec/" }
+    ],
+    // Chess: the tab opens the map; the database is every game, by tournament.
+    "chess.html": [
+      { label: "Map", zh: "地图", href: "chess.html" },
+      { label: "Database", zh: "对局库", href: "chess-games.html" }
     ]
   };
 
@@ -159,7 +164,26 @@
     // its route map (assets/journal-map.js LABELS)
     "Zoom in": "放大", "Zoom out": "缩小",
     "{place}: {title}": "{place}：{title}", "{place}: {n} entries": "{place}：{n}篇",
-    "Entries at {place}": "{place}的游记"
+    "Entries at {place}": "{place}的游记",
+    // Chess (chess.js)
+    "Chess": "国际象棋", "Chess — Newton Liu Photography": "国际象棋 — Newton Liu Photography",
+    "Chess Database — Newton Liu Photography": "国际象棋对局库 — Newton Liu Photography",
+    "Database": "对局库", "Map": "地图", "Skip to tournaments": "跳到比赛列表", "Game": "对局",
+    "Game against {name} on chess.com": "chess.com上对{name}的对局", "Board": "棋盘",
+    "Show all tournaments": "显示全部比赛", "Show all": "显示全部", "Load map": "加载地图",
+    "Map unavailable. The tournaments are listed here.": "地图无法显示。比赛都在列表里。",
+    "{n} tournament": "{n}场比赛", "{n} tournaments": "{n}场比赛", "{n} game": "{n}盘对局", "{n} games": "{n}盘对局",
+    "No tournaments yet": "还没有比赛", "No tournaments yet.": "还没有比赛。",
+    "Couldn't load the tournaments.": "比赛加载失败。", "Use two fingers to move the map": "用两根手指移动地图",
+    "Tournaments": "比赛", "Tournament": "比赛", "Games": "对局", "Won": "胜", "Drawn": "和", "Lost": "负",
+    "Rating": "等级分", "Win": "胜", "Draw": "和", "Loss": "负", "White": "执白", "Black": "执黑",
+    "R{n}": "第{n}轮", "Score {pts} / {n}": "积分 {pts} / {n}", "Place {n}": "第{n}名", "Crosstable": "成绩表",
+    "Bye": "轮空", "Half-point bye": "轮空（半分）", "Full-point bye": "轮空（一分）",
+    "Opponent to come": "对手待补", "No games logged yet.": "还没有记录对局。",
+    "Couldn't load the games.": "对局加载失败。", "Starting position": "初始局面",
+    "Position after {move}": "{move}之后的局面", "Start": "回到开局", "End": "跳到终局",
+    "Previous move": "上一步", "Next move": "下一步",
+    "The rest of this game's moves couldn't be read.": "这盘棋后面的着法无法读取。"
   };
 
   var ZH_EDIT = {
@@ -167,6 +191,8 @@
     "home.heroSub": "从加拉帕戈斯群岛到东喜马拉雅的野外摄影。",
     "contact.title": "联系方式",
     "academia.title": "学术",
+    "chess.title": "国际象棋", "chess.listTitle": "比赛",
+    "chessdb.title": "对局库", "chessdb.name": "国际象棋 · Newton Liu",
     "projects.title": "项目",
     "projects.ebird.kicker": "网页应用 · 2026", "projects.shootplanner.kicker": "网页应用 · 2026",
     "projects.retreatfinder.kicker": "网页应用 · 2026", "projects.siteranking.kicker": "网页应用 · 2026",
