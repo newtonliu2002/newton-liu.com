@@ -238,7 +238,7 @@
       "Waterton Lakes National Park": "Waterton Lakes国家公园",
       "Parc national de la Mauricie": "La Mauricie国家公园",
       "Parc national des Grands-Jardins": "Grands-Jardins国家公园",
-      "Parc national du Fjord-du-Saguenay": "Fjord-du-Saguenay国家公园",
+      "Parc national du Fjord-du-Saguenay": "Saguenay峡湾国家公园",   // his own name for it
       "Parc national des Hautes-Gorges-de-la-Rivière-Malbaie": "Hautes-Gorges-de-la-Rivière-Malbaie国家公园",
       "Yala National Park": "Yala国家公园", "Bundala National Park": "Bundala国家公园",
       "Horton Plains National Park": "Horton Plains国家公园", "Souss-Massa National Park": "Souss-Massa国家公园",
@@ -2905,9 +2905,6 @@
     lbMeta  = lightbox.querySelector(".lb-meta");
     lbExif  = lightbox.querySelector(".lb-exif");
     lbName  = lightbox.querySelector(".lb-name");
-    // The bird's name leads, under the photograph, with the date and the
-    // camera below it (Newton, 2026-10-19); the pages' markup has it last.
-    if (lbName && lbMeta) lbMeta.parentNode.insertBefore(lbName, lbMeta);
 
     lightbox.querySelector(".lb-close").addEventListener("click", function () { close(false); });
     lightbox.querySelector(".lb-prev").addEventListener("click", function () { show(index - 1); });

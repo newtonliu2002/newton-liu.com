@@ -11377,37 +11377,37 @@
       "zh": "西美鸥"
     },
     {
-      "src": "images/california/2022-44.jpg",
-      "title": "2022 44",
+      "src": "images/california/3.jpg",
+      "title": "3",
       "collection": "california",
       "location": "",
-      "date": "",
+      "date": "2023-01-12",
       "width": 2500,
       "height": 1668,
       "exif": {},
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/california/2022-44.jpg"
+          "src": "images/_thumbs/800/california/3.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/california/2022-44.jpg"
+          "src": "images/_thumbs/1600/california/3.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/california/2022-44.jpg"
+          "src": "images/_thumbs/2400/california/3.jpg"
         },
         {
           "w": 2500,
-          "src": "images/california/2022-44.jpg"
+          "src": "images/california/3.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/california/2022-44.jpg",
-      "caption": "Dark-eyed Junco",
-      "sci": "Junco hyemalis",
-      "ebird": "daejun",
-      "zh": "暗眼灯草鹀"
+      "thumb": "images/_thumbs/1600/california/3.jpg",
+      "caption": "Great Gray Owl",
+      "sci": "Strix nebulosa",
+      "ebird": "grgowl",
+      "zh": "乌林鸮"
     },
     {
       "src": "images/california/2022-6-California-2.jpg",
@@ -11573,39 +11573,37 @@
       "zh": "西丛鸦"
     },
     {
-      "src": "images/california/2022-6-California-3.jpg",
-      "title": "2022-6-California-3",
+      "src": "images/california/2022-44.jpg",
+      "title": "2022 44",
       "collection": "california",
       "location": "",
-      "date": "2022-06-06",
+      "date": "",
       "width": 2500,
       "height": 1668,
-      "exif": {
-        "lens": "EF600mm f/4L IS III USM"
-      },
+      "exif": {},
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/california/2022-6-California-3.jpg"
+          "src": "images/_thumbs/800/california/2022-44.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/california/2022-6-California-3.jpg"
+          "src": "images/_thumbs/1600/california/2022-44.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/california/2022-6-California-3.jpg"
+          "src": "images/_thumbs/2400/california/2022-44.jpg"
         },
         {
           "w": 2500,
-          "src": "images/california/2022-6-California-3.jpg"
+          "src": "images/california/2022-44.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/california/2022-6-California-3.jpg",
-      "caption": "Yellow-rumped Warbler",
-      "sci": "Setophaga coronata",
-      "ebird": "yerwar",
-      "zh": "黄腰林莺"
+      "thumb": "images/_thumbs/1600/california/2022-44.jpg",
+      "caption": "Dark-eyed Junco",
+      "sci": "Junco hyemalis",
+      "ebird": "daejun",
+      "zh": "暗眼灯草鹀"
     },
     {
       "src": "images/california/2022-23.jpg",
@@ -11736,37 +11734,39 @@
       "zh": "暗冠蓝鸦"
     },
     {
-      "src": "images/california/3.jpg",
-      "title": "3",
+      "src": "images/california/2022-6-California-3.jpg",
+      "title": "2022-6-California-3",
       "collection": "california",
       "location": "",
-      "date": "2023-01-12",
+      "date": "2022-06-06",
       "width": 2500,
       "height": 1668,
-      "exif": {},
+      "exif": {
+        "lens": "EF600mm f/4L IS III USM"
+      },
       "variants": [
         {
           "w": 800,
-          "src": "images/_thumbs/800/california/3.jpg"
+          "src": "images/_thumbs/800/california/2022-6-California-3.jpg"
         },
         {
           "w": 1600,
-          "src": "images/_thumbs/1600/california/3.jpg"
+          "src": "images/_thumbs/1600/california/2022-6-California-3.jpg"
         },
         {
           "w": 2400,
-          "src": "images/_thumbs/2400/california/3.jpg"
+          "src": "images/_thumbs/2400/california/2022-6-California-3.jpg"
         },
         {
           "w": 2500,
-          "src": "images/california/3.jpg"
+          "src": "images/california/2022-6-California-3.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/california/3.jpg",
-      "caption": "Great Gray Owl",
-      "sci": "Strix nebulosa",
-      "ebird": "grgowl",
-      "zh": "乌林鸮"
+      "thumb": "images/_thumbs/1600/california/2022-6-California-3.jpg",
+      "caption": "Yellow-rumped Warbler",
+      "sci": "Setophaga coronata",
+      "ebird": "yerwar",
+      "zh": "黄腰林莺"
     },
     {
       "src": "images/new-england/2022-74.jpg",
