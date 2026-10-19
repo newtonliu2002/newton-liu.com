@@ -423,9 +423,18 @@
     // An upright cover is shown whole on the raised ground, as an upright
     // gallery opener is, rather than cut to a band across the window.
     function upright(ar) { box.classList.toggle("is-upright", ar > 0 && ar < 1); }
+    // A cover photo's own smaller and larger widths (journal.json `variants`,
+    // [{ w, src }], `src` among them), so a phone doesn't load what a 5K
+    // screen needs; a photograph from a collection has its own already.
+    function coverSizes(list) {
+      if (!Array.isArray(list)) return undefined;
+      return list.filter(function (v) { return v && v.w > 0 && typeof v.src === "string" && v.src; })
+        .map(function (v) { return { w: +v.w, src: cleanPath(v.src) }; })
+        .sort(function (a, b) { return a.w - b.w; });
+    }
     var c = journal.cover || {}, src = cleanPath(c.src);
     if (c.type === "photo" && src) {
-      var rec = photoBySrc[src] || { src: src };
+      var rec = photoBySrc[src] || { src: src, variants: coverSizes(c.variants) };
       var img = el("img");
       img.decoding = "async";
       img.setAttribute("fetchpriority", "high");
@@ -440,7 +449,12 @@
         box.classList.add("is-whole");
         if (ar) slot.style.aspectRatio = String(ar);
       }
-      S.responsive(img, rec, "100vw");
+      // Filling the window (100vh, 78vh on a phone; journal.css), a
+      // panorama is as wide as the window is tall times its ratio, wider
+      // than the window: the size asked for says so. A phone, which shows a
+      // narrow slice of it, asks for no more than the 4000 width.
+      S.responsive(img, rec, box.classList.contains("is-whole") || !(ar > 1) ? "100vw"
+        : "(max-width: 620px) min(max(100vw, " + Math.round(78 * ar) + "vh), 1300px), max(100vw, " + Math.round(100 * ar) + "vh)");
       if (c.focus || rec.focus) img.style.objectPosition = c.focus || rec.focus;
       slot.appendChild(img);
       box.classList.add("has-media");

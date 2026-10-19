@@ -180,6 +180,9 @@ def trip_media(folder, name):
     cover = journal.get("cover") or {}
     if isinstance(cover, dict) and cover.get("type") in ("photo", "video"):
         keys.append(cover.get("src"))
+        for v in cover.get("variants") or []:      # a photo cover's other widths
+            if isinstance(v, dict):
+                keys.append(v.get("src"))
         if cover.get("type") == "video":
             keys.append(cover.get("poster"))
     english = set(e for e in journal.get("english") or [] if isinstance(e, str))

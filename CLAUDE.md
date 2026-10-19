@@ -931,7 +931,12 @@ side, 2026-10-17); `month` ("October 2026", through `NLSite.date`); optional `da
 "placeholder", "photo" or "video", `src`, a video's `poster`, `alt`, and
 `"fit": "whole"` to show a landscape photo in its own proportions, nothing
 cut, rather than filling the window; Quebec's fills the window: Newton
-tried whole and went back, 2026-10-17);
+tried whole and went back, 2026-10-17); a photo cover not from a collection
+may list its widths, `variants` ([{ "w", "src" }], `src` among them), for
+its srcset: Quebec's is B0004545 from his full-size export at 1600, 2400,
+4000 and 6400 wide (a panorama filling a 5K window needs ~6200; 2400 alone
+was blurred, Newton 2026-10-19), a phone asking for no more than 4000;
+upload.py uploads them;
 `route`, the visits in travel order (`{ "place": <a pin name>, "date": "" }`;
 repeats and several a day allowed); `entries`, the reading order;
 `english`, the entries that also have an English version,

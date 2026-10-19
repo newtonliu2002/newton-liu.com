@@ -1,6 +1,9 @@
 {
   "sizes": {
-    "images/_journals/quebec/cover.jpg": [2400, 886],
+    "images/_journals/quebec/cover-2400.jpg": [2400, 886],
+    "images/_journals/quebec/cover-1600.jpg": [1600, 591],
+    "images/_journals/quebec/cover-4000.jpg": [4000, 1477],
+    "images/_journals/quebec/cover-6400.jpg": [6400, 2363],
     "images/_journals/quebec/owl-1.jpg": [2400, 1800],
     "images/_journals/quebec/owl-2.jpg": [2400, 1800],
     "images/_journals/quebec/french-cafe-window.jpg": [1800, 2400],
@@ -19,7 +22,10 @@
     "images/_journals/quebec/book-1.jpg": [2400, 1350]
   },
   "exif": {
-    "images/_journals/quebec/cover.jpg": {"camera": "Hasselblad X2D II 100C", "lens": "XCD 35-100E@35", "focal": "35mm", "aperture": "f/9.5", "shutter": "1/10s", "iso": "100"},
+    "images/_journals/quebec/cover-2400.jpg": {"camera": "Hasselblad X2D II 100C", "lens": "XCD 35-100E@35", "focal": "35mm", "aperture": "f/9.5", "shutter": "1/10s", "iso": "100"},
+    "images/_journals/quebec/cover-1600.jpg": {"camera": "Hasselblad X2D II 100C", "lens": "XCD 35-100E@35", "focal": "35mm", "aperture": "f/9.5", "shutter": "1/10s", "iso": "100"},
+    "images/_journals/quebec/cover-4000.jpg": {"camera": "Hasselblad X2D II 100C", "lens": "XCD 35-100E@35", "focal": "35mm", "aperture": "f/9.5", "shutter": "1/10s", "iso": "100"},
+    "images/_journals/quebec/cover-6400.jpg": {"camera": "Hasselblad X2D II 100C", "lens": "XCD 35-100E@35", "focal": "35mm", "aperture": "f/9.5", "shutter": "1/10s", "iso": "100"},
     "images/_journals/quebec/owl-1.jpg": {"camera": "Hasselblad X2D II 100C", "lens": "XCD 35-100E@100", "focal": "100mm", "aperture": "f/4", "shutter": "1/45s", "iso": "200"},
     "images/_journals/quebec/owl-2.jpg": {"camera": "Hasselblad X2D II 100C", "lens": "XCD 35-100E@100", "focal": "100mm", "aperture": "f/4", "shutter": "2s", "iso": "1600"},
     "images/_journals/quebec/french-cafe-window.jpg": {"camera": "Hasselblad X2D II 100C", "lens": "XCD 35-100E@100", "focal": "100mm", "aperture": "f/8", "shutter": "1/180s", "iso": "200"},
