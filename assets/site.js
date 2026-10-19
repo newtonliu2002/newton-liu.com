@@ -94,12 +94,12 @@
                taglines. A blurb he rewrites in English needs its Chinese
                rewritten here too.
      ZH_PLACES collection titles, list regions, the card's "where" parts,
-               and the pins that go Chinese: every pin in China, and
-               elsewhere the cities only (parks, reserves, islands, rivers
-               and roads stay English). A new place is one line in the
-               right group. Pins, titles and where-parts are kept apart
-               because the same name can be both (Hawai'i Island is a pin,
-               and stays English there, and a where-part, which doesn't).
+               and the pins: every pin in China, the major cities and the
+               best known fully Chinese; elsewhere a place keeps its own
+               name and only the generic part goes Chinese (McDonald湖),
+               and a small town is left as it is. A new place is one line
+               in the right group. Pins, titles and where-parts are kept
+               apart because the same name can be more than one.
      Bird names are in data/photos.json ("zh", beside caption, sci and
      ebird), from eBird's zh_SIM taxonomy.
      ------------------------------------------------------------------ */
@@ -189,7 +189,7 @@
       "New England": "新英格兰", "Québec": "魁北克", "Ecuador": "厄瓜多尔", "Galápagos": "加拉帕戈斯群岛",
       "Peru": "秘鲁", "Guangxi & Guangdong": "广西 & 广东", "Malaysia": "马来西亚", "Sri Lanka": "斯里兰卡",
       "Yunnan": "云南", "Yellowstone & North Dakota": "黄石 & 北达科他", "Morocco": "摩洛哥",
-      "Guangxi": "广西", "Arizona": "亚利桑那", "Big Bend": "大弯曲"
+      "Guangxi": "广西", "Arizona": "亚利桑那"
     },
     regions: { "North America": "北美洲", "South America": "南美洲", "Asia": "亚洲", "Africa": "非洲" },
     // A whole line first ("Sabah, Borneo" reads the other way round in
@@ -204,34 +204,55 @@
       "China": "中国", "Nebraska": "内布拉斯加", "Nuevo León": "新莱昂"
     },
     pins: {
-      // cities
-      "Monterey": "蒙特雷", "Monterrey": "蒙特雷",
-      "Vancouver": "温哥华", "Lima": "利马", "Cusco": "库斯科", "Matara": "马塔拉", "Nuwara Eliya": "努沃勒埃利耶",
-      "Kandy": "康提", "Sedona": "塞多纳", "Phoenix": "凤凰城", "Juneau": "朱诺", "Utqiagvik": "乌特恰维克",
-      "Fairbanks": "费尔班克斯", "Rabat": "拉巴特", "Agadir": "阿加迪尔", "Guelmim": "盖勒敏",
-      "Montreal": "蒙特利尔", "Quebec City": "魁北克市",
-      "Ottawa/Gatineau": "渥太华/加蒂诺", "Craig": "克雷格",
-      // the national parks in the US and Canada (Newton, 2026-10-17); not
-      // Quebec's own parcs nationaux, which keep their French names
-      "Acadia National Park": "阿卡迪亚国家公园", "Arches National Park": "拱门国家公园",
-      "Banff National Park": "班夫国家公园", "Big Bend National Park": "大弯曲国家公园",
-      "Black Canyon of the Gunnison National Park": "甘尼森黑峡谷国家公园",
-      "Channel Islands National Park": "海峡群岛国家公园", "Crater Lake National Park": "火山口湖国家公园",
-      "Denali National Park": "德纳里国家公园", "Everglades National Park": "大沼泽地国家公园",
-      "Glacier Bay National Park": "冰川湾国家公园", "Glacier National Park": "冰川国家公园",
-      "Grand Teton National Park": "大提顿国家公园", "Great Sand Dunes National Park": "大沙丘国家公园",
-      "Jasper National Park": "贾斯珀国家公园", "Katmai National Park": "卡特迈国家公园",
-      "Kenai Fjords National Park": "基奈峡湾国家公园", "Kluane National Park": "克卢恩国家公园",
-      "Parc national de la Mauricie": "莫里西国家公园", "Mesa Verde National Park": "弗德台地国家公园",
-      "Mount Rainier National Park": "雷尼尔山国家公园", "Saguaro National Park": "巨人柱国家公园",
-      "Sequoia & Kings Canyon National Parks": "红杉 & 国王峡谷国家公园",
-      "Theodore Roosevelt National Park": "西奥多·罗斯福国家公园",
-      "Waterton Lakes National Park": "沃特顿湖国家公园", "Yellowstone National Park": "黄石国家公园",
-      "Yosemite National Park": "优胜美地国家公园",
-      // and Sri Lanka's, Morocco's and Mexico's
-      "Yala National Park": "雅拉国家公园", "Bundala National Park": "本达拉国家公园",
-      "Horton Plains National Park": "霍顿平原国家公园", "Souss-Massa National Park": "苏斯-马萨国家公园",
-      "Cumbres de Monterrey National Park": "蒙特雷山国家公园",
+      // Major cities, fully Chinese. A smaller town keeps its own name
+      // (Tadoussac, Sedona, Fairbanks): it is simply not listed.
+      "Montreal": "蒙特利尔", "Quebec City": "魁北克市", "Ottawa/Gatineau": "渥太华/加蒂诺",
+      "Vancouver": "温哥华", "Phoenix": "凤凰城", "Monterrey": "蒙特雷", "Lima": "利马", "Cusco": "库斯科",
+      "Rabat": "拉巴特", "Agadir": "阿加迪尔", "Kandy": "康提",
+      // The best known, fully Chinese (Newton, 2026-10-19)
+      "Yellowstone National Park": "黄石国家公园", "Yosemite National Park": "优胜美地国家公园",
+      "Banff National Park": "班夫国家公园", "Glacier National Park": "冰川国家公园", "Machu Picchu": "马丘比丘",
+      "Hawai'i Island": "夏威夷岛", "Kaua'i": "考爱岛", "Maui": "毛伊岛", "O'ahu": "瓦胡岛",
+      // Everything else: its own name kept as written, only the generic
+      // part in Chinese and at the end (专名保留，通名意译; Newton,
+      // 2026-10-19): Lake McDonald is McDonald湖, Mount X is X山, no space.
+      // A park named after a lake or a mountain keeps that name whole
+      // (Crater Lake国家公园). A state or province inside a name is Chinese,
+      // as it is everywhere (阿拉斯加公路). Quebec's parcs nationaux are
+      // 国家公园 too.
+      "Acadia National Park": "Acadia国家公园", "Arches National Park": "Arches国家公园",
+      "Big Bend National Park": "Big Bend国家公园",
+      "Black Canyon of the Gunnison National Park": "Black Canyon of the Gunnison国家公园",
+      "Channel Islands National Park": "Channel Islands国家公园", "Crater Lake National Park": "Crater Lake国家公园",
+      "Denali National Park": "Denali国家公园", "Everglades National Park": "Everglades国家公园",
+      "Glacier Bay National Park": "Glacier Bay国家公园", "Grand Teton National Park": "Grand Teton国家公园",
+      "Great Sand Dunes National Park": "Great Sand Dunes国家公园", "Jasper National Park": "Jasper国家公园",
+      "Katmai National Park": "Katmai国家公园", "Kenai Fjords National Park": "Kenai Fjords国家公园",
+      "Kluane National Park": "Kluane国家公园", "Mesa Verde National Park": "Mesa Verde国家公园",
+      "Mount Rainier National Park": "Mount Rainier国家公园", "Saguaro National Park": "Saguaro国家公园",
+      "Sequoia & Kings Canyon National Parks": "Sequoia & Kings Canyon国家公园",
+      "Theodore Roosevelt National Park": "Theodore Roosevelt国家公园",
+      "Waterton Lakes National Park": "Waterton Lakes国家公园",
+      "Parc national de la Mauricie": "La Mauricie国家公园",
+      "Parc national des Grands-Jardins": "Grands-Jardins国家公园",
+      "Parc national des Hautes-Gorges-de-la-Rivière-Malbaie": "Hautes-Gorges-de-la-Rivière-Malbaie国家公园",
+      "Yala National Park": "Yala国家公园", "Bundala National Park": "Bundala国家公园",
+      "Horton Plains National Park": "Horton Plains国家公园", "Souss-Massa National Park": "Souss-Massa国家公园",
+      "Cumbres de Monterrey National Park": "Cumbres de Monterrey国家公园",
+      "Merritt Island National Wildlife Refuge": "Merritt Island国家野生动物保护区",
+      "Parker River National Wildlife Refuge": "Parker River国家野生动物保护区",
+      "Santa Ana National Wildlife Refuge": "Santa Ana国家野生动物保护区", "National Elk Refuge": "国家马鹿保护区",
+      "Three Lakes Wildlife Management Area": "Three Lakes野生动物管理区",
+      "Bentsen-Rio Grande Valley State Park": "Bentsen-Rio Grande Valley州立公园",
+      "Fort De Soto Park": "Fort De Soto公园", "Nebraska National Forest": "内布拉斯加国家森林",
+      "Pawnee National Grassland": "Pawnee国家草原", "Sinharaja Forest Reserve": "Sinharaja森林保护区",
+      "Mindo Cloud Forest": "Mindo云雾林",
+      "Lake Apopka": "Apopka湖", "Kinabatangan River": "Kinabatangan河", "Platte River": "Platte河",
+      "Sawtooth Mountains": "Sawtooth山脉", "Labuk Bay": "Labuk湾", "Loveland Pass": "Loveland山口",
+      "Skagit Valley": "Skagit谷", "Santa Cruz Flats": "Santa Cruz平原",
+      "Isabela Island": "Isabela岛", "Santa Cruz Island": "Santa Cruz岛", "Catalina Island": "Catalina岛",
+      "Alaska Highway": "阿拉斯加公路", "Stewart–Cassiar Highway": "Stewart–Cassiar公路",
+      "Central Sabah": "沙巴中部",
       // everything in China
       "Shenzhen Bay": "深圳湾", "Nonggang National Nature Reserve": "弄岗国家级自然保护区",
       "Gaoligong Mountains": "高黎贡山", "Dali": "大理", "Lijiang": "丽江", "Shangri-La": "香格里拉"

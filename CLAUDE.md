@@ -450,12 +450,20 @@ West, The Desert West, The Snowy West, Birds of the Rio Grande), the card's
 "where" lines, region headings, dates ("May 2023, December 2024" →
 2023年5月、2024年12月), the local time (下午3:50), the readout ("北纬
 45.5000° · 西经 73.5700°", the words in their own spans so the digits stay
-mono), and the pins: every pin in China, and elsewhere the cities only.
-Not Quebec's small towns (Saguenay, Tadoussac, Baie-Saint-Paul): they stay
-in French, and its park pins are named in French in both languages (Parc
-national du Fjord-du-Saguenay…). Cape May, Ouray and Sanibel & Fort Myers stay English. The national parks in
-the US, Canada, Sri Lanka, Morocco and Mexico (every national park pin) do go Chinese (La Mauricie too, a federal park), but not
-Quebec's provincial three (Newton, 2026-10-17).
+mono), and the pins, by one rule (Newton, 2026-10-19): **a place keeps its
+own name as written and only the generic part goes Chinese, at the end, no
+space** (专名保留，通名意译): La Mauricie国家公园, Apopka湖, Kinabatangan河,
+Isabela岛, Merritt Island国家野生动物保护区; "Lake McDonald" would be
+McDonald湖 and "Mount X" X山. A park named after a lake or mountain keeps that
+name whole (Crater Lake国家公园, Mount Rainier国家公园). A state or province
+inside a name is Chinese as everywhere (阿拉斯加公路, 内布拉斯加国家森林).
+Quebec's parcs nationaux are 国家公园 too (his call: Canada recognises Quebec
+as a nation). Fully Chinese: everything in China, major cities (蒙特利尔,
+渥太华/加蒂诺, 利马, 凤凰城…), countries, states and provinces, and the best known
+(黄石, 优胜美地, 班夫, 冰川 as in his essay, 马丘比丘, 加拉帕戈斯群岛, Hawai'i's four
+islands). A small town with no generic part keeps its own name in both
+(Tadoussac, Saguenay, Sedona, Fairbanks, Cape May). His journal heading
+lines are never touched.
 **Not translated:** "Newton Liu Photography" (the wordmark and the end of
 the tab titles, his call 2026-10-17), the About essay, blurbs, notes, the Contact page's sentence
 (its list labels do go Chinese, 邮箱： and so on: contactLabels() in site.js,
@@ -474,10 +482,9 @@ also sets the card's ‹ ›, the tour and the passing order), and all keys
   `contact.title`). **A Projects blurb rewritten in English needs its
   Chinese rewritten here too.**
 - `ZH_PLACES`: `titles`, `regions`, `where` (a whole line, else each part
-  between " · "), `pins`. They are separate because one name can be two
-  things (Hawai'i Island is an island pin, which stays English, and a
-  where-part, which doesn't). **A new place** is one line in the right
-  group; a pin that should stay English simply isn't listed. About's
+  between " · "), `pins`. They are separate because one name can be more
+  than one thing. **A new place** is one line in the right group, by the
+  rule above; a pin that keeps its own name whole simply isn't listed. About's
   numbers keep their own `ZH_PLACE` inside `photoNumbers` (Mindo is 厄瓜多尔
   there only).
 - **A new bird name:** its `zh` in photos.json beside `caption`, `sci` and
