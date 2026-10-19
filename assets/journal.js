@@ -469,6 +469,7 @@
           if (own(shapes, src)) { view.width = shapes[src][0]; view.height = shapes[src][1]; }
           else if (img.naturalWidth) { view.width = img.naturalWidth; view.height = img.naturalHeight; }
           if (own(cameras, src)) view.exif = cameras[src];
+          if (view.exif && view.exif.date) view.date = view.exif.date;
           if (own(birds, src)) ["caption", "sci", "ebird", "zh"].forEach(function (k) {
             if (birds[src][k]) view[k] = birds[src][k];
           });
@@ -768,6 +769,7 @@
     var view = rec ? copy(rec) : { src: item.src };
     if (!rec && own(shapes, item.src) && cell._ar) { view.width = shapes[item.src][0]; view.height = shapes[item.src][1]; }
     if (!rec && own(cameras, item.src)) view.exif = cameras[item.src];   // the camera line when enlarged
+    if (!rec && view.exif && view.exif.date) view.date = view.exif.date;  // and the day above it
     // A bird's names under it, as in the collections: English, Latin, the
     // eBird link, and its Chinese name first in Chinese.
     if (!rec && own(birds, item.src)) ["caption", "sci", "ebird", "zh"].forEach(function (k) {

@@ -19,9 +19,10 @@
   /* ------------------------------------------------------------------
      CAPTIONS — what, if anything, is printed under a photograph.
 
-     Everything is off: the photographs are shown without titles, dates,
-     locations or camera data. Flip any of these to true to bring that line
-     back; the data is always there, refreshed from the files on every run of
+     The enlarged photograph shows the day it was taken (where its file
+     says; Newton asked, 2026-10-19), its camera line and a bird's names;
+     nothing shows over a thumbnail. Flip any of these to bring a line back
+     or take it away; the data is always there, refreshed from the files on every run of
      tools/build.py, so nothing needs regenerating first.
 
        title     the photograph's name
@@ -38,7 +39,7 @@
      ------------------------------------------------------------------ */
   var CAPTIONS = {
     grid:     { title: false, location: false },
-    lightbox: { title: false, location: false, date: false, exif: true, caption: true }
+    lightbox: { title: false, location: false, date: true, exif: true, caption: true }
   };
 
   // Which EXIF fields print, and in what order. Any field that's missing from

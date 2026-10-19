@@ -692,6 +692,11 @@ def journal_shapes(folder):
                 # a collection's photographs have from photos.json.
                 if format_exif(fields):
                     exif[key] = format_exif(fields)
+                    # The day it was taken, shown over the camera line when
+                    # enlarged, as a collection's photographs have it.
+                    m = re.match(r"^(\d{4}):(\d{2}):(\d{2})", fields.get("date_taken") or "")
+                    if m:
+                        exif[key]["date"] = "{}-{}-{}".format(*m.groups())
         elif isinstance(old_exif.get(key), dict):
             exif[key] = old_exif[key]
         if size and size[0] and size[1]:

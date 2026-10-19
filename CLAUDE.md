@@ -319,12 +319,19 @@ and switches (`STARS`, `TERRAIN_3D`) are just below it, and day and night's
 
 ## What's shown under a photograph
 
-**Only the technical line: camera, lens, aperture, shutter, ISO.** No title,
-no filename, no date, no location. This is deliberate — do not add them back
-without being asked.
+**The day it was taken, then the technical line: camera, lens, aperture,
+shutter, ISO** (and a bird's names under it). No title, no filename, no
+location. This is deliberate — do not add them back without being asked.
+The date line (`CAPTIONS.lightbox.date`, the photograph's `date`, from its
+EXIF when the filename gives none) was off until Newton asked for it on
+2026-10-19; it shows only where a date is known (208 of 410 then: Galápagos,
+Ecuador, Yunnan, Sri Lanka, Hawai'i, Colorado & Nebraska and most of
+Malaysia were exported without EXIF; their dates are to come from his
+Lightroom catalog). A journal's own photographs carry theirs in media.json
+(`exif.date`, from the file's DateTimeOriginal).
 
 Dates appear **once per collection**, under the gallery heading ("December
-2025"), never on individual photographs. That line is derived from the capture
+2025"), and on a photograph only when it is enlarged. That line is derived from the capture
 dates in the manifest by `collectionDate()` in `site.js`, so it stays correct
 as photographs are added. Set `"date"` on a collection in
 `data/collections.json` to override it with fixed text — Galápagos, Ecuador,
