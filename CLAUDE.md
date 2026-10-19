@@ -389,6 +389,12 @@ look. Uncertain ones were left unnamed and listed for Newton (downy chicks,
 distant flocks, silhouettes, Darwin's finches, birds off his eBird list at
 medium confidence).
 
+**More than one animal** (Newton, 2026-10-19: "its gulls and humpback"): a
+photograph's `also` is a list of further names, each with the same fields
+(`caption`, `sci`, `zh`, and `ebird` or `wiki`/`wikiZh`); the lightbox gives
+every animal its own line (`.lb-row`), the named one first. `also` is an
+authored field too.
+
 **Other animals' names** (Newton, 2026-10-19): mammals, reptiles, crabs, the
 shark, the ants and the butterfly have the same line, in the birds' Title
 Case, linked to Wikipedia instead of eBird: `wiki` is the English article's
@@ -1305,7 +1311,7 @@ folder name ("2026.9" = September 2026; Newton corrected it from 2024 on
 
 `build.py` never overwrites hand-authored text (`AUTHORED_FIELDS`: `title`,
 `location`, `date`, `caption`, `collection`, `featured`, `focus`, `sci`,
-`ebird`, `zh`, `wiki`, `wikiZh`). A new hand-edited field must be added there, or the next
+`ebird`, `zh`, `wiki`, `wikiZh`, `also`). A new hand-edited field must be added there, or the next
 build drops it. It only refreshes mechanical fields — dimensions,
 EXIF, thumbnail paths. To re-derive a field, delete it from `photos.json` and
 rebuild.

@@ -470,7 +470,7 @@
           else if (img.naturalWidth) { view.width = img.naturalWidth; view.height = img.naturalHeight; }
           if (own(cameras, src)) view.exif = cameras[src];
           if (view.exif && view.exif.date) view.date = view.exif.date;
-          if (own(birds, src)) ["caption", "sci", "ebird", "zh", "wiki", "wikiZh"].forEach(function (k) {
+          if (own(birds, src)) ["caption", "sci", "ebird", "zh", "wiki", "wikiZh", "also"].forEach(function (k) {
             if (birds[src][k]) view[k] = birds[src][k];
           });
         }
@@ -772,7 +772,7 @@
     if (!rec && view.exif && view.exif.date) view.date = view.exif.date;  // and the day above it
     // A bird's names under it, as in the collections: English, Latin, the
     // eBird link, and its Chinese name first in Chinese.
-    if (!rec && own(birds, item.src)) ["caption", "sci", "ebird", "zh", "wiki", "wikiZh"].forEach(function (k) {
+    if (!rec && own(birds, item.src)) ["caption", "sci", "ebird", "zh", "wiki", "wikiZh", "also"].forEach(function (k) {
       if (birds[item.src][k]) view[k] = birds[item.src][k];
     });
     view.alt = img.alt;

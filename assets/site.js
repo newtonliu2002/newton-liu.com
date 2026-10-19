@@ -2466,25 +2466,32 @@
     var title = (zh ? photo.wikiZh : photo.wiki).replace(/ /g, "_");
     return (zh ? "https://zh.wikipedia.org/zh-cn/" : "https://en.wikipedia.org/wiki/") + encodeURIComponent(title);
   }
+  // One line per animal: the named one, then any others in the frame
+  // ("also", the same fields each; Newton, 2026-10-19: gulls AND the
+  // humpback they're mobbing).
   function nameLine(photo) {
     lbName.textContent = "";
     if (!CAPTIONS.lightbox.caption || !photo.caption) return;
-    var to = lbName, link = photo.ebird ? "https://ebird.org/species/" + encodeURIComponent(photo.ebird)
-      : photo.wiki ? wikiURL(photo) : "";
-    if (link) {
-      to = lbName.appendChild(el("a", photo.ebird ? "lb-ebird" : "lb-wiki"));
-      to.href = link;
-      to.target = "_blank";
-      to.rel = "noopener";
-    }
-    if (LANG === "zh" && photo.zh) setText(to.appendChild(el("span", "lb-zh")), photo.zh);
-    to.appendChild(document.createTextNode(photo.caption));
-    if (photo.sci) to.appendChild(el("i", "lb-sci")).textContent = photo.sci;
-    if (link) {
-      var out = to.appendChild(el("span", "lb-out"));
-      out.textContent = "\u2197";
-      out.setAttribute("aria-hidden", "true");
-    }
+    [photo].concat(Array.isArray(photo.also) ? photo.also : []).forEach(function (who) {
+      if (!who || !who.caption) return;
+      var row = lbName.appendChild(el("span", "lb-row")), to = row;
+      var link = who.ebird ? "https://ebird.org/species/" + encodeURIComponent(who.ebird)
+        : who.wiki ? wikiURL(who) : "";
+      if (link) {
+        to = row.appendChild(el("a", who.ebird ? "lb-ebird" : "lb-wiki"));
+        to.href = link;
+        to.target = "_blank";
+        to.rel = "noopener";
+      }
+      if (LANG === "zh" && who.zh) setText(to.appendChild(el("span", "lb-zh")), who.zh);
+      to.appendChild(document.createTextNode(who.caption));
+      if (who.sci) to.appendChild(el("i", "lb-sci")).textContent = who.sci;
+      if (link) {
+        var out = to.appendChild(el("span", "lb-out"));
+        out.textContent = "\u2197";
+        out.setAttribute("aria-hidden", "true");
+      }
+    });
   }
 
   function metaLine(photo) {

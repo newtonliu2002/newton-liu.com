@@ -66,7 +66,7 @@ VARIANT_QUALITY = 85
 # its eBird species code (ebird.org/species/<code>) and `zh` its Chinese name
 # (eBird's zh_SIM, shown first in the lightbox when the site is in Chinese).
 AUTHORED_FIELDS = ("title", "location", "date", "caption", "collection", "featured",
-                   "focus", "sci", "ebird", "zh", "wiki", "wikiZh")
+                   "focus", "sci", "ebird", "zh", "wiki", "wikiZh", "also")
 
 
 # --------------------------------------------------------------------------

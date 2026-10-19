@@ -79,7 +79,16 @@
       "caption": "Glaucous-winged Gull",
       "sci": "Larus glaucescens",
       "ebird": "glwgul",
-      "zh": "灰翅鸥"
+      "zh": "灰翅鸥",
+      "also": [
+        {
+          "caption": "Humpback Whale",
+          "sci": "Megaptera novaeangliae",
+          "zh": "大翅鲸",
+          "wiki": "Humpback whale",
+          "wikiZh": "大翅鲸"
+        }
+      ]
     },
     {
       "src": "images/alaska/BU2A8430.jpg",
