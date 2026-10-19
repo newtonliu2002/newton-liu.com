@@ -57,7 +57,7 @@ EXTENSIONS = RASTER_EXT + (".svg",)
 # phone should ever download. So every photograph is also written out at these
 # long edges, and the browser picks one from a srcset. Add a width here and the
 # next build fills it in; the original is always offered as the largest.
-VARIANT_LONG_EDGES = (800, 1600, 2400)
+VARIANT_LONG_EDGES = (800, 1600, 2400, 4000)   # 4000 matters only above it: a 6400 panorama (5K screens)
 VARIANT_QUALITY = 85
 
 # Fields a human may edit; never overwritten once set. `focus` is a CSS

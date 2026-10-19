@@ -357,6 +357,11 @@
 
   // Height-capped slots (the opener, the lightbox) are limited by the window's
   // height, not its width, so their width follows from the photograph's ratio.
+  // The lightbox's: .lb-image is capped at the window's width and at its
+  // height less 13rem for the caption (site.css).
+  function lbSizes(photo) {
+    return "min(100vw, calc((100vh - 13rem) * " + aspectOf(photo).toFixed(3) + "))";
+  }
   function cappedSizes(photo, vh) {
     return "min(100vw, " + Math.round(vh * aspectOf(photo)) + "vh)";
   }
@@ -2839,9 +2844,11 @@
     index = (i + shown.length) % shown.length;       // wrap at both ends
 
     var photo = shown[index];
-    // .lb-image is capped at roughly 80vh once the caption is allowed for.
+    // .lb-image is capped at the window less 13rem for the caption (site.css),
+    // and at its width: say so exactly, or an upright on a tall window gets a
+    // file a size too small, and a panorama on a 5K screen the 4000 one.
     lbImage.removeAttribute("srcset");        // or the old one races the new
-    responsive(lbImage, photo, cappedSizes(photo, 80));
+    responsive(lbImage, photo, lbSizes(photo));
     lbImage.alt = photo.alt || altFor(photo);
     lbTitle.textContent = (CAPTIONS.lightbox.title && photo.title) || "";
     lbMeta.textContent = metaLine(photo);
@@ -2863,7 +2870,7 @@
       // Warm the same file the lightbox will actually ask for — preloading
       // the 4000px original when it will display the 2400px one downloads
       // both.
-      if (next) responsive(new Image(), next, cappedSizes(next, 80));
+      if (next) responsive(new Image(), next, lbSizes(next));
     });
   }
 

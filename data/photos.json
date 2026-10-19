@@ -5442,8 +5442,8 @@
         }
       ],
       "thumb": "images/_thumbs/1600/yellowstone/05A2016.jpg",
-      "focus": "center bottom",
       "caption": "American Bison",
+      "focus": "center bottom",
       "sci": "Bison bison",
       "zh": "美洲野牛",
       "wiki": "American bison",
@@ -13290,8 +13290,8 @@
       "collection": "quebec",
       "location": "",
       "date": "2026-10-14",
-      "width": 4000,
-      "height": 1477,
+      "width": 6400,
+      "height": 2363,
       "exif": {
         "camera": "Hasselblad X2D II 100C",
         "lens": "XCD 35-100E@35",
@@ -13315,6 +13315,10 @@
         },
         {
           "w": 4000,
+          "src": "images/_thumbs/4000/quebec/B0004601.jpg"
+        },
+        {
+          "w": 6400,
           "src": "images/quebec/B0004601.jpg"
         }
       ],
@@ -13398,8 +13402,8 @@
       "collection": "quebec",
       "location": "",
       "date": "2026-10-14",
-      "width": 4000,
-      "height": 1477,
+      "width": 6400,
+      "height": 2363,
       "exif": {
         "camera": "Hasselblad X2D II 100C",
         "lens": "XCD 35-100E@35",
@@ -13423,6 +13427,10 @@
         },
         {
           "w": 4000,
+          "src": "images/_thumbs/4000/quebec/B0004545.jpg"
+        },
+        {
+          "w": 6400,
           "src": "images/quebec/B0004545.jpg"
         }
       ],
@@ -13613,8 +13621,8 @@
       "collection": "quebec",
       "location": "",
       "date": "2026-10-11",
-      "width": 4000,
-      "height": 3000,
+      "width": 6400,
+      "height": 4800,
       "exif": {
         "camera": "Hasselblad X2D II 100C",
         "lens": "XCD 20-35E@35",
@@ -13638,6 +13646,10 @@
         },
         {
           "w": 4000,
+          "src": "images/_thumbs/4000/quebec/B0003769.jpg"
+        },
+        {
+          "w": 6400,
           "src": "images/quebec/B0003769.jpg"
         }
       ],
@@ -13968,8 +13980,8 @@
       "collection": "quebec",
       "location": "",
       "date": "2026-10-09",
-      "width": 4000,
-      "height": 1477,
+      "width": 6400,
+      "height": 2363,
       "exif": {
         "camera": "Hasselblad L3D-100c",
         "focal": "14mm",
@@ -13992,6 +14004,10 @@
         },
         {
           "w": 4000,
+          "src": "images/_thumbs/4000/quebec/DJI-20261009060605-0169-D.jpg"
+        },
+        {
+          "w": 6400,
           "src": "images/quebec/DJI-20261009060605-0169-D.jpg"
         }
       ],
@@ -14147,8 +14163,8 @@
       "collection": "quebec",
       "location": "",
       "date": "2026-10-11",
-      "width": 4000,
-      "height": 1477,
+      "width": 6400,
+      "height": 2363,
       "exif": {
         "camera": "Hasselblad L3D-100c",
         "focal": "14mm",
@@ -14171,6 +14187,10 @@
         },
         {
           "w": 4000,
+          "src": "images/_thumbs/4000/quebec/DJI-20261011081844-0032-D.jpg"
+        },
+        {
+          "w": 6400,
           "src": "images/quebec/DJI-20261011081844-0032-D.jpg"
         }
       ],
@@ -14433,8 +14453,8 @@
       "collection": "quebec",
       "location": "",
       "date": "2026-10-09",
-      "width": 4000,
-      "height": 2250,
+      "width": 6400,
+      "height": 3600,
       "exif": {
         "camera": "Hasselblad L3D-100c",
         "focal": "14mm",
@@ -14457,6 +14477,10 @@
         },
         {
           "w": 4000,
+          "src": "images/_thumbs/4000/quebec/DJI-20261009060641-0170-D.jpg"
+        },
+        {
+          "w": 6400,
           "src": "images/quebec/DJI-20261009060641-0170-D.jpg"
         }
       ],

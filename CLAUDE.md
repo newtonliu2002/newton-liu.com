@@ -663,11 +663,17 @@ window, so it stays centred at 34%. A plan should avoid ever leaving one.
 
 ## Sizes on the page
 
-Originals are imported at a **4000px long edge, JPEG quality 85**, which is
-enough that a full-width photograph on a 5K display is drawn from real pixels.
-That is far more than a phone should ever download, so `build.py` also writes
-each photograph out at the long edges in `VARIANT_LONG_EDGES` — 800, 1600,
-2400 — under `images/_thumbs/<edge>/<slug>/`, and records the whole ladder as
+Originals are imported at a **4000px long edge, JPEG quality 85**. That is
+not quite enough for a panorama or the full-bleed opener on a 5K display
+(Newton's Studio Display: 2560 points, so about 4,900 pixels across in the
+lightbox), so a horizontal frame that fills the width can be re-exported at
+**6400 wide** (quality 90, GPS stripped, from his full-size file, matched to
+the site's crop first): Québec's B0004601, B0004545, B0003769 and the three
+DJI 0169/0032/0170, 2026-10-19; the boat B0004180, B0004316 and DJI 0053 wait
+for his full-size exports. Uprights never need it: the lightbox caps them by
+the window's height. That is far more than a phone should ever download, so
+`build.py` also writes each photograph out at the long edges in
+`VARIANT_LONG_EDGES` — 800, 1600, 2400, and 4000 under a larger source — under `images/_thumbs/<edge>/<slug>/`, and records the whole ladder as
 `variants` on the photograph in `photos.json`. The original is always offered
 as the largest rung. Nothing is ever upscaled: a variant wider than its source
 is skipped.
