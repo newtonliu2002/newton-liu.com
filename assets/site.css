@@ -886,16 +886,17 @@ body[data-page="globe"] .nav-menu-list { border-top: 1px solid var(--hairline); 
   margin: 0; color: var(--text-dim);
   font: 400 var(--t-meta)/1.5 var(--mono); letter-spacing: .02em;
 }
-/* The camera line, and under it the bird's name where one is given. */
+/* The bird's name first and largest (wireLightbox moves it up), then the
+   date, then the camera line. */
 .lb-exif {
-  margin: 0.4rem 0 0; color: var(--text-faint);
+  margin: 0.2rem 0 0; color: var(--text-faint);
   font: 400 var(--t-meta)/1.5 var(--mono);
   letter-spacing: .02em;
   font-variant-numeric: tabular-nums;
 }
 .lb-name {
-  margin: 0.15rem 0 0; color: var(--text-dim);
-  font: 400 var(--t-meta)/1.5 var(--mono);
+  margin: 0 0 0.45rem; color: var(--text);
+  font: 400 15px/1.5 var(--mono);
   letter-spacing: .02em;
 }
 .lb-name a { color: inherit; text-decoration: none; }
@@ -2334,7 +2335,7 @@ body.is-editing .about-rail { top: calc(var(--nl-bar-h) + var(--masthead-h) + 2r
 /* A Chinese line of places breaks only between places, never inside a name. */
 .g-plate-where:lang(zh), .g-card-where:lang(zh) { word-break: keep-all; }
 /* The bird's Chinese name, before the English and the Latin. */
-.lb-zh { margin-right: .7em; font-size: 13px; }
+.lb-zh { margin-right: .7em; font-size: 17px; }
 
 /* Until site.js has put the page's own words into Chinese (it does before
    the first paint on a normal load), they stay hidden rather than flash

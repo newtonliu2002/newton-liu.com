@@ -212,7 +212,8 @@
       "Rabat": "拉巴特", "Agadir": "阿加迪尔", "Kandy": "康提", "Fairbanks": "费尔班克斯", "Juneau": "朱诺",
       // The best known, fully Chinese (Newton, 2026-10-19)
       "Yellowstone National Park": "黄石国家公园", "Yosemite National Park": "优胜美地国家公园",
-      "Banff National Park": "班夫国家公园", "Grand Teton National Park": "大提顿国家公园",
+      "Banff National Park": "班夫国家公园", "Jasper National Park": "贾斯珀国家公园",
+      "Grand Teton National Park": "大提顿国家公园",
       "Glacier National Park": "冰川国家公园", "Machu Picchu": "马丘比丘",
       "Hawai'i Island": "夏威夷岛", "Kaua'i": "考爱岛", "Maui": "毛伊岛", "O'ahu": "瓦胡岛",
       // Everything else: its own name kept as written, only the generic
@@ -228,7 +229,7 @@
       "Channel Islands National Park": "Channel Islands国家公园", "Crater Lake National Park": "Crater Lake国家公园",
       "Denali National Park": "Denali国家公园", "Everglades National Park": "Everglades国家公园",
       "Glacier Bay National Park": "Glacier Bay国家公园",
-      "Great Sand Dunes National Park": "Great Sand Dunes国家公园", "Jasper National Park": "Jasper国家公园",
+      "Great Sand Dunes National Park": "Great Sand Dunes国家公园", 
       "Katmai National Park": "Katmai国家公园", "Kenai Fjords National Park": "Kenai Fjords国家公园",
       "Kluane National Park": "Kluane国家公园", "Mesa Verde National Park": "Mesa Verde国家公园",
       "Mount Rainier National Park": "Mount Rainier国家公园", "Saguaro National Park": "Saguaro国家公园",
@@ -237,6 +238,7 @@
       "Waterton Lakes National Park": "Waterton Lakes国家公园",
       "Parc national de la Mauricie": "La Mauricie国家公园",
       "Parc national des Grands-Jardins": "Grands-Jardins国家公园",
+      "Parc national du Fjord-du-Saguenay": "Fjord-du-Saguenay国家公园",
       "Parc national des Hautes-Gorges-de-la-Rivière-Malbaie": "Hautes-Gorges-de-la-Rivière-Malbaie国家公园",
       "Yala National Park": "Yala国家公园", "Bundala National Park": "Bundala国家公园",
       "Horton Plains National Park": "Horton Plains国家公园", "Souss-Massa National Park": "Souss-Massa国家公园",
@@ -2886,6 +2888,9 @@
     lbMeta  = lightbox.querySelector(".lb-meta");
     lbExif  = lightbox.querySelector(".lb-exif");
     lbName  = lightbox.querySelector(".lb-name");
+    // The bird's name leads, under the photograph, with the date and the
+    // camera below it (Newton, 2026-10-19); the pages' markup has it last.
+    if (lbName && lbMeta) lbMeta.parentNode.insertBefore(lbName, lbMeta);
 
     lightbox.querySelector(".lb-close").addEventListener("click", function () { close(false); });
     lightbox.querySelector(".lb-prev").addEventListener("click", function () { show(index - 1); });

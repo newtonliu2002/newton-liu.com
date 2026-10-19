@@ -7,7 +7,7 @@
     "variants": [{ "w": 1600, "src": "images/_journals/quebec/cover-1600.jpg" }, { "w": 2400, "src": "images/_journals/quebec/cover-2400.jpg" }, { "w": 4000, "src": "images/_journals/quebec/cover-4000.jpg" }, { "w": 6400, "src": "images/_journals/quebec/cover-6400.jpg" }] },
   "route": [
     { "place": "Montreal", "date": "2026-10-08" },
-    { "place": "L'Anse-Saint-Jean", "date": "" },
+    { "place": "Parc national du Fjord-du-Saguenay", "date": "" },
     { "place": "Saguenay", "date": "" },
     { "place": "Tadoussac", "date": "2026-10-11" },
     { "place": "Baie-Saint-Paul", "date": "2026-10-12" },

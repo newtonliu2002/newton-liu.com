@@ -227,9 +227,9 @@ keyed by the collection's slug, after the usual collections.json entry:
   in places.json and routes.json; taking a slug out of the list brings it
   back. **Quebec** (October 2026) has its photographs now (2026-10-17: the
   collection `quebec`, 33 frames, his journal linked from its rail and
-  card); its pins and road: Montreal, L'Anse-Saint-Jean, Saguenay, Tadoussac (his route as
-  driven, 2026-10-17: no La Mauricie, Quebec City or Fjord-du-Saguenay park
-  pin), Baie-Saint-Paul, Hautes-Gorges, back
+  card); its pins and road: Montreal, Parc national du Fjord-du-Saguenay (the
+  L'Anse-Saint-Jean pin renamed, same place, 2026-10-19), Saguenay, Tadoussac
+  (his route as driven, 2026-10-17: no Quebec City pin), Baie-Saint-Paul, Hautes-Gorges, back
   through Baie-Saint-Paul (one pin for a place passed twice, his rule),
   Grands-Jardins, La Mauricie (back on 2026-10-17 for his entry 《月》 there on
   10.15, on the way home), Ottawa/Gatineau (his name for it); park pins sit on the park road. Its passing card
