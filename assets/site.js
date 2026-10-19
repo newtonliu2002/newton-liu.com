@@ -1026,7 +1026,7 @@
         monthShort: function (i) { return MON[i].charAt(0); }, allYears: "all years combined",
         byYear: "Photos by year", byMonth: "Photos by month, all years combined", byCountry: "Photos by country/territory",
         allAria: "All photos, by year, month and country",
-        bigTrip: "Biggest trip", perDay: "Most per day",
+        bigTrip: "Biggest trip", perDay: "Most per day", perDayOne: "Per day",
         days: function (n) { return n + " days"; },
         byTrip: "Images by trip, top 10",
         trip: function (t) { return t[3] + " days · " + fmt(t[5]) + "/day"; },
@@ -1067,7 +1067,7 @@
         monthShort: function (i) { return String(i + 1); }, allYears: "历年总计",
         byYear: "每年的照片数（万张）", byMonth: "一年中每个月的照片数（历年总计，万张）", byCountry: "各国家/地区的照片数",
         allAria: "全部照片：按年份、月份和国家/地区",
-        bigTrip: "拍得最多的一次旅行", perDay: "日均最多",
+        bigTrip: "拍得最多的一次旅行", perDay: "日均最多", perDayOne: "日均",
         days: function (n) { return n + "天"; },
         byTrip: "拍得最多的十次旅行（张）",
         trip: function (t) { return t[3] + "天 · 平均每天" + fmt(t[5]) + "张"; },
@@ -1110,7 +1110,11 @@
     }
 
     // ---- One block: its readout (if it has one), its dials, its charts ----
-    // opt: { cls, label, n, unit, ctx, dials: [[key, value, note?, unit?]], aria, listFirst }
+    // opt: { cls, label, n, unit, ctx, dials: [[key, value, note?, unit?, n?]], aria, listFirst }
+    // A bar or row with its own `dial` ([key, n, note]) shows it in place of
+    // the first dial while it is read, the number running to it as the
+    // readout's does (the trips: each one's own day average, Newton,
+    // 2026-10-19); n is the first dial's own number, to run back to.
     function Block(box, opt) {
       var blk = el("section", "nb-block nb-" + opt.cls);
       blk.setAttribute("aria-label", opt.aria);
@@ -1124,14 +1128,16 @@
         read.appendChild(lab); read.appendChild(num); read.appendChild(ctx);
         inst.appendChild(read);
       }
+      var dialEls = [];
       if (opt.dials) {
         var dials = el("div", "nb-dials");
         opt.dials.forEach(function (d) {
           var s = el("div", "nb-dial");
-          s.appendChild(el("span", "nb-k", d[0]));
-          var dv = s.appendChild(el("span", "nb-dv", d[1]));
+          var k = s.appendChild(el("span", "nb-k", d[0]));
+          var dv = s.appendChild(el("span", "nb-dv")), dn = dv.appendChild(document.createTextNode(d[1]));
           if (d[3]) dv.appendChild(el("span", "nb-unit", d[3]));
-          if (d[2]) s.appendChild(el("span", "nb-note", d[2]));
+          var note = d[2] ? s.appendChild(el("span", "nb-note", d[2])) : null;
+          dialEls.push({ d: d, k: k, dn: dn, note: note, shown: d[4], anim: 0 });
           dials.appendChild(s);
         });
         inst.appendChild(dials);
@@ -1155,6 +1161,26 @@
           anim = t < 1 ? requestAnimationFrame(step) : 0;
         }
         anim = requestAnimationFrame(step);
+      }
+
+      // The first dial: an item's own, or its own again.
+      function setDial(it, ms) {
+        var o = dialEls[0];
+        if (!o || o.d[4] == null) return;
+        var to = it && it.dial ? it.dial : [o.d[0], o.d[4], o.d[2]];
+        o.k.textContent = to[0];
+        if (o.note) o.note.textContent = to[2] || "";
+        if (o.anim) cancelAnimationFrame(o.anim);
+        o.anim = 0;
+        if (!ms || RM.matches) { o.shown = to[1]; o.dn.nodeValue = fmt(to[1]); return; }
+        var from = o.shown, t0 = null;
+        o.anim = requestAnimationFrame(function step(now) {
+          if (t0 === null) t0 = now;
+          var t = Math.min(1, (now - t0) / ms), e = 1 - Math.pow(1 - t, 3);
+          o.shown = from + (to[1] - from) * e;
+          o.dn.nodeValue = fmt(o.shown);
+          o.anim = t < 1 ? requestAnimationFrame(step) : 0;
+        });
       }
 
       function head(sec, title) {
@@ -1234,7 +1260,7 @@
           li.appendChild(track);
           li.appendChild(el("span", "nb-n", fmt(r.n)));
           ol.appendChild(li);
-          var it = { el: li, label: r.label, n: r.n, ctx: r.ctx, group: group, i: i };
+          var it = { el: li, label: r.label, n: r.n, ctx: r.ctx, dial: r.dial, group: group, i: i };
           li._nb = it;
           group.push(it);
         });
@@ -1274,6 +1300,7 @@
             });
           }
         }
+        setDial(it, ms == null ? 240 : ms);
         if (!read) return;
         if (it && it.ctx) {
           lab.textContent = it.label;
@@ -1476,12 +1503,12 @@
       function when(t) { return L.months(t[1], t[2]); }
       var bt = Block(box, {
         cls: "trip", label: L.bigTrip, n: top[7], unit: L.photos, ctx: L.place(top[0]) + " · " + when(top),
-        dials: [[L.perDay, fmt(D.mostPerDay.n), L.place(D.mostPerDay.where) + " · " + L.months(D.mostPerDay.when), L.photos]],
+        dials: [[L.perDay, fmt(D.mostPerDay.n), L.place(D.mostPerDay.where) + " · " + L.months(D.mostPerDay.when), L.photos, D.mostPerDay.n]],
         aria: L.tripAria
       });
       bt.list(L.byTrip, D.trips.map(function (t) {
         var what = L.place(t[0]) + " · " + when(t);
-        return { p: what, s: L.trip(t), n: t[7], label: what, ctx: L.trip(t),
+        return { p: what, s: L.trip(t), n: t[7], label: what, ctx: L.trip(t), dial: [L.perDayOne, t[5], what],
           aria: what + ", " + L.trip(t) + L.sep + L.images(t[7]) };
       }), "trips");
       bt.wire();
