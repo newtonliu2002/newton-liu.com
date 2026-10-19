@@ -393,7 +393,17 @@ medium confidence).
 photograph's `also` is a list of further names, each with the same fields
 (`caption`, `sci`, `zh`, and `ebird` or `wiki`/`wikiZh`); the lightbox gives
 every animal its own line (`.lb-row`), the named one first. `also` is an
-authored field too.
+authored field too. A sweep of all 410 photographs (2026-10-19: one look per
+photo against his eBird lists for the day, every find confirmed by a second,
+independent look) named the others in 14: the humpbacks under the gulls,
+Laughing Gulls with the Florida pelicans, the skimmer and tern roost, the
+Western Sandpiper and Dunlin roost (now named), Willets round the godwit, the
+puffer in the sea lion's mouth, Yunnan's shelducks, lapwings and cormorants,
+the water buffalo under the pond-heron, a Neotropic Cormorant with the Inca
+Terns, a Marbled Godwit at Cape May, a Western Gull by the Brandt's, and the
+black bear behind the junco. Chinese names: eBird's zh_SIM, else the name
+already used elsewhere on the site, else 橙嘴凤头燕鸥 and 美洲鸬鹚 (Chinese
+Wikipedia says 斑翅鸬鹚); the humpback is 座头鲸 (Wikipedia: 大翅鲸).
 
 **Other animals' names** (Newton, 2026-10-19): mammals, reptiles, crabs, the
 shark, the ants and the butterfly have the same line, in the birds' Title

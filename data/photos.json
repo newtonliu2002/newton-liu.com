@@ -84,7 +84,7 @@
         {
           "caption": "Humpback Whale",
           "sci": "Megaptera novaeangliae",
-          "zh": "大翅鲸",
+          "zh": "座头鲸",
           "wiki": "Humpback whale",
           "wikiZh": "大翅鲸"
         }
@@ -2069,7 +2069,15 @@
       "caption": "American White Pelican",
       "sci": "Pelecanus erythrorhynchos",
       "ebird": "amwpel",
-      "zh": "美洲鹈鹕"
+      "zh": "美洲鹈鹕",
+      "also": [
+        {
+          "caption": "Laughing Gull",
+          "sci": "Leucophaeus atricilla",
+          "ebird": "laugul",
+          "zh": "笑鸥"
+        }
+      ]
     },
     {
       "src": "images/florida/E05A7130.jpg",
@@ -2145,7 +2153,19 @@
           "src": "images/florida/ZL-1674.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/florida/ZL-1674.jpg"
+      "thumb": "images/_thumbs/1600/florida/ZL-1674.jpg",
+      "caption": "Western Sandpiper",
+      "sci": "Calidris mauri",
+      "ebird": "wessan",
+      "zh": "西方滨鹬",
+      "also": [
+        {
+          "caption": "Dunlin",
+          "sci": "Calidris alpina",
+          "ebird": "dunlin",
+          "zh": "黑腹滨鹬"
+        }
+      ]
     },
     {
       "src": "images/florida/05A6867-2.jpg",
@@ -2425,7 +2445,15 @@
       "caption": "Marbled Godwit",
       "sci": "Limosa fedoa",
       "ebird": "margod",
-      "zh": "云斑塍鹬"
+      "zh": "云斑塍鹬",
+      "also": [
+        {
+          "caption": "Willet",
+          "sci": "Tringa semipalmata",
+          "ebird": "willet1",
+          "zh": "斑翅鹬"
+        }
+      ]
     },
     {
       "src": "images/florida/E05A6204.jpg",
@@ -2465,7 +2493,27 @@
       "caption": "American White Pelican",
       "sci": "Pelecanus erythrorhynchos",
       "ebird": "amwpel",
-      "zh": "美洲鹈鹕"
+      "zh": "美洲鹈鹕",
+      "also": [
+        {
+          "caption": "Black Skimmer",
+          "sci": "Rynchops niger",
+          "ebird": "blkski",
+          "zh": "黑剪嘴鸥"
+        },
+        {
+          "caption": "Royal Tern",
+          "sci": "Thalasseus maximus",
+          "ebird": "royter1",
+          "zh": "橙嘴凤头燕鸥"
+        },
+        {
+          "caption": "Sandwich Tern",
+          "sci": "Thalasseus sandvicensis",
+          "ebird": "santer1",
+          "zh": "白嘴端凤头燕鸥"
+        }
+      ]
     },
     {
       "src": "images/florida/05A9810-2.jpg",
@@ -2505,7 +2553,15 @@
       "caption": "Brown Pelican",
       "sci": "Pelecanus occidentalis",
       "ebird": "brnpel",
-      "zh": "褐鹈鹕"
+      "zh": "褐鹈鹕",
+      "also": [
+        {
+          "caption": "Laughing Gull",
+          "sci": "Leucophaeus atricilla",
+          "ebird": "laugul",
+          "zh": "笑鸥"
+        }
+      ]
     },
     {
       "src": "images/florida/05A9756-2.jpg",
@@ -3582,7 +3638,16 @@
       "caption": "Galápagos Sea Lion",
       "sci": "Zalophus wollebaeki",
       "zh": "加拉帕戈斯海狮",
-      "wiki": "Galápagos sea lion"
+      "wiki": "Galápagos sea lion",
+      "also": [
+        {
+          "caption": "Bullseye Puffer",
+          "sci": "Sphoeroides annulatus",
+          "zh": "黑点圆鲀",
+          "wiki": "Sphoeroides annulatus",
+          "wikiZh": "黑點圓魨"
+        }
+      ]
     },
     {
       "src": "images/galapagos/21.jpg",
@@ -8572,7 +8637,15 @@
       "caption": "Great Cormorant",
       "sci": "Phalacrocorax carbo",
       "ebird": "grecor",
-      "zh": "普通鸬鹚"
+      "zh": "普通鸬鹚",
+      "also": [
+        {
+          "caption": "Ruddy Shelduck",
+          "sci": "Tadorna ferruginea",
+          "ebird": "rudshe",
+          "zh": "赤麻鸭"
+        }
+      ]
     },
     {
       "src": "images/yunnan/36-1.jpg",
@@ -8836,7 +8909,21 @@
       "caption": "Ruddy Shelduck",
       "sci": "Tadorna ferruginea",
       "ebird": "rudshe",
-      "zh": "赤麻鸭"
+      "zh": "赤麻鸭",
+      "also": [
+        {
+          "caption": "Northern Lapwing",
+          "sci": "Vanellus vanellus",
+          "ebird": "norlap",
+          "zh": "凤头麦鸡"
+        },
+        {
+          "caption": "Great Cormorant",
+          "sci": "Phalacrocorax carbo",
+          "ebird": "grecor",
+          "zh": "普通鸬鹚"
+        }
+      ]
     },
     {
       "src": "images/yunnan/36-2.jpg",
@@ -9001,7 +9088,16 @@
       "caption": "Indian Pond-Heron",
       "sci": "Ardeola grayii",
       "ebird": "inpher1",
-      "zh": "印度池鹭"
+      "zh": "印度池鹭",
+      "also": [
+        {
+          "caption": "Water Buffalo",
+          "sci": "Bubalus bubalis",
+          "zh": "水牛",
+          "wiki": "Water buffalo",
+          "wikiZh": "水牛"
+        }
+      ]
     },
     {
       "src": "images/sri-lanka/51-2.jpg",
@@ -11243,7 +11339,15 @@
       "caption": "Inca Tern",
       "sci": "Larosterna inca",
       "ebird": "incter1",
-      "zh": "印加燕鸥"
+      "zh": "印加燕鸥",
+      "also": [
+        {
+          "caption": "Neotropic Cormorant",
+          "sci": "Nannopterum brasilianum",
+          "ebird": "neocor",
+          "zh": "美洲鸬鹚"
+        }
+      ]
     },
     {
       "src": "images/peru/HZLH1837.jpg",
@@ -11734,7 +11838,15 @@
       "caption": "Brandt's Cormorant",
       "sci": "Urile penicillatus",
       "ebird": "bracor",
-      "zh": "加州鸬鹚"
+      "zh": "加州鸬鹚",
+      "also": [
+        {
+          "caption": "Western Gull",
+          "sci": "Larus occidentalis",
+          "ebird": "wesgul",
+          "zh": "西美鸥"
+        }
+      ]
     },
     {
       "src": "images/california/2022-6-California-6.jpg",
@@ -11835,7 +11947,16 @@
       "caption": "Dark-eyed Junco",
       "sci": "Junco hyemalis",
       "ebird": "daejun",
-      "zh": "暗眼灯草鹀"
+      "zh": "暗眼灯草鹀",
+      "also": [
+        {
+          "caption": "American Black Bear",
+          "sci": "Ursus americanus",
+          "zh": "美洲黑熊",
+          "wiki": "American black bear",
+          "wikiZh": "美洲黑熊"
+        }
+      ]
     },
     {
       "src": "images/california/2022-23.jpg",
@@ -12136,7 +12257,15 @@
       "caption": "American Oystercatcher",
       "sci": "Haematopus palliatus",
       "ebird": "ameoys",
-      "zh": "美洲斑蛎鹬"
+      "zh": "美洲斑蛎鹬",
+      "also": [
+        {
+          "caption": "Marbled Godwit",
+          "sci": "Limosa fedoa",
+          "ebird": "margod",
+          "zh": "云斑塍鹬"
+        }
+      ]
     },
     {
       "src": "images/new-england/2022-12-Maine-6.jpg",
