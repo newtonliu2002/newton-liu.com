@@ -20,6 +20,7 @@
   "use strict";
 
   var NL = window.NLSite;
+  if (!window.NLChessCore) return;
   var t = NL ? NL.t : function (s, v) { return s.replace(/\{(\w+)\}/g, function (m, k) { return v && k in v ? v[k] : m; }); };
   var ZH = !!(NL && NL.lang() === "zh");
 
@@ -83,21 +84,9 @@
 
   var events = [], byId = Object.create(null), places = [], summary = "";
 
-  // Each tournament's anchor in the database: its `id`, else made from its
-  // name and start date. chess.js has the same function: keep the two alike.
-  function slug(s) {
-    return String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
-      .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "tournament";
-  }
-  function tournamentIds(list) {
-    var seen = {};
-    return list.map(function (tm) {
-      var id = tm.id || slug((tm.name || "") + "-" + (tm.start || ""));
-      while (seen[id]) id += "-2";
-      seen[id] = true;
-      return id;
-    });
-  }
+  // Each tournament's anchor in the database: assets/chess-core.js, which
+  // the database and the analysis tool use too.
+  var tournamentIds = window.NLChessCore.tournamentIds;
 
   var MONTHS = ["January", "February", "March", "April", "May", "June", "July",
                 "August", "September", "October", "November", "December"];
@@ -134,12 +123,13 @@
     var n = String(name || "").toLowerCase().replace(/[^a-z]/g, "");
     return n && player.some(function (p) { return String(p).toLowerCase().replace(/[^a-z]/g, "") === n; });
   }
-  function tag(pgn, k) { var m = new RegExp("\\[" + k + "\\s+\"([^\"]*)\"\\]").exec(pgn); return m ? m[1] : ""; }
   function points(g) {
     if (g.bye != null) return typeof g.bye === "number" ? g.bye : 0;
     if (g.pgn && (g.result == null || !g.color)) {
-      var c = g.color || (me(tag(g.pgn, "Black")) && !me(tag(g.pgn, "White")) ? "black" : me(tag(g.pgn, "White")) ? "white" : null);
-      g = { result: g.result != null ? g.result : tag(g.pgn, "Result"), color: c };
+      // The PGN's header, read as the database reads it (chess-core.js).
+      var tg = window.NLChessCore.readTags(g.pgn).tags;
+      var c = g.color || (me(tg.Black) && !me(tg.White) ? "black" : me(tg.White) ? "white" : null);
+      g = { result: g.result != null ? g.result : tg.Result, color: c };
     }
     var r = String(g.result == null ? "" : g.result).trim().toLowerCase().replace(/\s/g, "");
     if (/^(win|w|1|\+)$/.test(r)) return 1;

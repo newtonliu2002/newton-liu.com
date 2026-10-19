@@ -499,7 +499,7 @@ def load_collections():
 
 ASSETS = ("site.css", "site.js", "edit.js", "globe.css", "globe.js",
           "journal.css", "journal.js", "journal-map.css", "journal-map.js",
-          "chess.css", "chess.js", "chess-map.css", "chess-map.js")
+          "chess-core.js", "chess.css", "chess.js", "chess-map.css", "chess-map.js")
 
 
 def asset_stamps():

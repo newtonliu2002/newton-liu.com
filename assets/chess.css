@@ -24,8 +24,17 @@
   --cg-coord-on-light: rgba(0,0,0,.55);
   --cg-coord-on-dark:  rgba(255,255,255,.62);
   --cg-last: color-mix(in srgb, var(--accent) 55%, transparent);
+  /* the eval bar and graph: White's share light, Black's dark, on both grounds */
+  --cg-bar-white: #ecebe6;
+  --cg-bar-black: #2b2b2a;
+  /* the marks: an inaccuracy quiet, a mistake plain, a blunder in the warning red */
+  --cg-inaccuracy: var(--text-faint);
+  --cg-mistake: var(--text);
+  --cg-blunder: var(--warn);
 }
 :root[data-theme="light"] .chess {
+  --cg-bar-black: #3a3a39;
+  --cg-blunder: #b3361c;
   --cg-light: #e8e3d8;
   --cg-dark:  #aaa396;
   --cg-black-edge: rgba(255,255,255,.5);
@@ -162,12 +171,38 @@ body.is-editing .chess .cg-intro:empty { display: block; }
   outline: none;
 }
 .chess .cg-viewer[hidden] { display: none; }
+/* The board column: the eval bar beside the board, the graph under both. */
+.chess .cg-left { flex: 0 1 27rem; min-width: 0; max-width: 100%; display: flex; flex-direction: column; gap: var(--s2); align-self: flex-start; }
+.chess .cg-boardrow { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; }
+.chess .cg-boardrow.has-bar { grid-template-columns: 10px minmax(0, 1fr); }
+.chess .cg-evalbar {
+  position: relative; overflow: hidden;
+  background: var(--cg-bar-black); outline: 1px solid var(--hairline);
+}
+.chess .cg-evalbar i {
+  position: absolute; left: 0; right: 0; bottom: 0; height: calc(var(--w, .5) * 100%);
+  background: var(--cg-bar-white);
+  transition: height .35s var(--ease-out);
+}
+.chess .cg-evalbar.is-flipped i { bottom: auto; top: 0; }
+.chess .cg-graph {
+  display: block; width: 100%; height: 56px; cursor: pointer;
+  background: var(--cg-bar-black); outline: 1px solid var(--hairline);
+}
+.chess .cg-boardrow.has-bar + .cg-graph { margin-left: 16px; width: calc(100% - 16px); }
+.chess .cg-graph-white { fill: var(--cg-bar-white); }
+.chess .cg-graph-mid { stroke: var(--text-faint); stroke-width: 1; vector-effect: non-scaling-stroke; opacity: .6; }
+.chess .cg-graph-tick { stroke-width: 1; vector-effect: non-scaling-stroke; opacity: .9; }
+.chess .cg-graph-tick.is-inaccuracy { stroke: var(--cg-inaccuracy); }
+.chess .cg-graph-tick.is-mistake { stroke: var(--text-dim); }
+.chess .cg-graph-tick.is-blunder { stroke: var(--cg-blunder); }
+.chess .cg-graph-cursor { stroke: var(--accent); stroke-width: 2; vector-effect: non-scaling-stroke; }
+
 .chess .cg-board {
-  flex: 0 1 26rem; min-width: 0; max-width: 100%;
+  min-width: 0; max-width: 100%;
   display: grid; grid-template: repeat(8, minmax(0, 1fr)) / repeat(8, minmax(0, 1fr));
   aspect-ratio: 1;
   container-type: inline-size;
-  align-self: flex-start;
 }
 .chess .cg-sq { position: relative; display: grid; place-items: center; min-height: 0; overflow: hidden; }
 .chess .cg-sq.is-light { background: var(--cg-light); }
@@ -207,11 +242,27 @@ body.is-editing .chess .cg-intro:empty { display: block; }
 .chess .cg-step:hover:not(:disabled) { background: var(--wash); }
 .chess .cg-step:disabled { color: var(--text-faint); border-color: var(--hairline); cursor: default; }
 .chess .cg-step:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.chess .cg-step.cg-play { margin: 0 var(--s1); }
+.chess .cg-step.cg-play.is-on { color: var(--accent); border-color: var(--accent); }
 .chess .cg-readout {
-  flex: 1; text-align: center;
+  flex: 1; text-align: right; padding-left: var(--s2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   font: 400 var(--t-meta)/1 var(--mono); letter-spacing: .04em;
   color: var(--text-dim);
 }
+
+/* What the engine says about the current position. */
+.chess .cg-engine { display: flex; flex-direction: column; gap: 4px; min-height: 40px; }
+.chess .cg-verdict, .chess .cg-best { margin: 0; font: 400 var(--t-meta)/1.5 var(--mono); letter-spacing: .02em; color: var(--text-dim); }
+.chess .cg-verdict[hidden] { display: none; }
+.chess .cg-verdict .cg-mark { margin-right: 2px; }
+.chess .cg-verdict.is-blunder .cg-mark { color: var(--cg-blunder); }
+.chess .cg-verdict.is-mistake .cg-mark { color: var(--cg-mistake); }
+.chess .cg-verdict.is-inaccuracy .cg-mark { color: var(--cg-inaccuracy); }
+.chess .cg-eval {
+  display: inline-block; min-width: 4.5em; margin-right: var(--s2);
+  color: var(--text); font-variant-numeric: tabular-nums;
+}
+.chess .cg-pv { color: var(--text-faint); }
 .chess .cg-moves {
   list-style: none; margin: 0; padding: 0;
   max-height: 20rem; overflow-y: auto;
@@ -231,9 +282,40 @@ body.is-editing .chess .cg-intro:empty { display: block; }
 }
 .chess .cg-move:hover { color: var(--text); background: var(--wash); }
 .chess .cg-move.is-current { color: var(--on-accent); background: var(--accent); }
+.chess .cg-move.is-blank { cursor: default; }
+.chess .cg-mark { margin-left: 3px; }
+.chess .cg-move.is-inaccuracy .cg-mark { color: var(--cg-inaccuracy); }
+.chess .cg-move.is-mistake .cg-mark { color: var(--cg-mistake); }
+.chess .cg-move.is-blunder .cg-mark { color: var(--cg-blunder); }
+.chess .cg-move.is-current .cg-mark { color: inherit; }
 .chess .cg-move:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 .chess .cg-movenote, .chess .cg-broken {
   margin: 0; font: 400 var(--t-row)/1.6 var(--sans); color: var(--text-body);
 }
 .chess .cg-broken { font: 400 var(--t-label)/16px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--text-faint); }
 .chess .cg-movenote[hidden] { display: none; }
+
+/* Each side's marks, and the engine that made them. */
+.chess .cg-summary { display: flex; flex-direction: column; gap: 2px; }
+.chess .cg-summary p { margin: 0; display: flex; gap: var(--s3); font: 400 var(--t-meta)/1.5 var(--mono); color: var(--text-dim); }
+.chess .cg-summary-side { min-width: 4em; color: var(--text-faint); text-transform: uppercase; letter-spacing: .12em; font-size: var(--t-label); }
+.chess .cg-summary-n.is-blunder { color: var(--cg-blunder); }
+.chess .cg-summary-n.is-mistake { color: var(--cg-mistake); }
+.chess .cg-summary-n.is-inaccuracy { color: var(--cg-inaccuracy); }
+.chess .cg-summary-n.is-zero { color: var(--text-faint); opacity: .7; }
+.chess .cg-summary .cg-credit { margin-top: 2px; color: var(--text-faint); font-size: var(--t-label); letter-spacing: .08em; }
+
+/* Elsewhere: lichess's board and Claude. */
+.chess .cg-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--s5); margin: 0; }
+.chess .cg-tool {
+  display: inline-flex; align-items: center; min-height: 36px;
+  font: 400 var(--t-label)/16px var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-dim); text-decoration: none; white-space: nowrap;
+  transition: color var(--d-fast) var(--ease);
+}
+.chess .cg-tool:hover { color: var(--text); }
+.chess .cg-tool:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.chess .cg-tool-status { flex-basis: 100%; font: 400 var(--t-label)/16px var(--mono); letter-spacing: .06em; color: var(--text-faint); }
+.chess .cg-tool-status:empty { display: none; }
+.chess .cg-tool-web { color: var(--text-dim); text-decoration: underline; text-decoration-color: var(--hairline-strong); text-underline-offset: 3px; }
+.chess .cg-tool-web:hover { color: var(--text); text-decoration-color: var(--accent); }

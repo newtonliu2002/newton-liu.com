@@ -24,6 +24,8 @@ about.html, contact.html    prose pages
 academia.html               a prose page waiting for Newton's words (academia.prose)
 projects.html               things built alongside the photography (eBird Explorer)
 chess.html, chess-games.html   Chess: the tournament map and the games database (see "Chess")
+assets/chess-core.js, chess.js, chess.css, chess-map.js, chess-map.css   the Chess pages only
+tools/chess-eval.mjs        Stockfish analysis of the chess games → data/chess-eval.json
 collections/<slug>/index.html   one stub per collection (generated; ~15 lines)
 assets/site.css             ALL styling — design tokens in :root at the top
 assets/site.js              renders the grid, the collection cards, the lightbox
@@ -1212,11 +1214,54 @@ in site.js).
   nav's amber square). Each game is a row: round, his colour (outlined
   square white, filled black), opponent and rating, his points (1, ½, 0),
   **Game ↗** (its chess.com `link`) and, for a game with a PGN, **+** to
-  open a board under the row to step through (← → Home End). The rail: his
-  record (games, won, drawn, lost; byes aside) and latest rating, and the
-  tournaments as jump links. `assets/chess.js`, `assets/chess.css`. The PGN
-  reader is in chess.js, no library: it knows just enough of the rules to
-  place each move; a move it can't place ends the line there, with a note.
+  open a board under the row. The rail: his record (games, won, drawn,
+  lost; byes aside) and latest rating, and the tournaments as jump links.
+  `assets/chess.js`, `assets/chess.css`.
+- **The board** (Newton asked, 2026-10-19): step through with ⏮ ‹ › ⏭, the
+  move list or ← → Home End; **▶ plays through** a move a second (Space
+  too) and pauses on any manual move or when the board closes. With the
+  engine's analysis (below): an **eval bar** beside the board (White's
+  share from his side of the board), a **graph** under it (click to jump;
+  the marks as ticks, the current move amber), **?! ? ??** in the move list
+  (inaccuracy faint, mistake plain, blunder in `--warn` red), the mark's
+  word and the move the engine preferred, this position's evaluation and
+  best line, and each side's counts. Then two links: **Analyse on lichess ↗**
+  (lichess.org/analysis/pgn/<the game>#<half-move>, `?color=black` when he
+  had Black: lichess's own board and engine, opened on this move; lichess
+  reads `_` as a space, drops `+`, keeps 5000 characters) and **Ask Claude ↗**
+  (the Claude desktop app's documented `claude://claude.ai/new?q=` link, on a
+  phone `https://claude.ai/new?q=`, with the game's PGN, the FEN, the
+  engine's evaluation, line and mark, and an instruction to explain the
+  engine's lines rather than calculate; it fills the prompt, he types his
+  question and sends; the same text goes to the clipboard; in 中 it asks for
+  an answer in Chinese). Neither link sends anything until clicked, and no
+  API key is involved. A Claude chat *inside* the page would need a Worker
+  holding his API key (each question billed to it); not built.
+- **The rules: `assets/chess-core.js`** (window.NLChessCore; also
+  `require()`-able in Node), shared by the database, the map and the tool:
+  FEN in and out (castling rights, en passant, clocks), legal moves, SAN and
+  UCI, the PGN reader (chess.com's `[%clk]`/`[%cal]` commands are taken out
+  of comments; variations and NAGs skipped; a move it can't play ends the
+  line there, with a note), `cleanPGN`, `tournamentIds`, `gameKeys` and
+  lichess's winning-chances curve. No library. It passes the standard perft
+  counts (start position to depth 4, Kiwipete and positions 3–6).
+- **The engine's analysis: `node tools/chess-eval.mjs`**, run on Newton's
+  Mac after adding PGNs (Stockfish 19, the official macOS build, installed
+  2026-10-19 in `~/.local/share/stockfish-19`, linked as
+  `~/.local/bin/stockfish`; `STOCKFISH=` points elsewhere). It analyses
+  every position of every game with a PGN at depth 20 (`--depth`; about
+  1 s a position on 8 threads), judges each move by lichess's rules
+  (winning chances dropping by .3/.2/.1 = ??/?/?!; mates as lichess's
+  MateAdvice; the engine's own first choice never marked) and writes
+  **`data/chess-eval.json`**, keyed by `gameKeys()` ("<tournament id>/r<round>"),
+  each game with its moves in UCI (`uci`: a game whose moves change is
+  analysed again, and the page ignores a stale entry), `ev` (per position:
+  `c` centipawns or `m` mate from White's side, `mated`, `b` best move,
+  `pv` the line in SAN) and `j` (per move: "?!", "?", "??" or null). Only
+  new or changed games are analysed; `--force` redoes all, `--only <id>` one
+  tournament. Visitors download only this file (a few KB a game), when the
+  first board opens; nothing runs in their browser. Commit it with the
+  chess.json change it belongs to.
 - **Everything is `data/chess.json`**, hand-edited; Newton tells me where
   and when each tournament was, and sends its games:
 
