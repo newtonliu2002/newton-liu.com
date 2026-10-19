@@ -1,9 +1,12 @@
 /* ==========================================================================
    newton-liu.com — a travel journal's route map (journals/<trip>/).
 
-   The sticky map beside the journal: the road the trip took, one pin per
-   place, and, as the reader goes, the entry being read lit in the accent
-   with the road travelled so far up to it. It is the globe's own map,
+   The sticky map beside the journal: the trip as far as the reader has
+   read it. Only the places reached by the entry being read show (their
+   pins and names, one pin per place), with the road travelled up to it in
+   the accent, the camera framing just that; the road and places still
+   ahead appear as the journal reaches them (Newton, 2026-10-19), and go
+   again when the reader goes back. It is the globe's own map,
    flat and small: the same greyscale OpenFreeMap tiles in each ground's
    colours (PALETTE, as in globe.js), the same crosshair pins and mono
    labels, repainted when the ground switches ("nl:theme").
@@ -51,6 +54,8 @@
   var TURN_COST = .008;                // zoom a turn must win per degree to be taken
   var MAX_ZOOM = 11, TILE_MAX = 10;    // the camera, and the detailed tiles, stop here
   var GROW = 450;                      // ms: the travelled road growing (or shrinking) to a new entry
+  var WIDEN = 700;                     // ms: the camera taking in (or letting go of) the places reached
+  var SOLO_ZOOM = 7;                   // the closest the camera frames the trip so far (one place: its region)
   var GLIDE = 600;                     // ms: the one gentle pan, when the lit pin is out of view
   var WAIT = 15000;                    // no MapLibre by then: the plain drawing instead
   var LINE_CH = 18, LINE_CH_NARROW = 14;   // a label's longest line, in characters (mono)
@@ -66,8 +71,8 @@
   /* ------------------------------------------------------------------
      PALETTE — the map's colours on each ground: globe.js's PALETTE as a
      collection arrives (Black, and White's paper atlas), and the two must
-     agree. `route` is the road still to come, quiet; the road travelled
-     is the accent, read from site.css. What sits over the map in HTML
+     agree. The road travelled is the accent, read from site.css (the road
+     still to come isn't drawn). What sits over the map in HTML
      (pins, labels, credit) takes the --jm-* colours in journal-map.css.
      ------------------------------------------------------------------ */
   function W(a) { return "rgba(255,255,255," + a + ")"; }
@@ -75,13 +80,11 @@
   var PALETTE = {
     black: {
       land: "#161616", sea: "#0a0a0a", park: W(.025), parkEdge: W(.16),
-      coast: W(.16), river: W(.06), border: W(.16), state: W(.08),
-      route: W(.42)
+      coast: W(.16), river: W(.06), border: W(.16), state: W(.08)
     },
     white: {
       land: "#dededa", sea: "#ecece9", park: K(.035), parkEdge: K(.22),
-      coast: K(.28), river: K(.07), border: K(.18), state: K(.09),
-      route: K(.42)
+      coast: K(.28), river: K(.07), border: K(.18), state: K(.09)
     }
   };
   function ground() { return document.documentElement.getAttribute("data-theme") === "light" ? "white" : "black"; }
@@ -212,6 +215,10 @@
     var straight = path.length < 2;
     if (straight) path = visits.map(function (v) { return byName[v.name].ll; });
     var at = visitPoints();
+    // How far into the trip the reader is: the last visit (index into
+    // visits) the entry being read has reached. A place shows once its first
+    // visit is reached. With no route to go by, everything shows.
+    var reach = visits.length ? 0 : Infinity, reached = false;
 
     // Each entry's pin, and the visit its road runs to. An entry without a
     // visit of its own goes by its place (the first visit there not before
@@ -290,12 +297,25 @@
     // Keyboard order is travel order.
     pins.sort(byFirst);
 
+    // The places still ahead are hidden, and can't be reached by a click or
+    // the keyboard.
+    function reveal() {
+      pins.forEach(function (p) {
+        p.ahead = p.first > reach;
+        p.el.classList.toggle("is-ahead", p.ahead);
+        if (p.ahead) p.el.classList.remove("has-label");     // a name would show through the hidden pin
+        if (p.ahead && listFor === p) closeList();
+        if (p.ahead && document.activeElement === p.el) p.el.blur();
+      });
+    }
+    reveal();
+
     // The pin with something to read whose centre is closest to a point on
     // the screen.
     function nearest(x, y) {
       var best = null, bd = Infinity;
       pins.forEach(function (p) {
-        if (!p.lab || !p.el.isConnected) return;
+        if (!p.lab || p.ahead || !p.el.isConnected) return;
         var r = p.el.getBoundingClientRect(), dx = r.left + r.width / 2 - x, dy = r.top + r.height / 2 - y, d = dx * dx + dy * dy;
         if (r.width && d < bd) { bd = d; best = p; }
       });
@@ -320,12 +340,19 @@
     }
     var written = "";
 
-    /* ---------- the camera: everything in view ------------------------ */
+    /* ---------- the camera: the trip so far in view -------------------- */
 
-    // The whole trip fitted to the box, at whichever slight turn fits it
-    // largest; north stays up unless a turn wins clearly.
+    // The road travelled and the places reached, fitted to the box at
+    // whichever slight turn fits them largest (north stays up unless a turn
+    // wins clearly), never closer than SOLO_ZOOM, so the first place alone
+    // shows its region.
+    function soFar() {
+      if (reach === Infinity) return path;
+      if (straight) return path.slice(0, reach + 1);
+      return path.slice(0, (at[reach] || 0) + 1);
+    }
     function fitCamera() {
-      var pts = path.concat(pins.map(function (p) { return p.ll; })).map(merc);
+      var pts = soFar().concat(pins.filter(function (p) { return p.first <= reach; }).map(function (p) { return p.ll; })).map(merc);
       if (!pts.length || !width || !height) return null;
       // Clear of the credit along the foot too (two lines in a narrow box).
       var credit = root.querySelector(".maplibregl-ctrl-attrib, .jm-credit");
@@ -338,7 +365,7 @@
           if (r[0] < x0) x0 = r[0]; if (r[0] > x1) x1 = r[0];
           if (r[1] < y0) y0 = r[1]; if (r[1] > y1) y1 = r[1];
         });
-        var z = Math.min(9, Math.log(Math.min(aw / Math.max(x1 - x0, 1e-9), ah / Math.max(y1 - y0, 1e-9)) / 512) / Math.LN2);
+        var z = Math.min(SOLO_ZOOM, Math.log(Math.min(aw / Math.max(x1 - x0, 1e-9), ah / Math.max(y1 - y0, 1e-9)) / 512) / Math.LN2);
         // The camera's centre sits that much below the route's, so the
         // route is centred in the space above the credit.
         var score = z - Math.abs(b) * TURN_COST, c = turn((x0 + x1) / 2, (y0 + y1) / 2 + (foot - top) / 2 / (512 * Math.pow(2, z)), b);
@@ -414,7 +441,7 @@
       });
       pins.forEach(function (p) {
         p.xy = project(p.ll);
-        p.inView = p.xy.x > -8 && p.xy.y > -8 && p.xy.x < width + 8 && p.xy.y < height + 8;
+        p.inView = !p.ahead && p.xy.x > -8 && p.xy.y > -8 && p.xy.x < width + 8 && p.xy.y < height + 8;
         if (mode === "plain") p.el.style.transform = "translate(" + p.xy.x.toFixed(1) + "px," + p.xy.y.toFixed(1) + "px)";
         if (p.inView) blocks.push([p.xy.x - 7, p.xy.y - 7, p.xy.x + 7, p.xy.y + 7, p]);
       });
@@ -535,13 +562,23 @@
       var x = id != null ? byId[String(id)] : null;
       activeId = x ? x.id : null;
       pins.forEach(function (p) { p.el.classList.toggle("is-active", !!x && p.name === x.place); });
+      // The places reached so far, and the camera taking them in (at once
+      // the first time, and not while the reader has moved the map).
+      var r = !visits.length ? Infinity : x && x.road >= 0 ? x.road : 0, framed = false;
+      if (r !== reach) {
+        reach = r;
+        reveal();
+        if (!moved) { fit(reached, WIDEN); framed = true; }
+      }
+      reached = true;
       growTo(x && x.road >= 0 && at[x.road] != null ? at[x.road] : -1);
       layoutSoon();
-      if (x && x.place && mode === "map") glideTo(byName[x.place], false);
+      // Framed afresh, the lit pin is in view: a glide now would cut that short.
+      if (!framed && x && x.place && mode === "map") glideTo(byName[x.place], false);
     }
     // Only when the pin is out of view (or under the box's edge): one gentle
     // pan at the same zoom, never a jump or a zoom. "Under the edge" is
-    // narrower than the padding a fitted view keeps, so the whole trip,
+    // narrower than the padding a fitted view keeps, so the trip so far,
     // fitted, never pans. A view panned that way while the reader hasn't
     // moved the map goes back to the whole trip as soon as the pin lit is
     // in it.
@@ -578,13 +615,13 @@
       if (mode === "plain") drawPlain();
       layoutSoon();
     }
-    function fit(animate) {
+    function fit(animate, ms) {
       var c = fitCamera();
       if (!c) return;
       cam = c; needFit = false; moved = false; drifted = false;
       if (mode === "map") {
         map.setMinZoom(Math.max(0, c.zoom - 1.5));
-        if (animate && !REDUCED) map.easeTo({ center: c.center, zoom: c.zoom, bearing: c.bearing, duration: 400 });
+        if (animate && !REDUCED) map.easeTo({ center: c.center, zoom: c.zoom, bearing: c.bearing, duration: ms || 400 });
         else map.jumpTo({ center: c.center, zoom: c.zoom, bearing: c.bearing });
       }
     }
@@ -604,7 +641,6 @@
         version: 8,
         sources: {
           omt: { type: "vector", url: TILES, maxzoom: TILE_MAX, attribution: ATTR_TILES },
-          "jm-route": { type: "geojson", data: line(path) },
           "jm-travelled": { type: "geojson", data: line(travelled(shown)) }
         },
         // A change of ground repaints at once, as the page around the map does.
@@ -622,8 +658,6 @@
             filter: ["all", ["==", ["get", "admin_level"], 4], ["!=", ["get", "maritime"], 1]], paint: { "line-color": P.state, "line-width": .6, "line-dasharray": [2, 2] } },
           { id: "admin-2", type: "line", source: "omt", "source-layer": "boundary",
             filter: ["all", ["==", ["get", "admin_level"], 2], ["!=", ["get", "maritime"], 1], ["!=", ["get", "disputed"], 1]], paint: { "line-color": P.border, "line-width": .6 } },
-          { id: "jm-route", type: "line", source: "jm-route", layout: { "line-join": "round", "line-cap": "round" },
-            paint: { "line-color": P.route, "line-width": 1.25 } },
           { id: "jm-travelled", type: "line", source: "jm-travelled", layout: { "line-join": "round", "line-cap": "round" },
             paint: { "line-color": A, "line-width": 2 } }
         ]
@@ -698,7 +732,7 @@
     }
 
     // The two small buttons: closer, and back out (all the way out, the
-    // whole trip fitted again).
+    // trip so far fitted again).
     function addZoom() {
       var z = el("div", "jm-zoom");
       [["plus", "zoomIn", 1], ["minus", "zoomOut", -1]].forEach(function (d) {
@@ -720,7 +754,7 @@
 
     /* ---------- the plain drawing (no MapLibre, no WebGL2) -------------- */
 
-    var svg = null, routeEl = null, travelledEl = null;
+    var svg = null, travelledEl = null;
     function toPlain() {
       if (mode !== "map") return;
       try { map.remove(); } catch (e) {}
@@ -738,11 +772,9 @@
       svg = document.createElementNS(NS, "svg");
       svg.setAttribute("class", "jm-plain");
       svg.setAttribute("aria-hidden", "true");
-      routeEl = document.createElementNS(NS, "polyline");
-      routeEl.setAttribute("class", "jm-plain-route");
       travelledEl = document.createElementNS(NS, "polyline");
       travelledEl.setAttribute("class", "jm-plain-travelled");
-      svg.appendChild(routeEl); svg.appendChild(travelledEl);
+      svg.appendChild(travelledEl);
       stage.appendChild(svg);
       pins.forEach(function (p) { pinLayer.appendChild(p.el); });
       var credit = el("div", "jm-credit");
@@ -760,7 +792,6 @@
       if (!cam || !width || !height) return;
       svg.setAttribute("viewBox", "0 0 " + width + " " + height);
       function pts(c) { return c.map(function (ll) { var q = project(ll); return q.x.toFixed(1) + "," + q.y.toFixed(1); }).join(" "); }
-      routeEl.setAttribute("points", path.length > 1 ? pts(path) : "");
       travelledEl.setAttribute("points", pts(travelled(shown)));
     }
 

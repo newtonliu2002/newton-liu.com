@@ -1029,6 +1029,14 @@ the order of visits from journal.json's `route`. An entry's place is its
 `place:` line. A place mentioned in an entry's text never goes on the map,
 and nothing is ever read out of the body ("Rain" remembers New York; New
 York is not on the map). One pin per place, even visited twice.
+It unfolds with the reading (Newton, 2026-10-19): only the places the entry
+being read has reached show (a place appears at its first visit in
+`route`, so the stops between two entries come with the later one), with
+the road travelled up to it in the accent; the road ahead isn't drawn, and
+the camera frames the trip so far (`fitCamera()`, never closer than
+`SOLO_ZOOM`), widening as places are reached and narrowing again when the
+reader goes back (`reveal()`, `setActive()` in journal-map.js). A map the
+reader has dragged or zoomed is left where it is.
 
 **Ways in.** The globe's card: a place with a journal shows "Journal →"
 (游记 →) where "View collection" would be when it has no collection yet

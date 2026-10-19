@@ -15,7 +15,6 @@
   --jm-ink:       #fff;                    /* full strength: a pin pointed at, focused or lit */
   --jm-pin:       rgba(242,242,242,.85);   /* a pin's crosshair */
   --jm-pin-quiet: rgba(242,242,242,.4);    /* a place with nothing to read */
-  --jm-route:     rgba(255,255,255,.42);   /* PALETTE.black.route: the road still to come */
   --jm-label-bg:  rgba(5,5,5,.7);          /* behind a place's name */
   --jm-attrib-bg: rgba(5,5,5,.78);         /* behind the map credits */
   position: relative; width: 100%; height: 100%; overflow: hidden; background: var(--jm-land);
@@ -25,7 +24,6 @@
   --jm-ink:       #000;
   --jm-pin:       rgba(27,28,32,.85);
   --jm-pin-quiet: rgba(27,28,32,.45);
-  --jm-route:     rgba(0,0,0,.42);
   --jm-label-bg:  rgba(244,244,242,.8);
   --jm-attrib-bg: rgba(244,244,242,.85);
 }
@@ -65,6 +63,12 @@
 .jm-pin:hover .jm-pin-x, .jm-pin:focus-visible .jm-pin-x, .jm-pin.is-open .jm-pin-x, .jm-pin.is-active .jm-pin-x { --k: var(--jm-ink); --a: 5px; }
 .jm-pin.is-active .jm-pin-x { --dot: var(--accent); }
 .jm-pin.is-quiet { cursor: default; pointer-events: none; }
+/* A place the journal hasn't reached yet: gone, and out of reach of a click
+   or the keyboard. It fades in when it is reached. (Not the pin's own
+   opacity: MapLibre writes that on its markers.) */
+.jm-pin-x { transition: opacity var(--d-base) var(--ease); }
+.jm-pin.is-ahead { visibility: hidden; pointer-events: none; transition: visibility 0s var(--d-base); }
+.jm-pin.is-ahead .jm-pin-x { opacity: 0; }
 .jm-pin.is-quiet .jm-pin-x { --k: var(--jm-pin-quiet); --a: 2px; }
 .jm-pin:hover, .jm-pin:focus-visible, .jm-pin.is-open { z-index: 3; }
 .jm-pin.is-active { z-index: 2; }
@@ -158,10 +162,9 @@
 
 .jm-plain { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .jm-plain polyline { fill: none; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
-.jm-plain-route { stroke: var(--jm-route); stroke-width: 1.25; }
 .jm-plain-travelled { stroke: var(--accent); stroke-width: 2; }
 
 @media (prefers-reduced-motion: reduce) {
   .jm-pin.is-active .jm-pin-af, .jm-list { animation: none; }
-  .jm-pin-label, .jm-pin-af { transition: none; }
+  .jm-pin-label, .jm-pin-af, .jm-pin-x, .jm-pin.is-ahead { transition: none; }
 }
