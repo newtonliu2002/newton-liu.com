@@ -14,8 +14,8 @@
     { "place": "Baie-Saint-Paul", "date": "" },
     { "place": "Parc national des Grands-Jardins", "date": "" },
     { "place": "Parc national de la Mauricie", "date": "2026-10-15" },
-    { "place": "Ottawa/Gatineau", "date": "" }
+    { "place": "Ottawa/Gatineau", "date": "2026-10-16" }
   ],
-  "entries": ["quebec-and-me", "owl", "french", "rain", "sea", "blue", "snow", "moon"],
+  "entries": ["quebec-and-me", "owl", "french", "rain", "sea", "blue", "snow", "moon", "book"],
   "english": []
 }
