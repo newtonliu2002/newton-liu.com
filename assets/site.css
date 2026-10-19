@@ -1199,6 +1199,12 @@ body.lb-open { overflow: hidden; }
   object-fit: cover;
 }
 
+.about-band-open {
+  display: block; width: 100%; margin: 0; padding: 0;
+  border: 0; border-radius: 0; background: none; cursor: zoom-in;
+}
+.about-band-open:focus-visible { outline: 2px solid var(--accent); outline-offset: -6px; }
+
 @media (min-width: 621px) {
   .about-band { margin-top: calc(-1 * (var(--masthead-h) + 1px)); }
   body:has(.about-band) .masthead { border-bottom-color: transparent; }

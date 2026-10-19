@@ -872,6 +872,22 @@
     });
   });
 
+  // About's cover opens full screen like any gallery photograph (Newton,
+  // 2026-10-19): the whole frame from photos.json, with its date and camera
+  // line; the band's own file if the record isn't there.
+  Array.prototype.forEach.call(document.querySelectorAll(".about-band-open"), function (btn) {
+    var img = btn.querySelector("img"), src = btn.getAttribute("data-photo"), photos = null;
+    btn.setAttribute("aria-label", tr("View {title} larger", { title: placeName("Alaska") }));
+    btn.addEventListener("click", function () {
+      (photos || (photos = getJSON("data/photos.json").then(function (d) { return d.photos || []; },
+        function () { return []; }))).then(function (list) {
+        var rec = list.filter(function (p) { return p.src === src; })[0] ||
+          { src: img.getAttribute("src"), width: img.naturalWidth, height: img.naturalHeight };
+        viewer([rec], 0, btn);
+      });
+    });
+  });
+
   // About in Chinese or English: each version is everything marked
   // data-lang, and site.css shows one (html[data-about-lang="en"]) and hides
   // the other. The site's 中 / EN switch picks it (Newton, 2026-10-17; the
