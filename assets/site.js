@@ -2449,23 +2449,33 @@
       .join("  ·  ");
   }
 
-  // The bird's English name, its scientific name beside it, the pair a link
-  // to the species on eBird when photos.json carries the code. In Chinese
-  // its Chinese name ("zh", eBird's zh_SIM) comes first, then the two.
+  // The animal's English name, its scientific name beside it, the pair a
+  // link: a bird to its species on eBird when photos.json carries the code,
+  // any other animal to Wikipedia ("wiki", the English article's title, and
+  // "wikiZh", the Chinese one's, read in simplified characters on the
+  // Chinese page; Newton, 2026-10-19). In Chinese its Chinese name ("zh":
+  // eBird's zh_SIM for a bird, Chinese Wikipedia's for the rest) comes
+  // first, then the two.
+  function wikiURL(photo) {
+    var zh = LANG === "zh" && photo.wikiZh;
+    var title = (zh ? photo.wikiZh : photo.wiki).replace(/ /g, "_");
+    return (zh ? "https://zh.wikipedia.org/zh-cn/" : "https://en.wikipedia.org/wiki/") + encodeURIComponent(title);
+  }
   function nameLine(photo) {
     lbName.textContent = "";
     if (!CAPTIONS.lightbox.caption || !photo.caption) return;
-    var to = lbName;
-    if (photo.ebird) {
-      to = lbName.appendChild(el("a", "lb-ebird"));
-      to.href = "https://ebird.org/species/" + encodeURIComponent(photo.ebird);
+    var to = lbName, link = photo.ebird ? "https://ebird.org/species/" + encodeURIComponent(photo.ebird)
+      : photo.wiki ? wikiURL(photo) : "";
+    if (link) {
+      to = lbName.appendChild(el("a", photo.ebird ? "lb-ebird" : "lb-wiki"));
+      to.href = link;
       to.target = "_blank";
       to.rel = "noopener";
     }
     if (LANG === "zh" && photo.zh) setText(to.appendChild(el("span", "lb-zh")), photo.zh);
     to.appendChild(document.createTextNode(photo.caption));
     if (photo.sci) to.appendChild(el("i", "lb-sci")).textContent = photo.sci;
-    if (photo.ebird) {
+    if (link) {
       var out = to.appendChild(el("span", "lb-out"));
       out.textContent = "\u2197";
       out.setAttribute("aria-hidden", "true");

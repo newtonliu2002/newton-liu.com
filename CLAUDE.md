@@ -386,7 +386,22 @@ Striated Heron has none); in Chinese the line reads 中文名, English,
 eBird species for that trip's regions and confirmed by a second, independent
 look. Uncertain ones were left unnamed and listed for Newton (downy chicks,
 distant flocks, silhouettes, Darwin's finches, birds off his eBird list at
-medium confidence); mammals, landscapes and the butterfly have none.
+medium confidence).
+
+**Other animals' names** (Newton, 2026-10-19): mammals, reptiles, crabs, the
+shark, the ants and the butterfly have the same line, in the birds' Title
+Case, linked to Wikipedia instead of eBird: `wiki` is the English article's
+title, `wikiZh` the Chinese article's (opened as zh.wikipedia.org/zh-cn/, so
+it reads simplified on the Chinese page). `zh` is Chinese Wikipedia's title in
+simplified characters, except 绿海龟 (the usual mainland name) and three with
+no Chinese article (马来鼬, 加拉帕戈斯海狮, 红叶猴); four have no Chinese name
+at all (Stone Sheep, Large-headed Capuchin, Green Forest Lizard, and the Lava
+Lizard at genus level). 48 photographs, each ID made by one look and
+confirmed by a second, independent one, named only as far as the photograph
+supports (three caimans as Caiman, Caimaninae; the leafcutter ants with no
+genus; the Alaska Highway bison as Wood Bison by range). The uncaptioned
+birds that turned up (Darwin's finches, distant gulls, a Brandt's Cormorant
+in California's 2:1 frame…) were listed for him, not named.
 
 `EXIF_FIELDS` sets which technical values print and in what order. Missing
 values are skipped, which is why drone frames show fewer items — their
@@ -1278,7 +1293,7 @@ folder name ("2026.9" = September 2026; Newton corrected it from 2024 on
 
 `build.py` never overwrites hand-authored text (`AUTHORED_FIELDS`: `title`,
 `location`, `date`, `caption`, `collection`, `featured`, `focus`, `sci`,
-`ebird`, `zh`). A new hand-edited field must be added there, or the next
+`ebird`, `zh`, `wiki`, `wikiZh`). A new hand-edited field must be added there, or the next
 build drops it. It only refreshes mechanical fields — dimensions,
 EXIF, thumbnail paths. To re-derive a field, delete it from `photos.json` and
 rebuild.

@@ -34,7 +34,12 @@
           "src": "images/alaska/BU2A9705.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/alaska/BU2A9705.jpg"
+      "thumb": "images/_thumbs/1600/alaska/BU2A9705.jpg",
+      "caption": "Harbor Seal",
+      "sci": "Phoca vitulina",
+      "zh": "港海豹",
+      "wiki": "Harbor seal",
+      "wikiZh": "港海豹"
     },
     {
       "src": "images/alaska/AU2A4187.jpg",
@@ -110,7 +115,12 @@
           "src": "images/alaska/BU2A8430.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/alaska/BU2A8430.jpg"
+      "thumb": "images/_thumbs/1600/alaska/BU2A8430.jpg",
+      "caption": "Harbor Seal",
+      "sci": "Phoca vitulina",
+      "zh": "港海豹",
+      "wiki": "Harbor seal",
+      "wikiZh": "港海豹"
     },
     {
       "src": "images/alaska/BU2A7646.jpg",
@@ -146,7 +156,12 @@
           "src": "images/alaska/BU2A7646.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/alaska/BU2A7646.jpg"
+      "thumb": "images/_thumbs/1600/alaska/BU2A7646.jpg",
+      "caption": "Harbor Seal",
+      "sci": "Phoca vitulina",
+      "zh": "港海豹",
+      "wiki": "Harbor seal",
+      "wikiZh": "港海豹"
     },
     {
       "src": "images/alaska/BU2A6298.jpg",
@@ -302,7 +317,12 @@
           "src": "images/alaska/BU2A8354.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/alaska/BU2A8354.jpg"
+      "thumb": "images/_thumbs/1600/alaska/BU2A8354.jpg",
+      "caption": "Harbor Seal",
+      "sci": "Phoca vitulina",
+      "zh": "港海豹",
+      "wiki": "Harbor seal",
+      "wikiZh": "港海豹"
     },
     {
       "src": "images/alaska/BU2A8828.jpg",
@@ -338,7 +358,12 @@
           "src": "images/alaska/BU2A8828.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/alaska/BU2A8828.jpg"
+      "thumb": "images/_thumbs/1600/alaska/BU2A8828.jpg",
+      "caption": "Harbor Seal",
+      "sci": "Phoca vitulina",
+      "zh": "港海豹",
+      "wiki": "Harbor seal",
+      "wikiZh": "港海豹"
     },
     {
       "src": "images/alaska/B0003302.jpg",
@@ -830,7 +855,12 @@
           "src": "images/alaska/B0002996.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/alaska/B0002996.jpg"
+      "thumb": "images/_thumbs/1600/alaska/B0002996.jpg",
+      "caption": "Brown Bear",
+      "sci": "Ursus arctos",
+      "zh": "棕熊",
+      "wiki": "Brown bear",
+      "wikiZh": "棕熊"
     },
     {
       "src": "images/alaska/AU2A2186.jpg",
@@ -866,7 +896,12 @@
           "src": "images/alaska/AU2A2186.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/alaska/AU2A2186.jpg"
+      "thumb": "images/_thumbs/1600/alaska/AU2A2186.jpg",
+      "caption": "Brown Bear",
+      "sci": "Ursus arctos",
+      "zh": "棕熊",
+      "wiki": "Brown bear",
+      "wikiZh": "棕熊"
     },
     {
       "src": "images/alaska/B0003196.jpg",
@@ -938,7 +973,12 @@
           "src": "images/alaska/BU2A9247.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/alaska/BU2A9247.jpg"
+      "thumb": "images/_thumbs/1600/alaska/BU2A9247.jpg",
+      "caption": "Brown Bear",
+      "sci": "Ursus arctos",
+      "zh": "棕熊",
+      "wiki": "Brown bear",
+      "wikiZh": "棕熊"
     },
     {
       "src": "images/alaska/U2A6259.jpg",
@@ -1054,7 +1094,12 @@
           "src": "images/alaska/B0003018.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/alaska/B0003018.jpg"
+      "thumb": "images/_thumbs/1600/alaska/B0003018.jpg",
+      "caption": "Brown Bear",
+      "sci": "Ursus arctos",
+      "zh": "棕熊",
+      "wiki": "Brown bear",
+      "wikiZh": "棕熊"
     },
     {
       "src": "images/alaska/B0003281.jpg",
@@ -2827,7 +2872,11 @@
           "src": "images/malaysia/Inde-5.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/malaysia/Inde-5.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/Inde-5.jpg",
+      "caption": "Malayan Weasel",
+      "sci": "Mustela nudipes",
+      "zh": "马来鼬",
+      "wiki": "Malayan weasel"
     },
     {
       "src": "images/malaysia/12-2.jpg",
@@ -3087,7 +3136,12 @@
           "src": "images/malaysia/6-1.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/malaysia/6-1.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/6-1.jpg",
+      "caption": "Proboscis Monkey",
+      "sci": "Nasalis larvatus",
+      "zh": "长鼻猴",
+      "wiki": "Proboscis monkey",
+      "wikiZh": "長鼻猴"
     },
     {
       "src": "images/malaysia/6-2.jpg",
@@ -3116,7 +3170,12 @@
           "src": "images/malaysia/6-2.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/malaysia/6-2.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/6-2.jpg",
+      "caption": "Proboscis Monkey",
+      "sci": "Nasalis larvatus",
+      "zh": "长鼻猴",
+      "wiki": "Proboscis monkey",
+      "wikiZh": "長鼻猴"
     },
     {
       "src": "images/malaysia/10-1.jpg",
@@ -3213,7 +3272,11 @@
           "src": "images/malaysia/Big-3.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/malaysia/Big-3.jpg"
+      "thumb": "images/_thumbs/1600/malaysia/Big-3.jpg",
+      "caption": "Maroon Langur",
+      "sci": "Presbytis rubicunda",
+      "zh": "红叶猴",
+      "wiki": "Maroon leaf monkey"
     },
     {
       "src": "images/malaysia/14-1.jpg",
@@ -3506,7 +3569,11 @@
           "src": "images/galapagos/8.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/galapagos/8.jpg"
+      "thumb": "images/_thumbs/1600/galapagos/8.jpg",
+      "caption": "Galápagos Sea Lion",
+      "sci": "Zalophus wollebaeki",
+      "zh": "加拉帕戈斯海狮",
+      "wiki": "Galápagos sea lion"
     },
     {
       "src": "images/galapagos/21.jpg",
@@ -3601,7 +3668,12 @@
           "src": "images/galapagos/6.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/galapagos/6.jpg"
+      "thumb": "images/_thumbs/1600/galapagos/6.jpg",
+      "caption": "Sally Lightfoot Crab",
+      "sci": "Grapsus grapsus",
+      "zh": "红石蟹",
+      "wiki": "Grapsus grapsus",
+      "wikiZh": "红石蟹"
     },
     {
       "src": "images/galapagos/1.jpg",
@@ -3630,7 +3702,12 @@
           "src": "images/galapagos/1.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/galapagos/1.jpg"
+      "thumb": "images/_thumbs/1600/galapagos/1.jpg",
+      "caption": "Marine Iguana",
+      "sci": "Amblyrhynchus cristatus",
+      "zh": "海鬣蜥",
+      "wiki": "Marine iguana",
+      "wikiZh": "海鬣蜥"
     },
     {
       "src": "images/galapagos/11-2.jpg",
@@ -3987,7 +4064,12 @@
           "src": "images/galapagos/16-2.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/galapagos/16-2.jpg"
+      "thumb": "images/_thumbs/1600/galapagos/16-2.jpg",
+      "caption": "Lava Lizard",
+      "sci": "Microlophus sp.",
+      "zh": "麦克罗蜥",
+      "wiki": "Microlophus",
+      "wikiZh": "麦克罗蜥属"
     },
     {
       "src": "images/galapagos/9-2.jpg",
@@ -4132,7 +4214,12 @@
           "src": "images/galapagos/18.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/galapagos/18.jpg"
+      "thumb": "images/_thumbs/1600/galapagos/18.jpg",
+      "caption": "Galápagos Tortoise",
+      "sci": "Chelonoidis niger",
+      "zh": "加拉帕戈斯象龟",
+      "wiki": "Galápagos tortoise",
+      "wikiZh": "加拉帕戈斯象龜"
     },
     {
       "src": "images/galapagos/23.jpg",
@@ -4161,7 +4248,11 @@
           "src": "images/galapagos/23.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/galapagos/23.jpg"
+      "thumb": "images/_thumbs/1600/galapagos/23.jpg",
+      "caption": "Galápagos Sea Lion",
+      "sci": "Zalophus wollebaeki",
+      "zh": "加拉帕戈斯海狮",
+      "wiki": "Galápagos sea lion"
     },
     {
       "src": "images/galapagos/12-3.jpg",
@@ -5351,7 +5442,12 @@
         }
       ],
       "thumb": "images/_thumbs/1600/yellowstone/05A2016.jpg",
-      "focus": "center bottom"
+      "focus": "center bottom",
+      "caption": "American Bison",
+      "sci": "Bison bison",
+      "zh": "美洲野牛",
+      "wiki": "American bison",
+      "wikiZh": "美洲野牛"
     },
     {
       "src": "images/yellowstone/U2A7753.jpg",
@@ -5387,7 +5483,12 @@
           "src": "images/yellowstone/U2A7753.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/yellowstone/U2A7753.jpg"
+      "thumb": "images/_thumbs/1600/yellowstone/U2A7753.jpg",
+      "caption": "American Bison",
+      "sci": "Bison bison",
+      "zh": "美洲野牛",
+      "wiki": "American bison",
+      "wikiZh": "美洲野牛"
     },
     {
       "src": "images/yellowstone/05A1862.jpg",
@@ -5459,7 +5560,12 @@
           "src": "images/yellowstone/05A1955.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/yellowstone/05A1955.jpg"
+      "thumb": "images/_thumbs/1600/yellowstone/05A1955.jpg",
+      "caption": "Coyote",
+      "sci": "Canis latrans",
+      "zh": "郊狼",
+      "wiki": "Coyote",
+      "wikiZh": "郊狼"
     },
     {
       "src": "images/yellowstone/05A2197.jpg",
@@ -5495,7 +5601,12 @@
           "src": "images/yellowstone/05A2197.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/yellowstone/05A2197.jpg"
+      "thumb": "images/_thumbs/1600/yellowstone/05A2197.jpg",
+      "caption": "Bighorn Sheep",
+      "sci": "Ovis canadensis",
+      "zh": "大角羊",
+      "wiki": "Bighorn sheep",
+      "wikiZh": "大角羊"
     },
     {
       "src": "images/yellowstone/0Z9A0522.jpg",
@@ -5531,7 +5642,12 @@
           "src": "images/yellowstone/0Z9A0522.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/yellowstone/0Z9A0522.jpg"
+      "thumb": "images/_thumbs/1600/yellowstone/0Z9A0522.jpg",
+      "caption": "American Bison",
+      "sci": "Bison bison",
+      "zh": "美洲野牛",
+      "wiki": "American bison",
+      "wikiZh": "美洲野牛"
     },
     {
       "src": "images/desert-west/DJI-20251228074816-0049-D.jpg",
@@ -5745,7 +5861,12 @@
           "src": "images/yellowstone/B0000090.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/yellowstone/B0000090.jpg"
+      "thumb": "images/_thumbs/1600/yellowstone/B0000090.jpg",
+      "caption": "American Bison",
+      "sci": "Bison bison",
+      "zh": "美洲野牛",
+      "wiki": "American bison",
+      "wikiZh": "美洲野牛"
     },
     {
       "src": "images/yellowstone/05A1837.jpg",
@@ -5781,7 +5902,12 @@
           "src": "images/yellowstone/05A1837.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/yellowstone/05A1837.jpg"
+      "thumb": "images/_thumbs/1600/yellowstone/05A1837.jpg",
+      "caption": "American Bison",
+      "sci": "Bison bison",
+      "zh": "美洲野牛",
+      "wiki": "American bison",
+      "wikiZh": "美洲野牛"
     },
     {
       "src": "images/yellowstone/U2A6934.jpg",
@@ -5977,7 +6103,12 @@
           "src": "images/snowy-west/05A2448.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/snowy-west/05A2448.jpg"
+      "thumb": "images/_thumbs/1600/snowy-west/05A2448.jpg",
+      "caption": "Coyote",
+      "sci": "Canis latrans",
+      "zh": "郊狼",
+      "wiki": "Coyote",
+      "wikiZh": "郊狼"
     },
     {
       "src": "images/snowy-west/05A0702.jpg",
@@ -7138,7 +7269,12 @@
           "src": "images/hawaii/15.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/hawaii/15.jpg"
+      "thumb": "images/_thumbs/1600/hawaii/15.jpg",
+      "caption": "Green Sea Turtle",
+      "sci": "Chelonia mydas",
+      "zh": "绿海龟",
+      "wiki": "Green sea turtle",
+      "wikiZh": "綠蠵龜"
     },
     {
       "src": "images/hawaii/2-2.jpg",
@@ -7233,7 +7369,12 @@
           "src": "images/hawaii/13-2.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/hawaii/13-2.jpg"
+      "thumb": "images/_thumbs/1600/hawaii/13-2.jpg",
+      "caption": "Galapagos Shark",
+      "sci": "Carcharhinus galapagensis",
+      "zh": "直翅真鲨",
+      "wiki": "Galapagos shark",
+      "wikiZh": "直翅真鯊"
     },
     {
       "src": "images/hawaii/9-1.jpg",
@@ -8946,7 +9087,12 @@
           "src": "images/sri-lanka/40-2.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sri-lanka/40-2.jpg"
+      "thumb": "images/_thumbs/1600/sri-lanka/40-2.jpg",
+      "caption": "Bengal Monitor",
+      "sci": "Varanus bengalensis",
+      "zh": "孟加拉巨蜥",
+      "wiki": "Bengal monitor",
+      "wikiZh": "孟加拉巨蜥"
     },
     {
       "src": "images/sri-lanka/23.jpg",
@@ -9008,7 +9154,12 @@
           "src": "images/sri-lanka/54-1.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sri-lanka/54-1.jpg"
+      "thumb": "images/_thumbs/1600/sri-lanka/54-1.jpg",
+      "caption": "Toque Macaque",
+      "sci": "Macaca sinica",
+      "zh": "斯里兰卡猕猴",
+      "wiki": "Toque macaque",
+      "wikiZh": "斯里兰卡猕猴"
     },
     {
       "src": "images/sri-lanka/50.jpg",
@@ -9070,7 +9221,12 @@
           "src": "images/sri-lanka/42.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sri-lanka/42.jpg"
+      "thumb": "images/_thumbs/1600/sri-lanka/42.jpg",
+      "caption": "Sri Lankan Leopard",
+      "sci": "Panthera pardus kotiya",
+      "zh": "斯里兰卡豹",
+      "wiki": "Sri Lankan leopard",
+      "wikiZh": "斯里兰卡豹"
     },
     {
       "src": "images/sri-lanka/51-1.jpg",
@@ -9132,7 +9288,10 @@
           "src": "images/sri-lanka/4-4.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sri-lanka/4-4.jpg"
+      "thumb": "images/_thumbs/1600/sri-lanka/4-4.jpg",
+      "caption": "Green Forest Lizard",
+      "sci": "Calotes calotes",
+      "wiki": "Calotes calotes"
     },
     {
       "src": "images/sri-lanka/21.jpg",
@@ -9689,7 +9848,12 @@
           "src": "images/sri-lanka/45-1.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sri-lanka/45-1.jpg"
+      "thumb": "images/_thumbs/1600/sri-lanka/45-1.jpg",
+      "caption": "Horned Ghost Crab",
+      "sci": "Ocypode ceratophthalmus",
+      "zh": "角眼沙蟹",
+      "wiki": "Ocypode ceratophthalmus",
+      "wikiZh": "角眼沙蟹"
     },
     {
       "src": "images/sri-lanka/55.jpg",
@@ -9780,7 +9944,12 @@
           "src": "images/sri-lanka/36.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/sri-lanka/36.jpg"
+      "thumb": "images/_thumbs/1600/sri-lanka/36.jpg",
+      "caption": "Indian Flying Fox",
+      "sci": "Pteropus medius",
+      "zh": "印度狐蝠",
+      "wiki": "Indian flying fox",
+      "wikiZh": "印度狐蝠"
     },
     {
       "src": "images/sri-lanka/7-1.jpg",
@@ -10059,7 +10228,12 @@
           "src": "images/alberta-bc-yukon/ZL-0781.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/alberta-bc-yukon/ZL-0781.jpg"
+      "thumb": "images/_thumbs/1600/alberta-bc-yukon/ZL-0781.jpg",
+      "caption": "Bighorn Sheep",
+      "sci": "Ovis canadensis",
+      "zh": "大角羊",
+      "wiki": "Bighorn sheep",
+      "wikiZh": "大角羊"
     },
     {
       "src": "images/alberta-bc-yukon/05A8628.jpg",
@@ -10359,7 +10533,12 @@
           "src": "images/alberta-bc-yukon/ZL-0712.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/alberta-bc-yukon/ZL-0712.jpg"
+      "thumb": "images/_thumbs/1600/alberta-bc-yukon/ZL-0712.jpg",
+      "caption": "Bighorn Sheep",
+      "sci": "Ovis canadensis",
+      "zh": "大角羊",
+      "wiki": "Bighorn sheep",
+      "wikiZh": "大角羊"
     },
     {
       "src": "images/alberta-bc-yukon/B0003236.jpg",
@@ -10503,7 +10682,10 @@
           "src": "images/alberta-bc-yukon/ZL-6549.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/alberta-bc-yukon/ZL-6549.jpg"
+      "thumb": "images/_thumbs/1600/alberta-bc-yukon/ZL-6549.jpg",
+      "caption": "Stone Sheep",
+      "sci": "Ovis dalli stonei",
+      "wiki": "Stone sheep"
     },
     {
       "src": "images/alberta-bc-yukon/ZL-6985.jpg",
@@ -10611,7 +10793,12 @@
           "src": "images/alberta-bc-yukon/ZL-7451.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/alberta-bc-yukon/ZL-7451.jpg"
+      "thumb": "images/_thumbs/1600/alberta-bc-yukon/ZL-7451.jpg",
+      "caption": "Wood Bison",
+      "sci": "Bison bison athabascae",
+      "zh": "美洲森林野牛",
+      "wiki": "Wood bison",
+      "wikiZh": "美洲森林野牛"
     },
     {
       "src": "images/peru/EZLE1970.jpg",
@@ -10683,7 +10870,12 @@
           "src": "images/peru/EZLE2124.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/peru/EZLE2124.jpg"
+      "thumb": "images/_thumbs/1600/peru/EZLE2124.jpg",
+      "caption": "Caiman",
+      "sci": "Caimaninae",
+      "zh": "凯门鳄",
+      "wiki": "Caiman",
+      "wikiZh": "凱門鱷亞科"
     },
     {
       "src": "images/peru/GZLG4668.jpg",
@@ -10759,7 +10951,10 @@
           "src": "images/peru/EZLE1651.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/peru/EZLE1651.jpg"
+      "thumb": "images/_thumbs/1600/peru/EZLE1651.jpg",
+      "caption": "Large-headed Capuchin",
+      "sci": "Sapajus macrocephalus",
+      "wiki": "Large-headed capuchin"
     },
     {
       "src": "images/peru/GZLG5328.jpg",
@@ -10795,7 +10990,11 @@
           "src": "images/peru/GZLG5328.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/peru/GZLG5328.jpg"
+      "thumb": "images/_thumbs/1600/peru/GZLG5328.jpg",
+      "caption": "Leafcutter Ant",
+      "zh": "切叶蚁",
+      "wiki": "Leafcutter ant",
+      "wikiZh": "切葉蟻"
     },
     {
       "src": "images/peru/EZLE3285.jpg",
@@ -10831,7 +11030,12 @@
           "src": "images/peru/EZLE3285.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/peru/EZLE3285.jpg"
+      "thumb": "images/_thumbs/1600/peru/EZLE3285.jpg",
+      "caption": "Caiman",
+      "sci": "Caimaninae",
+      "zh": "凯门鳄",
+      "wiki": "Caiman",
+      "wikiZh": "凱門鱷亞科"
     },
     {
       "src": "images/peru/EZLE3445.jpg",
@@ -11186,7 +11390,12 @@
           "src": "images/peru/EZLE1063.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/peru/EZLE1063.jpg"
+      "thumb": "images/_thumbs/1600/peru/EZLE1063.jpg",
+      "caption": "Caiman",
+      "sci": "Caimaninae",
+      "zh": "凯门鳄",
+      "wiki": "Caiman",
+      "wikiZh": "凱門鱷亞科"
     },
     {
       "src": "images/california/1.jpg",
@@ -11277,7 +11486,12 @@
           "src": "images/california/2022-6-California-4.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/california/2022-6-California-4.jpg"
+      "thumb": "images/_thumbs/1600/california/2022-6-California-4.jpg",
+      "caption": "American Black Bear",
+      "sci": "Ursus americanus",
+      "zh": "美洲黑熊",
+      "wiki": "American black bear",
+      "wikiZh": "美洲黑熊"
     },
     {
       "src": "images/california/2022-1-California-1.jpg",
@@ -11339,7 +11553,12 @@
           "src": "images/california/2022-43.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/california/2022-43.jpg"
+      "thumb": "images/_thumbs/1600/california/2022-43.jpg",
+      "caption": "Mule Deer",
+      "sci": "Odocoileus hemionus",
+      "zh": "骡鹿",
+      "wiki": "Mule deer",
+      "wikiZh": "騾鹿"
     },
     {
       "src": "images/california/2022-6-California-9-3.jpg",
@@ -11665,7 +11884,12 @@
           "src": "images/california/2022-1-California-2.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/california/2022-1-California-2.jpg"
+      "thumb": "images/_thumbs/1600/california/2022-1-California-2.jpg",
+      "caption": "Island Fox",
+      "sci": "Urocyon littoralis",
+      "zh": "岛屿灰狐",
+      "wiki": "Island fox",
+      "wikiZh": "島嶼灰狐"
     },
     {
       "src": "images/california/2022-47.jpg",
@@ -12903,7 +13127,12 @@
           "src": "images/guangxi-guangdong/U2A6681.jpg"
         }
       ],
-      "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A6681.jpg"
+      "thumb": "images/_thumbs/1600/guangxi-guangdong/U2A6681.jpg",
+      "caption": "Red Helen",
+      "sci": "Papilio helenus",
+      "zh": "玉斑凤蝶",
+      "wiki": "Papilio helenus",
+      "wikiZh": "玉斑鳳蝶"
     },
     {
       "src": "images/guangxi-guangdong/6-1.jpg",
