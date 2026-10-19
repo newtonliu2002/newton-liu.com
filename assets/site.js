@@ -246,11 +246,12 @@
       "Merritt Island National Wildlife Refuge": "Merritt Island国家野生动物保护区",
       "Parker River National Wildlife Refuge": "Parker River国家野生动物保护区",
       "Santa Ana National Wildlife Refuge": "Santa Ana国家野生动物保护区", "National Elk Refuge": "国家马鹿保护区",
+      // pins named without their generic part in English get it in Chinese
+      "Bosque del Apache": "Bosque del Apache国家野生动物保护区", "Craters of the Moon": "Craters of the Moon国家纪念区",
       "Three Lakes Wildlife Management Area": "Three Lakes野生动物管理区",
       "Bentsen-Rio Grande Valley State Park": "Bentsen-Rio Grande Valley州立公园",
       "Fort De Soto Park": "Fort De Soto公园", "Nebraska National Forest": "内布拉斯加国家森林",
       "Pawnee National Grassland": "Pawnee国家草原", "Sinharaja Forest Reserve": "Sinharaja森林保护区",
-      "Mindo Cloud Forest": "Mindo云雾林",
       "Lake Apopka": "Apopka湖", "Kinabatangan River": "Kinabatangan河", "Platte River": "Platte河",
       "Sawtooth Mountains": "Sawtooth山脉", "Labuk Bay": "Labuk湾", "Loveland Pass": "Loveland山口",
       "Skagit Valley": "Skagit谷", "Santa Cruz Flats": "Santa Cruz平原",
