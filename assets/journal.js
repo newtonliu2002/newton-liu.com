@@ -456,7 +456,26 @@
       S.responsive(img, rec, box.classList.contains("is-whole") || !(ar > 1) ? "100vw"
         : "(max-width: 620px) min(max(100vw, " + Math.round(78 * ar) + "vh), 1300px), max(100vw, " + Math.round(100 * ar) + "vh)");
       if (c.focus || rec.focus) img.style.objectPosition = c.focus || rec.focus;
-      slot.appendChild(img);
+      // It opens full screen as every photograph here does, with its camera
+      // line, and a bird's names when it has them (Newton, 2026-10-19).
+      var open = slot.appendChild(el("button", "jn-cover-open"));
+      open.type = "button";
+      open.setAttribute("aria-label", c.alt || t("Photograph"));
+      open.appendChild(img);
+      open.addEventListener("click", function () {
+        if (!S.viewer) return;
+        var view = photoBySrc[src] ? copy(rec) : { src: src, variants: rec.variants };
+        if (!photoBySrc[src]) {
+          if (own(shapes, src)) { view.width = shapes[src][0]; view.height = shapes[src][1]; }
+          else if (img.naturalWidth) { view.width = img.naturalWidth; view.height = img.naturalHeight; }
+          if (own(cameras, src)) view.exif = cameras[src];
+          if (own(birds, src)) ["caption", "sci", "ebird", "zh"].forEach(function (k) {
+            if (birds[src][k]) view[k] = birds[src][k];
+          });
+        }
+        view.alt = c.alt || "";
+        S.viewer([view], 0, open);
+      });
       box.classList.add("has-media");
     } else if (c.type === "video" && src) {
       upright(shapeOf(src) || shapeOf(cleanPath(c.poster)));

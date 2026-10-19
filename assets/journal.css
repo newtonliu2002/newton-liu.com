@@ -87,6 +87,8 @@ body[data-page="journal"] {
 }
 
 .jn-cover-media { position: absolute; inset: 0; }
+.jn-cover-open { display: block; width: 100%; height: 100%; margin: 0; padding: 0; border: 0; background: none; cursor: zoom-in; }
+.jn-cover-open:focus-visible { outline: 2px solid var(--accent); outline-offset: -6px; }
 .jn-cover-media img, .jn-cover-video {
   display: block; width: 100%; height: 100%; object-fit: cover;
 }
@@ -108,6 +110,7 @@ body[data-page="journal"] {
    as on the full cover, and under it on a phone, where the band is thin. */
 .jn-cover.is-whole { height: auto; min-height: 0; margin-top: 0; }
 .jn-cover.is-whole .jn-cover-media { position: relative; inset: auto; }
+.jn-cover.is-whole .jn-cover-open { height: auto; aspect-ratio: inherit; }   /* passes the slot's ratio on to the img */
 .jn-cover.is-whole .jn-cover-media img { height: auto; aspect-ratio: inherit; object-fit: contain; }
 .jn-cover.is-whole .jn-cover-text { bottom: clamp(24px, 4vw, 64px); }
 @media (max-width: 620px) {
