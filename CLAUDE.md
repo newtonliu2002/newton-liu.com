@@ -70,7 +70,10 @@ collections as a grid of covers, rendered by site.js's `renderHome`.
 
 The globe opens with Morocco on the right and the Americas on the left and
 turns west on its own (`START_LNG`, `SPIN`): Morocco's card first, then the
-Americas, the Pacific and Asia; there is no pause button, by Newton's choice. As it turns,
+Americas, the Pacific and Asia; there is no pause button, by Newton's choice. While Morocco is
+hidden (see below) the landing comes round to 64°W instead, so Quebec's card,
+first then, is up about as long as the others (at 42°W it stayed ~14 s;
+Newton: far too long, 2026-10-19). As it turns,
 the collection crossing the middle shows its plate (photo, title, where,
 local time) for a few seconds: the **passing card** (`passStep()`, `PASS_*`). Its row
 in the list lights with it (amber arms, an amber wire out toward the globe;

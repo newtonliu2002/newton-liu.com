@@ -84,6 +84,11 @@
   // pins, road, row or card (Newton, 2026-10-16, until the photographs come).
   // Take a slug out to bring it back. Quebec waits on the globe as usual.
   var HIDE_WAITING = ["morocco", "rio-grande"];
+  // With Morocco off the globe the landing comes round nearer Quebec, the
+  // first card then: from START_LNG its pin was 31° out and its card stayed
+  // up ~14 s, three times any other's (Newton: far too long, 2026-10-19).
+  // From 64°W it is up about as long as the rest. Morocco back, -42 again.
+  if (HIDE_WAITING.indexOf("morocco") >= 0) START_LNG = -64;
   // The local preview (tools/serve.py) shows a travel journal still in draft
   // (places.json `journal`, `draft: true`); the live site only once it is out.
   var LOCAL = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
