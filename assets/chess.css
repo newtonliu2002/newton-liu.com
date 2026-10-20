@@ -369,6 +369,7 @@ html.cg-locked { overflow: hidden; }
   max-width: none; min-width: min(16rem, calc(100dvh - var(--fh) - 140px));
 }
 .chess .is-full .cg-side { min-height: 0; height: 100%; }
+.chess .is-full .cg-side > :not(.cg-moves) { flex-shrink: 0; }   /* only the move list gives way (a two-line best line stays whole) */
 .chess .is-full .cg-moves { flex: 1 1 auto; max-height: none; min-height: 6rem; font-size: 14px; }
 .chess .is-full .cg-move { padding: 8px var(--s2); }
 .chess .is-full .cg-verdict, .chess .is-full .cg-best, .chess .is-full .cg-readout { font-size: 13px; }
