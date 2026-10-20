@@ -633,7 +633,8 @@
     if (counted.length) line.appendChild(el("span", null, t("Score {pts} / {n}", { pts: score(pts), n: tm.rounds || games.length })));
     var rt = tm.rating;
     if (rt && (rt.before || rt.after)) {
-      var s = (rt.system ? rt.system + " " : "") + (rt.before || "?") + (rt.after ? " → " + rt.after : "");
+      // No rating before (his first rated event): "USCF Unrated → 1240".
+      var s = (rt.system ? rt.system + " " : "") + (rt.before || t("Unrated")) + (rt.after ? " → " + rt.after : "");
       if (rt.before && rt.after) s += " (" + (rt.after - rt.before >= 0 ? "+" : "−") + Math.abs(rt.after - rt.before) + ")";
       line.appendChild(el("span", null, s));
     }
