@@ -93,14 +93,16 @@
           "color": "black",
           "opponent": "Dhivin Aarith Iyyappan",
           "opponentRating": 1350,
-          "result": "loss"
+          "result": "loss",
+          "pgn": "[Event \"24th Holly Heisman Memorial\"]\n[Site \"Exton, PA\"]\n[Date \"2026.10.03\"]\n[Round \"2\"]\n[White \"Dhivin Aarith Iyyappan\"]\n[Black \"Newton Liu\"]\n[WhiteElo \"1350\"]\n[Result \"1-0\"]\n\n1. d4 Nf6 2. Nf3 g6 3. Bf4 Bg7 4. Nc3 O-O 5. e4 d6 6. Qd2 c5 7. d5 e6 8. O-O-O exd5 9. exd5 Bf5 10. Bh6 Qa5 11. Bxg7 Kxg7 12. a3 Nbd7 13. h3 b5 14. Bxb5 Rfb8 15. g4 Be4 16. Nxe4 Qxb5 17. Qc3 Kg8 18. Nxf6+ Nxf6 19. Qxf6 Qe2 20. Rd2 Qc4 21. h4 Qa2 22. Rdd1 Rb6 23. h5 Rab8 24. Rhe1 Rxb2 25. Re8+ Rxe8 26. Qxb2 Qc4 27. Kb1 Qxg4 28. h6 Kf8 29. Qh8+ Ke7 30. Re1+ Kd7 31. Qxe8+ Kc7 32. Qc6+ 1-0"
         },
         {
           "round": 3,
           "color": "white",
           "opponent": "Aayan Dev Bhowmik",
           "opponentRating": 1095,
-          "result": "win"
+          "result": "win",
+          "pgn": "[Event \"24th Holly Heisman Memorial\"]\n[Site \"Exton, PA\"]\n[Date \"2026.10.03\"]\n[Round \"3\"]\n[White \"Newton Liu\"]\n[Black \"Aayan Dev Bhowmik\"]\n[Result \"1-0\"]\n\n1. d4 Nf6 2. Bf4 g6 3. Nf3 d5 4. e3 e6 5. Bd3 Nc6 6. c3 Bd7 7. Nbd2 Bg7 8. Qc2 O-O 9. O-O-O a6 10. Rdg1 Re8 11. g4 h5 12. gxh5 Nxh5 13. Bxg6 Nxf4 14. exf4 Qf6 15. Rg5 Qxf4 16. Rhg1 Qf6 17. Bh7+ Kf8 18. Rxg7 Qxg7 19. Rxg7 Kxg7 20. Ng5 f6 21. Qg6+ Kf8 22. Qf7# 1-0"
         },
         {
           "round": 4,
