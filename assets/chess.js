@@ -107,6 +107,12 @@
     return ma + " " + a.d + ", " + a.y + " – " + mb + " " + b.d + ", " + b.y;
   }
 
+  // A tournament's `rating`: one { system, before, after }, or a list of them.
+  function ratingsOf(tm) {
+    var r = tm && tm.rating;
+    return !r ? [] : Object.prototype.toString.call(r) === "[object Array]" ? r : [r];
+  }
+
   function score(n) {
     if (n == null) return "";
     var whole = Math.floor(n), half = n - whole >= 0.5;
@@ -717,13 +723,14 @@
     var pts = counted.reduce(function (a, g) { return a + g.points; }, 0);
     var line = el("p", "cg-score");
     if (counted.length) line.appendChild(el("span", null, t("Score {pts} / {n}", { pts: score(pts), n: tm.rounds || games.length })));
-    var rt = tm.rating;
-    if (rt && (rt.before || rt.after)) {
-      // No rating before (his first rated event): "USCF Unrated → 1240".
-      var s = (rt.system ? rt.system + " " : "") + (rt.before || t("Unrated")) + (rt.after ? " → " + rt.after : "");
-      if (rt.before && rt.after) s += " (" + (rt.after - rt.before >= 0 ? "+" : "−") + Math.abs(rt.after - rt.before) + ")";
+    // His ratings, one per system (a dual-rated event has two: "USCF" and
+    // "USCF Quick"); no rating before (his first rated event): "Unrated → 1240".
+    ratingsOf(tm).forEach(function (rt) {
+      if (!rt.before && !rt.after) return;
+      var s = (rt.system ? rt.system + " " : "") + (rt.before || t("Unrated")) + (rt.after ? " \u2192 " + rt.after : "");
+      if (rt.before && rt.after) s += " (" + (rt.after - rt.before >= 0 ? "+" : "\u2212") + Math.abs(rt.after - rt.before) + ")";
       line.appendChild(el("span", null, s));
-    }
+    });
     if (tm.place) line.appendChild(el("span", null, t("Place {n}", { n: tm.place })));
     if (tm.url) {
       var a = el("a", "cg-link", t("Crosstable") + " ↗");
@@ -777,14 +784,19 @@
       d.appendChild(el("dd", null, String(row[1])));
       stats.appendChild(d);
     });
-    var latest = null;
-    events.some(function (tm) { if (tm.rating && tm.rating.after) { latest = tm.rating; return true; } return false; });
-    if (latest) {
-      var d = el("div", "cg-stat");
-      d.appendChild(el("dt", null, latest.system || t("Rating")));
-      d.appendChild(el("dd", null, String(latest.after)));
-      stats.appendChild(d);
-    }
+    // Each rating system's latest: from the newest tournament that has it.
+    var seenSystem = {};
+    events.forEach(function (tm) {
+      ratingsOf(tm).forEach(function (rt) {
+        var sys = rt.system || t("Rating");
+        if (!rt.after || seenSystem[sys]) return;
+        seenSystem[sys] = true;
+        var d = el("div", "cg-stat");
+        d.appendChild(el("dt", null, sys));
+        d.appendChild(el("dd", null, String(rt.after)));
+        stats.appendChild(d);
+      });
+    });
     stats.hidden = false;
     jump.hidden = false;
 

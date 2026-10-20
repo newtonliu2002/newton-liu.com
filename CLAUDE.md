@@ -1300,7 +1300,14 @@ in site.js).
     by `color`. A `pgn`'s tags fill in what an entry leaves out (colour by
     `player`, opponent, ratings, result, round). `rounds` is the score's
     denominator when he didn't play them all; otherwise the rows count.
-  - `rating.after` of the newest tournament with one is the rail's rating.
+  - `rating` is one `{system, before, after}` or a list: a dual-rated
+    event has `[{"system": "USCF", …}, {"system": "USCF Quick", …}]`; no
+    `before` (his first rated event) reads "Unrated → 1240". The rail shows
+    each system's `after` from the newest tournament that has it. Ratings
+    are copied from the US Chess crosstable he pastes: opponents' and his
+    *pre-event* ratings (his rule), his after-event rating as `after`.
+  - Games carry no `note` text unless he writes one (he had the
+    "moves recorded up to…" notes removed, 2026-10-20).
 - Chinese: the interface words are in ZH_UI (site.js, "Chess"); his
   tournament names, places and opponents stay as written.
 
