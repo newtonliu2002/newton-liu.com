@@ -666,7 +666,9 @@
       tm = Object.assign({}, tm, { id: ids[k] });
       var keys = R.gameKeys(ids[k], tm.games);
       var games = (tm.games || []).map(function (raw, n) { return gameOf(raw, tm, keys[n]); });
-      games.sort(function (a, b) { return (parseFloat(a.round) || 0) - (parseFloat(b.round) || 0); });
+      // By round; a game whose round isn't known yet comes after, in the data's order.
+      var rnd = function (g) { var r = parseFloat(g.round); return isNaN(r) ? Infinity : r; };
+      games.sort(function (a, b) { var x = rnd(a), y = rnd(b); return x === y ? 0 : x < y ? -1 : 1; });
       all = all.concat(games);
       col.appendChild(tournamentBlock(tm, games));
       var a = el("a", null, tm.name || t("Tournament"));

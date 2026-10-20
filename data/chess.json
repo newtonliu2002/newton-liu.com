@@ -45,6 +45,49 @@
         }
       ],
       "timeControl": "25+5"
+    },
+    {
+      "id": "holly-heisman-memorial-2026",
+      "name": "24th Holly Heisman Memorial",
+      "where": "West Whiteland Township Building, Exton, PA",
+      "lat": 40.0258,
+      "lng": -75.6291,
+      "start": "2026-10-03",
+      "end": "2026-10-03",
+      "section": "U1500",
+      "games": [
+        {
+          "round": 1,
+          "color": "white",
+          "opponent": "Sai Venkat Shanvith Nandan Alahari",
+          "opponentRating": 1151,
+          "result": "win",
+          "note": "Moves recorded up to 62…Nxg4, when time ran low; won after that.",
+          "pgn": "[Event \"24th Holly Heisman Memorial\"]\n[Site \"Exton, PA\"]\n[Date \"2026.10.03\"]\n[Round \"1\"]\n[White \"Newton Liu\"]\n[Black \"Sai Venkat Shanvith Nandan Alahari\"]\n[Result \"*\"]\n\n1. d4 d5 2. Bf4 Bf5 3. e3 Nf6 4. Nf3 e6 5. Bd3 Bg6 6. Nbd2 Bd6 7. Bg3 Bxd3 8. cxd3 Nc6 9. a3 a6 10. Qc2 Bxg3 11. hxg3 h6 12. O-O-O Qd6 13. Nb3 b6 14. e4 Nd7 15. Rh5 Ne7 16. Kb1 O-O-O 17. Rc1 Kb7 18. Ne5 Nxe5 19. Rxe5 g6 20. exd5 Nxd5 21. Re2 Rc8 22. Nd2 Nf6 23. Qc3 Rhd8 24. Nf3 Nd7 25. Ree1 Qc6 26. Re4 Qxc3 27. bxc3 c5 28. Kc2 cxd4 29. Rxd4 a5 30. Rb1 f6 31. Rd6 Rc6 32. Rxc6 Kxc6 33. Nd4+ Kd6 34. Nb5+ Kc6 35. Nd4+ Kd6 36. Rb5 e5 37. Ne2 Kc6 38. Rb1 Nc5 39. d4 exd4 40. Nxd4+ Kb7 41. f3 Nd7 42. Nb3 Re8 43. Kd2 Rd8 44. Ke2 Kc6 45. Nd4+ Kb7 46. Nb3 Re8+ 47. Kf2 Rd8 48. Nd4 Re8 49. g4 g5 50. g3 Nc5 51. Nf5 Nd3+ 52. Kg2 Ne1+ 53. Kf2 Nd3+ 54. Kf1 Rh8 55. Rd1 Nc5 56. Rd6 Re8 57. Rxf6 Nd3 58. Nd6+ Kc7 59. Nxe8+ Kb7 60. Rxh6 Ne5 61. f4 gxf4 62. gxf4 Nxg4 *"
+        },
+        {
+          "round": 2,
+          "color": "black",
+          "opponent": "Dhivin Aarith Iyyappan",
+          "opponentRating": 1350,
+          "result": "loss"
+        },
+        {
+          "color": "white",
+          "opponent": "Aayan Dev Bhowmik",
+          "result": "win"
+        },
+        {
+          "color": "white",
+          "opponent": "Kieran Chang Visvanathan",
+          "result": "draw"
+        },
+        {
+          "color": "black",
+          "opponent": "Viaan Sharma",
+          "result": "loss"
+        }
+      ]
     }
   ]
 }
