@@ -73,14 +73,15 @@
           "result": "loss"
         },
         {
-          "color": "white",
-          "opponent": "Aayan Dev Bhowmik",
-          "result": "win"
-        },
-        {
+          "round": 3,
           "color": "white",
           "opponent": "Kieran Chang Visvanathan",
           "result": "draw"
+        },
+        {
+          "color": "white",
+          "opponent": "Aayan Dev Bhowmik",
+          "result": "win"
         },
         {
           "color": "black",
