@@ -1210,8 +1210,8 @@ in site.js).
   counts tournaments and games, or reads the lit one's place and dates.
 - **chess-games.html, the database**: every tournament, newest first, one
   section each, its `id` the anchor the pins link to
-  (`chess-games.html#<id>`; arriving there marks the section with the
-  nav's amber square). Each game is a row: round, the opponent's colour
+  (`chess-games.html#<id>`, scrolled to on arrival); every tournament's
+  name carries the nav's amber square (Newton asked, 2026-10-20). Each game is a row: round, the opponent's colour
   beside their name (outlined square white, filled black; Newton read it
   that way, 2026-10-20), opponent and rating, his points (1, ½, 0),
   **Game ↗** (its chess.com `link`) and, for a game with a PGN, **+** to
