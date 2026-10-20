@@ -1191,8 +1191,8 @@ fall behind the globe's sticky stage.
 ## Chess (chess.html, chess-games.html)
 
 Newton's chess tournaments (asked 2026-10-19). The **Chess** tab opens the
-map; pointing at it drops a menu (Map · Database, `NAV_MENUS["chess.html"]`
-in site.js).
+map, with no drop-down (he had the Map · Database menu removed 2026-10-20):
+the database is reached from the map's pins and its "Database →".
 
 - **chess.html, the map**: a pin wherever he has played a tournament. He
   plays mostly in the United States, so it is a flat (mercator) map framed

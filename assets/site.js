@@ -70,12 +70,9 @@
     ],
     "journals": [
       { label: "Québec", zh: "魁北克", href: "journals/quebec/" }
-    ],
-    // Chess: the tab opens the map; the database is every game, by tournament.
-    "chess.html": [
-      { label: "Map", zh: "地图", href: "chess.html" },
-      { label: "Database", zh: "对局库", href: "chess-games.html" }
     ]
+    // Chess has no menu (Newton, 2026-10-20): the tab goes straight to the
+    // map, whose pins and "Database →" open the games.
   };
 
   /* ------------------------------------------------------------------
