@@ -1202,7 +1202,10 @@ in site.js).
   heading, newest first; the crosshair pins; the plate; the console), with
   the landing's map colours (`PALETTE` in chess-map.js, copied from
   globe.js: keep the two alike) and no day and night. `assets/chess-map.js`
-  draws it, `assets/chess-map.css` adds the little a flat map needs.
+  draws it, `assets/chess-map.css` adds the little a flat map needs,
+  and draws the pins larger than the landing's (his ask: a few pins alone
+  on a wide map were hard to see): 1.5px arms, an amber dot, a soft amber
+  glow, a 40px hit area.
   Pointing at a pin or row lights it and shows its plate (name, place,
   dates, score); a click on either opens the database at that tournament.
   Tournaments within about a kilometre share one ringed pin; its click
