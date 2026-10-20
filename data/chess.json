@@ -14,6 +14,26 @@
       "end": "2026-10-18",
       "games": [
         {
+          "round": 1,
+          "color": "black",
+          "opponent": "Adam Parket",
+          "opponentRating": 1373,
+          "rating": 1240,
+          "result": "1-0",
+          "link": "https://www.chess.com/analysis/collection/tournament-games-34YAiMGSz/c79oeav9L/games",
+          "pgn": "[Event \"Marshall Chess Club Morning U1600\"]\n[Site \"New York, NY\"]\n[Date \"2026.10.18\"]\n[Round \"1\"]\n[White \"Adam Parket\"]\n[Black \"Newton Liu\"]\n[Result \"1-0\"]\n[Section \"U1600\"]\n[Board \"17\"]\n[WhiteElo \"1373\"]\n[BlackElo \"1240\"]\n[TimeControl \"25+5\"]\n[Link \"https://www.chess.com/analysis/collection/tournament-games-34YAiMGSz/c79oeav9L/games\"]\n\n1. c4 Nf6 2. Nc3 g6 3. d4 Bg7 4. Nf3 O-O 5. e4 d6 6. Bd3 Nbd7 7. O-O b6 8. Re1\nBb7 9. Bg5 Re8 10. Nd5 Nxd5 11. exd5 c6 12. dxc6 Bxc6 13. Be4 Rc8 14. Rc1 Ba8\n15. Qd2 Nf6 16. Bxa8 Rxa8 17. Bh6 Rc8 18. d5 Rc7 19. a4 Qc8 20. b3 a5 21. Bxg7\nKxg7 22. Nd4 Nd7 23. Re3 Qb7 24. Nc6 $2 Kf8 25. Rh3 $6 h5 $2 26. Rcc3 $6 e6 $2 27. Qh6+ $1\nKg8 28. Rxh5 $3 f5 (28... gxh5 29. Rg3#) 29. Qh8+ Kf7 30. Rh7# 1-0"
+        },
+        {
+          "round": 2,
+          "color": "white",
+          "opponent": "Patrick Zhiping Chen",
+          "opponentRating": 1320,
+          "rating": 1240,
+          "result": "1-0",
+          "link": "https://www.chess.com/analysis/collection/tournament-games-34YAiMGSz/5eMCPUoJ4W/games",
+          "pgn": "[Event \"Marshall Chess Club Morning U1600\"]\n[Site \"New York, NY\"]\n[Date \"2026.10.18\"]\n[Round \"2\"]\n[White \"Newton Liu\"]\n[Black \"Patrick Zhiping Chen\"]\n[Result \"1-0\"]\n[WhiteElo \"1240\"]\n[TimeControl \"25+5\"]\n[BlackElo \"1320\"]\n[Link \"https://www.chess.com/analysis/collection/tournament-games-34YAiMGSz/5eMCPUoJ4W/games\"]\n\n1. d4 e6 2. Bf4 Nf6 3. Nf3 d6 4. e3 Be7 5. Bd3 O-O 6. Nbd2 Nbd7 7. c3 Nb6 8. Qc2\nNbd5 9. Bg3 h6 10. O-O-O a6 11. h4 b6 12. a3 Bd7 13. Bf4 Nxf4 14. exf4 a5 15.\nRdg1 b5 16. g4 b4 17. g5 bxc3 18. Qxc3 Nd5 19. Qc2 h5 20. f5 Nf4 21. fxe6 Nxd3+\n22. Qxd3 Bxe6 23. Qb5 Rb8 24. Qe2 Bg4 25. Qd3 Qd7 26. Nh2 Bf5 27. Qc4 d5 28. Qc3\nRb6 29. Kd1 Qa4+ 30. Ke1 Re6+ 31. Kf1 Qb5+ 32. Kg2 Qd7 33. Nhf1 Ra6 1-0"
+        },
+        {
           "round": 3,
           "color": "black",
           "opponent": "Teddy Giuliano",
