@@ -1089,8 +1089,8 @@
       var col = {
         slug: c.slug, title: c.title || c.slug, sub: c.subtitle || "", date: NL ? NL.date(date) : date,
         name: NL ? NL.place(c.title || c.slug) : c.title || c.slug,
-        // Newton has written something for it (its blurb): it carries the note mark.
-        written: !!(c.blurb && String(c.blurb).trim()),
+        // Newton has written something for it (its blurb or a journal): it carries the note mark.
+        written: !!((c.blurb && String(c.blurb).trim()) || c.journal),
         // A list of places ("Maine · Massachusetts") breaks only after a dot.
         where: (NL ? NL.where(pl.where || "") : pl.where || "").replace(/ · /g, "\u00a0· "), zoom: pl.zoom, sensitive: !!pl.sensitive, i: i, opener: opener, cover: cover,
         // Its time zone (places.json `tz`, IANA), for the local time on its plate and card.
@@ -2425,7 +2425,7 @@
      ------------------------------------------------------------------ */
 
   // The note mark: a collection Newton has written something for (a blurb
-  // on its page) shows a small scroll beside its name, in the list, and at
+  // on its page, or a journal) shows a small scroll beside its name, in the list, and at
   // the right end of its name's line on the plate and the card (Newton's
   // pick of eight, 2026-10-16).
   function noteMark() {
