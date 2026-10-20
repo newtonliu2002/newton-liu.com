@@ -24,3 +24,12 @@ body.cm .g-plate.is-text { min-width: 220px; }
 
 /* The console has one button, on the right: the readout centres on it. */
 body.cm .g-fit { border-left: 1px solid var(--hairline); }
+
+/* A row: the tournament's name, its date at the right (the year is the
+   heading above), since a club's weekly events share a name. */
+body.cm .g-row { grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; align-items: baseline; }
+body.cm .cm-row-date {
+  font: 400 var(--t-label)/16px var(--mono); letter-spacing: .1em; text-transform: uppercase;
+  color: var(--text-faint); white-space: nowrap; font-variant-numeric: tabular-nums;
+}
+body.cm .g-row.is-lit .cm-row-date { color: var(--text-dim); }

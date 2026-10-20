@@ -112,6 +112,16 @@
     if (b.y === a.y) return ma + " " + a.d + " – " + mb + " " + b.d + ", " + a.y;
     return ma + " " + a.d + ", " + a.y + " – " + mb + " " + b.d + ", " + b.y;
   }
+  // The list's own date, the year being the heading: "Oct 18", "Oct 11–12",
+  // "Sep 30 – Oct 1"; 10月18日.
+  var SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  function shortDate(from, to) {
+    var a = ymd(from), b = ymd(to) || a;
+    if (!a || !a.d) return "";
+    var one = b.m === a.m && b.d === a.d && b.y === a.y, month = b.m === a.m && b.y === a.y;
+    if (ZH) return a.m + "月" + a.d + (one ? "" : month ? "–" + b.d : "日–" + b.m + "月" + b.d) + "日";
+    return SHORT[a.m - 1] + " " + a.d + (one ? "" : month ? "\u2013" + b.d : " \u2013 " + SHORT[b.m - 1] + " " + b.d);
+  }
   function score(n) {
     var whole = Math.floor(n), half = n - whole >= .5;
     return half ? (whole ? whole + "½" : "½") : String(whole);
@@ -155,7 +165,7 @@
       });
       var e = {
         id: ids[k], name: tm.name || t("Tournament"), where: tm.where || "",
-        date: dateRange(tm.start, tm.end), year: (ymd(tm.start) || {}).y || "",
+        date: dateRange(tm.start, tm.end), short: shortDate(tm.start, tm.end), year: (ymd(tm.start) || {}).y || "",
         score: counted ? t("Score {pts} / {n}", { pts: score(pts), n: tm.rounds || gs.length }) : "",
         href: DB + "#" + encodeURIComponent(ids[k]),
         ll: typeof tm.lat === "number" && typeof tm.lng === "number" ? [tm.lng, tm.lat] : null
@@ -203,6 +213,7 @@
       a.setAttribute("data-id", e.id);
       a.appendChild(el("span", "g-row-mark")).setAttribute("aria-hidden", "true");
       a.appendChild(setText(el("span", "g-row-title"), e.name));
+      if (e.short) a.appendChild(el("span", "cm-row-date", e.short));
       a.addEventListener("pointerenter", function (ev) { if (ev.pointerType !== "touch") light(e, "row"); });
       a.addEventListener("pointerleave", function () { unlight(); });
       a.addEventListener("focus", function () { if (a.matches(":focus-visible")) light(e, "row"); });
