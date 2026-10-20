@@ -21,7 +21,7 @@
           "rating": 1240,
           "result": "1-0",
           "link": "https://www.chess.com/analysis/collection/tournament-games-34YAiMGSz/5DtASKbpPg/games",
-          "pgn": "[Event \"Marshall Chess Club\"]\n[Round \"3\"]\n[Board \"13\"]\n[Result \"1-0\"]\n\n1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Nf3 Bg7 5. Bg5 O-O 6. Bc4 b6 7. O-O Bb7 8. d5 c6 9. Re1 Qc7 10. Qd2 Re8 11. Rad1 Nbd7 12. Qf4 b5 13. Bb3 Nc5 14. dxc6 Bxc6 15. Bd5 a6 16. Nd4 Nxd5 17. exd5 Bd7 18. Bxe7 Be5 19. Qh4 b4 20. Ne4 Ba4 21. b3 Bxb3 22. cxb3 Rxe7 23. Nc6 Ree8 24. Nxe5 Rxe5 25. Nf6+ Kf8 26. Rxe5 dxe5 27. d6 Qc6 28. Qh6# 1-0"
+          "pgn": "[Event \"Marshall Chess Club Morning U1600\"]\n[Site \"New York, NY\"]\n[Date \"2026.10.18\"]\n[Round \"3\"]\n[White \"Teddy Giuliano\"]\n[Black \"Newton Liu\"]\n[Result \"1-0\"]\n[Board \"13\"]\n[BlackElo \"1240\"]\n[TimeControl \"25+5\"]\n[WhiteElo \"1443\"]\n[Link \"https://www.chess.com/analysis/collection/tournament-games-34YAiMGSz/5DtASKbpPg/games\"]\n\n1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Nf3 Bg7 5. Bg5 O-O 6. Bc4 $6 b6 $2 7. O-O $6 Bb7 8.\nd5 $6 c6 9. Re1 Qc7 10. Qd2 Re8 $6 11. Rad1 $6 Nbd7 12. Qf4 b5 13. Bb3 Nc5 $6 14.\ndxc6 Bxc6 15. Bd5 $6 (15. e5) 15... a6 $2 (15... a5 $2) 16. Nd4 $4 Nxd5 17. exd5 Bd7 $6\n18. Bxe7 Be5 (18... b4 19. Ne4 $4 (19. Nb1 $2)) 19. Qh4 b4 $2 (19... Rxe7 20. Qxe7\nBxd4 $1 21. Rxd4 Re8 $1 22. Qxe8+ Bxe8 23. Rxe8+ Kg7) 20. Ne4 Ba4 $4 21. b3 Bxb3 22.\ncxb3 Rxe7 23. Nc6 Ree8 24. Nxe5 Rxe5 25. Nf6+ Kf8 26. Rxe5 dxe5 27. d6 Qc6 28.\nQh6# 1-0"
         }
       ],
       "timeControl": "25+5"
