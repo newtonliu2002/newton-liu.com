@@ -119,7 +119,7 @@ body.is-editing .chess .cg-intro:empty { display: block; }
   font-family: var(--mono); font-variant-numeric: tabular-nums;
 }
 .chess .cg-round { font-size: var(--t-meta); letter-spacing: .08em; color: var(--text-faint); }
-/* His colour: a small square, filled for black, outlined for white. */
+/* The opponent's colour, beside their name: a small square, filled for black, outlined for white. */
 .chess .cg-color { width: 10px; height: 10px; justify-self: center; }
 .chess .cg-color.is-white { border: 1px solid var(--text-dim); }
 .chess .cg-color.is-black { background: var(--text-dim); border: 1px solid var(--text-dim); }

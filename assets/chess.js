@@ -549,10 +549,13 @@
       row.appendChild(el("span", "cg-color"));
       row.appendChild(el("span", "cg-opp is-bye", t(g.points === 1 ? "Full-point bye" : g.points ? "Half-point bye" : "Bye")));
     } else {
-      var col = el("span", "cg-color" + (g.color ? " is-" + g.color : ""));
-      if (g.color) {
+      // The opponent's colour, beside the opponent's name (Newton read it
+      // that way, 2026-10-20): his own is the other one.
+      var theirs = g.color === "white" ? "black" : g.color === "black" ? "white" : null;
+      var col = el("span", "cg-color" + (theirs ? " is-" + theirs : ""));
+      if (theirs) {
         col.setAttribute("role", "img");
-        col.setAttribute("aria-label", t(g.color === "white" ? "White" : "Black"));
+        col.setAttribute("aria-label", t(theirs === "white" ? "White" : "Black"));
       }
       row.appendChild(col);
       var opp = el("span", "cg-opp", g.opponent || t("Opponent to come"));
