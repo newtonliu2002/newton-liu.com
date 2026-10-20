@@ -266,6 +266,16 @@
     var readout = el("span", "cg-readout");
     readout.setAttribute("aria-live", "polite");
     bar.appendChild(readout);
+    var ICON_IN = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg>';
+    var ICON_OUT = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2v4H2M14 6h-4V2M10 14v-4h4M2 10h4v4"/></svg>';
+    var bFull = el("button", "cg-step cg-full");
+    bFull.type = "button";
+    bFull.innerHTML = ICON_IN;
+    bFull.setAttribute("aria-pressed", "false");
+    bFull.setAttribute("aria-label", t("Full screen"));
+    bFull.title = t("Full screen");
+    bFull.addEventListener("click", function () { setFull(!full); });
+    bar.appendChild(bFull);
 
     // What the engine says: the mark on the move just played (and what it
     // preferred), then this position's evaluation and best line.
@@ -363,6 +373,23 @@
     });
     side.appendChild(tools);
 
+    // Shown only in full screen: the game it is, and the way back.
+    var fullHead = el("div", "cg-fullhead");
+    var tm = game.tournament || {};
+    var who = el("p", "cg-fullhead-game");
+    if (game.round != null) who.appendChild(el("span", "cg-fullhead-round", t("R{n}", { n: game.round })));
+    who.appendChild(el("span", "cg-fullhead-opp", game.opponent || t("Opponent to come")));
+    if (game.opponentRating) who.appendChild(el("span", "cg-fullhead-elo", String(game.opponentRating)));
+    fullHead.appendChild(who);
+    fullHead.appendChild(el("p", "cg-fullhead-event", [tm.name, dateRange(tm.start, tm.end)].filter(Boolean).join(" \u00b7 ")));
+    var bExit = el("button", "cg-fullhead-close", "\u00d7");
+    bExit.type = "button";
+    bExit.setAttribute("aria-label", t("Exit full screen"));
+    bExit.title = t("Exit full screen");
+    bExit.addEventListener("click", function () { setFull(false); });
+    fullHead.appendChild(bExit);
+
+    box.appendChild(fullHead);
     box.appendChild(left);
     box.appendChild(side);
     box.tabIndex = -1;
@@ -374,6 +401,8 @@
     });
     box.addEventListener("keydown", function (e) {
       if (e.altKey || e.metaKey || e.ctrlKey) return;
+      if (e.key === "Escape" && full) { e.preventDefault(); setFull(false); return; }
+      if ((e.key === "f" || e.key === "F") && e.target === box) { e.preventDefault(); setFull(!full); return; }
       if (e.key === " " && e.target === box) { e.preventDefault(); autoplay(!timer); return; }
       var to = e.key === "ArrowLeft" ? ply - 1 : e.key === "ArrowRight" ? ply + 1 :
                e.key === "Home" ? 0 : e.key === "End" ? N : null;
@@ -396,7 +425,63 @@
       bPlay.title = t(timer ? "Pause" : "Play through");
       bPlay.classList.toggle("is-on", !!timer);
     }
-    box.stop = function () { autoplay(false); };
+    // Full screen: the board as large as the window allows, the moves and
+    // the engine beside it (below it on a phone). The browser's own full
+    // screen where it has one for a page element (not iPhone Safari); the
+    // same layout as a window-filling overlay either way, so nothing
+    // depends on it. Esc, × or the button leaves it.
+    var full = false, savedY = 0, inerted = [];
+    function setFull(on) {
+      if (on === full) return;
+      full = on;
+      if (on) savedY = window.scrollY;
+      box.classList.toggle("is-full", on);
+      document.documentElement.classList.toggle("cg-locked", on);
+      // Everything else on the page sits behind the board: out of reach of
+      // Tab and screen readers while it is up (the overlay has no browser
+      // full screen to keep focus in).
+      if (on) {
+        for (var n = box; n && n.parentElement && n !== document.body; n = n.parentElement) {
+          Array.prototype.forEach.call(n.parentElement.children, function (sib) {
+            if (sib !== n && !sib.inert && !/^(SCRIPT|STYLE|TEMPLATE)$/.test(sib.tagName)) { sib.inert = true; inerted.push(sib); }
+          });
+        }
+      } else {
+        inerted.forEach(function (sib) { sib.inert = false; });
+        inerted = [];
+      }
+      bFull.innerHTML = on ? ICON_OUT : ICON_IN;
+      bFull.setAttribute("aria-pressed", on ? "true" : "false");
+      bFull.setAttribute("aria-label", t(on ? "Exit full screen" : "Full screen"));
+      bFull.title = t(on ? "Exit full screen" : "Full screen");
+      var fs = document.fullscreenElement;
+      if (on && !fs && box.requestFullscreen) {
+        try { var pr = box.requestFullscreen(); if (pr && pr.catch) pr.catch(function () {}); } catch (err) {}
+      } else if (!on && fs === box && document.exitFullscreen) {
+        try { var px = document.exitFullscreen(); if (px && px.catch) px.catch(function () {}); } catch (err) {}
+      }
+      showCurrent();
+      box.focus({ preventScroll: true });
+      if (!on) backToPlace();
+    }
+    // The page where it was before: once the board is back in the page and
+    // the window is its own size again (leaving the browser's full screen
+    // resizes it a moment later), so both a frame and that resize restore it.
+    function backToPlace() {
+      function restore() { window.scrollTo({ top: savedY, behavior: "instant" }); }
+      requestAnimationFrame(restore);
+      function once() { window.removeEventListener("resize", once); restore(); }
+      window.addEventListener("resize", once);
+      setTimeout(function () { window.removeEventListener("resize", once); }, 1000);
+    }
+    document.addEventListener("fullscreenchange", function () {
+      if (full && document.fullscreenElement !== box) setFull(false);   // Esc in the browser's own full screen
+    });
+    // Esc wherever the focus is (the overlay too).
+    document.addEventListener("keydown", function (e) {
+      if (full && e.key === "Escape" && !e.defaultPrevented) { e.preventDefault(); setFull(false); }
+    });
+    box.stop = function () { autoplay(false); setFull(false); };
 
     function moveName(k) { return R.moveNumber(line, k) + " " + line.moves[k].san; }
     function go(p, auto) {
@@ -448,6 +533,7 @@
     // The current move kept in view in the move list (once the board is on
     // the page: gameRow asks again when it opens it).
     function showCurrent() {
+      if (ply === 0) { list.scrollTop = 0; return; }
       var cur = marks[ply - 1];
       if (!cur || list.scrollHeight <= list.clientHeight) return;
       var top = cur.getBoundingClientRect().top - list.getBoundingClientRect().top + list.scrollTop;

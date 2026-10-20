@@ -319,3 +319,70 @@ body.is-editing .chess .cg-intro:empty { display: block; }
 .chess .cg-tool-status:empty { display: none; }
 .chess .cg-tool-web { color: var(--text-dim); text-decoration: underline; text-decoration-color: var(--hairline-strong); text-underline-offset: 3px; }
 .chess .cg-tool-web:hover { color: var(--text); text-decoration-color: var(--accent); }
+
+/* ---- full screen ----------------------------------------------------------
+   The board as large as the window allows, its moves and the engine beside
+   it; on a phone the board on top and the rest below, the whole scrolling.
+   .is-full on .cg-viewer (chess.js setFull); the page under it stops
+   scrolling (html.cg-locked). Above the masthead, as the lightbox is. */
+
+.chess .cg-full svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.25; display: block; margin: auto; }
+.chess .cg-full { margin-left: var(--s2); }
+.chess .cg-fullhead { display: none; }
+html.cg-locked { overflow: hidden; }
+
+.chess .cg-viewer.is-full {
+  --fh: 56px;                                  /* the head */
+  position: fixed; inset: 0; z-index: var(--z-lightbox);
+  display: grid; grid-template-columns: auto minmax(18rem, 28rem); grid-template-rows: var(--fh) minmax(0, 1fr);
+  justify-content: center; align-content: start; gap: var(--s4) var(--s6);
+  margin: 0; padding: var(--s4) clamp(16px, 3vw, 48px) var(--s5);
+  background: var(--bg); overflow-y: auto;      /* a window too short for it all (a phone held sideways) scrolls */
+}
+.chess .cg-viewer.is-full:fullscreen { width: 100vw; height: 100vh; }
+.chess .cg-viewer.is-full::backdrop { background: var(--bg); }
+.chess .is-full .cg-fullhead {
+  grid-column: 1 / -1; display: flex; align-items: center; gap: var(--s5);
+  border-bottom: 1px solid var(--hairline);
+}
+.chess .cg-fullhead p { margin: 0; }
+.chess .cg-fullhead-game { display: flex; align-items: baseline; gap: var(--s3); min-width: 0; font: 500 var(--t-lede)/1.2 var(--sans); color: var(--text); }
+.chess .cg-fullhead-round, .chess .cg-fullhead-elo { font: 400 var(--t-meta)/1 var(--mono); letter-spacing: .08em; color: var(--text-faint); }
+.chess .cg-fullhead-opp { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chess .cg-fullhead-event {
+  flex: 1; min-width: 0; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font: 400 var(--t-meta)/1 var(--mono); letter-spacing: .04em; color: var(--text-dim);
+}
+.chess .cg-fullhead-close {
+  flex: none; width: 44px; height: 44px; margin: 0 -10px 0 auto; padding: 0 0 3px;
+  appearance: none; background: none; border: 0; cursor: pointer;
+  font: 300 26px/1 var(--sans); color: var(--text-dim);
+}
+.chess .cg-fullhead-close:hover { color: var(--text); }
+.chess .cg-fullhead-close:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; }
+
+/* The board's side: whatever is left of the height under the head, less the
+   graph; and of the width, less the move column. */
+.chess .is-full .cg-left {
+  flex: none; align-self: start;
+  width: min(calc(100dvh - var(--fh) - 140px), calc(100vw - 28rem - 7rem));
+  max-width: none; min-width: min(16rem, calc(100dvh - var(--fh) - 140px));
+}
+.chess .is-full .cg-side { min-height: 0; height: 100%; }
+.chess .is-full .cg-moves { flex: 1 1 auto; max-height: none; min-height: 6rem; font-size: 14px; }
+.chess .is-full .cg-move { padding: 8px var(--s2); }
+.chess .is-full .cg-verdict, .chess .is-full .cg-best, .chess .is-full .cg-readout { font-size: 13px; }
+.chess .is-full .cg-graph { height: 64px; }
+
+@media (max-width: 760px), (max-aspect-ratio: 1/1) and (max-width: 1100px) {
+  .chess .cg-viewer.is-full {
+    --fh: 48px;
+    grid-template-columns: minmax(0, 1fr); grid-template-rows: var(--fh) auto auto;
+    justify-content: stretch; gap: var(--s3); overflow-y: auto; padding-top: var(--s2);
+  }
+  .chess .is-full .cg-left { width: min(100%, calc(100dvh - var(--fh) - 200px)); min-width: 0; justify-self: center; }
+  .chess .is-full .cg-side { height: auto; min-height: auto; }
+  .chess .is-full .cg-moves { max-height: 40vh; }
+  .chess .is-full .cg-fullhead-event { display: none; }
+  .chess .cg-fullhead-game { font-size: var(--t-row); }
+}

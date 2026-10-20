@@ -1220,7 +1220,14 @@ in site.js).
   `assets/chess.js`, `assets/chess.css`.
 - **The board** (Newton asked, 2026-10-19): step through with ⏮ ‹ › ⏭, the
   move list or ← → Home End; **▶ plays through** a move a second (Space
-  too) and pauses on any manual move or when the board closes. With the
+  too) and pauses on any manual move or when the board closes. **Full
+  screen** (the corners button at the bar's right end, or F; Newton asked,
+  2026-10-20): the board as large as the window allows with the moves and
+  engine beside it (below it on a phone), a head with the round, opponent
+  and event, × or Esc to leave; the browser's own full screen where a page
+  element can have it, else the same layout as a window-filling overlay
+  (`.cg-viewer.is-full`, `setFull()`; the page stops scrolling,
+  `html.cg-locked`). With the
   engine's analysis (below): an **eval bar** beside the board (White's
   share from his side of the board), a **graph** under it (click to jump;
   the marks as ticks, the current move amber), **?! ? ??** in the move list

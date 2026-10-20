@@ -179,6 +179,7 @@
     "best was {move}": "最佳着法是{move}", "{engine}, depth {depth}": "{engine}，深度{depth}",
     "Analyse on lichess": "在lichess上分析", "Ask Claude": "问Claude",
     "Opens Claude with this position and the engine's view; the text is copied too": "用这个局面和引擎的分析打开Claude；文字也会复制下来",
+    "Full screen": "全屏", "Exit full screen": "退出全屏", "Unrated": "无等级分",
     "Claude app didn't open?": "Claude应用没有打开？", "The position is on your clipboard too.": "局面也已复制到剪贴板。",
     "Tournaments": "比赛", "Tournament": "比赛", "Games": "对局", "Won": "胜", "Drawn": "和", "Lost": "负",
     "Rating": "等级分", "Win": "胜", "Draw": "和", "Loss": "负", "White": "执白", "Black": "执黑",
