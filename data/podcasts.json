@@ -63,7 +63,7 @@
      "intro": "First millennium BC through the third century BC: Carthage's origins, the Greek city-states, Persia, Alexander and Alexandria.",
      "after": "The clean Persian-Wars sequence is 668-669 (done), then the Marathon bonus, then 98-99 (480 BC). Herodotus follows as a companion. Persia (41) and Alexandria (361) range beyond their position in this timeline.",
      "items": [
-      {"n": 421, "title": "Ancient Carthage: Lords of the Sea (Part 1)", "date": "2024-02-18", "href": "https://therestishistory.com/episodes/lords-of-the-sea-part-1", "note": "Carthage's origins, maritime power and emergence as a major state."},
+      {"n": 421, "title": "Ancient Carthage: Lords of the Sea (Part 1)", "date": "2024-02-18", "href": "https://therestishistory.com/episodes/lords-of-the-sea-part-1", "note": "Carthage's origins, maritime power and emergence as a major state.", "done": true},
       {"n": 422, "title": "Ancient Carthage: Rise of a Superpower (Part 2)", "date": "2024-02-21", "href": "https://therestishistory.com/episodes/rise-of-a-superpower-part-2"},
       {"n": 79, "title": "Ancient Olympics", "date": "2021-07-25", "href": "https://therestishistory.com/episodes/ancient-olympics", "note": "Greek athletics and the ancient games."},
       {"n": 82, "title": "Sparta", "date": "2021-08-01", "href": "https://therestishistory.com/episodes/sparta", "note": "Spartan society and its reputation."},
