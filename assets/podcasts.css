@@ -1,0 +1,256 @@
+/* ==========================================================================
+   newton-liu.com — the podcast tracker (podcast-tracker.html), on top of
+   site.css. Only pt-* classes, under .podcasts; colours, type and motion
+   are site.css tokens, and the layout is the chess database's: the prose
+   pages' rail (.about-rail) beside a column of rows.
+
+   The rail: the page's name, how far he has got (a count and a thin amber
+   bar: the accent is for progress), the filter, and the sections, lit as
+   they pass. The column: his words (podcasts.prose), then each podcast:
+   its name with the nav's amber square, the guide, and its sections, each
+   a numbered list of episodes. A finished episode's square is filled
+   amber; one still to hear is an outline.
+   ========================================================================== */
+
+.podcasts .pt-column { min-width: 0; }
+.podcasts .pt-intro:empty { display: none; }
+body.is-editing .podcasts .pt-intro:empty { display: block; }
+.podcasts .pt-intro { margin-bottom: var(--s7); }
+
+.podcasts .pt-empty {
+  margin: 0;
+  font: 400 var(--t-label)/16px var(--mono);
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* ---- the rail ----------------------------------------------------------- */
+
+/* Fifteen sections are taller than a laptop screen: the rail scrolls itself. */
+@media (min-width: 1001px) {
+  .podcasts > .about-rail {
+    max-height: calc(100vh - var(--masthead-h) - 4rem);
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .podcasts > .about-rail::-webkit-scrollbar { display: none; }
+}
+
+.podcasts .pt-stats {
+  display: flex; flex-wrap: wrap; gap: var(--s4) var(--s5);
+  margin: var(--s6) 0 0; max-width: 15rem;
+}
+.podcasts .pt-stat { margin: 0; }
+.podcasts .pt-stat.is-main { flex-basis: 100%; }
+.podcasts .pt-stat dt {
+  font: 400 var(--t-label)/16px var(--mono);
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-faint);
+}
+.podcasts .pt-stat dd {
+  margin: 2px 0 0;
+  font: 400 var(--t-row)/1.3 var(--mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+}
+.podcasts .pt-stat.is-main dd { font-size: var(--t-lede); line-height: 1.2; color: var(--text); }
+.podcasts .pt-bar {
+  display: block; position: relative;
+  max-width: 15rem; height: 2px; margin: var(--s4) 0 0;
+  background: var(--hairline);
+}
+.podcasts .pt-bar-fill { position: absolute; inset: 0 auto 0 0; background: var(--accent); }
+
+.podcasts .pt-filter { display: flex; flex-wrap: wrap; gap: 0 var(--s4); margin: var(--s5) 0 0; }
+.podcasts .pt-filter button {
+  appearance: none; background: none; border: 0; border-radius: 0; padding: 0;
+  min-height: 32px;
+  font: 400 var(--t-label)/16px var(--mono);
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-faint); cursor: pointer;
+  transition: color var(--d-fast) var(--ease);
+}
+.podcasts .pt-filter button:hover { color: var(--text); }
+.podcasts .pt-filter button[aria-pressed="true"] { color: var(--text); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 5px; }
+.podcasts .pt-filter button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.podcasts .pt-jump { max-width: 18rem; }
+.podcasts .pt-jump a {
+  align-items: baseline; gap: var(--s3);
+  min-height: 30px; padding: 7px 0 6px;
+  text-transform: none; letter-spacing: .02em;
+  font-family: var(--sans); font-size: var(--t-ui); line-height: 1.3;
+}
+.podcasts .pt-jump a[hidden] { display: none; }
+.podcasts .pt-jump-no {
+  flex: none; width: 1.5rem;
+  font: 400 var(--t-meta)/1 var(--mono); letter-spacing: .06em;
+  color: var(--text-faint);
+}
+.podcasts .pt-jump-title { min-width: 0; text-wrap: pretty; }
+.podcasts .pt-jump a.is-current { color: var(--text); }
+.podcasts .pt-jump a.is-current .pt-jump-no { color: var(--accent); }
+.podcasts .pt-jump-lead {
+  margin: var(--s3) 0 0; padding: var(--s2) 0 var(--s1);
+  font: 400 var(--t-meta)/1.3 var(--sans); letter-spacing: .02em;
+  color: var(--text-faint);
+}
+.podcasts .pt-jump a.is-led .pt-jump-title::first-letter { text-transform: uppercase; }
+.podcasts .pt-jump-pod {
+  margin: var(--s4) 0 var(--s2);
+  font: 400 var(--t-label)/16px var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* ---- a podcast ---------------------------------------------------------- */
+
+.podcasts .pt-podcast + .pt-podcast { margin-top: var(--s8); }
+.podcasts .pt-name {
+  position: relative;
+  margin: 0;
+  font: 500 var(--t-h3)/1.25 var(--sans);
+  letter-spacing: -.01em;
+  color: var(--text);
+}
+/* the nav's amber square, as on the chess tournaments */
+.podcasts .pt-name::before {
+  content: ""; position: absolute; right: 100%; top: 50%;
+  margin: -2px 10px 0 0; border: 2px solid var(--accent);
+}
+.podcasts .pt-meta {
+  display: flex; flex-wrap: wrap; gap: 0 var(--s3);
+  margin: var(--s2) 0 0;
+  font: 400 var(--t-meta)/1.6 var(--mono);
+  letter-spacing: .04em;
+  color: var(--text-dim);
+}
+.podcasts .pt-meta > * + *::before {
+  content: "\00B7"; display: inline-block; margin-right: var(--s3); color: var(--text-faint);
+}
+.podcasts .pt-meta-link { color: inherit; text-decoration: underline; text-decoration-color: var(--hairline-strong); text-underline-offset: 3px; }
+.podcasts .pt-meta-link:hover { text-decoration-color: var(--accent); }
+.podcasts .pt-lede {
+  margin: var(--s5) 0 0; max-width: 62ch;
+  font: 400 var(--t-body)/1.7 var(--sans); color: var(--text-body);
+}
+.podcasts .pt-guide {
+  margin: var(--s3) 0 0; max-width: 62ch;
+  font: 400 var(--t-row)/1.65 var(--sans); color: var(--text-dim);
+}
+
+/* ---- a section ---------------------------------------------------------- */
+
+.podcasts .pt-section { margin-top: var(--s8); scroll-margin-top: calc(var(--masthead-h) + 2rem); }
+.podcasts .pt-section[hidden] { display: none; }
+.podcasts .pt-section-head {
+  display: flex; align-items: baseline; gap: var(--s3);
+  margin: 0;
+  font: 500 var(--t-lede)/1.3 var(--sans);
+  letter-spacing: -.005em;
+  color: var(--text);
+}
+.podcasts .pt-section-no {
+  font: 400 var(--t-meta)/1 var(--mono); letter-spacing: .08em;
+  color: var(--text-faint);
+}
+.podcasts .pt-section-intro {
+  margin: var(--s2) 0 0; max-width: 62ch;
+  font: 400 var(--t-row)/1.6 var(--sans); color: var(--text-dim);
+}
+.podcasts .pt-after {
+  margin: var(--s4) 0 0; max-width: 62ch;
+  font: 400 var(--t-meta)/1.65 var(--sans); color: var(--text-faint);
+}
+
+/* ---- the episodes ------------------------------------------------------- */
+
+.podcasts .pt-eps {
+  list-style: none; margin: var(--s4) 0 0; padding: 0; max-width: 54rem;
+  border-top: 1px solid var(--hairline);
+}
+.podcasts .pt-ep {
+  display: grid;
+  grid-template-columns: 10px 2.75rem minmax(0, 1fr) 7rem;
+  grid-template-areas: "mark num main date";
+  align-items: baseline; column-gap: var(--s3);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--hairline-soft);
+  font: 400 var(--t-row)/1.45 var(--sans); color: var(--text-body);
+}
+.podcasts [data-show="open"] .pt-ep.is-done,
+.podcasts [data-show="done"] .pt-ep:not(.is-done) { display: none; }
+
+/* finished: a filled amber square; still to hear: an outline */
+.podcasts .pt-mark {
+  grid-area: mark; align-self: start;
+  margin-top: calc(.725em - 4.5px);   /* centred on the title's first line */
+  width: 9px; height: 9px; box-sizing: border-box;
+  border: 1px solid var(--text-faint);
+}
+.podcasts .pt-ep.is-done .pt-mark { background: var(--accent); border-color: var(--accent); }
+.podcasts .pt-num {
+  grid-area: num;
+  font: 400 var(--t-meta)/1.45 var(--mono); letter-spacing: .06em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-faint);
+}
+.podcasts .pt-ep.is-done .pt-num { color: var(--text-dim); }
+.podcasts .pt-main { grid-area: main; min-width: 0; }
+.podcasts .pt-title { margin: 0; color: var(--text); }
+.podcasts .pt-link {
+  color: inherit; text-decoration: underline; text-decoration-color: var(--hairline-strong);
+  text-underline-offset: 3px; text-decoration-thickness: 1px;
+  transition: text-decoration-color var(--d-fast) var(--ease);
+}
+.podcasts .pt-link:hover { text-decoration-color: var(--accent); }
+.podcasts .pt-out { margin-left: 3px; font-size: .85em; color: var(--text-faint); }
+.podcasts .pt-kind {
+  display: inline-block; margin-left: var(--s3);
+  font: 400 var(--t-label)/16px var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+.podcasts .pt-note {
+  margin: 3px 0 0; max-width: 62ch;
+  font: 400 var(--t-meta)/1.6 var(--sans); color: var(--text-dim);
+}
+.podcasts .pt-date {
+  grid-area: date; text-align: right;
+  font: 400 var(--t-meta)/1.45 var(--mono); letter-spacing: .04em;
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+  color: var(--text-faint);
+}
+
+/* ---- notes and sources --------------------------------------------------- */
+
+.podcasts .pt-notes { margin-top: var(--s8); padding-top: var(--s5); border-top: 1px solid var(--hairline); max-width: 62ch; }
+.podcasts .pt-notes-head { margin: 0; font: 500 var(--t-lede)/1.3 var(--sans); color: var(--text); }
+.podcasts .pt-notes-label {
+  margin: var(--s5) 0 0;
+  font: 400 var(--t-label)/16px var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-faint);
+}
+.podcasts .pt-notes-text { margin: var(--s2) 0 0; font: 400 var(--t-meta)/1.65 var(--sans); color: var(--text-dim); }
+.podcasts .pt-sources {
+  list-style: none; margin: var(--s2) 0 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: var(--s1) var(--s5);
+  font: 400 var(--t-meta)/1.8 var(--sans); color: var(--text-dim);
+}
+
+/* ---- narrower: the rail sits on top, without the sections ---------------- */
+
+@media (max-width: 1000px) {
+  .podcasts .pt-jump { display: none; }
+}
+
+/* ---- phones -------------------------------------------------------------- */
+
+@media (max-width: 620px) {
+  .podcasts .pt-name::before { position: static; display: inline-block; vertical-align: middle; margin: -2px 8px 0 0; }
+  .podcasts .pt-ep {
+    grid-template-columns: 10px 2.5rem minmax(0, 1fr);
+    grid-template-areas: "mark num main" ". . date";
+    row-gap: 2px;
+  }
+  .podcasts .pt-date { text-align: left; }
+}

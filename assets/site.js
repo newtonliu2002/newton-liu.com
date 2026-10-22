@@ -70,6 +70,10 @@
     ],
     "journals": [
       { label: "Québec", zh: "魁北克", href: "journals/quebec/" }
+    ],
+    // Personal: a tab with no page, like Journals (Newton, 2026-10-21)
+    "personal": [
+      { label: "Podcast Tracker", zh: "播客记录", href: "podcast-tracker.html" }
     ]
     // Chess has no menu (Newton, 2026-10-20): the tab goes straight to the
     // map, whose pins and "Database →" open the games.
@@ -186,7 +190,15 @@
     "Couldn't load the games.": "对局加载失败。", "Starting position": "初始局面",
     "Position after {move}": "{move}之后的局面", "Start": "回到开局", "End": "跳到终局",
     "Previous move": "上一步", "Next move": "下一步",
-    "The rest of this game's moves couldn't be read.": "这盘棋后面的着法无法读取。"
+    "The rest of this game's moves couldn't be read.": "这盘棋后面的着法无法读取。",
+    // the podcast tracker (podcasts.js); the episodes, notes and section names stay English
+    "Personal": "个人", "Podcast Tracker": "播客记录",
+    "Podcast Tracker — Newton Liu Photography": "播客记录 — Newton Liu Photography",
+    "Finished": "已听完", "Not finished yet": "还没听完", "To listen": "未听", "All": "全部", "Show": "显示",
+    "Sections": "部分", "Episodes": "正片", "Episode archive": "节目列表", "Extras": "加更", "Bonus": "会员加更", "Extract": "有声书节选",
+    "Special": "特别节目", "Checked {date}": "核对于{date}", "Date shown in the catalogue": "目录上标注的日期",
+    "Catalogue notes and sources": "目录说明与来源", "Sources": "来源",
+    "Nothing on the list yet.": "清单上还没有内容。", "Couldn't load the list.": "清单加载失败。"
   };
 
   var ZH_EDIT = {
@@ -196,6 +208,7 @@
     "academia.title": "学术",
     "chess.title": "国际象棋", "chess.listTitle": "比赛",
     "chessdb.title": "对局库", "chessdb.name": "国际象棋 · Newton Liu",
+    "podcasts.title": "播客记录", "podcasts.name": "个人 · Newton Liu",
     "projects.title": "项目",
     "projects.ebird.kicker": "网页应用 · 2026", "projects.shootplanner.kicker": "网页应用 · 2026",
     "projects.retreatfinder.kicker": "网页应用 · 2026", "projects.siteranking.kicker": "网页应用 · 2026",

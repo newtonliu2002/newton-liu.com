@@ -423,9 +423,19 @@ a   { color: inherit; }
 .lang-toggle:hover { color: var(--text); }
 .lang-toggle:lang(zh) { font-size: 14px; }
 
-@media (max-width: 1023px) {
+/* Eight tabs (Personal, 2026-10-21) need the narrower gap below 1280px to
+   fit beside the wordmark. */
+@media (max-width: 1279px) {
   .nav { gap: var(--s5); }
+}
+@media (max-width: 1023px) {
   .nav > .lang-toggle { margin-left: -9px; }   /* boxes meet, not overlap */
+}
+/* On its own row (tablets), a little tighter, so the eight tabs and the two
+   switches stay one line down to an iPad's 768px; narrower, the row wraps. */
+@media (min-width: 621px) and (max-width: 1023px) {
+  .nav { gap: 16px; }
+  .nav a, .nav-tab { letter-spacing: .1em; }
 }
 
 /* Nav drop-down (NAV_MENUS in site.js): a tab that has one is wrapped in
@@ -459,6 +469,9 @@ a   { color: inherit; }
   /* The Chinese tabs are short, so 项目 sits near the right end of the bar:
      its menu hangs from the tab's right edge, or it runs off the page. */
   :root[data-site-lang="zh"] .nav-menu { left: auto; right: -16px; }
+  /* In English too, from the sixth tab on (Personal, Projects): hung from
+     the left they ran past the page's edge on a laptop. */
+  .nav > :nth-child(n+6) > .nav-menu { left: auto; right: -16px; }
   .nav-drop.is-open > .nav-tab { color: var(--text); }
   .nav .nav-drop.is-open .nav-menu {
     visibility: visible; opacity: 1;
@@ -503,7 +516,7 @@ body[data-page="globe"] .nav-menu-list { border-top: 1px solid var(--hairline); 
 @media (min-width: 621px) and (max-width: 1023px) {
   .masthead:has(.nav > :nth-child(5):not(.theme-toggle):not(.lang-toggle)) { position: static; }
   .masthead-inner:has(.nav > :nth-child(5):not(.theme-toggle):not(.lang-toggle)) { flex-wrap: wrap; row-gap: 0; padding-top: var(--s1); }
-  .masthead-inner:has(.nav > :nth-child(5):not(.theme-toggle):not(.lang-toggle)) .nav { flex-basis: 100%; }
+  .masthead-inner:has(.nav > :nth-child(5):not(.theme-toggle):not(.lang-toggle)) .nav { flex-basis: 100%; flex-wrap: wrap; row-gap: 0; }   /* a second line when eight tabs don't fit */
   body:has(.nav > :nth-child(5):not(.theme-toggle):not(.lang-toggle))[data-page="gallery"] .book-lead { margin-top: 0; }
   body:has(.nav > :nth-child(5):not(.theme-toggle):not(.lang-toggle)) .about-band { margin-top: 0; }
 }

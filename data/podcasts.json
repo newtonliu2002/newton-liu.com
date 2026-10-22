@@ -1,0 +1,356 @@
+{
+ "_about": "The podcast tracker (podcast-tracker.html, assets/podcasts.js). See CLAUDE.md, \"Podcast Tracker\". A row is one episode: n (null for an unnumbered extra), title, kind (bonus/extract/special), date (release, New York), catalogueDate (the * dates), href, note, done.",
+ "podcasts": [
+  {
+   "id": "the-rest-is-history",
+   "name": "The Rest Is History",
+   "subtitle": "Classical history & mythology",
+   "lede": "A chronological listening guide with subscriber extras.",
+   "href": "https://therestishistory.com/episodes",
+   "checked": "2026-10-21",
+   "guide": [
+    "Read from section 01 onward. Section 01 is a mythological prologue; 02 supplies optional ancient-world background; 03-06 form the historical sequence. Section 07 covers society and later interpretations. Further subscriber discussions follow by subject.",
+    "BONUS identifies unnumbered subscriber extras or livestreams. EXTRACT identifies book readings.",
+    "Each part has its own number and release date. Series remain adjacent in historical order. Unnumbered bonuses have no official main-series episode number; their exact titles and dates are the identifiers."
+   ],
+   "sections": [
+    {
+     "no": "01",
+     "title": "Mythological prologue",
+     "intro": "Greek gods, Troy, Odysseus and the literary foundations of the classical world. This is narrative order, not a historical timeline.",
+     "after": "Odyssey-related film discussions and mixed Greek Q&As appear in the subscriber appendix. They are not marked done merely because you finished 687-688.",
+     "items": [
+      {"n": 602, "title": "Greek Myths: Zeus, King of the Gods (Part 1)", "date": "2025-09-21", "href": "https://therestishistory.com/episodes/zeus-king-of-the-gods-part-1", "note": "Four parts: Zeus; Oedipus; Dionysus; Jason and the Argonauts. Keep the series together as a mythological introduction."},
+      {"n": 603, "title": "Greek Myths: The Riddle of the Sphinx (Part 2)", "date": "2025-09-24", "href": "https://therestishistory.com/episodes/the-riddle-of-the-sphinx-part-2"},
+      {"n": 604, "title": "Greek Myths: Sex, Drugs & Tragedy (Part 3)", "date": "2025-09-28", "href": "https://therestishistory.com/series/greek-myths"},
+      {"n": 605, "title": "Greek Myths: Jason & The Quest for the Golden Fleece (Part 4)", "date": "2025-10-01", "href": "https://therestishistory.com/episodes/jason-and-the-quest-for-the-golden-fleece-part-4"},
+      {"n": null, "title": "How Real Were The Greek Myths?", "kind": "bonus", "date": "2025-10-07", "catalogueDate": true, "href": "https://therestishistory.com/episodes/how-real-were-the-greek-myths", "note": "Historical questions behind Greek and biblical traditions."},
+      {"n": 457, "title": "Helen of Troy: Queen of the Greek Myths (Part 1)", "date": "2024-06-02", "href": "https://therestishistory.com/episodes/queen-of-the-greek-myths-part-1", "note": "Helen and the violent family mythology surrounding her.", "done": true},
+      {"n": 458, "title": "Helen of Troy: A Family of Blood (Part 2)", "date": "2024-06-05", "href": "https://therestishistory.com/episodes/a-family-of-blood-part-2", "done": true},
+      {"n": 6, "title": "Troy", "date": "2020-11-22", "href": "https://therestishistory.com/episodes/troy", "note": "The Trojan War and the relationship between history and legend."},
+      {"n": 13, "title": "Stephen Fry and Troy", "date": "2021-01-06", "href": "https://therestishistory.com/episodes/stephen-fry-and-troy", "note": "A separate conversation about the Trojan stories."},
+      {"n": null, "title": "The Trojan War, with Mary Beard | FULL EPISODE", "kind": "bonus", "date": "2025-10-09", "catalogueDate": true, "href": "https://therestishistory.com/episodes/the-trojan-war-with-mary-beard-full-episode", "note": "Mary Beard examines the evidence for the Trojan conflict.", "done": true},
+      {"n": 687, "title": "The Odyssey: Hero of the Trojan Horse (Part 1)", "date": "2026-07-12", "href": "https://therestishistory.com/episodes/hero-of-the-trojan-horse-part-1", "note": "Both parts finished: Odysseus, the Trojan Horse and the return to Ithaca. Mythological sequence, not a firmly dated historical event.", "done": true},
+      {"n": 688, "title": "The Odyssey: Return of the King (Part 2)", "date": "2026-07-15", "href": "https://therestishistory.com/episodes/return-of-the-king-part-2", "done": true},
+      {"n": null, "title": "Greek Gods, The Trojan War, and The Odyssey", "kind": "bonus", "date": "2025-04-29", "catalogueDate": true, "href": "https://therestishistory.com/episodes/greek-gods-the-trojan-war-and-the-odyssey", "note": "Homeric stories, their relationship, and the evidence behind them."},
+      {"n": 262, "title": "Tunisia: Dido of Carthage", "date": "2022-11-23", "href": "https://therestishistory.com/episodes/dido-of-carthage", "note": "Virgil, Dido and Carthage; put after the Odyssey in the mythological prologue, rather than assign the legend a firm historical date."},
+      {"n": 55, "title": "The World Cup of Gods - Preview", "date": "2021-05-21", "href": "https://therestishistory.com/episodes/the-world-cup-of-gods-preview", "note": "A playful tournament involving gods from several traditions. Listen to the preview, then Parts 1 and 2; thematic, not chronological."},
+      {"n": 58, "title": "The World Cup of Gods - Part 1", "date": "2021-05-30", "href": "https://therestishistory.com/episodes/the-world-cup-of-gods-part-1"},
+      {"n": 59, "title": "The World Cup of Gods - Part 2", "date": "2021-05-31", "href": "https://therestishistory.com/episodes/the-world-cup-of-gods-part-2"}
+     ]
+    },
+    {
+     "no": "02",
+     "title": "Before Greece and Rome",
+     "intro": "Optional ancient-world foundations: prehistory, Mesopotamia, Egypt and biblical context. Broad episodes overlap; dates below refer to their subjects.",
+     "after": "If you want the tightest classical-history route, begin with section 03 after the mythological prologue. These foundations are included for completeness, not as prerequisites.",
+     "items": [
+      {"n": 280, "title": "Serbia: The Birthplace of Civilisation", "date": "2022-12-11", "href": "https://therestishistory.com/episodes/the-birthplace-of-civilisation", "note": "Examines prehistoric settlement, early metallurgy and claims about the Vinca culture. Prehistory appendix or opening context."},
+      {"n": 114, "title": "Stonehenge, ancient ritual and the origins of paganism", "date": "2021-11-01", "href": "https://therestishistory.com/episodes/stonehenge-ancient-ritual-and-the-origins-of-paganism", "note": "Prehistory and ancient religion."},
+      {"n": 199, "title": "Stonehenge", "date": "2022-06-22", "href": "https://therestishistory.com/episodes/stonehenge", "note": "A further dedicated episode."},
+      {"n": 519, "title": "The World's First City", "date": "2024-12-04", "href": "https://therestishistory.com/episodes/the-world-s-first-city", "note": "Early Mesopotamian urban life and the development of Uruk. Place near the beginning, before the Babylon episodes."},
+      {"n": 181, "title": "The Birth of Babylon", "date": "2022-05-01", "href": "https://therestishistory.com/episodes/the-birth-of-babylon", "note": "A separate Babylon episode."},
+      {"n": 145, "title": "Babylon", "date": "2022-01-30", "href": "https://therestishistory.com/episodes/babylon", "note": "Mesopotamian history."},
+      {"n": 299, "title": "The Greatest Female Pharaoh", "date": "2023-01-29", "href": "https://therestishistory.com/episodes/the-greatest-female-pharaoh", "note": "Hatshepsut."},
+      {"n": 27, "title": "Tutankhamun", "date": "2021-02-28", "href": "https://therestishistory.com/episodes/tutankhamun", "note": "Ancient Egypt."},
+      {"n": 345, "title": "Raiders of the Lost Ark (Part 1)", "date": "2023-06-25", "href": "https://therestishistory.com/episodes/raiders-of-the-lost-ark-ep-1", "note": "The Ark, biblical history and its later interpretation."},
+      {"n": null, "title": "Mesopotamian Mythology, Cyrus the Great, and The First Museum", "kind": "bonus", "date": "2025-03-19", "catalogueDate": true, "href": "https://therestishistory.com/episodes/mesopotamian-mythology-cyrus-the-great-and-the-first-museum", "note": "Mesopotamian warfare, Nabonidus, Babylon's fall, and ancient collecting."}
+     ]
+    },
+    {
+     "no": "03",
+     "title": "The early Mediterranean and Greece",
+     "intro": "First millennium BC through the third century BC: Carthage's origins, the Greek city-states, Persia, Alexander and Alexandria.",
+     "after": "The clean Persian-Wars sequence is 668-669 (done), then the Marathon bonus, then 98-99 (480 BC). Herodotus follows as a companion. Persia (41) and Alexandria (361) range beyond their position in this timeline.",
+     "items": [
+      {"n": 421, "title": "Ancient Carthage: Lords of the Sea (Part 1)", "date": "2024-02-18", "href": "https://therestishistory.com/episodes/lords-of-the-sea-part-1", "note": "Carthage's origins, maritime power and emergence as a major state."},
+      {"n": 422, "title": "Ancient Carthage: Rise of a Superpower (Part 2)", "date": "2024-02-21", "href": "https://therestishistory.com/episodes/rise-of-a-superpower-part-2"},
+      {"n": 79, "title": "Ancient Olympics", "date": "2021-07-25", "href": "https://therestishistory.com/episodes/ancient-olympics", "note": "Greek athletics and the ancient games."},
+      {"n": 82, "title": "Sparta", "date": "2021-08-01", "href": "https://therestishistory.com/episodes/sparta", "note": "Spartan society and its reputation."},
+      {"n": 41, "title": "Persia", "date": "2021-04-07", "href": "https://therestishistory.com/episodes/persia", "note": "A broad discussion with Ali Ansari; extends beyond antiquity."},
+      {"n": 334, "title": "Athens and the Birth of Democracy", "date": "2023-05-21", "href": "https://therestishistory.com/episodes/athens-and-the-birth-of-democracy", "note": "Athenian politics and democracy."},
+      {"n": 668, "title": "Greece vs Persia: The Rise of the First Superpower (Part 1)", "date": "2026-05-10", "href": "https://therestishistory.com/episodes/the-rise-of-the-first-superpower-part-1", "note": "Persian expansion, Darius and the Battle of Marathon.", "done": true},
+      {"n": 669, "title": "Greece vs. Persia: The Battle of Marathon (Part 2)", "date": "2026-05-13", "href": "https://therestishistory.com/episodes/the-battle-of-marathon-part-2", "done": true},
+      {"n": null, "title": "Is Marathon the Most Important Battle in Ancient History?", "kind": "bonus", "date": "2026-05-12", "catalogueDate": true, "href": "https://therestishistory.com/episodes/is-marathon-the-most-important-battle-in-ancient-history", "note": "Reassessing Marathon and its long-term significance; follow 668-669."},
+      {"n": 98, "title": "Thermopylae & Salamis Episode 1", "date": "2021-09-19", "href": "https://therestishistory.com/episodes/thermopylae-and-salamis-part-1", "note": "Two episodes on the Persian invasion and the battles of 480 BC.", "done": true},
+      {"n": 99, "title": "Thermopylae & Salamis Episode 2", "date": "2021-09-20", "href": "https://therestishistory.com/episodes/thermopylae-and-salamis-part-2", "done": true},
+      {"n": 330, "title": "Herodotus: The Birth of History", "date": "2023-05-07", "href": "https://therestishistory.com/episodes/the-birth-of-history", "note": "Herodotus and the beginnings of historical writing."},
+      {"n": 314, "title": "Atlantis: The Legend (Part 1)", "date": "2023-03-19", "href": "https://therestishistory.com/episodes/the-legend-ep-1", "note": "Plato's fourth-century BC story and its later reception. An imagined past, rather than evidence of a securely established ancient civilisation."},
+      {"n": 315, "title": "Atlantis: Legacy of the Lost Empire (Part 2)", "date": "2023-03-22", "href": "https://therestishistory.com/episodes/legacy-of-the-lost-empire-ep-2"},
+      {"n": 116, "title": "Alexander the Great Part 1", "date": "2021-11-07", "href": "https://therestishistory.com/episodes/alexander-the-great-part-1", "note": "Two episodes on Alexander and his conquests.", "done": true},
+      {"n": 117, "title": "Alexander the Great part 2", "date": "2021-11-08", "href": "https://therestishistory.com/episodes/alexander-the-great-part-2", "done": true},
+      {"n": null, "title": "Alexander the Great, with Mary Beard | FULL EPISODE", "kind": "bonus", "date": "2025-10-16", "catalogueDate": true, "href": "https://therestishistory.com/episodes/alexander-the-great-with-mary-beard-full-episode", "note": "Alexander's origins and expansion; distinct from episodes 116-117."},
+      {"n": 361, "title": "The Lost Library of Alexandria", "date": "2023-08-20", "href": "https://therestishistory.com/episodes/the-lost-library-of-alexandria", "note": "Ancient scholarship and the library's history and reputation."}
+     ]
+    },
+    {
+     "no": "04",
+     "title": "Rome, Carthage and the Republic",
+     "intro": "264-30 BC: the Punic Wars, Marius and Sulla, Caesar and the end of the Republic.",
+     "after": "For stricter Caesar/Cleopatra interleaving: 499 → 134-135 → 195-196 (done) → 304-305 → 197-198 (done). The checklist otherwise keeps Cleopatra as one completed series.",
+     "items": [
+      {"n": 423, "title": "Carthage vs. Rome: The Wolf at the Gates (Part 3)", "date": "2024-02-25", "href": "https://therestishistory.com/episodes/the-wolf-at-the-gates-part-3", "note": "Rome's rise and the First Punic War."},
+      {"n": 424, "title": "Carthage vs. Rome: Total War (Part 4)", "date": "2024-02-28", "href": "https://therestishistory.com/episodes/total-war-part-4"},
+      {"n": 568, "title": "Hannibal: Rome's Greatest Enemy (Part 1)", "date": "2025-05-25", "href": "https://therestishistory.com/episodes/rome-s-greatest-enemy-part-1", "note": "Hannibal's rise, the Alps, invasion of Italy and Cannae.", "done": true},
+      {"n": 569, "title": "Hannibal: Elephants Cross the Alps (Part 2)", "date": "2025-05-28", "href": "https://therestishistory.com/episodes/elephants-cross-the-alps-part-2", "done": true},
+      {"n": 570, "title": "Hannibal: The Invasion of Italy (Part 3)", "date": "2025-06-01", "href": "https://therestishistory.com/episodes/the-invasion-of-italy-part-3", "done": true},
+      {"n": 571, "title": "Hannibal: Roman Bloodbath at Cannae (Part 4)", "date": "2025-06-04", "href": "https://therestishistory.com/episodes/hannibal-roman-bloodbath-at-cannae-part-4", "done": true},
+      {"n": 640, "title": "Rome’s Greatest Enemy: Carthage at the Gates (Part 1)", "date": "2026-02-01", "href": "https://therestishistory.com/episodes/carthage-at-the-gates-part-1", "note": "The continuation: Rome's response, Scipio, the war in Africa and Carthage's eventual destruction.", "done": true},
+      {"n": 641, "title": "Rome’s Greatest Enemy: Hannibal’s Nemesis (Part 2)", "date": "2026-02-04", "href": "https://therestishistory.com/episodes/hannibal-s-nemesis-part-2", "done": true},
+      {"n": 642, "title": "Rome’s Greatest Enemy: Bloodbath in Africa (Part 3)", "date": "2026-02-08", "href": "https://therestishistory.com/episodes/bloodbath-in-africa-part-3", "done": true},
+      {"n": 643, "title": "Rome’s Greatest Enemy: Carthage Destroyed (Part 4)", "date": "2026-02-11", "href": "https://therestishistory.com/episodes/carthage-destroyed-part-4", "done": true},
+      {"n": 701, "title": "Roman Civil War: Rise of the General (Part 1)", "date": "2026-08-30", "href": "https://therestishistory.com/episodes/rise-of-the-general-part-1", "note": "Late second to early first century BC: Marius and Sulla. All four parts finished; this is not Caesar's civil war.", "done": true},
+      {"n": 702, "title": "Roman Civil War: The Barbarian Invasion (Part 2)", "date": "2026-09-02", "href": "https://therestishistory.com/episodes/the-barbarian-invasion-part-2", "done": true},
+      {"n": 703, "title": "Roman Civil War: Marching on the Senate (Part 3)", "date": "2026-09-06", "href": "https://therestishistory.com/episodes/marching-on-the-senate-part-3", "done": true},
+      {"n": 704, "title": "Roman Civil War: Master of the Republic (Part 4)", "date": "2026-09-09", "href": "https://therestishistory.com/episodes/master-of-the-republic-part-4", "done": true},
+      {"n": null, "title": "The General Who Made Rome Invincible", "kind": "bonus", "date": "2026-09-01", "catalogueDate": true, "href": "https://therestishistory.com/episodes/the-general-who-made-rome-invincible", "note": "Marius and changes to Roman military organisation; follow 701-704.", "done": true},
+      {"n": null, "title": "Spartacus and Gladiators, with Mary Beard | FULL EPISODE", "kind": "bonus", "date": "2025-10-31", "catalogueDate": true, "href": "https://therestishistory.com/episodes/spartacus-and-gladiators-with-mary-beard-full-episode", "note": "Gladiatorial origins and Spartacus's rebellion, 73-71 BC."},
+      {"n": null, "title": "Cicero: Defender of the Republic", "kind": "bonus", "date": "2026-09-08", "catalogueDate": true, "href": "https://therestishistory.com/episodes/defender-of-the-republic", "note": "Cicero's career and his defence of republican government.", "done": true},
+      {"n": 499, "title": "The Roman Conquest of Britain: Julius Caesar’s Invasion (Part 1)", "date": "2024-09-29", "href": "https://therestishistory.com/episodes/julius-caesar-s-invasion-part-1", "note": "55-54 BC. Listen here before the Rubicon; resume this series with 500-502 under the emperors."},
+      {"n": 134, "title": "Crossing the Rubicon: The rise of Julius Caesar", "date": "2022-01-09", "href": "https://therestishistory.com/episodes/crossing-the-rubicon", "note": "Caesar's rise and the decision that precipitated civil war."},
+      {"n": 135, "title": "Crossing the Rubicon: The die is cast", "date": "2022-01-10", "href": "https://podcasts.apple.com/us/podcast/crossing-the-rubicon-the-die-is-cast/id1537788786?i=1000547498121"},
+      {"n": null, "title": "Julius Caesar, with Mary Beard | FULL EPISODE", "kind": "bonus", "date": "2025-10-23", "catalogueDate": true, "href": "https://therestishistory.com/episodes/julius-caesar-with-mary-beard-full-episode", "note": "Caesar's ascent and relationships; companion to the Rubicon episodes."},
+      {"n": 304, "title": "The Murder of Julius Caesar", "date": "2023-02-12", "href": "https://therestishistory.com/episodes/the-murder-of-julius-caesar", "note": "The assassination and the political collapse surrounding it."},
+      {"n": 305, "title": "The Fall of the Roman Republic", "date": "2023-02-15", "href": "https://therestishistory.com/episodes/the-fall-of-the-roman-republic"},
+      {"n": 195, "title": "Young Cleopatra (Part 1)", "date": "2022-06-12", "href": "https://therestishistory.com/episodes/young-cleopatra-episode-1", "note": "69-30 BC: Cleopatra, Caesar and Antony. All four parts finished. This series overlaps the Caesar entries immediately above.", "done": true},
+      {"n": 196, "title": "Julius Caesar & Cleopatra (Part 2)", "date": "2022-06-13", "href": "https://therestishistory.com/episodes/young-cleopatra-episode-1", "done": true},
+      {"n": 197, "title": "Antony & Cleopatra (Part 3)", "date": "2022-06-14", "href": "https://therestishistory.com/episodes/young-cleopatra-episode-1", "done": true},
+      {"n": 198, "title": "Cleopatra's Downfall (Part 4)", "date": "2022-06-15", "href": "https://therestishistory.com/episodes/young-cleopatra-episode-1", "done": true},
+      {"n": null, "title": "Rubicon: The Triumph and Tragedy of the Roman Republic", "kind": "extract", "date": "2024-06-13", "catalogueDate": true, "href": "https://therestishistory.com/episodes/the-triumph-and-tragedy-of-the-roman-republic-extract", "note": "An audiobook reading, not a regular podcast discussion. Optional after this period."}
+     ]
+    },
+    {
+     "no": "05",
+     "title": "Empire: politics and provinces",
+     "intro": "First century BC to the second century AD. The emperors, Jesus, Britain and the Jewish revolt overlap in time; most series stay intact.",
+     "after": "The Britain series resumes here at Part 2. Its final parts overlap several later entries; the next section gives a stricter interleaving option.",
+     "items": [
+      {"n": 175, "title": "Crucifixion (Part 1)", "date": "2022-04-13", "href": "https://therestishistory.com/episodes/crucifixion", "note": "The origins and development of the punishment."},
+      {"n": 287, "title": "Jesus Christ: The Mystery (Part 1)", "date": "2022-12-18", "href": "https://therestishistory.com/episodes/the-mystery-ep-1", "note": "Two episodes: The Mystery and The History."},
+      {"n": 288, "title": "Jesus Christ: The History (Part 2)", "date": "2022-12-21", "href": "https://therestishistory.com/episodes/the-history-ep-2"},
+      {"n": 534, "title": "Emperors of Rome: Sex Secrets of the Caesars (Part 1)", "date": "2025-01-26", "href": "https://therestishistory.com/episodes/sex-secrets-of-the-caesars-part-1", "note": "Suetonius and the Julio-Claudian court, followed by Tiberius, Caligula and Claudius."},
+      {"n": 535, "title": "Emperors of Rome: Tiberius, Slaughter and Scandal (Part 2)", "date": "2025-01-29", "href": "https://therestishistory.com/episodes/tiberius-slaughter-and-scandal-part-2"},
+      {"n": 536, "title": "Emperors of Rome: Caligula, Incest and Insanity (Part 3)", "date": "2025-02-02", "href": "https://therestishistory.com/episodes/caligula-incest-and-insanity-part-3"},
+      {"n": 537, "title": "Emperors of Rome: Claudius, Paranoia and Poison (Part 4)", "date": "2025-02-05", "href": "https://therestishistory.com/episodes/claudius-paranoia-and-poison-part-4"},
+      {"n": null, "title": "Dynasty: The Rise and Fall of the House of Caesar", "kind": "extract", "date": "2024-06-27", "catalogueDate": true, "href": "https://therestishistory.com/episodes/the-rise-and-fall-of-the-house-of-caesar-extract", "note": "An audiobook reading, not a regular podcast discussion. Optional after this period."},
+      {"n": null, "title": "Rome's Greatest Emperors (Livestream)", "kind": "bonus", "date": "2023-07-19", "catalogueDate": true, "href": "https://therestishistory.com/episodes/rome-s-greatest-emperors-livestream", "note": "A comparison of five especially consequential emperors."},
+      {"n": null, "title": "Roman Emperors - Busts, Coins, and Mullets (Livestream)", "kind": "bonus", "date": "2023-10-18", "catalogueDate": true, "href": "https://therestishistory.com/episodes/roman-emperors-busts-coins-and-mullets-livestream", "note": "Imperial portraiture, coins, and presentation of power."},
+      {"n": 500, "title": "The Roman Conquest of Britain: The Empire Strikes Back (Part 2)", "date": "2024-10-02", "href": "https://therestishistory.com/episodes/the-empire-strikes-back-part-2", "note": "AD 43-84: Claudius, Boudicca and the northern campaigns. Kept together; overlaps Nero and the Jewish revolt."},
+      {"n": 501, "title": "The Roman Conquest of Britain: Boudicca’s Reign of Blood (Part 3)", "date": "2024-10-06", "href": "https://therestishistory.com/episodes/boudicca-s-reign-of-blood-part-3"},
+      {"n": 502, "title": "The Roman Conquest of Britain: To the Ends of the Earth (Part 4)", "date": "2024-10-09", "href": "https://therestishistory.com/episodes/to-the-ends-of-the-earth-part-4"},
+      {"n": null, "title": "The Roman Conquest of Britain EXTRA", "kind": "bonus", "date": "2024-10-15", "catalogueDate": true, "href": "https://therestishistory.com/episodes/the-roman-conquest-of-britain-extra", "note": "Roman Britain's later reception; companion to episodes 499-502."},
+      {"n": null, "title": "Romans in Britain, the Language of Boudicca, and Celtic Mysteries", "kind": "bonus", "date": "2025-06-24", "catalogueDate": true, "href": "https://therestishistory.com/episodes/romans-in-britain-the-language-of-boudicca-and-celtic-mysteries", "note": "Languages, coinage, and the transition into Roman-era Britain."},
+      {"n": 56, "title": "Nero", "date": "2021-05-23", "href": "https://therestishistory.com/episodes/nero", "note": "Nero and his historical reputation."},
+      {"n": null, "title": "12 Days: Nero's succession and the fall of the Byzantine Empire", "kind": "special", "date": "2021-12-31", "href": "https://therestishistory.com/episodes/nero-s-succession-and-the-fall-of-the-byzantine-empire", "note": "Unnumbered January 1 seasonal special. Its Roman half fits after Nero; the second half jumps to medieval Byzantium. Do not label this episode 151."},
+      {"n": 176, "title": "The Jews Against Rome (Part 2)", "date": "2022-04-17", "href": "https://therestishistory.com/episodes/the-jews-against-rome", "note": "Rebellion, the destruction of the Temple, Vespasian, Titus and Masada."},
+      {"n": 177, "title": "The Jewish Revolt (Part 3)", "date": "2022-04-20", "href": "https://therestishistory.com/episodes/the-jewish-revolt"}
+     ]
+    },
+    {
+     "no": "05",
+     "title": "Empire: cities, life and culture",
+     "intro": "Pompeii, public spectacle, the provinces, Hadrian and everyday Roman experience.",
+     "after": "For a stricter first-century sequence, split Britain: 500 (AD 43), Nero (54-68), 501 (60/61), the Jewish revolt (66-73/74), Pompeii (79), Colosseum (80), then 502 (northern campaigns through c.84).",
+     "items": [
+      {"n": 16, "title": "Pompeii", "date": "2021-01-20", "href": "https://therestishistory.com/episodes/pompeii", "note": "Archaeology and Roman life, with Sophie Hay."},
+      {"n": 355, "title": "Roman Apocalypse: Pompeii 79 AD", "date": "2023-07-30", "href": "https://therestishistory.com/episodes/pompeii-79-ad", "note": "The eruption and destruction of Pompeii; distinct from episode 16."},
+      {"n": null, "title": "The Eruption of Vesuvius, Lost Texts, and Ancient Cults", "kind": "bonus", "date": "2024-12-18", "catalogueDate": true, "href": "https://therestishistory.com/episodes/the-eruption-of-vesuvius-lost-texts-and-ancient-cults", "note": "The survival and recovery of texts buried at Herculaneum."},
+      {"n": 369, "title": "The Colosseum: Rome's Arena of Death", "date": "2023-09-17", "href": "https://therestishistory.com/episodes/rome-s-arena-of-death", "note": "The amphitheatre and Roman spectacle."},
+      {"n": 340, "title": "Hadrian and Antinous", "date": "2023-06-11", "href": "https://therestishistory.com/episodes/hadrian-and-antinous", "note": "The emperor, Antinous and their relationship."},
+      {"n": null, "title": "Pax: War and Peace in Rome's Golden Age", "kind": "extract", "date": "2023-09-18", "catalogueDate": true, "href": "https://therestishistory.com/episodes/war-and-peace-in-rome-s-golden-age-extract", "note": "An audiobook reading, not a regular podcast discussion. Optional after this period."},
+      {"n": 209, "title": "Londinium (Part 1)", "date": "2022-07-17", "href": "https://podcasts.apple.com/gb/podcast/londinium-part-1/id1537788786?i=1000570245518", "note": "Roman London; the opening of their London sequence."},
+      {"n": 224, "title": "Roman Holidays", "date": "2022-08-24", "href": "https://podcasts.apple.com/gb/podcast/roman-holidays/id1537788786?i=1000577271502", "note": "Travel and holidays in the Roman world."},
+      {"n": null, "title": "Mary Beard on What Made The Romans Different", "kind": "bonus", "date": "2026-09-03", "catalogueDate": true, "href": "https://therestishistory.com/episodes/mary-beard-on-what-made-the-romans-different", "note": "Roman slavery, everyday violence, and imperial rule; spans periods."}
+     ]
+    },
+    {
+     "no": "06",
+     "title": "Rome's later centuries and aftermath",
+     "intro": "Third to seventh centuries AD, with retrospective episodes about Rome's fall and its eastern continuation.",
+     "after": "Warlords of the West spans several centuries. Saint George and Christmas follow the later development of ancient traditions; the fall-of-Rome pair ranges well beyond a single date.",
+     "items": [
+      {"n": 260, "title": "Croatia: The Man Who Saved The Roman Empire", "date": "2022-11-21", "href": "https://therestishistory.com/episodes/the-man-who-saved-the-roman-empire", "note": "Diocletian - easy to miss because of the geographical title."},
+      {"n": 462, "title": "St George: Dragon-Slayer", "date": "2024-06-19", "href": "https://therestishistory.com/episodes/dragon-slayer", "note": "An ancient martyr and the much later development of his legend."},
+      {"n": 402, "title": "Christmas: Pagan or Christian?", "date": "2023-12-24", "href": "https://therestishistory.com/episodes/pagan-or-christian", "note": "The festival's origins and its relationship with pagan traditions."},
+      {"n": 164, "title": "Saint Patrick", "date": "2022-03-16", "href": "https://therestishistory.com/episodes/saint-patrick", "note": "Patrick and the world of late Roman and post-Roman Britain and Ireland."},
+      {"n": 520, "title": "Warlords of the West: Barbarian Heirs of Rome (Part 1)", "date": "2024-12-08", "href": "https://therestishistory.com/episodes/barbarian-heirs-of-rome-part-1", "note": "The post-Roman Franks, Clovis, Merovingian rulers and the emergence of medieval Europe."},
+      {"n": 521, "title": "Warlords of the West: Killer Queens (Part 2)", "date": "2024-12-11", "href": "https://therestishistory.com/episodes/killer-queens-part-2"},
+      {"n": 522, "title": "Warlords of the West: A Clash of Ice and Fire (Part 3)", "date": "2024-12-15", "href": "https://therestishistory.com/episodes/a-clash-of-ice-and-fire-part-3"},
+      {"n": 217, "title": "Plague and the decline of the Roman Empire", "date": "2022-08-03", "href": "https://therestishistory.com/episodes/plague-and-the-decline-of-the-roman-empire", "note": "Disease across the Roman centuries, ending in late-antique crises. A broad introduction before the Justinian sequence."},
+      {"n": 218, "title": "Theodora: Empress of Byzantium (Part 1)", "date": "2022-08-07", "href": "https://therestishistory.com/episodes/empress-of-byzantium-ep-1", "note": "Three episodes: Theodora, Justinian's imperial ambitions and Procopius's Secret History."},
+      {"n": 219, "title": "Justinian: Making Rome Great Again (Part 2)", "date": "2022-08-08", "href": "https://therestishistory.com/episodes/making-rome-great-again-ep-2"},
+      {"n": 220, "title": "Justinian & Theodora: The Secret History (Part 3)", "date": "2022-08-10", "href": "https://therestishistory.com/episodes/the-secret-history-ep-3"},
+      {"n": 60, "title": "Muhammad", "date": "2021-06-02", "href": "https://therestishistory.com/episodes/muhammad", "note": "Arabia in the late sixth and early seventh centuries. An optional continuation beyond the Greco-Roman world."},
+      {"n": 156, "title": "When did the Roman Empire fall?", "date": "2022-02-27", "href": "https://therestishistory.com/episodes/when-did-the-roman-empire-fall-part-1", "note": "What 'Rome's fall' means and the empire's continuation in the east."},
+      {"n": 157, "title": "Byzantium and the Ghosts of Rome", "date": "2022-02-28", "href": "https://therestishistory.com/episodes/byzantium-and-the-ghosts-of-rome-part-2"},
+      {"n": null, "title": "The 'Dark Ages' (Livestream)", "kind": "bonus", "date": "2022-03-16", "catalogueDate": true, "href": "https://therestishistory.com/episodes/the-dark-ages-livestream", "note": "The transformation of the Roman world and the early medieval period."}
+     ]
+    },
+    {
+     "no": "07",
+     "title": "Society, interpretation and later legends",
+     "intro": "Flexible companions. These belong beside the main sequence, rather than at an artificially exact date.",
+     "after": "Arthur is an optional post-Roman and medieval-literary epilogue. China (444) is an optional comparison outside the Mediterranean focus. This is not a catalogue of all world history.",
+     "items": [
+      {"n": 105, "title": "Classics", "date": "2021-10-06", "href": "https://therestishistory.com/episodes/classics", "note": "Mary Beard on how subsequent generations have understood Greece and Rome."},
+      {"n": 146, "title": "Disease vs. the rise of civilisation", "date": "2022-02-02", "href": "https://therestishistory.com/episodes/disease-vs-the-rise-of-civilisation-part-1", "note": "Interview with Kyle Harper about how human settlement and social change shaped disease. Broad context rather than a single-period narrative."},
+      {"n": 111, "title": "Golden Ages", "date": "2021-10-24", "href": "https://therestishistory.com/episodes/golden-ages", "note": "Cross-era discussion of prosperity and the idea of a golden age. Optional thematic companion, not core chronology."},
+      {"n": 491, "title": "History's Greatest Beards: From Egyptian Queens to Medieval Conquerors (Part 1)", "date": "2024-09-08", "href": "https://therestishistory.com/episodes/from-egyptian-queens-to-medieval-conquerors-part-1", "note": "Appearance, identity and power across ancient and later societies. A substantial antiquity-related thematic extra."},
+      {"n": 666, "title": "Wine and the Birth of Civilisation", "date": "2026-05-03", "href": "https://therestishistory.com/episodes/wine-and-the-birth-of-civilisation", "note": "Includes Greek and Roman wine culture, alongside other periods."},
+      {"n": 151, "title": "Valentine's Day", "date": "2022-02-13", "href": "https://therestishistory.com/episodes/valentine-s-day", "note": "A cross-era holiday history. Include as a thematic side trip rather than a continuous late-Roman narrative."},
+      {"n": 412, "title": "Romans in Space: Star Wars, Dune and Beyond...", "date": "2024-01-24", "href": "https://therestishistory.com/episodes/star-wars-dune-and-beyond", "note": "Rome's influence on science fiction."},
+      {"n": 19, "title": "King Arthur", "date": "2021-01-31", "href": "https://therestishistory.com/episodes/king-arthur", "note": "Older standalone discussion. Optional bridge out of antiquity; not Greek/Roman mythology."},
+      {"n": 713, "title": "King Arthur: The Once & Future King (Part 1)", "date": "2026-10-11", "href": "https://therestishistory.com/episodes/the-once-and-future-king-part-1", "note": "Post-Roman possibilities and the much later growth of the legend. Includes Part 4, currently listed in the members catalogue."},
+      {"n": 714, "title": "King Arthur: Lancelot and the Round Table (Part 2)", "date": "2026-10-14", "href": "https://therestishistory.com/episodes/lancelot-and-the-round-table-part-2"},
+      {"n": 715, "title": "King Arthur: The Mysteries of Merlin (Part 3)", "date": "2026-10-18", "href": "https://therestishistory.com/episodes/the-mysteries-of-merlin-part-3"},
+      {"n": 716, "title": "King Arthur: The Truth Behind the Legend (Part 4)", "date": "2026-10-11", "catalogueDate": true, "href": "https://therestishistory.com/episodes/the-truth-behind-the-legend-part-4"},
+      {"n": 444, "title": "The First Emperor of China", "date": "2024-04-28", "href": "https://therestishistory.com/episodes/the-first-emperor-of-china", "note": "Optional world-antiquity appendix only: Qin Shi Huang and imperial unification are outside the Mediterranean classical-history spine."}
+     ]
+    },
+    {
+     "no": "08",
+     "title": "More subscriber listening: ancient foundations",
+     "intro": "Prehistory, Egypt, Mesopotamia and the ancient Near East.",
+     "items": [
+      {"n": null, "title": "The Discovery of Fire, Ancient Cannibals, and British Neanderthals", "kind": "bonus", "date": "2026-01-07", "catalogueDate": true, "href": "https://therestishistory.com/episodes/the-discovery-of-fire-ancient-cannibals-and-british-neanderthals", "note": "Optional deep-prehistory background; well before classical antiquity."},
+      {"n": null, "title": "Medieval Battles, the Pyramids, and the Industrial Revolution", "kind": "bonus", "date": "2024-05-14", "catalogueDate": true, "href": "https://therestishistory.com/episodes/medieval-battles-the-pyramids-and-the-industrial-revolution", "note": "Mixed discussion. Includes the labour used to build Egypt's pyramids."},
+      {"n": null, "title": "Murdered Martyrs, Norse Raids, and Mysterious Stone Circles", "kind": "bonus", "date": "2024-12-11", "catalogueDate": true, "href": "https://therestishistory.com/episodes/murdered-martyrs-norse-raids-and-mysterious-stone-circles", "note": "Mixed discussion. Orkney's prehistoric monuments, followed by medieval themes."},
+      {"n": null, "title": "American Civil War & Stonehenge (Livestream)", "kind": "bonus", "date": "2022-06-30", "catalogueDate": true, "href": "https://therestishistory.com/episodes/american-civil-war-and-stonehenge-livestream", "note": "Stonehenge discussion in a mixed-topic livestream."},
+      {"n": null, "title": "King Arthur, Ancient Egypt, and Unexpected Historical Trends", "kind": "bonus", "date": "2024-07-23", "catalogueDate": true, "href": "https://therestishistory.com/episodes/king-arthur-ancient-egypt-and-unexpected-historical-trends", "note": "Mixed discussion. Ancient Egypt is a named topic; exact segment is not established by the public preview."},
+      {"n": null, "title": "The Death of Nelson, Ancient Egypt, and The Holy Roman Empire", "kind": "bonus", "date": "2024-06-18", "catalogueDate": true, "href": "https://therestishistory.com/episodes/the-death-of-nelson-ancient-egypt-and-the-holy-roman-empire", "note": "Mixed discussion. Ancient Egypt is a named topic among later historical questions. Classical topic confirmed by title only; detailed segment unverified."},
+      {"n": null, "title": "The Death of History", "kind": "bonus", "date": "2026-08-20", "catalogueDate": true, "href": "https://therestishistory.com/episodes/the-death-of-history", "note": "Mosul's layered past and the modern destruction of historical heritage."}
+     ]
+    },
+    {
+     "no": "09",
+     "title": "More subscriber listening: Greek myth and literature",
+     "intro": "Homer, gods, ancient storytelling and modern adaptations.",
+     "items": [
+      {"n": null, "title": "Why Is Christopher Nolan's Odyssey Controversial?", "kind": "bonus", "date": "2026-07-14", "catalogueDate": true, "href": "https://therestishistory.com/episodes/why-is-christopher-nolan-s-odyssey-controversial", "note": "Modern adaptation, ancient identity, and the Odyssey's characters."},
+      {"n": null, "title": "Tom Holland Meets Tom Holland + The Odyssey Review", "kind": "bonus", "date": "2026-07-16", "catalogueDate": true, "href": "https://therestishistory.com/episodes/tom-holland-meets-tom-holland-the-odyssey-review", "note": "An interview and film discussion about Homer's legacy."},
+      {"n": null, "title": "Heroic Vikings, Greek Epics, and The Rules of War", "kind": "bonus", "date": "2025-01-08", "catalogueDate": true, "href": "https://therestishistory.com/episodes/heroic-vikings-greek-epics-and-the-rules-of-war", "note": "Mixed discussion. Greek epics are a named topic; the public preview concentrates on later history. Classical topic confirmed by title only; detailed segment unverified."},
+      {"n": null, "title": "Revolutions, Tolkien's Tomb, and Poseidon's daughter", "kind": "bonus", "date": "2023-05-10", "catalogueDate": true, "href": "https://therestishistory.com/episodes/revolutions-tolkien-s-tomb-and-poseidon-s-daughter", "note": "Mixed discussion. Herodotus and mythology within a wider historical Q&A."}
+     ]
+    },
+    {
+     "no": "10",
+     "title": "More subscriber listening: the Greek world",
+     "intro": "Companions to the city-states, wars and Greek historians.",
+     "items": [
+      {"n": null, "title": "The Odyssey, Ancient Greek Wars, and Ottoman Invasions", "kind": "bonus", "date": "2026-03-11", "catalogueDate": true, "href": "https://therestishistory.com/episodes/the-odyssey-ancient-greek-wars-and-ottoman-invasions", "note": "Mixed discussion. Corfu in Homer and the Peloponnesian War, then later history."},
+      {"n": null, "title": "Crossroads Of Civilisations - Where East Meets West", "kind": "bonus", "date": "2024-05-21", "catalogueDate": true, "href": "https://therestishistory.com/episodes/crossroads-of-civilisations-where-east-meets-west", "note": "Mixed discussion. Persian Wars and the changing idea of an East-West divide."},
+      {"n": null, "title": "The Last English Pope, Persian Europe, and Tom and Dominic's Favourite Castles", "kind": "bonus", "date": "2025-03-05", "catalogueDate": true, "href": "https://therestishistory.com/episodes/the-last-english-pope-persian-europe-and-tom-and-dominic-s-favourite-castles", "note": "Mixed discussion. Mediterranean and Persian counterfactuals among unrelated questions."},
+      {"n": null, "title": "Alexander the Great, Napoleon, and Royal Correspondence", "kind": "bonus", "date": "2024-09-03", "catalogueDate": true, "href": "https://therestishistory.com/episodes/alexander-the-great-napoleon-and-royal-correspondence", "note": "Mixed discussion. How Alexander administered and garrisoned his conquests."},
+      {"n": null, "title": "In-flight entertainment, Harry Potter, and tales from D.C.", "kind": "bonus", "date": "2023-06-07", "catalogueDate": true, "href": "https://therestishistory.com/episodes/in-flight-entertainment-harry-potter-and-tales-from-d-c", "note": "Mixed discussion. Includes which lost ancient writings the hosts would recover."}
+     ]
+    },
+    {
+     "no": "11",
+     "title": "More subscriber listening: the Republic",
+     "intro": "Companions to Carthage, Roman politics, civil wars and Cicero.",
+     "items": [
+      {"n": null, "title": "Ancient Monsters, Roman Conspiracies, and D-Day Gaffs", "kind": "bonus", "date": "2024-06-11", "catalogueDate": true, "href": "https://therestishistory.com/episodes/ancient-monsters-roman-conspiracies-and-d-day-gaffs", "note": "Mixed discussion. Cicero, Catiline's conspiracy, and the reliability of its portrayal."},
+      {"n": null, "title": "The Destruction of Carthage, The Beatles, and St Cuthbert’s Way", "kind": "bonus", "date": "2023-08-29", "catalogueDate": true, "href": "https://therestishistory.com/episodes/the-destruction-of-carthage-the-beatles-and-st-cuthbert-s-way", "note": "Mixed discussion. Changes in Roman armies between Carthage and Jerusalem's destruction."},
+      {"n": null, "title": "Political Dynasties, Fascism and the Roman Republic", "kind": "bonus", "date": "2023-12-20", "catalogueDate": true, "href": "https://therestishistory.com/episodes/political-dynasties-fascism-and-the-roman-republic", "note": "Mixed discussion. The nature of Caesar's rule within a broader Q&A."},
+      {"n": null, "title": "Top Gun, Love Island, and Cicero", "kind": "bonus", "date": "2022-06-22", "catalogueDate": true, "href": "https://therestishistory.com/episodes/top-gun-love-island-and-cicero", "note": "Mixed discussion. Roman personalities, including Cicero, alongside modern entertainment."},
+      {"n": null, "title": "History’s Greatest Warrior, JFK vs. Nixon, and Roman Civil Wars", "kind": "bonus", "date": "2023-11-01", "catalogueDate": true, "href": "https://therestishistory.com/episodes/history-s-greatest-warrior-jfk-vs-nixon-and-roman-civil-wars", "note": "Mixed discussion. Roman civil wars are a named topic; detailed segment not publicly established. Classical topic confirmed by title only; detailed segment unverified."},
+      {"n": null, "title": "Class in Britain, heretical historians, and dead men talking", "kind": "bonus", "date": "2023-02-08", "catalogueDate": true, "href": "https://therestishistory.com/episodes/class-in-britain-heretical-historians-and-dead-men-talking", "note": "Mixed discussion. A question about speaking Latin with Caesar among unrelated subjects."}
+     ]
+    },
+    {
+     "no": "12",
+     "title": "More subscriber listening: imperial Rome",
+     "intro": "Roman society, the army, emperors, Britain and archaeology.",
+     "items": [
+      {"n": null, "title": "History’s Top Lads, Ancient Slavery and Aztec Gold", "kind": "bonus", "date": "2023-11-15", "catalogueDate": true, "href": "https://therestishistory.com/episodes/history-s-top-lads-ancient-slavery-and-aztec-gold", "note": "Mixed discussion. Comparison of slavery across ancient societies."},
+      {"n": null, "title": "Shakespeare, Roman Slavery, and the Tudors", "kind": "bonus", "date": "2025-10-14", "catalogueDate": true, "href": "https://therestishistory.com/episodes/shakespeare-roman-slavery-and-the-tudors", "note": "Mixed discussion. Whether ancient societies depended upon slavery."},
+      {"n": null, "title": "Roman Legions vs. Norman Invaders, The Killing Fields of Agincourt, and American Aristocracy", "kind": "bonus", "date": "2024-10-08", "catalogueDate": true, "href": "https://therestishistory.com/episodes/roman-legions-vs-norman-invaders-the-killing-fields-of-agincourt-and-american-aristocracy", "note": "Mixed discussion. A hypothetical comparison of Roman and Norman armies."},
+      {"n": null, "title": "Roman Scotland, Humanities, and Herodotus", "kind": "bonus", "date": "2023-05-17", "catalogueDate": true, "href": "https://therestishistory.com/episodes/roman-scotland-humanities-and-herodotus", "note": "Mixed discussion. Scotland's position in the Roman world, plus historical study."},
+      {"n": null, "title": "Tom in Romania, multiculturalism, and the World Cup", "kind": "bonus", "date": "2022-11-23", "catalogueDate": true, "href": "https://therestishistory.com/episodes/tom-in-romania-multiculturalism-and-the-world-cup", "note": "Mixed discussion. A visit to Sarmizegetusa and Dacia's historical landscape."},
+      {"n": null, "title": "Rome’s Worst Emperor, The Jacobite Uprising, and Consequential Battles", "kind": "bonus", "date": "2025-04-01", "catalogueDate": true, "href": "https://therestishistory.com/episodes/rome-s-worst-emperor-the-jacobite-uprising-and-consequential-battles", "note": "Mixed discussion. Judging Roman imperial misrule alongside other questions."},
+      {"n": null, "title": "Gladiator II, Narcissistic Poets, and The Princes in the Tower (Livestream)", "kind": "bonus", "date": "2024-12-04", "catalogueDate": true, "href": "https://therestishistory.com/episodes/gladiator-ii-narcissistic-poets-and-the-princes-in-the-tower-livestream", "note": "The film Gladiator II and Rome's failure to conquer Ireland."},
+      {"n": null, "title": "English Mythology, Historical Heatwaves, and Woke Informers", "kind": "bonus", "date": "2023-08-08", "catalogueDate": true, "href": "https://therestishistory.com/episodes/english-mythology-historical-heatwaves-and-woke-informers", "note": "Mixed discussion. Includes the significance of imperial purple."},
+      {"n": null, "title": "Podwashing, Tom’s opera, and Pixar", "kind": "bonus", "date": "2022-11-30", "catalogueDate": true, "href": "https://therestishistory.com/episodes/podwashing-tom-s-opera-and-pixar", "note": "Mixed discussion. Includes a reported discovery concerning an allegedly invented Roman emperor."},
+      {"n": null, "title": "Mexican History, East German perspectives, and Roman dog epitaphs", "kind": "bonus", "date": "2023-04-26", "catalogueDate": true, "href": "https://therestishistory.com/episodes/mexican-history-east-german-perspectives-and-roman-dog-epitaphs", "note": "Mixed discussion. Roman pet memorials are a named topic in a broader Q&A. Classical topic confirmed by title only; detailed segment unverified."},
+      {"n": null, "title": "Roman Sex Scandals, Courageous Leaders, and Napoleon’s Fate", "kind": "bonus", "date": "2023-11-08", "catalogueDate": true, "href": "https://therestishistory.com/episodes/roman-sex-scandals-courageous-leaders-and-napoleon-s-fate", "note": "Mixed discussion. Roman sexual scandals are a named topic; specific subjects not confirmed."},
+      {"n": null, "title": "British Inventions, Ronald Reagan, and Roman Conquests", "kind": "bonus", "date": "2024-09-24", "catalogueDate": true, "href": "https://therestishistory.com/episodes/british-inventions-ronald-reagan-and-roman-conquests", "note": "Mixed discussion. Roman conquest is a named topic; exact historical scope unverified."},
+      {"n": null, "title": "The Brothers Holland, Masters of the Air and Ghostly Centurions", "kind": "bonus", "date": "2024-04-09", "catalogueDate": true, "href": "https://therestishistory.com/episodes/the-brothers-holland-masters-of-the-air-and-ghostly-centurions", "note": "Mixed discussion. A counterfactual about Jesus, among wider history and ghost stories."},
+      {"n": null, "title": "The Worst Disasters in History (Livestream)", "kind": "bonus", "date": "2024-02-28", "catalogueDate": true, "href": "https://therestishistory.com/episodes/the-worst-disasters-in-history-livestream", "note": "Includes the amphitheatre collapse of AD 27 and the Sodom and Gomorrah tradition."},
+      {"n": null, "title": "Reagan & Thatcher, Roman Britain, and \"sleazy hacks\"", "kind": "bonus", "date": "2023-03-15", "catalogueDate": true, "href": "https://therestishistory.com/episodes/reagan-and-thatcher-roman-britain-and-sleazy-hacks", "note": "Mixed discussion. An island involved in the British campaigns of both Caesar and Claudius."}
+     ]
+    },
+    {
+     "no": "13",
+     "title": "More subscriber listening: late antiquity",
+     "intro": "The transition out of the ancient world.",
+     "items": [
+      {"n": null, "title": "Fallen Empires, The Dark Ages, and Christopher Nolan’s Odyssey", "kind": "bonus", "date": "2025-01-22", "catalogueDate": true, "href": "https://therestishistory.com/episodes/fallen-empires-the-dark-ages-and-christopher-nolan-s-odyssey", "note": "Mixed discussion. Imperial collapse, the early medieval world, and modern Homeric reception."},
+      {"n": null, "title": "Collectibles, literary criticism, and the illusion of historical truth", "kind": "bonus", "date": "2023-02-15", "catalogueDate": true, "href": "https://therestishistory.com/episodes/collectibles-literary-criticism-and-the-illusion-of-historical-truth", "note": "Mixed discussion. Comparing wealth in the Eastern and Western Roman Empires."},
+      {"n": null, "title": "Corrupt US Presidents, Wartime Prime Ministers, and the Birth of Byzantium", "kind": "bonus", "date": "2025-07-15", "catalogueDate": true, "href": "https://therestishistory.com/episodes/corrupt-us-presidents-wartime-prime-ministers-and-the-birth-of-byzantium", "note": "Mixed discussion. When the Eastern Roman Empire should be called Byzantine."},
+      {"n": null, "title": "The Fall of the Roman Empire, Edward the Confessor’s True Heir, and Vikings Abroad", "kind": "bonus", "date": "2025-05-06", "catalogueDate": true, "href": "https://therestishistory.com/episodes/the-fall-of-the-roman-empire-edward-the-confessor-s-true-heir-and-vikings-abroad", "note": "Mixed discussion. Roman identity and language in the eastern empire."},
+      {"n": null, "title": "King Arthur and the Ballads of His Greatest Knight", "kind": "bonus", "date": "2026-10-13", "catalogueDate": true, "href": "https://therestishistory.com/episodes/king-arthur-and-the-ballads-of-his-greatest-knight", "note": "Mixed discussion. Medieval Arthurian poetry and Britain's legendary Trojan ancestry; optional epilogue."}
+     ]
+    },
+    {
+     "no": "14",
+     "title": "More subscriber listening: cross-era discussions",
+     "intro": "These include relevant classical segments, but also discuss other periods.",
+     "items": [
+      {"n": null, "title": "Museums of the Western World (Livestream)", "kind": "bonus", "date": "2024-03-20", "catalogueDate": true, "href": "https://therestishistory.com/episodes/museums-of-the-western-world-livestream", "note": "Classical sculpture in Rome and ancient finds in museum collections."},
+      {"n": null, "title": "Henry VIII, Thatcherism and Roman Counterfactuals", "kind": "bonus", "date": "2024-03-06", "catalogueDate": true, "href": "https://therestishistory.com/episodes/henry-viii-thatcherism-and-roman-counterfactuals", "note": "Mixed discussion. Biblical catastrophe and Roman counterfactuals among later topics."}
+     ]
+    }
+   ],
+   "notes": [
+    {
+     "title": "Scope",
+     "text": [
+      "It covers dedicated classical episodes plus substantial, identifiable ancient-world segments in mixed extras. The focus is Greece, Rome, Persia, Carthage, their mythological and literary worlds, and late antiquity. Earlier Egypt, Mesopotamia and prehistory are included as context; Arthur and China are explicitly optional. This is not an exhaustive index of every fleeting classical reference in every general Q&A.",
+      "Every title links to its official episode/series listing or, for a few older feed items, its podcast page. Sign in with your membership when prompted. An access prompt on a website does not by itself establish that a numbered episode is absent from the public feed."
+     ]
+    },
+    {
+     "title": "Release-date method",
+     "text": [
+      "Release dates: numbered episodes use original public-feed timestamps converted to America/New_York when available. An asterisk (*) identifies a date displayed by the official catalogue or publisher listing where no feed timestamp was established; this includes members-only items and early access. Your subscriber feed may show an earlier date than the public release.",
+      "The date beside an episode is its release date, not the historical date of its subject. Main-feed publication timestamps are converted to America/New_York; this can fall on the previous calendar day relative to Britain or UTC. The original feed is used instead of migrated website dates such as 27 November 2021 that were applied to many older episodes.",
+      "Dates marked * are the calendar date shown by the official episode catalogue or publisher listing. They may represent a members' release, livestream listing or later edition. A timestamp was not established for those dates. Member early access and public release are therefore not assumed to be identical. The January 1 Nero special was published at 02:00 UTC on 1 January 2022, which is 31 December 2021 in New York."
+     ]
+    },
+    {
+     "title": "Numbering and identification",
+     "text": [
+      "Hadrian and Antinous is episode 340 despite an inconsistent number on its webpage. Greek Myths is 602-605; the series page duplicates 603 for Part 3. Use the part order. The January 1 Nero/Byzantium special is unnumbered; episode 151 is Valentine's Day. The two Pompeii episodes, 16 and 355, are distinct.",
+      "King Arthur is listed as 713-716 on the official series page, including the fourth part in the current members catalogue. Publication and series-header dates on some migrated pages are inconsistent; this guide uses verified episode numbers and series order instead of relying on those headers."
+     ]
+    }
+   ],
+   "sources": [
+    {
+     "label": "Official episode catalogue",
+     "href": "https://therestishistory.com/episodes"
+    },
+    {
+     "label": "Searchable archive",
+     "href": "https://archive.therestishistory.com/"
+    },
+    {
+     "label": "Members' bonuses",
+     "href": "https://therestishistory.com/series/bonus-episodes"
+    },
+    {
+     "label": "Earlier RIHC collection",
+     "href": "https://therestishistory.com/series/rihc"
+    },
+    {
+     "label": "Full episode index",
+     "href": "https://therestishistory.com/series/full-episodes"
+    },
+    {
+     "label": "Official public podcast feed",
+     "href": "https://feeds.megaphone.fm/GLT4787413333"
+    }
+   ]
+  }
+ ]
+}

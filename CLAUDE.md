@@ -1159,8 +1159,11 @@ they're small). Their `sizes` mirrors the column: the page width below
 The tab is in the nav of every page: the hand-written pages, this one,
 the journal pages, and `PAGE_TEMPLATE` in build.py for the collection pages.
 
-**The nav, in order** (Newton, 2026-10-17; Chess added 2026-10-19): Work ·
-About · Journals · Academia · Chess · Projects · Contact. **Journals** is not a link (he wanted it
+**The nav, in order** (Newton, 2026-10-17; Chess added 2026-10-19,
+Personal 2026-10-21): Work · About · Journals · Academia · Chess ·
+Personal · Projects · Contact. **Personal** is a page-less tab like
+Journals (`data-menu="personal"`); its one entry is the Podcast Tracker
+(see "Podcast Tracker"). **Journals** is not a link (he wanted it
 unclickable): `<button class="nav-tab" data-menu="journals">`, keyed in
 `NAV_MENUS` by its `data-menu`, whose one entry is Québec
 (journals/quebec/; `zh` gives 魁北克). Pointing opens it as for Projects;
@@ -1313,6 +1316,49 @@ the database is reached from the map's pins and its "Database →".
     "moves recorded up to…" notes removed, 2026-10-20).
 - Chinese: the interface words are in ZH_UI (site.js, "Chess"); his
   tournament names, places and opponents stay as written.
+
+## Podcast Tracker (podcast-tracker.html)
+
+Asked for 2026-10-21: a page called "Podcast Tracker" under a new
+**Personal** tab (Chess stays its own tab: his answer), listing every
+episode on his listening list and marking the ones he has finished. His
+picks: just the list he sent (not the whole podcast's archive), and **he
+says what he finished in chat and I mark it** (no checkboxes, nothing on
+the page writes).
+
+- **Data: data/podcasts.json.** `podcasts`, each with `name`, `subtitle`,
+  `lede`, `guide` (paragraphs), `sections` (`no`, `title`, `intro`,
+  `after`, `items`), `notes`, `sources`. An item is one episode, one line:
+  `n` (null for an unnumbered members' extra), `title`, `kind`
+  (bonus/extract/special), `date` (release date, New York), `catalogueDate`
+  (the checklist's * dates: the catalogue's, no feed timestamp), `href`,
+  `note`, `done`. **Marking one finished = `"done": true` on its line**,
+  commit, push; the count and bar follow.
+- **Source:** The Rest Is History, from his PDF "The Rest Is History —
+  Classical Listening Checklist" (checked 21 October 2026; he called it the
+  superior one over the earlier 6-page catalogue). Its sections, rows,
+  links, dates and notes are as written, except where the notes talked about
+  the PDF itself ("green DONE rows", "the next page", "now"), the "Newly
+  marked complete" page and the progress record (the page counts for
+  itself), and a "262:"-style number prefix on a title, dropped as the
+  number has its own column. Finished on 2026-10-21: its 27 (116-117,
+  195-198, 457-458, 568-571, 640-643, 668-669, 687-688, 701-704; the
+  Trojan War with Mary Beard, The General Who Made Rome Invincible, Cicero:
+  Defender of the Republic) plus 98-99, which he added.
+- **Page:** the chess database's layout (prose rail + column). The rail:
+  `podcasts.title`/`podcasts.name`/`podcasts.prose` are ?edit slots; the
+  count (finished / all, numbered episodes, extras) and a thin amber bar;
+  a filter All · To listen · Finished (remembered in localStorage
+  "podcasts.show"); the sections, lit as they pass (`.is-current`, its own
+  rule, not railLights), with a shared title lead ("More subscriber
+  listening: …", "Empire: …") said once above its run. The rail scrolls
+  itself above 1000px wide; below that the section list is hidden. A row:
+  square (filled amber = finished, outline = not yet), number, title
+  linking out ↗, kind label, note, date (Chinese 2024年6月2日).
+- A second podcast is another entry in `podcasts`; the rail then names each.
+- Chinese: interface words in ZH_UI ("the podcast tracker"); Personal 个人,
+  Podcast Tracker 播客记录. The episodes, notes and section names stay
+  English.
 
 ## Editing the words (?edit)
 
