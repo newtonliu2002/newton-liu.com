@@ -126,8 +126,7 @@
    "stops": [
     { "name": "Philadelphia", "lat": 39.9526, "lng": -75.1652 },
     { "name": "Exton", "lat": 40.029, "lng": -75.621 }
-   ],
-   "link": { "label": "Chess", "href": "chess-games.html#holly-heisman-memorial-2026" }
+   ]
   },
   {
    "id": "washington-dc-2026-10-04",
@@ -157,8 +156,7 @@
     { "name": "Ottawa/Gatineau", "lat": 45.42, "lng": -75.69, "date": "2026-10-16" },
     { "name": "New York City", "lat": 40.7128, "lng": -74.006 },
     { "name": "Richmond", "lat": 37.5407, "lng": -77.436 }
-   ],
-   "link": { "label": "Journal", "href": "journals/quebec/" }
+   ]
   },
   {
    "id": "new-york-2026-10-18",

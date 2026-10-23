@@ -1374,8 +1374,9 @@ redone for trips, public (his pick).
   **data/travel-routes.json**, whose `path` is drawn: hand-set
   `waypoints`, the path written by `python3 tools/route.py --file
   data/travel-routes.json <key>`; kept apart from data/routes.json, which
-  is the globe's), optional `link` `{label, href}` (its journal, its chess games; label
-  through ZH_UI). **Every stop is a public place at its usual centre**
+  is the globe's), optional `link` `{label, href}` (a small link under the row; label
+  through ZH_UI). **No trip has one: he had them all removed (2026-10-23);
+  don't add journal or chess links back unless he asks.** **Every stop is a public place at its usual centre**
   (a city, town or national park, the globe's rule), never a home, a
   street address or where a checklist was made.
 - **Where it came from:** his own list (2026-10-23, in chat), a trip to
