@@ -265,6 +265,7 @@
   var shapes = {};        // media.json: { path: [width, height] }
   var cameras = {};       // media.json: { path: { camera, lens, focal, aperture, shutter, iso } }
   var birds = {};         // media.json: { path: { caption, sci, ebird, zh } }, a bird's names
+  var collection = "";    // the slug of the collection that links to this journal, if any
   var list = [];          // the entries as drawn, in reading order
   var byId = {};
   var pins = [], pinByName = {};
@@ -323,7 +324,8 @@
       S.getJSON(CONTENT + "journal.json"),
       S.getJSON("data/routes.json").catch(function () { return null; }),
       S.getJSON("data/photos.json").catch(function () { return null; }),
-      S.getJSON(CONTENT + "media.json").catch(function () { return null; })
+      S.getJSON(CONTENT + "media.json").catch(function () { return null; }),
+      S.getJSON("data/collections.json").catch(function () { return null; })
     ]).then(function (r) {
       journal = r[0] || {};
       shapes = (r[3] && r[3].sizes) || {};
@@ -331,6 +333,14 @@
       birds = (r[3] && r[3].birds) || {};
       var routes = r[1], photos = (r[2] && r[2].photos) || [];
       photos.forEach(function (p) { if (p && p.src) photoBySrc[p.src] = p; });
+      // The way back to the photographs: the collection whose entry in
+      // collections.json names this journal ("journal": "journals/quebec/"),
+      // the same line that gives the collection its "Journal →", so the two
+      // pages link each other or neither does. Only one with photographs.
+      ((r[4] && r[4].collections) || []).forEach(function (c) {
+        if (collection || !c || c.journal !== "journals/" + PLACE + "/" || !/^[a-z0-9-]+$/.test(c.slug || "")) return;
+        if (photos.some(function (p) { return p && p.collection === c.slug; })) collection = c.slug;
+      });
       pins = (place.pins || []).map(function (p) {
         return { name: p.name, label: S.pin(p.name), lat: +p.lat, lng: +p.lng };
       });
@@ -419,6 +429,14 @@
     if (range) dates.textContent = range;
     if (!month.textContent) month.hidden = true;
     if (!dates.textContent) dates.hidden = true;
+
+    // Under the month, the way to the trip's photographs, as the
+    // collection's rail has "Journal →" under its date.
+    if (collection && !box.querySelector(".jn-cover-link")) {
+      var go = box.querySelector(".jn-cover-text").appendChild(el("p", "jn-cover-link"));
+      var a = go.appendChild(el("a", "text-link", t("Photographs →")));
+      a.href = BASE + "collections/" + collection + "/";
+    }
 
     // An upright cover is shown whole on the raised ground, as an upright
     // gallery opener is, rather than cut to a band across the window.

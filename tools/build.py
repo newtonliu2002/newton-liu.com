@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Scan images/ and regenerate data/photos.json + the per-collection pages
-(and each travel journal's media.json, the shapes of its media).
+(and each travel journal's media.json, the shapes of its media; sitemap.xml;
+and work.html's plain list of collection links).
 
 Usage
 -----
@@ -42,6 +43,7 @@ import shutil
 import struct
 import subprocess
 import sys
+import urllib.parse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IMAGE_DIR = os.path.join(ROOT, "images")
@@ -50,6 +52,20 @@ DATA_DIR = os.path.join(ROOT, "data")
 MANIFEST = os.path.join(DATA_DIR, "photos.json")
 COLLECTIONS = os.path.join(DATA_DIR, "collections.json")
 PAGES_DIR = os.path.join(ROOT, "collections")
+
+# The site's public address, the one place build.py writes it: the collection
+# pages' sharing tags (og:url, og:image) and sitemap.xml are built on it. The
+# hand-written pages carry it in their <head> too, so a move to a custom
+# domain is this line plus a find-and-replace of the old address in *.html,
+# journals/*/index.html, then a build (CLAUDE.md, "Link previews").
+SITE_URL = "https://newtonliu2002.github.io/newton-liu.com/"
+# The hand-written pages at the root, in the sitemap and restamped (404.html
+# is restamped too, but is no page of its own to list).
+ROOT_PAGES = ("index.html", "work.html", "projects.html", "about.html", "contact.html", "academia.html",
+              "chess.html", "chess-games.html", "podcast-tracker.html", "travel-fall-2026.html")
+# A link preview's picture where a page has none of its own: the About band
+# (images/_about/ is in git, so served by Pages), at its 1600 rung, real size.
+SHARE_IMAGE = ("images/_about/1600/B0003302.jpg", 1600, 592, "Photograph from Alaska")
 
 RASTER_EXT = (".jpg", ".jpeg", ".png", ".webp")
 EXTENSIONS = RASTER_EXT + (".svg",)
@@ -390,7 +406,17 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title} — Newton Liu Photography</title>
-<meta name="description" content="{title} — photographs by Newton Liu.">
+<meta name="description" content="{description}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Newton Liu Photography">
+<meta property="og:title" content="{title} — Newton Liu Photography">
+<meta property="og:description" content="{description}">
+<meta property="og:url" content="{url}">
+<meta property="og:image" content="{image}">
+<meta property="og:image:width" content="{image_w}">
+<meta property="og:image:height" content="{image_h}">
+<meta property="og:image:alt" content="{image_alt}">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#121212">
 <link rel="icon" type="image/png" sizes="64x64" href="../../assets/favicon.png">
 <link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
@@ -448,6 +474,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   <div class="wrap footer-inner">
     <p>&copy; <span data-year>2026</span> Newton Liu. All photographs are my own.</p>
     <p class="footer-links">
+      <a href="../../#collections">Work</a>
       <a href="../../about.html">About</a>
       <a href="../../projects.html">Projects</a>
       <a href="../../contact.html">Contact</a>
@@ -517,16 +544,20 @@ def asset_stamps():
     return out
 
 
-def stamp_root_pages(stamps):
-    """Refresh ?v= on the hand-written pages: the ten at the root and every
-    journal's page. Returns how many changed."""
-    changed = 0
-    pages = ["index.html", "work.html", "projects.html", "about.html", "contact.html", "academia.html", "chess.html", "chess-games.html",
-             "podcast-tracker.html", "travel-fall-2026.html"]
+def journal_pages():
+    """Every journal's page, journals/<trip>/index.html, from the repo root."""
     journals = os.path.join(ROOT, "journals")
-    if os.path.isdir(journals):
-        pages += sorted(os.path.join("journals", d, "index.html") for d in os.listdir(journals)
-                        if not d.startswith((".", "_")))
+    if not os.path.isdir(journals):
+        return []
+    return sorted("journals/{}/index.html".format(d) for d in os.listdir(journals)
+                  if not d.startswith((".", "_")))
+
+
+def stamp_root_pages(stamps):
+    """Refresh ?v= on the hand-written pages: the ten at the root, 404.html
+    and every journal's page. Returns how many changed."""
+    changed = 0
+    pages = list(ROOT_PAGES) + ["404.html"] + journal_pages()
     for page in pages:
         path = os.path.join(ROOT, page)
         if not os.path.exists(path):
@@ -547,8 +578,122 @@ def stamp_root_pages(stamps):
     return changed
 
 
-def write_pages(collections, stamps):
-    """One stub page per collection. Rewritten every run — don't hand-edit."""
+# --------------------------------------------------------------------------
+# Link previews and the sitemap.
+#
+# A link to a page, pasted into a message or a post, shows the page's sharing
+# tags (og:*, twitter:card): a collection page shows its opening photograph,
+# a few words built from data, and the page's address. The hand-written pages
+# carry theirs in their <head>. sitemap.xml lists every public page, and
+# work.html carries a plain list of the collections for anything that reads
+# the page without running site.js (a crawler, a reader without JavaScript).
+
+MONTHS = ("January", "February", "March", "April", "May", "June", "July", "August",
+          "September", "October", "November", "December")
+WORK_LINKS = ("<!-- build.py: collection links -->", "<!-- /build.py: collection links -->")
+
+
+def esc(text):
+    """Text for HTML, in an element or a double-quoted attribute."""
+    return (str(text).replace("&", "&amp;").replace("<", "&lt;")
+            .replace(">", "&gt;").replace('"', "&quot;"))
+
+
+def collection_date(photos):
+    """The date line site.js's collectionDate() derives from capture dates:
+    "August 2023", "October – December 2025", "December 2023 – January 2024"."""
+    dates = sorted(p.get("date") for p in photos
+                   if isinstance(p.get("date"), str) and re.match(r"^\d{4}-\d{2}-\d{2}$", p["date"]))
+    if not dates:
+        return ""
+    (fy, fm), (ly, lm) = [(int(d[:4]), int(d[5:7])) for d in (dates[0], dates[-1])]
+    if fy == ly:
+        if fm == lm:
+            return "{} {}".format(MONTHS[lm - 1], ly)
+        return "{} – {} {}".format(MONTHS[fm - 1], MONTHS[lm - 1], ly)
+    return "{} {} – {} {}".format(MONTHS[fm - 1], fy, MONTHS[lm - 1], ly)
+
+
+def r2_base():
+    """R2's public address, from the `R2` constant in assets/site.js (as
+    tools/upload.py reads it); None if it can't be found."""
+    try:
+        with open(os.path.join(ROOT, "assets", "site.js"), "r", encoding="utf-8") as fh:
+            m = re.search(r'var R2 = "(https://[^"]+/)";', fh.read())
+    except OSError:
+        return None
+    return m.group(1) if m else None
+
+
+def share_image(photo, old_page=""):
+    """(absolute URL, width, height) of a photograph's 1600px rung in R2, for
+    a collection page's og:image: the photograph site.js opens the gallery
+    with. The URL is encoded as site.js's url() does it. The size is the
+    file's own when it is on this machine; in a checkout without images/ the
+    size the page already states for the same file is kept, else it is worked
+    out from the photograph's shape (sips rounds either way, so that one can
+    be a pixel out). None if R2's address can't be read."""
+    base = r2_base()
+    if not base or not photo.get("src"):
+        return None
+    ladder = photo.get("variants") or [{"w": photo.get("width"), "src": photo["src"]}]
+    rung = next((v for v in ladder if v.get("src", "").startswith("images/_thumbs/1600/")), None)
+    if rung is None:          # a photograph too small for one: its largest file up to 1600 wide
+        fits = [v for v in ladder if (v.get("w") or 0) <= 1600]
+        rung = fits[-1] if fits else ladder[0]
+    url = base + "/".join(urllib.parse.quote(seg, safe="") for seg in rung["src"].split("/"))
+    pw, ph = photo.get("width") or 0, photo.get("height") or 0
+    if rung["src"] == photo["src"] and pw and ph:
+        return url, pw, ph
+    real = read_size(os.path.join(ROOT, rung["src"]))
+    if real:
+        if (real[0] - real[1]) * (pw - ph) < 0:      # stored on its side
+            real = (real[1], real[0])
+        return url, real[0], real[1]
+    m = re.search(r'og:image" content="' + re.escape(esc(url)) + r'">\s*'
+                  r'<meta property="og:image:width" content="(\d+)">\s*'
+                  r'<meta property="og:image:height" content="(\d+)">', old_page)
+    if m:
+        return url, int(m.group(1)), int(m.group(2))
+    w = rung.get("w") or pw
+    return url, w, round(w * ph / pw) if pw else w
+
+
+def page_tags(c, photos, old_page=""):
+    """The values a collection page's sharing tags are filled with."""
+    title = c.get("title", c.get("slug"))
+    shots = [p for p in photos if p.get("collection") == c.get("slug")]
+    # The gallery's opener (site.js renderOpener): flagged "featured", else the first.
+    opener = next((p for p in shots if p.get("featured")), shots[0] if shots else None)
+    image = opener and share_image(opener, old_page)
+    if image:
+        alt = "Photograph from " + title          # the gallery's own alt text (site.js altFor)
+    else:
+        image, alt = (SITE_URL + SHARE_IMAGE[0], SHARE_IMAGE[1], SHARE_IMAGE[2]), SHARE_IMAGE[3]
+    # The gallery's date line: the collection's own "date" ("" = none), else
+    # the capture dates'. No photo count: "No photo counts anywhere" (CLAUDE.md).
+    date = c["date"] if isinstance(c.get("date"), str) else collection_date(shots)
+    description = ("{}, {}: photographs by Newton Liu." if date else "{}: photographs by Newton Liu.").format(title, date)
+    return {"title": esc(title), "description": esc(description),
+            "url": esc(SITE_URL + "collections/{}/".format(c["slug"])),
+            "image": esc(image[0]), "image_w": image[1], "image_h": image[2], "image_alt": esc(alt)}
+
+
+def load_photos():
+    try:
+        with open(MANIFEST, "r", encoding="utf-8") as fh:
+            return json.load(fh).get("photos", [])
+    except (OSError, ValueError):
+        return []
+
+
+def write_pages(collections, stamps, photos=None):
+    """One stub page per collection, from `photos` (by default the manifest as
+    it stands). Rewritten every run — don't hand-edit. Also brings
+    sitemap.xml and work.html's list of collection links up to date.
+    Returns how many collection pages changed."""
+    if photos is None:
+        photos = load_photos()
     written = 0
     for c in collections:
         slug = c.get("slug")
@@ -556,20 +701,91 @@ def write_pages(collections, stamps):
             continue
         out_dir = os.path.join(PAGES_DIR, slug)
         os.makedirs(out_dir, exist_ok=True)
-        html = PAGE_TEMPLATE.format(
-            slug=slug, title=c.get("title", slug),
-            v_css=stamps["site.css"], v_js=stamps["site.js"],
-            v_edit=stamps["edit.js"])
         path = os.path.join(out_dir, "index.html")
         existing = None
         if os.path.exists(path):
             with open(path, "r", encoding="utf-8") as fh:
                 existing = fh.read()
+        html = PAGE_TEMPLATE.format(
+            slug=slug, v_css=stamps["site.css"], v_js=stamps["site.js"],
+            v_edit=stamps["edit.js"], **page_tags(c, photos, existing or ""))
         if existing != html:
             with open(path, "w", encoding="utf-8") as fh:
                 fh.write(html)
             written += 1
+    if collections:        # an unreadable collections.json must not empty them
+        write_sitemap(collections)
+        write_work_links(collections)
     return written
+
+
+def published_journals():
+    """The journals whose page is live: places.<place>.journal.draft is false
+    in data/places.json (a draft shows nothing outside the local preview)."""
+    try:
+        with open(os.path.join(DATA_DIR, "places.json"), "r", encoding="utf-8") as fh:
+            places = json.load(fh).get("places") or {}
+    except (OSError, ValueError, AttributeError):
+        places = {}
+    out = []
+    for page in journal_pages():
+        folder = os.path.dirname(page)
+        try:
+            with open(os.path.join(ROOT, folder, "journal.json"), "r", encoding="utf-8") as fh:
+                place = json.load(fh).get("place")
+        except (OSError, ValueError, AttributeError):
+            continue
+        gate = (places.get(place) or {}).get("journal") or {}
+        if os.path.exists(os.path.join(ROOT, page)) and gate.get("draft") is False:
+            out.append(folder + "/")
+    return out
+
+
+def write_sitemap(collections):
+    """sitemap.xml at the root: every public page, by its address. Returns
+    whether it changed."""
+    paths = [""] + [p for p in ROOT_PAGES if p != "index.html" and os.path.exists(os.path.join(ROOT, p))]
+    paths += published_journals()
+    paths += ["collections/{}/".format(c["slug"]) for c in collections if c.get("slug")]
+    text = ('<?xml version="1.0" encoding="UTF-8"?>\n'
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+            + "".join("  <url><loc>{}</loc></url>\n".format(esc(SITE_URL + p)) for p in paths)
+            + "</urlset>\n")
+    return write_if_changed(os.path.join(ROOT, "sitemap.xml"), text)
+
+
+def write_work_links(collections):
+    """work.html: a plain link to every collection, newest first as the Index
+    shows them, between the WORK_LINKS markers inside #collection-grid, in a
+    <noscript> (site.js replaces the grid's content when it runs). Returns
+    whether it changed."""
+    path = os.path.join(ROOT, "work.html")
+    try:
+        with open(path, "r", encoding="utf-8") as fh:
+            page = fh.read()
+    except OSError:
+        return False
+    m = re.search(r"([ \t]*)" + re.escape(WORK_LINKS[0]) + r".*?" + re.escape(WORK_LINKS[1]), page, re.S)
+    if not m:
+        return False
+    pad = m.group(1)
+    links = "".join("\n{}    <li><a href=\"collections/{}/\">{}</a></li>".format(pad, c["slug"], esc(c.get("title", c["slug"])))
+                    for c in reversed(collections) if c.get("slug"))
+    block = "{0}{1}\n{0}<noscript>\n{0}  <ul>{2}\n{0}  </ul>\n{0}</noscript>\n{0}{3}".format(
+        pad, WORK_LINKS[0], links, WORK_LINKS[1])
+    return write_if_changed(path, page[:m.start()] + block + page[m.end():])
+
+
+def write_if_changed(path, text):
+    try:
+        with open(path, "r", encoding="utf-8") as fh:
+            if fh.read() == text:
+                return False
+    except OSError:
+        pass
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write(text)
+    return True
 
 
 # --------------------------------------------------------------------------
@@ -814,11 +1030,11 @@ def main():
     collections = load_collections()
     stamps = asset_stamps()
     roots = stamp_root_pages(stamps)
-    pages = write_pages(collections, stamps)
 
     before = load_existing()
     photos = collect(make_thumbs=not args.no_thumbs)
     if not photos and not args.force:
+        write_pages(collections, stamps)       # restamped all the same, from the manifest as it stands
         print("No photographs found under images/<collection>/.")
         print("Add some, or pass --force to write an empty gallery.")
         return 1
@@ -829,6 +1045,7 @@ def main():
     kept = {p["src"] for p in photos}
     gone = [src for src in before if src not in kept]
     if gone and not args.allow_removals:
+        write_pages(collections, stamps)       # restamped all the same, from the manifest as it stands
         print("{} photograph(s) in data/photos.json have no file under images/, e.g.:".format(len(gone)))
         for src in gone[:10]:
             print("  " + src)
@@ -844,6 +1061,9 @@ def main():
     with open(MANIFEST, "w", encoding="utf-8") as fh:
         json.dump({"photos": photos}, fh, indent=2, ensure_ascii=False)
         fh.write("\n")
+    # After the manifest, so each page's sharing tags follow its new opener and
+    # dates (--no-thumbs drops the 1600 rungs they show: the last manifest's then).
+    pages = write_pages(collections, stamps, list(before.values()) if args.no_thumbs else photos)
 
     counts = {}
     for p in photos:

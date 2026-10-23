@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- GitHub Pages serves this page at ANY address with no file behind it,
+     however deep (…/collections/nowhere/at/all), so before anything else:
+     a page that has moved goes to its new address (MOVED: the old path from
+     the site's root, with or without its trailing slash or index.html, then
+     the new one; one line each), and then a <base> makes every relative
+     link below start from the site's root wherever the visitor landed. The
+     root is /newton-liu.com/ on the GitHub Pages address and / anywhere else,
+     so a custom domain needs no change here. -->
+<base href="https://newtonliu2002.github.io/newton-liu.com/">
+<script>
+(function () {
+  var MOVED = {
+    "collections/guangxi/": "collections/guangxi-guangdong/"
+  };
+  var path = location.pathname;
+  var root = path.indexOf("/newton-liu.com/") === 0 ? "/newton-liu.com/" : "/";
+  var rest = path.slice(root.length).replace(/index\.html$/, "").replace(/([^\/])$/, "$1/");
+  if (Object.prototype.hasOwnProperty.call(MOVED, rest)) {
+    location.replace(root + MOVED[rest] + location.search + location.hash);
+    return;
+  }
+  // The <base> above is written in the markup so the browser's first look
+  // ahead fetches the assets from the root too; here it gets this host's root.
+  document.querySelector("base").setAttribute("href", root);
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found — Newton Liu Photography</title>
+<meta name="robots" content="noindex">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Newton Liu Photography">
+<meta property="og:title" content="Page not found — Newton Liu Photography">
+<meta property="og:image" content="https://newtonliu2002.github.io/newton-liu.com/images/_about/1600/B0003302.jpg">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="592">
+<meta property="og:image:alt" content="Photograph from Alaska">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#121212">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<script>try{if(localStorage.getItem("theme")==="white"){document.documentElement.dataset.theme="light";var m=document.querySelector('meta[name="theme-color"]');if(m)m.content="#ffffff"}}catch(e){}</script>
+<script>try{if(localStorage.getItem("lang")==="zh"&&!/[?&]edit\b/.test(location.search))document.documentElement.setAttribute("data-site-lang","zh")}catch(e){}</script>
+<link rel="stylesheet" href="assets/site.css?v=87ef54ec">
+</head>
+
+<body data-page="prose" data-base="">
+
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <a class="wordmark" href="./">
+      <span class="wordmark-name">Newton Liu</span>
+      <span class="wordmark-sub">Photography</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html#collections">Work</a>
+      <a href="about.html">About</a>
+      <button type="button" class="nav-tab" data-menu="journals">Journals</button>
+      <a href="academia.html">Academia</a>
+      <a href="chess.html">Chess</a>
+      <button type="button" class="nav-tab" data-menu="personal">Personal</button>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- Contact's rail, with nothing beside it. The heading is a [data-edit]
+       slot so the 中 / EN switch translates it (ZH_UI "Page not found"). -->
+  <div class="wrap-wide about-body is-bare">
+    <aside class="about-rail">
+      <h1 class="about-title" data-edit="notFound.title">Page not found</h1>
+      <nav class="about-jump">
+        <a href="index.html#collections">&larr; All collections</a>
+      </nav>
+    </aside>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <p>&copy; <span data-year>2026</span> Newton Liu. All photographs are my own.</p>
+    <p class="footer-links">
+      <a href="index.html#collections">Work</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </p>
+  </div>
+</footer>
+
+<script src="assets/site.js?v=c5cddf26"></script>
+<script src="assets/edit.js?v=59a5bab4"></script>
+</body>
+</html>

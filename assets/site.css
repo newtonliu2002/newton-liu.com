@@ -522,9 +522,11 @@ body[data-page="globe"] .nav-menu-list { border-top: 1px solid var(--hairline); 
 }
 
 /* Phones: two static rows, wordmark then nav. The nav row runs to the
-   window's edges and scrolls sideways once it outgrows them (fading at the
-   right while there is more to scroll to, as the cue: .has-more, set by
-   site.js), so every page stays one tap away without a menu button. The
+   window's edges and scrolls sideways once it outgrows them (fading, with a
+   small chevron, at an end while there is more that way, as the cue:
+   .has-more and .has-less, set by site.js, which also opens the row
+   scrolled to the current tab), so every page stays one tap away without a
+   menu button. The
    Black/White switch is not in that row here: site.js moves it up to the
    right of the wordmark, where scrolling can't carry it out of sight. The
    opener rules below drop the pull-up at this width for the same reason. */
@@ -542,10 +544,34 @@ body[data-page="globe"] .nav-menu-list { border-top: 1px solid var(--hairline); 
     padding-inline: var(--edge);
   }
   .nav::-webkit-scrollbar { display: none; }
+  /* The cue that the row goes on (.has-more at the right, .has-less at the
+     left, site.js navOverflow): the tabs fade out toward that end, clear of
+     the last 20px inside the page's edge, where a small chevron stands (on
+     .masthead-inner, outside the mask), drawn as the journal's caret is. */
   .nav.has-more {
-    -webkit-mask-image: linear-gradient(to right, var(--mask-solid) calc(100% - 24px), transparent);
-            mask-image: linear-gradient(to right, var(--mask-solid) calc(100% - 24px), transparent);
+    -webkit-mask-image: linear-gradient(to right, var(--mask-solid) calc(100% - var(--edge) - 56px), transparent calc(100% - var(--edge) - 20px));
+            mask-image: linear-gradient(to right, var(--mask-solid) calc(100% - var(--edge) - 56px), transparent calc(100% - var(--edge) - 20px));
   }
+  .nav.has-less {
+    -webkit-mask-image: linear-gradient(to right, transparent calc(var(--edge) + 20px), var(--mask-solid) calc(var(--edge) + 56px));
+            mask-image: linear-gradient(to right, transparent calc(var(--edge) + 20px), var(--mask-solid) calc(var(--edge) + 56px));
+  }
+  .nav.has-less.has-more {
+    -webkit-mask-image: linear-gradient(to right, transparent calc(var(--edge) + 20px), var(--mask-solid) calc(var(--edge) + 56px),
+                          var(--mask-solid) calc(100% - var(--edge) - 56px), transparent calc(100% - var(--edge) - 20px));
+            mask-image: linear-gradient(to right, transparent calc(var(--edge) + 20px), var(--mask-solid) calc(var(--edge) + 56px),
+                          var(--mask-solid) calc(100% - var(--edge) - 56px), transparent calc(100% - var(--edge) - 20px));
+  }
+  .masthead-inner::before, .masthead-inner::after {
+    content: ""; position: absolute; bottom: 18px;
+    width: 7px; height: 7px;
+    border-right: 1.25px solid var(--text-dim); border-bottom: 1.25px solid var(--text-dim);
+    pointer-events: none;
+    opacity: 0; transition: opacity var(--d-fast) var(--ease);
+  }
+  .masthead-inner::before { left: calc(var(--edge) + 2px); transform: rotate(135deg); }
+  .masthead-inner::after { right: calc(var(--edge) + 2px); transform: rotate(-45deg); }
+  .masthead-inner:has(> .nav.has-less)::before, .masthead-inner:has(> .nav.has-more)::after { opacity: 1; }
   /* The scrolling row would clip a ring drawn outside the link, so here it
      is drawn just inside, clear of the letters thanks to the padding. */
   .nav a:focus-visible, .nav-tab:focus-visible, .theme-toggle:focus-visible, .lang-toggle:focus-visible { outline-offset: -2px; }
@@ -693,7 +719,7 @@ body[data-page="globe"] .nav-menu-list { border-top: 1px solid var(--hairline); 
 
 /* ---------- Gallery page: the rail ------------------------------------ */
 
-.back-link {
+.back-link, .book-onward a {
   display: block; width: fit-content;
   padding-block: 14px; margin-block: -14px;   /* a 44px target that takes one line */
   font: 400 var(--t-label)/16px var(--mono);
@@ -703,7 +729,21 @@ body[data-page="globe"] .nav-menu-list { border-top: 1px solid var(--hairline); 
   text-decoration: none;
   transition: color var(--d-fast) var(--ease);
 }
-.back-link:hover { color: var(--text); }
+.back-link:hover, .book-onward a:hover { color: var(--text); }
+
+/* The way onward, under the last photographs (site.js onward()): the
+   collections either side of this one in the Index's order, in the back
+   link's small capitals, the newer at the left and the older at the right,
+   under the photographs' column, its text inset like the rail's (so on a
+   laptop the right one ends under the footer's links, and on a phone both
+   line up with the wordmark); on a phone a long pair takes two lines. */
+.book-onward {
+  grid-column: 2;
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  gap: var(--s4) var(--s5);
+  padding: var(--s6) var(--rail-inset) var(--s7);
+}
+.book-onward .book-onward-next { margin-left: auto; text-align: right; }
 
 .gallery-title {
   font: 500 var(--t-h1)/1.05 var(--sans);
@@ -2342,7 +2382,7 @@ body.is-editing .about-rail { top: calc(var(--nl-bar-h) + var(--masthead-h) + 2r
    The mono labels are 11px capitals with wide tracking, and Song at 11px
    is too small to read: in Chinese they take About's 13px (the uppercase
    does nothing to characters, and :lang(zh) above sets the tracking). */
-:is(.wordmark-sub, .skip-link, .back-link, .gallery-date, .grid-status, .view-switch a,
+:is(.wordmark-sub, .skip-link, .back-link, .book-onward a, .gallery-date, .grid-status, .view-switch a,
     .view-switch [aria-current], .footer-links a, .about-teaser .section-title,
     .about-jump a, .project-kicker span, .project-note, .project-shot figcaption,
     .g-list-title, .g-region-name, .g-pin-label, .g-card-where, .g-card-date, .g-card-go-label,

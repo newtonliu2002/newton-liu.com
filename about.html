@@ -5,12 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>About — Newton Liu Photography</title>
 <meta name="description" content="About Newton Liu, bird and wildlife photographer.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Newton Liu Photography">
+<meta property="og:title" content="About — Newton Liu Photography">
+<meta property="og:description" content="About Newton Liu, bird and wildlife photographer.">
+<meta property="og:url" content="https://newtonliu2002.github.io/newton-liu.com/about.html">
+<meta property="og:image" content="https://newtonliu2002.github.io/newton-liu.com/images/_about/1600/B0003302.jpg">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="592">
+<meta property="og:image:alt" content="Photograph from Alaska">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#121212">
 <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <script>try{if(localStorage.getItem("theme")==="white"){document.documentElement.dataset.theme="light";var m=document.querySelector('meta[name="theme-color"]');if(m)m.content="#ffffff"}}catch(e){}</script>
 <script>try{if(localStorage.getItem("lang")==="zh"&&!/[?&]edit\b/.test(location.search))document.documentElement.setAttribute("data-site-lang","zh")}catch(e){}</script>
-<link rel="stylesheet" href="assets/site.css?v=9d94ee64">
+<link rel="stylesheet" href="assets/site.css?v=87ef54ec">
 </head>
 
 <body data-page="prose" data-base="">
@@ -141,7 +151,14 @@
          the essay is read, or after their paragraphs below 1000px. data-crop
          shows a photograph at 3:2 (the crop's centre in object-position); the
          charts and the upright Arches stay whole. A figure whose mark is
-         gone from the text doesn't show. -->
+         gone from the text doesn't show.
+         Their sizes, over 1000px, are the left column's width (site.css,
+         .about-body.has-figures): the page up to 108rem, less its padding
+         (24px a side, 32 from 1280px: 48 in all is the generous side), the
+         column gap (4vw up to 4.5rem) and the text (62ch, about 658px, or
+         52% of the page; 650px keeps the hint on the generous side); the
+         upright Arches is held to the rail's height (100vh less 8rem) × .8.
+         Change the CSS and change these with it. -->
     <template data-figures-for="#about-zh">
       <figure class="about-fig" lang="en" data-figure="1" data-crop>
         <div class="bird-map" data-src="data/birdmap.json?v=4a79afed"></div>
@@ -150,7 +167,7 @@
       <figure class="about-fig" lang="en" data-figure="2" data-crop>
         <img src="images/_about/fig-3.jpg"
              srcset="images/_about/800/fig-3.jpg 800w, images/_about/1600/fig-3.jpg 1600w, images/_about/2400/fig-3.jpg 2400w, images/_about/fig-3.jpg 4000w"
-             sizes="(max-width: 1000px) 100vw, min(58vw, 60rem)"
+             sizes="(max-width: 1000px) 100vw, calc(min(100vw, 108rem) - 48px - min(4vw, 4.5rem) - min(0.52 * (min(100vw, 108rem) - 48px), 650px))"
              alt="Lake McDonald in Glacier National Park in winter: still grey water under low cloud, snow on the far shore, wet stones in the foreground."
              width="4000" height="2667" loading="lazy" decoding="async">
         <figcaption lang="zh-Hans">图2：当时的McDonald湖</figcaption>
@@ -158,7 +175,7 @@
       <figure class="about-fig" lang="en" data-figure="3">
         <img src="images/_about/fig-4.jpg"
              srcset="images/_about/800/fig-4.jpg 800w, images/_about/1600/fig-4.jpg 1600w, images/_about/fig-4.jpg 2400w"
-             sizes="(max-width: 1000px) 100vw, min(58vw, 60rem)"
+             sizes="(max-width: 1000px) 100vw, calc(min(100vw, 108rem) - 48px - min(4vw, 4.5rem) - min(0.52 * (min(100vw, 108rem) - 48px), 650px))"
              alt="A male Bufflehead rising on the water to stretch its wings, in low golden light."
              width="2400" height="1600" loading="lazy" decoding="async">
         <figcaption lang="zh-Hans">图3：2022年十二月于新泽西州</figcaption>
@@ -166,7 +183,7 @@
       <figure class="about-fig" lang="en" data-figure="4">
         <img src="images/_about/fig-5.jpg"
              srcset="images/_about/800/fig-5.jpg 800w, images/_about/1600/fig-5.jpg 1600w, images/_about/fig-5.jpg 2400w"
-             sizes="(max-width: 1000px) 100vw, min(58vw, 60rem)"
+             sizes="(max-width: 1000px) 100vw, calc(min(100vw, 108rem) - 48px - min(4vw, 4.5rem) - min(0.52 * (min(100vw, 108rem) - 48px), 650px))"
              alt="Utqiagvik from above on a clear day: sheds, shipping containers, trucks and a dirt road along the edge of the Arctic Ocean."
              width="2400" height="1600" loading="lazy" decoding="async">
         <figcaption lang="zh-Hans">图4：乌特恰维克我的酒店窗外的“风景”</figcaption>
@@ -174,7 +191,7 @@
       <figure class="about-fig" lang="en" data-figure="5">
         <img src="images/_about/fig-6.jpg"
              srcset="images/_about/800/fig-6.jpg 800w, images/_about/1600/fig-6.jpg 1600w, images/_about/fig-6.jpg 2400w"
-             sizes="(max-width: 1000px) 100vw, min(58vw, 60rem)"
+             sizes="(max-width: 1000px) 100vw, calc(min(100vw, 108rem) - 48px - min(4vw, 4.5rem) - min(0.52 * (min(100vw, 108rem) - 48px), 650px))"
              alt="Loveland Pass deep in snow, a ploughed road winding up between white mountains under a pale sun."
              width="2400" height="1600" loading="lazy" decoding="async">
         <figcaption lang="zh-Hans">图5：Loveland垭口</figcaption>
@@ -182,7 +199,7 @@
       <figure class="about-fig" lang="en" data-figure="6" data-crop>
         <img src="images/_about/fig-7.jpg"
              srcset="images/_about/800/fig-7.jpg 800w, images/_about/1600/fig-7.jpg 1600w, images/_about/2400/fig-7.jpg 2400w, images/_about/fig-7.jpg 4000w"
-             sizes="(max-width: 1000px) 100vw, min(58vw, 60rem)"
+             sizes="(max-width: 1000px) 100vw, calc(min(100vw, 108rem) - 48px - min(4vw, 4.5rem) - min(0.52 * (min(100vw, 108rem) - 48px), 650px))"
              alt="A White-tailed Ptarmigan in white winter plumage, its dark eye open, seen from very close through blurred twigs."
              width="4000" height="2668" loading="lazy" decoding="async">
         <figcaption lang="zh-Hans">图6</figcaption>
@@ -190,7 +207,7 @@
       <figure class="about-fig" lang="en" data-figure="7">
         <img src="images/_about/fig-8.jpg"
              srcset="images/_about/800/fig-8.jpg 640w, images/_about/1600/fig-8.jpg 1280w, images/_about/2400/fig-8.jpg 1920w, images/_about/fig-8.jpg 3200w"
-             sizes="(max-width: 1000px) min(100vw, calc((100vh - 10rem) * .8)), min(58vw, 60rem)"
+             sizes="(max-width: 1000px) min(100vw, calc((100vh - 10rem) * .8)), min(calc(min(100vw, 108rem) - 48px - min(4vw, 4.5rem) - min(0.52 * (min(100vw, 108rem) - 48px), 650px)), calc((100vh - 8rem) * .8))"
              alt="Arches National Park at dusk: sandstone towers against a fading sky, car lights streaking along the road below."
              width="3200" height="4000" loading="lazy" decoding="async">
         <figcaption lang="zh-Hans">图7</figcaption>
@@ -200,7 +217,7 @@
       <figure class="about-fig" lang="en" data-figure="9" data-section="gear" data-under>
         <img src="images/_about/fig-9.jpg"
              srcset="images/_about/800/fig-9.jpg 800w, images/_about/1600/fig-9.jpg 1600w, images/_about/fig-9.jpg 2400w"
-             sizes="(max-width: 1000px) 100vw, min(58vw, 60rem)"
+             sizes="(max-width: 1000px) 100vw, calc(min(100vw, 108rem) - 48px - min(4vw, 4.5rem) - min(0.52 * (min(100vw, 108rem) - 48px), 650px))"
              alt="Newton's Hasselblad 501CM with its waist-level finder, on a table ruled with coloured lines, in soft blue light."
              width="2400" height="1800" loading="lazy" decoding="async">
       </figure>
@@ -247,6 +264,7 @@
     <p>&copy; <span data-year>2026</span> Newton Liu. All photographs are my own.</p>
     <p class="footer-links">
       <a href="index.html#collections">Work</a>
+      <a href="about.html">About</a>
       <a href="projects.html">Projects</a>
       <a href="contact.html">Contact</a>
     </p>
@@ -270,7 +288,7 @@
   </figure>
 </div>
 
-<script src="assets/site.js?v=5a44c41f"></script>
+<script src="assets/site.js?v=c5cddf26"></script>
 <script src="assets/edit.js?v=59a5bab4"></script>
 </body>
 </html>

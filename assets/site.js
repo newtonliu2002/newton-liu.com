@@ -134,7 +134,11 @@
     "Photograph viewer": "照片查看器", "Close viewer": "关闭查看器",
     "Previous photograph": "上一张照片", "Next photograph": "下一张照片",
     "View photograph {n} of {total} larger": "放大查看第{n}张照片（共{total}张）",
+    "View photograph {n} of {total} larger: {description}": "放大查看第{n}张照片（共{total}张）：{description}",
     "View {title} larger": "放大查看：{title}",
+    // the line under a gallery's last photographs, and the journal's way back to them
+    "Previous collection: {title}": "上一个作品集：{title}", "Next collection: {title}": "下一个作品集：{title}",
+    "Photographs →": "照片 →", "Page not found": "页面不存在",
     "Photograph from {collection}": "{collection}的照片", "Photograph": "照片",
     "photographed at {location}": "摄于{location}",
     // Projects (the names stay English)
@@ -496,16 +500,32 @@
   }
 
   // Screen readers still need something, even when nothing is printed on
-  // screen. Falls back to the collection, which is the only description
-  // that exists when captions are off.
+  // screen: the animal's name, and any others in the frame as the lightbox
+  // lists them ("also"), then the collection's place: "Harbor Seal,
+  // Alaska"; in Chinese each animal's Chinese name where it has one,
+  // "港海豹，阿拉斯加" (several animals joined by 、). A photograph with no
+  // name falls back to the collection alone, and with no collection (a
+  // journal's) to "Photograph". A tile's label carries it too (makeTile).
   var collectionName = "";
 
   function altFor(photo) {
+    var zh = lang() === "zh";
     if (CAPTIONS.lightbox.title && photo.title) {
       return [photo.title, photo.location && tr("photographed at {location}", { location: photo.location })]
-        .filter(Boolean).join(lang() === "zh" ? "，" : ", ");
+        .filter(Boolean).join(zh ? "，" : ", ");
     }
-    return collectionName ? tr("Photograph from {collection}", { collection: placeName(collectionName) }) : tr("Photograph");
+    var where = collectionName ? placeName(collectionName) : "";
+    var names = [];
+    if (photo.caption) {
+      [photo].concat(Array.isArray(photo.also) ? photo.also : []).forEach(function (who) {
+        if (who && who.caption) names.push(zh && who.zh ? who.zh : who.caption);
+      });
+    }
+    if (names.length) {
+      return zh ? names.join("、") + (where ? "，" + where : "")
+                : names.concat(where ? [where] : []).join(", ");
+    }
+    return where ? tr("Photograph from {collection}", { collection: where }) : tr("Photograph");
   }
 
   function status(container, message) {
@@ -520,12 +540,43 @@
   var EDIT_MODE = /[?&]edit\b/.test(location.search);
   var HAN_ALL = /[㐀-鿿豈-﫿]/g;
 
+  // A link can open the site in one language: ?lang=zh or ?lang=en. It
+  // sets the language for the visit and remembers it as the switch does
+  // (localStorage "lang"), then the word leaves the address
+  // (history.replaceState; the other parameters and the #part stay), so a
+  // reload or the switch afterwards behaves as usual. With storage blocked
+  // it can't be remembered, so it stays in the address and still holds on
+  // a reload. zh-CN or en-US count as zh and en; any other value is left
+  // alone. ?edit wins and leaves it where it is.
+  function langAsked() {
+    var asked = "", kept = [];
+    location.search.replace(/^\?/, "").split("&").forEach(function (part) {
+      var m = /^lang=(.*)$/.exec(part), v = "";
+      if (m) { try { v = decodeURIComponent(m[1].replace(/\+/g, " ")).trim().toLowerCase(); } catch (e) {} }
+      var l = /^zh(-|$)/.test(v) ? "zh" : /^en(-|$)/.test(v) ? "en" : "";
+      if (!l) { if (part) kept.push(part); return; }
+      if (!asked) asked = l;
+    });
+    if (!asked) return "";
+    try { localStorage.setItem("lang", asked); } catch (e) { return asked; }
+    try {
+      history.replaceState(history.state, "",
+        location.pathname + (kept.length ? "?" + kept.join("&") : "") + location.hash);
+    } catch (e) { /* file:// */ }
+    return asked;
+  }
+
   // "zh" or "en". The <head> line sets the attribute before the first
   // paint; a page without that line (an old preview) reads the stored
-  // choice instead. ?edit is English whatever was chosen.
+  // choice instead. ?edit is English whatever was chosen. A ?lang= link
+  // (above) arrives after the <head> line has read the stored choice, so
+  // the attribute is set or taken off here to match it.
   var LANG = (function () {
     var root = document.documentElement;
     if (EDIT_MODE) { root.removeAttribute("data-site-lang"); return "en"; }
+    var asked = langAsked();
+    if (asked === "zh") { root.setAttribute("data-site-lang", "zh"); return "zh"; }
+    if (asked === "en") { root.removeAttribute("data-site-lang"); return "en"; }
     if (root.getAttribute("data-site-lang") === "zh") return "zh";
     try {
       if (localStorage.getItem("lang") === "zh") { root.setAttribute("data-site-lang", "zh"); return "zh"; }
@@ -865,19 +916,69 @@
     else if (phone && phone.addListener) phone.addListener(place);
   })();
 
-  // The phone nav fades at its right edge only while there is more of it to
-  // scroll to (.has-more, site.css), so a row that fits is never dimmed.
+  // The phone nav is a row that scrolls sideways (about four of its eight
+  // tabs fit). It fades with a small chevron at an end while there is more
+  // of it that way (.has-more at the right, .has-less at the left; site.css),
+  // so a row that fits is never dimmed. On a phone it also opens scrolled to
+  // the current tab (the amber square), centred where it can be: only the
+  // row's own scrollLeft moves, never the page. Fonts arriving late widen
+  // the tabs, so it is centred again then, unless the reader has moved it.
   (function navOverflow() {
     var nav = document.querySelector(".nav");
     if (!nav) return;
+    var phone = window.matchMedia ? window.matchMedia("(max-width: 620px)") : null;
+    var placed = null;    // the scrollLeft centre() last set
     function more() {
       var on = nav.scrollLeft + nav.clientWidth < nav.scrollWidth - 1;
+      var less = nav.scrollLeft > 1;
       if (on !== nav.classList.contains("has-more")) nav.classList.toggle("has-more", on);
+      if (less !== nav.classList.contains("has-less")) nav.classList.toggle("has-less", less);
+    }
+    // The current tab, a link or a tab with no page, bare or in its .nav-drop;
+    // never an entry inside a menu.
+    function current() {
+      var tabs = nav.querySelectorAll('a[aria-current="page"], .nav-tab.is-current');
+      for (var i = 0; i < tabs.length; i++) {
+        var up = tabs[i].parentNode;
+        if (up === nav || (up.classList.contains("nav-drop") && up.parentNode === nav)) return tabs[i];
+      }
+      return null;
+    }
+    function centre() {
+      var tab = phone && phone.matches && current();
+      if (!tab || nav.scrollWidth <= nav.clientWidth) { more(); return; }
+      var row = nav.getBoundingClientRect(), r = tab.getBoundingClientRect();
+      var to = nav.scrollLeft + (r.left + r.width / 2) - (row.left + nav.clientWidth / 2);
+      nav.scrollLeft = Math.max(0, Math.min(nav.scrollWidth - nav.clientWidth, Math.round(to)));
+      placed = nav.scrollLeft;
+      more();
     }
     nav.addEventListener("scroll", more, { passive: true });
+    // A tap on a chevron lands in the faded end (the last 20px inside the
+    // page's edge, where the tabs are clear): it scrolls the row that way,
+    // never opening the hidden tab underneath. Keyboard clicks (no pointer
+    // position) pass as usual.
+    nav.addEventListener("click", function (e) {
+      if (!phone || !phone.matches || !e.clientX) return;
+      var r = nav.getBoundingClientRect();
+      var end = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--edge")) || 16) + 20;
+      var dir = nav.classList.contains("has-more") && e.clientX > r.right - end ? 1
+              : nav.classList.contains("has-less") && e.clientX < r.left + end ? -1 : 0;
+      if (!dir) return;
+      e.preventDefault();
+      e.stopPropagation();
+      nav.scrollBy({ left: dir * Math.round(nav.clientWidth * 0.6), behavior: window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    }, true);
     window.addEventListener("resize", more);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(more);
-    more();
+    // Into phone width (a turned tablet, a narrowed window): centre again,
+    // once themeToggle has taken its switches out of the row.
+    function onPhone() { if (phone.matches) requestAnimationFrame(centre); else more(); }
+    if (phone && phone.addEventListener) phone.addEventListener("change", onPhone);
+    else if (phone && phone.addListener) phone.addListener(onPhone);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () {
+      if (placed !== null && Math.abs(nav.scrollLeft - placed) < 2) centre(); else more();
+    });
+    centre();
   })();
 
   // A rail of jump links lights the part being read (aria-current, styled
@@ -2439,6 +2540,13 @@
 
   /* ---------- home ---------------------------------------------------- */
 
+  // The Index's order (work.html): newest trip first (Newton, 2026-10-17);
+  // collections.json stays oldest first, the order the globe's pins arrive
+  // in. A gallery's way onward (onward(), below) follows it too.
+  function workOrder(collections) {
+    return collections.slice().reverse();
+  }
+
   function renderHome(collections, photos) {
     var grid = document.getElementById("collection-grid");
 
@@ -2460,9 +2568,7 @@
     if (!collections.length) { status(grid, tr("No collections defined yet.")); return; }
 
     grid.textContent = "";
-    // Newest trip first (Newton, 2026-10-17); collections.json stays oldest
-    // first, the order the globe's pins arrive in.
-    collections.slice().reverse().forEach(function (c) {
+    workOrder(collections).forEach(function (c) {
       var shots = byCollection[c.slug] || [];
       var cover = c.cover
         ? photos.filter(function (p) { return p.src === c.cover; })[0] ||
@@ -2764,19 +2870,26 @@
   function makeTile(photo, index, total, sizes) {
     var tile = el("button", "tile");
     tile.type = "button";
+    // The button's label is all a screen reader hears of it (the img's alt
+    // inside goes unread), so a named photograph's description is in it.
+    var alt = altFor(photo);
     tile.setAttribute("aria-label", CAPTIONS.grid.title && photo.title
       ? tr("View {title} larger", { title: photo.title })
+      : photo.caption ? tr("View photograph {n} of {total} larger: {description}", { n: index + 1, total: total, description: alt })
       : tr("View photograph {n} of {total} larger", { n: index + 1, total: total }));
 
     var img = el("img");
+    // Every tile is lazy, the first rows too: the browser starts a lazy
+    // image well before it is scrolled to, and the opener above them goes
+    // first (renderOpener). Set before src, which starts the fetch.
+    img.loading = "lazy";
+    img.decoding = "async";
     responsive(img, photo, sizes || tileSizes(1), photo.thumb || photo.src);
     // A cell that crops trims evenly from both ends unless the photograph
     // says otherwise: `"focus": "center bottom"` in photos.json keeps a long
     // tail that would otherwise lose its tip.
     if (photo.focus) img.style.objectPosition = photo.focus;
-    img.alt = altFor(photo);
-    img.loading = index < 8 ? "eager" : "lazy";
-    img.decoding = "async";
+    img.alt = alt;
     img.dataset.loaded = "false";
 
     var reveal = function () { img.dataset.loaded = "true"; };
@@ -2822,6 +2935,9 @@
 
     var upright = aspectOf(photo) <= 1.05;          // squares count as uprights here
     var img = el("img");
+    // The first thing seen, so it is fetched ahead of everything else on the
+    // page (set before src, which starts the fetch).
+    img.setAttribute("fetchpriority", "high");
     // A landscape opener is always the window's width (trimmed to its height,
     // never shrunk), so it asks for 100vw. An upright is capped at
     // --opener-h-upright, repeated here rather than read from the stylesheet
@@ -3097,7 +3213,39 @@
     if (lead) lead.classList.toggle("is-whole", meta.opener === "whole");
     if (meta.journal) journalLink(slug, meta.journal);
     renderGrid(shown, meta.layout);
+    onward(collections, photos, slug);
     wireLightbox();
+  }
+
+  // Under the last photographs, a quiet line to the collections either side
+  // of this one, in the Index's order (workOrder): "← Peru" and "Yunnan →",
+  // the titles as the Index shows them (placeName). A collection with no
+  // photographs is passed over; at either end of the Index there is only
+  // the one link, no wrapping round.
+  function onward(collections, photos, slug) {
+    var grid = document.getElementById("grid");
+    if (!grid || !grid.parentNode || document.querySelector(".book-onward")) return;
+    var has = {};
+    photos.forEach(function (p) { has[p.collection] = true; });
+    var list = workOrder(collections).filter(function (c) { return c && c.slug && has[c.slug]; });
+    var at = -1;
+    list.forEach(function (c, i) { if (c.slug === slug) at = i; });
+    if (at < 0 || list.length < 2) return;
+
+    var nav = el("nav", "book-onward");
+    nav.setAttribute("aria-label", tr("Collections"));
+    [[list[at - 1], "prev"], [list[at + 1], "next"]].forEach(function (side) {
+      var c = side[0];
+      if (!c) return;
+      var title = placeName(c.title || c.slug);
+      var a = el("a", "book-onward-" + side[1]);
+      a.href = BASE + "collections/" + c.slug + "/";
+      a.textContent = side[1] === "prev" ? "← " + title : title + " →";
+      a.setAttribute("aria-label", tr(side[1] === "prev" ? "Previous collection: {title}" : "Next collection: {title}",
+                                      { title: title }));
+      nav.appendChild(a);
+    });
+    grid.parentNode.insertBefore(nav, grid.nextSibling);
   }
 
   // A trip with a travel journal ("journal": "journals/quebec/" on its

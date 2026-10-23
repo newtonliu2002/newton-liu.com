@@ -146,6 +146,15 @@ body[data-page="journal"] {
 }
 .jn-cover-dates { margin-top: 4px; color: var(--text-dim); }
 .jn-cover.has-media .jn-cover-dates { color: var(--jn-on-photo-dim); }
+/* "Photographs →", the way to the trip's collection (journal.js drawCover):
+   the site's small text link under the month, in the photograph's ink over
+   a cover photograph and the ground's elsewhere. */
+.jn-cover-link { margin: var(--s4) 0 0; }
+.jn-cover.has-media .jn-cover-link .text-link { color: inherit; text-decoration-color: var(--jn-ctrl-line); }
+.jn-cover.has-media .jn-cover-link .text-link:hover { text-decoration-color: var(--accent); }
+@media (max-width: 620px) {
+  .jn-cover.is-whole .jn-cover-link .text-link { text-decoration-color: var(--hairline-strong); }
+}
 .jn-cover.has-media .jn-cover-text { text-shadow: 0 1px 18px rgba(0,0,0,.25); }
 
 /* No cover at all (the live site, should one be missing): just the words. */
