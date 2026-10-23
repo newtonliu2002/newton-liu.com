@@ -1371,33 +1371,43 @@ redone for trips, public (his pick).
   `#<id>` link), `name`, optional `where` (shown as written, through
   ZH_PLACES.where), `start`, `end` (only for several days), `stops`
   (`name`, `lat`, `lng`, optional `date`), optional `route` (a key into
-  data/routes.json: its road is drawn, Québec's being the landing's own),
-  optional `link` `{label, href}` (its journal, its chess games; label
+  **data/travel-routes.json**, whose `path` is drawn: hand-set
+  `waypoints`, the path written by `python3 tools/route.py --file
+  data/travel-routes.json <key>`; kept apart from data/routes.json, which
+  is the globe's), optional `link` `{label, href}` (its journal, its chess games; label
   through ZH_UI). **Every stop is a public place at its usual centre**
   (a city, town or national park, the globe's rule), never a home, a
   street address or where a checklist was made.
-- **Where it came from:** he confirmed (2026-10-22) a list read from his
-  eBird export (dates and counties only, used on this Mac; nothing from it
-  is committed), his chess tournaments and his Québec journal: Washington,
-  D.C. (Aug 22), Virginia (Sep 20: Richmond, Shenandoah National Park),
-  New York City (Sep 24), Exton (Oct 3, chess), Québec (Oct 8–16, the
-  journal's route and dates), New York City (Oct 18, chess). The season
-  starts with D.C. (his word). **New trips: he tells me**; one entry
-  each, in date order, added once he is back, never while he is away.
+- **Where it came from:** his own list (2026-10-23, in chat), a trip to
+  each line he wrote, in his order, the places written out (DC is
+  Washington, D.C., rva Richmond, capital trail the Virginia Capital
+  Trail, quebec Québec). Roads only where he said drive or bike: Boston –
+  Richmond through D.C.; the Capital Trail (routed along Route 5, beside
+  the trail); the Québec loop (Richmond, the journal's route, Ottawa, New
+  York City, D.C., Richmond). The Québec stops keep the journal's dates.
+  It replaced a first list read from his eBird export (2026-10-22).
+  **New trips: he tells me**; one entry each, in date order, added once
+  he is back, never while he is away.
 - **Page:** assets/travel-map.js and travel-map.css (body.tl), begun as a
   copy of chess-map.js/.css so the two can change apart (the chess page
   is the chess session's). The list: a month to a heading, a row per trip
   with its dates, its link under it. Pointing at a row lights the trip's
   pins and road and shows its plate; clicking frames the trip and sets
-  `#<id>`. Pointing at a pin shows the place and each visit's date (New
-  York City is one ringed pin for both visits); clicking frames its
-  latest trip. The fit button shows the whole season.
+  `#<id>`. Pointing at a pin shows the place and each visit's date
+  (Washington, D.C. is one ringed pin for its eight visits; past two
+  visits the plate gives the short dates alone, and the list lights
+  their rows); clicking frames its latest trip. The fit button shows the
+  whole season.
 - A later season: a new page and data file (copy this page, change its
   `data-src`, title and `travel.*` keys; add both to build.py and the
   Personal menu).
 - Chinese: ZH_UI ("The travel log"), `travel.title`/`travel.listTitle`
-  2026秋季旅行记录, and the new places in ZH_PLACES (华盛顿, 弗吉尼亚,
-  纽约, 里士满, Shenandoah国家公园, 宾夕法尼亚, 加拿大; Exton stays).
+  2026秋季旅行记录, and ZH_PLACES. A trip's name is looked up part by
+  part (`tripName` in travel-map.js splits at " · " and " – "); a `where`
+  line whole first (自驾，途经华盛顿), else by its parts. Cities in
+  Chinese (华盛顿, 纽约, 里士满, 波士顿, 费城, 洛杉矶, 尔湾), towns kept
+  (Charlottesville, Williamsburg, Calabasas, Exton), Catalina岛,
+  Shenandoah国家公园, 弗吉尼亚Capital步道.
 
 ## Editing the words (?edit)
 

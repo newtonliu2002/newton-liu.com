@@ -8,17 +8,18 @@
 
    Pointing at a trip's row lights its pins (and its road, when it has
    one) and shows its plate; clicking the row frames the trip on the map
-   (and puts its id in the address, so #quebec-2026-10-08 opens on it).
+   (and puts its id in the address, so #quebec-2026-10-07 opens on it).
    Pointing at a pin shows that place, with every visit's date; clicking
-   it frames the trip. Places within about a kilometre are one pin (New
-   York City twice). A trip's `link` (its journal, its chess games) is a
-   small link under its row.
+   it frames the trip. Places within about a kilometre are one pin
+   (Washington, D.C., eight times). A trip's `link` (its journal, its
+   chess games) is a small link under its row.
 
    The trips are the page's data-src (data/travel-fall-2026.json; see
    CLAUDE.md, "Travel log"): every stop a public place at its usual
-   centre, never a home. A trip's `route` draws data/routes.json's road
-   (Québec's, the landing's own). MapLibre arrives as a module from the
-   page, as on the landing; without it the list still works alone.
+   centre, never a home. A trip's `route` draws a road from
+   data/travel-routes.json (his drives and the bike ride; tools/route.py
+   --file writes it). MapLibre arrives as a module from the page, as on
+   the landing; without it the list still works alone.
    ========================================================================== */
 
 (function () {
@@ -30,6 +31,12 @@
   var pinName = NL ? NL.pin : function (s) { return s; };
   var placeName = NL ? NL.place : function (s) { return s; };
   var whereLine = NL ? NL.where : function (s) { return s; };
+  // A trip's name, part by part in Chinese ("Boston – Richmond" 波士顿 –
+  // 里士满, "Charlottesville · Washington, D.C."), its dashes and dots kept.
+  function tripName(s) {
+    if (!ZH || !NL || !NL.zhPlace || !s) return placeName(s);
+    return String(s).split(/( · | – )/).map(function (part, i) { return i % 2 ? part : NL.zhPlace(part); }).join("");
+  }
 
   var EAST = [[-125, 24], [-60, 50]];        // the view with no trips yet
   var FIT_MAX = 6;                           // never closer than this framing the whole season
@@ -150,14 +157,17 @@
       if (road && road.length > 1) roads[id] = road;
       (tr.stops || []).forEach(function (s) {
         if (typeof s.lat !== "number" || typeof s.lng !== "number") return;
-        var stop = { name: s.name || e.name, ll: [s.lng, s.lat], date: s.date ? dateRange(s.date) : "", trip: e };
+        var stop = { name: s.name || e.name, ll: [s.lng, s.lat], date: s.date ? dateRange(s.date) : "",
+                     short: s.date ? shortDate(s.date) : "", trip: e };
         // One pin per place: a stop within ~1 km of another's pin joins it
-        // (Baie-Saint-Paul passed twice; New York City in September and October).
+        // (Richmond at both ends of the Québec loop; Washington, D.C. eight times).
         var at = places.filter(function (pl) { return Math.abs(pl.ll[0] - stop.ll[0]) < .012 && Math.abs(pl.ll[1] - stop.ll[1]) < .01; })[0];
         if (!at) { at = { ll: stop.ll, name: stop.name, visits: [] }; places.push(at); }
         if (!at.visits.some(function (v) { return v.trip === e; })) at.visits.push(stop);
         else if (stop.date && !at.visits.filter(function (v) { return v.trip === e; })[0].date) {
-          at.visits.filter(function (v) { return v.trip === e; })[0].date = stop.date;
+          var was = at.visits.filter(function (v) { return v.trip === e; })[0];
+          was.date = stop.date;
+          was.short = stop.short;
         }
         stop.place = at;
         e.stops.push(stop);
@@ -198,7 +208,7 @@
       a.href = "#" + encodeURIComponent(e.id);
       a.setAttribute("data-id", e.id);
       a.appendChild(el("span", "g-row-mark")).setAttribute("aria-hidden", "true");
-      a.appendChild(setText(el("span", "g-row-title"), placeName(e.name)));
+      a.appendChild(setText(el("span", "g-row-title"), tripName(e.name)));
       if (e.short) a.appendChild(el("span", "tl-row-date", e.short));
       a.addEventListener("pointerenter", function (ev) { if (ev.pointerType !== "touch") light(e); });
       a.addEventListener("pointerleave", function () { unlight(); });
@@ -215,7 +225,7 @@
         go.href = e.link.href;
         go.appendChild(document.createTextNode(t(e.link.label) + " "));
         go.appendChild(el("span", null, "→")).setAttribute("aria-hidden", "true");
-        go.setAttribute("aria-label", t("{label}: {trip}", { label: t(e.link.label), trip: placeName(e.name) }));
+        go.setAttribute("aria-label", t("{label}: {trip}", { label: t(e.link.label), trip: tripName(e.name) }));
         li.appendChild(go);
       }
       group.appendChild(li);
@@ -508,7 +518,7 @@
 
   function readout(e, line) {
     if (!readEl) return;
-    var s = line || (e ? [placeName(e.name), e.date].filter(Boolean).join(" · ") : summary);
+    var s = line || (e ? [tripName(e.name), e.date].filter(Boolean).join(" · ") : summary);
     setText(readEl, s || summary);
   }
 
@@ -517,17 +527,21 @@
     var lines = [];
     if (e.where) lines.push(whereLine(e.where));
     if (e.date) lines.push(e.date);
-    return [placeName(e.name), lines];
+    return [tripName(e.name), lines];
   }
   function placeLines(pl) {
+    // Many visits (Washington, D.C.'s eight): the short dates alone, a
+    // line each; the list lights their rows.
+    var many = pl.visits.length > 2;
     var lines = pl.visits.map(function (v) {
+      if (many) return v.short || v.trip.short || v.date || v.trip.date;
       var when = v.date || v.trip.date;
-      return v.trip.name !== pl.name ? placeName(v.trip.name) + " · " + when : when;
+      return v.trip.name !== pl.name ? tripName(v.trip.name) + " · " + when : when;
     });
     return [pinName(pl.name), lines];
   }
   function showPlate(pl, content) {
-    if (!app() || COARSE || !plate) return;
+    if (!app() || COARSE || !plate || !map) return;    // no map (yet, or failed): no plate to point
     plate.textContent = "";
     plate.appendChild(setText(el("p", "g-plate-title"), content[0]));
     content[1].forEach(function (s, i) {
@@ -574,7 +588,7 @@
 
   var getJSON = NL ? NL.getJSON : function (p) { return fetch(p, { cache: "no-cache" }).then(function (r) { return r.json(); }); };
   // The roads are optional: the trips draw without them.
-  var routesReady = getJSON("data/routes.json").then(function (r) { return (r && r.routes) || {}; }, function () { return {}; });
+  var routesReady = getJSON("data/travel-routes.json").then(function (r) { return (r && r.routes) || {}; }, function () { return {}; });
   var dataReady = Promise.all([getJSON(SRC), routesReady]).then(function (res) {
     join(res[0] || {}, res[1]);
     renderList();

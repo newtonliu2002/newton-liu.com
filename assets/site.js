@@ -250,8 +250,8 @@
       "Peru": "秘鲁", "Guangxi & Guangdong": "广西 & 广东", "Malaysia": "马来西亚", "Sri Lanka": "斯里兰卡",
       "Yunnan": "云南", "Yellowstone & North Dakota": "黄石 & 北达科他", "Morocco": "摩洛哥",
       "Guangxi": "广西", "Arizona": "亚利桑那",
-      // the travel log's trips
-      "Washington, D.C.": "华盛顿", "Virginia": "弗吉尼亚", "New York City": "纽约"
+      // the travel log's trips (each part of a longer name is looked up alone)
+      "Washington, D.C.": "华盛顿", "New York City": "纽约", "Virginia Capital Trail": "弗吉尼亚Capital步道"
     },
     regions: { "North America": "北美洲", "South America": "南美洲", "Asia": "亚洲", "Africa": "非洲" },
     // A whole line first ("Sabah, Borneo" reads the other way round in
@@ -264,8 +264,11 @@
       "Washington": "华盛顿州", "North Dakota": "北达科他", "Wyoming": "怀俄明", "New Mexico": "新墨西哥",
       "Utah": "犹他", "Alberta": "艾伯塔", "British Columbia": "不列颠哥伦比亚", "Yukon": "育空",
       "China": "中国", "Nebraska": "内布拉斯加", "Nuevo León": "新莱昂",
-      "Pennsylvania": "宾夕法尼亚", "Canada": "加拿大", "Richmond": "里士满",
-      "Shenandoah National Park": "Shenandoah国家公园"
+      // the travel log's lines
+      "Pennsylvania": "宾夕法尼亚", "Irvine": "尔湾", "Catalina Island": "Catalina岛", "Los Angeles": "洛杉矶",
+      "Drive, through Washington, D.C.": "自驾，途经华盛顿",
+      "Bike: Richmond – Williamsburg, round trip": "骑行：里士满 – Williamsburg，往返",
+      "Drive: Richmond – Québec – Ottawa – New York City – Richmond": "自驾：里士满 – 魁北克 – 渥太华 – 纽约 – 里士满"
     },
     pins: {
       // Major cities, fully Chinese, and Fairbanks and Juneau (Newton,
@@ -274,7 +277,8 @@
       "Montreal": "蒙特利尔", "Quebec City": "魁北克市", "Ottawa/Gatineau": "渥太华/加蒂诺",
       "Vancouver": "温哥华", "Phoenix": "凤凰城", "Monterrey": "蒙特雷", "Lima": "利马", "Cusco": "库斯科",
       "Rabat": "拉巴特", "Agadir": "阿加迪尔", "Kandy": "康提", "Fairbanks": "费尔班克斯", "Juneau": "朱诺",
-      "Washington, D.C.": "华盛顿", "Richmond": "里士满", "New York City": "纽约",
+      "Washington, D.C.": "华盛顿", "Richmond": "里士满", "New York City": "纽约", "Boston": "波士顿",
+      "Philadelphia": "费城", "Los Angeles": "洛杉矶", "Irvine": "尔湾", "Catalina Island": "Catalina岛",
       "Shenandoah National Park": "Shenandoah国家公园",
       // The best known, fully Chinese (Newton, 2026-10-19)
       "Yellowstone National Park": "黄石国家公园", "Yosemite National Park": "优胜美地国家公园",

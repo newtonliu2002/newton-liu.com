@@ -3,6 +3,8 @@
 
     python3 tools/route.py alberta-bc-yukon     # one collection
     python3 tools/route.py                      # every collection in the file
+    python3 tools/route.py --file data/travel-routes.json quebec-loop
+                                                # the travel log's roads
 
 data/routes.json holds, per collection slug, the `waypoints` you edit by hand
 ([lat, lng] in driving order: towns, park visitor hubs, a road's end) and the
@@ -101,11 +103,17 @@ def dump(doc):
 
 
 def main():
-    doc = json.load(open(FILE, encoding="utf-8"))
-    slugs = sys.argv[1:] or list(doc["routes"])
+    args, target = sys.argv[1:], FILE
+    if args[:1] == ["--file"]:
+        # Another file of the same shape (the travel log's roads).
+        if len(args) < 2:
+            raise SystemExit("--file needs a path")
+        target, args = os.path.join(ROOT, args[1]), args[2:]
+    doc = json.load(open(target, encoding="utf-8"))
+    slugs = args or list(doc["routes"])
     for slug in slugs:
         if slug not in doc["routes"]:
-            raise SystemExit("{} has no waypoints in data/routes.json".format(slug))
+            raise SystemExit("{} has no waypoints in {}".format(slug, os.path.relpath(target, ROOT)))
         wps = doc["routes"][slug]["waypoints"]
         if len(wps) < 2:
             raise SystemExit("{} needs at least two waypoints".format(slug))
@@ -115,9 +123,9 @@ def main():
         print("{}: {:,.0f} km of road, {} points".format(slug, metres / 1000, len(path)))
     text = dump(doc)
     json.loads(text)
-    tmp = FILE + ".tmp"
+    tmp = target + ".tmp"
     open(tmp, "w", encoding="utf-8").write(text)
-    os.replace(tmp, FILE)
+    os.replace(tmp, target)
 
 
 if __name__ == "__main__":
