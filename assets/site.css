@@ -542,6 +542,9 @@ body[data-page="globe"] .nav-menu-list { border-top: 1px solid var(--hairline); 
     overflow-x: auto; scrollbar-width: none;
     margin-inline: calc(-1 * var(--edge));
     padding-inline: var(--edge);
+    /* A tab or menu entry scrolled into view (by focus, or a menu opening)
+       stops clear of the fades below, not under them. */
+    scroll-padding-inline: calc(var(--edge) + 56px);
   }
   .nav::-webkit-scrollbar { display: none; }
   /* The cue that the row goes on (.has-more at the right, .has-less at the
@@ -948,6 +951,11 @@ body[data-page="globe"] .nav-menu-list { border-top: 1px solid var(--hairline); 
 .lb-name a { color: inherit; text-decoration: none; }
 .lb-name a:hover, .lb-name a:focus-visible { color: var(--text); text-decoration: underline; text-underline-offset: .2em; }
 .lb-row { display: block; }          /* one per animal in the frame */
+/* On a touch screen each animal's link is a 24px target, clear of the next. */
+@media (pointer: coarse) {
+  .lb-name a { padding-block: 4px; }
+  .lb-row + .lb-row { margin-top: 8px; }
+}
 .lb-sci { margin-left: .7em; font-style: italic; }
 .lb-out { margin-left: .4em; color: var(--text-faint); }
 .lb-title:empty, .lb-meta:empty, .lb-exif:empty, .lb-name:empty { display: none; }
@@ -995,6 +1003,7 @@ body[data-page="globe"] .nav-menu-list { border-top: 1px solid var(--hairline); 
 
 /* One photograph alone (a journal entry's): nothing to step to. */
 .lightbox.is-single .lb-nav { display: none; }
+.lb-nav:focus-visible { outline-offset: -2px; }   /* at the window's edge: drawn inside */
 
 body.lb-open { overflow: hidden; }
 
@@ -1200,6 +1209,11 @@ body.lb-open { overflow: hidden; }
 .grid.book .tile:hover::after,
 .grid.book .tile:focus-visible::after { opacity: 1; }
 .grid.book .tile:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* The bar is sticky from 621px: a photograph or card that focus or a skip
+   link scrolls to stops clear of it rather than under it. */
+@media (min-width: 621px) {
+  #grid, #collection-grid, .grid.book .tile, .collection-card { scroll-margin-top: calc(var(--masthead-h) + 1rem); }
+}
 
 /* A four-frame sequence (SSSS in site.js). Four across on a phone would make
    each frame a thumbnail, so below the breakpoint the strip folds into two

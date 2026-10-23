@@ -117,7 +117,7 @@
     "Primary": "主导航", "Work": "作品", "About": "关于", "Projects": "项目", "Contact": "联系",
     "Journals": "游记", "Academia": "学术", "Academia — Newton Liu Photography": "学术 — Newton Liu Photography",
     // "Newton Liu Photography" stays English in both (Newton, 2026-10-17)
-    "Skip to collections": "跳到作品集", "Skip to photographs": "跳到照片",
+    "Skip to collections": "跳到作品集", "Skip to photographs": "跳到照片", "Skip to content": "跳到正文",
     "Newton Liu. All photographs are my own.": "Newton Liu。所有照片均为本人拍摄。",
     "White background": "白色背景", "Black background": "黑色背景",
     // the home page's "Newton Liu — Photography" stays English too (Newton, 2026-10-18)

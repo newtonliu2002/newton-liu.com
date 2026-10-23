@@ -1488,6 +1488,12 @@ Newton asked for it: every photograph in a gallery has its own address, so a lin
   - While the viewer is open, everything beside it is `inert` (`shutBehind()`), so Tab stays inside it and a screen reader reads only it.
   - On close, focus goes back to the tile or the opener. After an address it goes to that photograph's tile (`photoButtons`).
   - The opener is a keyboard button too (`role="button"`): Enter, or Space on release.
+- **Other keyboard and phone fixes from the 2026-10-23 audit:**
+  - Every page has a skip link: About, Contact, Academia, the Podcast Tracker and 404 got "Skip to content" (跳到正文) to `<main id="main">`.
+  - From 621px a gallery's tiles, the Index's cards and both grids carry `scroll-margin-top`, so focus never lands under the sticky bar. This is not set on `html`: About, Projects, Chess, the Podcast Tracker and the journal set their own scroll-margin, and a page-wide scroll-padding would add to it.
+  - The viewer's ‹ › draw their ring inside.
+  - On a touch screen each animal's eBird or Wikipedia link is a 24px target (`.lb-name a`, `.lb-row + .lb-row`).
+  - On a phone the nav row's `scroll-padding-inline` keeps a focused tab or an opened Journals or Personal entry clear of the fades.
 
 ## Editing the words (?edit)
 
