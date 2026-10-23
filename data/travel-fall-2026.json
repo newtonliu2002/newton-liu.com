@@ -167,8 +167,7 @@
    "stops": [
     { "name": "New York City", "lat": 40.7128, "lng": -74.006 },
     { "name": "Washington, D.C.", "lat": 38.9072, "lng": -77.0369 }
-   ],
-   "link": { "label": "Chess", "href": "chess-games.html#marshall-morning-u1600-2026-10-18" }
+   ]
   }
  ]
 }
