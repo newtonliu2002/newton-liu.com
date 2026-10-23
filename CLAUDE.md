@@ -1468,6 +1468,27 @@ Six "quick wins" from an audit, which Newton approved on 2026-10-23. Nothing vis
   - When the build stops early, they are written from the manifest as it stands.
   - Under --no-thumbs, they are written from the previous manifest.
 
+## A link for each photograph (2026-10-23)
+
+Newton asked for it: every photograph in a gallery has its own address, so a link sent to someone opens that exact photograph enlarged.
+
+- **The address** is the gallery's, then `#` and the camera filename without `.jpg`: `collections/alaska/#BU2A9705`.
+  - Filenames are unique in a collection and never change, so a link keeps working.
+  - Matching ignores case. A `#` that names no photograph (`#grid`) is ignored.
+  - With the language: `collections/alaska/?lang=zh#BU2A9705`. 404.html's MOVED keeps the `#` part.
+- **How it works** (site.js, "A link for each photograph"):
+  - A tile or the opener opens the viewer and adds the photograph's address to the history (`openGallery()`, `open()`).
+  - The arrows and a swipe swap the address rather than add one (`show()`, a quarter of a second after the last step, because browsers ignore a page that rewrites its address dozens of times a second), so Back closes the viewer however far it was walked.
+  - Esc, × and the backdrop go back to the gallery's own address.
+  - Arriving at an address (`renderGallery()`): the photograph opens over the gallery's own address, so × lands on the gallery. Back does too once the visitor has touched the page; until then Chrome's Back skips an entry a page added by itself.
+  - A reload with a photograph open reuses its entry. Back and Forward reopen or close it, and an address typed in opens it (the popstate handler in `wireLightbox()`).
+- The journal's and About's viewer (`NLSite.viewer`) leaves the address alone.
+- A shared link's preview is still the gallery's (the og tags are per page).
+- **Keyboard:**
+  - While the viewer is open, everything beside it is `inert` (`shutBehind()`), so Tab stays inside it and a screen reader reads only it.
+  - On close, focus goes back to the tile or the opener. After an address it goes to that photograph's tile (`photoButtons`).
+  - The opener is a keyboard button too (`role="button"`): Enter, or Space on release.
+
 ## Editing the words (?edit)
 
 **Add `?edit` to any page's URL and the words on it become typeable.** A bar

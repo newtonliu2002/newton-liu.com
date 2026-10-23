@@ -2616,7 +2616,38 @@
   var shown = [];      // photos currently in the grid — what the arrows walk
   var index = -1;
   var isOpen = false;
-  var lbReturn = null; // where focus goes back to on close (NLSite.viewer)
+  var lbReturn = null; // where focus goes back to on close
+  var inerted = [];    // what the open viewer shut off behind it (shutBehind)
+
+  /* A link for each photograph (Newton, 2026-10-23). On a gallery the
+     viewer's address names the photograph it shows, by its camera filename
+     without the .jpg (collections/alaska/#BU2A9705: unique in a collection,
+     and it never changes). Opening one adds that address to the history,
+     the arrows swap it, and Back or × returns to the gallery's own; a link
+     sent to someone opens that photograph over the gallery, so × lands on
+     the gallery (and so does Back, once the visitor has touched the page:
+     until then Chrome's Back skips an entry a page adds on its own). The
+     journal's and About's viewer (NLSite.viewer) leaves the address alone. */
+  var galleryPhotos = null;   // this gallery's photographs, on a gallery page
+  var linked = false;         // the viewer is walking them (not NLSite.viewer's list)
+  var photoButtons = [];      // each photograph's tile (or the opener), by index
+  var addressTimer = 0;
+
+  function photoKey(photo) {
+    return String((photo && photo.src) || "").split("/").pop().replace(/\.[a-z0-9]+$/i, "");
+  }
+  // The photograph the address names, as its index in the gallery, or -1.
+  function addressed() {
+    if (!galleryPhotos || location.hash.length < 2) return -1;
+    var key;
+    try { key = decodeURIComponent(location.hash.slice(1)).toLowerCase(); } catch (e) { return -1; }
+    for (var i = 0; i < galleryPhotos.length; i++) {
+      if (photoKey(galleryPhotos[i]).toLowerCase() === key) return i;
+    }
+    return -1;
+  }
+  function pageAddress() { return location.pathname + location.search; }
+  function photoAddress(i) { return pageAddress() + "#" + encodeURIComponent(photoKey(shown[i])); }
 
   function exifLine(photo) {
     var e = photo.exif;
@@ -2917,7 +2948,8 @@
       tile.appendChild(label);
     }
 
-    tile.addEventListener("click", function () { open(index); });
+    tile.addEventListener("click", function () { openGallery(index, tile); });
+    photoButtons[index] = tile;
     return tile;
   }
 
@@ -2951,7 +2983,23 @@
     slot.textContent = "";
     slot.classList.toggle("is-upright", upright);
     slot.appendChild(img);
-    slot.addEventListener("click", function () { open(at); });
+    // A button to the keyboard and to a screen reader too, as the tiles are.
+    slot.tabIndex = 0;
+    slot.setAttribute("role", "button");
+    slot.setAttribute("aria-label", photo.caption
+      ? tr("View photograph {n} of {total} larger: {description}", { n: at + 1, total: photos.length, description: img.alt })
+      : tr("View photograph {n} of {total} larger", { n: at + 1, total: photos.length }));
+    slot.addEventListener("click", function () { openGallery(at, slot); });
+    // Enter acts as it goes down, Space as it comes up, as on a real button
+    // (and Space must not scroll the page).
+    slot.addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter") { ev.preventDefault(); openGallery(at, slot); }
+      else if (ev.key === " ") ev.preventDefault();
+    });
+    slot.addEventListener("keyup", function (ev) {
+      if (ev.key === " ") { ev.preventDefault(); openGallery(at, slot); }
+    });
+    photoButtons[at] = slot;
     return at;
   }
 
@@ -3065,17 +3113,51 @@
       // both.
       if (next) responsive(new Image(), next, lbSizes(next));
     });
+
+    // The arrows swap the address rather than add to the history, so Back
+    // closes the viewer however far it was walked. A moment after the last
+    // step: browsers stop listening to a page that rewrites its address
+    // dozens of times a second (an arrow key held down), and a stale one
+    // would send the wrong photograph.
+    clearTimeout(addressTimer);
+    if (linked && isOpen) addressTimer = setTimeout(function () {
+      if (!linked || !isOpen) return;
+      try { history.replaceState(history.state, "", photoAddress(index)); } catch (e) { /* file:// */ }
+    }, 250);
   }
 
-  function open(i) {
+  // While the viewer is open nothing behind it can be reached: not by Tab,
+  // not by a screen reader (it is aria-modal). Everything beside it, and
+  // beside each of its ancestors, goes inert, and comes back on close.
+  function shutBehind(on) {
+    inerted.forEach(function (n) { n.inert = false; });
+    inerted = [];
+    if (!on) return;
+    for (var n = lightbox; n && n.parentNode && n !== body; n = n.parentNode) {
+      Array.prototype.forEach.call(n.parentNode.children, function (sib) {
+        if (sib === n || sib.inert || /^(SCRIPT|STYLE|TEMPLATE)$/.test(sib.tagName)) return;
+        sib.inert = true;
+        inerted.push(sib);
+      });
+    }
+  }
+
+  // `entered`: the history entry is already there (Back/Forward to a
+  // photograph's address, or one typed in), so none is added.
+  function open(i, entered) {
     show(i);
     if (isOpen) return;
     isOpen = true;
     lightbox.hidden = false;
     body.classList.add("lb-open");
+    shutBehind(true);
     lightbox.querySelector(".lb-close").focus();
+    if (entered) return;
     // Lets the phone's Back gesture close the viewer rather than leave the page.
-    try { history.pushState({ lb: true }, ""); } catch (e) { /* file:// */ }
+    try {
+      if (linked) history.pushState({ lb: true }, "", photoAddress(index));
+      else history.pushState({ lb: true }, "");
+    } catch (e) { /* file:// */ }
   }
 
   function close(fromPopstate) {
@@ -3084,14 +3166,34 @@
     lightbox.hidden = true;
     lbImage.removeAttribute("src");
     body.classList.remove("lb-open");
-    if (!fromPopstate && history.state && history.state.lb) {
-      try { history.back(); } catch (e) { /* no-op */ }
+    shutBehind(false);
+    clearTimeout(addressTimer);
+    if (!fromPopstate) {
+      if (history.state && history.state.lb) {
+        try { history.back(); } catch (e) { /* no-op */ }
+      } else if (linked && addressed() >= 0) {
+        // Opened from an address typed in: take the photograph off it.
+        try { history.replaceState(history.state, "", pageAddress()); } catch (e) { /* file:// */ }
+      }
     }
+    // Opened by an address rather than a click: focus goes to the
+    // photograph's own tile, so Tab carries on from there, not from the top.
+    if (!lbReturn && linked) lbReturn = photoButtons[index] || null;
     if (lbReturn) {
       var back = lbReturn;
       lbReturn = null;
       try { back.focus({ preventScroll: true }); } catch (e) { /* gone */ }
     }
+  }
+
+  // A gallery's own tile or opener: the viewer walks the gallery, with
+  // addresses, and focus comes back to `from` on close.
+  function openGallery(i, from) {
+    if (!galleryPhotos) return;
+    shown = galleryPhotos;
+    linked = true;
+    lbReturn = from || null;
+    open(i);
   }
 
   // The same viewer for another page's photographs (the travel journal,
@@ -3103,6 +3205,7 @@
     if (!lightbox) wireLightbox();
     if (!lightbox || !list || !list.length) return;
     shown = list;
+    linked = false;
     lbReturn = from || document.activeElement;
     open(Math.max(0, Math.min(list.length - 1, i || 0)));
   }
@@ -3128,7 +3231,22 @@
       if (ev.target === lightbox || ev.target.classList.contains("lb-figure")) close(false);
     });
 
-    window.addEventListener("popstate", function () { close(true); });
+    // Back and Forward: a gallery's photograph address opens (or moves the
+    // open viewer to) that photograph; any other entry closes the viewer.
+    window.addEventListener("popstate", function () {
+      var at = addressed();
+      if (at < 0) return close(true);
+      if (isOpen && !linked) close(true);
+      shown = galleryPhotos;
+      linked = true;
+      if (isOpen) return show(at);
+      // An address typed in arrives with no state: mark it the viewer's,
+      // so closing goes back to the gallery rather than leaving a copy of it.
+      if (!(history.state && history.state.lb)) {
+        try { history.replaceState({ lb: true }, ""); } catch (e) { /* file:// */ }
+      }
+      open(at, true);
+    });
 
     document.addEventListener("keydown", function (ev) {
       if (!isOpen) return;
@@ -3212,9 +3330,25 @@
     var lead = document.querySelector(".book-lead");
     if (lead) lead.classList.toggle("is-whole", meta.opener === "whole");
     if (meta.journal) journalLink(slug, meta.journal);
+    galleryPhotos = shown;
     renderGrid(shown, meta.layout);
     onward(collections, photos, slug);
     wireLightbox();
+
+    // Arriving at a photograph's address: open it, over the gallery's own
+    // address, so closing it lands on the gallery rather than leaving. A
+    // reload of an open viewer (or a phone bringing back a discarded tab) is
+    // already on the viewer's own entry, with the gallery's before it.
+    var at = lightbox ? addressed() : -1;
+    if (at >= 0) {
+      shown = galleryPhotos;
+      linked = true;
+      if (history.state && history.state.lb) open(at, true);
+      else {
+        try { history.replaceState(null, "", pageAddress()); } catch (e) { /* file:// */ }
+        open(at);
+      }
+    }
   }
 
   // Under the last photographs, a quiet line to the collections either side

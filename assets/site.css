@@ -1080,6 +1080,8 @@ body.lb-open { overflow: hidden; }
   justify-content: center;
   width: 100%;
 }
+/* Full bleed, so the ring is drawn inside it rather than off the window. */
+.book-opener:focus-visible { outline-offset: -6px; }
 
 /* A landscape opener is always the width of the window. Where that would
    make it taller than --opener-h, the box stops there and object-fit trims
