@@ -710,13 +710,6 @@ body[data-page="globe"] .nav-menu-list { border-top: 1px solid var(--hairline); 
 }
 .collection-card.is-empty .card-title { color: var(--text-dim); }
 
-/* ---------- About teaser (end of the Work page) ------------------------ */
-
-.about-teaser {
-  padding-block: var(--s8);
-  border-top: 1px solid var(--hairline);
-}
-
 /* ---------- Gallery page: the rail ------------------------------------ */
 
 .back-link, .book-onward a {
@@ -2383,7 +2376,7 @@ body.is-editing .about-rail { top: calc(var(--nl-bar-h) + var(--masthead-h) + 2r
    is too small to read: in Chinese they take About's 13px (the uppercase
    does nothing to characters, and :lang(zh) above sets the tracking). */
 :is(.wordmark-sub, .skip-link, .back-link, .book-onward a, .gallery-date, .grid-status, .view-switch a,
-    .view-switch [aria-current], .footer-links a, .about-teaser .section-title,
+    .view-switch [aria-current], .footer-links a,
     .about-jump a, .project-kicker span, .project-note, .project-shot figcaption,
     .g-list-title, .g-region-name, .g-pin-label, .g-card-where, .g-card-date, .g-card-go-label,
     .g-index-link, .g-readout, .g-plate-where, .g-list-status, .g-fallback p, .g-load,
