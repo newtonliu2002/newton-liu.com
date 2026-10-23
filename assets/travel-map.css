@@ -1,0 +1,65 @@
+/* ==========================================================================
+   newton-liu.com — a travel log (travel-fall-2026.html), on top of
+   site.css and globe.css, whose g-* classes it wears as they are, as the
+   chess map does. Only what a flat map of trips needs beyond the landing,
+   under body.tl; the pins are the chess map's (chess-map.css), copied, so
+   either page can change without the other.
+   ========================================================================== */
+
+/* No ring, no stars: the map itself fills the stage. */
+body.tl .g-map { background: var(--space); }
+
+/* The plate: the trip or place, then where and when. */
+body.tl .g-plate .tl-plate-date { margin-top: 2px; color: var(--text-dim); }
+body.tl .g-plate > :first-child { padding-top: 10px; }
+
+/* The console has one button, on the right: the readout centres on it. */
+body.tl .g-fit { border-left: 1px solid var(--hairline); }
+
+/* A row: the trip's name, its dates at the right (the month is the
+   heading above). Its journal or games: a small link under it. */
+body.tl .g-row { grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; align-items: baseline; }
+body.tl .tl-row-date {
+  font: 400 var(--t-label)/16px var(--mono); letter-spacing: .1em; text-transform: uppercase;
+  color: var(--text-faint); white-space: nowrap; font-variant-numeric: tabular-nums;
+}
+body.tl .g-row.is-lit .tl-row-date, body.tl .g-row[aria-current="true"] .tl-row-date { color: var(--text-dim); }
+body.tl .tl-row-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin: -2px 0 4px 36px; min-height: 24px;     /* under the trip's name */
+  font: 400 var(--t-label)/16px var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-faint); text-decoration: none;
+  transition: color var(--d-fast) var(--ease);
+}
+body.tl .tl-row-link:hover { color: var(--accent); }
+body.tl .tl-row-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media not all and (min-width: 1024px) and (min-height: 620px) {
+  body.tl .tl-row-link { margin: -6px 0 10px calc(var(--edge) + 20px); }
+}
+
+/* Pins: the chess map's, larger and lit, since a handful of places sit
+   alone on a wide dark map. 1.5px arms round an 8px gap, a 4px amber dot,
+   a soft amber glow, in a 40px hit area. */
+body.tl .g-pin { width: 40px; height: 40px; --c: 19.5px; cursor: pointer; }
+@media (pointer: coarse) { body.tl .g-pin { width: 48px; height: 48px; --c: 23.5px; } }
+body.tl .g-pin-x {
+  left: calc(var(--c) - 12.5px); top: calc(var(--c) - 12.5px); width: 25px; height: 25px;
+  --dot: var(--accent); --a: 6px;
+  background: linear-gradient(var(--k) 0 0) 11.75px calc(8.5px - var(--a)) / 1.5px var(--a),
+    linear-gradient(var(--k) 0 0) 11.75px 16.5px / 1.5px var(--a), linear-gradient(var(--k) 0 0) calc(8.5px - var(--a)) 11.75px / var(--a) 1.5px,
+    linear-gradient(var(--k) 0 0) 16.5px 11.75px / var(--a) 1.5px, linear-gradient(var(--dot) 0 0) 10.5px 10.5px / 4px 4px;
+  background-repeat: no-repeat;
+}
+body.tl .g-pin:hover .g-pin-x, body.tl .g-pin.is-lit .g-pin-x { --a: 8px; }
+body.tl .g-pin-in::before {
+  content: ""; position: absolute; left: calc(var(--c) - 20px); top: calc(var(--c) - 20px); width: 40px; height: 40px;
+  border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 30%, transparent), transparent);
+  transition: opacity var(--d-base) var(--ease); opacity: .8;
+}
+body.tl .g-pin:hover .g-pin-in::before, body.tl .g-pin.is-lit .g-pin-in::before { opacity: 1; }
+body.tl .g-pin.is-stack .g-pin-in::after {
+  left: calc(var(--c) - 15px); top: calc(var(--c) - 15px); width: 30px; height: 30px;
+}
+body.tl .g-pin-af { left: calc(var(--c) - 15px); top: calc(var(--c) - 15px); width: 30px; height: 30px; }
+body.tl .g-pin.is-intro .g-pin-ring { animation-name: tl-pulse; }
+@keyframes tl-pulse { 0% { width: 12px; height: 12px; opacity: .5; } 40%, 100% { width: 54px; height: 54px; opacity: 0; } }

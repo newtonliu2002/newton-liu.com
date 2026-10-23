@@ -73,7 +73,8 @@
     ],
     // Personal: a tab with no page, like Journals (Newton, 2026-10-21)
     "personal": [
-      { label: "Podcast Tracker", zh: "播客记录", href: "podcast-tracker.html" }
+      { label: "Podcast Tracker", zh: "播客记录", href: "podcast-tracker.html" },
+      { label: "Fall 2026 Travel Log", zh: "2026秋季旅行记录", href: "travel-fall-2026.html" }
     ]
     // Chess has no menu (Newton, 2026-10-20): the tab goes straight to the
     // map, whose pins and "Database →" open the games.
@@ -198,7 +199,21 @@
     "Sections": "部分", "Episodes": "正片", "Episode archive": "节目列表", "Extras": "加更", "Bonus": "会员加更", "Extract": "有声书节选",
     "Special": "特别节目", "Checked {date}": "核对于{date}", "Date shown in the catalogue": "目录上标注的日期",
     "Catalogue notes and sources": "目录说明与来源", "Sources": "来源",
-    "Nothing on the list yet.": "清单上还没有内容。", "Couldn't load the list.": "清单加载失败。"
+    "Nothing on the list yet.": "清单上还没有内容。", "Couldn't load the list.": "清单加载失败。",
+    "Couldn't load what's finished.": "听完的记录加载失败。", "Sign in to tick": "登录后打勾", "Sign in": "登录",
+    "Sign out": "退出登录", "Password": "密码", "Signing in…": "登录中…",
+    "Signed in: click a square to tick it.": "已登录：点方块即可打勾。",
+    "That's not the password.": "密码不对。", "Too many tries. Try again in an hour.": "试的次数太多了，一小时后再试。",
+    "No password has been set yet.": "还没有设密码。", "Couldn't sign in. Try again.": "登录失败，请再试一次。",
+    "Couldn't reach the server. Try again.": "连不上服务器，请再试一次。",
+    "Couldn't save that. Try again.": "没存上，请再试一次。", "Signed out. Sign in again to tick.": "已退出登录，重新登录后才能打勾。",
+    // The travel log (travel-map.js)
+    "Fall 2026 Travel Log": "2026秋季旅行记录", "Fall 2026 Travel Log — Newton Liu Photography": "2026秋季旅行记录 — Newton Liu Photography",
+    "Skip to trips": "跳到行程列表", "Show all trips": "显示全部行程",
+    "Map unavailable. The trips are listed here.": "地图无法加载，行程都列在这里。",
+    "{n} trip": "{n}次行程", "{n} trips": "{n}次行程", "{n} place": "{n}个地点", "{n} places": "{n}个地点",
+    "No trips yet": "还没有行程", "No trips yet.": "还没有行程。", "Couldn't load the trips.": "行程加载失败。",
+    "{label}: {trip}": "{trip}：{label}"
   };
 
   var ZH_EDIT = {
@@ -207,6 +222,7 @@
     "contact.title": "联系方式",
     "academia.title": "学术",
     "chess.title": "国际象棋", "chess.listTitle": "比赛",
+    "travel.title": "2026秋季旅行记录", "travel.listTitle": "2026秋季旅行记录",
     "chessdb.title": "对局库", "chessdb.name": "国际象棋 · Newton Liu",
     "podcasts.title": "播客记录", "podcasts.name": "个人 · Newton Liu",
     "projects.title": "项目",
@@ -233,7 +249,9 @@
       "New England": "新英格兰", "Québec": "魁北克", "Ecuador": "厄瓜多尔", "Galápagos": "加拉帕戈斯群岛",
       "Peru": "秘鲁", "Guangxi & Guangdong": "广西 & 广东", "Malaysia": "马来西亚", "Sri Lanka": "斯里兰卡",
       "Yunnan": "云南", "Yellowstone & North Dakota": "黄石 & 北达科他", "Morocco": "摩洛哥",
-      "Guangxi": "广西", "Arizona": "亚利桑那"
+      "Guangxi": "广西", "Arizona": "亚利桑那",
+      // the travel log's trips
+      "Washington, D.C.": "华盛顿", "Virginia": "弗吉尼亚", "New York City": "纽约"
     },
     regions: { "North America": "北美洲", "South America": "南美洲", "Asia": "亚洲", "Africa": "非洲" },
     // A whole line first ("Sabah, Borneo" reads the other way round in
@@ -245,7 +263,9 @@
       "Colorado": "科罗拉多", "Idaho": "爱达荷", "Montana": "蒙大拿", "Oregon": "俄勒冈",
       "Washington": "华盛顿州", "North Dakota": "北达科他", "Wyoming": "怀俄明", "New Mexico": "新墨西哥",
       "Utah": "犹他", "Alberta": "艾伯塔", "British Columbia": "不列颠哥伦比亚", "Yukon": "育空",
-      "China": "中国", "Nebraska": "内布拉斯加", "Nuevo León": "新莱昂"
+      "China": "中国", "Nebraska": "内布拉斯加", "Nuevo León": "新莱昂",
+      "Pennsylvania": "宾夕法尼亚", "Canada": "加拿大", "Richmond": "里士满",
+      "Shenandoah National Park": "Shenandoah国家公园"
     },
     pins: {
       // Major cities, fully Chinese, and Fairbanks and Juneau (Newton,
@@ -254,6 +274,8 @@
       "Montreal": "蒙特利尔", "Quebec City": "魁北克市", "Ottawa/Gatineau": "渥太华/加蒂诺",
       "Vancouver": "温哥华", "Phoenix": "凤凰城", "Monterrey": "蒙特雷", "Lima": "利马", "Cusco": "库斯科",
       "Rabat": "拉巴特", "Agadir": "阿加迪尔", "Kandy": "康提", "Fairbanks": "费尔班克斯", "Juneau": "朱诺",
+      "Washington, D.C.": "华盛顿", "Richmond": "里士满", "New York City": "纽约",
+      "Shenandoah National Park": "Shenandoah国家公园",
       // The best known, fully Chinese (Newton, 2026-10-19)
       "Yellowstone National Park": "黄石国家公园", "Yosemite National Park": "优胜美地国家公园",
       "Banff National Park": "班夫国家公园", "Jasper National Park": "贾斯珀国家公园",

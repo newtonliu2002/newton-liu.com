@@ -1162,8 +1162,8 @@ the journal pages, and `PAGE_TEMPLATE` in build.py for the collection pages.
 **The nav, in order** (Newton, 2026-10-17; Chess added 2026-10-19,
 Personal 2026-10-21): Work · About · Journals · Academia · Chess ·
 Personal · Projects · Contact. **Personal** is a page-less tab like
-Journals (`data-menu="personal"`); its one entry is the Podcast Tracker
-(see "Podcast Tracker"). **Journals** is not a link (he wanted it
+Journals (`data-menu="personal"`); its entries are the Podcast Tracker
+(see "Podcast Tracker") and the Fall 2026 Travel Log (see "Travel log"). **Journals** is not a link (he wanted it
 unclickable): `<button class="nav-tab" data-menu="journals">`, keyed in
 `NAV_MENUS` by its `data-menu`, whose one entry is Québec
 (journals/quebec/; `zh` gives 魁北克). Pointing opens it as for Projects;
@@ -1359,6 +1359,45 @@ the page writes).
 - Chinese: interface words in ZH_UI ("the podcast tracker"); Personal 个人,
   Podcast Tracker 播客记录. The episodes, notes and section names stay
   English.
+
+## Travel log (travel-fall-2026.html)
+
+Asked for 2026-10-22: "Fall 2026 Travel Log" under **Personal**, a map of
+where Newton went and when, with pins: the chess map's page (chess.html)
+redone for trips, public (his pick).
+
+- **Data: data/travel-fall-2026.json** (the page's `data-src` on
+  `<main>`), `trips` oldest first: `id` (permanent: it is the page's
+  `#<id>` link), `name`, optional `where` (shown as written, through
+  ZH_PLACES.where), `start`, `end` (only for several days), `stops`
+  (`name`, `lat`, `lng`, optional `date`), optional `route` (a key into
+  data/routes.json: its road is drawn, Québec's being the landing's own),
+  optional `link` `{label, href}` (its journal, its chess games; label
+  through ZH_UI). **Every stop is a public place at its usual centre**
+  (a city, town or national park, the globe's rule), never a home, a
+  street address or where a checklist was made.
+- **Where it came from:** he confirmed (2026-10-22) a list read from his
+  eBird export (dates and counties only, used on this Mac; nothing from it
+  is committed), his chess tournaments and his Québec journal: Washington,
+  D.C. (Aug 22), Virginia (Sep 20: Richmond, Shenandoah National Park),
+  New York City (Sep 24), Exton (Oct 3, chess), Québec (Oct 8–16, the
+  journal's route and dates), New York City (Oct 18, chess). The season
+  starts with D.C. (his word). **New trips: he tells me**; one entry
+  each, in date order, added once he is back, never while he is away.
+- **Page:** assets/travel-map.js and travel-map.css (body.tl), begun as a
+  copy of chess-map.js/.css so the two can change apart (the chess page
+  is the chess session's). The list: a month to a heading, a row per trip
+  with its dates, its link under it. Pointing at a row lights the trip's
+  pins and road and shows its plate; clicking frames the trip and sets
+  `#<id>`. Pointing at a pin shows the place and each visit's date (New
+  York City is one ringed pin for both visits); clicking frames its
+  latest trip. The fit button shows the whole season.
+- A later season: a new page and data file (copy this page, change its
+  `data-src`, title and `travel.*` keys; add both to build.py and the
+  Personal menu).
+- Chinese: ZH_UI ("The travel log"), `travel.title`/`travel.listTitle`
+  2026秋季旅行记录, and the new places in ZH_PLACES (华盛顿, 弗吉尼亚,
+  纽约, 里士满, Shenandoah国家公园, 宾夕法尼亚, 加拿大; Exton stays).
 
 ## Editing the words (?edit)
 

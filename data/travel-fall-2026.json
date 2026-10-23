@@ -1,0 +1,71 @@
+{
+ "_about": "The Fall 2026 Travel Log (travel-fall-2026.html, assets/travel-map.js). See CLAUDE.md, \"Travel log\". A trip: id (permanent), name, where (optional line, shown as written), start, end (ISO; end only when it ran over several days), stops (each a public place at its usual centre, never a home or a precise spot: name, lat, lng, optional date), route (optional: a key into data/routes.json, the road drawn), link (optional: {label, href}). Trips oldest first. Newton confirmed this list on 2026-10-22; the season starts with Washington, D.C. (his word). New trips are added once he is back, never while he is away.",
+ "title": "Fall 2026",
+ "trips": [
+  {
+   "id": "washington-dc-2026-08-22",
+   "name": "Washington, D.C.",
+   "start": "2026-08-22",
+   "stops": [
+    { "name": "Washington, D.C.", "lat": 38.9072, "lng": -77.0369 }
+   ]
+  },
+  {
+   "id": "virginia-2026-09-20",
+   "name": "Virginia",
+   "where": "Richmond · Shenandoah National Park",
+   "start": "2026-09-20",
+   "stops": [
+    { "name": "Richmond", "lat": 37.5407, "lng": -77.436 },
+    { "name": "Shenandoah National Park", "lat": 38.53, "lng": -78.35 }
+   ]
+  },
+  {
+   "id": "new-york-2026-09-24",
+   "name": "New York City",
+   "start": "2026-09-24",
+   "stops": [
+    { "name": "New York City", "lat": 40.7128, "lng": -74.006 }
+   ]
+  },
+  {
+   "id": "exton-2026-10-03",
+   "name": "Exton",
+   "where": "Pennsylvania",
+   "start": "2026-10-03",
+   "stops": [
+    { "name": "Exton", "lat": 40.029, "lng": -75.621 }
+   ],
+   "link": { "label": "Chess", "href": "chess-games.html#holly-heisman-memorial-2026" }
+  },
+  {
+   "id": "quebec-2026-10-08",
+   "name": "Québec",
+   "where": "Canada",
+   "start": "2026-10-08",
+   "end": "2026-10-16",
+   "route": "quebec",
+   "stops": [
+    { "name": "Montreal", "lat": 45.5, "lng": -73.57, "date": "2026-10-08" },
+    { "name": "Parc national du Fjord-du-Saguenay", "lat": 48.24, "lng": -70.2 },
+    { "name": "Saguenay", "lat": 48.41, "lng": -71.07 },
+    { "name": "Tadoussac", "lat": 48.14, "lng": -69.72, "date": "2026-10-11" },
+    { "name": "Baie-Saint-Paul", "lat": 47.44, "lng": -70.51, "date": "2026-10-12" },
+    { "name": "Parc national des Hautes-Gorges-de-la-Rivière-Malbaie", "lat": 47.89, "lng": -70.48, "date": "2026-10-13" },
+    { "name": "Parc national des Grands-Jardins", "lat": 47.68, "lng": -70.83 },
+    { "name": "Parc national de la Mauricie", "lat": 46.77, "lng": -72.95, "date": "2026-10-15" },
+    { "name": "Ottawa/Gatineau", "lat": 45.42, "lng": -75.69, "date": "2026-10-16" }
+   ],
+   "link": { "label": "Journal", "href": "journals/quebec/" }
+  },
+  {
+   "id": "new-york-2026-10-18",
+   "name": "New York City",
+   "start": "2026-10-18",
+   "stops": [
+    { "name": "New York City", "lat": 40.7128, "lng": -74.006 }
+   ],
+   "link": { "label": "Chess", "href": "chess-games.html#marshall-morning-u1600-2026-10-18" }
+  }
+ ]
+}

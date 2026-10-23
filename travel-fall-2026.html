@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fall 2026 Travel Log — Newton Liu Photography</title>
+<meta name="description" content="Newton Liu: where he went in fall 2026, and when.">
+<meta name="theme-color" content="#050505">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<script>try{if(localStorage.getItem("theme")==="white"){document.documentElement.dataset.theme="light";var m=document.querySelector('meta[name="theme-color"]');if(m)m.content="#ffffff"}}catch(e){}</script>
+<script>try{if(localStorage.getItem("lang")==="zh"&&!/[?&]edit\b/.test(location.search))document.documentElement.setAttribute("data-site-lang","zh")}catch(e){}</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<link rel="preconnect" href="https://tiles.openfreemap.org" crossorigin>
+<link rel="stylesheet" href="assets/site.css?v=9d94ee64">
+<link rel="stylesheet" href="assets/globe.css?v=44615ea2">
+<link rel="stylesheet" href="assets/travel-map.css?v=495a80d6">
+</head>
+
+<!-- The Fall 2026 travel log (Newton, 2026-10-22), under the nav's
+     Personal tab: where he went and when, a pin at each place. The chess
+     map's clothes (globe.css's g-* classes on a flat map). Drawn by
+     assets/travel-map.js from the data-src below; see CLAUDE.md,
+     "Travel log". -->
+<body data-page="globe" data-base="" class="tl">
+
+<a class="skip-link" href="#trips">Skip to trips</a>
+
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <a class="wordmark" href="./">
+      <span class="wordmark-name">Newton Liu</span>
+      <span class="wordmark-sub">Photography</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="index.html#collections">Work</a>
+      <a href="about.html">About</a>
+      <button type="button" class="nav-tab" data-menu="journals">Journals</button>
+      <a href="academia.html">Academia</a>
+      <a href="chess.html">Chess</a>
+      <button type="button" class="nav-tab is-current" data-menu="personal">Personal</button>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="g-app" data-src="data/travel-fall-2026.json">
+
+  <div class="g-stage" id="g-stage">
+    <div class="g-map" id="g-map"></div>
+    <svg class="g-wire" aria-hidden="true"><line class="g-wire-p"></line></svg>
+    <div class="g-plate" aria-hidden="true"></div>
+    <div class="g-console">
+      <p class="g-readout" aria-hidden="true"></p>
+      <button class="g-btn g-fit" type="button" aria-label="Show all trips" title="Show all"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg></button>
+    </div>
+    <div class="g-fallback" hidden>
+      <p>Map unavailable. The trips are listed here.</p>
+      <button class="g-load bk-hover" type="button" hidden>Load map</button>
+    </div>
+  </div>
+
+  <div class="g-panel">
+    <h1 class="g-sr" data-edit="travel.title">Fall 2026 Travel Log</h1>
+    <section class="g-atlas" id="trips" aria-labelledby="g-list-title">
+      <div class="g-list-head">
+        <h2 class="g-list-title" id="g-list-title" data-edit="travel.listTitle">Fall 2026 Travel Log</h2>
+      </div>
+      <ol class="g-list" id="g-list"><li class="g-list-status">Loading…</li></ol>
+    </section>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <p>&copy; <span data-year>2026</span> Newton Liu. All photographs are my own.</p>
+    <p class="footer-links">
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </p>
+  </div>
+</footer>
+
+<!-- MapLibre, as on the landing (index.html): an ES module handed to the
+     page's ordinary scripts; nothing loads on Save-Data or 2G until asked. -->
+<script type="module">
+  var ML = "https://cdn.jsdelivr.net/npm/maplibre-gl@6.11.2/dist/maplibre-gl";
+  window.NLLoadMapLibre = function () {
+    var css = new Promise(function (ok, no) {
+      var l = document.createElement("link");
+      l.rel = "stylesheet"; l.href = ML + ".css"; l.onload = ok; l.onerror = no;
+      document.head.insertBefore(l, document.querySelector('link[href^="assets/"]'));
+    });
+    return Promise.all([import(ML + ".mjs"), css]).then(
+      function (r) { window.maplibregl = r[0]; dispatchEvent(new Event("maplibre:ready")); },
+      function ()  { dispatchEvent(new Event("maplibre:failed")); });
+  };
+  var c = navigator.connection;
+  if (c && (c.saveData || /(^|-)2g$/.test(c.effectiveType || ""))) dispatchEvent(new Event("maplibre:deferred"));
+  else window.NLLoadMapLibre();
+</script>
+<script src="assets/site.js?v=3611ec0f"></script>
+<script src="assets/edit.js?v=59a5bab4"></script>
+<script src="assets/travel-map.js?v=546d0e6d"></script>
+</body>
+</html>
