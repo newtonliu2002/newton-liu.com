@@ -89,7 +89,6 @@
      "no": "04",
      "title": "Rome, Carthage and the Republic",
      "intro": "264-30 BC: the Punic Wars, Marius and Sulla, Caesar and the end of the Republic.",
-     "after": "For stricter Caesar/Cleopatra interleaving: 499 → 134-135 → 195-196 (done) → 304-305 → 197-198 (done). The checklist otherwise keeps Cleopatra as one completed series.",
      "items": [
       {"n": 568, "title": "Hannibal: Rome's Greatest Enemy (Part 1)", "date": "2025-05-25", "href": "https://therestishistory.com/episodes/rome-s-greatest-enemy-part-1", "note": "Hannibal's rise, the Alps, invasion of Italy and Cannae."},
       {"n": 569, "title": "Hannibal: Elephants Cross the Alps (Part 2)", "date": "2025-05-28", "href": "https://therestishistory.com/episodes/elephants-cross-the-alps-part-2"},
@@ -149,7 +148,6 @@
      "no": "05",
      "title": "Empire: cities, life and culture",
      "intro": "Pompeii, public spectacle, the provinces, Hadrian and everyday Roman experience.",
-     "after": "For a stricter first-century sequence, split Britain: 500 (AD 43), Nero (54-68), 501 (60/61), the Jewish revolt (66-73/74), Pompeii (79), Colosseum (80), then 502 (northern campaigns through c.84).",
      "items": [
       {"n": 16, "title": "Pompeii", "date": "2021-01-20", "href": "https://therestishistory.com/episodes/pompeii", "note": "Archaeology and Roman life, with Sophie Hay."},
       {"n": 355, "title": "Roman Apocalypse: Pompeii 79 AD", "date": "2023-07-30", "href": "https://therestishistory.com/episodes/pompeii-79-ad", "note": "The eruption and destruction of Pompeii; distinct from episode 16."},

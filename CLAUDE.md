@@ -1382,7 +1382,7 @@ squares himself** (he asked), and he may still tell me.
   - Carthage 423-424 went up beside 421-422. The official feed numbers all four Parts 1-4, though the website files them under two series names.
   - The Roman Conquest of Britain 500-502 and its EXTRA went up beside 499.
   - The Jews Against Rome and The Jewish Revolt (176-177) went up beside Crucifixion (175). The feed calls them Parts 2-3 and 176 follows on from it.
-  - The notes that described the old split were trimmed: 499's "resume this series with 500-502 under the emperors", "Britain" in Empire: politics' intro, and that section's closing note about Britain resuming there.
+  - The notes that described the old split were trimmed: 499's "resume this series with 500-502 under the emperors", "Britain" in Empire: politics' intro, and that section's closing note about Britain resuming there. The two closing notes that suggested splitting a series as another order went too, at his word ("do as you see fit"): the Caesar/Cleopatra interleaving under Rome, Carthage and the Republic, and "split Britain" under Empire: cities, life and culture.
   - A new episode of a series goes beside its parts.
 - **Page:** the chess database's layout (prose rail + column). The rail:
   `podcasts.title`/`podcasts.name`/`podcasts.prose` are ?edit slots; the
