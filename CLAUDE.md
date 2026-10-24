@@ -1324,9 +1324,9 @@ the database is reached from the map's pins and its "Database →".
 Asked for 2026-10-21: a page called "Podcast Tracker" under a new
 **Personal** tab (Chess stays its own tab: his answer), listing every
 episode on his listening list and marking the ones he has finished. His
-picks: just the list he sent (not the whole podcast's archive), and **he
-says what he finished in chat and I mark it** (no checkboxes, nothing on
-the page writes).
+picks: just the list he sent (not the whole podcast's archive). At first
+he told me in chat what he finished; since 2026-10-22 **he ticks the
+squares himself** (he asked), and he may still tell me.
 
 - **Data: data/podcasts.json.** `podcasts`, each with `name`, `subtitle`,
   `lede`, `guide` (paragraphs), `sections` (`no`, `title`, `intro`,
@@ -1334,8 +1334,35 @@ the page writes).
   `n` (null for an unnumbered members' extra), `title`, `kind`
   (bonus/extract/special), `date` (release date, New York), `catalogueDate`
   (the checklist's * dates: the catalogue's, no feed timestamp), `href`,
-  `note`, `done`. **Marking one finished = `"done": true` on its line**,
-  commit, push; the count and bar follow.
+  `note`. **What he has finished is not in the repo.**
+- **The ticks: the "personal" Worker** (`~/Code/personal`, its own local
+  git; Worker `personal` at personal.shoot-planner-worker.workers.dev, D1
+  `personal`; nothing shared with Shoot Planner's or Retreat Finder's).
+  Table `ticks` (list = the podcast's `id`, key = the episode's `n`, or for
+  an extra the last part of its `href`, at = when ticked). Anyone may read
+  them (`READ_PUBLIC = "1"`).
+  - **Anyone may tick too, with no password** (`WRITE_PUBLIC = "1"`). Newton decided on 2026-10-23: the Personal pages will go behind one general password later.
+  - What keeps a stranger from doing much harm:
+    - only the lists in `TICK_LISTS` can be written;
+    - only keys shaped like the page's (a number, or a lowercase slug);
+    - at most 1,000 rows a list;
+    - per-address speed limits: 30 ticks and 60 reads a minute. These are Cloudflare rate-limit bindings, so a flood costs none of the account's D1 allowance, which Shoot Planner and Retreat Finder share.
+  - Anything a stranger undoes can be put back with D1 Time Travel.
+  - The Worker's password sign-in (`/login`, `PASSWORD`, `SESSION_SECRET` set 2026-10-23) stays dormant. Setting `PASSWORD` and turning `WRITE_PUBLIC` off brings it back, but the page's sign-in box was taken out, so that also needs the page's part rebuilding.
+  **When he tells me in chat**, tick it in D1 from `~/Code/personal`:
+  `npx wrangler d1 execute personal --remote --command "INSERT OR IGNORE
+  INTO ticks (list, key, at) VALUES ('the-rest-is-history', '423',
+  '<ISO now>')"` (untick: DELETE that row). Nothing to commit.
+- **The page draws the list at once**, squares blank (`.is-unknown`) until
+  the ticks come; then the count, the bar and the filter (which hides rows
+  by them). If the Worker can't be reached the squares stay blank, the rail
+  says "Couldn't load what's finished.", and there is no filter.
+  Each square is a checkbox (`button.pt-mark[role=checkbox]`) that saves on
+  click, and goes back with "Couldn't save that. Try again." under the
+  filter if the save fails. A row just ticked stays in view under To listen /
+  Finished until the filter is next used (`.is-fresh`). The page says
+  nothing to invite visitors to tick. Local testing: `npm run dev` in
+  ~/Code/personal (port 8788) and `podcast-tracker.html?api=local`.
 - **Source:** The Rest Is History, from his PDF "The Rest Is History —
   Classical Listening Checklist" (checked 21 October 2026; he called it the
   superior one over the earlier 6-page catalogue). Its sections, rows,
@@ -1346,7 +1373,8 @@ the page writes).
   number has its own column. Finished on 2026-10-21: its 27 (116-117,
   195-198, 457-458, 568-571, 640-643, 668-669, 687-688, 701-704; the
   Trojan War with Mary Beard, The General Who Made Rome Invincible, Cicero:
-  Defender of the Republic) plus 98-99, which he added.
+  Defender of the Republic) plus 98-99, which he added; 421 and 422 on
+  2026-10-22. These 31 seeded the Worker (`seed/ticks-2026-10-22.sql`).
 - **Page:** the chess database's layout (prose rail + column). The rail:
   `podcasts.title`/`podcasts.name`/`podcasts.prose` are ?edit slots; the
   count (finished / all, numbered episodes, extras) and a thin amber bar;
