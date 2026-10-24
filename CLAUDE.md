@@ -1375,6 +1375,12 @@ squares himself** (he asked), and he may still tell me.
   Trojan War with Mary Beard, The General Who Made Rome Invincible, Cicero:
   Defender of the Republic) plus 98-99, which he added; 421 and 422 on
   2026-10-22. These 31 seeded the Worker (`seed/ticks-2026-10-22.sql`).
+- **A series always stays together** (Newton, 2026-10-23), even where that breaks the dates. It sits where its Part 1 is.
+  - Carthage 423-424 went up beside 421-422. The official feed numbers all four Parts 1-4, though the website files them under two series names.
+  - The Roman Conquest of Britain 500-502 and its EXTRA went up beside 499.
+  - The Jews Against Rome and The Jewish Revolt (176-177) went up beside Crucifixion (175). The feed calls them Parts 2-3 and 176 follows on from it.
+  - The notes that described the old split were trimmed: 499's "resume this series with 500-502 under the emperors", "Britain" in Empire: politics' intro, and that section's closing note about Britain resuming there.
+  - A new episode of a series goes beside its parts.
 - **Page:** the chess database's layout (prose rail + column). The rail:
   `podcasts.title`/`podcasts.name`/`podcasts.prose` are ?edit slots; the
   count (finished / all, numbered episodes, extras) and a thin amber bar;

@@ -65,6 +65,8 @@
      "items": [
       {"n": 421, "title": "Ancient Carthage: Lords of the Sea (Part 1)", "date": "2024-02-18", "href": "https://therestishistory.com/episodes/lords-of-the-sea-part-1", "note": "Carthage's origins, maritime power and emergence as a major state."},
       {"n": 422, "title": "Ancient Carthage: Rise of a Superpower (Part 2)", "date": "2024-02-21", "href": "https://therestishistory.com/episodes/rise-of-a-superpower-part-2"},
+      {"n": 423, "title": "Carthage vs. Rome: The Wolf at the Gates (Part 3)", "date": "2024-02-25", "href": "https://therestishistory.com/episodes/the-wolf-at-the-gates-part-3", "note": "Rome's rise and the First Punic War."},
+      {"n": 424, "title": "Carthage vs. Rome: Total War (Part 4)", "date": "2024-02-28", "href": "https://therestishistory.com/episodes/total-war-part-4"},
       {"n": 79, "title": "Ancient Olympics", "date": "2021-07-25", "href": "https://therestishistory.com/episodes/ancient-olympics", "note": "Greek athletics and the ancient games."},
       {"n": 82, "title": "Sparta", "date": "2021-08-01", "href": "https://therestishistory.com/episodes/sparta", "note": "Spartan society and its reputation."},
       {"n": 41, "title": "Persia", "date": "2021-04-07", "href": "https://therestishistory.com/episodes/persia", "note": "A broad discussion with Ali Ansari; extends beyond antiquity."},
@@ -89,8 +91,6 @@
      "intro": "264-30 BC: the Punic Wars, Marius and Sulla, Caesar and the end of the Republic.",
      "after": "For stricter Caesar/Cleopatra interleaving: 499 → 134-135 → 195-196 (done) → 304-305 → 197-198 (done). The checklist otherwise keeps Cleopatra as one completed series.",
      "items": [
-      {"n": 423, "title": "Carthage vs. Rome: The Wolf at the Gates (Part 3)", "date": "2024-02-25", "href": "https://therestishistory.com/episodes/the-wolf-at-the-gates-part-3", "note": "Rome's rise and the First Punic War."},
-      {"n": 424, "title": "Carthage vs. Rome: Total War (Part 4)", "date": "2024-02-28", "href": "https://therestishistory.com/episodes/total-war-part-4"},
       {"n": 568, "title": "Hannibal: Rome's Greatest Enemy (Part 1)", "date": "2025-05-25", "href": "https://therestishistory.com/episodes/rome-s-greatest-enemy-part-1", "note": "Hannibal's rise, the Alps, invasion of Italy and Cannae."},
       {"n": 569, "title": "Hannibal: Elephants Cross the Alps (Part 2)", "date": "2025-05-28", "href": "https://therestishistory.com/episodes/elephants-cross-the-alps-part-2"},
       {"n": 570, "title": "Hannibal: The Invasion of Italy (Part 3)", "date": "2025-06-01", "href": "https://therestishistory.com/episodes/the-invasion-of-italy-part-3"},
@@ -106,7 +106,11 @@
       {"n": null, "title": "The General Who Made Rome Invincible", "kind": "bonus", "date": "2026-09-01", "catalogueDate": true, "href": "https://therestishistory.com/episodes/the-general-who-made-rome-invincible", "note": "Marius and changes to Roman military organisation; follow 701-704."},
       {"n": null, "title": "Spartacus and Gladiators, with Mary Beard | FULL EPISODE", "kind": "bonus", "date": "2025-10-31", "catalogueDate": true, "href": "https://therestishistory.com/episodes/spartacus-and-gladiators-with-mary-beard-full-episode", "note": "Gladiatorial origins and Spartacus's rebellion, 73-71 BC."},
       {"n": null, "title": "Cicero: Defender of the Republic", "kind": "bonus", "date": "2026-09-08", "catalogueDate": true, "href": "https://therestishistory.com/episodes/defender-of-the-republic", "note": "Cicero's career and his defence of republican government."},
-      {"n": 499, "title": "The Roman Conquest of Britain: Julius Caesar’s Invasion (Part 1)", "date": "2024-09-29", "href": "https://therestishistory.com/episodes/julius-caesar-s-invasion-part-1", "note": "55-54 BC. Listen here before the Rubicon; resume this series with 500-502 under the emperors."},
+      {"n": 499, "title": "The Roman Conquest of Britain: Julius Caesar’s Invasion (Part 1)", "date": "2024-09-29", "href": "https://therestishistory.com/episodes/julius-caesar-s-invasion-part-1", "note": "55-54 BC. Listen here before the Rubicon."},
+      {"n": 500, "title": "The Roman Conquest of Britain: The Empire Strikes Back (Part 2)", "date": "2024-10-02", "href": "https://therestishistory.com/episodes/the-empire-strikes-back-part-2", "note": "AD 43-84: Claudius, Boudicca and the northern campaigns. Kept together; overlaps Nero and the Jewish revolt."},
+      {"n": 501, "title": "The Roman Conquest of Britain: Boudicca’s Reign of Blood (Part 3)", "date": "2024-10-06", "href": "https://therestishistory.com/episodes/boudicca-s-reign-of-blood-part-3"},
+      {"n": 502, "title": "The Roman Conquest of Britain: To the Ends of the Earth (Part 4)", "date": "2024-10-09", "href": "https://therestishistory.com/episodes/to-the-ends-of-the-earth-part-4"},
+      {"n": null, "title": "The Roman Conquest of Britain EXTRA", "kind": "bonus", "date": "2024-10-15", "catalogueDate": true, "href": "https://therestishistory.com/episodes/the-roman-conquest-of-britain-extra", "note": "Roman Britain's later reception; companion to episodes 499-502."},
       {"n": 134, "title": "Crossing the Rubicon: The rise of Julius Caesar", "date": "2022-01-09", "href": "https://therestishistory.com/episodes/crossing-the-rubicon", "note": "Caesar's rise and the decision that precipitated civil war."},
       {"n": 135, "title": "Crossing the Rubicon: The die is cast", "date": "2022-01-10", "href": "https://podcasts.apple.com/us/podcast/crossing-the-rubicon-the-die-is-cast/id1537788786?i=1000547498121"},
       {"n": null, "title": "Julius Caesar, with Mary Beard | FULL EPISODE", "kind": "bonus", "date": "2025-10-23", "catalogueDate": true, "href": "https://therestishistory.com/episodes/julius-caesar-with-mary-beard-full-episode", "note": "Caesar's ascent and relationships; companion to the Rubicon episodes."},
@@ -122,10 +126,11 @@
     {
      "no": "05",
      "title": "Empire: politics and provinces",
-     "intro": "First century BC to the second century AD. The emperors, Jesus, Britain and the Jewish revolt overlap in time; most series stay intact.",
-     "after": "The Britain series resumes here at Part 2. Its final parts overlap several later entries; the next section gives a stricter interleaving option.",
+     "intro": "First century BC to the second century AD. The emperors, Jesus and the Jewish revolt overlap in time; most series stay intact.",
      "items": [
       {"n": 175, "title": "Crucifixion (Part 1)", "date": "2022-04-13", "href": "https://therestishistory.com/episodes/crucifixion", "note": "The origins and development of the punishment."},
+      {"n": 176, "title": "The Jews Against Rome (Part 2)", "date": "2022-04-17", "href": "https://therestishistory.com/episodes/the-jews-against-rome", "note": "Rebellion, the destruction of the Temple, Vespasian, Titus and Masada."},
+      {"n": 177, "title": "The Jewish Revolt (Part 3)", "date": "2022-04-20", "href": "https://therestishistory.com/episodes/the-jewish-revolt"},
       {"n": 287, "title": "Jesus Christ: The Mystery (Part 1)", "date": "2022-12-18", "href": "https://therestishistory.com/episodes/the-mystery-ep-1", "note": "Two episodes: The Mystery and The History."},
       {"n": 288, "title": "Jesus Christ: The History (Part 2)", "date": "2022-12-21", "href": "https://therestishistory.com/episodes/the-history-ep-2"},
       {"n": 534, "title": "Emperors of Rome: Sex Secrets of the Caesars (Part 1)", "date": "2025-01-26", "href": "https://therestishistory.com/episodes/sex-secrets-of-the-caesars-part-1", "note": "Suetonius and the Julio-Claudian court, followed by Tiberius, Caligula and Claudius."},
@@ -135,15 +140,9 @@
       {"n": null, "title": "Dynasty: The Rise and Fall of the House of Caesar", "kind": "extract", "date": "2024-06-27", "catalogueDate": true, "href": "https://therestishistory.com/episodes/the-rise-and-fall-of-the-house-of-caesar-extract", "note": "An audiobook reading, not a regular podcast discussion. Optional after this period."},
       {"n": null, "title": "Rome's Greatest Emperors (Livestream)", "kind": "bonus", "date": "2023-07-19", "catalogueDate": true, "href": "https://therestishistory.com/episodes/rome-s-greatest-emperors-livestream", "note": "A comparison of five especially consequential emperors."},
       {"n": null, "title": "Roman Emperors - Busts, Coins, and Mullets (Livestream)", "kind": "bonus", "date": "2023-10-18", "catalogueDate": true, "href": "https://therestishistory.com/episodes/roman-emperors-busts-coins-and-mullets-livestream", "note": "Imperial portraiture, coins, and presentation of power."},
-      {"n": 500, "title": "The Roman Conquest of Britain: The Empire Strikes Back (Part 2)", "date": "2024-10-02", "href": "https://therestishistory.com/episodes/the-empire-strikes-back-part-2", "note": "AD 43-84: Claudius, Boudicca and the northern campaigns. Kept together; overlaps Nero and the Jewish revolt."},
-      {"n": 501, "title": "The Roman Conquest of Britain: Boudicca’s Reign of Blood (Part 3)", "date": "2024-10-06", "href": "https://therestishistory.com/episodes/boudicca-s-reign-of-blood-part-3"},
-      {"n": 502, "title": "The Roman Conquest of Britain: To the Ends of the Earth (Part 4)", "date": "2024-10-09", "href": "https://therestishistory.com/episodes/to-the-ends-of-the-earth-part-4"},
-      {"n": null, "title": "The Roman Conquest of Britain EXTRA", "kind": "bonus", "date": "2024-10-15", "catalogueDate": true, "href": "https://therestishistory.com/episodes/the-roman-conquest-of-britain-extra", "note": "Roman Britain's later reception; companion to episodes 499-502."},
       {"n": null, "title": "Romans in Britain, the Language of Boudicca, and Celtic Mysteries", "kind": "bonus", "date": "2025-06-24", "catalogueDate": true, "href": "https://therestishistory.com/episodes/romans-in-britain-the-language-of-boudicca-and-celtic-mysteries", "note": "Languages, coinage, and the transition into Roman-era Britain."},
       {"n": 56, "title": "Nero", "date": "2021-05-23", "href": "https://therestishistory.com/episodes/nero", "note": "Nero and his historical reputation."},
-      {"n": null, "title": "12 Days: Nero's succession and the fall of the Byzantine Empire", "kind": "special", "date": "2021-12-31", "href": "https://therestishistory.com/episodes/nero-s-succession-and-the-fall-of-the-byzantine-empire", "note": "Unnumbered January 1 seasonal special. Its Roman half fits after Nero; the second half jumps to medieval Byzantium. Do not label this episode 151."},
-      {"n": 176, "title": "The Jews Against Rome (Part 2)", "date": "2022-04-17", "href": "https://therestishistory.com/episodes/the-jews-against-rome", "note": "Rebellion, the destruction of the Temple, Vespasian, Titus and Masada."},
-      {"n": 177, "title": "The Jewish Revolt (Part 3)", "date": "2022-04-20", "href": "https://therestishistory.com/episodes/the-jewish-revolt"}
+      {"n": null, "title": "12 Days: Nero's succession and the fall of the Byzantine Empire", "kind": "special", "date": "2021-12-31", "href": "https://therestishistory.com/episodes/nero-s-succession-and-the-fall-of-the-byzantine-empire", "note": "Unnumbered January 1 seasonal special. Its Roman half fits after Nero; the second half jumps to medieval Byzantium. Do not label this episode 151."}
      ]
     },
     {
