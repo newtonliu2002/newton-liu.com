@@ -1342,11 +1342,12 @@ squares himself** (he asked), and he may still tell me.
   an extra the last part of its `href`, at = when ticked). Anyone may read
   them (`READ_PUBLIC = "1"`).
   - **Anyone may tick too, with no password** (`WRITE_PUBLIC = "1"`). Newton decided on 2026-10-23: the Personal pages will go behind one general password later.
-  - What keeps a stranger from doing much harm:
-    - only the lists in `TICK_LISTS` can be written;
-    - only keys shaped like the page's (a number, or a lowercase slug);
-    - at most 1,000 rows a list;
-    - per-address speed limits: 30 ticks and 60 reads a minute. These are Cloudflare rate-limit bindings, so a flood costs none of the account's D1 allowance, which Shoot Planner and Retreat Finder share.
+  - What keeps a stranger from doing much harm (hardened after a review, 2026-10-23; details in the Worker's README):
+    - only this page's own episodes can be ticked: the Worker reads data/podcasts.json from the site (`CATALOGUE_URL`, every 10 minutes) and accepts only its podcast ids and episode keys, made as `tickKey()` makes them. A new episode needs no Worker change. If the site moves to a domain, change `CATALOGUE_URL` too;
+    - `list` and `key` must be strings;
+    - speed limits, per address (30 ticks and 60 reads a minute) and for everyone together (10 ticks and 12 database reads a minute). These are Cloudflare rate-limit bindings, so a flood costs none of the account's D1 allowance, which Shoot Planner and Retreat Finder share;
+    - reads are answered from the Worker's memory for 10 seconds, and a save clears it.
+    - Over a limit the page says "Too many at once. Wait a minute, then try again." (一次点太多了，请等一分钟再试。).
   - Anything a stranger undoes can be put back with D1 Time Travel.
   - The Worker's password sign-in (`/login`, `PASSWORD`, `SESSION_SECRET` set 2026-10-23) stays dormant. Setting `PASSWORD` and turning `WRITE_PUBLIC` off brings it back, but the page's sign-in box was taken out, so that also needs the page's part rebuilding.
   **When he tells me in chat**, tick it in D1 from `~/Code/personal`:
@@ -1359,7 +1360,9 @@ squares himself** (he asked), and he may still tell me.
   says "Couldn't load what's finished.", and there is no filter.
   Each square is a checkbox (`button.pt-mark[role=checkbox]`) that saves on
   click, and goes back with "Couldn't save that. Try again." under the
-  filter if the save fails. A row just ticked stays in view under To listen /
+  filter if the save fails. Below 1000px that line stands at the foot of the
+  window, and it clears after 8 seconds. It stays in the page while empty, so
+  a screen reader announces it. The filter is hidden until the ticks are in. A row just ticked stays in view under To listen /
   Finished until the filter is next used (`.is-fresh`). The page says
   nothing to invite visitors to tick. Local testing: `npm run dev` in
   ~/Code/personal (port 8788) and `podcast-tracker.html?api=local`.

@@ -206,6 +206,7 @@
     "Nothing on the list yet.": "清单上还没有内容。", "Couldn't load the list.": "清单加载失败。",
     "Couldn't load what's finished.": "听完的记录加载失败。",
     "Couldn't save that. Try again.": "没存上，请再试一次。",
+    "Too many at once. Wait a minute, then try again.": "一次点太多了，请等一分钟再试。",
     // The travel log (travel-map.js)
     "Fall 2026 Travel Log": "2026秋季旅行记录", "Fall 2026 Travel Log — Newton Liu Photography": "2026秋季旅行记录 — Newton Liu Photography",
     "Skip to trips": "跳到行程列表", "Show all trips": "显示全部行程",

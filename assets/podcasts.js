@@ -40,7 +40,7 @@
   // The ticks: undefined while they load, null when the Worker couldn't be
   // reached (then nothing shows as finished or not, and nothing can be
   // ticked).
-  var ticks, rows = [], redraw = function () {};
+  var ticks, rows = [], redraw = function () {}, refilter = function () {};
 
   function el(tag, cls, text) {
     var n = document.createElement(tag);
@@ -264,6 +264,11 @@
       // a row just ticked stays in view until the filter is used again
       Array.prototype.forEach.call(col.querySelectorAll(".pt-ep.is-fresh"), function (li) { li.classList.remove("is-fresh"); });
       buttons.forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-show") === show ? "true" : "false"); });
+      sections();
+    }
+    // Which sections (and rail lines) have something to show under the filter. Also run when a tick that the
+    // filter was used during fails to save, so its row's section comes back.
+    function sections() {
       Array.prototype.forEach.call(col.querySelectorAll(".pt-section"), function (sec) {
         var any = show === "all" || !!sec.querySelector(show === "done" ? ".pt-ep.is-done" : ".pt-ep:not(.is-done)");
         sec.hidden = !any;
@@ -280,6 +285,7 @@
       });
       light();
     }
+    refilter = sections;
     buttons.forEach(function (b) {
       b.addEventListener("click", function () {
         apply(b.getAttribute("data-show"));
@@ -350,8 +356,13 @@
 
   // The rail's status line, for a tick that didn't save (one, kept, so a
   // screen reader hears each change).
-  var note = null;
-  function say(msg) { if (note) note.textContent = msg || ""; }
+  var note = null, noteTimer = 0;
+  function say(msg) {
+    if (!note) return;
+    note.textContent = msg || "";
+    clearTimeout(noteTimer);
+    if (msg) noteTimer = setTimeout(function () { note.textContent = ""; }, 8000);
+  }
 
   // A click on a square: it changes at once, and back if the save fails.
   function toggle(row) {
@@ -365,11 +376,14 @@
     say("");
     call("PUT", "/ticks", { list: row.list, key: row.key, done: to }).then(function (r) {
       if (r.status === 200) return true;
-      return Promise.reject(new Error("save"));
-    }).catch(function () {
+      var err = new Error("save");
+      err.status = r.status;
+      return Promise.reject(err);
+    }).catch(function (err) {
       row.ep.done = !to;
       paintMark(row);
-      say(t("Couldn't save that. Try again."));
+      refilter();
+      say(t(err && err.status === 429 ? "Too many at once. Wait a minute, then try again." : "Couldn't save that. Try again."));
       return false;
     }).then(function (ok) {
       row.busy = false;
@@ -416,7 +430,12 @@
   }
 
   // A link to a section (#the-rest-is-history-4): the anchor exists only
-  // once the list is drawn.
+  // once the list is drawn. Gone to again when the ticks have come (rows may
+  // have been hidden or shown above it), unless the reader has moved since.
+  var readerMoved = false;
+  ["wheel", "touchstart", "keydown", "mousedown"].forEach(function (type) {
+    window.addEventListener(type, function () { readerMoved = true; }, { once: true, passive: true });
+  });
   function toHash() {
     var target = null;
     try { target = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1))); } catch (e) {}
@@ -445,7 +464,7 @@
       bar.hidden = false;
       filter(root.querySelector(".pt-podcasts"), root.querySelector(".pt-jump"),
              Array.prototype.slice.call(bar.querySelectorAll("button")));
-      if (location.hash) toHash();
+      if (location.hash && !readerMoved) toHash();
     }
   }
 
