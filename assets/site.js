@@ -271,6 +271,7 @@
       "Drive, through Washington, D.C.": "自驾，途经华盛顿",
       "Bike: Richmond – Williamsburg, round trip": "骑行：里士满 – Williamsburg，往返",
       "Drive: Richmond – Québec – Ottawa – New York City – Richmond": "自驾：里士满 – 魁北克 – 渥太华 – 纽约 – 里士满",
+      "Drive: Richmond – Charlottesville – Shenandoah – Washington, D.C. – Philadelphia – Exton – Philadelphia – Washington, D.C. – Richmond": "自驾：里士满 – Charlottesville – Shenandoah – 华盛顿 – 费城 – Exton – 费城 – 华盛顿 – 里士满",
       "Drive: Richmond – Staunton – Shenandoah – Charlottesville – Tysons Corner – Richmond": "自驾：里士满 – Staunton – Shenandoah – Charlottesville – Tysons Corner – 里士满"
     },
     pins: {

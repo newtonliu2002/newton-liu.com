@@ -1468,7 +1468,10 @@ redone for trips, public (his pick).
   Charlottesville from Richmond. Oct 23-24 is called "Shenandoah ·
   Charlottesville · Washington, D.C." although D.C. proper was Tysons
   Corner, and home was on I-95. The D.C. day trips were driven from
-  Richmond (he confirmed). California's last stop is Fallbrook.
+  Richmond (he confirmed). California's last stop is Fallbrook. Oct 1-4 is
+  one trip: Richmond – Charlottesville – Shenandoah – D.C. – Philadelphia –
+  Exton – Philadelphia – D.C. – Richmond (his line; the Oct 2-4 Philadelphia ·
+  Exton and Oct 4 D.C. trips and their roads are gone).
   It replaced a first list read from his eBird export (2026-10-22).
   **New trips: he tells me**; one entry each, in date order, added once
   he is back, never while he is away.

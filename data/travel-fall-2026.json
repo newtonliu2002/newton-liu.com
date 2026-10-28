@@ -110,34 +110,17 @@
   },
   {
    "id": "charlottesville-2026-10-01",
-   "name": "Charlottesville · Shenandoah · Washington, D.C.",
+   "name": "Charlottesville · Shenandoah · Washington, D.C. · Philadelphia · Exton",
+   "where": "Drive: Richmond – Charlottesville – Shenandoah – Washington, D.C. – Philadelphia – Exton – Philadelphia – Washington, D.C. – Richmond",
    "start": "2026-10-01",
+   "end": "2026-10-04",
    "route": "charlottesville-2026-10-01",
    "stops": [
-    { "name": "Charlottesville", "lat": 38.0293, "lng": -78.4767 },
-    { "name": "Shenandoah National Park", "lat": 38.53, "lng": -78.35 },
-    { "name": "Washington, D.C.", "lat": 38.9072, "lng": -77.0369 }
-   ]
-  },
-  {
-   "id": "philadelphia-exton-2026-10-02",
-   "name": "Philadelphia · Exton",
-   "where": "Pennsylvania",
-   "start": "2026-10-02",
-   "end": "2026-10-04",
-   "route": "philadelphia-exton-2026-10-02",
-   "stops": [
+    { "name": "Charlottesville", "lat": 38.0293, "lng": -78.4767, "date": "2026-10-01" },
+    { "name": "Shenandoah National Park", "lat": 38.53, "lng": -78.35, "date": "2026-10-01" },
+    { "name": "Washington, D.C.", "lat": 38.9072, "lng": -77.0369 },
     { "name": "Philadelphia", "lat": 39.9526, "lng": -75.1652 },
     { "name": "Exton", "lat": 40.029, "lng": -75.621 }
-   ]
-  },
-  {
-   "id": "washington-dc-2026-10-04",
-   "name": "Washington, D.C.",
-   "start": "2026-10-04",
-   "route": "washington-dc-2026-10-04",
-   "stops": [
-    { "name": "Washington, D.C.", "lat": 38.9072, "lng": -77.0369 }
    ]
   },
   {
