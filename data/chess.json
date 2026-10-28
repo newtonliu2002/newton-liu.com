@@ -13,6 +13,7 @@
       "start": "2026-10-25",
       "end": "2026-10-25",
       "section": "Under 1500",
+      "timeControl": "G/30;d5",
       "rounds": 4,
       "rating": [
         {
