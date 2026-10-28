@@ -169,12 +169,17 @@
   },
   {
    "id": "shenandoah-2026-10-24",
-   "name": "Shenandoah · Charlottesville · Washington, D.C.",
-   "start": "2026-10-24",
+   "name": "Shenandoah · Charlottesville",
+   "where": "Drive: Richmond – Staunton – Shenandoah – Charlottesville – Tysons Corner",
+   "start": "2026-10-23",
+   "end": "2026-10-24",
+   "route": "shenandoah-2026-10",
    "stops": [
-    { "name": "Shenandoah National Park", "lat": 38.53, "lng": -78.35 },
-    { "name": "Charlottesville", "lat": 38.0293, "lng": -78.4767 },
-    { "name": "Washington, D.C.", "lat": 38.9072, "lng": -77.0369 }
+    { "name": "Richmond", "lat": 37.5407, "lng": -77.436, "date": "2026-10-23" },
+    { "name": "Staunton", "lat": 38.1496, "lng": -79.0717, "date": "2026-10-24" },
+    { "name": "Shenandoah National Park", "lat": 38.53, "lng": -78.35, "date": "2026-10-24" },
+    { "name": "Charlottesville", "lat": 38.0293, "lng": -78.4767, "date": "2026-10-24" },
+    { "name": "Tysons Corner", "lat": 38.9187, "lng": -77.2311, "date": "2026-10-24" }
    ]
   }
  ]

@@ -1425,6 +1425,10 @@ redone for trips, public (his pick).
   Richmond through D.C.; the Capital Trail (routed along Route 5, beside
   the trail); the Québec loop (Richmond, the journal's route, Ottawa, New
   York City, D.C., Richmond). The Québec stops keep the journal's dates.
+  Added 2026-10-28 from his word: Oct 23-24, a drive Richmond (left Friday
+  10 PM) – Staunton – Shenandoah – Charlottesville – Tysons Corner, "no dc
+  proper" (route `shenandoah-2026-10`, held on Skyline Drive from Rockfish
+  Gap to Swift Run Gap by two waypoints; OSRM otherwise takes the valley).
   It replaced a first list read from his eBird export (2026-10-22).
   **New trips: he tells me**; one entry each, in date order, added once
   he is back, never while he is away.
