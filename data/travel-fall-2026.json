@@ -38,7 +38,7 @@
   {
    "id": "california-2026-09-02",
    "name": "California",
-   "where": "Irvine · Catalina Island · Los Angeles · Pasadena · Calabasas",
+   "where": "Irvine · Catalina Island · Los Angeles · Pasadena · Fallbrook",
    "start": "2026-09-02",
    "end": "2026-09-12",
    "route": "california-2026-09-02",
@@ -47,7 +47,7 @@
     { "name": "Catalina Island", "lat": 33.3428, "lng": -118.3282 },
     { "name": "Los Angeles", "lat": 34.0522, "lng": -118.2437 },
     { "name": "Pasadena", "lat": 34.1478, "lng": -118.1445 },
-    { "name": "Calabasas", "lat": 34.1367, "lng": -118.6615 }
+    { "name": "Fallbrook", "lat": 33.3764, "lng": -117.2512 }
    ]
   },
   {

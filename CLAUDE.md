@@ -1479,7 +1479,7 @@ redone for trips, public (his pick).
   part (`tripName` in travel-map.js splits at " · " and " – "); a `where`
   line whole first (自驾，途经华盛顿), else by its parts. Cities in
   Chinese (华盛顿, 纽约, 里士满, 波士顿, 费城, 洛杉矶, 尔湾), towns kept
-  (Charlottesville, Williamsburg, Calabasas, Exton), Catalina岛,
+  (Charlottesville, Williamsburg, Fallbrook, Exton, Staunton, Tysons Corner), Catalina岛,
   Shenandoah国家公园, 弗吉尼亚Capital步道.
 
 ## Sharing, search, 404 and the way onward (2026-10-23)
