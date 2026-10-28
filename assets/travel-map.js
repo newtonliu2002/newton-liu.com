@@ -56,13 +56,13 @@
     black: {
       meta: "#050505",
       land: "#161616", sea: "#0a0a0a", ice: W(.04), park: W(.025), parkEdge: W(.16),
-      coast: W(.16), river: W(.06), border: W(.16), state: W(.1),
+      coast: W(.16), river: W(.06), border: W(.16), state: W(.1), road: W(.3),
       country: W(.28), stateName: W(.2), city: W(.3)
     },
     white: {
       meta: "#f4f4f2",
       land: "#dededa", sea: "#ecece9", ice: W(.4), park: K(.035), parkEdge: K(.22),
-      coast: K(.28), river: K(.07), border: K(.18), state: K(.11),
+      coast: K(.28), river: K(.07), border: K(.18), state: K(.11), road: K(.32),
       country: K(.45), stateName: K(.3), city: K(.42)
     }
   };
@@ -285,7 +285,9 @@
     };
   }
 
-  // The roads of the trips that have one: faint, and full while lit.
+  // The roads of the trips: a quiet grey at rest; a lit or chosen trip's
+  // road in the accent, and the others all but gone meanwhile (Newton,
+  // 2026-10-28: only that trip's drive should light up).
   function addRoads() {
     var features = Object.keys(roads).map(function (id) {
       return { type: "Feature", properties: { id: id }, geometry: { type: "LineString", coordinates: roads[id] } };
@@ -293,7 +295,7 @@
     if (!features.length) return;
     map.addSource("roads", { type: "geojson", data: { type: "FeatureCollection", features: features } });
     map.addLayer({ id: "road", type: "line", source: "roads", layout: { "line-join": "round", "line-cap": "round" },
-      paint: { "line-color": accent(), "line-width": 1.25, "line-opacity": .45 } });
+      paint: { "line-color": PALETTE[ground()].road, "line-width": 1, "line-opacity": 1 } });
     map.addLayer({ id: "road-lit", type: "line", source: "roads", filter: ["==", ["get", "id"], ""],
       layout: { "line-join": "round", "line-cap": "round" },
       paint: { "line-color": accent(), "line-width": 2, "line-opacity": 1 } });
@@ -301,6 +303,7 @@
   function litRoad(id) {
     if (!map || !ready || !map.getLayer("road-lit")) return;
     map.setFilter("road-lit", ["==", ["get", "id"], id || ""]);
+    map.setPaintProperty("road", "line-opacity", id ? .2 : 1);
   }
 
   // The ground changed (the square at the end of the nav): repaint in place.
@@ -312,7 +315,7 @@
         for (var k in ly.paint) map.setPaintProperty(ly.id, k, ly.paint[k]);
       });
       if (map.getLayer("road")) {
-        map.setPaintProperty("road", "line-color", accent());
+        map.setPaintProperty("road", "line-color", PALETTE[ground()].road);
         map.setPaintProperty("road-lit", "line-color", accent());
       }
     } catch (e) {}

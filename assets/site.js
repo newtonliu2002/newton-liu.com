@@ -191,6 +191,7 @@
     "Rating": "等级分", "Win": "胜", "Draw": "和", "Loss": "负", "White": "执白", "Black": "执黑",
     "R{n}": "第{n}轮", "Score {pts} / {n}": "积分 {pts} / {n}", "Place {n}": "第{n}名", "Crosstable": "成绩表",
     "Bye": "轮空", "Half-point bye": "轮空（半分）", "Full-point bye": "轮空（一分）",
+    "forfeit": "弃权", "Win by forfeit": "对手弃权，判胜", "Loss by forfeit": "弃权，判负", "extra game": "额外对局",
     "Opponent to come": "对手待补", "No games logged yet.": "还没有记录对局。",
     "Couldn't load the games.": "对局加载失败。", "Starting position": "初始局面",
     "Position after {move}": "{move}之后的局面", "Start": "回到开局", "End": "跳到终局",
@@ -265,7 +266,7 @@
       "Utah": "犹他", "Alberta": "艾伯塔", "British Columbia": "不列颠哥伦比亚", "Yukon": "育空",
       "China": "中国", "Nebraska": "内布拉斯加", "Nuevo León": "新莱昂",
       // the travel log's lines
-      "Pennsylvania": "宾夕法尼亚", "Irvine": "尔湾", "Catalina Island": "Catalina岛", "Los Angeles": "洛杉矶",
+      "Pennsylvania": "宾夕法尼亚", "Irvine": "尔湾", "Catalina Island": "Catalina岛", "Los Angeles": "洛杉矶", "Pasadena": "帕萨迪纳",
       "Drive, through Washington, D.C.": "自驾，途经华盛顿",
       "Bike: Richmond – Williamsburg, round trip": "骑行：里士满 – Williamsburg，往返",
       "Drive: Richmond – Québec – Ottawa – New York City – Richmond": "自驾：里士满 – 魁北克 – 渥太华 – 纽约 – 里士满",
@@ -279,7 +280,7 @@
       "Vancouver": "温哥华", "Phoenix": "凤凰城", "Monterrey": "蒙特雷", "Lima": "利马", "Cusco": "库斯科",
       "Rabat": "拉巴特", "Agadir": "阿加迪尔", "Kandy": "康提", "Fairbanks": "费尔班克斯", "Juneau": "朱诺",
       "Washington, D.C.": "华盛顿", "Richmond": "里士满", "New York City": "纽约", "Boston": "波士顿",
-      "Philadelphia": "费城", "Los Angeles": "洛杉矶", "Irvine": "尔湾", "Catalina Island": "Catalina岛",
+      "Philadelphia": "费城", "Los Angeles": "洛杉矶", "Irvine": "尔湾", "Catalina Island": "Catalina岛", "Pasadena": "帕萨迪纳",
       "Shenandoah National Park": "Shenandoah国家公园",
       // The best known, fully Chinese (Newton, 2026-10-19)
       "Yellowstone National Park": "黄石国家公园", "Yosemite National Park": "优胜美地国家公园",

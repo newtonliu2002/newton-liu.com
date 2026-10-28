@@ -1428,7 +1428,18 @@ redone for trips, public (his pick).
   Added 2026-10-28 from his word: Oct 23-24, a drive Richmond (left Friday
   10 PM) – Staunton – Shenandoah – Charlottesville – Tysons Corner, "no dc
   proper" (route `shenandoah-2026-10`, held on Skyline Drive from Rockfish
-  Gap to Swift Run Gap by two waypoints; OSRM otherwise takes the valley).
+  Gap; he went in and out at Rockfish Gap, so the road goes north on
+  Skyline Drive to about Loft Mountain and back, the turnaround a guess).
+  **Every trip is a drive** (Newton, 2026-10-28) except the Capital Trail
+  (a bike ride) and California (flown to LA, then driven between the places;
+  Pasadena added; Catalina is off the line, by ferry). Each trip's road is
+  its own key in travel-routes.json (the trip's id). Unless he says
+  otherwise, it starts and ends in Richmond; a trip that runs straight into
+  the next on the same day continues from it (Philadelphia → D.C. on Aug 28
+  and Oct 4). Shenandoah day trips go to Big Meadows on Skyline Drive (a
+  guess). **Lighting:** at rest every road is a quiet grey (`road` in
+  PALETTE); a lit or chosen trip's road is the accent and the others fade to
+  a fifth (litRoad), so only that trip's drive lights up (his ask).
   It replaced a first list read from his eBird export (2026-10-22).
   **New trips: he tells me**; one entry each, in date order, added once
   he is back, never while he is away.

@@ -21,6 +21,7 @@
    "where": "Pennsylvania",
    "start": "2026-08-26",
    "end": "2026-08-28",
+   "route": "philadelphia-2026-08-26",
    "stops": [
     { "name": "Philadelphia", "lat": 39.9526, "lng": -75.1652 }
    ]
@@ -29,6 +30,7 @@
    "id": "washington-dc-2026-08-28",
    "name": "Washington, D.C.",
    "start": "2026-08-28",
+   "route": "washington-dc-2026-08-28",
    "stops": [
     { "name": "Washington, D.C.", "lat": 38.9072, "lng": -77.0369 }
    ]
@@ -36,13 +38,15 @@
   {
    "id": "california-2026-09-02",
    "name": "California",
-   "where": "Irvine · Catalina Island · Los Angeles · Calabasas",
+   "where": "Irvine · Catalina Island · Los Angeles · Pasadena · Calabasas",
    "start": "2026-09-02",
    "end": "2026-09-12",
+   "route": "california-2026-09-02",
    "stops": [
     { "name": "Irvine", "lat": 33.6846, "lng": -117.8265 },
     { "name": "Catalina Island", "lat": 33.3428, "lng": -118.3282 },
     { "name": "Los Angeles", "lat": 34.0522, "lng": -118.2437 },
+    { "name": "Pasadena", "lat": 34.1478, "lng": -118.1445 },
     { "name": "Calabasas", "lat": 34.1367, "lng": -118.6615 }
    ]
   },
@@ -50,6 +54,7 @@
    "id": "washington-dc-2026-09-13",
    "name": "Washington, D.C.",
    "start": "2026-09-13",
+   "route": "washington-dc-2026-09-13",
    "stops": [
     { "name": "Washington, D.C.", "lat": 38.9072, "lng": -77.0369 }
    ]
@@ -69,6 +74,7 @@
    "id": "washington-dc-2026-09-18",
    "name": "Washington, D.C.",
    "start": "2026-09-18",
+   "route": "washington-dc-2026-09-18",
    "stops": [
     { "name": "Washington, D.C.", "lat": 38.9072, "lng": -77.0369 }
    ]
@@ -77,6 +83,7 @@
    "id": "charlottesville-2026-09-19",
    "name": "Charlottesville · Washington, D.C.",
    "start": "2026-09-19",
+   "route": "charlottesville-2026-09-19",
    "stops": [
     { "name": "Charlottesville", "lat": 38.0293, "lng": -78.4767 },
     { "name": "Washington, D.C.", "lat": 38.9072, "lng": -77.0369 }
@@ -86,6 +93,7 @@
    "id": "shenandoah-2026-09-20",
    "name": "Shenandoah National Park",
    "start": "2026-09-20",
+   "route": "shenandoah-2026-09-20",
    "stops": [
     { "name": "Shenandoah National Park", "lat": 38.53, "lng": -78.35 }
    ]
@@ -95,6 +103,7 @@
    "name": "New York City",
    "start": "2026-09-24",
    "end": "2026-09-27",
+   "route": "new-york-2026-09-24",
    "stops": [
     { "name": "New York City", "lat": 40.7128, "lng": -74.006 }
    ]
@@ -103,6 +112,7 @@
    "id": "shenandoah-2026-09-28",
    "name": "Shenandoah National Park",
    "start": "2026-09-28",
+   "route": "shenandoah-2026-09-28",
    "stops": [
     { "name": "Shenandoah National Park", "lat": 38.53, "lng": -78.35 }
    ]
@@ -111,6 +121,7 @@
    "id": "charlottesville-2026-10-01",
    "name": "Charlottesville · Shenandoah · Washington, D.C.",
    "start": "2026-10-01",
+   "route": "charlottesville-2026-10-01",
    "stops": [
     { "name": "Charlottesville", "lat": 38.0293, "lng": -78.4767 },
     { "name": "Shenandoah National Park", "lat": 38.53, "lng": -78.35 },
@@ -123,6 +134,7 @@
    "where": "Pennsylvania",
    "start": "2026-10-02",
    "end": "2026-10-04",
+   "route": "philadelphia-exton-2026-10-02",
    "stops": [
     { "name": "Philadelphia", "lat": 39.9526, "lng": -75.1652 },
     { "name": "Exton", "lat": 40.029, "lng": -75.621 }
@@ -132,6 +144,7 @@
    "id": "washington-dc-2026-10-04",
    "name": "Washington, D.C.",
    "start": "2026-10-04",
+   "route": "washington-dc-2026-10-04",
    "stops": [
     { "name": "Washington, D.C.", "lat": 38.9072, "lng": -77.0369 }
    ]
@@ -162,6 +175,7 @@
    "id": "new-york-2026-10-18",
    "name": "New York City · Washington, D.C.",
    "start": "2026-10-18",
+   "route": "new-york-2026-10-18",
    "stops": [
     { "name": "New York City", "lat": 40.7128, "lng": -74.006 },
     { "name": "Washington, D.C.", "lat": 38.9072, "lng": -77.0369 }
