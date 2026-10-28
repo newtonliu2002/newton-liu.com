@@ -1458,6 +1458,15 @@ redone for trips, public (his pick).
   guess). **Lighting:** at rest every road is a quiet grey (`road` in
   PALETTE); a lit or chosen trip's road is the accent and the others fade to
   a fifth (litRoad), so only that trip's drive lights up (his ask).
+  2026-10-28, his corrections: Aug 26-28 Philadelphia and the Aug 28 D.C.
+  day are one trip, "Philadelphia · Washington, D.C." (Richmond →
+  Philadelphia → D.C. → Richmond; the D.C. trip and its road are gone). Every
+  Shenandoah visit went in and out at Rockfish Gap (the south entrance),
+  except Oct 1, which stays as drawn. Oct 6 was added: Shenandoah and
+  Charlottesville from Richmond. Oct 23-24 is called "Shenandoah ·
+  Charlottesville · Washington, D.C." although D.C. proper was Tysons
+  Corner, and home was on I-95. The D.C. day trips were driven from
+  Richmond (he confirmed). California's last stop is Fallbrook.
   It replaced a first list read from his eBird export (2026-10-22).
   **New trips: he tells me**; one entry each, in date order, added once
   he is back, never while he is away.

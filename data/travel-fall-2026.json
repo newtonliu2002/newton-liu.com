@@ -17,22 +17,13 @@
   },
   {
    "id": "philadelphia-2026-08-26",
-   "name": "Philadelphia",
-   "where": "Pennsylvania",
+   "name": "Philadelphia · Washington, D.C.",
    "start": "2026-08-26",
    "end": "2026-08-28",
    "route": "philadelphia-2026-08-26",
    "stops": [
-    { "name": "Philadelphia", "lat": 39.9526, "lng": -75.1652 }
-   ]
-  },
-  {
-   "id": "washington-dc-2026-08-28",
-   "name": "Washington, D.C.",
-   "start": "2026-08-28",
-   "route": "washington-dc-2026-08-28",
-   "stops": [
-    { "name": "Washington, D.C.", "lat": 38.9072, "lng": -77.0369 }
+    { "name": "Philadelphia", "lat": 39.9526, "lng": -75.1652 },
+    { "name": "Washington, D.C.", "lat": 38.9072, "lng": -77.0369, "date": "2026-08-28" }
    ]
   },
   {
@@ -150,6 +141,16 @@
    ]
   },
   {
+   "id": "shenandoah-2026-10-06",
+   "name": "Shenandoah · Charlottesville",
+   "start": "2026-10-06",
+   "route": "shenandoah-2026-10-06",
+   "stops": [
+    { "name": "Shenandoah National Park", "lat": 38.53, "lng": -78.35 },
+    { "name": "Charlottesville", "lat": 38.0293, "lng": -78.4767 }
+   ]
+  },
+  {
    "id": "quebec-2026-10-07",
    "name": "Québec",
    "where": "Drive: Richmond – Québec – Ottawa – New York City – Richmond",
@@ -183,8 +184,8 @@
   },
   {
    "id": "shenandoah-2026-10-24",
-   "name": "Shenandoah · Charlottesville",
-   "where": "Drive: Richmond – Staunton – Shenandoah – Charlottesville – Tysons Corner",
+   "name": "Shenandoah · Charlottesville · Washington, D.C.",
+   "where": "Drive: Richmond – Staunton – Shenandoah – Charlottesville – Tysons Corner – Richmond",
    "start": "2026-10-23",
    "end": "2026-10-24",
    "route": "shenandoah-2026-10",

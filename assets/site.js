@@ -270,7 +270,7 @@
       "Drive, through Washington, D.C.": "自驾，途经华盛顿",
       "Bike: Richmond – Williamsburg, round trip": "骑行：里士满 – Williamsburg，往返",
       "Drive: Richmond – Québec – Ottawa – New York City – Richmond": "自驾：里士满 – 魁北克 – 渥太华 – 纽约 – 里士满",
-      "Drive: Richmond – Staunton – Shenandoah – Charlottesville – Tysons Corner": "自驾：里士满 – Staunton – Shenandoah – Charlottesville – Tysons Corner"
+      "Drive: Richmond – Staunton – Shenandoah – Charlottesville – Tysons Corner – Richmond": "自驾：里士满 – Staunton – Shenandoah – Charlottesville – Tysons Corner – 里士满"
     },
     pins: {
       // Major cities, fully Chinese, and Fairbanks and Juneau (Newton,
