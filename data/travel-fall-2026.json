@@ -166,6 +166,16 @@
     { "name": "New York City", "lat": 40.7128, "lng": -74.006 },
     { "name": "Washington, D.C.", "lat": 38.9072, "lng": -77.0369 }
    ]
+  },
+  {
+   "id": "shenandoah-2026-10-24",
+   "name": "Shenandoah · Charlottesville · Washington, D.C.",
+   "start": "2026-10-24",
+   "stops": [
+    { "name": "Shenandoah National Park", "lat": 38.53, "lng": -78.35 },
+    { "name": "Charlottesville", "lat": 38.0293, "lng": -78.4767 },
+    { "name": "Washington, D.C.", "lat": 38.9072, "lng": -77.0369 }
+   ]
   }
  ]
 }
