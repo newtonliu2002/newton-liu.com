@@ -9,7 +9,10 @@
    A PGN (`pgn`) is optional: its tags fill in whatever the entry leaves out
    (White, Black, Result, Round, Date, WhiteElo, BlackElo) and its moves
    become a board to step through under the row. A bye is
-   { "round": 4, "bye": 0.5 }.
+   { "round": 4, "bye": 0.5 }. A win (or loss) by forfeit, with no game
+   played, has "forfeit": true: it counts in the tournament's score but not
+   as a game. A rated game played outside the pairings (US Chess's "Extra
+   games" section) has "extra": true: a game in his record, not in the score.
 
    No chess library: the PGN reader below knows just enough of the rules to
    place each move (which knight, en passant, castling, promotion, a piece
@@ -652,11 +655,13 @@
       row.appendChild(col);
       var opp = el("span", "cg-opp", g.opponent || t("Opponent to come"));
       if (g.opponentRating) opp.appendChild(el("span", "cg-elo", String(g.opponentRating)));
+      if (g.forfeit) opp.appendChild(el("span", "cg-tag", t("forfeit")));
+      else if (g.extra) opp.appendChild(el("span", "cg-tag", t("extra game")));
       row.appendChild(opp);
     }
     var res = el("span", "cg-result" + (g.points === 1 ? " is-win" : g.points === 0 ? " is-loss" : ""),
                  g.points == null ? "\u2013" : score(g.points));
-    if (g.points != null && g.bye == null) res.setAttribute("aria-label", t(RESULT_WORD[g.points]));
+    if (g.points != null && g.bye == null) res.setAttribute("aria-label", t(g.forfeit ? (g.points ? "Win by forfeit" : "Loss by forfeit") : RESULT_WORD[g.points]));
     row.appendChild(res);
 
     var link = el("span", "cg-linkcell");
@@ -719,10 +724,12 @@
     });
     if (meta.childNodes.length) sec.appendChild(meta);
 
-    var counted = games.filter(function (g) { return g.points != null; });
+    // The score is the tournament's: an extra game is rated but not scored.
+    var paired = games.filter(function (g) { return !g.extra; });
+    var counted = paired.filter(function (g) { return g.points != null; });
     var pts = counted.reduce(function (a, g) { return a + g.points; }, 0);
     var line = el("p", "cg-score");
-    if (counted.length) line.appendChild(el("span", null, t("Score {pts} / {n}", { pts: score(pts), n: tm.rounds || games.length })));
+    if (counted.length) line.appendChild(el("span", null, t("Score {pts} / {n}", { pts: score(pts), n: tm.rounds || paired.length })));
     // His ratings, one per system (a dual-rated event has two: "USCF" and
     // "USCF Quick"); no rating before (his first rated event): "Unrated → 1240".
     ratingsOf(tm).forEach(function (rt) {
@@ -775,8 +782,8 @@
       return;
     }
 
-    // The rail: games, wins, draws, losses (byes aside), and the latest rating.
-    var played = all.filter(function (g) { return g.bye == null && g.points != null; });
+    // The rail: games, wins, draws, losses (byes and forfeits aside), and the latest rating.
+    var played = all.filter(function (g) { return g.bye == null && !g.forfeit && g.points != null; });
     var tally = function (p) { return played.filter(function (g) { return g.points === p; }).length; };
     [["Games", played.length], ["Won", tally(1)], ["Drawn", tally(0.5)], ["Lost", tally(0)]].forEach(function (row) {
       var d = el("div", "cg-stat");

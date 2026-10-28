@@ -1308,6 +1308,24 @@ the database is reached from the map's pins and its "Database →".
     by `color`. A `pgn`'s tags fill in what an entry leaves out (colour by
     `player`, opponent, ratings, result, round). `rounds` is the score's
     denominator when he didn't play them all; otherwise the rows count.
+  - **Forfeits and extra games** (the Tysons Corner event, 2026-10-25):
+    `"forfeit": true` is a round won (or lost) by forfeit with no game
+    played: the row shows the opponent and FORFEIT, it counts in the
+    tournament's score, not as a game in his record or the map's count.
+    `"extra": true` is a rated game outside the pairings (US Chess's "Extra
+    games" section): EXTRA GAME on the row, a game in his record, not in the
+    score or its denominator. At Tysons he won round 1 by forfeit, played
+    Brian Lai as an extra game in that round (his score sheet says "Round
+    1"), lost round 2 and wasn't paired after (`rounds: 4`).
+  - **Tournament details** come from US Chess's public ratings API (no
+    sign-in): his events at `ratings-api.uschess.org/api/v1/members/<his
+    ID>/events`, a section's crosstable at `…/rated-events/<event
+    id>/sections/<n>/standings` (pre- and post-event ratings, every round).
+    The old MSA crosstable pages no longer serve these events.
+  - **Score sheets he photographs**: transcribe them, then play every move
+    through chess-core.js before it goes in; an ambiguous move ("Re1" with
+    two rooks able) is settled by the later moves, and anything still
+    guessed is told to him.
   - `rating` is one `{system, before, after}` or a list: a dual-rated
     event has `[{"system": "USCF", …}, {"system": "USCF Quick", …}]`; no
     `before` (his first rated event) reads "Unrated → 1240". The rail shows

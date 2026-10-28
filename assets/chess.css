@@ -126,6 +126,8 @@ body.is-editing .chess .cg-intro:empty { display: block; }
 .chess .cg-opp { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); }
 .chess .cg-opp.is-bye { color: var(--text-faint); }
 .chess .cg-elo { margin-left: var(--s2); font-size: var(--t-meta); color: var(--text-faint); }
+/* "forfeit", "extra game": a quiet word after the rating. */
+.chess .cg-tag { margin-left: var(--s2); font: 400 var(--t-label)/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--text-faint); }
 .chess .cg-result { text-align: right; font-size: var(--t-row); color: var(--text-dim); }
 .chess .cg-result.is-win { color: var(--text); }
 .chess .cg-result.is-loss { color: var(--text-faint); }

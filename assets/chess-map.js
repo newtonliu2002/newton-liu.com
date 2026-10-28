@@ -157,16 +157,18 @@
     });
     var ids = tournamentIds(list), games = 0;
     list.forEach(function (tm, k) {
-      var gs = tm.games || [], counted = 0, pts = 0;
+      var gs = tm.games || [], counted = 0, pts = 0, paired = 0;
       gs.forEach(function (g) {
         var p = points(g);
-        if (g.bye == null) games++;
+        if (g.bye == null && !g.forfeit) games++;          // a game played (chess.js's rule)
+        if (g.extra) return;                               // rated, but not in the tournament's score
+        paired++;
         if (p != null) { counted++; pts += p; }
       });
       var e = {
         id: ids[k], name: tm.name || t("Tournament"), where: tm.where || "",
         date: dateRange(tm.start, tm.end), short: shortDate(tm.start, tm.end), year: (ymd(tm.start) || {}).y || "",
-        score: counted ? t("Score {pts} / {n}", { pts: score(pts), n: tm.rounds || gs.length }) : "",
+        score: counted ? t("Score {pts} / {n}", { pts: score(pts), n: tm.rounds || paired }) : "",
         href: DB + "#" + encodeURIComponent(ids[k]),
         ll: typeof tm.lat === "number" && typeof tm.lng === "number" ? [tm.lng, tm.lat] : null
       };
