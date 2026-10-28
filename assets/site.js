@@ -74,10 +74,11 @@
     // Personal: a tab with no page, like Journals (Newton, 2026-10-21)
     "personal": [
       { label: "Podcast Tracker", zh: "播客记录", href: "podcast-tracker.html" },
-      { label: "Fall 2026 Travel Log", zh: "2026秋季旅行记录", href: "travel-fall-2026.html" }
+      { label: "Fall 2026 Travel Log", zh: "2026秋季旅行记录", href: "travel-fall-2026.html" },
+      // Chess moved here from its own tab (Newton, 2026-10-28): the map,
+      // whose pins and "Database →" open the games.
+      { label: "Chess", zh: "国际象棋", href: "chess.html" }
     ]
-    // Chess has no menu (Newton, 2026-10-20): the tab goes straight to the
-    // map, whose pins and "Database →" open the games.
   };
 
   /* ------------------------------------------------------------------

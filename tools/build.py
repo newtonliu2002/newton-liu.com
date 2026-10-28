@@ -442,7 +442,6 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
       <a href="../../about.html">About</a>
       <button type="button" class="nav-tab" data-menu="journals">Journals</button>
       <a href="../../academia.html">Academia</a>
-      <a href="../../chess.html">Chess</a>
       <button type="button" class="nav-tab" data-menu="personal">Personal</button>
       <a href="../../projects.html">Projects</a>
       <a href="../../contact.html">Contact</a>

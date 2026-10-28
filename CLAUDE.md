@@ -1161,11 +1161,12 @@ they're small). Their `sizes` mirrors the column: the page width below
 The tab is in the nav of every page: the hand-written pages, this one,
 the journal pages, and `PAGE_TEMPLATE` in build.py for the collection pages.
 
-**The nav, in order** (Newton, 2026-10-17; Chess added 2026-10-19,
-Personal 2026-10-21): Work · About · Journals · Academia · Chess ·
+**The nav, in order** (Newton, 2026-10-17; Personal 2026-10-21; Chess
+moved under Personal 2026-10-28): Work · About · Journals · Academia ·
 Personal · Projects · Contact. **Personal** is a page-less tab like
 Journals (`data-menu="personal"`); its entries are the Podcast Tracker
-(see "Podcast Tracker") and the Fall 2026 Travel Log (see "Travel log"). **Journals** is not a link (he wanted it
+(see "Podcast Tracker"), the Fall 2026 Travel Log (see "Travel log") and
+Chess (see "Chess"); on each of their pages the Personal tab is current. **Journals** is not a link (he wanted it
 unclickable): `<button class="nav-tab" data-menu="journals">`, keyed in
 `NAV_MENUS` by its `data-menu`, whose one entry is Québec
 (journals/quebec/; `zh` gives 魁北克). Pointing opens it as for Projects;
@@ -1195,9 +1196,10 @@ fall behind the globe's sticky stage.
 
 ## Chess (chess.html, chess-games.html)
 
-Newton's chess tournaments (asked 2026-10-19). The **Chess** tab opens the
-map, with no drop-down (he had the Map · Database menu removed 2026-10-20):
-the database is reached from the map's pins and its "Database →".
+Newton's chess tournaments (asked 2026-10-19). **Chess** is an entry in
+the Personal menu (it was its own tab until he moved it, 2026-10-28) and
+opens the map; the database is reached from the map's pins and its
+"Database →" (no Map · Database menu: removed 2026-10-20).
 
 - **chess.html, the map**: a pin wherever he has played a tournament. He
   plays mostly in the United States, so it is a flat (mercator) map framed
