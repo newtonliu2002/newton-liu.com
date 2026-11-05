@@ -749,10 +749,9 @@ the photographs reached that in October 2026 (Peru). Since then:
   used at the move). Each file's key is its repo path, so
   `images/peru/EZLE2124.jpg` in the repo is `images/peru/EZLE2124.jpg` in R2.
 - **The address** is the `R2` constant in `assets/site.js`, the one place it is
-  written; `upload.py` reads it from there. It is R2's `pub-….r2.dev` address
-  for now, which Cloudflare rate-limits and labels for development. The plan is
-  a custom domain (`photos.<his domain>`) connected to the bucket in
-  Cloudflare, then that one constant changes. Newton is choosing the domain.
+  written; `upload.py` reads it from there. It is `https://photos.newton-liu.com/`,
+  the bucket's custom domain in Cloudflare (since 2026-11-05; before that R2's
+  rate-limited `pub-….r2.dev` address, which still works but nothing uses).
 - **The live site reads R2; the local preview reads `images/` on disk** (any
   page on localhost/127.0.0.1), so a collection can be arranged before
   anything is uploaded. To preview against R2 instead, run
@@ -1066,7 +1065,7 @@ data/places.json: `{ "href": "journals/quebec/", "draft": true }`.
 - **Going live is `"draft": false`**, and only that (a missing `draft` is
   still a draft). Quebec is LIVE (Newton, 2026-10-17, before its cover: a
   cover still a placeholder shows plain, the title on black); its address is
-  newtonliu2002.github.io/newton-liu.com/journals/quebec/.
+  newton-liu.com/journals/quebec/.
 
 **Placeholders are local only.** Until his words and media arrive, the
 entries hold `@placeholder` lines and empty dates; the local preview marks
@@ -1513,13 +1512,13 @@ Six "quick wins" from an audit, which Newton approved on 2026-10-23. Nothing vis
     - If either image changes, update those tags (and SHARE_IMAGE in build.py).
     - A new page copies the block from a neighbour.
   - The chess pages have none, because they belong to the chess chat.
-- **The address.** SITE_URL in build.py is the one place the generator writes it; the hand-written heads also carry it. On a move to a custom domain:
+- **The address.** SITE_URL in build.py is the one place the generator writes it; the hand-written heads also carry it. Since 2026-11-05 it is `https://newton-liu.com/` (see "The domain"). To change it again:
   1. Change SITE_URL.
-  2. Find-and-replace `https://newtonliu2002.github.io/newton-liu.com/` in *.html and journals/*/index.html.
+  2. Find-and-replace the old address in *.html and journals/*/index.html (404.html's `<base>` too).
   3. Run build.py.
 - **Search.**
   - `write_pages()` also writes sitemap.xml every run. It lists ROOT_PAGES (the same list the restamp uses: a new root page goes there), each journal that is not a draft, and every collection.
-  - robots.txt can't point to the sitemap on a project site, so submit it in Google Search Console.
+  - Submit sitemap.xml in Google Search Console (a robots.txt at the root could point to it now that the site has its own domain).
   - work.html has a `<noscript>` list of plain links to every collection. build.py writes it between the "build.py: collection links" markers inside #collection-grid, so don't hand-edit between them. site.js replaces the grid when it runs.
 - **Descriptions for screen readers and image search** (`altFor` in site.js). A photograph with a `caption` is described by its names (the caption, then any `also`) and the collection's place:
   - English: "Harbor Seal, Alaska".
@@ -1530,7 +1529,7 @@ Six "quick wins" from an audit, which Newton approved on 2026-10-23. Nothing vis
   - It saves the choice as the 中 switch does and corrects `data-site-lang`.
   - Then `history.replaceState` drops `lang=` and keeps the other parameters and the #part, so the switch works as usual afterwards.
   - `?edit` wins: the page stays English.
-  - To share in Chinese: newtonliu2002.github.io/newton-liu.com/?lang=zh.
+  - To share in Chinese: newton-liu.com/?lang=zh.
 - **Loading.** Every gallery tile is `loading="lazy"`, the first rows too, and the opener has `fetchpriority="high"`.
   - A phone on Alaska went from 1.67 MB to 0.59 MB before any scroll; a laptop is unchanged.
   - The About figures' `sizes` now match their real column above 1000px: `calc(min(100vw, 108rem) - 48px - min(4vw, 4.5rem) - min(0.52 * (min(100vw, 108rem) - 48px), 650px))`. The upright Arches is also held to (100vh − 8rem) × .8.
@@ -1642,6 +1641,27 @@ are the only things that decide where it writes.
 Nothing in edit mode is visible to a visitor. `?edit` on the live site would
 let a stranger type into their own copy of the page and change nothing —
 saving needs the token, and they don't have it.
+
+## The domain (newton-liu.com)
+
+Since 2026-11-05 the site is **https://newton-liu.com** (Newton renewed it
+at Squarespace, through Nov 5 2027; it renews there each year).
+
+- **DNS is on Cloudflare** (Newton's account, Free plan); the Squarespace
+  registration points its nameservers at Cloudflare's (dale, rosemary).
+  DNSSEC is off.
+- **The site:** four A records for newton-liu.com to GitHub Pages
+  (185.199.108–111.153) and `www` a CNAME to newtonliu2002.github.io, all
+  "DNS only" (grey cloud), so GitHub issues the certificate. The `CNAME`
+  file at the repo's root names the domain; never delete it, or Pages drops
+  the domain. The old newtonliu2002.github.io/newton-liu.com/ address
+  redirects here.
+- **The photographs:** photos.newton-liu.com is the R2 bucket's custom
+  domain (see "Where the photographs live").
+- **Workers** (Photography Planner, Retreat Finder, personal) list
+  https://newton-liu.com and https://www.newton-liu.com in ALLOWED_ORIGINS,
+  beside the old github.io origin. A sign-in kept in a browser belongs to
+  one origin, so the apps asked for their passphrase again after the move.
 
 ## Conventions
 

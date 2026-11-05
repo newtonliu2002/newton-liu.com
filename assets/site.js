@@ -366,7 +366,7 @@
   // so a collection can be arranged before a single file is uploaded. To check
   // an upload, preview against R2 by running  localStorage.media = "r2"  in the
   // console, and delete it afterwards.
-  var R2 = "https://pub-ce9a4b2d164449d8ac95ccbca47549a3.r2.dev/";
+  var R2 = "https://photos.newton-liu.com/";
   var MEDIA = (function () {
     var local = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
     var force = null;

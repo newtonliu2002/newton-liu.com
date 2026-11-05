@@ -58,7 +58,7 @@ PAGES_DIR = os.path.join(ROOT, "collections")
 # hand-written pages carry it in their <head> too, so a move to a custom
 # domain is this line plus a find-and-replace of the old address in *.html,
 # journals/*/index.html, then a build (CLAUDE.md, "Link previews").
-SITE_URL = "https://newtonliu2002.github.io/newton-liu.com/"
+SITE_URL = "https://newton-liu.com/"
 # The hand-written pages at the root, in the sitemap and restamped (404.html
 # is restamped too, but is no page of its own to list).
 ROOT_PAGES = ("index.html", "work.html", "projects.html", "about.html", "contact.html", "academia.html",
