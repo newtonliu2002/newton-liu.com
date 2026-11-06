@@ -113,7 +113,8 @@
     removePersonAsk: function (n) { return "把" + n + "和他们的所有评分移出？"; },
     noFriends: "还没有朋友加入。把这个页面发给他们，输入名字就能开始评分。",
     nRated: function (n) { return "评了 " + n + " 个公园"; },
-    notRated: "还没评", friendsOn: "朋友的评分", othersOn: "其他人的评分"
+    notRated: "还没评", friendsOn: "朋友的评分", othersOn: "其他人的评分",
+    where: { us: "美国", ca: "加拿大", both: "全部" }, whereLabel: "国家", noneHere: "这里还没有评过的公园。"
   } : {
     loading: "Loading…", failed: "The list of parks didn't load.", ranked: "Mine", unrated: "To be rated", friendsTab: "Friends",
     count: function (n, all) { return n + " of " + all + " rated"; },
@@ -148,7 +149,8 @@
     removePersonAsk: function (n) { return "Remove " + n + " and all their ratings?"; },
     noFriends: "No friends here yet. Send them this page: they type their name and start rating.",
     nRated: function (n) { return n === 1 ? "1 park rated" : n + " parks rated"; },
-    notRated: "Hasn't rated it", friendsOn: "Friends' ratings", othersOn: "Everyone else's ratings"
+    notRated: "Hasn't rated it", friendsOn: "Friends' ratings", othersOn: "Everyone else's ratings",
+    where: { us: "US", ca: "Canada", both: "Both" }, whereLabel: "Country", noneHere: "No parks rated here yet."
   };
 
   var view = root.querySelector(".pk-view");
@@ -158,6 +160,13 @@
   var peopleBox = root.querySelector(".pk-people");
   var shareBox = root.querySelector(".pk-share");
   var backupBox = root.querySelector(".pk-backup");
+  // US, Canada or both (his ask, 2026-11-06): only hides parks from the lists.
+  // Scores, comparisons and "#r of n" stay over the one combined ranking.
+  var WHERE = "park_ranking_where";
+  var whereBox = root.querySelector(".pk-where");
+  var where = (function () { try { return localStorage.getItem(WHERE) || "both"; } catch (e) { return "both"; } })();
+  if (!/^(us|ca|both)$/.test(where)) where = "both";
+  function here(id) { var p = byId[id]; return !!p && (where === "both" || (p.country || "US").toLowerCase() === where); }
   var fileIn = backupBox.querySelector('input[type="file"]');
   var parks = [], byId = {}, store = blank(), state = { view: "ranked" }, query = "";
   // owner: Newton's Personal sign-in. friend: {id, token, name} for a friend's browser.
@@ -362,7 +371,20 @@
     var looking = state.view === "ranked" || state.view === "detail";
     var shown = looking ? (state.who === undefined ? me : state.who) : me;
     var st = inside && shown ? rankingOf(shown) : null;
-    countEl.textContent = st ? (shown !== me ? whoName(shown) + " · " : "") + L.count(Object.keys(st.rated).length, parks.length) : "";
+    countEl.textContent = st ? (shown !== me ? whoName(shown) + " · " : "") +
+      L.count(Object.keys(st.rated).filter(here).length, parks.filter(function (p) { return here(p.id); }).length) : "";
+    whereBox.hidden = !inside;
+    whereBox.setAttribute("aria-label", L.whereLabel);
+    whereBox.textContent = "";
+    ["us", "ca", "both"].forEach(function (k) {
+      var b = button(null, L.where[k], function () {
+        where = k;
+        try { localStorage.setItem(WHERE, k); } catch (e) {}
+        draw();
+      });
+      b.setAttribute("aria-pressed", String(where === k));
+      whereBox.appendChild(b);
+    });
     var on = state.view === "unrated" ? "unrated"
       : state.view === "friends" || shown !== me ? "friends" : "ranked";
     tabs.forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-view") === on)); });
@@ -568,18 +590,20 @@
       h.appendChild(el("h2", "pk-title", L.rankingOf(whoName(who))));
       view.appendChild(h);
     }
-    var ids = rankedList(st);
+    var ids = rankedList(st), shownIds = ids.filter(here);
     if (!ids.length) view.appendChild(el("p", "pk-note", who === me ? L.noneRanked : L.nothingYet(whoName(who))));
+    else if (!shownIds.length) view.appendChild(el("p", "pk-note", L.noneHere));
     else view.appendChild(el("p", "pk-note pk-lead", L.legend));
     var rank = 0;
     GROUPS.forEach(function (g) {
-      if (!st.order[g.k].length) return;
+      if (!st.order[g.k].filter(here).length) return;
       var sec = el("section", "pk-tier");
       var hd = el("h2", "pk-tier-head");
       hd.appendChild(el("span", "pk-tier-n", L.group[g.k]));
       sec.appendChild(hd);
       var ol = el("ol", "pk-list");
       st.order[g.k].forEach(function (id) {
+        if (!here(id)) return;
         rank++;
         ol.appendChild(parkRow(byId[id], twoScores(st, id), function () { go({ view: "detail", id: id, who: who }); }, rank));
       });
@@ -601,7 +625,7 @@
   }
 
   function drawUnrated() {
-    var left = parks.filter(function (p) { return !store.rated[p.id]; });
+    var left = parks.filter(function (p) { return !store.rated[p.id] && here(p.id); });
     if (!left.length) { view.appendChild(el("p", "pk-note", L.allRated)); return; }
     var box = el("input", "pk-search");
     box.type = "search";
@@ -632,7 +656,7 @@
       var b = button("pk-row", null, function () { go({ view: "ranked", who: p.id }); });
       var nm = el("span", "pk-name");
       nm.appendChild(el("span", "pk-park", p.name));
-      nm.appendChild(el("span", "pk-state", L.nRated(Object.keys(p.data.rated).length)));
+      nm.appendChild(el("span", "pk-state", L.nRated(Object.keys(p.data.rated).filter(here).length)));
       b.appendChild(nm);
       b.appendChild(el("span", "pk-go", "→"));
       li.appendChild(b);

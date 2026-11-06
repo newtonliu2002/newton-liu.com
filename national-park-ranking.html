@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>National Park Ranking — Newton Liu Photography</title>
-<meta name="description" content="Newton Liu: a personal ranking of the U.S. national parks, by scenery, activities and wildlife.">
+<meta name="description" content="Newton Liu: a ranking of the national parks of the U.S. and Canada, shared with friends.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Newton Liu Photography">
 <meta property="og:title" content="National Park Ranking — Newton Liu Photography">
-<meta property="og:description" content="Newton Liu: a personal ranking of the U.S. national parks, by scenery, activities and wildlife.">
+<meta property="og:description" content="Newton Liu: a ranking of the national parks of the U.S. and Canada, shared with friends.">
 <meta property="og:url" content="https://newton-liu.com/national-park-ranking.html">
 <meta property="og:image" content="https://newton-liu.com/images/_about/1600/B0003302.jpg">
 <meta property="og:image:width" content="1600">
@@ -22,7 +22,7 @@
 <script>try{if(localStorage.getItem("theme")==="white"){document.documentElement.dataset.theme="light";var m=document.querySelector('meta[name="theme-color"]');if(m)m.content="#ffffff"}}catch(e){}</script>
 <script>try{if(localStorage.getItem("lang")==="zh"&&!/[?&]edit\b/.test(location.search))document.documentElement.setAttribute("data-site-lang","zh")}catch(e){}</script>
 <link rel="stylesheet" href="assets/site.css?v=6229dcb2">
-<link rel="stylesheet" href="assets/parks.css?v=96efcc3a">
+<link rel="stylesheet" href="assets/parks.css?v=172ac010">
 </head>
 
 <body data-page="prose" data-base="">
@@ -49,10 +49,11 @@
 
 <main id="main">
   <!-- The National Park Ranking (Newton, 2026-11-06), a Projects entry: his
-       own ranking of the U.S. national parks, made like the eBird Site
-       Ranking. Each park he has been to gets 1–5 for scenery, activities and
-       wildlife; the total (3–15) is its tier, and "which did you like
-       more?" comparisons order each tier. Layout only: the parks are
+       ranking of the national parks of the U.S. and Canada (Canada added
+       2026-11-06, with a US / Canada / Both filter), shared with friends.
+       Each park: liked it? (yes / mid / no), then "which did you like
+       more?" comparisons place it in that group, then optional weighted
+       category scores. Layout only: the parks are
        data/national-parks.json, drawn by assets/parks.js; the ratings are
        Newton's and his friends', in the park-ranking Worker (see CLAUDE.md,
        "National Park Ranking"). -->
@@ -66,6 +67,7 @@
         <button type="button" data-view="unrated" aria-pressed="false">To be rated</button>
         <button type="button" data-view="friends" aria-pressed="false">Friends</button>
       </div>
+      <div class="pk-where" role="group" aria-label="Country" hidden></div>
       <div class="pk-people" hidden></div>
       <div class="pk-share" hidden></div>
       <div class="pk-backup" hidden>
@@ -95,8 +97,8 @@
   </div>
 </footer>
 
-<script src="assets/site.js?v=bb24e3bd"></script>
+<script src="assets/site.js?v=73868a6c"></script>
 <script src="assets/edit.js?v=59a5bab4"></script>
-<script src="assets/parks.js?v=a24f5e92"></script>
+<script src="assets/parks.js?v=bc0feafa"></script>
 </body>
 </html>

@@ -1583,8 +1583,13 @@ Newton asked for it: every photograph in a gallery has its own address, so a lin
 Asked for 2026-11-06: "you know what i do for my ebird site ranking? can we
 build one for the national parks too", under Projects as "National Park
 Ranking". Made like the eBird Site Ranking, but on this site:
-- `data/national-parks.json`: the 63 U.S. national parks (id permanent,
-  name without "National Park", state). In Chinese a name shows as
+- `data/national-parks.json`: the 63 U.S. national parks and Canada's 47
+  national parks and park reserves (added 2026-11-06; ids "ca-…", marine
+  and urban parks left out), each with id (permanent), name without
+  "National Park (Reserve)", state/province, country US or CA. His US /
+  Canada / Both filter (rail, `.pk-where`, kept in localStorage
+  "park_ranking_where") only hides parks from the lists and counts; the
+  ranking, comparisons, scores and "#r of n" stay one combined list. In Chinese a name shows as
   "Acadia国家公园" (the generic part translated, per the place-name rule).
 - `assets/parks.js` + `assets/parks.css`: rating a park is his three steps
   (2026-11-06, "like how Beli works"): 1. "Did you like it?" Yes / Mid /

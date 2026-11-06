@@ -25,9 +25,11 @@
 
 .parks .pk-count { margin: var(--s6) 0 0; color: var(--text-dim); }
 .parks .pk-tabs,
+.parks .pk-where,
 .parks .pk-backup { display: flex; flex-wrap: wrap; gap: 0 var(--s4); margin: var(--s4) 0 0; }
 .parks .pk-backup { margin-top: var(--s6); }
 .parks .pk-tabs button,
+.parks .pk-where button,
 .parks .pk-backup button,
 .parks .pk-quiet,
 .parks .pk-back {
@@ -39,10 +41,12 @@
   transition: color var(--d-fast) var(--ease);
 }
 .parks .pk-tabs button:hover,
+.parks .pk-where button:hover,
 .parks .pk-backup button:hover,
 .parks .pk-quiet:hover,
 .parks .pk-back:hover { color: var(--text); }
-.parks .pk-tabs button[aria-pressed="true"] {
+.parks .pk-tabs button[aria-pressed="true"],
+.parks .pk-where button[aria-pressed="true"] {
   color: var(--text); text-decoration: underline;
   text-decoration-color: var(--accent); text-underline-offset: 5px;
 }
