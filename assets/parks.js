@@ -163,9 +163,24 @@
   // US, Canada or both (his ask, 2026-11-06): only hides parks from the lists.
   // Scores, comparisons and "#r of n" stay over the one combined ranking.
   var WHERE = "park_ranking_where";
-  var whereBox = root.querySelector(".pk-where");
   var where = (function () { try { return localStorage.getItem(WHERE) || "both"; } catch (e) { return "both"; } })();
   if (!/^(us|ca|both)$/.test(where)) where = "both";
+  // The filter sits at the top of each list, above "Find a park" (his ask).
+  function whereBar() {
+    var box = el("div", "pk-where");
+    box.setAttribute("role", "group");
+    box.setAttribute("aria-label", L.whereLabel);
+    ["us", "ca", "both"].forEach(function (k) {
+      var b = button(null, L.where[k], function () {
+        where = k;
+        try { localStorage.setItem(WHERE, k); } catch (e) {}
+        draw();
+      });
+      b.setAttribute("aria-pressed", String(where === k));
+      box.appendChild(b);
+    });
+    return box;
+  }
   function here(id) { var p = byId[id]; return !!p && (where === "both" || (p.country || "US").toLowerCase() === where); }
   var fileIn = backupBox.querySelector('input[type="file"]');
   var parks = [], byId = {}, store = blank(), state = { view: "ranked" }, query = "";
@@ -373,18 +388,6 @@
     var st = inside && shown ? rankingOf(shown) : null;
     countEl.textContent = st ? (shown !== me ? whoName(shown) + " · " : "") +
       L.count(Object.keys(st.rated).filter(here).length, parks.filter(function (p) { return here(p.id); }).length) : "";
-    whereBox.hidden = !inside;
-    whereBox.setAttribute("aria-label", L.whereLabel);
-    whereBox.textContent = "";
-    ["us", "ca", "both"].forEach(function (k) {
-      var b = button(null, L.where[k], function () {
-        where = k;
-        try { localStorage.setItem(WHERE, k); } catch (e) {}
-        draw();
-      });
-      b.setAttribute("aria-pressed", String(where === k));
-      whereBox.appendChild(b);
-    });
     var on = state.view === "unrated" ? "unrated"
       : state.view === "friends" || shown !== me ? "friends" : "ranked";
     tabs.forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-view") === on)); });
@@ -590,6 +593,7 @@
       h.appendChild(el("h2", "pk-title", L.rankingOf(whoName(who))));
       view.appendChild(h);
     }
+    view.appendChild(whereBar());
     var ids = rankedList(st), shownIds = ids.filter(here);
     if (!ids.length) view.appendChild(el("p", "pk-note", who === me ? L.noneRanked : L.nothingYet(whoName(who))));
     else if (!shownIds.length) view.appendChild(el("p", "pk-note", L.noneHere));
@@ -625,6 +629,7 @@
   }
 
   function drawUnrated() {
+    view.appendChild(whereBar());
     var left = parks.filter(function (p) { return !store.rated[p.id] && here(p.id); });
     if (!left.length) { view.appendChild(el("p", "pk-note", L.allRated)); return; }
     var box = el("input", "pk-search");
@@ -650,6 +655,7 @@
   function drawFriends() {
     var others = people.filter(function (p) { return p.id !== me; });
     if (!others.length) { view.appendChild(el("p", "pk-note", L.noFriends)); return; }
+    view.appendChild(whereBar());
     var ol = el("ul", "pk-list");
     others.forEach(function (p) {
       var li = el("li");

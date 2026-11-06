@@ -25,7 +25,6 @@
 
 .parks .pk-count { margin: var(--s6) 0 0; color: var(--text-dim); }
 .parks .pk-tabs,
-.parks .pk-where,
 .parks .pk-backup { display: flex; flex-wrap: wrap; gap: 0 var(--s4); margin: var(--s4) 0 0; }
 .parks .pk-backup { margin-top: var(--s6); }
 .parks .pk-tabs button,
@@ -83,6 +82,8 @@
 .parks .pk-scores { display: flex; gap: var(--s3); flex: 0 0 auto; }
 .parks .pk-score { display: inline-flex; align-items: baseline; gap: 6px; }
 .parks .pk-score-v { font: 400 var(--t-row)/1.3 var(--mono); font-variant-numeric: tabular-nums; color: var(--text-dim); }
+
+.parks .pk-where { display: flex; flex-wrap: wrap; gap: 0 var(--s4); margin: 0 0 var(--s3); }
 
 .parks .pk-search {
   width: 100%; max-width: 22rem; margin: 0 0 var(--s4); padding: 10px 12px;

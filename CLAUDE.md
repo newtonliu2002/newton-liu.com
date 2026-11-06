@@ -1587,7 +1587,7 @@ Ranking". Made like the eBird Site Ranking, but on this site:
   national parks and park reserves (added 2026-11-06; ids "ca-…", marine
   and urban parks left out), each with id (permanent), name without
   "National Park (Reserve)", state/province, country US or CA. His US /
-  Canada / Both filter (rail, `.pk-where`, kept in localStorage
+  Canada / Both filter (top of each list, above "Find a park", `.pk-where`, kept in localStorage
   "park_ranking_where") only hides parks from the lists and counts; the
   ranking, comparisons, scores and "#r of n" stay one combined list. In Chinese a name shows as
   "Acadia国家公园" (the generic part translated, per the place-name rule).
