@@ -1578,6 +1578,27 @@ Newton asked for it: every photograph in a gallery has its own address, so a lin
   - On a touch screen each animal's eBird or Wikipedia link is a 24px target (`.lb-name a`, `.lb-row + .lb-row`).
   - On a phone the nav row's `scroll-padding-inline` keeps a focused tab or an opened Journals or Personal entry clear of the fades.
 
+## National Park Ranking (national-park-ranking.html)
+
+Asked for 2026-11-06: "you know what i do for my ebird site ranking? can we
+build one for the national parks too", under Projects as "National Park
+Ranking". Made like the eBird Site Ranking, but on this site:
+- `data/national-parks.json`: the 63 U.S. national parks (id permanent,
+  name without "National Park", state). In Chinese a name shows as
+  "Acadia国家公园" (the generic part translated, per the place-name rule).
+- `assets/parks.js` + `assets/parks.css`: three scores per park, 1–5 each:
+  scenery, activities, wildlife (his three). The sum (3–15) is the tier;
+  inside a tier, "Which did you like more?" places a newly rated park by
+  halving the tier (Beli-style), with "Too close to call" and "Skip".
+- **The ratings live in the browser** (localStorage `park_ranking_v1`), as
+  the Site Ranking's do. "Save a copy" downloads them as JSON; "Restore a
+  copy" reads one back (also how they move between computers).
+- Behind the Personal front-door password (`personal-gate.js` with
+  `data-title`/`data-title-zh` naming the box), noindex, in `PRIVATE_PAGES`.
+- Listed on projects.html (`#national-park-ranking`, keys
+  `projects.parkranking.*`, Chinese in site.js) and in the Projects
+  drop-down (NAV_MENUS). The blurb is my draft until he sends his own.
+
 ## Personal password (front door)
 
 Asked for 2026-11-06 ("front door lock", his pick over moving the data off
@@ -1597,6 +1618,8 @@ changed) locks the page again. Chinese wording when the site is in Chinese.
   `personal` → Settings → Variables and secrets → Add → type Secret, name
   `PASSWORD`, 8+ characters. Until then the box answers "No password has
   been set yet." Changing it signs every browser out.
+- The National Park Ranking (a Projects page) uses the same gate, its own
+  name on the box via `data-title` / `data-title-zh` on the script tag.
 - A new Personal page needs the same `<script src="assets/personal-gate.js?v=…">`
   line and noindex meta, and its name in `PRIVATE_PAGES`.
 - The chess pages belong to the chess chat; only the two `<head>` lines here

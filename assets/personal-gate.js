@@ -18,6 +18,10 @@
     ? "http://127.0.0.1:8788" : "https://personal.shoot-planner-worker.workers.dev";
   var asked = /[?&]lang=(zh|en)\b/.exec(location.search);
   var zh = asked ? asked[1] === "zh" : root.getAttribute("data-site-lang") === "zh";
+  // A page that isn't one of the Personal ones names itself on the box:
+  // data-title / data-title-zh on this script's tag (the National Park Ranking).
+  var me = document.currentScript;
+  var own = me && me.getAttribute(zh ? "data-title-zh" : "data-title");
   var T = zh ? {
     title: "个人页面", lead: "这些页面需要密码。", label: "密码", go: "进入",
     wrong: "密码不对。", many: "尝试次数太多，请一小时后再试。", unset: "还没有设置密码。",
@@ -28,6 +32,7 @@
     unset: "No password has been set yet.", offline: "Can't reach the server just now. Try again in a moment.",
     busy: "Checking…"
   };
+  if (own) { T.title = own; T.lead = zh ? "此页面需要密码。" : "This page needs a password."; }
 
   function getToken() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
   function setToken(t) { try { if (t) localStorage.setItem(KEY, t); else localStorage.removeItem(KEY); } catch (e) {} }

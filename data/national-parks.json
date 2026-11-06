@@ -1,0 +1,320 @@
+{
+ "_about": "The National Park Ranking's list (national-park-ranking.html, assets/parks.js): the 63 U.S. national parks. id is permanent (ratings are kept by it in the browser); name is the park's own name without \"National Park\"; state as shown. A new park is one more entry with a new id. See CLAUDE.md, \"National Park Ranking\".",
+ "parks": [
+  {
+   "id": "acadia",
+   "name": "Acadia",
+   "state": "Maine"
+  },
+  {
+   "id": "american-samoa",
+   "name": "American Samoa",
+   "state": "American Samoa"
+  },
+  {
+   "id": "arches",
+   "name": "Arches",
+   "state": "Utah"
+  },
+  {
+   "id": "badlands",
+   "name": "Badlands",
+   "state": "South Dakota"
+  },
+  {
+   "id": "big-bend",
+   "name": "Big Bend",
+   "state": "Texas"
+  },
+  {
+   "id": "biscayne",
+   "name": "Biscayne",
+   "state": "Florida"
+  },
+  {
+   "id": "black-canyon-of-the-gunnison",
+   "name": "Black Canyon of the Gunnison",
+   "state": "Colorado"
+  },
+  {
+   "id": "bryce-canyon",
+   "name": "Bryce Canyon",
+   "state": "Utah"
+  },
+  {
+   "id": "canyonlands",
+   "name": "Canyonlands",
+   "state": "Utah"
+  },
+  {
+   "id": "capitol-reef",
+   "name": "Capitol Reef",
+   "state": "Utah"
+  },
+  {
+   "id": "carlsbad-caverns",
+   "name": "Carlsbad Caverns",
+   "state": "New Mexico"
+  },
+  {
+   "id": "channel-islands",
+   "name": "Channel Islands",
+   "state": "California"
+  },
+  {
+   "id": "congaree",
+   "name": "Congaree",
+   "state": "South Carolina"
+  },
+  {
+   "id": "crater-lake",
+   "name": "Crater Lake",
+   "state": "Oregon"
+  },
+  {
+   "id": "cuyahoga-valley",
+   "name": "Cuyahoga Valley",
+   "state": "Ohio"
+  },
+  {
+   "id": "death-valley",
+   "name": "Death Valley",
+   "state": "California · Nevada"
+  },
+  {
+   "id": "denali",
+   "name": "Denali",
+   "state": "Alaska"
+  },
+  {
+   "id": "dry-tortugas",
+   "name": "Dry Tortugas",
+   "state": "Florida"
+  },
+  {
+   "id": "everglades",
+   "name": "Everglades",
+   "state": "Florida"
+  },
+  {
+   "id": "gates-of-the-arctic",
+   "name": "Gates of the Arctic",
+   "state": "Alaska"
+  },
+  {
+   "id": "gateway-arch",
+   "name": "Gateway Arch",
+   "state": "Missouri"
+  },
+  {
+   "id": "glacier",
+   "name": "Glacier",
+   "state": "Montana"
+  },
+  {
+   "id": "glacier-bay",
+   "name": "Glacier Bay",
+   "state": "Alaska"
+  },
+  {
+   "id": "grand-canyon",
+   "name": "Grand Canyon",
+   "state": "Arizona"
+  },
+  {
+   "id": "grand-teton",
+   "name": "Grand Teton",
+   "state": "Wyoming"
+  },
+  {
+   "id": "great-basin",
+   "name": "Great Basin",
+   "state": "Nevada"
+  },
+  {
+   "id": "great-sand-dunes",
+   "name": "Great Sand Dunes",
+   "state": "Colorado"
+  },
+  {
+   "id": "great-smoky-mountains",
+   "name": "Great Smoky Mountains",
+   "state": "North Carolina · Tennessee"
+  },
+  {
+   "id": "guadalupe-mountains",
+   "name": "Guadalupe Mountains",
+   "state": "Texas"
+  },
+  {
+   "id": "haleakala",
+   "name": "Haleakalā",
+   "state": "Hawaii"
+  },
+  {
+   "id": "hawaii-volcanoes",
+   "name": "Hawaiʻi Volcanoes",
+   "state": "Hawaii"
+  },
+  {
+   "id": "hot-springs",
+   "name": "Hot Springs",
+   "state": "Arkansas"
+  },
+  {
+   "id": "indiana-dunes",
+   "name": "Indiana Dunes",
+   "state": "Indiana"
+  },
+  {
+   "id": "isle-royale",
+   "name": "Isle Royale",
+   "state": "Michigan"
+  },
+  {
+   "id": "joshua-tree",
+   "name": "Joshua Tree",
+   "state": "California"
+  },
+  {
+   "id": "katmai",
+   "name": "Katmai",
+   "state": "Alaska"
+  },
+  {
+   "id": "kenai-fjords",
+   "name": "Kenai Fjords",
+   "state": "Alaska"
+  },
+  {
+   "id": "kings-canyon",
+   "name": "Kings Canyon",
+   "state": "California"
+  },
+  {
+   "id": "kobuk-valley",
+   "name": "Kobuk Valley",
+   "state": "Alaska"
+  },
+  {
+   "id": "lake-clark",
+   "name": "Lake Clark",
+   "state": "Alaska"
+  },
+  {
+   "id": "lassen-volcanic",
+   "name": "Lassen Volcanic",
+   "state": "California"
+  },
+  {
+   "id": "mammoth-cave",
+   "name": "Mammoth Cave",
+   "state": "Kentucky"
+  },
+  {
+   "id": "mesa-verde",
+   "name": "Mesa Verde",
+   "state": "Colorado"
+  },
+  {
+   "id": "mount-rainier",
+   "name": "Mount Rainier",
+   "state": "Washington"
+  },
+  {
+   "id": "new-river-gorge",
+   "name": "New River Gorge",
+   "state": "West Virginia"
+  },
+  {
+   "id": "north-cascades",
+   "name": "North Cascades",
+   "state": "Washington"
+  },
+  {
+   "id": "olympic",
+   "name": "Olympic",
+   "state": "Washington"
+  },
+  {
+   "id": "petrified-forest",
+   "name": "Petrified Forest",
+   "state": "Arizona"
+  },
+  {
+   "id": "pinnacles",
+   "name": "Pinnacles",
+   "state": "California"
+  },
+  {
+   "id": "redwood",
+   "name": "Redwood",
+   "state": "California"
+  },
+  {
+   "id": "rocky-mountain",
+   "name": "Rocky Mountain",
+   "state": "Colorado"
+  },
+  {
+   "id": "saguaro",
+   "name": "Saguaro",
+   "state": "Arizona"
+  },
+  {
+   "id": "sequoia",
+   "name": "Sequoia",
+   "state": "California"
+  },
+  {
+   "id": "shenandoah",
+   "name": "Shenandoah",
+   "state": "Virginia"
+  },
+  {
+   "id": "theodore-roosevelt",
+   "name": "Theodore Roosevelt",
+   "state": "North Dakota"
+  },
+  {
+   "id": "virgin-islands",
+   "name": "Virgin Islands",
+   "state": "U.S. Virgin Islands"
+  },
+  {
+   "id": "voyageurs",
+   "name": "Voyageurs",
+   "state": "Minnesota"
+  },
+  {
+   "id": "white-sands",
+   "name": "White Sands",
+   "state": "New Mexico"
+  },
+  {
+   "id": "wind-cave",
+   "name": "Wind Cave",
+   "state": "South Dakota"
+  },
+  {
+   "id": "wrangellst-elias",
+   "name": "Wrangell–St. Elias",
+   "state": "Alaska"
+  },
+  {
+   "id": "yellowstone",
+   "name": "Yellowstone",
+   "state": "Wyoming · Montana · Idaho"
+  },
+  {
+   "id": "yosemite",
+   "name": "Yosemite",
+   "state": "California"
+  },
+  {
+   "id": "zion",
+   "name": "Zion",
+   "state": "Utah"
+  }
+ ]
+}

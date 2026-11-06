@@ -62,10 +62,12 @@ SITE_URL = "https://newton-liu.com/"
 # The hand-written pages at the root, in the sitemap and restamped (404.html
 # is restamped too, but is no page of its own to list).
 ROOT_PAGES = ("index.html", "work.html", "projects.html", "about.html", "contact.html", "academia.html",
-              "chess.html", "chess-games.html", "podcast-tracker.html", "travel-fall-2026.html")
+              "chess.html", "chess-games.html", "podcast-tracker.html", "travel-fall-2026.html",
+              "national-park-ranking.html")
 # The Personal pages, behind the password (assets/personal-gate.js): kept out
 # of the sitemap, and each carries <meta name="robots" content="noindex">.
-PRIVATE_PAGES = ("chess.html", "chess-games.html", "podcast-tracker.html", "travel-fall-2026.html")
+PRIVATE_PAGES = ("chess.html", "chess-games.html", "podcast-tracker.html", "travel-fall-2026.html",
+                 "national-park-ranking.html")
 # A link preview's picture where a page has none of its own: the About band
 # (images/_about/ is in git, so served by Pages), at its 1600 rung, real size.
 SHARE_IMAGE = ("images/_about/1600/B0003302.jpg", 1600, 592, "Photograph from Alaska")
@@ -530,7 +532,8 @@ def load_collections():
 ASSETS = ("site.css", "site.js", "edit.js", "globe.css", "globe.js",
           "journal.css", "journal.js", "journal-map.css", "journal-map.js",
           "chess-core.js", "chess.css", "chess.js", "chess-map.css", "chess-map.js",
-          "podcasts.css", "podcasts.js", "travel-map.css", "travel-map.js", "personal-gate.js")
+          "podcasts.css", "podcasts.js", "travel-map.css", "travel-map.js", "personal-gate.js",
+          "parks.css", "parks.js")
 
 
 def asset_stamps():

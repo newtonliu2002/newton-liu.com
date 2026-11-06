@@ -66,7 +66,8 @@
       { label: "eBird Explorer", href: "https://ebird.newton-liu.com" },
       { label: "Photography Planner", href: "shoot-planner/" },
       { label: "Retreat Finder", href: "retreat-finder/" },
-      { label: "Site Ranking", href: "https://ebird.newton-liu.com/site-ranking" }
+      { label: "Site Ranking", href: "https://ebird.newton-liu.com/site-ranking" },
+      { label: "National Park Ranking", zh: "国家公园排名", href: "national-park-ranking.html" }
     ],
     "journals": [
       { label: "Québec", zh: "魁北克", href: "journals/quebec/" }
@@ -230,6 +231,8 @@
     "projects.title": "项目",
     "projects.ebird.kicker": "网页应用 · 2026", "projects.shootplanner.kicker": "网页应用 · 2026",
     "projects.retreatfinder.kicker": "网页应用 · 2026", "projects.siteranking.kicker": "网页应用 · 2026",
+    "projects.parkranking.kicker": "网页应用 · 2026", "projects.parkranking.status": "建设中", "projects.parkranking.note": "需要密码",
+    "projects.parkranking.blurb": "一个美国国家公园的个人排名，做法与 Site Ranking 相同。每个去过的公园按风景、活动和野生动物各打 1 到 5 分；总分决定它所在的档次，再通过两两比较把每一档里的公园排出先后。",
     "projects.ebird.status": "建设中", "projects.shootplanner.status": "建设中",
     "projects.retreatfinder.status": "建设中", "projects.siteranking.status": "建设中",
     "projects.ebird.note": "需要密码", "projects.shootplanner.note": "需要密码",
