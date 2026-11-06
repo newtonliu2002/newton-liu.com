@@ -22,27 +22,18 @@
 <script>try{if(localStorage.getItem("theme")==="white"){document.documentElement.dataset.theme="light";var m=document.querySelector('meta[name="theme-color"]');if(m)m.content="#ffffff"}}catch(e){}</script>
 <script>try{if(localStorage.getItem("lang")==="zh"&&!/[?&]edit\b/.test(location.search))document.documentElement.setAttribute("data-site-lang","zh")}catch(e){}</script>
 <link rel="stylesheet" href="assets/site.css?v=6229dcb2">
-<link rel="stylesheet" href="assets/parks.css?v=c4c7d9e2">
+<link rel="stylesheet" href="assets/parks.css?v=25b44b50">
 </head>
 
 <body data-page="prose" data-base="">
 
 <a class="skip-link" href="#main">Skip to content</a>
 
-<header class="masthead">
+<!-- No site header here (Newton, 2026-11-06): only the Black / White
+     switch, which site.js puts in this empty nav. -->
+<header class="masthead pk-masthead">
   <div class="wrap masthead-inner">
-    <a class="wordmark" href="./">
-      <span class="wordmark-name">Newton Liu</span>
-      <span class="wordmark-sub">Photography</span>
-    </a>
-    <nav class="nav" aria-label="Primary">
-      <a href="index.html#collections">Work</a>
-      <a href="about.html">About</a>
-      <button type="button" class="nav-tab" data-menu="journals">Journals</button>
-      <button type="button" class="nav-tab" data-menu="personal">Personal</button>
-      <a href="projects.html" aria-current="page">Projects</a>
-      <a href="contact.html">Contact</a>
-    </nav>
+    <nav class="nav" aria-label="Page"></nav>
   </div>
 </header>
 

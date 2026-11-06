@@ -8,6 +8,20 @@
 
 .parks .pk-column { min-width: 0; max-width: 46rem; }
 
+/* No site header on this page (Newton, 2026-11-06): the bar keeps only the
+   Black / White switch at the right, and scrolls away with the page, so the
+   rail sticks near the top. No 中 / EN switch either. */
+.pk-masthead { position: static; background: none; border-bottom: 0; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.pk-masthead .masthead-inner { flex-direction: row; justify-content: flex-end; align-items: center; min-height: var(--masthead-h); padding-block: 0; }
+.pk-masthead .nav:empty { display: none; }
+.pk-masthead .lang-toggle { display: none; }
+.pk-masthead .masthead-inner::before, .pk-masthead .masthead-inner::after { display: none; }
+@media (max-width: 620px) {
+  .pk-masthead .masthead-inner > .theme-toggle { position: relative; top: auto; right: auto; margin: -15px; }
+  .pk-masthead .masthead-inner { padding-block: var(--s1) 0; min-height: 44px; }
+}
+.parks .about-rail { top: 2rem; }
+
 .parks .pk-empty,
 .parks .pk-count,
 .parks .pk-kicker,
