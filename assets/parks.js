@@ -86,6 +86,7 @@
     scoresTitle: "分项打分", scoresNote: "每项满分 5 分。加权：风景 40%，活动 35%，野生动物 25%。可以跳过。",
     skipScores: "跳过", weighted: "分项得分", skipped: "没有打分",
     legend: "前一个数字由两两比较得出，满分 10；后一个是分项加权得分，满分 5。",
+    legendVs: "“你”一栏是你自己的名次和得分（满分 10）；没评过的显示 —。",
     editScores: "修改分项打分", addScores: "补上分项打分",
     rateMore: "继续评分 →", rerate: "重新评分", recompare: "重新比较", remove: "删除评分", back: "← 返回",
     removeAsk: function (n) { return "删除你对" + n + "的评分？"; },
@@ -130,6 +131,7 @@
     scoresTitle: "Score by category", scoresNote: "Each out of 5. Weighted: scenery 40%, activities 35%, wildlife 25%. You can skip this.",
     skipScores: "Skip", weighted: "Category score", skipped: "Not scored",
     legend: "First number: out of 10, from your comparisons. Second: the weighted category score, out of 5.",
+    legendVs: "Under You: your own rank and score out of 10 (— where you haven't rated it).",
     editScores: "Edit category scores", addScores: "Add category scores",
     rateMore: "Rate more →", rerate: "Rate again", recompare: "Compare again", remove: "Remove rating", back: "← Back",
     removeAsk: function (n) { return "Remove your rating for " + n + "?"; },
@@ -632,20 +634,44 @@
     if (!ids.length) view.appendChild(el("p", "pk-note", who === me ? L.noneRanked : L.nothingYet(whoName(who))));
     else if (!shownIds.length) view.appendChild(el("p", "pk-note", L.noneHere));
     else if (show === "map") mapView(st, shownIds, who);
-    else view.appendChild(el("p", "pk-note pk-lead", L.legend));
+    else {
+      var lead = el("p", "pk-note pk-lead", L.legend);
+      if (who !== me) lead.appendChild(document.createTextNode(" " + L.legendVs));
+      view.appendChild(lead);
+    }
     if (show === "map") return removeFoot(who);
+    // On someone else's list, a You column beside theirs (his ask, 2026-11-06):
+    // your rank among the parks shown (as on your own list) and your score.
+    var vs = who !== me, mine = {};
+    if (vs) rankedList(store).filter(here).forEach(function (id, i) { mine[id] = i + 1; });
     var rank = 0;
     GROUPS.forEach(function (g) {
       if (!st.order[g.k].filter(here).length) return;
       var sec = el("section", "pk-tier");
       var hd = el("h2", "pk-tier-head");
       hd.appendChild(el("span", "pk-tier-n", L.group[g.k]));
+      if (vs) {
+        hd.classList.add("pk-vs-head");
+        hd.appendChild(el("span", "pk-col pk-col-you", L.you));
+        hd.appendChild(el("span", "pk-col pk-col-them", whoName(who)));
+      }
       sec.appendChild(hd);
-      var ol = el("ol", "pk-list");
+      var ol = el("ol", "pk-list" + (vs ? " pk-vs" : ""));
       st.order[g.k].forEach(function (id) {
         if (!here(id)) return;
         rank++;
-        ol.appendChild(parkRow(byId[id], twoScores(st, id), function () { go({ view: "detail", id: id, who: who }); }, rank));
+        var right = twoScores(st, id);
+        if (vs) {
+          var both = el("span", "pk-both"), you = el("span", "pk-mine");
+          if (mine[id]) {
+            you.appendChild(el("span", "pk-mine-rank", "#" + mine[id]));
+            you.appendChild(el("span", "pk-mine-n", fmt(scoreOf(store, id))));
+          } else you.appendChild(el("span", "pk-mine-rank", "—"));
+          both.appendChild(you);
+          both.appendChild(right);
+          right = both;
+        }
+        ol.appendChild(parkRow(byId[id], right, function () { go({ view: "detail", id: id, who: who }); }, rank));
       });
       sec.appendChild(ol);
       view.appendChild(sec);

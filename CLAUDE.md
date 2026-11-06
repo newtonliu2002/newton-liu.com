@@ -1619,6 +1619,10 @@ Ranking". Made like the eBird Site Ranking, but on this site:
   straight to the comparisons, picked season or not. Kept as `season` on the
   rating, shown on the park's page (Add / Change season there, its own small
   page; tapping the lit one clears it) and as a column in the PDF.
+  Someone else's list (his ask, 2026-11-06) has a You column beside theirs:
+  your rank among the parks shown (as on your own list) and your score out
+  of 10, or — where you haven't rated it; labeled You / their name in each
+  group's heading.
   Two numbers per park: a
   score out of 10 (Yes 10–6.7, Mid 6.6–3.4, No 3.3–0, the group's top for
   its best park then steps of range/n) and the weighted category score out
