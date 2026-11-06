@@ -85,7 +85,7 @@
     skipScores: "跳过", weighted: "分项得分", skipped: "没有打分",
     legend: "前一个数字由两两比较得出，满分 10；后一个是分项加权得分，满分 5。",
     editScores: "修改分项打分", addScores: "补上分项打分",
-    rerate: "重新评分", recompare: "重新比较", remove: "删除评分", back: "← 返回",
+    rateMore: "继续评分 →", rerate: "重新评分", recompare: "重新比较", remove: "删除评分", back: "← 返回",
     removeAsk: function (n) { return "删除你对" + n + "的评分？"; },
     saved: "已保存副本。", restored: "已恢复。", badFile: "这个文件读不了。",
     replaceAsk: "用这个文件替换你所有的评分？",
@@ -121,7 +121,7 @@
     skipScores: "Skip", weighted: "Category score", skipped: "Not scored",
     legend: "First number: out of 10, from your comparisons. Second: the weighted category score, out of 5.",
     editScores: "Edit category scores", addScores: "Add category scores",
-    rerate: "Rate again", recompare: "Compare again", remove: "Remove rating", back: "← Back",
+    rateMore: "Rate more →", rerate: "Rate again", recompare: "Compare again", remove: "Remove rating", back: "← Back",
     removeAsk: function (n) { return "Remove your rating for " + n + "?"; },
     saved: "Copy saved.", restored: "Restored.", badFile: "That file couldn't be read.",
     replaceAsk: "Replace every one of your ratings with the ones in this file?",
@@ -933,7 +933,11 @@
 
     var acts = el("p", "pk-actions");
     if (who === me) {
-      acts.appendChild(button("pk-primary", L.rerate, function () { go({ view: "rate", id: p.id }); }));
+      // Rate more (his ask): straight on to the parks still to be rated.
+      if (parks.some(function (x) { return !store.rated[x.id]; })) {
+        acts.appendChild(button("pk-primary", L.rateMore, function () { query = ""; go({ view: "unrated" }); }));
+      }
+      acts.appendChild(button("pk-quiet", L.rerate, function () { go({ view: "rate", id: p.id }); }));
       if (store.order[r.like].length > 1) acts.appendChild(button("pk-quiet", L.recompare, function () { startCompare(p.id, false); }));
       acts.appendChild(button("pk-quiet", weightOf(r) == null ? L.addScores : L.editScores, function () { go({ view: "scores", id: p.id, rating: false }); }));
       acts.appendChild(button("pk-quiet", L.remove, function () {
