@@ -168,6 +168,8 @@
 }
 .parks .pk-like:hover { border-color: var(--accent); background: var(--wash); }
 .parks .pk-like[aria-pressed="true"] { border-color: var(--accent); }
+.parks .pk-seasons { max-width: 40rem; flex-wrap: wrap; }
+.parks .pk-seasons .pk-like { flex: 1 1 calc(25% - var(--s3)); min-width: 7rem; }
 .parks .pk-scores-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--s2) var(--s5); }
 .parks .pk-scores-head .pk-ask { margin: 0; }
 .parks .pk-scores-head .pk-total { margin: 0; }
@@ -303,9 +305,10 @@
   .pk-print .pk-print-sub { margin: 0 0 14pt; font: 400 8pt/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: #555; }
   .pk-print h2 { font: 500 8.5pt/1.4 var(--mono); letter-spacing: .14em; text-transform: uppercase; margin: 16pt 0 4pt; break-after: avoid; }
   .pk-print table { width: 100%; border-collapse: collapse; table-layout: fixed; }   /* the same columns in every group */
-  .pk-print th:nth-child(2) { width: 21%; }
-  .pk-print th:nth-child(3) { width: 21%; }
-  .pk-print th:nth-child(n+4):nth-child(-n+8) { width: 8%; }
+  .pk-print th:nth-child(2) { width: 19%; }
+  .pk-print th:nth-child(3) { width: 18%; }
+  .pk-print th:nth-child(n+4):nth-child(-n+8) { width: 7.5%; }
+  .pk-print th:nth-child(9) { width: 8%; }
   .pk-print th { font: 400 7pt/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: #555; text-align: left;
     padding: 0 6pt 3pt 0; border-bottom: 1px solid #999; }
   .pk-print td { padding: 3.5pt 6pt 3.5pt 0; border-bottom: 1px solid #ddd; vertical-align: baseline; }

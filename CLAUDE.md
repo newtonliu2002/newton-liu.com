@@ -1613,6 +1613,11 @@ Ranking". Made like the eBird Site Ranking, but on this site:
   and calls window.print(): my ranking under the filter, a table per group
   (#, park, state, score, category, S/A/W, visited, notes); print CSS hides
   everything else.
+  Season (his ask, 2026-11-06): an optional step after the comparisons,
+  "Which season did you go?" Spring / Summer / Fall / Winter (one tap goes on
+  to the category scores) or Skip; kept as `season` on the rating, shown on
+  the park's page (Add / Change season there; tapping the lit one clears it)
+  and as a column in the PDF.
   Two numbers per park: a
   score out of 10 (Yes 10–6.7, Mid 6.6–3.4, No 3.3–0, the group's top for
   its best park then steps of range/n) and the weighted category score out

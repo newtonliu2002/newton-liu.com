@@ -63,6 +63,8 @@
     { k: "no", hi: 3.3, lo: 0 }
   ];
   var WEIGHT = { s: 0.40, a: 0.35, w: 0.25 };
+  // Which season did you go? (his ask, 2026-11-06): optional, one of these or "".
+  var SEASONS = ["spring", "summer", "fall", "winter"];
 
   // No 1–5 descriptions under the scores: he had them removed (2026-11-06).
   var AXES = [
@@ -107,8 +109,10 @@
     nRated: function (n) { return "评了 " + n + " 个公园"; },
     notRated: "还没评", friendsOn: "朋友的评分", othersOn: "其他人的评分",
     where: { us: "美国", ca: "加拿大", both: "全部" }, whereLabel: "国家", noneHere: "这里还没有评过的公园。",
+    seasonQ: "你是哪个季节去的？", seasonK: "季节", seasonNote: "选填。", addSeason: "补上季节", editSeason: "修改季节",
+    season: { spring: "春天", summer: "夏天", fall: "秋天", winter: "冬天" },
     pdf: "导出 PDF", pdfTitle: function (n) { return n + "的国家公园排名"; }, pdfMine: "我的国家公园排名",
-    pdfCols: ["#", "公园", "地区", "得分 /10", "分项 /5", "风景", "活动", "野生动物", "到访"], pdfNone: "还没有评过的公园。",
+    pdfCols: ["#", "公园", "地区", "得分 /10", "分项 /5", "风景", "活动", "野生动物", "季节", "到访"], pdfNone: "还没有评过的公园。",
     pdfMade: function (d) { return "导出于 " + d; },
     show: { list: "列表", map: "地图" }, showLabel: "显示方式", mapFailed: "地图加载失败。",
     mapCount: function (n) { return "地图上 " + n + " 个公园"; },
@@ -149,8 +153,10 @@
     nRated: function (n) { return n === 1 ? "1 park rated" : n + " parks rated"; },
     notRated: "Hasn't rated it", friendsOn: "Friends' ratings", othersOn: "Everyone else's ratings",
     where: { us: "US", ca: "Canada", both: "Both" }, whereLabel: "Country", noneHere: "No parks rated here yet.",
+    seasonQ: "Which season did you go?", seasonK: "Season", seasonNote: "Optional.", addSeason: "Add season", editSeason: "Change season",
+    season: { spring: "Spring", summer: "Summer", fall: "Fall", winter: "Winter" },
     pdf: "Export PDF", pdfTitle: function (n) { return n + "'s National Park Ranking"; }, pdfMine: "National Park Ranking",
-    pdfCols: ["#", "Park", "State / province", "Score /10", "Category /5", "Scenery", "Activities", "Wildlife", "Visited"],
+    pdfCols: ["#", "Park", "State / province", "Score /10", "Category /5", "Scenery", "Activities", "Wildlife", "Season", "Visited"],
     pdfNone: "No parks rated yet.", pdfMade: function (d) { return "Exported " + d; },
     show: { list: "List", map: "Map" }, showLabel: "Show as", mapFailed: "The map didn't load.",
     mapCount: function (n) { return n === 1 ? "1 park on the map" : n + " parks on the map"; },
@@ -271,7 +277,8 @@
       if (!like && scored) { var sum = +r.s + +r.a + +r.w; like = sum >= 11 ? "yes" : sum >= 8 ? "mid" : "no"; }
       if (!like) return;
       st.rated[id] = { like: like, s: scored ? +r.s : 0, a: scored ? +r.a : 0, w: scored ? +r.w : 0,
-                       date: typeof r.date === "string" ? r.date : "", notes: typeof r.notes === "string" ? r.notes : "" };
+                       date: typeof r.date === "string" ? r.date : "", notes: typeof r.notes === "string" ? r.notes : "",
+                       season: SEASONS.indexOf(r.season) >= 0 ? r.season : "" };
     });
     var placed = {};
     seq.forEach(function (id) {
@@ -492,6 +499,7 @@
     if (!me) return drawJoin();
     if (state.view !== "compare") settle();
     if (state.view === "rate") return drawLike();
+    if (state.view === "season") return drawSeason();
     if (state.view === "scores") return drawScores();
     if (state.view === "compare") return drawCompare();
     if (state.view === "detail") return drawDetail();
@@ -887,7 +895,7 @@
         var was = snapshot(p.id);
         store.rated[p.id] = {
           like: g.k, s: old ? old.s : 0, a: old ? old.a : 0, w: old ? old.w : 0,
-          date: old ? old.date : "", notes: old ? old.notes : ""
+          date: old ? old.date : "", notes: old ? old.notes : "", season: old ? old.season || "" : ""
         };
         startCompare(p.id, true, was);
       });
@@ -926,7 +934,7 @@
     go({ view: "compare", id: id, group: g, lo: 0, hi: others, n: 1, then: !!then, was: was, prev: null });
   }
   function afterPlace(id, then) {
-    go(then ? { view: "scores", id: id, rating: true } : { view: "detail", id: id, who: me });
+    go(then ? { view: "season", id: id, rating: true } : { view: "detail", id: id, who: me });
   }
   function place(at) {
     store.order[state.group].splice(at, 0, state.id);
@@ -971,7 +979,43 @@
     view.appendChild(acts);
   }
 
-  // Step 3: scenery, activities, wildlife (weighted), or skip. Also when
+  // Step 3, optional (his ask): which season did you go? One tap picks it and
+  // goes on to the category scores (or back to the park, when changing it
+  // later); Skip leaves it blank. The season already picked is lit; tapping
+  // it again while changing it clears it.
+  function drawSeason() {
+    var p = byId[state.id], r = store.rated[p.id];
+    if (!r) { go({ view: "unrated" }); return; }
+    view.appendChild(head(p));
+    var hd = el("div", "pk-scores-head");
+    hd.appendChild(el("h2", "pk-title pk-ask", L.seasonQ));
+    var right = el("div", "pk-head-right");
+    hd.appendChild(right);
+    view.appendChild(hd);
+    view.appendChild(el("p", "pk-note pk-lead", L.seasonNote));
+    function next() {
+      save();
+      go(state.rating ? { view: "scores", id: p.id, rating: true } : { view: "detail", id: p.id, who: me });
+    }
+    var row = el("div", "pk-likes pk-seasons");
+    SEASONS.forEach(function (k) {
+      var b = button("pk-like", L.season[k], function () {
+        r.season = !state.rating && r.season === k ? "" : k;
+        next();
+      });
+      if (r.season === k) b.setAttribute("aria-pressed", "true");
+      row.appendChild(b);
+    });
+    view.appendChild(row);
+    if (state.rating) right.appendChild(button("pk-quiet pk-skip", L.skipScores, function () { r.season = ""; next(); }));
+    else {
+      var acts = el("p", "pk-actions");
+      acts.appendChild(button("pk-quiet", L.cancel, function () { go({ view: "detail", id: p.id, who: me }); }));
+      view.appendChild(acts);
+    }
+  }
+
+  // Step 4: scenery, activities, wildlife (weighted), or skip. Also when
   // editing them later from the park's page (state.rating false).
   function drawScores() {
     var p = byId[state.id], old = store.rated[p.id];
@@ -1082,6 +1126,12 @@
         row.appendChild(el("span", "pk-score-v", r[ax.k] + " / 5"));
         box.appendChild(row);
       });
+      if (r.season) {
+        var sn = el("p", "pk-axis-line");
+        sn.appendChild(el("span", "pk-score-k", L.seasonK));
+        sn.appendChild(el("span", "pk-axis-txt", L.season[r.season]));
+        box.appendChild(sn);
+      }
       if (r.date) {
         var m = r.date.split("-");
         var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -1140,6 +1190,7 @@
       acts.appendChild(button("pk-quiet", L.rerate, function () { go({ view: "rate", id: p.id }); }));
       if (store.order[r.like].length > 1) acts.appendChild(button("pk-quiet", L.recompare, function () { startCompare(p.id, false); }));
       acts.appendChild(button("pk-quiet", weightOf(r) == null ? L.addScores : L.editScores, function () { go({ view: "scores", id: p.id, rating: false }); }));
+      acts.appendChild(button("pk-quiet", r.season ? L.editSeason : L.addSeason, function () { go({ view: "season", id: p.id, rating: false }); }));
       acts.appendChild(button("pk-quiet", L.remove, function () {
         if (!window.confirm(L.removeAsk(nameOf(p)))) return;
         unplace(p.id);
@@ -1184,6 +1235,13 @@
   // the US / Canada / Both filter, then the browser's print dialog, where
   // "Save as PDF" makes the file. The page is built for the print only
   // (.pk-print; parks.css hides everything else on paper) and removed after.
+  // "2025-08" as "Aug 2025" (2025年8月); anything else as it is.
+  function monthText(d) {
+    var m = /^(\d{4})-(\d{1,2})$/.exec(d || "");
+    if (!m) return d || "";
+    var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return ZH ? m[1] + "年" + (+m[2]) + "月" : MON[+m[2] - 1] + " " + m[1];
+  }
   function printRanking() {
     var old = document.querySelector(".pk-print");
     if (old) old.remove();
@@ -1213,14 +1271,15 @@
         rank++;
         var tr = el("tr");
         [String(rank), nameOf(p), p.state, fmt(scoreOf(st, id)), fmt(weightOf(r)),
-         r.s ? String(r.s) : "—", r.a ? String(r.a) : "—", r.w ? String(r.w) : "—", r.date || ""].forEach(function (v, i) {
+         r.s ? String(r.s) : "—", r.a ? String(r.a) : "—", r.w ? String(r.w) : "—",
+         r.season ? L.season[r.season] : "", monthText(r.date)].forEach(function (v, i) {
           tr.appendChild(el("td", i > 2 && i < 8 ? "n" : i === 1 ? "park" : null, v));
         });
         tb.appendChild(tr);
         if (r.notes) {
           var nr = el("tr", "pk-print-notes"), td = el("td", null, r.notes);
           nr.appendChild(el("td"));
-          td.colSpan = 8;
+          td.colSpan = 9;
           nr.appendChild(td);
           tb.appendChild(nr);
         }
