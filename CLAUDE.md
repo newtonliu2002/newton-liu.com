@@ -1602,6 +1602,17 @@ Ranking". Made like the eBird Site Ranking, but on this site:
   buttons; 3. scenery, activities,
   wildlife 1–5, weighted 40/35/25 %, plain number buttons with no
   descriptions (he had them removed), Skip up top by the category score.
+  No site header on this page (his ask, 2026-11-06): `.pk-masthead` keeps an
+  empty nav that only the light/dark switch fills (no 中 / EN). List / Map
+  (`.pk-show`, right of the filter, localStorage "park_ranking_show"): the map
+  is MapLibre (loaded by parks.js on first use) on OpenFreeMap tiles in
+  travel-map.js's colours, one pin a rated park at its `lat`/`lng` in
+  data/national-parks.json (Wikidata, a few by hand), Liked = accent, Mid =
+  grey, No = hollow ring; hover names it with its score, click opens it
+  (first tap on touch). "Export PDF" (rail, by Save a copy) builds `.pk-print`
+  and calls window.print(): my ranking under the filter, a table per group
+  (#, park, state, score, category, S/A/W, visited, notes); print CSS hides
+  everything else.
   Two numbers per park: a
   score out of 10 (Yes 10–6.7, Mid 6.6–3.4, No 3.3–0, the group's top for
   its best park then steps of range/n) and the weighted category score out

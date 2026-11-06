@@ -106,7 +106,13 @@
     noFriends: "还没有朋友加入。把这个页面发给他们，输入名字就能开始评分。",
     nRated: function (n) { return "评了 " + n + " 个公园"; },
     notRated: "还没评", friendsOn: "朋友的评分", othersOn: "其他人的评分",
-    where: { us: "美国", ca: "加拿大", both: "全部" }, whereLabel: "国家", noneHere: "这里还没有评过的公园。"
+    where: { us: "美国", ca: "加拿大", both: "全部" }, whereLabel: "国家", noneHere: "这里还没有评过的公园。",
+    pdf: "导出 PDF", pdfTitle: function (n) { return n + "的国家公园排名"; }, pdfMine: "我的国家公园排名",
+    pdfCols: ["#", "公园", "地区", "得分 /10", "分项 /5", "风景", "活动", "野生动物", "到访"], pdfNone: "还没有评过的公园。",
+    pdfMade: function (d) { return "导出于 " + d; },
+    show: { list: "列表", map: "地图" }, showLabel: "显示方式", mapFailed: "地图加载失败。",
+    mapCount: function (n) { return "地图上 " + n + " 个公园"; },
+    zoomTouch: "用两根手指移动地图", zoomWin: "按住 Ctrl 滚动来缩放地图", zoomMac: "按住 ⌘ 滚动来缩放地图"
   } : {
     loading: "Loading…", failed: "The list of parks didn't load.", ranked: "Mine", unrated: "To be rated", friendsTab: "Friends",
     count: function (n, all) { return n + " of " + all + " rated"; },
@@ -142,7 +148,13 @@
     noFriends: "No friends here yet. Send them this page: they type their name and start rating.",
     nRated: function (n) { return n === 1 ? "1 park rated" : n + " parks rated"; },
     notRated: "Hasn't rated it", friendsOn: "Friends' ratings", othersOn: "Everyone else's ratings",
-    where: { us: "US", ca: "Canada", both: "Both" }, whereLabel: "Country", noneHere: "No parks rated here yet."
+    where: { us: "US", ca: "Canada", both: "Both" }, whereLabel: "Country", noneHere: "No parks rated here yet.",
+    pdf: "Export PDF", pdfTitle: function (n) { return n + "'s National Park Ranking"; }, pdfMine: "National Park Ranking",
+    pdfCols: ["#", "Park", "State / province", "Score /10", "Category /5", "Scenery", "Activities", "Wildlife", "Visited"],
+    pdfNone: "No parks rated yet.", pdfMade: function (d) { return "Exported " + d; },
+    show: { list: "List", map: "Map" }, showLabel: "Show as", mapFailed: "The map didn't load.",
+    mapCount: function (n) { return n === 1 ? "1 park on the map" : n + " parks on the map"; },
+    zoomTouch: "Use two fingers to move the map", zoomWin: "Use Ctrl + scroll to zoom the map", zoomMac: "Use ⌘ + scroll to zoom the map"
   };
 
   var view = root.querySelector(".pk-view");
@@ -169,6 +181,25 @@
         draw();
       });
       b.setAttribute("aria-pressed", String(where === k));
+      box.appendChild(b);
+    });
+    return box;
+  }
+  // List or map of a ranking (his ask, 2026-11-06: "a map view of all the
+  // nps i have visited"), remembered like the filter.
+  var SHOW = "park_ranking_show";
+  var show = (function () { try { return localStorage.getItem(SHOW) === "map" ? "map" : "list"; } catch (e) { return "list"; } })();
+  function showBar() {
+    var box = el("div", "pk-where pk-show");
+    box.setAttribute("role", "group");
+    box.setAttribute("aria-label", L.showLabel);
+    ["list", "map"].forEach(function (k) {
+      var b = button(null, L.show[k], function () {
+        show = k;
+        try { localStorage.setItem(SHOW, k); } catch (e) {}
+        draw();
+      });
+      b.setAttribute("aria-pressed", String(show === k));
       box.appendChild(b);
     });
     return box;
@@ -585,11 +616,16 @@
       h.appendChild(el("h2", "pk-title", L.rankingOf(whoName(who))));
       view.appendChild(h);
     }
-    view.appendChild(whereBar());
+    var bars = el("div", "pk-bars");
+    bars.appendChild(whereBar());
+    bars.appendChild(showBar());
+    view.appendChild(bars);
     var ids = rankedList(st), shownIds = ids.filter(here);
     if (!ids.length) view.appendChild(el("p", "pk-note", who === me ? L.noneRanked : L.nothingYet(whoName(who))));
     else if (!shownIds.length) view.appendChild(el("p", "pk-note", L.noneHere));
+    else if (show === "map") mapView(st, shownIds, who);
     else view.appendChild(el("p", "pk-note pk-lead", L.legend));
+    if (show === "map") return removeFoot(who);
     var rank = 0;
     GROUPS.forEach(function (g) {
       if (!st.order[g.k].filter(here).length) return;
@@ -606,6 +642,10 @@
       sec.appendChild(ol);
       view.appendChild(sec);
     });
+    removeFoot(who);
+  }
+  // Newton may take a friend out (under their ranking, list or map).
+  function removeFoot(who) {
     if (owner && who !== me && who !== OWNER) {
       var acts = el("p", "pk-actions pk-foot");
       acts.appendChild(button("pk-quiet", L.removePerson(whoName(who)), function () {
@@ -618,6 +658,166 @@
       }));
       view.appendChild(acts);
     }
+  }
+
+  // ---- the map --------------------------------------------------------------
+  // A ranking's parks as pins (MapLibre and OpenFreeMap's tiles, as on the
+  // travel log, in the landing's colours): Liked it in the accent, Mid grey,
+  // Didn't like it a hollow ring. Pointing at a pin names it with its score;
+  // clicking opens the park (on a touch screen the first tap names it). The
+  // map is made once and kept across redraws; MapLibre loads on first use.
+
+  var ML = "https://cdn.jsdelivr.net/npm/maplibre-gl@6.11.2/dist/maplibre-gl";
+  var mlLoad = null, map = null, mapReady = false, mapFailed = false, mapBox = null, mapEl = null, pins = [], mapWant = null;
+  var COARSE = !!(window.matchMedia && matchMedia("(pointer: coarse)").matches);
+  var TILES = "https://tiles.openfreemap.org/planet";
+  var GLYPHS = "https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf";
+  var ATTR = '<a href="https://openfreemap.org">OpenFreeMap</a> <a href="https://www.openmaptiles.org/">© OpenMapTiles</a> ' +
+    '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors</a>';
+  function W(a) { return "rgba(255,255,255," + a + ")"; }
+  function K(a) { return "rgba(0,0,0," + a + ")"; }
+  // travel-map.js's PALETTE (the landing's colours), less the roads.
+  var PALETTE = {
+    black: { land: "#161616", sea: "#0a0a0a", ice: W(.04), park: W(.035), parkEdge: W(.16), coast: W(.16), river: W(.06),
+             border: W(.2), state: W(.1), country: W(.28), stateName: W(.2), city: W(.3) },
+    white: { land: "#dededa", sea: "#ecece9", ice: W(.4), park: K(.04), parkEdge: K(.22), coast: K(.28), river: K(.07),
+             border: K(.22), state: K(.11), country: K(.45), stateName: K(.3), city: K(.42) }
+  };
+  function ground() { return document.documentElement.getAttribute("data-theme") === "light" ? "white" : "black"; }
+  function mapStyle() {
+    var P = PALETTE[ground()];
+    var poly = ["match", ["geometry-type"], ["Polygon", "MultiPolygon"], true, false];
+    var nps = ["match", ["get", "class"], ["national_park", "nature_reserve"], true, false];
+    var name = ["coalesce", ["get", "name:en"], ["get", "name:latin"]];
+    function text(size, color, extra) {
+      var layout = { "text-field": name, "text-font": ["Noto Sans Regular"], "text-size": size,
+        "text-transform": "uppercase", "text-letter-spacing": .2, "text-max-width": 8 };
+      for (var k in extra) layout[k] = extra[k];
+      return { layout: layout, paint: { "text-color": color } };
+    }
+    var V = [
+      ["water", "fill", "water", 0, ["all", poly, ["!=", ["get", "brunnel"], "tunnel"]], { "fill-color": P.sea, "fill-antialias": false }],
+      ["ice", "fill", "landcover", 2, ["match", ["get", "subclass"], ["glacier", "ice_shelf"], true, false], { "fill-color": P.ice, "fill-antialias": false }],
+      ["park", "fill", "park", 4, ["all", poly, nps], { "fill-color": P.park }],
+      ["coast", "line", "water", 0, ["all", poly, ["match", ["get", "class"], ["ocean", "sea", "lake"], true, false], ["!=", ["get", "brunnel"], "tunnel"]],
+        { "line-color": P.coast, "line-width": ["interpolate", ["linear"], ["zoom"], 1, .5, 7, .8],
+          "line-opacity": ["interpolate", ["linear"], ["zoom"], 5, 1, 7.5, .4] }],
+      ["river", "line", "waterway", 6, ["!=", ["get", "brunnel"], "tunnel"], { "line-color": P.river }],
+      ["park-edge", "line", "park", 4, ["all", poly, nps], { "line-color": P.parkEdge, "line-width": .8, "line-dasharray": [1, 2] }],
+      ["admin-4", "line", "boundary", 2.5, ["all", ["==", ["get", "admin_level"], 4], ["!=", ["get", "maritime"], 1]],
+        { "line-color": P.state, "line-width": .6, "line-dasharray": [2, 2] }],
+      ["admin-2", "line", "boundary", 0, ["all", ["==", ["get", "admin_level"], 2], ["!=", ["get", "maritime"], 1], ["!=", ["get", "disputed"], 1]],
+        { "line-color": P.border, "line-width": .6 }],
+      ["country", "symbol", "place", 1.5, ["==", ["get", "class"], "country"], text(11, P.country)],
+      ["state", "symbol", "place", 3.4, ["==", ["get", "class"], "state"], text(10, P.stateName, { "text-max-width": 12, "text-padding": 16 })],
+      ["city", "symbol", "place", 6, ["==", ["get", "class"], "city"], text(10, P.city, { "text-padding": 12 })]
+    ];
+    var layers = [{ id: "land", type: "background", paint: { "background-color": P.land } }];
+    V.forEach(function (d) {
+      var ly = { id: d[0], type: d[1], source: "omt", "source-layer": d[2], minzoom: d[3], filter: d[4] };
+      if (d[1] === "symbol") { ly.layout = d[5].layout; ly.paint = d[5].paint; } else ly.paint = d[5];
+      layers.push(ly);
+    });
+    return { version: 8, projection: { type: "mercator" }, glyphs: GLYPHS,
+      sources: { omt: { type: "vector", url: TILES, maxzoom: 9, attribution: ATTR } },
+      transition: { duration: 0, delay: 0 }, layers: layers };
+  }
+  function repaintMap() {
+    if (!map || !mapReady) return;
+    try { mapStyle().layers.forEach(function (ly) { for (var k in ly.paint) map.setPaintProperty(ly.id, k, ly.paint[k]); }); } catch (e) {}
+  }
+  document.addEventListener("nl:theme", repaintMap);
+
+  function loadMapLibre() {
+    if (window.maplibregl) return Promise.resolve(window.maplibregl);
+    if (!mlLoad) {
+      var css = new Promise(function (ok, no) {
+        var l = document.createElement("link");
+        l.rel = "stylesheet"; l.href = ML + ".css"; l.onload = ok; l.onerror = no;
+        document.head.insertBefore(l, document.querySelector('link[href^="assets/"]'));
+      });
+      mlLoad = Promise.all([import(ML + ".mjs"), css]).then(function (r) { window.maplibregl = r[0]; return r[0]; });
+    }
+    return mlLoad;
+  }
+
+  function mapView(st, ids, who) {
+    if (!mapBox) {
+      mapBox = el("div", "pk-map");
+      mapEl = el("div", "pk-map-canvas");
+      mapBox.appendChild(mapEl);
+    }
+    view.appendChild(mapBox);
+    var key = el("p", "pk-map-key");
+    GROUPS.forEach(function (g) {
+      var n = ids.filter(function (id) { return st.rated[id].like === g.k; }).length;
+      if (!n) return;
+      var k = el("span", "pk-key is-" + g.k);
+      k.appendChild(el("i", "pk-dot"));
+      k.appendChild(document.createTextNode(L.group[g.k] + " · " + n));
+      key.appendChild(k);
+    });
+    view.appendChild(key);
+    if (mapFailed) { view.insertBefore(el("p", "pk-note", L.mapFailed), mapBox); mapBox.hidden = true; return; }
+    mapWant = { st: st, ids: ids, who: who };
+    loadMapLibre().then(startMap, function () { mapFailed = true; if (state.view === "ranked" && show === "map") draw(); });
+    if (map) { map.resize(); if (mapReady) placePins(); }
+  }
+
+  function startMap(ml) {
+    if (map) return;
+    try {
+      map = new ml.Map({
+        container: mapEl, style: mapStyle(), bounds: [[-130, 22], [-60, 56]], fitBoundsOptions: { padding: 30 },
+        minZoom: 1, maxZoom: 10, renderWorldCopies: false,
+        pixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+        attributionControl: false, keyboard: false, boxZoom: false,
+        dragRotate: false, pitchWithRotate: false, touchPitch: false, cooperativeGestures: true,
+        locale: { "CooperativeGesturesHandler.MobileHelpText": L.zoomTouch,
+                  "CooperativeGesturesHandler.WindowsHelpText": L.zoomWin,
+                  "CooperativeGesturesHandler.MacHelpText": L.zoomMac }
+      });
+    } catch (e) { mapFailed = true; map = null; draw(); return; }   // no WebGL, most often
+    map.touchZoomRotate.disableRotation();
+    map.getCanvas().setAttribute("aria-hidden", "true");
+    map.addControl(new ml.NavigationControl({ showCompass: false }), "top-right");
+    map.addControl(new ml.AttributionControl({ compact: true }), "bottom-right");
+    map.on("load", function () { mapReady = true; repaintMap(); placePins(); });
+    map.on("click", closeTips);
+  }
+
+  function closeTips() { pins.forEach(function (p) { p.el.classList.remove("is-open"); }); }
+
+  function placePins() {
+    var w = mapWant;
+    if (!map || !w) return;
+    pins.forEach(function (p) { p.marker.remove(); });
+    pins = [];
+    var ml = window.maplibregl, b = new ml.LngLatBounds(), n = 0;
+    // Disliked first, so the liked pins sit on top where they crowd.
+    var order = w.ids.slice().reverse();
+    order.forEach(function (id) {
+      var p = byId[id], r = w.st.rated[id];
+      if (!p || p.lat == null) return;
+      var e = button("pk-pin is-" + r.like, null, function (ev) {
+        ev.stopPropagation();
+        if (COARSE && !e.classList.contains("is-open")) { closeTips(); e.classList.add("is-open"); return; }
+        go({ view: "detail", id: id, who: w.who });
+      });
+      e.setAttribute("aria-label", nameOf(p) + ", " + fmt(scoreOf(w.st, id)) + " / 10");
+      e.appendChild(el("i", "pk-dot"));
+      var tip = el("span", "pk-tip");
+      tip.appendChild(el("span", "pk-tip-name", nameOf(p)));
+      tip.appendChild(el("span", "pk-tip-score", fmt(scoreOf(w.st, id))));
+      e.appendChild(tip);
+      pins.push({ el: e, marker: new ml.Marker({ element: e, anchor: "center" }).setLngLat([p.lng, p.lat]).addTo(map) });
+      b.extend([p.lng, p.lat]);
+      n++;
+    });
+    if (!n) return;
+    map.resize();
+    var pad = Math.min(60, Math.round(mapEl.clientWidth / 8));
+    map.fitBounds(b, { padding: pad, maxZoom: 6, animate: false });
   }
 
   function drawUnrated() {
@@ -979,6 +1179,69 @@
     flash(L.saved);
   });
   backupBox.querySelector('[data-act="import"]').addEventListener("click", function () { fileIn.click(); });
+
+  // Export PDF (his ask, 2026-11-06): my ranking as a printable page, under
+  // the US / Canada / Both filter, then the browser's print dialog, where
+  // "Save as PDF" makes the file. The page is built for the print only
+  // (.pk-print; parks.css hides everything else on paper) and removed after.
+  function printRanking() {
+    var old = document.querySelector(".pk-print");
+    if (old) old.remove();
+    var st = store, mine = person(me), name = mine ? mine.name : (friend.name || "");
+    var title = me === OWNER || !name ? L.pdfMine : L.pdfTitle(name);
+    if (me === OWNER) title = (ZH ? "Newton Liu 的国家公园排名" : "Newton Liu's National Park Ranking");
+    var page = el("section", "pk-print");
+    page.appendChild(el("h1", null, title));
+    var today = new Date();
+    var d = ZH ? today.getFullYear() + "年" + (today.getMonth() + 1) + "月" + today.getDate() + "日"
+               : today.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+    var shown = rankedList(st).filter(here);
+    page.appendChild(el("p", "pk-print-sub", L.pdfMade(d) + " · " + L.where[where] + " · " + L.nRated(shown.length)));
+    if (!shown.length) page.appendChild(el("p", null, L.pdfNone));
+    var rank = 0;
+    GROUPS.forEach(function (g) {
+      var ids = st.order[g.k].filter(here);
+      if (!ids.length) return;
+      page.appendChild(el("h2", null, L.group[g.k]));
+      var t = el("table"), hr = el("tr");
+      L.pdfCols.forEach(function (c, i) { var th = el("th", i > 2 && i < 8 ? "n" : null, c); hr.appendChild(th); });
+      var thead = el("thead"); thead.appendChild(hr); t.appendChild(thead);
+      var tb = el("tbody");
+      ids.forEach(function (id) {
+        var p = byId[id], r = st.rated[id];
+        if (!p) return;
+        rank++;
+        var tr = el("tr");
+        [String(rank), nameOf(p), p.state, fmt(scoreOf(st, id)), fmt(weightOf(r)),
+         r.s ? String(r.s) : "—", r.a ? String(r.a) : "—", r.w ? String(r.w) : "—", r.date || ""].forEach(function (v, i) {
+          tr.appendChild(el("td", i > 2 && i < 8 ? "n" : i === 1 ? "park" : null, v));
+        });
+        tb.appendChild(tr);
+        if (r.notes) {
+          var nr = el("tr", "pk-print-notes"), td = el("td", null, r.notes);
+          nr.appendChild(el("td"));
+          td.colSpan = 8;
+          nr.appendChild(td);
+          tb.appendChild(nr);
+        }
+      });
+      t.appendChild(tb);
+      page.appendChild(t);
+    });
+    document.body.appendChild(page);
+    document.body.classList.add("pk-printing");
+    var was = document.title;
+    document.title = title;   // the PDF's suggested file name
+    function done() {
+      document.title = was;
+      document.body.classList.remove("pk-printing");
+      page.remove();
+      window.removeEventListener("afterprint", done);
+    }
+    window.addEventListener("afterprint", done);
+    window.print();
+  }
+  backupBox.querySelector('[data-act="pdf"]').addEventListener("click", printRanking);
   fileIn.addEventListener("change", function () {
     var f = fileIn.files && fileIn.files[0];
     fileIn.value = "";
@@ -1002,6 +1265,7 @@
     tabs[0].textContent = L.ranked;
     tabs[1].textContent = L.unrated;
     tabs[2].textContent = L.friendsTab;
+    backupBox.querySelector('[data-act="pdf"]').textContent = L.pdf;
     backupBox.querySelector('[data-act="export"]').textContent = "保存副本";
     backupBox.querySelector('[data-act="import"]').textContent = "恢复副本";
   }

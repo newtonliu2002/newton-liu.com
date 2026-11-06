@@ -1,665 +1,115 @@
 {
- "_about": "The National Park Ranking's list (national-park-ranking.html, assets/parks.js): the 63 U.S. national parks and Canada's 47 national parks and national park reserves (Parks Canada; marine and urban parks left out). id is permanent (ratings are kept by it); name is the park's own name without \"National Park\" or \"National Park Reserve\"; state is the state, province or territory as shown; country is US or CA (the US / Canada / Both filter). A new park is one more entry with a new id. See CLAUDE.md, \"National Park Ranking\".",
- "parks": [
-  {
-   "id": "acadia",
-   "name": "Acadia",
-   "state": "Maine",
-   "country": "US"
-  },
-  {
-   "id": "american-samoa",
-   "name": "American Samoa",
-   "state": "American Samoa",
-   "country": "US"
-  },
-  {
-   "id": "arches",
-   "name": "Arches",
-   "state": "Utah",
-   "country": "US"
-  },
-  {
-   "id": "badlands",
-   "name": "Badlands",
-   "state": "South Dakota",
-   "country": "US"
-  },
-  {
-   "id": "big-bend",
-   "name": "Big Bend",
-   "state": "Texas",
-   "country": "US"
-  },
-  {
-   "id": "biscayne",
-   "name": "Biscayne",
-   "state": "Florida",
-   "country": "US"
-  },
-  {
-   "id": "black-canyon-of-the-gunnison",
-   "name": "Black Canyon of the Gunnison",
-   "state": "Colorado",
-   "country": "US"
-  },
-  {
-   "id": "bryce-canyon",
-   "name": "Bryce Canyon",
-   "state": "Utah",
-   "country": "US"
-  },
-  {
-   "id": "canyonlands",
-   "name": "Canyonlands",
-   "state": "Utah",
-   "country": "US"
-  },
-  {
-   "id": "capitol-reef",
-   "name": "Capitol Reef",
-   "state": "Utah",
-   "country": "US"
-  },
-  {
-   "id": "carlsbad-caverns",
-   "name": "Carlsbad Caverns",
-   "state": "New Mexico",
-   "country": "US"
-  },
-  {
-   "id": "channel-islands",
-   "name": "Channel Islands",
-   "state": "California",
-   "country": "US"
-  },
-  {
-   "id": "congaree",
-   "name": "Congaree",
-   "state": "South Carolina",
-   "country": "US"
-  },
-  {
-   "id": "crater-lake",
-   "name": "Crater Lake",
-   "state": "Oregon",
-   "country": "US"
-  },
-  {
-   "id": "cuyahoga-valley",
-   "name": "Cuyahoga Valley",
-   "state": "Ohio",
-   "country": "US"
-  },
-  {
-   "id": "death-valley",
-   "name": "Death Valley",
-   "state": "California · Nevada",
-   "country": "US"
-  },
-  {
-   "id": "denali",
-   "name": "Denali",
-   "state": "Alaska",
-   "country": "US"
-  },
-  {
-   "id": "dry-tortugas",
-   "name": "Dry Tortugas",
-   "state": "Florida",
-   "country": "US"
-  },
-  {
-   "id": "everglades",
-   "name": "Everglades",
-   "state": "Florida",
-   "country": "US"
-  },
-  {
-   "id": "gates-of-the-arctic",
-   "name": "Gates of the Arctic",
-   "state": "Alaska",
-   "country": "US"
-  },
-  {
-   "id": "gateway-arch",
-   "name": "Gateway Arch",
-   "state": "Missouri",
-   "country": "US"
-  },
-  {
-   "id": "glacier",
-   "name": "Glacier",
-   "state": "Montana",
-   "country": "US"
-  },
-  {
-   "id": "glacier-bay",
-   "name": "Glacier Bay",
-   "state": "Alaska",
-   "country": "US"
-  },
-  {
-   "id": "grand-canyon",
-   "name": "Grand Canyon",
-   "state": "Arizona",
-   "country": "US"
-  },
-  {
-   "id": "grand-teton",
-   "name": "Grand Teton",
-   "state": "Wyoming",
-   "country": "US"
-  },
-  {
-   "id": "great-basin",
-   "name": "Great Basin",
-   "state": "Nevada",
-   "country": "US"
-  },
-  {
-   "id": "great-sand-dunes",
-   "name": "Great Sand Dunes",
-   "state": "Colorado",
-   "country": "US"
-  },
-  {
-   "id": "great-smoky-mountains",
-   "name": "Great Smoky Mountains",
-   "state": "North Carolina · Tennessee",
-   "country": "US"
-  },
-  {
-   "id": "guadalupe-mountains",
-   "name": "Guadalupe Mountains",
-   "state": "Texas",
-   "country": "US"
-  },
-  {
-   "id": "haleakala",
-   "name": "Haleakalā",
-   "state": "Hawaii",
-   "country": "US"
-  },
-  {
-   "id": "hawaii-volcanoes",
-   "name": "Hawaiʻi Volcanoes",
-   "state": "Hawaii",
-   "country": "US"
-  },
-  {
-   "id": "hot-springs",
-   "name": "Hot Springs",
-   "state": "Arkansas",
-   "country": "US"
-  },
-  {
-   "id": "indiana-dunes",
-   "name": "Indiana Dunes",
-   "state": "Indiana",
-   "country": "US"
-  },
-  {
-   "id": "isle-royale",
-   "name": "Isle Royale",
-   "state": "Michigan",
-   "country": "US"
-  },
-  {
-   "id": "joshua-tree",
-   "name": "Joshua Tree",
-   "state": "California",
-   "country": "US"
-  },
-  {
-   "id": "katmai",
-   "name": "Katmai",
-   "state": "Alaska",
-   "country": "US"
-  },
-  {
-   "id": "kenai-fjords",
-   "name": "Kenai Fjords",
-   "state": "Alaska",
-   "country": "US"
-  },
-  {
-   "id": "kings-canyon",
-   "name": "Kings Canyon",
-   "state": "California",
-   "country": "US"
-  },
-  {
-   "id": "kobuk-valley",
-   "name": "Kobuk Valley",
-   "state": "Alaska",
-   "country": "US"
-  },
-  {
-   "id": "lake-clark",
-   "name": "Lake Clark",
-   "state": "Alaska",
-   "country": "US"
-  },
-  {
-   "id": "lassen-volcanic",
-   "name": "Lassen Volcanic",
-   "state": "California",
-   "country": "US"
-  },
-  {
-   "id": "mammoth-cave",
-   "name": "Mammoth Cave",
-   "state": "Kentucky",
-   "country": "US"
-  },
-  {
-   "id": "mesa-verde",
-   "name": "Mesa Verde",
-   "state": "Colorado",
-   "country": "US"
-  },
-  {
-   "id": "mount-rainier",
-   "name": "Mount Rainier",
-   "state": "Washington",
-   "country": "US"
-  },
-  {
-   "id": "new-river-gorge",
-   "name": "New River Gorge",
-   "state": "West Virginia",
-   "country": "US"
-  },
-  {
-   "id": "north-cascades",
-   "name": "North Cascades",
-   "state": "Washington",
-   "country": "US"
-  },
-  {
-   "id": "olympic",
-   "name": "Olympic",
-   "state": "Washington",
-   "country": "US"
-  },
-  {
-   "id": "petrified-forest",
-   "name": "Petrified Forest",
-   "state": "Arizona",
-   "country": "US"
-  },
-  {
-   "id": "pinnacles",
-   "name": "Pinnacles",
-   "state": "California",
-   "country": "US"
-  },
-  {
-   "id": "redwood",
-   "name": "Redwood",
-   "state": "California",
-   "country": "US"
-  },
-  {
-   "id": "rocky-mountain",
-   "name": "Rocky Mountain",
-   "state": "Colorado",
-   "country": "US"
-  },
-  {
-   "id": "saguaro",
-   "name": "Saguaro",
-   "state": "Arizona",
-   "country": "US"
-  },
-  {
-   "id": "sequoia",
-   "name": "Sequoia",
-   "state": "California",
-   "country": "US"
-  },
-  {
-   "id": "shenandoah",
-   "name": "Shenandoah",
-   "state": "Virginia",
-   "country": "US"
-  },
-  {
-   "id": "theodore-roosevelt",
-   "name": "Theodore Roosevelt",
-   "state": "North Dakota",
-   "country": "US"
-  },
-  {
-   "id": "virgin-islands",
-   "name": "Virgin Islands",
-   "state": "U.S. Virgin Islands",
-   "country": "US"
-  },
-  {
-   "id": "voyageurs",
-   "name": "Voyageurs",
-   "state": "Minnesota",
-   "country": "US"
-  },
-  {
-   "id": "white-sands",
-   "name": "White Sands",
-   "state": "New Mexico",
-   "country": "US"
-  },
-  {
-   "id": "wind-cave",
-   "name": "Wind Cave",
-   "state": "South Dakota",
-   "country": "US"
-  },
-  {
-   "id": "wrangellst-elias",
-   "name": "Wrangell–St. Elias",
-   "state": "Alaska",
-   "country": "US"
-  },
-  {
-   "id": "yellowstone",
-   "name": "Yellowstone",
-   "state": "Wyoming · Montana · Idaho",
-   "country": "US"
-  },
-  {
-   "id": "yosemite",
-   "name": "Yosemite",
-   "state": "California",
-   "country": "US"
-  },
-  {
-   "id": "zion",
-   "name": "Zion",
-   "state": "Utah",
-   "country": "US"
-  },
-  {
-   "id": "ca-akami-uapishku-kakkasuak-mealy-mountains",
-   "name": "Akami-Uapishkᵁ-KakKasuak-Mealy Mountains",
-   "state": "Newfoundland and Labrador",
-   "country": "CA"
-  },
-  {
-   "id": "ca-gros-morne",
-   "name": "Gros Morne",
-   "state": "Newfoundland and Labrador",
-   "country": "CA"
-  },
-  {
-   "id": "ca-terra-nova",
-   "name": "Terra Nova",
-   "state": "Newfoundland and Labrador",
-   "country": "CA"
-  },
-  {
-   "id": "ca-torngat-mountains",
-   "name": "Torngat Mountains",
-   "state": "Newfoundland and Labrador",
-   "country": "CA"
-  },
-  {
-   "id": "ca-cape-breton-highlands",
-   "name": "Cape Breton Highlands",
-   "state": "Nova Scotia",
-   "country": "CA"
-  },
-  {
-   "id": "ca-kejimkujik",
-   "name": "Kejimkujik",
-   "state": "Nova Scotia",
-   "country": "CA"
-  },
-  {
-   "id": "ca-sable-island",
-   "name": "Sable Island",
-   "state": "Nova Scotia",
-   "country": "CA"
-  },
-  {
-   "id": "ca-prince-edward-island",
-   "name": "Prince Edward Island",
-   "state": "Prince Edward Island",
-   "country": "CA"
-  },
-  {
-   "id": "ca-fundy",
-   "name": "Fundy",
-   "state": "New Brunswick",
-   "country": "CA"
-  },
-  {
-   "id": "ca-kouchibouguac",
-   "name": "Kouchibouguac",
-   "state": "New Brunswick",
-   "country": "CA"
-  },
-  {
-   "id": "ca-forillon",
-   "name": "Forillon",
-   "state": "Québec",
-   "country": "CA"
-  },
-  {
-   "id": "ca-la-mauricie",
-   "name": "La Mauricie",
-   "state": "Québec",
-   "country": "CA"
-  },
-  {
-   "id": "ca-mingan-archipelago",
-   "name": "Mingan Archipelago",
-   "state": "Québec",
-   "country": "CA"
-  },
-  {
-   "id": "ca-bruce-peninsula",
-   "name": "Bruce Peninsula",
-   "state": "Ontario",
-   "country": "CA"
-  },
-  {
-   "id": "ca-georgian-bay-islands",
-   "name": "Georgian Bay Islands",
-   "state": "Ontario",
-   "country": "CA"
-  },
-  {
-   "id": "ca-point-pelee",
-   "name": "Point Pelee",
-   "state": "Ontario",
-   "country": "CA"
-  },
-  {
-   "id": "ca-pukaskwa",
-   "name": "Pukaskwa",
-   "state": "Ontario",
-   "country": "CA"
-  },
-  {
-   "id": "ca-thousand-islands",
-   "name": "Thousand Islands",
-   "state": "Ontario",
-   "country": "CA"
-  },
-  {
-   "id": "ca-riding-mountain",
-   "name": "Riding Mountain",
-   "state": "Manitoba",
-   "country": "CA"
-  },
-  {
-   "id": "ca-wapusk",
-   "name": "Wapusk",
-   "state": "Manitoba",
-   "country": "CA"
-  },
-  {
-   "id": "ca-grasslands",
-   "name": "Grasslands",
-   "state": "Saskatchewan",
-   "country": "CA"
-  },
-  {
-   "id": "ca-prince-albert",
-   "name": "Prince Albert",
-   "state": "Saskatchewan",
-   "country": "CA"
-  },
-  {
-   "id": "ca-banff",
-   "name": "Banff",
-   "state": "Alberta",
-   "country": "CA"
-  },
-  {
-   "id": "ca-elk-island",
-   "name": "Elk Island",
-   "state": "Alberta",
-   "country": "CA"
-  },
-  {
-   "id": "ca-jasper",
-   "name": "Jasper",
-   "state": "Alberta",
-   "country": "CA"
-  },
-  {
-   "id": "ca-waterton-lakes",
-   "name": "Waterton Lakes",
-   "state": "Alberta",
-   "country": "CA"
-  },
-  {
-   "id": "ca-wood-buffalo",
-   "name": "Wood Buffalo",
-   "state": "Alberta · Northwest Territories",
-   "country": "CA"
-  },
-  {
-   "id": "ca-glacier",
-   "name": "Glacier",
-   "state": "British Columbia",
-   "country": "CA"
-  },
-  {
-   "id": "ca-gulf-islands",
-   "name": "Gulf Islands",
-   "state": "British Columbia",
-   "country": "CA"
-  },
-  {
-   "id": "ca-gwaii-haanas",
-   "name": "Gwaii Haanas",
-   "state": "British Columbia",
-   "country": "CA"
-  },
-  {
-   "id": "ca-kootenay",
-   "name": "Kootenay",
-   "state": "British Columbia",
-   "country": "CA"
-  },
-  {
-   "id": "ca-mount-revelstoke",
-   "name": "Mount Revelstoke",
-   "state": "British Columbia",
-   "country": "CA"
-  },
-  {
-   "id": "ca-pacific-rim",
-   "name": "Pacific Rim",
-   "state": "British Columbia",
-   "country": "CA"
-  },
-  {
-   "id": "ca-yoho",
-   "name": "Yoho",
-   "state": "British Columbia",
-   "country": "CA"
-  },
-  {
-   "id": "ca-ivvavik",
-   "name": "Ivvavik",
-   "state": "Yukon",
-   "country": "CA"
-  },
-  {
-   "id": "ca-kluane",
-   "name": "Kluane",
-   "state": "Yukon",
-   "country": "CA"
-  },
-  {
-   "id": "ca-vuntut",
-   "name": "Vuntut",
-   "state": "Yukon",
-   "country": "CA"
-  },
-  {
-   "id": "ca-aulavik",
-   "name": "Aulavik",
-   "state": "Northwest Territories",
-   "country": "CA"
-  },
-  {
-   "id": "ca-naatsihchoh",
-   "name": "Nááts’ihch’oh",
-   "state": "Northwest Territories",
-   "country": "CA"
-  },
-  {
-   "id": "ca-nahanni",
-   "name": "Nahanni",
-   "state": "Northwest Territories",
-   "country": "CA"
-  },
-  {
-   "id": "ca-thaidene-nene",
-   "name": "Thaidene Nëné",
-   "state": "Northwest Territories",
-   "country": "CA"
-  },
-  {
-   "id": "ca-tuktut-nogait",
-   "name": "Tuktut Nogait",
-   "state": "Northwest Territories",
-   "country": "CA"
-  },
-  {
-   "id": "ca-auyuittuq",
-   "name": "Auyuittuq",
-   "state": "Nunavut",
-   "country": "CA"
-  },
-  {
-   "id": "ca-qausuittuq",
-   "name": "Qausuittuq",
-   "state": "Nunavut",
-   "country": "CA"
-  },
-  {
-   "id": "ca-quttinirpaaq",
-   "name": "Quttinirpaaq",
-   "state": "Nunavut",
-   "country": "CA"
-  },
-  {
-   "id": "ca-sirmilik",
-   "name": "Sirmilik",
-   "state": "Nunavut",
-   "country": "CA"
-  },
-  {
-   "id": "ca-ukkusiksalik",
-   "name": "Ukkusiksalik",
-   "state": "Nunavut",
-   "country": "CA"
-  }
- ]
+  "_about": "The National Park Ranking's list (national-park-ranking.html, assets/parks.js): the 63 U.S. national parks and Canada's 47 national parks and national park reserves (Parks Canada; marine and urban parks left out). id is permanent (ratings are kept by it); name is the park's own name without \"National Park\" or \"National Park Reserve\"; state is the state, province or territory as shown; country is US or CA (the US / Canada / Both filter). A new park is one more entry with a new id. See CLAUDE.md, \"National Park Ranking\". lat/lng: a point inside the park for the map view (Wikidata, a few by hand), 2026-11-06.",
+  "parks": [
+    {"id": "acadia", "name": "Acadia", "state": "Maine", "country": "US", "lat": 44.35, "lng": -68.21},
+    {"id": "american-samoa", "name": "American Samoa", "state": "American Samoa", "country": "US", "lat": -14.25, "lng": -170.68},
+    {"id": "arches", "name": "Arches", "state": "Utah", "country": "US", "lat": 38.728, "lng": -109.54},
+    {"id": "badlands", "name": "Badlands", "state": "South Dakota", "country": "US", "lat": 43.75, "lng": -102.5},
+    {"id": "big-bend", "name": "Big Bend", "state": "Texas", "country": "US", "lat": 29.25, "lng": -103.25},
+    {"id": "biscayne", "name": "Biscayne", "state": "Florida", "country": "US", "lat": 25.502, "lng": -80.181},
+    {"id": "black-canyon-of-the-gunnison", "name": "Black Canyon of the Gunnison", "state": "Colorado", "country": "US", "lat": 38.57, "lng": -107.72},
+    {"id": "bryce-canyon", "name": "Bryce Canyon", "state": "Utah", "country": "US", "lat": 37.64, "lng": -112.17},
+    {"id": "canyonlands", "name": "Canyonlands", "state": "Utah", "country": "US", "lat": 38.167, "lng": -109.76},
+    {"id": "capitol-reef", "name": "Capitol Reef", "state": "Utah", "country": "US", "lat": 38.2, "lng": -111.167},
+    {"id": "carlsbad-caverns", "name": "Carlsbad Caverns", "state": "New Mexico", "country": "US", "lat": 32.175, "lng": -104.444},
+    {"id": "channel-islands", "name": "Channel Islands", "state": "California", "country": "US", "lat": 33.66, "lng": -119.64},
+    {"id": "congaree", "name": "Congaree", "state": "South Carolina", "country": "US", "lat": 33.783, "lng": -80.783},
+    {"id": "crater-lake", "name": "Crater Lake", "state": "Oregon", "country": "US", "lat": 42.94, "lng": -122.1},
+    {"id": "cuyahoga-valley", "name": "Cuyahoga Valley", "state": "Ohio", "country": "US", "lat": 41.242, "lng": -81.55},
+    {"id": "death-valley", "name": "Death Valley", "state": "California · Nevada", "country": "US", "lat": 36.51, "lng": -117.08},
+    {"id": "denali", "name": "Denali", "state": "Alaska", "country": "US", "lat": 63.33, "lng": -150.5},
+    {"id": "dry-tortugas", "name": "Dry Tortugas", "state": "Florida", "country": "US", "lat": 24.63, "lng": -82.87},
+    {"id": "everglades", "name": "Everglades", "state": "Florida", "country": "US", "lat": 25.312, "lng": -80.688},
+    {"id": "gates-of-the-arctic", "name": "Gates of the Arctic", "state": "Alaska", "country": "US", "lat": 67.78, "lng": -153.3},
+    {"id": "gateway-arch", "name": "Gateway Arch", "state": "Missouri", "country": "US", "lat": 38.62, "lng": -90.18},
+    {"id": "glacier", "name": "Glacier", "state": "Montana", "country": "US", "lat": 48.755, "lng": -113.8},
+    {"id": "glacier-bay", "name": "Glacier Bay", "state": "Alaska", "country": "US", "lat": 58.7, "lng": -137.0},
+    {"id": "grand-canyon", "name": "Grand Canyon", "state": "Arizona", "country": "US", "lat": 36.055, "lng": -112.122},
+    {"id": "grand-teton", "name": "Grand Teton", "state": "Wyoming", "country": "US", "lat": 43.833, "lng": -110.701},
+    {"id": "great-basin", "name": "Great Basin", "state": "Nevada", "country": "US", "lat": 39.006, "lng": -114.22},
+    {"id": "great-sand-dunes", "name": "Great Sand Dunes", "state": "Colorado", "country": "US", "lat": 37.73, "lng": -105.51},
+    {"id": "great-smoky-mountains", "name": "Great Smoky Mountains", "state": "North Carolina · Tennessee", "country": "US", "lat": 35.611, "lng": -83.425},
+    {"id": "guadalupe-mountains", "name": "Guadalupe Mountains", "state": "Texas", "country": "US", "lat": 31.917, "lng": -104.867},
+    {"id": "haleakala", "name": "Haleakalā", "state": "Hawaii", "country": "US", "lat": 20.72, "lng": -156.155},
+    {"id": "hawaii-volcanoes", "name": "Hawaiʻi Volcanoes", "state": "Hawaii", "country": "US", "lat": 19.401, "lng": -155.124},
+    {"id": "hot-springs", "name": "Hot Springs", "state": "Arkansas", "country": "US", "lat": 34.514, "lng": -93.054},
+    {"id": "indiana-dunes", "name": "Indiana Dunes", "state": "Indiana", "country": "US", "lat": 41.648, "lng": -87.108},
+    {"id": "isle-royale", "name": "Isle Royale", "state": "Michigan", "country": "US", "lat": 47.996, "lng": -88.909},
+    {"id": "joshua-tree", "name": "Joshua Tree", "state": "California", "country": "US", "lat": 33.87, "lng": -115.9},
+    {"id": "katmai", "name": "Katmai", "state": "Alaska", "country": "US", "lat": 58.5, "lng": -155.0},
+    {"id": "kenai-fjords", "name": "Kenai Fjords", "state": "Alaska", "country": "US", "lat": 59.918, "lng": -149.988},
+    {"id": "kings-canyon", "name": "Kings Canyon", "state": "California", "country": "US", "lat": 36.789, "lng": -118.673},
+    {"id": "kobuk-valley", "name": "Kobuk Valley", "state": "Alaska", "country": "US", "lat": 67.353, "lng": -159.199},
+    {"id": "lake-clark", "name": "Lake Clark", "state": "Alaska", "country": "US", "lat": 60.97, "lng": -153.42},
+    {"id": "lassen-volcanic", "name": "Lassen Volcanic", "state": "California", "country": "US", "lat": 40.498, "lng": -121.427},
+    {"id": "mammoth-cave", "name": "Mammoth Cave", "state": "Kentucky", "country": "US", "lat": 37.187, "lng": -86.101},
+    {"id": "mesa-verde", "name": "Mesa Verde", "state": "Colorado", "country": "US", "lat": 37.26, "lng": -108.494},
+    {"id": "mount-rainier", "name": "Mount Rainier", "state": "Washington", "country": "US", "lat": 46.85, "lng": -121.75},
+    {"id": "new-river-gorge", "name": "New River Gorge", "state": "West Virginia", "country": "US", "lat": 38.07, "lng": -81.08},
+    {"id": "north-cascades", "name": "North Cascades", "state": "Washington", "country": "US", "lat": 48.483, "lng": -120.911},
+    {"id": "olympic", "name": "Olympic", "state": "Washington", "country": "US", "lat": 47.7, "lng": -123.75},
+    {"id": "petrified-forest", "name": "Petrified Forest", "state": "Arizona", "country": "US", "lat": 35.088, "lng": -109.806},
+    {"id": "pinnacles", "name": "Pinnacles", "state": "California", "country": "US", "lat": 36.487, "lng": -121.167},
+    {"id": "redwood", "name": "Redwood", "state": "California", "country": "US", "lat": 41.529, "lng": -124.058},
+    {"id": "rocky-mountain", "name": "Rocky Mountain", "state": "Colorado", "country": "US", "lat": 40.35, "lng": -105.683},
+    {"id": "saguaro", "name": "Saguaro", "state": "Arizona", "country": "US", "lat": 32.25, "lng": -110.5},
+    {"id": "sequoia", "name": "Sequoia", "state": "California", "country": "US", "lat": 36.565, "lng": -118.773},
+    {"id": "shenandoah", "name": "Shenandoah", "state": "Virginia", "country": "US", "lat": 38.533, "lng": -78.35},
+    {"id": "theodore-roosevelt", "name": "Theodore Roosevelt", "state": "North Dakota", "country": "US", "lat": 46.97, "lng": -103.45},
+    {"id": "virgin-islands", "name": "Virgin Islands", "state": "U.S. Virgin Islands", "country": "US", "lat": 18.328, "lng": -64.933},
+    {"id": "voyageurs", "name": "Voyageurs", "state": "Minnesota", "country": "US", "lat": 48.5, "lng": -92.883},
+    {"id": "white-sands", "name": "White Sands", "state": "New Mexico", "country": "US", "lat": 32.78, "lng": -106.172},
+    {"id": "wind-cave", "name": "Wind Cave", "state": "South Dakota", "country": "US", "lat": 43.556, "lng": -103.479},
+    {"id": "wrangellst-elias", "name": "Wrangell–St. Elias", "state": "Alaska", "country": "US", "lat": 61.435, "lng": -142.954},
+    {"id": "yellowstone", "name": "Yellowstone", "state": "Wyoming · Montana · Idaho", "country": "US", "lat": 44.6, "lng": -110.5},
+    {"id": "yosemite", "name": "Yosemite", "state": "California", "country": "US", "lat": 37.742, "lng": -119.537},
+    {"id": "zion", "name": "Zion", "state": "Utah", "country": "US", "lat": 37.3, "lng": -113.05},
+    {"id": "ca-akami-uapishku-kakkasuak-mealy-mountains", "name": "Akami-Uapishkᵁ-KakKasuak-Mealy Mountains", "state": "Newfoundland and Labrador", "country": "CA", "lat": 53.5, "lng": -59.0},
+    {"id": "ca-gros-morne", "name": "Gros Morne", "state": "Newfoundland and Labrador", "country": "CA", "lat": 49.689, "lng": -57.738},
+    {"id": "ca-terra-nova", "name": "Terra Nova", "state": "Newfoundland and Labrador", "country": "CA", "lat": 48.531, "lng": -53.928},
+    {"id": "ca-torngat-mountains", "name": "Torngat Mountains", "state": "Newfoundland and Labrador", "country": "CA", "lat": 59.436, "lng": -63.696},
+    {"id": "ca-cape-breton-highlands", "name": "Cape Breton Highlands", "state": "Nova Scotia", "country": "CA", "lat": 46.717, "lng": -60.66},
+    {"id": "ca-kejimkujik", "name": "Kejimkujik", "state": "Nova Scotia", "country": "CA", "lat": 44.399, "lng": -65.218},
+    {"id": "ca-sable-island", "name": "Sable Island", "state": "Nova Scotia", "country": "CA", "lat": 43.935, "lng": -59.858},
+    {"id": "ca-prince-edward-island", "name": "Prince Edward Island", "state": "Prince Edward Island", "country": "CA", "lat": 46.417, "lng": -63.075},
+    {"id": "ca-fundy", "name": "Fundy", "state": "New Brunswick", "country": "CA", "lat": 45.595, "lng": -64.954},
+    {"id": "ca-kouchibouguac", "name": "Kouchibouguac", "state": "New Brunswick", "country": "CA", "lat": 46.85, "lng": -64.967},
+    {"id": "ca-forillon", "name": "Forillon", "state": "Québec", "country": "CA", "lat": 48.9, "lng": -64.35},
+    {"id": "ca-la-mauricie", "name": "La Mauricie", "state": "Québec", "country": "CA", "lat": 46.8, "lng": -72.97},
+    {"id": "ca-mingan-archipelago", "name": "Mingan Archipelago", "state": "Québec", "country": "CA", "lat": 50.2, "lng": -63.829},
+    {"id": "ca-bruce-peninsula", "name": "Bruce Peninsula", "state": "Ontario", "country": "CA", "lat": 45.239, "lng": -81.614},
+    {"id": "ca-georgian-bay-islands", "name": "Georgian Bay Islands", "state": "Ontario", "country": "CA", "lat": 44.878, "lng": -79.875},
+    {"id": "ca-point-pelee", "name": "Point Pelee", "state": "Ontario", "country": "CA", "lat": 41.967, "lng": -82.517},
+    {"id": "ca-pukaskwa", "name": "Pukaskwa", "state": "Ontario", "country": "CA", "lat": 48.25, "lng": -85.917},
+    {"id": "ca-thousand-islands", "name": "Thousand Islands", "state": "Ontario", "country": "CA", "lat": 44.352, "lng": -75.955},
+    {"id": "ca-riding-mountain", "name": "Riding Mountain", "state": "Manitoba", "country": "CA", "lat": 50.86, "lng": -100.04},
+    {"id": "ca-wapusk", "name": "Wapusk", "state": "Manitoba", "country": "CA", "lat": 57.774, "lng": -93.371},
+    {"id": "ca-grasslands", "name": "Grasslands", "state": "Saskatchewan", "country": "CA", "lat": 49.15, "lng": -107.51},
+    {"id": "ca-prince-albert", "name": "Prince Albert", "state": "Saskatchewan", "country": "CA", "lat": 53.963, "lng": -106.37},
+    {"id": "ca-banff", "name": "Banff", "state": "Alberta", "country": "CA", "lat": 51.167, "lng": -115.55},
+    {"id": "ca-elk-island", "name": "Elk Island", "state": "Alberta", "country": "CA", "lat": 53.614, "lng": -112.866},
+    {"id": "ca-jasper", "name": "Jasper", "state": "Alberta", "country": "CA", "lat": 52.8, "lng": -117.9},
+    {"id": "ca-waterton-lakes", "name": "Waterton Lakes", "state": "Alberta", "country": "CA", "lat": 49.05, "lng": -113.933},
+    {"id": "ca-wood-buffalo", "name": "Wood Buffalo", "state": "Alberta · Northwest Territories", "country": "CA", "lat": 59.383, "lng": -112.983},
+    {"id": "ca-glacier", "name": "Glacier", "state": "British Columbia", "country": "CA", "lat": 51.3, "lng": -117.52},
+    {"id": "ca-gulf-islands", "name": "Gulf Islands", "state": "British Columbia", "country": "CA", "lat": 48.851, "lng": -123.448},
+    {"id": "ca-gwaii-haanas", "name": "Gwaii Haanas", "state": "British Columbia", "country": "CA", "lat": 52.37, "lng": -131.47},
+    {"id": "ca-kootenay", "name": "Kootenay", "state": "British Columbia", "country": "CA", "lat": 50.883, "lng": -116.049},
+    {"id": "ca-mount-revelstoke", "name": "Mount Revelstoke", "state": "British Columbia", "country": "CA", "lat": 51.086, "lng": -118.066},
+    {"id": "ca-pacific-rim", "name": "Pacific Rim", "state": "British Columbia", "country": "CA", "lat": 48.983, "lng": -125.667},
+    {"id": "ca-yoho", "name": "Yoho", "state": "British Columbia", "country": "CA", "lat": 51.395, "lng": -116.487},
+    {"id": "ca-ivvavik", "name": "Ivvavik", "state": "Yukon", "country": "CA", "lat": 69.52, "lng": -139.525},
+    {"id": "ca-kluane", "name": "Kluane", "state": "Yukon", "country": "CA", "lat": 60.75, "lng": -139.5},
+    {"id": "ca-vuntut", "name": "Vuntut", "state": "Yukon", "country": "CA", "lat": 68.307, "lng": -140.048},
+    {"id": "ca-aulavik", "name": "Aulavik", "state": "Northwest Territories", "country": "CA", "lat": 73.7, "lng": -119.919},
+    {"id": "ca-naatsihchoh", "name": "Nááts’ihch’oh", "state": "Northwest Territories", "country": "CA", "lat": 62.6, "lng": -128.8},
+    {"id": "ca-nahanni", "name": "Nahanni", "state": "Northwest Territories", "country": "CA", "lat": 61.597, "lng": -125.852},
+    {"id": "ca-thaidene-nene", "name": "Thaidene Nëné", "state": "Northwest Territories", "country": "CA", "lat": 62.708, "lng": -108.634},
+    {"id": "ca-tuktut-nogait", "name": "Tuktut Nogait", "state": "Northwest Territories", "country": "CA", "lat": 68.819, "lng": -121.749},
+    {"id": "ca-auyuittuq", "name": "Auyuittuq", "state": "Nunavut", "country": "CA", "lat": 67.5, "lng": -66.0},
+    {"id": "ca-qausuittuq", "name": "Qausuittuq", "state": "Nunavut", "country": "CA", "lat": 76.124, "lng": -101.031},
+    {"id": "ca-quttinirpaaq", "name": "Quttinirpaaq", "state": "Nunavut", "country": "CA", "lat": 82.217, "lng": -72.217},
+    {"id": "ca-sirmilik", "name": "Sirmilik", "state": "Nunavut", "country": "CA", "lat": 72.833, "lng": -80.583},
+    {"id": "ca-ukkusiksalik", "name": "Ukkusiksalik", "state": "Nunavut", "country": "CA", "lat": 65.499, "lng": -87.895}
+  ]
 }
