@@ -66,7 +66,8 @@ ROOT_PAGES = ("index.html", "work.html", "projects.html", "about.html", "contact
               "national-park-ranking.html")
 # The Personal pages, behind the password (assets/personal-gate.js): kept out
 # of the sitemap, and each carries <meta name="robots" content="noindex">.
-PRIVATE_PAGES = ("chess.html", "chess-games.html", "podcast-tracker.html", "travel-fall-2026.html")
+PRIVATE_PAGES = ("chess.html", "chess-games.html", "podcast-tracker.html", "travel-fall-2026.html",
+                 "national-park-ranking.html")
 # A link preview's picture where a page has none of its own: the About band
 # (images/_about/ is in git, so served by Pages), at its 1600 rung, real size.
 SHARE_IMAGE = ("images/_about/1600/B0003302.jpg", 1600, 592, "Photograph from Alaska")

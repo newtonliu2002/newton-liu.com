@@ -2,24 +2,33 @@
    newton-liu.com — the National Park Ranking (national-park-ranking.html),
    a Projects entry (Newton, 2026-11-06), made like the eBird Site Ranking.
 
-   Each park he has been to gets three scores, 1–5 each: scenery,
-   activities, wildlife. Their sum (3–15) is the park's tier. Inside a tier
-   the order comes from "which did you like more?" questions: a newly rated
-   park is placed by halving the tier (as Beli does), so a tier of 8 takes
-   at most 3 questions.
+   Each park gets three scores, 1–5 each: scenery, activities, wildlife.
+   Their sum (3–15) is the park's tier. Inside a tier the order comes from
+   "which did you like more?" questions: a newly rated park is placed by
+   halving the tier (as Beli does), so a tier of 8 takes at most 3 questions.
 
-   The parks are data/national-parks.json. The ratings sync across devices
-   (2026-11-06): they live in the "park-ranking" Worker (~/Code/park-ranking,
-   one JSON document in D1). Anyone can see the ranking; changing it needs a
-   computer signed in with the Personal password (the same token as
-   personal-gate.js, "personal_token_v1"), and "Sign in to edit" asks for it.
-   Each save sends the whole document with the version it was based on; if
-   another device saved first, the page takes that version and says so.
-   localStorage "park_ranking_v1" keeps a copy for when the Worker can't be
-   reached. "Save a copy" / "Restore a copy" still download and read a file.
+   Newton and his friends (2026-11-06: "both me and my friends could rate,
+   and we could see each other's ratings … but this stays between me and my
+   friends"). Everything lives in the "park-ranking" Worker
+   (~/Code/park-ranking, D1), one ranking per person:
+   - Newton signs in with the Personal password ("Newton: sign in", the
+     same token as personal-gate.js, "personal_token_v1"). He can copy the
+     friends' link, make a new one (the old link stops working) and remove
+     a person.
+   - The friends' link is this page with #join=<key>. Opening it asks
+     "What's your name?"; joining gives this browser a token of its own
+     ("park_friend_v1"), and "Link for your other devices" (#me=<id>.<token>)
+     moves it to another device.
+   - Without either, the page only says to ask Newton for the link.
+   Everyone in the group sees everyone's ratings: each person's list, each
+   park's scores from everyone, and Together (average totals).
+   Each save sends one person's whole ranking with the version it was based
+   on; if another device saved first, the page takes that version and says
+   so. localStorage "park_ranking_v1" keeps a copy of one's own ranking (and
+   unsent changes) for when the Worker can't be reached.
 
-   Stored: { v: 1, rated: { id: { s, a, w, date ("YYYY-MM" or ""), notes } },
-             order: { "15": [id, …best first], … "3": [] } }
+   A ranking: { v: 1, rated: { id: { s, a, w, date ("YYYY-MM" or ""), notes } },
+                order: { "15": [id, …best first], … "3": [] } }
    ========================================================================== */
 
 (function () {
@@ -30,10 +39,12 @@
   var S = window.NLSite;
   var ZH = !!(S && S.lang && S.lang() === "zh");
   var KEY = "park_ranking_v1";
+  var FRIEND = "park_friend_v1";
   var TOKEN = "personal_token_v1";
   var LOCAL = /^(localhost|127\.0\.0\.1)$/.test(location.hostname) && /[?&]api=local\b/.test(location.search);
   var SYNC = LOCAL ? "http://127.0.0.1:8789" : "https://park-ranking.shoot-planner-worker.workers.dev";
   var PERSONAL = LOCAL ? "http://127.0.0.1:8788" : "https://personal.shoot-planner-worker.workers.dev";
+  var OWNER = "newton";
   var MIN = 3, MAX = 15;
 
   var AXES = [
@@ -52,47 +63,89 @@
   ];
 
   var L = ZH ? {
-    loading: "加载中……", failed: "公园列表加载失败。", ranked: "已排名", unrated: "待评分",
+    loading: "加载中……", failed: "公园列表加载失败。", ranked: "我的", unrated: "待评分", together: "大家",
     count: function (n, all) { return "已评 " + n + " / " + all; },
-    noneRanked: "还没有评过分的公园。去「待评分」里选一个你去过的公园。",
+    noneRanked: "你还没有评过分的公园。去「待评分」里选一个你去过的公园。",
     allRated: "所有公园都评过了。", search: "搜索公园", rate: "评分", total: "总分",
     visited: "到访时间", notes: "备注", save: "保存", cancel: "取消", optional: "（选填）",
     which: "你更喜欢哪一个？", close: "差不多，分不出", skip: "跳过，放在这一档最后",
     step: function (i) { return "第 " + i + " 题"; }, tier: "档", of: function (r, n) { return "第 " + r + " 名，共 " + n + " 个"; },
     rerate: "重新评分", recompare: "重新比较", remove: "删除评分", back: "← 返回",
-    removeAsk: function (n) { return "删除" + n + "的评分？"; },
+    removeAsk: function (n) { return "删除你对" + n + "的评分？"; },
     saved: "已保存副本。", restored: "已恢复。", badFile: "这个文件读不了。",
-    replaceAsk: "用这个文件替换所有评分？",
-    nothing: "还没有排名。", signIn: "登录以编辑", password: "密码", enter: "进入",
+    replaceAsk: "用这个文件替换你所有的评分？",
+    signIn: "Newton 登录", password: "密码", enter: "进入",
     wrong: "密码不对。", many: "尝试次数太多，请一小时后再试。", offline: "暂时连不上服务器。",
     signedOut: "登录已失效，请重新登录。", newer: "另一台设备刚刚改过，已显示最新版本。",
-    unsaved: "没能同步到服务器，已先保存在本浏览器。"
+    unsaved: "没能同步到服务器，已先保存在本浏览器。",
+    locked: "这个排名只在 Newton 和朋友之间分享。想加入的话，请向 Newton 要链接。",
+    oldLink: "这个链接已经失效了。请向 Newton 要新的链接。",
+    joinTitle: "你叫什么名字？", joinNote: "你的评分会以这个名字显示给所有拿到链接的人。",
+    joinGo: "加入", name: "名字",
+    taken: "这个名字已经有人用了。如果是你自己，请在原来的设备上点「其他设备的链接」；不然请加个姓氏首字母。",
+    full: "人数已满。", friends: "朋友", you: "你", rankingOf: function (n) { return n + "的排名"; },
+    nothingYet: function (n) { return n + "还没有评分。"; },
+    copyLink: "复制朋友链接", newLink: "换一个新链接",
+    newLinkAsk: "换新链接后，旧链接就不能再用来加入了（已经加入的人不受影响）。继续？",
+    copied: "朋友链接已复制，发给朋友吧。", madeNew: "新链接已复制。",
+    myLink: "其他设备的链接", myLinkNote: "链接已复制。在你的其他设备上打开它，就能在那里继续编辑。别发给别人。",
+    youAre: function (n) { return "你是 " + n; }, notYou: "不是你？",
+    notYouAsk: "让这个浏览器忘掉你？如果你没有保存过“其他设备的链接”，就再也不能编辑这份排名了。",
+    removePerson: function (n) { return "把" + n + "移出"; },
+    removePersonAsk: function (n) { return "把" + n + "和他们的所有评分移出？"; },
+    togetherNote: "至少有一个人评过的公园，按平均总分排列。",
+    people: function (n) { return n + " 人"; }, avg: "平均", everyone: "每个人的评分",
+    noneTogether: "还没有人评分。"
   } : {
-    loading: "Loading…", failed: "The list of parks didn't load.", ranked: "Ranked", unrated: "To be rated",
+    loading: "Loading…", failed: "The list of parks didn't load.", ranked: "Mine", unrated: "To be rated", together: "Together",
     count: function (n, all) { return n + " of " + all + " rated"; },
-    noneRanked: "No parks rated yet. Pick one you've been to under To be rated.",
+    noneRanked: "You haven't rated any parks yet. Pick one you've been to under To be rated.",
     allRated: "Every park has been rated.", search: "Find a park", rate: "Rate", total: "Total",
     visited: "Visited", notes: "Notes", save: "Save rating", cancel: "Cancel", optional: " (optional)",
     which: "Which did you like more?", close: "Too close to call", skip: "Skip: put it last in this tier",
     step: function (i) { return "Question " + i; }, tier: "Tier", of: function (r, n) { return "#" + r + " of " + n; },
     rerate: "Rate again", recompare: "Compare again", remove: "Remove rating", back: "← Back",
-    removeAsk: function (n) { return "Remove the rating for " + n + "?"; },
+    removeAsk: function (n) { return "Remove your rating for " + n + "?"; },
     saved: "Copy saved.", restored: "Restored.", badFile: "That file couldn't be read.",
-    replaceAsk: "Replace every rating with the ones in this file?",
-    nothing: "Nothing ranked yet.", signIn: "Sign in to edit", password: "Password", enter: "Enter",
+    replaceAsk: "Replace every one of your ratings with the ones in this file?",
+    signIn: "Newton: sign in", password: "Password", enter: "Enter",
     wrong: "That password isn't right.", many: "Too many tries. Try again in an hour.", offline: "Can't reach the server just now.",
     signedOut: "Signed out. Sign in again to edit.", newer: "Changed on another device: showing the latest.",
-    unsaved: "Couldn't reach the server; kept in this browser for now."
+    unsaved: "Couldn't reach the server; kept in this browser for now.",
+    locked: "This ranking is shared between Newton and his friends. To join, ask Newton for the link.",
+    oldLink: "This link doesn't work any more. Ask Newton for the new one.",
+    joinTitle: "What's your name?", joinNote: "Your ratings will be shown under this name to everyone with the link.",
+    joinGo: "Join", name: "Name",
+    taken: "Someone already has that name. If it's you, use “Link for your other devices” on the device you joined on; otherwise add an initial.",
+    full: "The group is full.", friends: "Friends", you: "You", rankingOf: function (n) { return n + "'s ranking"; },
+    nothingYet: function (n) { return n + " hasn't rated any parks yet."; },
+    copyLink: "Copy friends' link", newLink: "Make a new link",
+    newLinkAsk: "After this the old link can't be used to join (people who already joined keep their place). Go ahead?",
+    copied: "Friends' link copied: send it to them.", madeNew: "New link copied.",
+    myLink: "Link for your other devices", myLinkNote: "Link copied. Open it on your other devices to edit there too. Don't share it.",
+    youAre: function (n) { return "You're " + n; }, notYou: "Not you?",
+    notYouAsk: "Make this browser forget you? Unless you've saved your “Link for your other devices”, you won't be able to edit this ranking again.",
+    removePerson: function (n) { return "Remove " + n; },
+    removePersonAsk: function (n) { return "Remove " + n + " and all their ratings?"; },
+    togetherNote: "Every park at least one person has rated, by average total.",
+    people: function (n) { return n === 1 ? "1 person" : n + " people"; }, avg: "Average", everyone: "Everyone's scores",
+    noneTogether: "Nobody has rated a park yet."
   };
 
   var view = root.querySelector(".pk-view");
   var countEl = root.querySelector(".pk-count");
-  var tabs = root.querySelectorAll(".pk-tabs button");
-  var fileIn = root.querySelector('.pk-backup input[type="file"]');
+  var tabsBox = root.querySelector(".pk-tabs");
+  var tabs = tabsBox.querySelectorAll("button");
+  var peopleBox = root.querySelector(".pk-people");
+  var shareBox = root.querySelector(".pk-share");
+  var backupBox = root.querySelector(".pk-backup");
+  var fileIn = backupBox.querySelector('input[type="file"]');
   var parks = [], byId = {}, store = blank(), state = { view: "ranked" }, query = "";
-  // edit: this computer is signed in. base: the server version the page holds (null: none yet).
-  // pending: a change the server hasn't taken yet (it is sent again with the next save or on focus).
-  var edit = false, base = null, pending = false, sending = false;
+  // owner: Newton's Personal sign-in. friend: {key, id, token, name} for a friend's browser.
+  // me: the person this browser edits (null: only the link, or nothing). people: everyone, from the Worker.
+  // base: the server version of my ranking the page holds. pending: a change the server hasn't taken yet.
+  var owner = false, friend = {}, me = null, people = [], known = false, lockMsg = "", inviteKey = null;
+  var base = null, pending = false, sending = false;
 
   // ---- helpers ------------------------------------------------------------
 
@@ -110,6 +163,9 @@
   }
   function nameOf(p) { return ZH ? p.name + "国家公园" : p.name; }
   function totalOf(r) { return (r.s || 0) + (r.a || 0) + (r.w || 0); }
+  function person(id) { for (var i = 0; i < people.length; i++) if (people[i].id === id) return people[i]; return null; }
+  function whoName(id) { var p = person(id); return id === me ? L.you : p ? p.name : "?"; }
+  function rankingOf(id) { if (id === me) return store; var p = person(id); return p ? p.data : blank(); }
 
   function blank() {
     var order = {};
@@ -117,14 +173,14 @@
     return { v: 1, rated: {}, order: order };
   }
 
-  // A stored copy, made whole: every tier list there, each rated park in the
+  // A ranking made whole: every tier list there, each rated park in the
   // tier its scores say (once), and nothing listed that isn't rated.
   function clean(raw) {
     var st = blank();
     if (!raw || typeof raw !== "object" || typeof raw.rated !== "object") return st;
     Object.keys(raw.rated).forEach(function (id) {
       var r = raw.rated[id];
-      if (!r || !byIdOk(id)) return;
+      if (!r || (parks.length && !byId[id])) return;
       var ok = AXES.every(function (ax) { return r[ax.k] >= 1 && r[ax.k] <= 5; });
       if (!ok) return;
       st.rated[id] = { s: +r.s, a: +r.a, w: +r.w, date: typeof r.date === "string" ? r.date : "",
@@ -141,26 +197,11 @@
     });
     return st;
   }
-  function byIdOk(id) { return !parks.length || !!byId[id]; }
 
-  function load() {
-    var raw = null;
-    try { raw = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) {}
-    store = clean(raw && raw.data ? raw.data : raw);
-    base = raw && raw.data && Number.isInteger(raw.base) ? raw.base : null;
-    pending = !!(raw && raw.pending);
-  }
-  function keep() {
-    try { localStorage.setItem(KEY, JSON.stringify({ data: store, base: base, pending: pending })); } catch (e) {}
-  }
-  function save() {
-    pending = true;
-    keep();
-    push();
-  }
+  // ---- this browser ----------------------------------------------------------
 
-  // ---- the server -----------------------------------------------------------------
-
+  function read(k) { try { return JSON.parse(localStorage.getItem(k) || "null"); } catch (e) { return null; } }
+  function write(k, v) { try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
   function getToken() { try { return localStorage.getItem(TOKEN); } catch (e) { return null; } }
   function setToken(t) { try { if (t) localStorage.setItem(TOKEN, t); else localStorage.removeItem(TOKEN); } catch (e) {} }
   function unexpired(t) {
@@ -170,29 +211,64 @@
     } catch (e) { return false; }
   }
 
-  function push() {
-    if (!edit || !pending || sending) return;
-    sending = true;
-    var sent = JSON.stringify(store);
-    fetch(SYNC + "/ranking", {
-      method: "PUT", cache: "no-store", credentials: "omit",
-      headers: { "Content-Type": "application/json", Authorization: "Bearer " + getToken() },
-      body: JSON.stringify({ data: store, base: base })
+  // My own ranking's copy, kept with whose it is so a shared computer doesn't mix them up.
+  function load() {
+    var raw = read(KEY);
+    if (me && raw && raw.who === me) {
+      store = clean(raw.data);
+      base = Number.isInteger(raw.base) ? raw.base : null;
+      pending = !!raw.pending;
+    } else {
+      store = blank(); base = null; pending = false;
+    }
+  }
+  function keep() { if (me) write(KEY, { who: me, data: store, base: base, pending: pending }); }
+  function save() { pending = true; keep(); push(); }
+  function forgetFriend() {
+    friend = friend.key ? { key: friend.key } : {};
+    write(FRIEND, friend.key ? friend : null);
+  }
+
+  // ---- the server -------------------------------------------------------------
+
+  function headers(json) {
+    var h = {};
+    if (json) h["Content-Type"] = "application/json";
+    if (owner) h.Authorization = "Bearer " + getToken();
+    else if (friend.id && friend.token) h["X-Park-Me"] = friend.id + "." + friend.token;
+    if (!owner && friend.key) h["X-Park-Key"] = friend.key;
+    return h;
+  }
+  function call(method, path, body) {
+    return fetch(SYNC + path, {
+      method: method, cache: "no-store", credentials: "omit", headers: headers(!!body),
+      body: body ? JSON.stringify(body) : undefined
     }).then(function (r) {
       return r.json().catch(function () { return null; }).then(function (b) { return { status: r.status, body: b }; });
-    }).then(function (r) {
+    });
+  }
+
+  function push() {
+    if (!me || !pending || sending) return;
+    sending = true;
+    var sent = JSON.stringify(store);
+    call("PUT", "/people/" + me, { data: store, base: base }).then(function (r) {
       sending = false;
       if (r.status === 200 && r.body) {
         base = r.body.updated;
         pending = JSON.stringify(store) !== sent;   // changed again while it was on its way
         keep();
+        var p = person(me);
+        if (p) { p.data = store; p.updated = base; }
         if (pending) push();
       } else if (r.status === 409 && r.body) {
-        adopt(r.body);
+        adoptMine(r.body);
         flash(L.newer);
+        draw();
       } else if (r.status === 401) {
-        signOut();
+        if (owner) { owner = false; setToken(null); }
         flash(L.signedOut);
+        pull().catch(function () {});
       } else {
         keep();
         flash(L.unsaved);
@@ -203,40 +279,128 @@
     });
   }
 
-  // The server's copy replaces the page's (on start, or when another device saved first).
-  function adopt(body) {
+  function adoptMine(body) {
     store = clean(body.data);
     base = Number.isInteger(body.updated) ? body.updated : null;
     pending = false;
     keep();
-    if (state.view !== "ranked" && state.view !== "unrated") state = { view: "ranked" };
-    if (state.id && !store.rated[state.id]) state = { view: "ranked" };
-    draw();
+    var p = person(me);
+    if (p) { p.data = store; p.updated = base; }
   }
 
+  // Everyone's rankings; mine is merged with what this browser holds.
   function pull() {
-    return fetch(SYNC + "/ranking", { cache: "no-store", credentials: "omit" })
-      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-      .then(function (body) {
-        if (pending && edit && body.updated === base) { push(); return; }   // ours is newer: send it
-        if (body.data) { adopt(body); return; }
-        // Nothing on the server yet: a signed-in computer sends what this browser has.
-        if (edit && Object.keys(store.rated).length) { base = null; pending = true; push(); }
-        else if (!edit && !pending) { store = blank(); draw(); }
+    if (!owner && !friend.key && !friend.token) { known = true; me = null; draw(); return Promise.resolve(); }
+    return call("GET", "/all").then(function (r) {
+      known = true;
+      if (r.status === 403) {
+        if (owner) { owner = false; setToken(null); }
+        if (friend.key || friend.token) lockMsg = L.oldLink;
+        friend = {}; write(FRIEND, null); me = null; people = [];
+        draw();
+        return;
+      }
+      if (r.status !== 200 || !r.body) throw new Error(r.status);
+      var was = me;
+      me = r.body.me || null;
+      if (!owner && friend.id && me !== friend.id) forgetFriend();   // removed: back to joining
+      if (me !== was) load();
+      people = (r.body.people || []).map(function (p) {
+        return { id: p.id, name: p.name, data: clean(p.data), updated: p.updated };
       });
+      var mine = person(me);
+      if (mine) {
+        if (pending && mine.updated === base) { mine.data = store; push(); }   // ours is newer: send it
+        else if (mine.updated != null) adoptMine({ data: mine.data, updated: mine.updated });
+        else if (Object.keys(store.rated).length) { base = null; pending = true; mine.data = store; push(); }
+        else { store = blank(); base = null; pending = false; mine.data = store; }
+        if (!owner && friend.name !== mine.name) { friend.name = mine.name; write(FRIEND, friend); }
+      }
+      if (state.who && !person(state.who)) state = { view: "ranked" };
+      draw();
+      if (owner && !inviteKey) call("GET", "/invite").then(function (x) { if (x.status === 200 && x.body) inviteKey = x.body.key; }, function () {});
+    });
   }
 
-  function signOut() {
-    setToken(null);
-    edit = false;
-    if (state.view !== "ranked" && state.view !== "detail") state = { view: "ranked" };
-    draw();
+  // ---- the rail ---------------------------------------------------------------
+
+  function rail() {
+    var inside = !!me;
+    tabsBox.hidden = !inside;
+    peopleBox.hidden = !inside;
+    shareBox.hidden = !inside;
+    backupBox.hidden = !inside;
+    var looking = state.view === "ranked" || state.view === "detail";
+    var shown = looking ? (state.who === undefined ? me : state.who) : me;
+    var st = inside && shown ? rankingOf(shown) : null;
+    countEl.textContent = st ? (shown !== me ? whoName(shown) + " · " : "") + L.count(Object.keys(st.rated).length, parks.length) : "";
+    var on = state.view === "unrated" ? "unrated"
+      : state.view === "together" || (state.view === "detail" && state.who === null) ? "together"
+      : shown === me ? "ranked" : "";
+    tabs.forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-view") === on)); });
+
+    peopleBox.textContent = "";
+    var others = people.filter(function (p) { return p.id !== me; });
+    peopleBox.hidden = !inside || !others.length;
+    if (inside && others.length) {
+      peopleBox.appendChild(el("p", "pk-label", L.friends));
+      others.forEach(function (p) {
+        var b = button("pk-person", null, function () { go({ view: "ranked", who: p.id }); });
+        b.appendChild(el("span", "pk-person-name", p.name));
+        b.appendChild(el("span", "pk-person-n", String(Object.keys(p.data.rated).length)));
+        b.setAttribute("aria-pressed", String(looking && state.who === p.id));
+        peopleBox.appendChild(b);
+      });
+    }
+
+    shareBox.textContent = "";
+    if (inside) {
+      if (owner) {
+        shareBox.appendChild(button("pk-quiet", L.copyLink, function () {
+          if (inviteKey) copy(joinLink(inviteKey), L.copied);
+          else invite("GET", L.copied);
+        }));
+        shareBox.appendChild(button("pk-quiet", L.newLink, function () {
+          if (window.confirm(L.newLinkAsk)) invite("POST", L.madeNew);
+        }));
+      } else {
+        var mine = person(me);
+        shareBox.appendChild(el("p", "pk-you", L.youAre(mine ? mine.name : friend.name || "")));
+        shareBox.appendChild(button("pk-quiet", L.myLink, function () {
+          copy(location.origin + location.pathname + "#me=" + friend.id + "." + friend.token, L.myLinkNote);
+        }));
+        shareBox.appendChild(button("pk-quiet", L.notYou, function () {
+          if (!window.confirm(L.notYouAsk)) return;
+          forgetFriend();
+          write(KEY, null);
+          me = null; store = blank(); state = { view: "ranked" };
+          pull().catch(function () {});
+        }));
+      }
+    }
+    signInBox();
   }
 
-  // The sign-in box, in the rail, for a computer that isn't signed in.
+  function joinLink(key) { return location.origin + location.pathname + "#join=" + key; }
+  function invite(method, done) {
+    call(method, "/invite").then(function (r) {
+      if (r.status === 200 && r.body && r.body.key) { inviteKey = r.body.key; copy(joinLink(inviteKey), done); }
+      else flash(r.status === 401 ? L.signedOut : L.offline);
+    }, function () { flash(L.offline); });
+  }
+
+  // To the clipboard, or (where the browser won't) a box to copy it from.
+  function copy(text, msg) {
+    var shown = function () { window.prompt(msg, text); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { flash(msg, 8000); }, shown);
+    } else shown();
+  }
+
+  // Newton's sign-in, for a computer that isn't his yet.
   function signInBox() {
     var box = root.querySelector(".pk-signin");
-    if (edit) { if (box) box.remove(); return; }
+    if (owner || me || !known) { if (box) box.remove(); return; }
     if (box) return;
     box = el("div", "pk-signin");
     var open = button("pk-quiet", L.signIn, function () {
@@ -253,7 +417,7 @@
     input.placeholder = L.password;
     var go_ = el("button", "pk-quiet", L.enter);
     go_.type = "submit";
-    var msg = el("p", "pk-flash");
+    var msg = el("p", "pk-msg");
     form.appendChild(input);
     form.appendChild(go_);
     form.appendChild(msg);
@@ -270,8 +434,9 @@
         go_.disabled = false;
         if (r.status === 200 && r.body && r.body.token) {
           setToken(r.body.token);
-          edit = true;
-          draw();
+          owner = true;
+          lockMsg = "";
+          state = { view: "ranked" };
           pull().catch(function () { flash(L.offline); });
           return;
         }
@@ -281,7 +446,7 @@
     });
     box.appendChild(open);
     box.appendChild(form);
-    root.querySelector(".pk-backup").after(box);
+    backupBox.after(box);
   }
 
   function unplace(id) {
@@ -290,23 +455,10 @@
       if (i >= 0) store.order[t].splice(i, 1);
     }
   }
-
-  // Every rated park, best first, with its overall rank.
-  function rankedList() {
+  function rankedList(st) {
     var out = [];
-    for (var t = MAX; t >= MIN; t--) store.order[t].forEach(function (id) { out.push(id); });
+    for (var t = MAX; t >= MIN; t--) st.order[t].forEach(function (id) { out.push(id); });
     return out;
-  }
-
-  // ---- the rail ---------------------------------------------------------------
-
-  function rail() {
-    tabs[1].hidden = !edit;
-    root.querySelector(".pk-backup").hidden = !edit;
-    signInBox();
-    countEl.textContent = L.count(Object.keys(store.rated).length, parks.length);
-    var on = state.view === "unrated" ? "unrated" : "ranked";
-    tabs.forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-view") === on)); });
   }
 
   function go(next) {
@@ -319,14 +471,59 @@
   // ---- views ------------------------------------------------------------------
 
   function draw() {
-    if (!edit && (state.view === "rate" || state.view === "compare" || state.view === "unrated")) state = { view: "ranked" };
     rail();
     view.textContent = "";
+    if (!known) { view.appendChild(el("p", "pk-empty", L.loading)); return; }
+    if (!me) return friend.key ? drawJoin() : drawLocked();
     if (state.view === "rate") return drawRate();
     if (state.view === "compare") return drawCompare();
     if (state.view === "detail") return drawDetail();
     if (state.view === "unrated") return drawUnrated();
+    if (state.view === "together") return drawTogether();
     drawRanked();
+  }
+
+  function drawLocked() {
+    view.appendChild(el("p", "pk-note", lockMsg || L.locked));
+  }
+
+  function drawJoin() {
+    var form = el("form", "pk-join");
+    form.appendChild(el("h2", "pk-title", L.joinTitle));
+    form.appendChild(el("p", "pk-note", L.joinNote));
+    var row = el("div", "pk-join-row");
+    var input = el("input");
+    input.type = "text";
+    input.maxLength = 30;
+    input.autocomplete = "given-name";
+    input.setAttribute("aria-label", L.name);
+    input.placeholder = L.name;
+    var go_ = el("button", "pk-primary", L.joinGo);
+    go_.type = "submit";
+    row.appendChild(input);
+    row.appendChild(go_);
+    form.appendChild(row);
+    var msg = el("p", "pk-msg");
+    form.appendChild(msg);
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var name = input.value.replace(/\s+/g, " ").trim();
+      if (!name) { input.focus(); return; }
+      go_.disabled = true;
+      call("POST", "/join", { name: name }).then(function (r) {
+        go_.disabled = false;
+        if (r.status === 200 && r.body && r.body.token) {
+          friend = { key: friend.key, id: r.body.id, token: r.body.token, name: r.body.name };
+          write(FRIEND, friend);
+          state = { view: "unrated" };
+          pull().catch(function () { flash(L.offline); });
+          return;
+        }
+        msg.textContent = r.status === 409 ? L.taken : r.status === 403 && r.body && r.body.error === "full" ? L.full
+          : r.status === 403 ? L.oldLink : L.offline;
+      }, function () { go_.disabled = false; msg.textContent = L.offline; });
+    });
+    view.appendChild(form);
   }
 
   function scoreLine(r) {
@@ -340,34 +537,56 @@
     return line;
   }
 
+  function parkRow(p, right, fn, rank) {
+    var li = el("li");
+    var b = button("pk-row", null, fn);
+    if (rank != null) b.appendChild(el("span", "pk-rank", String(rank)));
+    var nm = el("span", "pk-name");
+    nm.appendChild(el("span", "pk-park", nameOf(p)));
+    nm.appendChild(el("span", "pk-state", p.state));
+    b.appendChild(nm);
+    b.appendChild(right);
+    li.appendChild(b);
+    return li;
+  }
+
   function drawRanked() {
-    var ids = rankedList();
-    if (!ids.length) { view.appendChild(el("p", "pk-note", edit ? L.noneRanked : L.nothing)); return; }
+    var who = state.who === undefined ? me : state.who;
+    var st = rankingOf(who);
+    if (who !== me) {
+      var h = el("div", "pk-head");
+      h.appendChild(el("h2", "pk-title", L.rankingOf(whoName(who))));
+      view.appendChild(h);
+    }
+    var ids = rankedList(st);
+    if (!ids.length) view.appendChild(el("p", "pk-note", who === me ? L.noneRanked : L.nothingYet(whoName(who))));
     var rank = 0;
     for (var t = MAX; t >= MIN; t--) {
-      if (!store.order[t].length) continue;
+      if (!st.order[t].length) continue;
       var sec = el("section", "pk-tier");
-      var h = el("h2", "pk-tier-head");
-      h.appendChild(el("span", "pk-tier-n", String(t)));
-      h.appendChild(el("span", "pk-tier-of", "/ " + MAX));
-      sec.appendChild(h);
+      var hd = el("h2", "pk-tier-head");
+      hd.appendChild(el("span", "pk-tier-n", String(t)));
+      hd.appendChild(el("span", "pk-tier-of", "/ " + MAX));
+      sec.appendChild(hd);
       var ol = el("ol", "pk-list");
-      store.order[t].forEach(function (id) {
+      st.order[t].forEach(function (id) {
         rank++;
-        var p = byId[id], r = store.rated[id];
-        var li = el("li");
-        var b = button("pk-row", null, function () { go({ view: "detail", id: id }); });
-        b.appendChild(el("span", "pk-rank", String(rank)));
-        var nm = el("span", "pk-name");
-        nm.appendChild(el("span", "pk-park", nameOf(p)));
-        nm.appendChild(el("span", "pk-state", p.state));
-        b.appendChild(nm);
-        b.appendChild(scoreLine(r));
-        li.appendChild(b);
-        ol.appendChild(li);
+        ol.appendChild(parkRow(byId[id], scoreLine(st.rated[id]), function () { go({ view: "detail", id: id, who: who }); }, rank));
       });
       sec.appendChild(ol);
       view.appendChild(sec);
+    }
+    if (owner && who !== me && who !== OWNER) {
+      var acts = el("p", "pk-actions pk-foot");
+      acts.appendChild(button("pk-quiet", L.removePerson(whoName(who)), function () {
+        if (!window.confirm(L.removePersonAsk(whoName(who)))) return;
+        call("DELETE", "/people/" + who).then(function (r) {
+          if (r.status !== 200) { flash(r.status === 401 ? L.signedOut : L.offline); return; }
+          people = people.filter(function (p) { return p.id !== who; });
+          go({ view: "ranked" });
+        }, function () { flash(L.offline); });
+      }));
+      view.appendChild(acts);
     }
   }
 
@@ -387,30 +606,54 @@
       var q = query.trim().toLowerCase();
       left.forEach(function (p) {
         if (q && (p.name + " " + p.state).toLowerCase().indexOf(q) < 0) return;
-        var li = el("li");
-        var b = button("pk-row", null, function () { go({ view: "rate", id: p.id }); });
-        var nm = el("span", "pk-name");
-        nm.appendChild(el("span", "pk-park", nameOf(p)));
-        nm.appendChild(el("span", "pk-state", p.state));
-        b.appendChild(nm);
-        b.appendChild(el("span", "pk-go", L.rate + " →"));
-        li.appendChild(b);
-        ol.appendChild(li);
+        ol.appendChild(parkRow(p, el("span", "pk-go", L.rate + " →"), function () { go({ view: "rate", id: p.id }); }));
       });
     }
     box.addEventListener("input", function () { query = box.value; fill(); });
     fill();
   }
 
+  // Every person's rating of one park, in the group's order.
+  function ratingsOf(id) {
+    var out = [];
+    people.forEach(function (p) {
+      var st = rankingOf(p.id), r = st.rated[id];
+      if (r) out.push({ who: p.id, r: r, rank: rankedList(st).indexOf(id) + 1, of: Object.keys(st.rated).length });
+    });
+    return out;
+  }
+
+  function drawTogether() {
+    var rows = [];
+    parks.forEach(function (p) {
+      var rs = ratingsOf(p.id);
+      if (!rs.length) return;
+      var sum = 0;
+      rs.forEach(function (x) { sum += totalOf(x.r); });
+      rows.push({ p: p, avg: sum / rs.length, n: rs.length });
+    });
+    if (!rows.length) { view.appendChild(el("p", "pk-note", L.noneTogether)); return; }
+    rows.sort(function (a, b) { return b.avg - a.avg || b.n - a.n || a.p.name.localeCompare(b.p.name); });
+    view.appendChild(el("p", "pk-note pk-lead", L.togetherNote));
+    var ol = el("ol", "pk-list");
+    rows.forEach(function (x, i) {
+      var right = el("span", "pk-avg");
+      right.appendChild(el("span", "pk-score-v", x.avg.toFixed(1)));
+      right.appendChild(el("span", "pk-state", L.people(x.n)));
+      ol.appendChild(parkRow(x.p, right, function () { go({ view: "detail", id: x.p.id, who: null }); }, i + 1));
+    });
+    view.appendChild(ol);
+  }
+
   function head(p, extra) {
     var h = el("div", "pk-head");
     h.appendChild(button("pk-back", L.back, function () {
-      // from a park's page, back to the list; from rating it, back to where it was opened
-      go(state.view === "detail" || !edit ? { view: "ranked" } : { view: store.rated[p.id] ? "detail" : "unrated", id: p.id });
+      if (state.view === "detail") { go(state.who === null ? { view: "together" } : { view: "ranked", who: state.who }); return; }
+      go({ view: store.rated[p.id] ? "detail" : "unrated", id: p.id, who: me });
     }));
+    if (extra) h.appendChild(extra);
     h.appendChild(el("h2", "pk-title", nameOf(p)));
     h.appendChild(el("p", "pk-state", p.state));
-    if (extra) h.appendChild(extra);
     return h;
   }
 
@@ -418,7 +661,8 @@
     var p = byId[state.id], old = store.rated[p.id];
     var r = old ? { s: old.s, a: old.a, w: old.w } : { s: 0, a: 0, w: 0 };
     var tot = el("p", "pk-total");
-    view.appendChild(head(p, tot));
+    view.appendChild(head(p));
+    view.lastChild.appendChild(tot);
     var saveB;
     function sync() {
       var done = r.s && r.a && r.w;
@@ -476,12 +720,12 @@
       var was = old ? totalOf(old) : null;
       store.rated[p.id] = { s: r.s, a: r.a, w: r.w, date: /^\d{4}-\d\d$/.test(date.value) ? date.value : "", notes: notes.value.trim() };
       var t = totalOf(r);
-      if (was === t) { save(); go({ view: "detail", id: p.id }); return; }
+      if (was === t) { save(); go({ view: "detail", id: p.id, who: me }); return; }
       unplace(p.id);
       startCompare(p.id);
     });
     acts.appendChild(saveB);
-    acts.appendChild(button("pk-quiet", L.cancel, function () { go({ view: old ? "detail" : "unrated", id: p.id }); }));
+    acts.appendChild(button("pk-quiet", L.cancel, function () { go({ view: old ? "detail" : "unrated", id: p.id, who: me }); }));
     view.appendChild(acts);
     sync();
   }
@@ -491,13 +735,13 @@
     unplace(id);
     var t = totalOf(store.rated[id]);
     var others = store.order[t].length;
-    if (!others) { store.order[t].push(id); save(); go({ view: "detail", id: id }); return; }
+    if (!others) { store.order[t].push(id); save(); go({ view: "detail", id: id, who: me }); return; }
     go({ view: "compare", id: id, tier: t, lo: 0, hi: others, n: 1 });
   }
   function place(at) {
     store.order[state.tier].splice(at, 0, state.id);
     save();
-    go({ view: "detail", id: state.id });
+    go({ view: "detail", id: state.id, who: me });
   }
 
   function drawCompare() {
@@ -531,45 +775,83 @@
   }
 
   function drawDetail() {
-    var p = byId[state.id], r = store.rated[p.id];
-    if (!r) { go({ view: "ranked" }); return; }
-    var all = rankedList();
-    view.appendChild(head(p));
+    var p = byId[state.id];
+    if (!p) { go({ view: "ranked" }); return; }
+    var who = state.who === undefined ? me : state.who;
+    var st = who ? rankingOf(who) : null, r = st && st.rated[p.id];
+    if (who && !r) { go({ view: "ranked", who: who }); return; }
+    var all = ratingsOf(p.id);
+    view.appendChild(head(p, who && who !== me ? el("p", "pk-kicker", L.rankingOf(whoName(who))) : null));
     var box = el("div", "pk-detail");
     var big = el("p", "pk-big");
-    big.appendChild(el("span", "pk-big-n", String(totalOf(r))));
-    big.appendChild(el("span", "pk-big-of", "/ " + MAX));
-    big.appendChild(el("span", "pk-big-rank", L.of(all.indexOf(p.id) + 1, all.length)));
-    box.appendChild(big);
-    AXES.forEach(function (ax) {
-      var row = el("p", "pk-axis-line");
-      row.appendChild(el("span", "pk-score-k", ZH ? ax.zh : ax.en));
-      row.appendChild(el("span", "pk-score-v", r[ax.k] + " / 5"));
-      row.appendChild(el("span", "pk-axis-txt", ax.anchors[ZH ? "zh" : "en"][r[ax.k] - 1]));
-      box.appendChild(row);
-    });
-    if (r.date) {
-      var m = r.date.split("-");
-      var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-      var d = el("p", "pk-axis-line");
-      d.appendChild(el("span", "pk-score-k", L.visited));
-      d.appendChild(el("span", "pk-axis-txt", ZH ? m[0] + "年" + (+m[1]) + "月" : MON[+m[1] - 1] + " " + m[0]));
-      box.appendChild(d);
+    if (r) {
+      var list = rankedList(st);
+      big.appendChild(el("span", "pk-big-n", String(totalOf(r))));
+      big.appendChild(el("span", "pk-big-of", "/ " + MAX));
+      big.appendChild(el("span", "pk-big-rank", L.of(list.indexOf(p.id) + 1, list.length)));
+      box.appendChild(big);
+      AXES.forEach(function (ax) {
+        var row = el("p", "pk-axis-line");
+        row.appendChild(el("span", "pk-score-k", ZH ? ax.zh : ax.en));
+        row.appendChild(el("span", "pk-score-v", r[ax.k] + " / 5"));
+        row.appendChild(el("span", "pk-axis-txt", ax.anchors[ZH ? "zh" : "en"][r[ax.k] - 1]));
+        box.appendChild(row);
+      });
+      if (r.date) {
+        var m = r.date.split("-");
+        var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        var d = el("p", "pk-axis-line");
+        d.appendChild(el("span", "pk-score-k", L.visited));
+        d.appendChild(el("span", "pk-axis-txt", ZH ? m[0] + "年" + (+m[1]) + "月" : MON[+m[1] - 1] + " " + m[0]));
+        box.appendChild(d);
+      }
+      if (r.notes) box.appendChild(el("p", "pk-notes", r.notes));
+    } else if (all.length) {
+      var sum = 0;
+      all.forEach(function (x) { sum += totalOf(x.r); });
+      big.appendChild(el("span", "pk-big-n", (sum / all.length).toFixed(1)));
+      big.appendChild(el("span", "pk-big-of", "/ " + MAX));
+      big.appendChild(el("span", "pk-big-rank", L.avg + " · " + L.people(all.length)));
+      box.appendChild(big);
     }
-    if (r.notes) box.appendChild(el("p", "pk-notes", r.notes));
     view.appendChild(box);
-    if (!edit) return;
+
+    // Everyone's scores for this park, when anyone besides the person shown has rated it.
+    if (all.some(function (x) { return x.who !== who; })) {
+      var sec = el("section", "pk-everyone");
+      sec.appendChild(el("h3", "pk-label", L.everyone));
+      var ol = el("ul", "pk-list");
+      all.forEach(function (x) {
+        var li = el("li");
+        var b = button("pk-row" + (x.who === who ? " is-here" : ""), null, function () { go({ view: "detail", id: p.id, who: x.who }); });
+        var nm = el("span", "pk-name");
+        nm.appendChild(el("span", "pk-park", whoName(x.who)));
+        nm.appendChild(el("span", "pk-state", L.of(x.rank, x.of)));
+        b.appendChild(nm);
+        b.appendChild(scoreLine(x.r));
+        b.appendChild(el("span", "pk-sum", String(totalOf(x.r))));
+        li.appendChild(b);
+        ol.appendChild(li);
+      });
+      sec.appendChild(ol);
+      view.appendChild(sec);
+    }
+
     var acts = el("p", "pk-actions");
-    acts.appendChild(button("pk-primary", L.rerate, function () { go({ view: "rate", id: p.id }); }));
-    if (store.order[totalOf(r)].length > 1) acts.appendChild(button("pk-quiet", L.recompare, function () { startCompare(p.id); }));
-    acts.appendChild(button("pk-quiet", L.remove, function () {
-      if (!window.confirm(L.removeAsk(nameOf(p)))) return;
-      unplace(p.id);
-      delete store.rated[p.id];
-      save();
-      go({ view: "ranked" });
-    }));
-    view.appendChild(acts);
+    if (who === me) {
+      acts.appendChild(button("pk-primary", L.rerate, function () { go({ view: "rate", id: p.id }); }));
+      if (store.order[totalOf(r)].length > 1) acts.appendChild(button("pk-quiet", L.recompare, function () { startCompare(p.id); }));
+      acts.appendChild(button("pk-quiet", L.remove, function () {
+        if (!window.confirm(L.removeAsk(nameOf(p)))) return;
+        unplace(p.id);
+        delete store.rated[p.id];
+        save();
+        go({ view: "ranked" });
+      }));
+    } else if (!store.rated[p.id]) {
+      acts.appendChild(button("pk-primary", L.rate, function () { go({ view: "rate", id: p.id }); }));
+    }
+    if (acts.children.length) view.appendChild(acts);
   }
 
   // ---- the rail's buttons -------------------------------------------------------
@@ -578,15 +860,16 @@
     b.addEventListener("click", function () { go({ view: b.getAttribute("data-view") }); });
   });
 
-  function flash(msg) {
-    var n = root.querySelector(".pk-flash") || el("p", "pk-flash");
+  function flash(msg, ms) {
+    var aside = root.querySelector(".about-rail");
+    var n = aside.querySelector(".pk-flash") || el("p", "pk-flash");
     n.textContent = msg;
-    root.querySelector(".pk-backup").appendChild(n);
+    aside.appendChild(n);
     clearTimeout(flash.t);
-    flash.t = setTimeout(function () { n.textContent = ""; }, 4000);
+    flash.t = setTimeout(function () { n.textContent = ""; }, ms || 4000);
   }
 
-  root.querySelector('[data-act="export"]').addEventListener("click", function () {
+  backupBox.querySelector('[data-act="export"]').addEventListener("click", function () {
     var blob = new Blob([JSON.stringify(store, null, 1)], { type: "application/json" });
     var a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
@@ -596,7 +879,7 @@
     setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 0);
     flash(L.saved);
   });
-  root.querySelector('[data-act="import"]').addEventListener("click", function () { fileIn.click(); });
+  backupBox.querySelector('[data-act="import"]').addEventListener("click", function () { fileIn.click(); });
   fileIn.addEventListener("change", function () {
     var f = fileIn.files && fileIn.files[0];
     fileIn.value = "";
@@ -619,25 +902,50 @@
     root.querySelector(".about-name").textContent = "项目 · Newton Liu";
     tabs[0].textContent = L.ranked;
     tabs[1].textContent = L.unrated;
-    root.querySelector('[data-act="export"]').textContent = "保存副本";
-    root.querySelector('[data-act="import"]').textContent = "恢复副本";
+    tabs[2].textContent = L.together;
+    backupBox.querySelector('[data-act="export"]').textContent = "保存副本";
+    backupBox.querySelector('[data-act="import"]').textContent = "恢复副本";
   }
-  view.textContent = "";
-  view.appendChild(el("p", "pk-empty", L.loading));
 
+  // A link opened here: #join=<key> (the friends' link) or #me=<id>.<token> (a friend's own).
+  friend = read(FRIEND) || {};
+  var hash = location.hash.slice(1);
+  var j = /(?:^|&)join=([A-Za-z0-9_-]{10,80})/.exec(hash);
+  var mm = /(?:^|&)me=([a-z0-9]{6,20})\.([A-Za-z0-9_-]{20,80})/.exec(hash);
+  if (j) friend.key = j[1];
+  if (mm) { friend.id = mm[1]; friend.token = mm[2]; }
+  if (j || mm) {
+    write(FRIEND, friend);
+    try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
+  }
+
+  // a link pasted into a tab that already has this page open
+  window.addEventListener("hashchange", function () {
+    if (/(?:^#|&)(join|me)=/.test(location.hash)) location.reload();
+  });
+
+  draw();
   fetch("data/national-parks.json", { cache: "no-cache" })
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(function (d) {
       parks = (d.parks || []).slice().sort(function (a, b) { return a.name.localeCompare(b.name); });
       parks.forEach(function (p) { byId[p.id] = p; });
       var t = getToken();
-      edit = !!(t && unexpired(t));
-      if (t && !edit) setToken(null);
+      owner = !!(t && unexpired(t));
+      if (t && !owner) setToken(null);
+      me = owner ? OWNER : friend.id || null;
       load();
-      state = { view: edit && !Object.keys(store.rated).length ? "unrated" : "ranked" };
-      draw();
-      pull().catch(function () { if (edit) flash(L.offline); });
-      window.addEventListener("focus", function () { if (pending) push(); });
+      pull().catch(function () {
+        // offline: still show my own copy if I'm someone
+        known = true;
+        if (me) people = [{ id: me, name: owner ? "Newton" : friend.name || "", data: store, updated: base }];
+        draw();
+        flash(L.offline);
+      });
+      window.addEventListener("focus", function () {
+        if (pending) push();
+        else if (me && !sending && state.view !== "rate" && state.view !== "compare") pull().catch(function () {});
+      });
     })
     .catch(function () {
       view.textContent = "";

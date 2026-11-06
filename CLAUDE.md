@@ -1590,20 +1590,32 @@ Ranking". Made like the eBird Site Ranking, but on this site:
   scenery, activities, wildlife (his three). The sum (3–15) is the tier;
   inside a tier, "Which did you like more?" places a newly rated park by
   halving the tier (Beli-style), with "Too close to call" and "Skip".
-- **No password to look** (his call, 2026-11-06): the page is public and in
-  the sitemap.
-- **Synced across devices** (2026-11-06): the ratings are one JSON document
-  in the `park-ranking` Worker (https://park-ranking.shoot-planner-worker.workers.dev,
-  repo ~/Code/park-ranking, D1 `park-ranking`). `GET /ranking` is open;
-  `PUT /ranking` needs the Personal sign-in token (`personal_token_v1`),
-  which the Worker checks by asking `personal`'s `/session` over a service
-  binding. A save sends `{data, base}`; if another device saved first the
-  Worker answers 409 with its copy and the page shows that one. Visitors see
-  the ranking read-only; "Sign in to edit" in the rail takes the Personal
-  password. localStorage `park_ranking_v1` keeps a copy (and unsent
-  changes) for when the Worker can't be reached. "Save a copy" / "Restore
-  a copy" still download and read a file. `?api=local` on the preview uses
-  `wrangler dev` on ports 8788 (personal) and 8789 (park-ranking).
+- **Newton and his friends** (2026-11-06: "both me and my friends could
+  rate, and we could see each other's ratings … but this stays between me
+  and my friends"). One ranking per person in the `park-ranking` Worker
+  (https://park-ranking.shoot-planner-worker.workers.dev, repo
+  ~/Code/park-ranking, D1 `park-ranking`, tables `people` + `meta`):
+  - Newton: "Newton: sign in" in the rail takes the Personal password
+    (token `personal_token_v1`, checked by `personal`'s `/session` over a
+    service binding); his row is id `newton`. He gets "Copy friends' link",
+    "Make a new link" (old link stops letting people join; joined people
+    stay) and "Remove <name>" on a friend's list.
+  - Friends: the link is `national-park-ranking.html#join=<key>`; it asks
+    "What's your name?" (names unique, case-insensitive) and gives that
+    browser its own token (`park_friend_v1`; the Worker keeps only its
+    SHA-256). "Link for your other devices" (`#me=<id>.<token>`) carries
+    it to another device. The page strips the hash from the address bar.
+  - Nobody else sees any ratings: without the link or a token the page
+    only says to ask Newton. noindex, and in `PRIVATE_PAGES` (no sitemap).
+  - Views: Mine, To be rated, Together (average total of everyone who
+    rated a park), each friend's list (rail), and a park's page shows
+    everyone's scores.
+  - Saves send `{data, base}` per person; 409 means another device saved
+    first and the page takes that copy. localStorage `park_ranking_v1`
+    keeps one's own copy (tagged with whose) and unsent changes.
+    "Save a copy" / "Restore a copy" download and read a file.
+  - `?api=local` on the preview uses `wrangler dev --local` on ports 8788
+    (personal) and 8789 (park-ranking).
 - Listed on projects.html (`#national-park-ranking`, keys
   `projects.parkranking.*`, Chinese in site.js) and in the Projects
   drop-down (NAV_MENUS). The blurb is my draft until he sends his own.

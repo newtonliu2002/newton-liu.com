@@ -16,12 +16,13 @@
 <meta property="og:image:alt" content="Photograph from Alaska">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#121212">
+<meta name="robots" content="noindex">
 <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <script>try{if(localStorage.getItem("theme")==="white"){document.documentElement.dataset.theme="light";var m=document.querySelector('meta[name="theme-color"]');if(m)m.content="#ffffff"}}catch(e){}</script>
 <script>try{if(localStorage.getItem("lang")==="zh"&&!/[?&]edit\b/.test(location.search))document.documentElement.setAttribute("data-site-lang","zh")}catch(e){}</script>
 <link rel="stylesheet" href="assets/site.css?v=6229dcb2">
-<link rel="stylesheet" href="assets/parks.css?v=41373711">
+<link rel="stylesheet" href="assets/parks.css?v=ba5ab48d">
 </head>
 
 <body data-page="prose" data-base="">
@@ -52,18 +53,22 @@
        Ranking. Each park he has been to gets 1–5 for scenery, activities and
        wildlife; the total (3–15) is its tier, and "which did you like
        more?" comparisons order each tier. Layout only: the parks are
-       data/national-parks.json, drawn by assets/parks.js; the ratings live
-       in this browser (see CLAUDE.md, "National Park Ranking"). -->
+       data/national-parks.json, drawn by assets/parks.js; the ratings are
+       Newton's and his friends', in the park-ranking Worker (see CLAUDE.md,
+       "National Park Ranking"). -->
   <div class="wrap-wide about-body is-bare parks">
     <aside class="about-rail">
       <h1 class="about-title">National Park Ranking</h1>
       <p class="about-name" data-edit="parks.name">Projects · Newton Liu</p>
       <p class="pk-count" aria-live="polite"></p>
-      <div class="pk-tabs" role="group" aria-label="Show">
-        <button type="button" data-view="ranked" aria-pressed="true">Ranked</button>
+      <div class="pk-tabs" role="group" aria-label="Show" hidden>
+        <button type="button" data-view="ranked" aria-pressed="true">Mine</button>
         <button type="button" data-view="unrated" aria-pressed="false">To be rated</button>
+        <button type="button" data-view="together" aria-pressed="false">Together</button>
       </div>
-      <div class="pk-backup">
+      <div class="pk-people" hidden></div>
+      <div class="pk-share" hidden></div>
+      <div class="pk-backup" hidden>
         <button type="button" data-act="export">Save a copy</button>
         <button type="button" data-act="import">Restore a copy</button>
         <input type="file" accept="application/json,.json" hidden>
@@ -90,8 +95,8 @@
   </div>
 </footer>
 
-<script src="assets/site.js?v=af162e3a"></script>
+<script src="assets/site.js?v=a327171f"></script>
 <script src="assets/edit.js?v=59a5bab4"></script>
-<script src="assets/parks.js?v=c8a0f987"></script>
+<script src="assets/parks.js?v=767ea98b"></script>
 </body>
 </html>
