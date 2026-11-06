@@ -79,7 +79,7 @@
     visited: "到访时间", notes: "备注", save: "保存", cancel: "取消", optional: "（选填）",
     didYouLike: function (n) { return "你喜欢" + n + "吗？"; },
     like: { yes: "喜欢", mid: "一般", no: "不喜欢" }, group: { yes: "喜欢", mid: "一般", no: "不喜欢" },
-    which: "你更喜欢哪一个？", close: "差不多，分不出", skip: "跳过，放在这一组最后",
+    which: "你更喜欢哪一个？", close: "差不多，分不出",
     step: function (i) { return "第 " + i + " 题"; }, of: function (r, n) { return "第 " + r + " 名，共 " + n + " 个"; },
     scoresTitle: "分项打分", scoresNote: "每项满分 5 分。加权：风景 40%，活动 35%，野生动物 25%。可以跳过。",
     skipScores: "跳过", weighted: "分项得分", skipped: "没有打分",
@@ -115,7 +115,7 @@
     visited: "Visited", notes: "Notes", save: "Save", cancel: "Cancel", optional: " (optional)",
     didYouLike: function (n) { return "Did you like " + n + "?"; },
     like: { yes: "Yes", mid: "Mid", no: "No" }, group: { yes: "Liked it", mid: "Mid", no: "Didn't like it" },
-    which: "Which did you like more?", close: "Too close to call", skip: "Skip: put it last in this group",
+    which: "Which did you like more?", close: "Too close to call",
     step: function (i) { return "Question " + i; }, of: function (r, n) { return "#" + r + " of " + n; },
     scoresTitle: "Score by category", scoresNote: "Each out of 5. Weighted: scenery 40%, activities 35%, wildlife 25%. You can skip this.",
     skipScores: "Skip", weighted: "Category score", skipped: "Not scored",
@@ -743,7 +743,6 @@
     view.appendChild(pair);
     var acts = el("p", "pk-actions");
     acts.appendChild(button("pk-quiet", L.close, function () { place(mid); }));
-    acts.appendChild(button("pk-quiet", L.skip, function () { place(list.length); }));
     view.appendChild(acts);
   }
 
