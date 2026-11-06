@@ -8,10 +8,15 @@
    park is placed by halving the tier (as Beli does), so a tier of 8 takes
    at most 3 questions.
 
-   The parks are data/national-parks.json. The ratings live in this browser
-   only (localStorage "park_ranking_v1"), like the Site Ranking's; "Save a
-   copy" downloads them as a file and "Restore a copy" reads one back, which
-   is also how they move to another computer.
+   The parks are data/national-parks.json. The ratings sync across devices
+   (2026-11-06): they live in the "park-ranking" Worker (~/Code/park-ranking,
+   one JSON document in D1). Anyone can see the ranking; changing it needs a
+   computer signed in with the Personal password (the same token as
+   personal-gate.js, "personal_token_v1"), and "Sign in to edit" asks for it.
+   Each save sends the whole document with the version it was based on; if
+   another device saved first, the page takes that version and says so.
+   localStorage "park_ranking_v1" keeps a copy for when the Worker can't be
+   reached. "Save a copy" / "Restore a copy" still download and read a file.
 
    Stored: { v: 1, rated: { id: { s, a, w, date ("YYYY-MM" or ""), notes } },
              order: { "15": [id, …best first], … "3": [] } }
@@ -25,6 +30,10 @@
   var S = window.NLSite;
   var ZH = !!(S && S.lang && S.lang() === "zh");
   var KEY = "park_ranking_v1";
+  var TOKEN = "personal_token_v1";
+  var LOCAL = /^(localhost|127\.0\.0\.1)$/.test(location.hostname) && /[?&]api=local\b/.test(location.search);
+  var SYNC = LOCAL ? "http://127.0.0.1:8789" : "https://park-ranking.shoot-planner-worker.workers.dev";
+  var PERSONAL = LOCAL ? "http://127.0.0.1:8788" : "https://personal.shoot-planner-worker.workers.dev";
   var MIN = 3, MAX = 15;
 
   var AXES = [
@@ -53,7 +62,11 @@
     rerate: "重新评分", recompare: "重新比较", remove: "删除评分", back: "← 返回",
     removeAsk: function (n) { return "删除" + n + "的评分？"; },
     saved: "已保存副本。", restored: "已恢复。", badFile: "这个文件读不了。",
-    replaceAsk: "用这个文件替换本浏览器里的所有评分？"
+    replaceAsk: "用这个文件替换所有评分？",
+    nothing: "还没有排名。", signIn: "登录以编辑", password: "密码", enter: "进入",
+    wrong: "密码不对。", many: "尝试次数太多，请一小时后再试。", offline: "暂时连不上服务器。",
+    signedOut: "登录已失效，请重新登录。", newer: "另一台设备刚刚改过，已显示最新版本。",
+    unsaved: "没能同步到服务器，已先保存在本浏览器。"
   } : {
     loading: "Loading…", failed: "The list of parks didn't load.", ranked: "Ranked", unrated: "To be rated",
     count: function (n, all) { return n + " of " + all + " rated"; },
@@ -65,7 +78,11 @@
     rerate: "Rate again", recompare: "Compare again", remove: "Remove rating", back: "← Back",
     removeAsk: function (n) { return "Remove the rating for " + n + "?"; },
     saved: "Copy saved.", restored: "Restored.", badFile: "That file couldn't be read.",
-    replaceAsk: "Replace every rating in this browser with the ones in this file?"
+    replaceAsk: "Replace every rating with the ones in this file?",
+    nothing: "Nothing ranked yet.", signIn: "Sign in to edit", password: "Password", enter: "Enter",
+    wrong: "That password isn't right.", many: "Too many tries. Try again in an hour.", offline: "Can't reach the server just now.",
+    signedOut: "Signed out. Sign in again to edit.", newer: "Changed on another device: showing the latest.",
+    unsaved: "Couldn't reach the server; kept in this browser for now."
   };
 
   var view = root.querySelector(".pk-view");
@@ -73,6 +90,9 @@
   var tabs = root.querySelectorAll(".pk-tabs button");
   var fileIn = root.querySelector('.pk-backup input[type="file"]');
   var parks = [], byId = {}, store = blank(), state = { view: "ranked" }, query = "";
+  // edit: this computer is signed in. base: the server version the page holds (null: none yet).
+  // pending: a change the server hasn't taken yet (it is sent again with the next save or on focus).
+  var edit = false, base = null, pending = false, sending = false;
 
   // ---- helpers ------------------------------------------------------------
 
@@ -124,10 +144,144 @@
   function byIdOk(id) { return !parks.length || !!byId[id]; }
 
   function load() {
-    try { store = clean(JSON.parse(localStorage.getItem(KEY) || "null")); } catch (e) { store = blank(); }
+    var raw = null;
+    try { raw = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) {}
+    store = clean(raw && raw.data ? raw.data : raw);
+    base = raw && raw.data && Number.isInteger(raw.base) ? raw.base : null;
+    pending = !!(raw && raw.pending);
+  }
+  function keep() {
+    try { localStorage.setItem(KEY, JSON.stringify({ data: store, base: base, pending: pending })); } catch (e) {}
   }
   function save() {
-    try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {}
+    pending = true;
+    keep();
+    push();
+  }
+
+  // ---- the server -----------------------------------------------------------------
+
+  function getToken() { try { return localStorage.getItem(TOKEN); } catch (e) { return null; } }
+  function setToken(t) { try { if (t) localStorage.setItem(TOKEN, t); else localStorage.removeItem(TOKEN); } catch (e) {} }
+  function unexpired(t) {
+    try {
+      var p = t.split(".")[0].replace(/-/g, "+").replace(/_/g, "/");
+      return JSON.parse(atob(p + "===".slice((p.length + 3) % 4))).exp * 1000 > Date.now();
+    } catch (e) { return false; }
+  }
+
+  function push() {
+    if (!edit || !pending || sending) return;
+    sending = true;
+    var sent = JSON.stringify(store);
+    fetch(SYNC + "/ranking", {
+      method: "PUT", cache: "no-store", credentials: "omit",
+      headers: { "Content-Type": "application/json", Authorization: "Bearer " + getToken() },
+      body: JSON.stringify({ data: store, base: base })
+    }).then(function (r) {
+      return r.json().catch(function () { return null; }).then(function (b) { return { status: r.status, body: b }; });
+    }).then(function (r) {
+      sending = false;
+      if (r.status === 200 && r.body) {
+        base = r.body.updated;
+        pending = JSON.stringify(store) !== sent;   // changed again while it was on its way
+        keep();
+        if (pending) push();
+      } else if (r.status === 409 && r.body) {
+        adopt(r.body);
+        flash(L.newer);
+      } else if (r.status === 401) {
+        signOut();
+        flash(L.signedOut);
+      } else {
+        keep();
+        flash(L.unsaved);
+      }
+    }, function () {
+      sending = false;
+      flash(L.unsaved);
+    });
+  }
+
+  // The server's copy replaces the page's (on start, or when another device saved first).
+  function adopt(body) {
+    store = clean(body.data);
+    base = Number.isInteger(body.updated) ? body.updated : null;
+    pending = false;
+    keep();
+    if (state.view !== "ranked" && state.view !== "unrated") state = { view: "ranked" };
+    if (state.id && !store.rated[state.id]) state = { view: "ranked" };
+    draw();
+  }
+
+  function pull() {
+    return fetch(SYNC + "/ranking", { cache: "no-store", credentials: "omit" })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (body) {
+        if (pending && edit && body.updated === base) { push(); return; }   // ours is newer: send it
+        if (body.data) { adopt(body); return; }
+        // Nothing on the server yet: a signed-in computer sends what this browser has.
+        if (edit && Object.keys(store.rated).length) { base = null; pending = true; push(); }
+        else if (!edit && !pending) { store = blank(); draw(); }
+      });
+  }
+
+  function signOut() {
+    setToken(null);
+    edit = false;
+    if (state.view !== "ranked" && state.view !== "detail") state = { view: "ranked" };
+    draw();
+  }
+
+  // The sign-in box, in the rail, for a computer that isn't signed in.
+  function signInBox() {
+    var box = root.querySelector(".pk-signin");
+    if (edit) { if (box) box.remove(); return; }
+    if (box) return;
+    box = el("div", "pk-signin");
+    var open = button("pk-quiet", L.signIn, function () {
+      open.hidden = true;
+      form.hidden = false;
+      input.focus();
+    });
+    var form = el("form");
+    form.hidden = true;
+    var input = el("input");
+    input.type = "password";
+    input.autocomplete = "current-password";
+    input.setAttribute("aria-label", L.password);
+    input.placeholder = L.password;
+    var go_ = el("button", "pk-quiet", L.enter);
+    go_.type = "submit";
+    var msg = el("p", "pk-flash");
+    form.appendChild(input);
+    form.appendChild(go_);
+    form.appendChild(msg);
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      if (!input.value) return;
+      go_.disabled = true;
+      fetch(PERSONAL + "/login", {
+        method: "POST", cache: "no-store", credentials: "omit",
+        headers: { "Content-Type": "application/json" }, body: JSON.stringify({ password: input.value })
+      }).then(function (r) {
+        return r.json().catch(function () { return null; }).then(function (b) { return { status: r.status, body: b }; });
+      }).then(function (r) {
+        go_.disabled = false;
+        if (r.status === 200 && r.body && r.body.token) {
+          setToken(r.body.token);
+          edit = true;
+          draw();
+          pull().catch(function () { flash(L.offline); });
+          return;
+        }
+        msg.textContent = r.status === 401 ? L.wrong : r.status === 429 ? L.many : L.offline;
+        input.select();
+      }, function () { go_.disabled = false; msg.textContent = L.offline; });
+    });
+    box.appendChild(open);
+    box.appendChild(form);
+    root.querySelector(".pk-backup").after(box);
   }
 
   function unplace(id) {
@@ -147,6 +301,9 @@
   // ---- the rail ---------------------------------------------------------------
 
   function rail() {
+    tabs[1].hidden = !edit;
+    root.querySelector(".pk-backup").hidden = !edit;
+    signInBox();
     countEl.textContent = L.count(Object.keys(store.rated).length, parks.length);
     var on = state.view === "unrated" ? "unrated" : "ranked";
     tabs.forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-view") === on)); });
@@ -162,6 +319,7 @@
   // ---- views ------------------------------------------------------------------
 
   function draw() {
+    if (!edit && (state.view === "rate" || state.view === "compare" || state.view === "unrated")) state = { view: "ranked" };
     rail();
     view.textContent = "";
     if (state.view === "rate") return drawRate();
@@ -184,7 +342,7 @@
 
   function drawRanked() {
     var ids = rankedList();
-    if (!ids.length) { view.appendChild(el("p", "pk-note", L.noneRanked)); return; }
+    if (!ids.length) { view.appendChild(el("p", "pk-note", edit ? L.noneRanked : L.nothing)); return; }
     var rank = 0;
     for (var t = MAX; t >= MIN; t--) {
       if (!store.order[t].length) continue;
@@ -246,7 +404,10 @@
 
   function head(p, extra) {
     var h = el("div", "pk-head");
-    h.appendChild(button("pk-back", L.back, function () { go({ view: store.rated[p.id] ? "detail" : "unrated", id: p.id }); }));
+    h.appendChild(button("pk-back", L.back, function () {
+      // from a park's page, back to the list; from rating it, back to where it was opened
+      go(state.view === "detail" || !edit ? { view: "ranked" } : { view: store.rated[p.id] ? "detail" : "unrated", id: p.id });
+    }));
     h.appendChild(el("h2", "pk-title", nameOf(p)));
     h.appendChild(el("p", "pk-state", p.state));
     if (extra) h.appendChild(extra);
@@ -397,6 +558,7 @@
     }
     if (r.notes) box.appendChild(el("p", "pk-notes", r.notes));
     view.appendChild(box);
+    if (!edit) return;
     var acts = el("p", "pk-actions");
     acts.appendChild(button("pk-primary", L.rerate, function () { go({ view: "rate", id: p.id }); }));
     if (store.order[totalOf(r)].length > 1) acts.appendChild(button("pk-quiet", L.recompare, function () { startCompare(p.id); }));
@@ -468,9 +630,14 @@
     .then(function (d) {
       parks = (d.parks || []).slice().sort(function (a, b) { return a.name.localeCompare(b.name); });
       parks.forEach(function (p) { byId[p.id] = p; });
+      var t = getToken();
+      edit = !!(t && unexpired(t));
+      if (t && !edit) setToken(null);
       load();
-      state = { view: Object.keys(store.rated).length ? "ranked" : "unrated" };
+      state = { view: edit && !Object.keys(store.rated).length ? "unrated" : "ranked" };
       draw();
+      pull().catch(function () { if (edit) flash(L.offline); });
+      window.addEventListener("focus", function () { if (pending) push(); });
     })
     .catch(function () {
       view.textContent = "";

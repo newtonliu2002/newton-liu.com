@@ -1590,11 +1590,20 @@ Ranking". Made like the eBird Site Ranking, but on this site:
   scenery, activities, wildlife (his three). The sum (3–15) is the tier;
   inside a tier, "Which did you like more?" places a newly rated park by
   halving the tier (Beli-style), with "Too close to call" and "Skip".
-- **The ratings live in the browser** (localStorage `park_ranking_v1`), as
-  the Site Ranking's do. "Save a copy" downloads them as JSON; "Restore a
-  copy" reads one back (also how they move between computers).
-- Behind the Personal front-door password (`personal-gate.js` with
-  `data-title`/`data-title-zh` naming the box), noindex, in `PRIVATE_PAGES`.
+- **No password to look** (his call, 2026-11-06): the page is public and in
+  the sitemap.
+- **Synced across devices** (2026-11-06): the ratings are one JSON document
+  in the `park-ranking` Worker (https://park-ranking.shoot-planner-worker.workers.dev,
+  repo ~/Code/park-ranking, D1 `park-ranking`). `GET /ranking` is open;
+  `PUT /ranking` needs the Personal sign-in token (`personal_token_v1`),
+  which the Worker checks by asking `personal`'s `/session` over a service
+  binding. A save sends `{data, base}`; if another device saved first the
+  Worker answers 409 with its copy and the page shows that one. Visitors see
+  the ranking read-only; "Sign in to edit" in the rail takes the Personal
+  password. localStorage `park_ranking_v1` keeps a copy (and unsent
+  changes) for when the Worker can't be reached. "Save a copy" / "Restore
+  a copy" still download and read a file. `?api=local` on the preview uses
+  `wrangler dev` on ports 8788 (personal) and 8789 (park-ranking).
 - Listed on projects.html (`#national-park-ranking`, keys
   `projects.parkranking.*`, Chinese in site.js) and in the Projects
   drop-down (NAV_MENUS). The blurb is my draft until he sends his own.
@@ -1618,8 +1627,8 @@ changed) locks the page again. Chinese wording when the site is in Chinese.
   `personal` → Settings → Variables and secrets → Add → type Secret, name
   `PASSWORD`, 8+ characters. Until then the box answers "No password has
   been set yet." Changing it signs every browser out.
-- The National Park Ranking (a Projects page) uses the same gate, its own
-  name on the box via `data-title` / `data-title-zh` on the script tag.
+- A page outside Personal can use the same gate and name itself on the box
+  with `data-title` / `data-title-zh` on the script tag (none does now).
 - A new Personal page needs the same `<script src="assets/personal-gate.js?v=…">`
   line and noindex meta, and its name in `PRIVATE_PAGES`.
 - The chess pages belong to the chess chat; only the two `<head>` lines here
