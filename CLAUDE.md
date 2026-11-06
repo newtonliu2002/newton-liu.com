@@ -1623,6 +1623,12 @@ Ranking". Made like the eBird Site Ranking, but on this site:
   your rank among the parks shown (as on your own list) and your score out
   of 10, or — where you haven't rated it; labeled You / their name in each
   group's heading.
+  Visited (his ask, 2026-11-06): any number of visits, each month + year or a
+  full date (Month / Day / Year selects, day optional; Chinese year-month-day),
+  "+ Add another visit", × removes one. Stored as `visits`, newest first
+  ("YYYY-MM" or "YYYY-MM-DD"); an older rating's single `date` month becomes
+  its one visit in clean(). Shown "Aug 2025 · Jul 14, 2021" on the park's page
+  and in the PDF.
   Two numbers per park: a
   score out of 10 (Yes 10–6.7, Mid 6.6–3.4, No 3.3–0, the group's top for
   its best park then steps of range/n) and the weighted category score out

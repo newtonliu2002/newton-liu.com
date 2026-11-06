@@ -134,7 +134,18 @@
   background: var(--bg-raised); border: 1px solid var(--hairline-strong); border-radius: 0;
   color-scheme: dark;
 }
-:root[data-theme="light"] .parks .pk-field input { color-scheme: light; }
+:root[data-theme="light"] .parks .pk-field input,
+:root[data-theme="light"] .parks .pk-field select { color-scheme: light; }
+/* Visited: a row per visit (month, day, year selects + ×), then Add another. */
+.parks .pk-visit-note { margin: 0 0 var(--s3); font-size: var(--t-meta); color: var(--text-dim); }
+.parks .pk-visit-rows { display: grid; gap: var(--s2); }
+.parks .pk-visit { display: flex; align-items: center; gap: var(--s2); }
+.parks .pk-field select {
+  flex: 1 1 0; min-width: 0; padding: 10px 8px; font: inherit; font-size: 16px; color: var(--text);
+  background: var(--bg-raised); border: 1px solid var(--hairline-strong); border-radius: 0; color-scheme: dark;
+}
+.parks .pk-visit-x { flex: 0 0 auto; min-width: 44px; min-height: 44px; font-size: 20px; line-height: 1; }
+.parks .pk-visit-add { margin-top: var(--s3); }
 .parks .pk-field textarea { resize: vertical; }
 
 .parks .pk-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3) var(--s5); margin: 0; }

@@ -78,7 +78,9 @@
     count: function (n, all) { return "已评 " + n + " / " + all; },
     noneRanked: "你还没有评过分的公园。去「待评分」里选一个你去过的公园。",
     allRated: "所有公园都评过了。", search: "搜索公园", rate: "评分",
-    visited: "到访时间", notes: "备注", save: "保存", cancel: "取消", optional: "（选填）",
+    visited: "到访时间", notes: "备注",
+    visitNote: "填年月，或具体日期；去过几次就加几行。", addVisit: "+ 再加一次", removeVisit: "删去这一次",
+    dayK: "日", monthK: "月", yearK: "年", save: "保存", cancel: "取消", optional: "（选填）",
     didYouLike: function (n) { return "你喜欢" + n + "吗？"; },
     like: { yes: "喜欢", mid: "一般", no: "不喜欢" }, group: { yes: "喜欢", mid: "一般", no: "不喜欢" },
     which: "你更喜欢哪一个？", close: "差不多，分不出",
@@ -123,7 +125,10 @@
     count: function (n, all) { return n + " of " + all + " rated"; },
     noneRanked: "You haven't rated any parks yet. Pick one you've been to under To be rated.",
     allRated: "Every park has been rated.", search: "Find a park", rate: "Rate",
-    visited: "Visited", notes: "Notes", save: "Save", cancel: "Cancel", optional: " (optional)",
+    visited: "Visited", notes: "Notes",
+    visitNote: "Month and year, or the full date. Been more than once? Add each visit.",
+    addVisit: "+ Add another visit", removeVisit: "Remove this visit",
+    dayK: "Day", monthK: "Month", yearK: "Year", save: "Save", cancel: "Cancel", optional: " (optional)",
     didYouLike: function (n) { return "Did you like " + n + "?"; },
     like: { yes: "Yes", mid: "Mid", no: "No" }, group: { yes: "Liked it", mid: "Mid", no: "Didn't like it" },
     which: "Which did you like more?", close: "Too close to call",
@@ -257,6 +262,27 @@
   function whoName(id) { var p = person(id); return id === me ? L.you : p ? p.name : "?"; }
   function rankingOf(id) { if (id === me) return store; var p = person(id); return p ? p.data : blank(); }
 
+  // Visits (his ask, 2026-11-06): any number, each "YYYY-MM" or "YYYY-MM-DD",
+  // newest first, no repeats. (Older ratings had one month, as `date`.)
+  function okVisit(v) {
+    var m = /^(\d{4})-(\d\d)(?:-(\d\d))?$/.exec(typeof v === "string" ? v : "");
+    if (!m || +m[2] < 1 || +m[2] > 12) return false;
+    return !m[3] || (+m[3] >= 1 && +m[3] <= new Date(+m[1], +m[2], 0).getDate());
+  }
+  function cleanVisits(list) {
+    var out = [];
+    (list || []).forEach(function (v) { if (okVisit(v) && out.indexOf(v) < 0) out.push(v); });
+    return out.sort().reverse();
+  }
+  var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  function visitText(v) {
+    var m = /^(\d{4})-(\d\d)(?:-(\d\d))?$/.exec(v || "");
+    if (!m) return "";
+    if (ZH) return m[1] + "年" + (+m[2]) + "月" + (m[3] ? (+m[3]) + "日" : "");
+    return MON[+m[2] - 1] + (m[3] ? " " + (+m[3]) + "," : "") + " " + m[1];
+  }
+  function visitsText(r, sep) { return (r.visits || []).map(visitText).join(sep); }
+
   function blank() {
     return { v: 2, rated: {}, order: { yes: [], mid: [], no: [] } };
   }
@@ -279,7 +305,7 @@
       if (!like && scored) { var sum = +r.s + +r.a + +r.w; like = sum >= 11 ? "yes" : sum >= 8 ? "mid" : "no"; }
       if (!like) return;
       st.rated[id] = { like: like, s: scored ? +r.s : 0, a: scored ? +r.a : 0, w: scored ? +r.w : 0,
-                       date: typeof r.date === "string" ? r.date : "", notes: typeof r.notes === "string" ? r.notes : "",
+                       visits: cleanVisits(Array.isArray(r.visits) ? r.visits : [r.date]), notes: typeof r.notes === "string" ? r.notes : "",
                        season: SEASONS.indexOf(r.season) >= 0 ? r.season : "" };
     });
     var placed = {};
@@ -940,7 +966,7 @@
         var was = snapshot(p.id);
         store.rated[p.id] = {
           like: g.k, s: old ? old.s : 0, a: old ? old.a : 0, w: old ? old.w : 0,
-          date: old ? old.date : "", notes: old ? old.notes : "", season: season
+          visits: old ? old.visits || [] : [], notes: old ? old.notes : "", season: season
         };
         startCompare(p.id, true, was);
       });
@@ -1101,12 +1127,49 @@
     });
 
     var more = el("div", "pk-more");
-    var dl = el("label", "pk-field");
-    dl.appendChild(el("span", null, L.visited + L.optional));
-    var date = el("input");
-    date.type = "month";
-    date.value = old.date || "";
-    dl.appendChild(date);
+    // Visited: one row per visit, [day] month year; day may stay blank.
+    var dl = el("div", "pk-field pk-visits");
+    dl.appendChild(el("span", "pk-field-k", L.visited + L.optional));
+    dl.appendChild(el("p", "pk-visit-note", L.visitNote));
+    var vrows = el("div", "pk-visit-rows");
+    dl.appendChild(vrows);
+    var thisYear = new Date().getFullYear();
+    function sel(label, opts, val) {
+      var x = el("select");
+      x.setAttribute("aria-label", label);
+      x.appendChild(new Option(label, ""));
+      opts.forEach(function (o) { x.appendChild(new Option(o[1], o[0])); });
+      x.value = val || "";
+      return x;
+    }
+    function visitRow(v) {
+      var m = /^(\d{4})-(\d\d)(?:-(\d\d))?$/.exec(v || "") || [];
+      var row = el("div", "pk-visit");
+      var days = [], mons = [], yrs = [];
+      for (var i = 1; i <= 31; i++) days.push([(i < 10 ? "0" : "") + i, String(i)]);
+      MON.forEach(function (n, i) { mons.push([(i < 9 ? "0" : "") + (i + 1), ZH ? (i + 1) + "月" : n]); });
+      for (var y = thisYear; y >= 1940; y--) yrs.push([String(y), String(y)]);
+      var mo = sel(L.monthK, mons, m[2]), da = sel(L.dayK, days, m[3]), yr = sel(L.yearK, yrs, m[1]);
+      // US order (month, day, year); Chinese year, month, day.
+      (ZH ? [yr, mo, da] : [mo, da, yr]).forEach(function (x) { row.appendChild(x); });
+      row.appendChild(button("pk-quiet pk-visit-x", "×", function () {
+        row.remove();
+        if (!vrows.children.length) vrows.appendChild(visitRow(""));
+      }));
+      row.lastChild.setAttribute("aria-label", L.removeVisit);
+      row.read = function () {
+        if (!mo.value || !yr.value) return "";
+        var v = yr.value + "-" + mo.value + (da.value ? "-" + da.value : "");
+        return okVisit(v) ? v : yr.value + "-" + mo.value;   // a day past the month's end is dropped
+      };
+      return row;
+    }
+    (old.visits && old.visits.length ? old.visits : [""]).forEach(function (v) { vrows.appendChild(visitRow(v)); });
+    dl.appendChild(button("pk-quiet pk-visit-add", L.addVisit, function () {
+      var row = visitRow("");
+      vrows.appendChild(row);
+      row.firstChild.focus();
+    }));
     var nl = el("label", "pk-field");
     nl.appendChild(el("span", null, L.notes + L.optional));
     var notes = el("textarea");
@@ -1118,7 +1181,8 @@
     view.appendChild(more);
 
     function keepExtras() {
-      old.date = /^\d{4}-\d\d$/.test(date.value) ? date.value : "";
+      old.visits = cleanVisits([].map.call(vrows.children, function (row) { return row.read(); }));
+      delete old.date;
       old.notes = notes.value.trim();
     }
     var acts = el("p", "pk-actions");
@@ -1176,12 +1240,10 @@
         sn.appendChild(el("span", "pk-axis-txt", L.season[r.season]));
         box.appendChild(sn);
       }
-      if (r.date) {
-        var m = r.date.split("-");
-        var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      if (r.visits && r.visits.length) {
         var d = el("p", "pk-axis-line");
         d.appendChild(el("span", "pk-score-k", L.visited));
-        d.appendChild(el("span", "pk-axis-txt", ZH ? m[0] + "年" + (+m[1]) + "月" : MON[+m[1] - 1] + " " + m[0]));
+        d.appendChild(el("span", "pk-axis-txt", visitsText(r, " · ")));
         box.appendChild(d);
       }
       if (r.notes) box.appendChild(el("p", "pk-notes", r.notes));
@@ -1280,12 +1342,6 @@
   // "Save as PDF" makes the file. The page is built for the print only
   // (.pk-print; parks.css hides everything else on paper) and removed after.
   // "2025-08" as "Aug 2025" (2025年8月); anything else as it is.
-  function monthText(d) {
-    var m = /^(\d{4})-(\d{1,2})$/.exec(d || "");
-    if (!m) return d || "";
-    var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    return ZH ? m[1] + "年" + (+m[2]) + "月" : MON[+m[2] - 1] + " " + m[1];
-  }
   function printRanking() {
     var old = document.querySelector(".pk-print");
     if (old) old.remove();
@@ -1316,7 +1372,7 @@
         var tr = el("tr");
         [String(rank), nameOf(p), p.state, fmt(scoreOf(st, id)), fmt(weightOf(r)),
          r.s ? String(r.s) : "—", r.a ? String(r.a) : "—", r.w ? String(r.w) : "—",
-         r.season ? L.season[r.season] : "", monthText(r.date)].forEach(function (v, i) {
+         r.season ? L.season[r.season] : "", visitsText(r, ZH ? "、" : "; ")].forEach(function (v, i) {
           tr.appendChild(el("td", i > 2 && i < 8 ? "n" : i === 1 ? "park" : null, v));
         });
         tb.appendChild(tr);
