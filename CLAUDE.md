@@ -1360,7 +1360,7 @@ squares himself** (he asked), and he may still tell me.
   Table `ticks` (list = the podcast's `id`, key = the episode's `n`, or for
   an extra the last part of its `href`, at = when ticked). Anyone may read
   them (`READ_PUBLIC = "1"`).
-  - **Anyone may tick too, with no password** (`WRITE_PUBLIC = "1"`). Newton decided on 2026-10-23: the Personal pages will go behind one general password later.
+  - **Anyone may tick too, with no password** (`WRITE_PUBLIC = "1"`). Newton decided on 2026-10-23: the Personal pages will go behind one general password later (done 2026-11-06 as a front door only, see "Personal password"; ticking itself is still open to anyone who calls the Worker).
   - What keeps a stranger from doing much harm (hardened after a review, 2026-10-23; details in the Worker's README):
     - only this page's own episodes can be ticked: the Worker reads data/podcasts.json from the site (`CATALOGUE_URL`, every 10 minutes) and accepts only its podcast ids and episode keys, made as `tickKey()` makes them. A new episode needs no Worker change. If the site moves to a domain, change `CATALOGUE_URL` too;
     - `list` and `key` must be strings;
@@ -1577,6 +1577,30 @@ Newton asked for it: every photograph in a gallery has its own address, so a lin
   - The viewer's ‹ › draw their ring inside.
   - On a touch screen each animal's eBird or Wikipedia link is a 24px target (`.lb-name a`, `.lb-row + .lb-row`).
   - On a phone the nav row's `scroll-padding-inline` keeps a focused tab or an opened Journals or Personal entry clear of the fades.
+
+## Personal password (front door)
+
+Asked for 2026-11-06 ("front door lock", his pick over moving the data off
+GitHub). The Personal tab and its entries stay in the nav for everyone; the
+four Personal pages (podcast-tracker.html, travel-fall-2026.html, chess.html,
+chess-games.html) load `assets/personal-gate.js` in their `<head>` (after
+the lang line), which hides `main` and the footer and shows a password box
+under the masthead until the `personal` Worker's `POST /login` accepts the
+password. The token (`personal_token_v1` in localStorage) keeps that browser
+signed in for a year; a token the Worker's `/session` refuses (password
+changed) locks the page again. Chinese wording when the site is in Chinese.
+- **It is a front door only**: the repo is public, so data/podcasts.json,
+  data/travel-*.json and data/chess*.json stay readable to anyone who looks.
+  The pages carry `<meta name="robots" content="noindex">` and build.py's
+  `PRIVATE_PAGES` keeps them out of sitemap.xml.
+- **The password is Newton's to set**: Cloudflare dashboard → Workers →
+  `personal` → Settings → Variables and secrets → Add → type Secret, name
+  `PASSWORD`, 8+ characters. Until then the box answers "No password has
+  been set yet." Changing it signs every browser out.
+- A new Personal page needs the same `<script src="assets/personal-gate.js?v=…">`
+  line and noindex meta, and its name in `PRIVATE_PAGES`.
+- The chess pages belong to the chess chat; only the two `<head>` lines here
+  were added to them.
 
 ## Editing the words (?edit)
 

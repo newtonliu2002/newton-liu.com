@@ -63,6 +63,9 @@ SITE_URL = "https://newton-liu.com/"
 # is restamped too, but is no page of its own to list).
 ROOT_PAGES = ("index.html", "work.html", "projects.html", "about.html", "contact.html", "academia.html",
               "chess.html", "chess-games.html", "podcast-tracker.html", "travel-fall-2026.html")
+# The Personal pages, behind the password (assets/personal-gate.js): kept out
+# of the sitemap, and each carries <meta name="robots" content="noindex">.
+PRIVATE_PAGES = ("chess.html", "chess-games.html", "podcast-tracker.html", "travel-fall-2026.html")
 # A link preview's picture where a page has none of its own: the About band
 # (images/_about/ is in git, so served by Pages), at its 1600 rung, real size.
 SHARE_IMAGE = ("images/_about/1600/B0003302.jpg", 1600, 592, "Photograph from Alaska")
@@ -527,7 +530,7 @@ def load_collections():
 ASSETS = ("site.css", "site.js", "edit.js", "globe.css", "globe.js",
           "journal.css", "journal.js", "journal-map.css", "journal-map.js",
           "chess-core.js", "chess.css", "chess.js", "chess-map.css", "chess-map.js",
-          "podcasts.css", "podcasts.js", "travel-map.css", "travel-map.js")
+          "podcasts.css", "podcasts.js", "travel-map.css", "travel-map.js", "personal-gate.js")
 
 
 def asset_stamps():
@@ -743,7 +746,7 @@ def published_journals():
 def write_sitemap(collections):
     """sitemap.xml at the root: every public page, by its address. Returns
     whether it changed."""
-    paths = [""] + [p for p in ROOT_PAGES if p != "index.html" and os.path.exists(os.path.join(ROOT, p))]
+    paths = [""] + [p for p in ROOT_PAGES if p != "index.html" and p not in PRIVATE_PAGES and os.path.exists(os.path.join(ROOT, p))]
     paths += published_journals()
     paths += ["collections/{}/".format(c["slug"]) for c in collections if c.get("slug")]
     text = ('<?xml version="1.0" encoding="UTF-8"?>\n'
