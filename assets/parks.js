@@ -684,11 +684,12 @@
     var row = el("div", "pk-likes");
     GROUPS.forEach(function (g) {
       var b = button("pk-like", L.like[g.k], function () {
+        var was = snapshot(p.id);
         store.rated[p.id] = {
           like: g.k, s: old ? old.s : 0, a: old ? old.a : 0, w: old ? old.w : 0,
           date: old ? old.date : "", notes: old ? old.notes : ""
         };
-        startCompare(p.id, true);
+        startCompare(p.id, true, was);
       });
       if (old && old.like === g.k) b.setAttribute("aria-pressed", "true");
       row.appendChild(b);
@@ -701,12 +702,28 @@
 
   // Step 2: place it in its group by halving: lo..hi is the stretch it can still go in.
   // then: go on to the category scores (while rating), or back to the park.
-  function startCompare(id, then) {
+  // was: the park's rating and place before this round, so Back can put them back.
+  function snapshot(id) {
+    var r = store.rated[id];
+    return r ? { rec: JSON.parse(JSON.stringify(r)), group: r.like, index: store.order[r.like].indexOf(id) }
+             : { rec: null };
+  }
+  function restore(id, was) {
+    unplace(id);
+    if (!was.rec) delete store.rated[id];
+    else {
+      store.rated[id] = was.rec;
+      if (was.index >= 0) store.order[was.group].splice(Math.min(was.index, store.order[was.group].length), 0, id);
+    }
+    save();
+  }
+  function startCompare(id, then, was) {
+    was = was || snapshot(id);
     unplace(id);
     var g = store.rated[id].like;
     var others = store.order[g].length;
     if (!others) { store.order[g].push(id); save(); afterPlace(id, then); return; }
-    go({ view: "compare", id: id, group: g, lo: 0, hi: others, n: 1, then: !!then });
+    go({ view: "compare", id: id, group: g, lo: 0, hi: others, n: 1, then: !!then, was: was, prev: null });
   }
   function afterPlace(id, then) {
     go(then ? { view: "scores", id: id, rating: true } : { view: "detail", id: id, who: me });
@@ -723,6 +740,14 @@
     var mid = (state.lo + state.hi) >> 1;
     var a = byId[state.id], b = byId[list[mid]];
     var h = el("div", "pk-head");
+    // Back (his ask): the previous question, or from the first one the step
+    // before (Did you like it?, or the park's page), as it was.
+    h.appendChild(button("pk-back", L.back, function () {
+      if (state.prev) { state = state.prev; draw(); return; }
+      var id = state.id, then = state.then;
+      restore(id, state.was);
+      go(then ? { view: "rate", id: id } : { view: "detail", id: id, who: me });
+    }));
     h.appendChild(el("p", "pk-kicker", L.group[state.group] + " · " + L.step(state.n)));
     h.appendChild(el("h2", "pk-title", L.which));
     view.appendChild(h);
@@ -730,7 +755,7 @@
     [[a, true], [b, false]].forEach(function (x) {
       var p = x[0];
       var c = button("pk-card", null, function () {
-        var next = { view: "compare", id: state.id, group: state.group, n: state.n + 1, lo: state.lo, hi: state.hi, then: state.then };
+        var next = { view: "compare", id: state.id, group: state.group, n: state.n + 1, lo: state.lo, hi: state.hi, then: state.then, was: state.was, prev: state };
         if (x[1]) next.hi = mid; else next.lo = mid + 1;
         state = next;
         draw();

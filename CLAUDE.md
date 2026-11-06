@@ -1595,7 +1595,9 @@ Ranking". Made like the eBird Site Ranking, but on this site:
   (2026-11-06, "like how Beli works"): 1. "Did you like it?" Yes / Mid /
   No (the group); 2. "Which did you like more?" places it in its group by
   halving (with "Too close to call"; the "Skip: put it last" option was
-  removed at his ask); 3. scenery, activities,
+  removed at his ask; "← Back" goes to the previous question, and from
+  the first back to "Did you like it?" or the park's page, with the park's
+  old rating and place put back); 3. scenery, activities,
   wildlife 1–5, weighted 40/35/25 %, plain number buttons with no
   descriptions (he had them removed), Skip up top by the category score.
   Two numbers per park: a
