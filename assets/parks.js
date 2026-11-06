@@ -260,6 +260,9 @@
     return Math.round((g.hi - (g.hi - g.lo) * i / n) * 10) / 10;
   }
   function fmt(x) { return x == null ? "—" : x.toFixed(1); }
+  // Newton's own row (built in, for his sign-in) stays out of the lists while
+  // it has no ratings (his ask, 2026-11-06).
+  function listed(p) { return p.id !== OWNER || p.id === me || Object.keys(p.data.rated).length > 0; }
   function person(id) { for (var i = 0; i < people.length; i++) if (people[i].id === id) return people[i]; return null; }
   function whoName(id) { var p = person(id); return id === me ? L.you : p ? p.name : "?"; }
   function rankingOf(id) { if (id === me) return store; var p = person(id); return p ? p.data : blank(); }
@@ -913,7 +916,7 @@
   }
 
   function drawFriends() {
-    var others = people.filter(function (p) { return p.id !== me; });
+    var others = people.filter(function (p) { return p.id !== me && listed(p); });
     if (!others.length) { view.appendChild(el("p", "pk-note", L.noFriends)); return; }
     view.appendChild(whereBar());
     var ol = el("ul", "pk-list");
@@ -1259,7 +1262,7 @@
     view.appendChild(box);
 
     // Every other person's score and rank for this park, or that they haven't rated it.
-    var others = people.filter(function (x) { return x.id !== who; });
+    var others = people.filter(function (x) { return x.id !== who && listed(x); });
     if (others.length) {
       var rows = others.map(function (x) {
         var xs = rankingOf(x.id), xr = xs.rated[p.id];
