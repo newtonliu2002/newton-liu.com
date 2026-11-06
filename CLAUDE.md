@@ -1471,6 +1471,9 @@ redone for trips, public (his pick).
   one trip: Richmond – Charlottesville – Shenandoah – D.C. – Philadelphia –
   Exton – Philadelphia – D.C. – Richmond (his line; the Oct 2-4 Philadelphia ·
   Exton and Oct 4 D.C. trips and their roads are gone).
+  2026-11-06, his word: the Québec road goes Montreal – Shawinigan (Oct 9) –
+  Île d'Orléans (Oct 10) – Fjord-du-Saguenay; "no need to make pins", so
+  they are waypoints in quebec-loop only, not stops.
   It replaced a first list read from his eBird export (2026-10-22).
   **New trips: he tells me**; one entry each, in date order, added once
   he is back, never while he is away.
