@@ -161,6 +161,8 @@
 .parks .pk-scores-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--s2) var(--s5); }
 .parks .pk-scores-head .pk-ask { margin: 0; }
 .parks .pk-scores-head .pk-total { margin: 0; }
+.parks .pk-head-right { display: flex; align-items: baseline; gap: var(--s5); }
+.parks .pk-skip { color: var(--text); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 5px; }
 .parks .pk-scores-head + .pk-lead { margin: var(--s2) 0 var(--s6); }
 .parks .pk-card-score { margin-top: var(--s2); font: 400 var(--t-meta)/1.3 var(--mono); color: var(--text-faint); }
 .parks .pk-two { display: inline-flex; align-items: baseline; gap: var(--s4); flex: 0 0 auto; }

@@ -764,8 +764,10 @@
     view.appendChild(head(p));
     var hd = el("div", "pk-scores-head");
     hd.appendChild(el("h2", "pk-title pk-ask", L.scoresTitle));
+    var right = el("div", "pk-head-right");
     var tot = el("p", "pk-total");
-    hd.appendChild(tot);
+    right.appendChild(tot);
+    hd.appendChild(right);
     view.appendChild(hd);
     view.appendChild(el("p", "pk-note pk-lead", L.scoresNote));
     var saveB;
@@ -833,7 +835,8 @@
     });
     acts.appendChild(saveB);
     if (state.rating) {
-      acts.appendChild(button("pk-quiet", L.skipScores, function () {
+      // Skip sits up top, by the category score (his ask), not under the form.
+      right.appendChild(button("pk-quiet pk-skip", L.skipScores, function () {
         old.s = old.a = old.w = 0;
         keepExtras();
         save();
