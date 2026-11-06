@@ -63,10 +63,10 @@
      ------------------------------------------------------------------ */
   var NAV_MENUS = {
     "projects.html": [
-      { label: "eBird Explorer", href: "https://ebird-explorer.onrender.com" },
+      { label: "eBird Explorer", href: "https://ebird.newton-liu.com" },
       { label: "Photography Planner", href: "shoot-planner/" },
       { label: "Retreat Finder", href: "retreat-finder/" },
-      { label: "Site Ranking", href: "https://ebird-explorer.onrender.com/site-ranking" }
+      { label: "Site Ranking", href: "https://ebird.newton-liu.com/site-ranking" }
     ],
     "journals": [
       { label: "Québec", zh: "魁北克", href: "journals/quebec/" }

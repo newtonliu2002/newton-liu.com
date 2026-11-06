@@ -1125,7 +1125,7 @@ collection exists. Both follow the same draft switch.
 The nav's second tab: things Newton has built alongside the photography,
 starting with **eBird Explorer**, his birding trip planner. The app itself
 is not part of this site: it runs on Render (its own server and eBird key)
-at https://ebird-explorer.onrender.com, behind a password, from the private
+at https://ebird.newton-liu.com (was ebird-explorer.onrender.com, which now redirects), behind a password, from the private
 repo `ebird-explorer`. This page only describes it and links to it.
 
 Same rail/column structure as the prose pages (`.about-body.is-bare`), with
