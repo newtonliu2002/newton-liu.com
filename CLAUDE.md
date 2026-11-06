@@ -1586,10 +1586,16 @@ Ranking". Made like the eBird Site Ranking, but on this site:
 - `data/national-parks.json`: the 63 U.S. national parks (id permanent,
   name without "National Park", state). In Chinese a name shows as
   "Acadia国家公园" (the generic part translated, per the place-name rule).
-- `assets/parks.js` + `assets/parks.css`: three scores per park, 1–5 each:
-  scenery, activities, wildlife (his three). The sum (3–15) is the tier;
-  inside a tier, "Which did you like more?" places a newly rated park by
-  halving the tier (Beli-style), with "Too close to call" and "Skip".
+- `assets/parks.js` + `assets/parks.css`: rating a park is his three steps
+  (2026-11-06, "like how Beli works"): 1. "Did you like it?" Yes / Mid /
+  No (the group); 2. "Which did you like more?" places it in its group by
+  halving (with "Too close to call" and "Skip"); 3. scenery, activities,
+  wildlife 1–5, weighted 40/35/25 %, skippable. Two numbers per park: a
+  score out of 10 (Yes 10–6.7, Mid 6.6–3.4, No 3.3–0, the group's top for
+  its best park then steps of range/n) and the weighted category score out
+  of 5 ("—" if skipped). Lists go by the first. Ranking format v2
+  ({like, s, a, w} + order {yes, mid, no}); clean() converts the first
+  day's v1 (sum-of-scores tiers).
 - **Newton and his friends** (2026-11-06: "both me and my friends could
   rate, and we could see each other's ratings"; then "when people land, it
   shows 'what is your name' and then all the parks are logged under that

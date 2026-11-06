@@ -2,10 +2,16 @@
    newton-liu.com — the National Park Ranking (national-park-ranking.html),
    a Projects entry (Newton, 2026-11-06), made like the eBird Site Ranking.
 
-   Each park gets three scores, 1–5 each: scenery, activities, wildlife.
-   Their sum (3–15) is the park's tier. Inside a tier the order comes from
-   "which did you like more?" questions: a newly rated park is placed by
-   halving the tier (as Beli does), so a tier of 8 takes at most 3 questions.
+   Rating a park (his steps, 2026-11-06, "like how Beli works"):
+   1. "Did you like it?" Yes / Mid / No puts it in one of three groups.
+   2. "Which did you like more?" places it inside its group by halving the
+      group (Beli-style), so a group of 8 takes at most 3 questions.
+   3. Scenery, activities, wildlife, 1–5 each, weighted 40 / 35 / 25 %.
+      This step can be skipped.
+   So each park has two numbers: a score out of 10 from the group and its
+   place in it (Yes 10–6.7, Mid 6.6–3.4, No 3.3–0, in even steps down the
+   group, as Beli does), and a weighted category score out of 5 (none if
+   skipped). Lists are in the order of the first.
 
    Newton and his friends (2026-11-06: "both me and my friends could rate,
    and we could see each other's ratings … but this stays between me and my
@@ -30,8 +36,11 @@
    so. localStorage "park_ranking_v1" keeps a copy of one's own ranking (and
    unsent changes) for when the Worker can't be reached.
 
-   A ranking: { v: 1, rated: { id: { s, a, w, date ("YYYY-MM" or ""), notes } },
-                order: { "15": [id, …best first], … "3": [] } }
+   A ranking: { v: 2, rated: { id: { like: "yes"|"mid"|"no", s, a, w (1–5, or all 0
+                when skipped), date ("YYYY-MM" or ""), notes } },
+                order: { yes: [id, …best first], mid: [], no: [] } }
+   (v1, from the first day: three scores whose sum was a tier, order by
+   tier; clean() turns it into v2.)
    ========================================================================== */
 
 (function () {
@@ -48,7 +57,12 @@
   var SYNC = LOCAL ? "http://127.0.0.1:8789" : "https://park-ranking.shoot-planner-worker.workers.dev";
   var PERSONAL = LOCAL ? "http://127.0.0.1:8788" : "https://personal.shoot-planner-worker.workers.dev";
   var OWNER = "newton";
-  var MIN = 3, MAX = 15;
+  var GROUPS = [
+    { k: "yes", hi: 10, lo: 6.7 },
+    { k: "mid", hi: 6.6, lo: 3.4 },
+    { k: "no", hi: 3.3, lo: 0 }
+  ];
+  var WEIGHT = { s: 0.40, a: 0.35, w: 0.25 };
 
   var AXES = [
     { k: "s", en: "Scenery", zh: "风景", anchors: {
@@ -69,10 +83,16 @@
     loading: "加载中……", failed: "公园列表加载失败。", ranked: "我的", unrated: "待评分", friendsTab: "朋友",
     count: function (n, all) { return "已评 " + n + " / " + all; },
     noneRanked: "你还没有评过分的公园。去「待评分」里选一个你去过的公园。",
-    allRated: "所有公园都评过了。", search: "搜索公园", rate: "评分", total: "总分",
+    allRated: "所有公园都评过了。", search: "搜索公园", rate: "评分",
     visited: "到访时间", notes: "备注", save: "保存", cancel: "取消", optional: "（选填）",
-    which: "你更喜欢哪一个？", close: "差不多，分不出", skip: "跳过，放在这一档最后",
-    step: function (i) { return "第 " + i + " 题"; }, tier: "档", of: function (r, n) { return "第 " + r + " 名，共 " + n + " 个"; },
+    didYouLike: function (n) { return "你喜欢" + n + "吗？"; },
+    like: { yes: "喜欢", mid: "一般", no: "不喜欢" }, group: { yes: "喜欢", mid: "一般", no: "不喜欢" },
+    which: "你更喜欢哪一个？", close: "差不多，分不出", skip: "跳过，放在这一组最后",
+    step: function (i) { return "第 " + i + " 题"; }, of: function (r, n) { return "第 " + r + " 名，共 " + n + " 个"; },
+    scoresTitle: "分项打分", scoresNote: "每项满分 5 分。加权：风景 40%，活动 35%，野生动物 25%。可以跳过。",
+    skipScores: "跳过", weighted: "分项得分", skipped: "没有打分",
+    legend: "前一个数字由两两比较得出，满分 10；后一个是分项加权得分，满分 5。",
+    editScores: "修改分项打分", addScores: "补上分项打分",
     rerate: "重新评分", recompare: "重新比较", remove: "删除评分", back: "← 返回",
     removeAsk: function (n) { return "删除你对" + n + "的评分？"; },
     saved: "已保存副本。", restored: "已恢复。", badFile: "这个文件读不了。",
@@ -98,10 +118,16 @@
     loading: "Loading…", failed: "The list of parks didn't load.", ranked: "Mine", unrated: "To be rated", friendsTab: "Friends",
     count: function (n, all) { return n + " of " + all + " rated"; },
     noneRanked: "You haven't rated any parks yet. Pick one you've been to under To be rated.",
-    allRated: "Every park has been rated.", search: "Find a park", rate: "Rate", total: "Total",
-    visited: "Visited", notes: "Notes", save: "Save rating", cancel: "Cancel", optional: " (optional)",
-    which: "Which did you like more?", close: "Too close to call", skip: "Skip: put it last in this tier",
-    step: function (i) { return "Question " + i; }, tier: "Tier", of: function (r, n) { return "#" + r + " of " + n; },
+    allRated: "Every park has been rated.", search: "Find a park", rate: "Rate",
+    visited: "Visited", notes: "Notes", save: "Save", cancel: "Cancel", optional: " (optional)",
+    didYouLike: function (n) { return "Did you like " + n + "?"; },
+    like: { yes: "Yes", mid: "Mid", no: "No" }, group: { yes: "Liked it", mid: "Mid", no: "Didn't like it" },
+    which: "Which did you like more?", close: "Too close to call", skip: "Skip: put it last in this group",
+    step: function (i) { return "Question " + i; }, of: function (r, n) { return "#" + r + " of " + n; },
+    scoresTitle: "Score by category", scoresNote: "Each out of 5. Weighted: scenery 40%, activities 35%, wildlife 25%. You can skip this.",
+    skipScores: "Skip", weighted: "Category score", skipped: "Not scored",
+    legend: "First number: out of 10, from your comparisons. Second: the weighted category score, out of 5.",
+    editScores: "Edit category scores", addScores: "Add category scores",
     rerate: "Rate again", recompare: "Compare again", remove: "Remove rating", back: "← Back",
     removeAsk: function (n) { return "Remove your rating for " + n + "?"; },
     saved: "Copy saved.", restored: "Restored.", badFile: "That file couldn't be read.",
@@ -155,38 +181,57 @@
     return b;
   }
   function nameOf(p) { return ZH ? p.name + "国家公园" : p.name; }
-  function totalOf(r) { return (r.s || 0) + (r.a || 0) + (r.w || 0); }
+  // The weighted category score out of 5 (null when skipped).
+  function weightOf(r) {
+    if (!r || !r.s || !r.a || !r.w) return null;
+    return Math.round((r.s * WEIGHT.s + r.a * WEIGHT.a + r.w * WEIGHT.w) * 10) / 10;
+  }
+  function groupOf(k) { for (var i = 0; i < GROUPS.length; i++) if (GROUPS[i].k === k) return GROUPS[i]; return null; }
+  // The score out of 10: the group's top for its best park, then even steps of
+  // range / n down the group (two liked parks: 10 and 8.4; the last only
+  // nears the bottom of the range as the group grows).
+  function scoreOf(st, id) {
+    var r = st.rated[id], g = r && groupOf(r.like);
+    if (!g) return null;
+    var list = st.order[g.k], i = list.indexOf(id), n = list.length;
+    if (i < 0) return null;
+    return Math.round((g.hi - (g.hi - g.lo) * i / n) * 10) / 10;
+  }
+  function fmt(x) { return x == null ? "—" : x.toFixed(1); }
   function person(id) { for (var i = 0; i < people.length; i++) if (people[i].id === id) return people[i]; return null; }
   function whoName(id) { var p = person(id); return id === me ? L.you : p ? p.name : "?"; }
   function rankingOf(id) { if (id === me) return store; var p = person(id); return p ? p.data : blank(); }
 
   function blank() {
-    var order = {};
-    for (var t = MIN; t <= MAX; t++) order[t] = [];
-    return { v: 1, rated: {}, order: order };
+    return { v: 2, rated: {}, order: { yes: [], mid: [], no: [] } };
   }
 
-  // A ranking made whole: every tier list there, each rated park in the
-  // tier its scores say (once), and nothing listed that isn't rated.
+  // A ranking made whole: every group list there, each rated park in its
+  // group (once), and nothing listed that isn't rated. A v1 ranking (tiers
+  // by score sum) becomes v2: sum 11+ is Yes, 8–10 Mid, 7 or less No,
+  // keeping its order.
   function clean(raw) {
     var st = blank();
     if (!raw || typeof raw !== "object" || typeof raw.rated !== "object") return st;
+    var seq = [];
+    if (raw.v === 2 && raw.order) GROUPS.forEach(function (g) { seq = seq.concat(raw.order[g.k] || []); });
+    else if (raw.order) for (var t = 15; t >= 3; t--) seq = seq.concat(raw.order[t] || []);
     Object.keys(raw.rated).forEach(function (id) {
       var r = raw.rated[id];
       if (!r || (parks.length && !byId[id])) return;
-      var ok = AXES.every(function (ax) { return r[ax.k] >= 1 && r[ax.k] <= 5; });
-      if (!ok) return;
-      st.rated[id] = { s: +r.s, a: +r.a, w: +r.w, date: typeof r.date === "string" ? r.date : "",
-                       notes: typeof r.notes === "string" ? r.notes : "" };
+      var scored = AXES.every(function (ax) { return r[ax.k] >= 1 && r[ax.k] <= 5; });
+      var like = groupOf(r.like) ? r.like : null;
+      if (!like && scored) { var sum = +r.s + +r.a + +r.w; like = sum >= 11 ? "yes" : sum >= 8 ? "mid" : "no"; }
+      if (!like) return;
+      st.rated[id] = { like: like, s: scored ? +r.s : 0, a: scored ? +r.a : 0, w: scored ? +r.w : 0,
+                       date: typeof r.date === "string" ? r.date : "", notes: typeof r.notes === "string" ? r.notes : "" };
     });
     var placed = {};
-    for (var t = MAX; t >= MIN; t--) {
-      ((raw.order && raw.order[t]) || []).forEach(function (id) {
-        if (st.rated[id] && !placed[id] && totalOf(st.rated[id]) === t) { st.order[t].push(id); placed[id] = 1; }
-      });
-    }
+    seq.forEach(function (id) {
+      if (st.rated[id] && !placed[id]) { st.order[st.rated[id].like].push(id); placed[id] = 1; }
+    });
     Object.keys(st.rated).forEach(function (id) {
-      if (!placed[id]) st.order[totalOf(st.rated[id])].push(id);
+      if (!placed[id]) st.order[st.rated[id].like].push(id);
     });
     return st;
   }
@@ -363,15 +408,24 @@
   }
 
   function unplace(id) {
-    for (var t = MIN; t <= MAX; t++) {
-      var i = store.order[t].indexOf(id);
-      if (i >= 0) store.order[t].splice(i, 1);
-    }
+    GROUPS.forEach(function (g) {
+      var i = store.order[g.k].indexOf(id);
+      if (i >= 0) store.order[g.k].splice(i, 1);
+    });
   }
   function rankedList(st) {
     var out = [];
-    for (var t = MAX; t >= MIN; t--) st.order[t].forEach(function (id) { out.push(id); });
+    GROUPS.forEach(function (g) { st.order[g.k].forEach(function (id) { out.push(id); }); });
     return out;
+  }
+
+  // A park left mid-way through comparing goes last in its group.
+  function settle() {
+    var placed = rankedList(store), moved = false;
+    Object.keys(store.rated).forEach(function (id) {
+      if (placed.indexOf(id) < 0) { store.order[store.rated[id].like].push(id); moved = true; }
+    });
+    if (moved) save();
   }
 
   function go(next) {
@@ -388,7 +442,9 @@
     view.textContent = "";
     if (!known) { view.appendChild(el("p", "pk-empty", L.loading)); return; }
     if (!me) return drawJoin();
-    if (state.view === "rate") return drawRate();
+    if (state.view !== "compare") settle();
+    if (state.view === "rate") return drawLike();
+    if (state.view === "scores") return drawScores();
     if (state.view === "compare") return drawCompare();
     if (state.view === "detail") return drawDetail();
     if (state.view === "unrated") return drawUnrated();
@@ -472,6 +528,14 @@
     if (!("ontouchstart" in window)) setTimeout(function () { input.focus(); }, 0);
   }
 
+  // The two numbers of a rated park: category score (faint, out of 5) and score out of 10.
+  function twoScores(st, id) {
+    var box = el("span", "pk-two");
+    box.appendChild(el("span", "pk-wt", fmt(weightOf(st.rated[id]))));
+    box.appendChild(el("span", "pk-sum", fmt(scoreOf(st, id))));
+    return box;
+  }
+
   function scoreLine(r) {
     var line = el("span", "pk-scores");
     AXES.forEach(function (ax) {
@@ -506,22 +570,22 @@
     }
     var ids = rankedList(st);
     if (!ids.length) view.appendChild(el("p", "pk-note", who === me ? L.noneRanked : L.nothingYet(whoName(who))));
+    else view.appendChild(el("p", "pk-note pk-lead", L.legend));
     var rank = 0;
-    for (var t = MAX; t >= MIN; t--) {
-      if (!st.order[t].length) continue;
+    GROUPS.forEach(function (g) {
+      if (!st.order[g.k].length) return;
       var sec = el("section", "pk-tier");
       var hd = el("h2", "pk-tier-head");
-      hd.appendChild(el("span", "pk-tier-n", String(t)));
-      hd.appendChild(el("span", "pk-tier-of", "/ " + MAX));
+      hd.appendChild(el("span", "pk-tier-n", L.group[g.k]));
       sec.appendChild(hd);
       var ol = el("ol", "pk-list");
-      st.order[t].forEach(function (id) {
+      st.order[g.k].forEach(function (id) {
         rank++;
-        ol.appendChild(parkRow(byId[id], scoreLine(st.rated[id]), function () { go({ view: "detail", id: id, who: who }); }, rank));
+        ol.appendChild(parkRow(byId[id], twoScores(st, id), function () { go({ view: "detail", id: id, who: who }); }, rank));
       });
       sec.appendChild(ol);
       view.appendChild(sec);
-    }
+    });
     if (owner && who !== me && who !== OWNER) {
       var acts = el("p", "pk-actions pk-foot");
       acts.appendChild(button("pk-quiet", L.removePerson(whoName(who)), function () {
@@ -581,7 +645,7 @@
     var h = el("div", "pk-head");
     h.appendChild(button("pk-back", L.back, function () {
       if (state.view === "detail") { go({ view: "ranked", who: state.who }); return; }
-      go({ view: store.rated[p.id] ? "detail" : "unrated", id: p.id, who: me });
+      go({ view: store.rated[p.id] && rankedList(store).indexOf(p.id) >= 0 ? "detail" : "unrated", id: p.id, who: me });
     }));
     if (extra) h.appendChild(extra);
     h.appendChild(el("h2", "pk-title", nameOf(p)));
@@ -589,21 +653,100 @@
     return h;
   }
 
-  function drawRate() {
+  // Step 1: did you like it?
+  function drawLike() {
     var p = byId[state.id], old = store.rated[p.id];
-    var r = old ? { s: old.s, a: old.a, w: old.w } : { s: 0, a: 0, w: 0 };
-    var tot = el("p", "pk-total");
     view.appendChild(head(p));
-    view.lastChild.appendChild(tot);
+    var h = el("h2", "pk-title pk-ask", L.didYouLike(nameOf(p)));
+    view.appendChild(h);
+    var row = el("div", "pk-likes");
+    GROUPS.forEach(function (g) {
+      var b = button("pk-like", L.like[g.k], function () {
+        store.rated[p.id] = {
+          like: g.k, s: old ? old.s : 0, a: old ? old.a : 0, w: old ? old.w : 0,
+          date: old ? old.date : "", notes: old ? old.notes : ""
+        };
+        startCompare(p.id, true);
+      });
+      if (old && old.like === g.k) b.setAttribute("aria-pressed", "true");
+      row.appendChild(b);
+    });
+    view.appendChild(row);
+    var acts = el("p", "pk-actions");
+    acts.appendChild(button("pk-quiet", L.cancel, function () { go({ view: old ? "detail" : "unrated", id: p.id, who: me }); }));
+    view.appendChild(acts);
+  }
+
+  // Step 2: place it in its group by halving: lo..hi is the stretch it can still go in.
+  // then: go on to the category scores (while rating), or back to the park.
+  function startCompare(id, then) {
+    unplace(id);
+    var g = store.rated[id].like;
+    var others = store.order[g].length;
+    if (!others) { store.order[g].push(id); save(); afterPlace(id, then); return; }
+    go({ view: "compare", id: id, group: g, lo: 0, hi: others, n: 1, then: !!then });
+  }
+  function afterPlace(id, then) {
+    go(then ? { view: "scores", id: id, rating: true } : { view: "detail", id: id, who: me });
+  }
+  function place(at) {
+    store.order[state.group].splice(at, 0, state.id);
+    save();
+    afterPlace(state.id, state.then);
+  }
+
+  function drawCompare() {
+    var list = store.order[state.group];
+    if (state.lo >= state.hi) { place(state.lo); return; }
+    var mid = (state.lo + state.hi) >> 1;
+    var a = byId[state.id], b = byId[list[mid]];
+    var h = el("div", "pk-head");
+    h.appendChild(el("p", "pk-kicker", L.group[state.group] + " · " + L.step(state.n)));
+    h.appendChild(el("h2", "pk-title", L.which));
+    view.appendChild(h);
+    var pair = el("div", "pk-pair");
+    [[a, true], [b, false]].forEach(function (x) {
+      var p = x[0];
+      var c = button("pk-card", null, function () {
+        var next = { view: "compare", id: state.id, group: state.group, n: state.n + 1, lo: state.lo, hi: state.hi, then: state.then };
+        if (x[1]) next.hi = mid; else next.lo = mid + 1;
+        state = next;
+        draw();
+      });
+      c.appendChild(el("span", "pk-park", nameOf(p)));
+      c.appendChild(el("span", "pk-state", p.state));
+      if (!x[1]) c.appendChild(el("span", "pk-card-score", fmt(scoreOf(store, p.id)) + " / 10"));
+      pair.appendChild(c);
+    });
+    view.appendChild(pair);
+    var acts = el("p", "pk-actions");
+    acts.appendChild(button("pk-quiet", L.close, function () { place(mid); }));
+    acts.appendChild(button("pk-quiet", L.skip, function () { place(list.length); }));
+    view.appendChild(acts);
+  }
+
+  // Step 3: scenery, activities, wildlife (weighted), or skip. Also when
+  // editing them later from the park's page (state.rating false).
+  function drawScores() {
+    var p = byId[state.id], old = store.rated[p.id];
+    if (!old) { go({ view: "unrated" }); return; }
+    var r = { s: old.s, a: old.a, w: old.w };
+    view.appendChild(head(p));
+    var hd = el("div", "pk-scores-head");
+    hd.appendChild(el("h2", "pk-title pk-ask", L.scoresTitle));
+    var tot = el("p", "pk-total");
+    hd.appendChild(tot);
+    view.appendChild(hd);
+    view.appendChild(el("p", "pk-note pk-lead", L.scoresNote));
     var saveB;
     function sync() {
       var done = r.s && r.a && r.w;
-      tot.textContent = L.total + "  " + (done ? totalOf(r) : "–") + " / " + MAX;
+      tot.textContent = L.weighted + "  " + fmt(weightOf(r)) + " / 5";
       if (saveB) saveB.disabled = !done;
     }
     AXES.forEach(function (ax) {
       var f = el("fieldset", "pk-axis");
-      f.appendChild(el("legend", null, ZH ? ax.zh : ax.en));
+      f.appendChild(el("legend", null, (ZH ? ax.zh : ax.en) + " · " + Math.round(WEIGHT[ax.k] * 100) + "%"));
       var row = el("div", "pk-pick");
       var anchors = el("ol", "pk-anchors");
       var btns = [];
@@ -635,75 +778,42 @@
     dl.appendChild(el("span", null, L.visited + L.optional));
     var date = el("input");
     date.type = "month";
-    date.value = old ? old.date : "";
+    date.value = old.date || "";
     dl.appendChild(date);
     var nl = el("label", "pk-field");
     nl.appendChild(el("span", null, L.notes + L.optional));
     var notes = el("textarea");
     notes.rows = 3;
-    notes.value = old ? old.notes : "";
+    notes.value = old.notes || "";
     nl.appendChild(notes);
     more.appendChild(dl);
     more.appendChild(nl);
     view.appendChild(more);
 
+    function keepExtras() {
+      old.date = /^\d{4}-\d\d$/.test(date.value) ? date.value : "";
+      old.notes = notes.value.trim();
+    }
     var acts = el("p", "pk-actions");
     saveB = button("pk-primary", L.save, function () {
-      var was = old ? totalOf(old) : null;
-      store.rated[p.id] = { s: r.s, a: r.a, w: r.w, date: /^\d{4}-\d\d$/.test(date.value) ? date.value : "", notes: notes.value.trim() };
-      var t = totalOf(r);
-      if (was === t) { save(); go({ view: "detail", id: p.id, who: me }); return; }
-      unplace(p.id);
-      startCompare(p.id);
+      old.s = r.s; old.a = r.a; old.w = r.w;
+      keepExtras();
+      save();
+      go({ view: "detail", id: p.id, who: me });
     });
     acts.appendChild(saveB);
-    acts.appendChild(button("pk-quiet", L.cancel, function () { go({ view: old ? "detail" : "unrated", id: p.id, who: me }); }));
+    if (state.rating) {
+      acts.appendChild(button("pk-quiet", L.skipScores, function () {
+        old.s = old.a = old.w = 0;
+        keepExtras();
+        save();
+        go({ view: "detail", id: p.id, who: me });
+      }));
+    } else {
+      acts.appendChild(button("pk-quiet", L.cancel, function () { go({ view: "detail", id: p.id, who: me }); }));
+    }
     view.appendChild(acts);
     sync();
-  }
-
-  // Place a park in its tier by halving: lo..hi is the stretch it can still go in.
-  function startCompare(id) {
-    unplace(id);
-    var t = totalOf(store.rated[id]);
-    var others = store.order[t].length;
-    if (!others) { store.order[t].push(id); save(); go({ view: "detail", id: id, who: me }); return; }
-    go({ view: "compare", id: id, tier: t, lo: 0, hi: others, n: 1 });
-  }
-  function place(at) {
-    store.order[state.tier].splice(at, 0, state.id);
-    save();
-    go({ view: "detail", id: state.id, who: me });
-  }
-
-  function drawCompare() {
-    var list = store.order[state.tier];
-    if (state.lo >= state.hi) { place(state.lo); return; }
-    var mid = (state.lo + state.hi) >> 1;
-    var a = byId[state.id], b = byId[list[mid]];
-    var h = el("div", "pk-head");
-    h.appendChild(el("p", "pk-kicker", L.tier + " " + state.tier + " · " + L.step(state.n)));
-    h.appendChild(el("h2", "pk-title", L.which));
-    view.appendChild(h);
-    var pair = el("div", "pk-pair");
-    [[a, true], [b, false]].forEach(function (x) {
-      var p = x[0];
-      var c = button("pk-card", null, function () {
-        var next = { view: "compare", id: state.id, tier: state.tier, n: state.n + 1, lo: state.lo, hi: state.hi };
-        if (x[1]) next.hi = mid; else next.lo = mid + 1;
-        state = next;
-        draw();
-      });
-      c.appendChild(el("span", "pk-park", nameOf(p)));
-      c.appendChild(el("span", "pk-state", p.state));
-      c.appendChild(scoreLine(store.rated[p.id]));
-      pair.appendChild(c);
-    });
-    view.appendChild(pair);
-    var acts = el("p", "pk-actions");
-    acts.appendChild(button("pk-quiet", L.close, function () { place(mid); }));
-    acts.appendChild(button("pk-quiet", L.skip, function () { place(list.length); }));
-    view.appendChild(acts);
   }
 
   function drawDetail() {
@@ -716,12 +826,17 @@
     var box = el("div", "pk-detail");
     var big = el("p", "pk-big");
     {
-      var list = rankedList(st);
-      big.appendChild(el("span", "pk-big-n", String(totalOf(r))));
-      big.appendChild(el("span", "pk-big-of", "/ " + MAX));
-      big.appendChild(el("span", "pk-big-rank", L.of(list.indexOf(p.id) + 1, list.length)));
+      var list = rankedList(st), wt = weightOf(r);
+      big.appendChild(el("span", "pk-big-n", fmt(scoreOf(st, p.id))));
+      big.appendChild(el("span", "pk-big-of", "/ 10"));
+      big.appendChild(el("span", "pk-big-rank", L.group[r.like] + " · " + L.of(list.indexOf(p.id) + 1, list.length)));
       box.appendChild(big);
-      AXES.forEach(function (ax) {
+      var wl = el("p", "pk-axis-line pk-wt-line");
+      wl.appendChild(el("span", "pk-score-k", L.weighted));
+      wl.appendChild(el("span", "pk-score-v", wt == null ? "—" : fmt(wt) + " / 5"));
+      if (wt == null) wl.appendChild(el("span", "pk-axis-txt", L.skipped));
+      box.appendChild(wl);
+      if (wt != null) AXES.forEach(function (ax) {
         var row = el("p", "pk-axis-line");
         row.appendChild(el("span", "pk-score-k", ZH ? ax.zh : ax.en));
         row.appendChild(el("span", "pk-score-v", r[ax.k] + " / 5"));
@@ -745,10 +860,11 @@
     if (others.length) {
       var rows = others.map(function (x) {
         var xs = rankingOf(x.id), xr = xs.rated[p.id];
-        return { id: x.id, r: xr, rank: xr ? rankedList(xs).indexOf(p.id) + 1 : 0, of: Object.keys(xs.rated).length };
+        return { id: x.id, st: xs, r: xr, score: xr ? scoreOf(xs, p.id) : null,
+                 rank: xr ? rankedList(xs).indexOf(p.id) + 1 : 0, of: Object.keys(xs.rated).length };
       });
       rows.sort(function (a, b) {
-        return (b.r ? 1 : 0) - (a.r ? 1 : 0) || (b.r && a.r ? totalOf(b.r) - totalOf(a.r) : 0) || whoName(a.id).localeCompare(whoName(b.id));
+        return (b.r ? 1 : 0) - (a.r ? 1 : 0) || (b.r && a.r ? (b.score || 0) - (a.score || 0) : 0) || whoName(a.id).localeCompare(whoName(b.id));
       });
       var sec = el("section", "pk-everyone");
       sec.appendChild(el("h3", "pk-label", who === me ? L.friendsOn : L.othersOn));
@@ -759,10 +875,10 @@
         nm.appendChild(el("span", "pk-park", whoName(x.id)));
         if (x.r) {
           var b = button("pk-row", null, function () { go({ view: "detail", id: p.id, who: x.id }); });
-          nm.appendChild(el("span", "pk-state", L.of(x.rank, x.of)));
+          nm.appendChild(el("span", "pk-state", L.group[x.r.like] + " · " + L.of(x.rank, x.of)));
           b.appendChild(nm);
-          b.appendChild(scoreLine(x.r));
-          b.appendChild(el("span", "pk-sum", String(totalOf(x.r))));
+          if (weightOf(x.r) != null) b.appendChild(scoreLine(x.r));
+          b.appendChild(twoScores(x.st, p.id));
           li.appendChild(b);
         } else {
           var d = el("div", "pk-row is-off");
@@ -779,7 +895,8 @@
     var acts = el("p", "pk-actions");
     if (who === me) {
       acts.appendChild(button("pk-primary", L.rerate, function () { go({ view: "rate", id: p.id }); }));
-      if (store.order[totalOf(r)].length > 1) acts.appendChild(button("pk-quiet", L.recompare, function () { startCompare(p.id); }));
+      if (store.order[r.like].length > 1) acts.appendChild(button("pk-quiet", L.recompare, function () { startCompare(p.id, false); }));
+      acts.appendChild(button("pk-quiet", weightOf(r) == null ? L.addScores : L.editScores, function () { go({ view: "scores", id: p.id, rating: false }); }));
       acts.appendChild(button("pk-quiet", L.remove, function () {
         if (!window.confirm(L.removeAsk(nameOf(p)))) return;
         unplace(p.id);
@@ -869,7 +986,7 @@
       });
       window.addEventListener("focus", function () {
         if (pending) push();
-        else if (me && !sending && state.view !== "rate" && state.view !== "compare") pull().catch(function () {});
+        else if (me && !sending && state.view !== "rate" && state.view !== "compare" && state.view !== "scores") pull().catch(function () {});
       });
     })
     .catch(function () {
