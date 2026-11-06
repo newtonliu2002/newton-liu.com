@@ -887,6 +887,25 @@
   function drawLike() {
     var p = byId[state.id], old = store.rated[p.id];
     view.appendChild(head(p));
+    // Which season did you go? above it (his ask, 2026-11-06): optional, a
+    // tap picks it (again clears it) and never moves on; Yes / Mid / No goes
+    // on as always, keeping whatever season is picked.
+    var season = old ? old.season || "" : "";
+    var sq = el("h2", "pk-title pk-ask pk-season-ask", L.seasonQ);
+    sq.appendChild(el("span", "pk-optional", L.seasonNote));
+    view.appendChild(sq);
+    var srow = el("div", "pk-seasons");
+    srow.setAttribute("role", "group");
+    srow.setAttribute("aria-label", L.seasonQ);
+    SEASONS.forEach(function (k) {
+      var b = button("pk-season", L.season[k], function () {
+        season = season === k ? "" : k;
+        [].forEach.call(srow.children, function (x, i) { x.setAttribute("aria-pressed", String(SEASONS[i] === season)); });
+      });
+      b.setAttribute("aria-pressed", String(season === k));
+      srow.appendChild(b);
+    });
+    view.appendChild(srow);
     var h = el("h2", "pk-title pk-ask", L.didYouLike(nameOf(p)));
     view.appendChild(h);
     var row = el("div", "pk-likes");
@@ -895,7 +914,7 @@
         var was = snapshot(p.id);
         store.rated[p.id] = {
           like: g.k, s: old ? old.s : 0, a: old ? old.a : 0, w: old ? old.w : 0,
-          date: old ? old.date : "", notes: old ? old.notes : "", season: old ? old.season || "" : ""
+          date: old ? old.date : "", notes: old ? old.notes : "", season: season
         };
         startCompare(p.id, true, was);
       });
@@ -934,7 +953,7 @@
     go({ view: "compare", id: id, group: g, lo: 0, hi: others, n: 1, then: !!then, was: was, prev: null });
   }
   function afterPlace(id, then) {
-    go(then ? { view: "season", id: id, rating: true } : { view: "detail", id: id, who: me });
+    go(then ? { view: "scores", id: id, rating: true } : { view: "detail", id: id, who: me });
   }
   function place(at) {
     store.order[state.group].splice(at, 0, state.id);
@@ -979,10 +998,9 @@
     view.appendChild(acts);
   }
 
-  // Step 3, optional (his ask): which season did you go? One tap picks it and
-  // goes on to the category scores (or back to the park, when changing it
-  // later); Skip leaves it blank. The season already picked is lit; tapping
-  // it again while changing it clears it.
+  // Changing the season later, from the park's page (while rating it is asked
+  // above "Did you like it?"): one tap picks it and goes back to the park;
+  // tapping the lit one clears it.
   function drawSeason() {
     var p = byId[state.id], r = store.rated[p.id];
     if (!r) { go({ view: "unrated" }); return; }
@@ -1015,7 +1033,7 @@
     }
   }
 
-  // Step 4: scenery, activities, wildlife (weighted), or skip. Also when
+  // Step 3: scenery, activities, wildlife (weighted), or skip. Also when
   // editing them later from the park's page (state.rating false).
   function drawScores() {
     var p = byId[state.id], old = store.rated[p.id];

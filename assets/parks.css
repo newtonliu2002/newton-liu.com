@@ -168,8 +168,20 @@
 }
 .parks .pk-like:hover { border-color: var(--accent); background: var(--wash); }
 .parks .pk-like[aria-pressed="true"] { border-color: var(--accent); }
-.parks .pk-seasons { max-width: 40rem; flex-wrap: wrap; }
-.parks .pk-seasons .pk-like { flex: 1 1 calc(25% - var(--s3)); min-width: 7rem; }
+.parks .pk-seasons { display: flex; flex-wrap: wrap; gap: var(--s2); max-width: 30rem; margin: 0 0 var(--s7); }
+.parks .pk-likes.pk-seasons { max-width: 40rem; gap: var(--s3); margin: 0 0 var(--s6); }   /* changing it from the park's page */
+.parks .pk-likes.pk-seasons .pk-like { flex: 1 1 calc(25% - var(--s3)); min-width: 7rem; }
+/* Above "Did you like it?": smaller than the like buttons, it being optional. */
+.parks .pk-season-ask { font-size: var(--t-row, 1.1rem); margin: 0 0 var(--s3); display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s3); }
+.parks .pk-optional { font: 400 var(--t-label)/16px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--text-faint); }
+.parks .pk-season {
+  appearance: none; flex: 1; min-height: 44px; border-radius: 0; cursor: pointer;
+  font: 400 var(--t-label)/16px var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-dim); background: none; border: 1px solid var(--hairline);
+  transition: border-color var(--d-fast) var(--ease), color var(--d-fast) var(--ease), background var(--d-fast) var(--ease);
+}
+.parks .pk-season:hover { color: var(--text); border-color: var(--hairline-strong); }
+.parks .pk-season[aria-pressed="true"] { color: var(--text); border-color: var(--accent); background: var(--wash); }
 .parks .pk-scores-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--s2) var(--s5); }
 .parks .pk-scores-head .pk-ask { margin: 0; }
 .parks .pk-scores-head .pk-total { margin: 0; }
