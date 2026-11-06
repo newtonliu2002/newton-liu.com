@@ -76,8 +76,11 @@
   var L = ZH ? {
     loading: "加载中……", failed: "公园列表加载失败。", ranked: "我的", unrated: "待评分", friendsTab: "朋友",
     count: function (n, all) { return "已评 " + n + " / " + all; },
+    plusMore: function (n) { return "另有 " + n + " 个其他公园"; },
+    moreHead: function (n) { return "州立公园和国家公园管理局的其他地点 · " + n; },
+    moreCap: function (n) { return "只显示前 " + n + " 个，再多打几个字缩小范围。"; },
     noneRanked: "你还没有评过分的公园。去「待评分」里选一个你去过的公园。",
-    allRated: "所有公园都评过了。", search: "搜索公园", rate: "评分",
+    allRated: "所有国家公园都评过了。", search: "搜索任何公园：国家公园、州立公园、国家纪念地……", rate: "评分",
     visited: "到访时间", notes: "备注",
     visitNote: "填年月，或具体日期；去过几次就加几行。", addVisit: "+ 再加一次", removeVisit: "删去这一次",
     dayK: "日", monthK: "月", yearK: "年", save: "保存", cancel: "取消", optional: "（选填）",
@@ -124,8 +127,11 @@
   } : {
     loading: "Loading…", failed: "The list of parks didn't load.", ranked: "Mine", unrated: "To be rated", friendsTab: "Friends",
     count: function (n, all) { return n + " of " + all + " rated"; },
+    plusMore: function (n) { return n === 1 ? "+ 1 other park" : "+ " + n + " other parks"; },
+    moreHead: function (n) { return "State parks and other NPS sites · " + n; },
+    moreCap: function (n) { return "Showing the first " + n + ". Type more to narrow it down."; },
     noneRanked: "You haven't rated any parks yet. Pick one you've been to under To be rated.",
-    allRated: "Every park has been rated.", search: "Find a park", rate: "Rate",
+    allRated: "Every national park has been rated.", search: "Find any park: national, state, monument, seashore…", rate: "Rate",
     visited: "Visited", notes: "Notes",
     visitNote: "Month and year, or the full date. Been more than once? Add each visit.",
     addVisit: "+ Add another visit", removeVisit: "Remove this visit",
@@ -219,9 +225,14 @@
     });
     return box;
   }
+  // Lower case, accents off: "puu" finds Puʻu, "inupiat" Iñupiat.
+  function fold(t) { return t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f\u02bb\u02bc'’]/g, ""); }
   function here(id) { var p = byId[id]; return !!p && (where === "both" || (p.country || "US").toLowerCase() === where); }
   var fileIn = backupBox.querySelector('input[type="file"]');
-  var parks = [], byId = {}, store = blank(), state = { view: "ranked" }, query = "";
+  // parks: the 110 national parks (To be rated, the counts). more: every other
+  // NPS site and U.S. state park (data/us-parks-more.json), found by search and
+  // rated like any park (his ask, 2026-11-06). byId holds both.
+  var parks = [], more = [], byId = {}, store = blank(), state = { view: "ranked" }, query = "";
   // owner: Newton's Personal sign-in. friend: {id, token, name} for a friend's browser.
   // me: the person this browser edits (null: not said who yet). people: everyone, from the Worker.
   // base: the server version of my ranking the page holds. pending: a change the server hasn't taken yet.
@@ -242,7 +253,7 @@
     b.addEventListener("click", fn);
     return b;
   }
-  function nameOf(p) { return ZH ? p.name + "国家公园" : p.name; }
+  function nameOf(p) { return p.full || !ZH ? p.name : p.name + "国家公园"; }
   // The weighted category score out of 5 (null when skipped).
   function weightOf(r) {
     if (!r || !r.s || !r.a || !r.w) return null;
@@ -449,8 +460,11 @@
     var looking = state.view === "ranked" || state.view === "detail";
     var shown = looking ? (state.who === undefined ? me : state.who) : me;
     var st = inside && shown ? rankingOf(shown) : null;
+    var ratedHere = st ? Object.keys(st.rated).filter(here) : [];
+    var others = ratedHere.filter(function (id) { return byId[id].full; }).length;
     countEl.textContent = st ? (shown !== me ? whoName(shown) + " · " : "") +
-      L.count(Object.keys(st.rated).filter(here).length, parks.filter(function (p) { return here(p.id); }).length) : "";
+      L.count(ratedHere.length - others, parks.filter(function (p) { return here(p.id); }).length) +
+      (others ? " " + L.plusMore(others) : "") : "";
     var on = state.view === "unrated" ? "unrated"
       : state.view === "friends" || shown !== me ? "friends" : "ranked";
     tabs.forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-view") === on)); });
@@ -894,7 +908,6 @@
   function drawUnrated() {
     view.appendChild(whereBar());
     var left = parks.filter(function (p) { return !store.rated[p.id] && here(p.id); });
-    if (!left.length) { view.appendChild(el("p", "pk-note", L.allRated)); return; }
     var box = el("input", "pk-search");
     box.type = "search";
     box.placeholder = L.search;
@@ -903,13 +916,43 @@
     view.appendChild(box);
     var ol = el("ul", "pk-list pk-unrated");
     view.appendChild(ol);
+    var moreBox = el("div", "pk-more-results");
+    view.appendChild(moreBox);
+    // Every word typed must be in the name or state; names that start with
+    // what was typed come first. The 3,500 others show only when searching.
+    function words(q) { return q.split(/\s+/).filter(Boolean); }
+    function hit(p, ws) {
+      var t = fold(p.name + " " + p.state);
+      for (var i = 0; i < ws.length; i++) if (t.indexOf(ws[i]) < 0) return false;
+      return true;
+    }
+    var CAP = 60;
     function fill() {
       ol.textContent = "";
-      var q = query.trim().toLowerCase();
+      moreBox.textContent = "";
+      var q = fold(query.trim()), ws = words(q);
+      if (!left.length && !q) ol.appendChild(el("li", "pk-note pk-all-rated", L.allRated));
       left.forEach(function (p) {
-        if (q && (p.name + " " + p.state).toLowerCase().indexOf(q) < 0) return;
+        if (ws.length && !hit(p, ws)) return;
         ol.appendChild(parkRow(p, el("span", "pk-go", L.rate + " →"), function () { go({ view: "rate", id: p.id }); }));
       });
+      if (q.length < 2) return;
+      var found = more.filter(function (p) { return here(p.id) && hit(p, ws); });
+      found.sort(function (a, b) {
+        var x = fold(a.name).indexOf(q) === 0, y = fold(b.name).indexOf(q) === 0;
+        return x === y ? a.name.localeCompare(b.name) : x ? -1 : 1;
+      });
+      if (!found.length) return;
+      moreBox.appendChild(el("h2", "pk-tier-head pk-more-head", L.moreHead(found.length)));
+      var ul = el("ul", "pk-list pk-unrated");
+      found.slice(0, CAP).forEach(function (p) {
+        var mine = store.rated[p.id];
+        ul.appendChild(parkRow(p, el("span", "pk-go", mine ? L.group[mine.like] + " →" : L.rate + " →"), function () {
+          go(mine ? { view: "detail", id: p.id, who: me } : { view: "rate", id: p.id });
+        }));
+      });
+      moreBox.appendChild(ul);
+      if (found.length > CAP) moreBox.appendChild(el("p", "pk-note", L.moreCap(CAP)));
     }
     box.addEventListener("input", function () { query = box.value; fill(); });
     fill();
@@ -1444,11 +1487,22 @@
   if (!friend.id || !friend.token) friend = {};
 
   draw();
-  fetch("data/national-parks.json", { cache: "no-cache" })
-    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-    .then(function (d) {
+  // Both lists before any ranking is read, so no rating of a park in either
+  // is ever dropped as unknown.
+  function getJson(u) {
+    return fetch(u, { cache: "no-cache" }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); });
+  }
+  Promise.all([getJson("data/national-parks.json"), getJson("data/us-parks-more.json")])
+    .then(function (both) {
+      var d = both[0], m = both[1], c = m.cols;
       parks = (d.parks || []).slice().sort(function (a, b) { return a.name.localeCompare(b.name); });
       parks.forEach(function (p) { byId[p.id] = p; });
+      more = (m.rows || []).map(function (r) {
+        var p = { full: true, country: "US" };
+        c.forEach(function (k, i) { p[k] = r[i]; });
+        return p;
+      }).filter(function (p) { return !byId[p.id]; });
+      more.forEach(function (p) { byId[p.id] = p; });
       var t = getToken();
       owner = !!(t && unexpired(t));
       if (t && !owner) setToken(null);

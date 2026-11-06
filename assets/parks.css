@@ -368,3 +368,8 @@
   .pk-print .pk-print-notes td { font-size: 9pt; color: #444; font-style: italic; padding-top: 1pt; }
   @page { margin: 16mm 14mm; }
 }
+
+/* Search beyond the national parks: state parks and other NPS sites (data/us-parks-more.json). */
+.parks .pk-more-results .pk-more-head { margin-top: var(--s6); font-size: var(--t-row); }
+.parks .pk-more-results > .pk-note { margin-top: var(--s3); }
+.parks .pk-all-rated { padding: var(--s3) var(--s2); }

@@ -1630,6 +1630,19 @@ Ranking". Made like the eBird Site Ranking, but on this site:
   ("YYYY-MM" or "YYYY-MM-DD"); an older rating's single `date` month becomes
   its one visit in clean(). Shown "Aug 2025 · Jul 14, 2021" on the park's page
   and in the PDF.
+  Search every park (his ask, 2026-11-06: "all us state parks, national
+  parks, and all nps stuff like national monument/seashore etc. and they
+  could be rated too"): `data/us-parks-more.json` (cols/rows, loaded with
+  national-parks.json BEFORE ratings are read, so clean() never drops a
+  rating of one) = the other 413 NPS sites (NPS API, ids nps-<parkCode>) +
+  3,499 state parks (Wikidata ids sp-Q…, plus PAD-US 4.1 named state
+  parks Wikidata lacked, ids sp-<state>-<slug>; ids are permanent). Built
+  by scratch scripts, not in the repo. The To be rated search box always
+  shows; 2+ letters list matching extra parks under "State parks and
+  other NPS sites · n" (first 60). They rate, rank, map and print like
+  any park (full names, `full: true`, country US); the rail counts the
+  110 national parks plus "+ n other parks". To-be-rated, the US/Canada
+  counts and "Every national park has been rated" stay national parks only.
   Two numbers per park: a
   score out of 10 (Yes 10–6.7, Mid 6.6–3.4, No 3.3–0, the group's top for
   its best park then steps of range/n) and the weighted category score out
