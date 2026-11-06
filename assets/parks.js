@@ -9,17 +9,16 @@
 
    Newton and his friends (2026-11-06: "both me and my friends could rate,
    and we could see each other's ratings … but this stays between me and my
-   friends"). Everything lives in the "park-ranking" Worker
-   (~/Code/park-ranking, D1), one ranking per person:
-   - Newton signs in with the Personal password ("Newton: sign in", the
-     same token as personal-gate.js, "personal_token_v1"). He can copy the
-     friends' link, make a new one (the old link stops working) and remove
+   friends"; then "when people land, it shows 'what is your name' and then
+   all the parks are logged under that person's name"). Everything lives in
+   the "park-ranking" Worker (~/Code/park-ranking, D1), one ranking per person:
+   - Whoever opens the page is asked "What's your name?". A new name starts
+     a new ranking; a name that's already there asks "Is that you?" and, on
+     yes, this device edits that ranking too (each device keeps its own
+     token in "park_friend_v1"). "Not you?" goes back to the question.
+   - Typing "Newton" asks for the Personal password (the same token as
+     personal-gate.js, "personal_token_v1"). Signed in, he can also remove
      a person.
-   - The friends' link is this page with #join=<key>. Opening it asks
-     "What's your name?"; joining gives this browser a token of its own
-     ("park_friend_v1"), and "Link for your other devices" (#me=<id>.<token>)
-     moves it to another device.
-   - Without either, the page only says to ask Newton for the link.
    Everyone in the group sees everyone's ratings: each person's list, each
    park's scores from everyone, and Together (average totals).
    Each save sends one person's whole ranking with the version it was based
@@ -78,19 +77,14 @@
     wrong: "密码不对。", many: "尝试次数太多，请一小时后再试。", offline: "暂时连不上服务器。",
     signedOut: "登录已失效，请重新登录。", newer: "另一台设备刚刚改过，已显示最新版本。",
     unsaved: "没能同步到服务器，已先保存在本浏览器。",
-    locked: "这个排名只在 Newton 和朋友之间分享。想加入的话，请向 Newton 要链接。",
-    oldLink: "这个链接已经失效了。请向 Newton 要新的链接。",
-    joinTitle: "你叫什么名字？", joinNote: "你的评分会以这个名字显示给所有拿到链接的人。",
-    joinGo: "加入", name: "名字",
-    taken: "这个名字已经有人用了。如果是你自己，请在原来的设备上点「其他设备的链接」；不然请加个姓氏首字母。",
+    joinTitle: "你叫什么名字？", joinNote: "你评的每个公园都会记在这个名字下，大家都能看到。换一台设备时，输入同一个名字就行。",
+    joinGo: "开始", name: "名字",
+    isThatYou: function (n, k) { return n + " 已经在这里了（评了 " + k + " 个公园）。是你吗？"; },
+    yesMe: "是我", notMe: "不是，换个名字",
+    ownerAsk: "这是 Newton 的名字。Newton，请输入密码：",
     full: "人数已满。", friends: "朋友", you: "你", rankingOf: function (n) { return n + "的排名"; },
     nothingYet: function (n) { return n + "还没有评分。"; },
-    copyLink: "复制朋友链接", newLink: "换一个新链接",
-    newLinkAsk: "换新链接后，旧链接就不能再用来加入了（已经加入的人不受影响）。继续？",
-    copied: "朋友链接已复制，发给朋友吧。", madeNew: "新链接已复制。",
-    myLink: "其他设备的链接", myLinkNote: "链接已复制。在你的其他设备上打开它，就能在那里继续编辑。别发给别人。",
     youAre: function (n) { return "你是 " + n; }, notYou: "不是你？",
-    notYouAsk: "让这个浏览器忘掉你？如果你没有保存过“其他设备的链接”，就再也不能编辑这份排名了。",
     removePerson: function (n) { return "把" + n + "移出"; },
     removePersonAsk: function (n) { return "把" + n + "和他们的所有评分移出？"; },
     togetherNote: "至少有一个人评过的公园，按平均总分排列。",
@@ -112,19 +106,14 @@
     wrong: "That password isn't right.", many: "Too many tries. Try again in an hour.", offline: "Can't reach the server just now.",
     signedOut: "Signed out. Sign in again to edit.", newer: "Changed on another device: showing the latest.",
     unsaved: "Couldn't reach the server; kept in this browser for now.",
-    locked: "This ranking is shared between Newton and his friends. To join, ask Newton for the link.",
-    oldLink: "This link doesn't work any more. Ask Newton for the new one.",
-    joinTitle: "What's your name?", joinNote: "Your ratings will be shown under this name to everyone with the link.",
-    joinGo: "Join", name: "Name",
-    taken: "Someone already has that name. If it's you, use “Link for your other devices” on the device you joined on; otherwise add an initial.",
+    joinTitle: "What's your name?", joinNote: "Every park you rate is kept under this name, for everyone here to see. On another device, just type the same name.",
+    joinGo: "Start", name: "Name",
+    isThatYou: function (n, k) { return n + " is already here (" + (k === 1 ? "1 park" : k + " parks") + " rated). Is that you?"; },
+    yesMe: "Yes, that's me", notMe: "No, a different name",
+    ownerAsk: "That's Newton's name. Newton, your password:",
     full: "The group is full.", friends: "Friends", you: "You", rankingOf: function (n) { return n + "'s ranking"; },
     nothingYet: function (n) { return n + " hasn't rated any parks yet."; },
-    copyLink: "Copy friends' link", newLink: "Make a new link",
-    newLinkAsk: "After this the old link can't be used to join (people who already joined keep their place). Go ahead?",
-    copied: "Friends' link copied: send it to them.", madeNew: "New link copied.",
-    myLink: "Link for your other devices", myLinkNote: "Link copied. Open it on your other devices to edit there too. Don't share it.",
     youAre: function (n) { return "You're " + n; }, notYou: "Not you?",
-    notYouAsk: "Make this browser forget you? Unless you've saved your “Link for your other devices”, you won't be able to edit this ranking again.",
     removePerson: function (n) { return "Remove " + n; },
     removePersonAsk: function (n) { return "Remove " + n + " and all their ratings?"; },
     togetherNote: "Every park at least one person has rated, by average total.",
@@ -141,10 +130,10 @@
   var backupBox = root.querySelector(".pk-backup");
   var fileIn = backupBox.querySelector('input[type="file"]');
   var parks = [], byId = {}, store = blank(), state = { view: "ranked" }, query = "";
-  // owner: Newton's Personal sign-in. friend: {key, id, token, name} for a friend's browser.
-  // me: the person this browser edits (null: only the link, or nothing). people: everyone, from the Worker.
+  // owner: Newton's Personal sign-in. friend: {id, token, name} for a friend's browser.
+  // me: the person this browser edits (null: not said who yet). people: everyone, from the Worker.
   // base: the server version of my ranking the page holds. pending: a change the server hasn't taken yet.
-  var owner = false, friend = {}, me = null, people = [], known = false, lockMsg = "", inviteKey = null;
+  var owner = false, friend = {}, me = null, people = [], known = false;
   var base = null, pending = false, sending = false;
 
   // ---- helpers ------------------------------------------------------------
@@ -225,8 +214,8 @@
   function keep() { if (me) write(KEY, { who: me, data: store, base: base, pending: pending }); }
   function save() { pending = true; keep(); push(); }
   function forgetFriend() {
-    friend = friend.key ? { key: friend.key } : {};
-    write(FRIEND, friend.key ? friend : null);
+    friend = {};
+    write(FRIEND, null);
   }
 
   // ---- the server -------------------------------------------------------------
@@ -236,7 +225,6 @@
     if (json) h["Content-Type"] = "application/json";
     if (owner) h.Authorization = "Bearer " + getToken();
     else if (friend.id && friend.token) h["X-Park-Me"] = friend.id + "." + friend.token;
-    if (!owner && friend.key) h["X-Park-Key"] = friend.key;
     return h;
   }
   function call(method, path, body) {
@@ -290,20 +278,13 @@
 
   // Everyone's rankings; mine is merged with what this browser holds.
   function pull() {
-    if (!owner && !friend.key && !friend.token) { known = true; me = null; draw(); return Promise.resolve(); }
     return call("GET", "/all").then(function (r) {
       known = true;
-      if (r.status === 403) {
-        if (owner) { owner = false; setToken(null); }
-        if (friend.key || friend.token) lockMsg = L.oldLink;
-        friend = {}; write(FRIEND, null); me = null; people = [];
-        draw();
-        return;
-      }
       if (r.status !== 200 || !r.body) throw new Error(r.status);
       var was = me;
       me = r.body.me || null;
-      if (!owner && friend.id && me !== friend.id) forgetFriend();   // removed: back to joining
+      if (owner && me !== OWNER) { owner = false; setToken(null); }   // sign-in ran out
+      if (!owner && friend.id && me !== friend.id) forgetFriend();   // removed: back to the name
       if (me !== was) load();
       people = (r.body.people || []).map(function (p) {
         return { id: p.id, name: p.name, data: clean(p.data), updated: p.updated };
@@ -318,7 +299,6 @@
       }
       if (state.who && !person(state.who)) state = { view: "ranked" };
       draw();
-      if (owner && !inviteKey) call("GET", "/invite").then(function (x) { if (x.status === 200 && x.body) inviteKey = x.body.key; }, function () {});
     });
   }
 
@@ -355,98 +335,39 @@
 
     shareBox.textContent = "";
     if (inside) {
-      if (owner) {
-        shareBox.appendChild(button("pk-quiet", L.copyLink, function () {
-          if (inviteKey) copy(joinLink(inviteKey), L.copied);
-          else invite("GET", L.copied);
-        }));
-        shareBox.appendChild(button("pk-quiet", L.newLink, function () {
-          if (window.confirm(L.newLinkAsk)) invite("POST", L.madeNew);
-        }));
-      } else {
-        var mine = person(me);
-        shareBox.appendChild(el("p", "pk-you", L.youAre(mine ? mine.name : friend.name || "")));
-        shareBox.appendChild(button("pk-quiet", L.myLink, function () {
-          copy(location.origin + location.pathname + "#me=" + friend.id + "." + friend.token, L.myLinkNote);
-        }));
-        shareBox.appendChild(button("pk-quiet", L.notYou, function () {
-          if (!window.confirm(L.notYouAsk)) return;
-          forgetFriend();
-          write(KEY, null);
-          me = null; store = blank(); state = { view: "ranked" };
-          pull().catch(function () {});
-        }));
-      }
+      var mine = person(me);
+      shareBox.appendChild(el("p", "pk-you", L.youAre(mine ? mine.name : owner ? "Newton" : friend.name || "")));
+      shareBox.appendChild(button("pk-quiet", L.notYou, function () {
+        if (owner) { owner = false; setToken(null); } else forgetFriend();
+        write(KEY, null);
+        me = null; store = blank(); base = null; pending = false; state = { view: "ranked" };
+        draw();
+      }));
     }
-    signInBox();
   }
 
-  function joinLink(key) { return location.origin + location.pathname + "#join=" + key; }
-  function invite(method, done) {
-    call(method, "/invite").then(function (r) {
-      if (r.status === 200 && r.body && r.body.key) { inviteKey = r.body.key; copy(joinLink(inviteKey), done); }
-      else flash(r.status === 401 ? L.signedOut : L.offline);
-    }, function () { flash(L.offline); });
-  }
-
-  // To the clipboard, or (where the browser won't) a box to copy it from.
-  function copy(text, msg) {
-    var shown = function () { window.prompt(msg, text); };
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(function () { flash(msg, 8000); }, shown);
-    } else shown();
-  }
-
-  // Newton's sign-in, for a computer that isn't his yet.
-  function signInBox() {
-    var box = root.querySelector(".pk-signin");
-    if (owner || me || !known) { if (box) box.remove(); return; }
-    if (box) return;
-    box = el("div", "pk-signin");
-    var open = button("pk-quiet", L.signIn, function () {
-      open.hidden = true;
-      form.hidden = false;
-      input.focus();
-    });
-    var form = el("form");
-    form.hidden = true;
-    var input = el("input");
-    input.type = "password";
-    input.autocomplete = "current-password";
-    input.setAttribute("aria-label", L.password);
-    input.placeholder = L.password;
-    var go_ = el("button", "pk-quiet", L.enter);
-    go_.type = "submit";
-    var msg = el("p", "pk-msg");
-    form.appendChild(input);
-    form.appendChild(go_);
-    form.appendChild(msg);
-    form.addEventListener("submit", function (ev) {
-      ev.preventDefault();
-      if (!input.value) return;
-      go_.disabled = true;
-      fetch(PERSONAL + "/login", {
-        method: "POST", cache: "no-store", credentials: "omit",
-        headers: { "Content-Type": "application/json" }, body: JSON.stringify({ password: input.value })
-      }).then(function (r) {
-        return r.json().catch(function () { return null; }).then(function (b) { return { status: r.status, body: b }; });
-      }).then(function (r) {
-        go_.disabled = false;
-        if (r.status === 200 && r.body && r.body.token) {
-          setToken(r.body.token);
-          owner = true;
-          lockMsg = "";
-          state = { view: "ranked" };
-          pull().catch(function () { flash(L.offline); });
-          return;
-        }
-        msg.textContent = r.status === 401 ? L.wrong : r.status === 429 ? L.many : L.offline;
-        input.select();
-      }, function () { go_.disabled = false; msg.textContent = L.offline; });
-    });
-    box.appendChild(open);
-    box.appendChild(form);
-    backupBox.after(box);
+  // Newton's sign-in (he typed his name on a device that isn't signed in yet).
+  function ownerLogin(password, msg, btn) {
+    btn.disabled = true;
+    fetch(PERSONAL + "/login", {
+      method: "POST", cache: "no-store", credentials: "omit",
+      headers: { "Content-Type": "application/json" }, body: JSON.stringify({ password: password })
+    }).then(function (r) {
+      return r.json().catch(function () { return null; }).then(function (b) { return { status: r.status, body: b }; });
+    }).then(function (r) {
+      btn.disabled = false;
+      if (r.status === 200 && r.body && r.body.token) {
+        setToken(r.body.token);
+        owner = true;
+        forgetFriend();
+        me = OWNER;
+        load();
+        state = { view: "ranked" };
+        pull().catch(function () { flash(L.offline); });
+        return;
+      }
+      msg.textContent = r.status === 401 ? L.wrong : r.status === 429 ? L.many : L.offline;
+    }, function () { btn.disabled = false; msg.textContent = L.offline; });
   }
 
   function unplace(id) {
@@ -474,17 +395,13 @@
     rail();
     view.textContent = "";
     if (!known) { view.appendChild(el("p", "pk-empty", L.loading)); return; }
-    if (!me) return friend.key ? drawJoin() : drawLocked();
+    if (!me) return drawJoin();
     if (state.view === "rate") return drawRate();
     if (state.view === "compare") return drawCompare();
     if (state.view === "detail") return drawDetail();
     if (state.view === "unrated") return drawUnrated();
     if (state.view === "together") return drawTogether();
     drawRanked();
-  }
-
-  function drawLocked() {
-    view.appendChild(el("p", "pk-note", lockMsg || L.locked));
   }
 
   function drawJoin() {
@@ -505,25 +422,62 @@
     form.appendChild(row);
     var msg = el("p", "pk-msg");
     form.appendChild(msg);
-    form.addEventListener("submit", function (ev) {
-      ev.preventDefault();
+    // "Is that you?" for a name that's already here
+    var ask = el("div", "pk-join-ask");
+    ask.hidden = true;
+    var askText = el("p", "pk-note");
+    var yes = button("pk-primary", L.yesMe, function () { send(true); });
+    var no = button("pk-quiet", L.notMe, function () { ask.hidden = true; input.disabled = false; go_.disabled = false; input.select(); });
+    ask.appendChild(askText);
+    ask.appendChild(yes);
+    ask.appendChild(no);
+    form.appendChild(ask);
+    // Newton's password, when the name is his
+    var pw = el("div", "pk-join-row");
+    pw.hidden = true;
+    var pwIn = el("input");
+    pwIn.type = "password";
+    pwIn.autocomplete = "current-password";
+    pwIn.setAttribute("aria-label", L.password);
+    pwIn.placeholder = L.password;
+    var pwGo = button("pk-primary", L.enter, function () { if (pwIn.value) ownerLogin(pwIn.value, msg, pwGo); });
+    pwIn.addEventListener("keydown", function (ev) { if (ev.key === "Enter") { ev.preventDefault(); pwGo.click(); } });
+    pw.appendChild(pwIn);
+    pw.appendChild(pwGo);
+    form.appendChild(pw);
+
+    function send(again) {
       var name = input.value.replace(/\s+/g, " ").trim();
       if (!name) { input.focus(); return; }
-      go_.disabled = true;
-      call("POST", "/join", { name: name }).then(function (r) {
-        go_.disabled = false;
+      go_.disabled = true; yes.disabled = true;
+      msg.textContent = "";
+      call("POST", "/join", { name: name, again: again }).then(function (r) {
+        go_.disabled = false; yes.disabled = false;
         if (r.status === 200 && r.body && r.body.token) {
-          friend = { key: friend.key, id: r.body.id, token: r.body.token, name: r.body.name };
+          friend = { id: r.body.id, token: r.body.token, name: r.body.name };
           write(FRIEND, friend);
-          state = { view: "unrated" };
+          me = friend.id;
+          load();
+          state = { view: again ? "ranked" : "unrated" };
           pull().catch(function () { flash(L.offline); });
           return;
         }
-        msg.textContent = r.status === 409 ? L.taken : r.status === 403 && r.body && r.body.error === "full" ? L.full
-          : r.status === 403 ? L.oldLink : L.offline;
-      }, function () { go_.disabled = false; msg.textContent = L.offline; });
-    });
+        var e = r.body && r.body.error;
+        if (r.status === 409 && e === "owner") {
+          msg.textContent = L.ownerAsk;
+          pw.hidden = false;
+          pwIn.focus();
+        } else if (r.status === 409 && e === "name-taken") {
+          askText.textContent = L.isThatYou(r.body.name, r.body.rated || 0);
+          ask.hidden = false;
+          input.disabled = true; go_.disabled = true;
+          yes.focus();
+        } else msg.textContent = r.status === 403 && e === "full" ? L.full : L.offline;
+      }, function () { go_.disabled = false; yes.disabled = false; msg.textContent = L.offline; });
+    }
+    form.addEventListener("submit", function (ev) { ev.preventDefault(); pw.hidden = true; send(false); });
     view.appendChild(form);
+    if (!("ontouchstart" in window)) setTimeout(function () { input.focus(); }, 0);
   }
 
   function scoreLine(r) {
@@ -907,22 +861,8 @@
     backupBox.querySelector('[data-act="import"]').textContent = "恢复副本";
   }
 
-  // A link opened here: #join=<key> (the friends' link) or #me=<id>.<token> (a friend's own).
   friend = read(FRIEND) || {};
-  var hash = location.hash.slice(1);
-  var j = /(?:^|&)join=([A-Za-z0-9_-]{10,80})/.exec(hash);
-  var mm = /(?:^|&)me=([a-z0-9]{6,20})\.([A-Za-z0-9_-]{20,80})/.exec(hash);
-  if (j) friend.key = j[1];
-  if (mm) { friend.id = mm[1]; friend.token = mm[2]; }
-  if (j || mm) {
-    write(FRIEND, friend);
-    try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
-  }
-
-  // a link pasted into a tab that already has this page open
-  window.addEventListener("hashchange", function () {
-    if (/(?:^#|&)(join|me)=/.test(location.hash)) location.reload();
-  });
+  if (!friend.id || !friend.token) friend = {};
 
   draw();
   fetch("data/national-parks.json", { cache: "no-cache" })

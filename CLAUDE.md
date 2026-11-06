@@ -1591,22 +1591,23 @@ Ranking". Made like the eBird Site Ranking, but on this site:
   inside a tier, "Which did you like more?" places a newly rated park by
   halving the tier (Beli-style), with "Too close to call" and "Skip".
 - **Newton and his friends** (2026-11-06: "both me and my friends could
-  rate, and we could see each other's ratings … but this stays between me
-  and my friends"). One ranking per person in the `park-ranking` Worker
+  rate, and we could see each other's ratings"; then "when people land, it
+  shows 'what is your name' and then all the parks are logged under that
+  person's name"). One ranking per person in the `park-ranking` Worker
   (https://park-ranking.shoot-planner-worker.workers.dev, repo
-  ~/Code/park-ranking, D1 `park-ranking`, tables `people` + `meta`):
-  - Newton: "Newton: sign in" in the rail takes the Personal password
-    (token `personal_token_v1`, checked by `personal`'s `/session` over a
-    service binding); his row is id `newton`. He gets "Copy friends' link",
-    "Make a new link" (old link stops letting people join; joined people
-    stay) and "Remove <name>" on a friend's list.
-  - Friends: the link is `national-park-ranking.html#join=<key>`; it asks
-    "What's your name?" (names unique, case-insensitive) and gives that
-    browser its own token (`park_friend_v1`; the Worker keeps only its
-    SHA-256). "Link for your other devices" (`#me=<id>.<token>`) carries
-    it to another device. The page strips the hash from the address bar.
-  - Nobody else sees any ratings: without the link or a token the page
-    only says to ask Newton. noindex, and in `PRIVATE_PAGES` (no sitemap).
+  ~/Code/park-ranking, D1 `park-ranking`, tables `people` + `devices`):
+  - Anyone who opens the page gets "What's your name?" (no link, no
+    password). A new name starts a ranking; a name already there asks
+    "Is that you?" and on yes this device edits that ranking too (honor
+    system among friends). Each device gets its own token
+    (`park_friend_v1`; the Worker keeps only its SHA-256 in `devices`).
+    "Not you?" in the rail goes back to the question.
+  - Typing "Newton" asks for the Personal password (token
+    `personal_token_v1`, checked by `personal`'s `/session` over a service
+    binding); his row is id `newton`, and only he can write it. Signed in
+    he also gets "Remove <name>" on a friend's list.
+  - Anyone with the page can read everyone's ratings. noindex, and in
+    `PRIVATE_PAGES` (no sitemap).
   - Views: Mine, To be rated, Together (average total of everyone who
     rated a park), each friend's list (rail), and a park's page shows
     everyone's scores.

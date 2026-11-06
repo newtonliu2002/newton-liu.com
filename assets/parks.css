@@ -185,9 +185,6 @@
 .parks .pk-msg { margin: var(--s2) 0 0; min-height: 16px; font-size: var(--t-meta); line-height: 1.5; color: var(--accent); flex-basis: 100%; }
 .parks .pk-flash { margin-top: var(--s4); text-transform: none; letter-spacing: .04em; line-height: 1.5; }
 
-.parks .pk-signin { margin: var(--s6) 0 0; }
-.parks .pk-signin form { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2) var(--s3); max-width: 15rem; }
-.parks .pk-signin input,
 .parks .pk-join input {
   flex: 1 1 8rem; min-width: 0; padding: 8px 10px; font: inherit; font-size: 16px; color: var(--text);
   background: var(--bg-raised); border: 1px solid var(--hairline-strong); border-radius: 0;
@@ -196,6 +193,9 @@
 .parks .pk-join .pk-title { margin-bottom: var(--s3); }
 .parks .pk-join-row { display: flex; gap: var(--s3); margin: var(--s5) 0 0; }
 .parks .pk-join input { padding: 10px 12px; }
+.parks .pk-join input:disabled { color: var(--text-faint); }
+.parks .pk-join-ask { margin: var(--s4) 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3) var(--s4); }
+.parks .pk-join-ask .pk-note { flex-basis: 100%; margin: 0; }
 
 .parks .pk-lead { margin-bottom: var(--s4); }
 .parks .pk-avg { display: inline-flex; align-items: baseline; gap: var(--s3); flex: 0 0 auto; }
