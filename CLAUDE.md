@@ -1608,9 +1608,11 @@ Ranking". Made like the eBird Site Ranking, but on this site:
     he also gets "Remove <name>" on a friend's list.
   - Anyone with the page can read everyone's ratings. noindex, and in
     `PRIVATE_PAGES` (no sitemap).
-  - Views: Mine, To be rated, Together (average total of everyone who
-    rated a park), each friend's list (rail), and a park's page shows
-    everyone's scores.
+  - Views: Mine, To be rated, Friends (each friend and how many parks
+    they've rated; open one for their ranking). A park's page (shown right
+    after rating it) lists every other person's scores and rank for it, or
+    "Hasn't rated it". The Together tab (group averages) was removed: "we
+    dont need this".
   - Saves send `{data, base}` per person; 409 means another device saved
     first and the page takes that copy. localStorage `park_ranking_v1`
     keeps one's own copy (tagged with whose) and unsent changes.

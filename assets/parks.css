@@ -198,11 +198,11 @@
 .parks .pk-join-ask .pk-note { flex-basis: 100%; margin: 0; }
 
 .parks .pk-lead { margin-bottom: var(--s4); }
-.parks .pk-avg { display: inline-flex; align-items: baseline; gap: var(--s3); flex: 0 0 auto; }
-.parks .pk-avg .pk-score-v { color: var(--text); }
 .parks .pk-head .pk-kicker + .pk-title { margin-top: 0; }
 .parks .pk-everyone { margin: 0 0 var(--s6); }
 .parks .pk-everyone .pk-label { font-weight: 400; }
-.parks .pk-row.is-here { background: var(--wash); }
+.parks .pk-row.is-off { cursor: default; }
+.parks .pk-row.is-off:hover { background: none; }
+.parks .pk-row.is-off .pk-park { color: var(--text-faint); }
 .parks .pk-sum { flex: 0 0 2em; text-align: right; font: 400 var(--t-row)/1.3 var(--mono); font-variant-numeric: tabular-nums; color: var(--text); }
 .parks .pk-foot { margin-top: var(--s7); }

@@ -19,8 +19,12 @@
    - Typing "Newton" asks for the Personal password (the same token as
      personal-gate.js, "personal_token_v1"). Signed in, he can also remove
      a person.
-   Everyone in the group sees everyone's ratings: each person's list, each
-   park's scores from everyone, and Together (average totals).
+   Everyone sees everyone's ratings: the Friends tab lists each friend
+   (open one for their ranking), and a park's page shows every friend's
+   scores and rank for it, or that they haven't rated it (his ask: "after i
+   rate each park i should also be able to see friend's rating … rate &
+   rank for all of them"). The old Together tab (group averages) is gone:
+   "we dont need this".
    Each save sends one person's whole ranking with the version it was based
    on; if another device saved first, the page takes that version and says
    so. localStorage "park_ranking_v1" keeps a copy of one's own ranking (and
@@ -62,7 +66,7 @@
   ];
 
   var L = ZH ? {
-    loading: "加载中……", failed: "公园列表加载失败。", ranked: "我的", unrated: "待评分", together: "大家",
+    loading: "加载中……", failed: "公园列表加载失败。", ranked: "我的", unrated: "待评分", friendsTab: "朋友",
     count: function (n, all) { return "已评 " + n + " / " + all; },
     noneRanked: "你还没有评过分的公园。去「待评分」里选一个你去过的公园。",
     allRated: "所有公园都评过了。", search: "搜索公园", rate: "评分", total: "总分",
@@ -87,11 +91,11 @@
     youAre: function (n) { return "你是 " + n; }, notYou: "不是你？",
     removePerson: function (n) { return "把" + n + "移出"; },
     removePersonAsk: function (n) { return "把" + n + "和他们的所有评分移出？"; },
-    togetherNote: "至少有一个人评过的公园，按平均总分排列。",
-    people: function (n) { return n + " 人"; }, avg: "平均", everyone: "每个人的评分",
-    noneTogether: "还没有人评分。"
+    noFriends: "还没有朋友加入。把这个页面发给他们，输入名字就能开始评分。",
+    nRated: function (n) { return "评了 " + n + " 个公园"; },
+    notRated: "还没评", friendsOn: "朋友的评分", othersOn: "其他人的评分"
   } : {
-    loading: "Loading…", failed: "The list of parks didn't load.", ranked: "Mine", unrated: "To be rated", together: "Together",
+    loading: "Loading…", failed: "The list of parks didn't load.", ranked: "Mine", unrated: "To be rated", friendsTab: "Friends",
     count: function (n, all) { return n + " of " + all + " rated"; },
     noneRanked: "You haven't rated any parks yet. Pick one you've been to under To be rated.",
     allRated: "Every park has been rated.", search: "Find a park", rate: "Rate", total: "Total",
@@ -116,9 +120,9 @@
     youAre: function (n) { return "You're " + n; }, notYou: "Not you?",
     removePerson: function (n) { return "Remove " + n; },
     removePersonAsk: function (n) { return "Remove " + n + " and all their ratings?"; },
-    togetherNote: "Every park at least one person has rated, by average total.",
-    people: function (n) { return n === 1 ? "1 person" : n + " people"; }, avg: "Average", everyone: "Everyone's scores",
-    noneTogether: "Nobody has rated a park yet."
+    noFriends: "No friends here yet. Send them this page: they type their name and start rating.",
+    nRated: function (n) { return n === 1 ? "1 park rated" : n + " parks rated"; },
+    notRated: "Hasn't rated it", friendsOn: "Friends' ratings", othersOn: "Everyone else's ratings"
   };
 
   var view = root.querySelector(".pk-view");
@@ -315,23 +319,11 @@
     var st = inside && shown ? rankingOf(shown) : null;
     countEl.textContent = st ? (shown !== me ? whoName(shown) + " · " : "") + L.count(Object.keys(st.rated).length, parks.length) : "";
     var on = state.view === "unrated" ? "unrated"
-      : state.view === "together" || (state.view === "detail" && state.who === null) ? "together"
-      : shown === me ? "ranked" : "";
+      : state.view === "friends" || shown !== me ? "friends" : "ranked";
     tabs.forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-view") === on)); });
 
     peopleBox.textContent = "";
-    var others = people.filter(function (p) { return p.id !== me; });
-    peopleBox.hidden = !inside || !others.length;
-    if (inside && others.length) {
-      peopleBox.appendChild(el("p", "pk-label", L.friends));
-      others.forEach(function (p) {
-        var b = button("pk-person", null, function () { go({ view: "ranked", who: p.id }); });
-        b.appendChild(el("span", "pk-person-name", p.name));
-        b.appendChild(el("span", "pk-person-n", String(Object.keys(p.data.rated).length)));
-        b.setAttribute("aria-pressed", String(looking && state.who === p.id));
-        peopleBox.appendChild(b);
-      });
-    }
+    peopleBox.hidden = true;
 
     shareBox.textContent = "";
     if (inside) {
@@ -400,7 +392,7 @@
     if (state.view === "compare") return drawCompare();
     if (state.view === "detail") return drawDetail();
     if (state.view === "unrated") return drawUnrated();
-    if (state.view === "together") return drawTogether();
+    if (state.view === "friends") return drawFriends();
     drawRanked();
   }
 
@@ -567,34 +559,20 @@
     fill();
   }
 
-  // Every person's rating of one park, in the group's order.
-  function ratingsOf(id) {
-    var out = [];
-    people.forEach(function (p) {
-      var st = rankingOf(p.id), r = st.rated[id];
-      if (r) out.push({ who: p.id, r: r, rank: rankedList(st).indexOf(id) + 1, of: Object.keys(st.rated).length });
-    });
-    return out;
-  }
-
-  function drawTogether() {
-    var rows = [];
-    parks.forEach(function (p) {
-      var rs = ratingsOf(p.id);
-      if (!rs.length) return;
-      var sum = 0;
-      rs.forEach(function (x) { sum += totalOf(x.r); });
-      rows.push({ p: p, avg: sum / rs.length, n: rs.length });
-    });
-    if (!rows.length) { view.appendChild(el("p", "pk-note", L.noneTogether)); return; }
-    rows.sort(function (a, b) { return b.avg - a.avg || b.n - a.n || a.p.name.localeCompare(b.p.name); });
-    view.appendChild(el("p", "pk-note pk-lead", L.togetherNote));
-    var ol = el("ol", "pk-list");
-    rows.forEach(function (x, i) {
-      var right = el("span", "pk-avg");
-      right.appendChild(el("span", "pk-score-v", x.avg.toFixed(1)));
-      right.appendChild(el("span", "pk-state", L.people(x.n)));
-      ol.appendChild(parkRow(x.p, right, function () { go({ view: "detail", id: x.p.id, who: null }); }, i + 1));
+  function drawFriends() {
+    var others = people.filter(function (p) { return p.id !== me; });
+    if (!others.length) { view.appendChild(el("p", "pk-note", L.noFriends)); return; }
+    var ol = el("ul", "pk-list");
+    others.forEach(function (p) {
+      var li = el("li");
+      var b = button("pk-row", null, function () { go({ view: "ranked", who: p.id }); });
+      var nm = el("span", "pk-name");
+      nm.appendChild(el("span", "pk-park", p.name));
+      nm.appendChild(el("span", "pk-state", L.nRated(Object.keys(p.data.rated).length)));
+      b.appendChild(nm);
+      b.appendChild(el("span", "pk-go", "→"));
+      li.appendChild(b);
+      ol.appendChild(li);
     });
     view.appendChild(ol);
   }
@@ -602,7 +580,7 @@
   function head(p, extra) {
     var h = el("div", "pk-head");
     h.appendChild(button("pk-back", L.back, function () {
-      if (state.view === "detail") { go(state.who === null ? { view: "together" } : { view: "ranked", who: state.who }); return; }
+      if (state.view === "detail") { go({ view: "ranked", who: state.who }); return; }
       go({ view: store.rated[p.id] ? "detail" : "unrated", id: p.id, who: me });
     }));
     if (extra) h.appendChild(extra);
@@ -731,14 +709,13 @@
   function drawDetail() {
     var p = byId[state.id];
     if (!p) { go({ view: "ranked" }); return; }
-    var who = state.who === undefined ? me : state.who;
-    var st = who ? rankingOf(who) : null, r = st && st.rated[p.id];
-    if (who && !r) { go({ view: "ranked", who: who }); return; }
-    var all = ratingsOf(p.id);
+    var who = state.who == null ? me : state.who;
+    var st = rankingOf(who), r = st.rated[p.id];
+    if (!r) { go({ view: "ranked", who: who }); return; }
     view.appendChild(head(p, who && who !== me ? el("p", "pk-kicker", L.rankingOf(whoName(who))) : null));
     var box = el("div", "pk-detail");
     var big = el("p", "pk-big");
-    if (r) {
+    {
       var list = rankedList(st);
       big.appendChild(el("span", "pk-big-n", String(totalOf(r))));
       big.appendChild(el("span", "pk-big-of", "/ " + MAX));
@@ -760,31 +737,39 @@
         box.appendChild(d);
       }
       if (r.notes) box.appendChild(el("p", "pk-notes", r.notes));
-    } else if (all.length) {
-      var sum = 0;
-      all.forEach(function (x) { sum += totalOf(x.r); });
-      big.appendChild(el("span", "pk-big-n", (sum / all.length).toFixed(1)));
-      big.appendChild(el("span", "pk-big-of", "/ " + MAX));
-      big.appendChild(el("span", "pk-big-rank", L.avg + " · " + L.people(all.length)));
-      box.appendChild(big);
     }
     view.appendChild(box);
 
-    // Everyone's scores for this park, when anyone besides the person shown has rated it.
-    if (all.some(function (x) { return x.who !== who; })) {
+    // Every other person's score and rank for this park, or that they haven't rated it.
+    var others = people.filter(function (x) { return x.id !== who; });
+    if (others.length) {
+      var rows = others.map(function (x) {
+        var xs = rankingOf(x.id), xr = xs.rated[p.id];
+        return { id: x.id, r: xr, rank: xr ? rankedList(xs).indexOf(p.id) + 1 : 0, of: Object.keys(xs.rated).length };
+      });
+      rows.sort(function (a, b) {
+        return (b.r ? 1 : 0) - (a.r ? 1 : 0) || (b.r && a.r ? totalOf(b.r) - totalOf(a.r) : 0) || whoName(a.id).localeCompare(whoName(b.id));
+      });
       var sec = el("section", "pk-everyone");
-      sec.appendChild(el("h3", "pk-label", L.everyone));
+      sec.appendChild(el("h3", "pk-label", who === me ? L.friendsOn : L.othersOn));
       var ol = el("ul", "pk-list");
-      all.forEach(function (x) {
+      rows.forEach(function (x) {
         var li = el("li");
-        var b = button("pk-row" + (x.who === who ? " is-here" : ""), null, function () { go({ view: "detail", id: p.id, who: x.who }); });
         var nm = el("span", "pk-name");
-        nm.appendChild(el("span", "pk-park", whoName(x.who)));
-        nm.appendChild(el("span", "pk-state", L.of(x.rank, x.of)));
-        b.appendChild(nm);
-        b.appendChild(scoreLine(x.r));
-        b.appendChild(el("span", "pk-sum", String(totalOf(x.r))));
-        li.appendChild(b);
+        nm.appendChild(el("span", "pk-park", whoName(x.id)));
+        if (x.r) {
+          var b = button("pk-row", null, function () { go({ view: "detail", id: p.id, who: x.id }); });
+          nm.appendChild(el("span", "pk-state", L.of(x.rank, x.of)));
+          b.appendChild(nm);
+          b.appendChild(scoreLine(x.r));
+          b.appendChild(el("span", "pk-sum", String(totalOf(x.r))));
+          li.appendChild(b);
+        } else {
+          var d = el("div", "pk-row is-off");
+          nm.appendChild(el("span", "pk-state", L.notRated));
+          d.appendChild(nm);
+          li.appendChild(d);
+        }
         ol.appendChild(li);
       });
       sec.appendChild(ol);
@@ -856,7 +841,7 @@
     root.querySelector(".about-name").textContent = "项目 · Newton Liu";
     tabs[0].textContent = L.ranked;
     tabs[1].textContent = L.unrated;
-    tabs[2].textContent = L.together;
+    tabs[2].textContent = L.friendsTab;
     backupBox.querySelector('[data-act="export"]').textContent = "保存副本";
     backupBox.querySelector('[data-act="import"]').textContent = "恢复副本";
   }

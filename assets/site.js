@@ -232,7 +232,7 @@
     "projects.ebird.kicker": "网页应用 · 2026", "projects.shootplanner.kicker": "网页应用 · 2026",
     "projects.retreatfinder.kicker": "网页应用 · 2026", "projects.siteranking.kicker": "网页应用 · 2026",
     "projects.parkranking.kicker": "网页应用 · 2026", "projects.parkranking.status": "建设中", "projects.parkranking.note": "无需密码",
-    "projects.parkranking.blurb": "一个我和朋友们共享的美国国家公园排名，做法与 Site Ranking 相同。每个人给自己去过的公园按风景、活动和野生动物各打 1 到 5 分；总分决定公园所在的档次，再通过两两比较排出每一档的先后。我们能看到彼此的排名和大家的平均分。",
+    "projects.parkranking.blurb": "一个我和朋友们共享的美国国家公园排名，做法与 Site Ranking 相同。每个人给自己去过的公园按风景、活动和野生动物各打 1 到 5 分；总分决定公园所在的档次，再通过两两比较排出每一档的先后。我们能看到彼此的排名，以及每个人给每个公园的分数。",
     "projects.ebird.status": "建设中", "projects.shootplanner.status": "建设中",
     "projects.retreatfinder.status": "建设中", "projects.siteranking.status": "建设中",
     "projects.ebird.note": "无需密码", "projects.shootplanner.note": "需要密码",
