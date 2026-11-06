@@ -1607,8 +1607,9 @@ Ranking". Made like the eBird Site Ranking, but on this site:
   (`.pk-show`, right of the filter, localStorage "park_ranking_show"): the map
   is MapLibre (loaded by parks.js on first use) on OpenFreeMap tiles in
   travel-map.js's colours, one pin a rated park at its `lat`/`lng` in
-  data/national-parks.json (Wikidata, a few by hand), Liked = accent, Mid =
-  grey, No = hollow ring; hover names it with its score, click opens it
+  data/national-parks.json (Wikidata, a few by hand), colored by rank among
+  the parks shown, green (#1) through amber to red (last) (his ask,
+  2026-11-06; key = a ramp + "n parks on the map"); hover names it with its score, click opens it
   (first tap on touch). "Export PDF" (rail, by Save a copy) builds `.pk-print`
   and calls window.print(): my ranking under the filter, a table per group
   (#, park, state, score, category, S/A/W, visited, notes); print CSS hides

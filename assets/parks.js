@@ -119,6 +119,7 @@
     pdfMade: function (d) { return "导出于 " + d; },
     show: { list: "列表", map: "地图" }, showLabel: "显示方式", mapFailed: "地图加载失败。",
     mapCount: function (n) { return "地图上 " + n + " 个公园"; },
+    keyHigh: "排名最高", keyLow: "最低",
     zoomTouch: "用两根手指移动地图", zoomWin: "按住 Ctrl 滚动来缩放地图", zoomMac: "按住 ⌘ 滚动来缩放地图"
   } : {
     loading: "Loading…", failed: "The list of parks didn't load.", ranked: "Mine", unrated: "To be rated", friendsTab: "Friends",
@@ -167,6 +168,7 @@
     pdfNone: "No parks rated yet.", pdfMade: function (d) { return "Exported " + d; },
     show: { list: "List", map: "Map" }, showLabel: "Show as", mapFailed: "The map didn't load.",
     mapCount: function (n) { return n === 1 ? "1 park on the map" : n + " parks on the map"; },
+    keyHigh: "Highest rated", keyLow: "Lowest",
     zoomTouch: "Use two fingers to move the map", zoomWin: "Use Ctrl + scroll to zoom the map", zoomMac: "Use ⌘ + scroll to zoom the map"
   };
 
@@ -722,8 +724,8 @@
 
   // ---- the map --------------------------------------------------------------
   // A ranking's parks as pins (MapLibre and OpenFreeMap's tiles, as on the
-  // travel log, in the landing's colours): Liked it in the accent, Mid grey,
-  // Didn't like it a hollow ring. Pointing at a pin names it with its score;
+  // travel log, in the landing's colours), green at the top of the ranking to
+  // red at its bottom. Pointing at a pin names it with its score;
   // clicking opens the park (on a touch screen the first tap names it). The
   // map is made once and kept across redraws; MapLibre loads on first use.
 
@@ -808,15 +810,16 @@
       mapBox.appendChild(mapEl);
     }
     view.appendChild(mapBox);
+    // Pins run green (the top of the ranking) to red (its bottom), his ask 2026-11-06.
     var key = el("p", "pk-map-key");
-    GROUPS.forEach(function (g) {
-      var n = ids.filter(function (id) { return st.rated[id].like === g.k; }).length;
-      if (!n) return;
-      var k = el("span", "pk-key is-" + g.k);
-      k.appendChild(el("i", "pk-dot"));
-      k.appendChild(document.createTextNode(L.group[g.k] + " · " + n));
+    if (ids.length) {
+      var k = el("span", "pk-key");
+      k.appendChild(document.createTextNode(L.keyHigh));
+      k.appendChild(el("i", "pk-ramp"));
+      k.appendChild(document.createTextNode(L.keyLow));
       key.appendChild(k);
-    });
+      key.appendChild(el("span", "pk-key", L.mapCount(ids.length)));
+    }
     view.appendChild(key);
     if (mapFailed) { view.insertBefore(el("p", "pk-note", L.mapFailed), mapBox); mapBox.hidden = true; return; }
     mapWant = { st: st, ids: ids, who: who };
@@ -848,23 +851,28 @@
 
   function closeTips() { pins.forEach(function (p) { p.el.classList.remove("is-open"); }); }
 
+  // 0 = top of the ranking (green) … 1 = bottom (red), through amber.
+  function rampColor(t) {
+    return "hsl(" + Math.round(130 * (1 - t)) + ", 58%, " + Math.round(42 + 6 * Math.sin(Math.PI * t)) + "%)";
+  }
   function placePins() {
     var w = mapWant;
     if (!map || !w) return;
     pins.forEach(function (p) { p.marker.remove(); });
     pins = [];
     var ml = window.maplibregl, b = new ml.LngLatBounds(), n = 0;
-    // Disliked first, so the liked pins sit on top where they crowd.
-    var order = w.ids.slice().reverse();
+    // Lowest first, so the best-ranked pins sit on top where they crowd.
+    var order = w.ids.slice().reverse(), last = Math.max(1, w.ids.length - 1);
     order.forEach(function (id) {
-      var p = byId[id], r = w.st.rated[id];
+      var p = byId[id];
       if (!p || p.lat == null) return;
-      var e = button("pk-pin is-" + r.like, null, function (ev) {
+      var e = button("pk-pin", null, function (ev) {
         ev.stopPropagation();
         if (COARSE && !e.classList.contains("is-open")) { closeTips(); e.classList.add("is-open"); return; }
         go({ view: "detail", id: id, who: w.who });
       });
       e.setAttribute("aria-label", nameOf(p) + ", " + fmt(scoreOf(w.st, id)) + " / 10");
+      e.style.setProperty("--pin", rampColor(w.ids.indexOf(id) / last));
       e.appendChild(el("i", "pk-dot"));
       var tip = el("span", "pk-tip");
       tip.appendChild(el("span", "pk-tip-name", nameOf(p)));
