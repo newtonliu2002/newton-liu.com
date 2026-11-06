@@ -67,7 +67,7 @@ ROOT_PAGES = ("index.html", "work.html", "projects.html", "about.html", "contact
 # The Personal pages, behind the password (assets/personal-gate.js): kept out
 # of the sitemap, and each carries <meta name="robots" content="noindex">.
 PRIVATE_PAGES = ("chess.html", "chess-games.html", "podcast-tracker.html", "travel-fall-2026.html",
-                 "national-park-ranking.html")
+                 "national-park-ranking.html", "academia.html")
 # A link preview's picture where a page has none of its own: the About band
 # (images/_about/ is in git, so served by Pages), at its 1600 rung, real size.
 SHARE_IMAGE = ("images/_about/1600/B0003302.jpg", 1600, 592, "Photograph from Alaska")
@@ -446,7 +446,6 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
       <a href="../../#collections" aria-current="page">Work</a>
       <a href="../../about.html">About</a>
       <button type="button" class="nav-tab" data-menu="journals">Journals</button>
-      <a href="../../academia.html">Academia</a>
       <button type="button" class="nav-tab" data-menu="personal">Personal</button>
       <a href="../../projects.html">Projects</a>
       <a href="../../contact.html">Contact</a>

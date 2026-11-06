@@ -1161,11 +1161,11 @@ The tab is in the nav of every page: the hand-written pages, this one,
 the journal pages, and `PAGE_TEMPLATE` in build.py for the collection pages.
 
 **The nav, in order** (Newton, 2026-10-17; Personal 2026-10-21; Chess
-moved under Personal 2026-10-28): Work · About · Journals · Academia ·
-Personal · Projects · Contact. **Personal** is a page-less tab like
+moved under Personal 2026-10-28; Academia moved under Personal 2026-11-06):
+Work · About · Journals · Personal · Projects · Contact. **Personal** is a page-less tab like
 Journals (`data-menu="personal"`); its entries are the Podcast Tracker
 (see "Podcast Tracker"), the Fall 2026 Travel Log (see "Travel log") and
-Chess (see "Chess"); on each of their pages the Personal tab is current. **Journals** is not a link (he wanted it
+Chess (see "Chess") and Academia (academia.html, his research intro); on each of their pages the Personal tab is current. **Journals** is not a link (he wanted it
 unclickable): `<button class="nav-tab" data-menu="journals">`, keyed in
 `NAV_MENUS` by its `data-menu`, whose one entry is Québec
 (journals/quebec/; `zh` gives 魁北克). Pointing opens it as for Projects;
@@ -1173,7 +1173,7 @@ a click or tap opens and shuts it (`.is-open`, `aria-expanded`), so a touch
 screen gets it too, and on a phone it opens inline in the scrolling nav row
 after a short rule. On a journal page the tab is current (`.is-current`,
 the amber square) and its entry `aria-current`. A new journal is one entry
-there. **Academia** links to academia.html, empty until he writes it.
+there.
 
 **The drop-down.** Pointing at the Projects tab (or tabbing onto it) drops
 a menu under it with "eBird Explorer ↗", which opens the app itself, not
@@ -1595,7 +1595,9 @@ Ranking". Made like the eBird Site Ranking, but on this site:
   (2026-11-06, "like how Beli works"): 1. "Did you like it?" Yes / Mid /
   No (the group); 2. "Which did you like more?" places it in its group by
   halving (with "Too close to call" and "Skip"); 3. scenery, activities,
-  wildlife 1–5, weighted 40/35/25 %, skippable. Two numbers per park: a
+  wildlife 1–5, weighted 40/35/25 %, plain number buttons with no
+  descriptions (he had them removed), Skip up top by the category score.
+  Two numbers per park: a
   score out of 10 (Yes 10–6.7, Mid 6.6–3.4, No 3.3–0, the group's top for
   its best park then steps of range/n) and the weighted category score out
   of 5 ("—" if skipped). Lists go by the first. Ranking format v2
@@ -1638,8 +1640,8 @@ Ranking". Made like the eBird Site Ranking, but on this site:
 
 Asked for 2026-11-06 ("front door lock", his pick over moving the data off
 GitHub). The Personal tab and its entries stay in the nav for everyone; the
-four Personal pages (podcast-tracker.html, travel-fall-2026.html, chess.html,
-chess-games.html) load `assets/personal-gate.js` in their `<head>` (after
+Personal pages (podcast-tracker.html, travel-fall-2026.html, chess.html,
+chess-games.html, academia.html since 2026-11-06) load `assets/personal-gate.js` in their `<head>` (after
 the lang line), which hides `main` and the footer and shows a password box
 under the masthead until the `personal` Worker's `POST /login` accepts the
 password. The token (`personal_token_v1` in localStorage) keeps that browser

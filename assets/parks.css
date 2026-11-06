@@ -111,10 +111,6 @@
 }
 .parks .pk-pick button:hover { color: var(--text); border-color: var(--text-faint); }
 .parks .pk-pick button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
-.parks .pk-anchors { list-style: none; margin: var(--s3) 0 0; padding: 0; font-size: var(--t-meta); line-height: 1.6; color: var(--text-faint); }
-.parks .pk-anchors li.is-on { color: var(--text); }
-.parks .pk-anchor-n { display: inline-block; width: 1.4em; font-family: var(--mono); }
-.parks .pk-anchors li.is-on .pk-anchor-n { color: var(--accent); }
 
 .parks .pk-more { display: grid; gap: var(--s4); max-width: 26rem; margin: 0 0 var(--s6); }
 .parks .pk-field span { display: block; margin-bottom: var(--s2); font: 400 var(--t-label)/16px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--text-faint); }

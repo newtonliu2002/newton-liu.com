@@ -78,7 +78,9 @@
       { label: "Fall 2026 Travel Log", zh: "2026秋季旅行记录", href: "travel-fall-2026.html" },
       // Chess moved here from its own tab (Newton, 2026-10-28): the map,
       // whose pins and "Database →" open the games.
-      { label: "Chess", zh: "国际象棋", href: "chess.html" }
+      { label: "Chess", zh: "国际象棋", href: "chess.html" },
+      // Academia moved here from its own tab, behind the password too (Newton, 2026-11-06).
+      { label: "Academia", zh: "学术", href: "academia.html" }
     ]
   };
 

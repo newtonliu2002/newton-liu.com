@@ -64,19 +64,11 @@
   ];
   var WEIGHT = { s: 0.40, a: 0.35, w: 0.25 };
 
+  // No 1–5 descriptions under the scores: he had them removed (2026-11-06).
   var AXES = [
-    { k: "s", en: "Scenery", zh: "风景", anchors: {
-      en: ["Plain: little that stands out", "Pleasant, but ordinary", "Good views and a few memorable spots",
-           "Striking: many places worth stopping for", "World-class: unforgettable landscapes"],
-      zh: ["平淡，没有突出的景色", "宜人，但普通", "风景不错，有几处难忘的地方", "令人惊叹，处处值得停留", "世界级，令人难忘的风景"] } },
-    { k: "a", en: "Activities", zh: "活动", anchors: {
-      en: ["Little to do beyond a short look", "A few short walks or drives", "A good day or two of hikes and things to do",
-           "Plenty: varied trails, camping, water, days of it", "Endless: backcountry and every kind of adventure"],
-      zh: ["除了看一眼没什么可做", "几条短步道或观景路线", "足够一两天的徒步和活动", "内容丰富：多样的步道、露营、水上活动，可以玩好几天", "无穷无尽：荒野深处和各种探险"] } },
-    { k: "w", en: "Wildlife", zh: "野生动物", anchors: {
-      en: ["Hardly anything seen", "Common animals and birds", "Some good sightings",
-           "Rich: notable animals or lots of birds", "Exceptional: the wildlife you came for"],
-      zh: ["几乎没看到动物", "常见的动物和鸟", "有一些不错的目击", "丰富：有特别的动物或大量的鸟", "非凡：见到了专程为之而来的野生动物"] } }
+    { k: "s", en: "Scenery", zh: "风景" },
+    { k: "a", en: "Activities", zh: "活动" },
+    { k: "w", en: "Wildlife", zh: "野生动物" }
   ];
 
   var L = ZH ? {
@@ -780,28 +772,19 @@
       var f = el("fieldset", "pk-axis");
       f.appendChild(el("legend", null, (ZH ? ax.zh : ax.en) + " · " + Math.round(WEIGHT[ax.k] * 100) + "%"));
       var row = el("div", "pk-pick");
-      var anchors = el("ol", "pk-anchors");
       var btns = [];
       for (var v = 1; v <= 5; v++) (function (v) {
         var b = button(null, String(v), function () {
           r[ax.k] = v;
           btns.forEach(function (x, i) { x.setAttribute("aria-pressed", String(i + 1 === v)); });
-          [].forEach.call(anchors.children, function (x, i) { x.classList.toggle("is-on", i + 1 === v); });
           sync();
         });
         b.setAttribute("aria-pressed", String(r[ax.k] === v));
-        b.setAttribute("aria-label", (ZH ? ax.zh : ax.en) + " " + v + ": " + ax.anchors[ZH ? "zh" : "en"][v - 1]);
+        b.setAttribute("aria-label", (ZH ? ax.zh : ax.en) + " " + v);
         btns.push(b);
         row.appendChild(b);
       })(v);
-      ax.anchors[ZH ? "zh" : "en"].forEach(function (txt, i) {
-        var li = el("li", r[ax.k] === i + 1 ? "is-on" : null);
-        li.appendChild(el("span", "pk-anchor-n", String(i + 1)));
-        li.appendChild(document.createTextNode(txt));
-        anchors.appendChild(li);
-      });
       f.appendChild(row);
-      f.appendChild(anchors);
       view.appendChild(f);
     });
 
@@ -873,7 +856,6 @@
         var row = el("p", "pk-axis-line");
         row.appendChild(el("span", "pk-score-k", ZH ? ax.zh : ax.en));
         row.appendChild(el("span", "pk-score-v", r[ax.k] + " / 5"));
-        row.appendChild(el("span", "pk-axis-txt", ax.anchors[ZH ? "zh" : "en"][r[ax.k] - 1]));
         box.appendChild(row);
       });
       if (r.date) {
