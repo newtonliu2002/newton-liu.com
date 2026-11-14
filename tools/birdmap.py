@@ -16,7 +16,8 @@ A sighting counts as eBird counts it, by the eBird taxonomy (downloaded
 once, public): a species, or a subspecies group or form of one, counted as
 its species; Feral Pigeon counts as Rock Pigeon; other domestic types,
 "sp.", slashes and hybrids don't. On 2026-10-16 this matched his profile's
-world total (1,373) and every country but Malaysia (see PROFILE).
+world total (1,373) and every country but Malaysia; since then eBird's
+own totals (EBIRD) are laid over it.
 
 The outlines are Natural Earth (public domain): world-atlas's 50m countries,
 us-atlas's Albers USA states (Alaska and Hawaii inset, like eBird's) and its
@@ -66,9 +67,13 @@ COUNTRIES = {
     "BS": ("044", "Bahamas", "districts"),
     "KH": ("116", "Cambodia", "provinces"),
 }
-# Where his eBird profile counts differently from the export (2026-10-16:
-# Malaysia shows 117 there, 118 here, all of them in Sabah).
-PROFILE = {"MY": 117, "MY-12": 117}
+# His life-list totals as eBird itself shows them (ebird.org/lifelist?r=<code>,
+# signed in), read after the export: they win over the export's counts and
+# add regions it doesn't have yet. eBird recounts old sightings when its
+# taxonomy changes, which an old export can't; on 2026-10-16 the export
+# matched them everywhere but Malaysia (117 there, 118 here, all in Sabah).
+# Only counts; the page shows them anyway.
+EBIRD = os.path.join(ROOT, "tools", "birdmap-ebird.json")
 # Outlines left off a country's map: Morocco's two regions in Western Sahara,
 # which eBird and the world map keep apart.
 SKIP = {"MA-15", "MA-16"}
@@ -267,8 +272,13 @@ def counts(export):
         if not sp: continue
         world.add(sp); country[cc].add(sp)
         if code.split("-", 1)[-1] and "-" in code: region[code].add(sp)
-    n = lambda k, v: PROFILE.get(k, len(v))
-    return len(world), {k: n(k, v) for k, v in country.items()}, {k: n(k, v) for k, v in region.items()}, where
+    total, country, region = len(world), {k: len(v) for k, v in country.items()}, {k: len(v) for k, v in region.items()}
+    if os.path.exists(EBIRD):
+        for k, n in json.load(open(EBIRD, encoding="utf-8"))["counts"].items():
+            if k == "world": total = n
+            elif "-" in k: region[k] = n
+            else: country[k] = n
+    return total, country, region, where
 
 
 # ---- regions -----------------------------------------------------------

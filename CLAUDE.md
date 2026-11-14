@@ -939,9 +939,14 @@ export (My eBird → Download my data; by default the copy in his Desktop
 Portfolio Website folder, never committed: it holds every checklist's
 coordinates, used only on this Mac to match regions to outlines) the way
 eBird does, by the public eBird taxonomy. On 2026-10-16 it matched his
-profile's world total and every country but Malaysia (PROFILE overrides
-that one). It downloads the outlines once into `_arrange/geo-src/` and
-restamps the data-src. New counts: a fresh export, then rerun; a new
+profile's world total and every country but Malaysia. Since 2026-11-14
+`tools/birdmap-ebird.json` (his life-list totals per world/country/region,
+read signed in from ebird.org/lifelist?r=<code>) is laid over the export's
+counts and adds regions the export lacks (Nova Scotia): eBird recounts old
+sightings after a taxonomy change, which an old export can't (1,373 → 1,396).
+It downloads the outlines once into `_arrange/geo-src/` and restamps the
+data-src. New counts: refresh birdmap-ebird.json from eBird (or a fresh
+export), update the caption's 截至 month in about.html, then rerun; a new
 country: one line in COUNTRIES. Puerto Rico's municipalities and the Virgin
 Islands come from us-atlas's counties; two border cases in Puerto Rico are
 pinned in MATCH; Morocco's map leaves out Western Sahara (SKIP).
