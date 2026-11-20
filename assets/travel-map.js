@@ -451,6 +451,13 @@
   function pinsOf(trip) {
     return trip.stops.map(function (s) { return s.place.pin; }).filter(Boolean);
   }
+  // Only one trip's pins while a trip is lit or chosen; every pin when none
+  // is (Newton, 2026-11-20). Pointing at a pin leaves them as they are, so
+  // the next pin is still there to point at.
+  function showPins(trip) {
+    var keep = trip ? pinsOf(trip) : null;
+    pins.forEach(function (p) { p.el.classList.toggle("is-away", !!keep && keep.indexOf(p) < 0); });
+  }
 
   // A trip lit: its row, its pins, its road, its plate (at its first stop).
   function light(e) {
@@ -461,6 +468,7 @@
     if (e.row) e.row.classList.add("is-lit");
     pinsOf(e).forEach(function (p) { p.el.classList.add("is-lit"); });
     litRoad(e.id);
+    showPins(e);
     readout(e);
     if (e.stops.length) showPlate(e.stops[0].place, tripPlate(e));
   }
@@ -492,6 +500,7 @@
       was.visits.forEach(function (v) { if (v.trip.row) v.trip.row.classList.remove("is-lit"); });
     }
     litRoad(current ? current.id : "");
+    showPins(current);
     hidePlate();
     readout(null);
   }
@@ -512,6 +521,7 @@
     current = e;
     if (e && e.row) e.row.setAttribute("aria-current", "true");
     litRoad(e ? e.id : "");
+    showPins(e);
   }
   function chosen() {
     var id = "";

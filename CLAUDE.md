@@ -1486,8 +1486,14 @@ redone for trips, public (his pick).
   pins): Richmond – D.C. (Nov 12) – Wellesley, MA (his word, 11-20; no date) – Halifax (13) – Peggy's Cove (14) –
   Lunenburg (15, for Blue Rocks) – Cape Sable Island (16) – Acadia (17,
   Schoodic and the Mount Desert Narrows) – Richmond, home Nov 18 (he
-  confirmed the drive and the date). Also his word: D.C. day trips from
-  Richmond on Nov 10 and Nov 19.
+  confirmed the drive and the date); it went through Wellesley, MA (his
+  word), and crossed between Maine and New Brunswick by the southern route
+  both ways (Calais – Saint John, then Moncton; "northern route was never
+  taken", so the waypoints pin it there). Also his word: D.C. day trips from Richmond on Nov 10 and Nov 19,
+  Nov 6–8 Richmond – D.C. – Richmond, the Oct 23 trip ends Oct 25 (not 24), and Oct 30–31 Richmond –
+  Charlottesville – Tysons Corner – D.C. – Richmond. **Pins:** while a trip
+  is lit or chosen, the other trips' pins hide (showPins, `.is-away`; his
+  ask 2026-11-20); pointing at a pin leaves them as they are.
   It replaced a first list read from his eBird export (2026-10-22).
   **New trips: he tells me**; one entry each, in date order, added once
   he is back, never while he is away.
