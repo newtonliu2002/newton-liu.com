@@ -1485,8 +1485,9 @@ redone for trips, public (his pick).
   Brunswick both ways; the eBird report's checklist spots are waypoints, not
   pins): Richmond – D.C. (Nov 12) – Halifax (13) – Peggy's Cove (14) –
   Lunenburg (15, for Blue Rocks) – Cape Sable Island (16) – Acadia (17,
-  Schoodic and the Mount Desert Narrows) – Richmond; end Nov 17 (the day
-  home is a guess he didn't give).
+  Schoodic and the Mount Desert Narrows) – Richmond, home Nov 18 (he
+  confirmed the drive and the date). Also his word: D.C. day trips from
+  Richmond on Nov 10 and Nov 19.
   It replaced a first list read from his eBird export (2026-10-22).
   **New trips: he tells me**; one entry each, in date order, added once
   he is back, never while he is away.
