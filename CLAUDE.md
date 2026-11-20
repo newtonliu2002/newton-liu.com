@@ -1484,7 +1484,7 @@ redone for trips, public (his pick).
   to richmond". Drawn as one drive (no ferry: the road goes through New
   Brunswick both ways; the eBird report's checklist spots are waypoints, not
   pins): Richmond – D.C. (Nov 12) – Wellesley, MA (his word, 11-20; no date) – Halifax (13) – Peggy's Cove (14) –
-  Lunenburg (15, for Blue Rocks) – Cape Sable Island (16) – Acadia (17,
+  Lunenburg (15, for Blue Rocks) – Baccaro Point (16, a pin at his ask) – Cape Sable Island (16) – Acadia (17,
   Schoodic and the Mount Desert Narrows) – Richmond, home Nov 18 (he
   confirmed the drive and the date); it went through Wellesley, MA (his
   word), and crossed between Maine and New Brunswick by the southern route
