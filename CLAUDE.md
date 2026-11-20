@@ -1479,6 +1479,14 @@ redone for trips, public (his pick).
   2026-11-06, his word: the Québec road goes Montreal – Shawinigan (Oct 9) –
   Île d'Orléans (Oct 10) – Fjord-du-Saguenay; "no need to make pins", so
   they are waypoints in quebec-loop only, not stops.
+  2026-11-20, his word (with his eBird trip report "2026.11 Nova Scotia +
+  Maine", 13–17 Nov): "start from richmond on 11.12, then dc 11.12, the back
+  to richmond". Drawn as one drive (no ferry: the road goes through New
+  Brunswick both ways; the eBird report's checklist spots are waypoints, not
+  pins): Richmond – D.C. (Nov 12) – Halifax (13) – Peggy's Cove (14) –
+  Lunenburg (15, for Blue Rocks) – Cape Sable Island (16) – Acadia (17,
+  Schoodic and the Mount Desert Narrows) – Richmond; end Nov 17 (the day
+  home is a guess he didn't give).
   It replaced a first list read from his eBird export (2026-10-22).
   **New trips: he tells me**; one entry each, in date order, added once
   he is back, never while he is away.

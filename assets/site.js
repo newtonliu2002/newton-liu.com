@@ -277,7 +277,9 @@
       "Bike: Richmond – Williamsburg, round trip": "骑行：里士满 – Williamsburg，往返",
       "Drive: Richmond – Québec – Ottawa – New York City – Richmond": "自驾：里士满 – 魁北克 – 渥太华 – 纽约 – 里士满",
       "Drive: Richmond – Charlottesville – Shenandoah – Washington, D.C. – Philadelphia – Exton – Philadelphia – Washington, D.C. – Richmond": "自驾：里士满 – Charlottesville – Shenandoah – 华盛顿 – 费城 – Exton – 费城 – 华盛顿 – 里士满",
-      "Drive: Richmond – Staunton – Shenandoah – Charlottesville – Tysons Corner – Richmond": "自驾：里士满 – Staunton – Shenandoah – Charlottesville – Tysons Corner – 里士满"
+      "Drive: Richmond – Staunton – Shenandoah – Charlottesville – Tysons Corner – Richmond": "自驾：里士满 – Staunton – Shenandoah – Charlottesville – Tysons Corner – 里士满",
+      "Drive: Richmond – Washington, D.C. – Halifax – Peggy's Cove – Lunenburg – Cape Sable Island – Acadia – Richmond": "自驾：里士满 – 华盛顿 – 哈利法克斯 – Peggy's Cove – Lunenburg – Cape Sable岛 – Acadia – 里士满",
+      "Nova Scotia": "新斯科舍"
     },
     pins: {
       // Major cities, fully Chinese, and Fairbanks and Juneau (Newton,
@@ -288,6 +290,7 @@
       "Rabat": "拉巴特", "Agadir": "阿加迪尔", "Kandy": "康提", "Fairbanks": "费尔班克斯", "Juneau": "朱诺",
       "Washington, D.C.": "华盛顿", "Richmond": "里士满", "New York City": "纽约", "Boston": "波士顿",
       "Philadelphia": "费城", "Los Angeles": "洛杉矶", "Irvine": "尔湾", "Catalina Island": "Catalina岛", "Pasadena": "帕萨迪纳",
+      "Halifax": "哈利法克斯", "Cape Sable Island": "Cape Sable岛",
       "Shenandoah National Park": "Shenandoah国家公园",
       // The best known, fully Chinese (Newton, 2026-10-19)
       "Yellowstone National Park": "黄石国家公园", "Yosemite National Park": "优胜美地国家公园",
