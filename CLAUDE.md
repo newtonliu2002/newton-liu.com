@@ -1491,7 +1491,9 @@ redone for trips, public (his pick).
   both ways (Calais – Saint John, then Moncton; "northern route was never
   taken", so the waypoints pin it there). Also his word: D.C. day trips from Richmond on Nov 10 and Nov 19,
   Nov 6–8 Richmond – D.C. – Richmond, the Oct 23 trip ends Oct 25 (not 24), and Oct 30–31 Richmond –
-  Charlottesville – Tysons Corner – D.C. – Richmond. **Pins:** while a trip
+  Charlottesville – Tysons Corner – D.C. – Richmond. The separate Oct 18
+  New York City · D.C. entry was dropped (2026-11-20, his word): it is the
+  last day of the Québec trip, whose road already runs NYC – D.C. **Pins:** while a trip
   is lit or chosen, the other trips' pins hide (showPins, `.is-away`; his
   ask 2026-11-20); pointing at a pin leaves them as they are.
   It replaced a first list read from his eBird export (2026-10-22).

@@ -156,16 +156,6 @@
    ]
   },
   {
-   "id": "new-york-2026-10-18",
-   "name": "New York City · Washington, D.C.",
-   "start": "2026-10-18",
-   "route": "new-york-2026-10-18",
-   "stops": [
-    { "name": "New York City", "lat": 40.7128, "lng": -74.006 },
-    { "name": "Washington, D.C.", "lat": 38.9072, "lng": -77.0369 }
-   ]
-  },
-  {
    "id": "shenandoah-2026-10-24",
    "name": "Shenandoah · Charlottesville · Washington, D.C.",
    "where": "Drive: Richmond – Staunton – Shenandoah – Charlottesville – Tysons Corner – Richmond",
