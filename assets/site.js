@@ -278,7 +278,7 @@
       "Drive: Richmond – Québec – Ottawa – New York City – Richmond": "自驾：里士满 – 魁北克 – 渥太华 – 纽约 – 里士满",
       "Drive: Richmond – Charlottesville – Shenandoah – Washington, D.C. – Philadelphia – Exton – Philadelphia – Washington, D.C. – Richmond": "自驾：里士满 – Charlottesville – Shenandoah – 华盛顿 – 费城 – Exton – 费城 – 华盛顿 – 里士满",
       "Drive: Richmond – Staunton – Shenandoah – Charlottesville – Tysons Corner – Richmond": "自驾：里士满 – Staunton – Shenandoah – Charlottesville – Tysons Corner – 里士满",
-      "Drive: Richmond – Washington, D.C. – Halifax – Peggy's Cove – Lunenburg – Cape Sable Island – Acadia – Richmond": "自驾：里士满 – 华盛顿 – 哈利法克斯 – Peggy's Cove – Lunenburg – Cape Sable岛 – Acadia – 里士满",
+      "Drive: Richmond – Washington, D.C. – Wellesley – Halifax – Peggy's Cove – Lunenburg – Cape Sable Island – Acadia – Richmond": "自驾：里士满 – 华盛顿 – Wellesley – 哈利法克斯 – Peggy's Cove – Lunenburg – Cape Sable岛 – Acadia – 里士满",
       "Nova Scotia": "新斯科舍"
     },
     pins: {

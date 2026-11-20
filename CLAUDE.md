@@ -1483,7 +1483,7 @@ redone for trips, public (his pick).
   Maine", 13–17 Nov): "start from richmond on 11.12, then dc 11.12, the back
   to richmond". Drawn as one drive (no ferry: the road goes through New
   Brunswick both ways; the eBird report's checklist spots are waypoints, not
-  pins): Richmond – D.C. (Nov 12) – Halifax (13) – Peggy's Cove (14) –
+  pins): Richmond – D.C. (Nov 12) – Wellesley, MA (his word, 11-20; no date) – Halifax (13) – Peggy's Cove (14) –
   Lunenburg (15, for Blue Rocks) – Cape Sable Island (16) – Acadia (17,
   Schoodic and the Mount Desert Narrows) – Richmond, home Nov 18 (he
   confirmed the drive and the date). Also his word: D.C. day trips from

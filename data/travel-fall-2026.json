@@ -192,13 +192,14 @@
   {
    "id": "nova-scotia-maine-2026-11-12",
    "name": "Nova Scotia · Maine",
-   "where": "Drive: Richmond – Washington, D.C. – Halifax – Peggy's Cove – Lunenburg – Cape Sable Island – Acadia – Richmond",
+   "where": "Drive: Richmond – Washington, D.C. – Wellesley – Halifax – Peggy's Cove – Lunenburg – Cape Sable Island – Acadia – Richmond",
    "start": "2026-11-12",
    "end": "2026-11-18",
    "route": "nova-scotia-maine-2026-11-12",
    "stops": [
     { "name": "Richmond", "lat": 37.5407, "lng": -77.436, "date": "2026-11-12" },
     { "name": "Washington, D.C.", "lat": 38.9072, "lng": -77.0369, "date": "2026-11-12" },
+    { "name": "Wellesley", "lat": 42.2968, "lng": -71.2924 },
     { "name": "Halifax", "lat": 44.6488, "lng": -63.5752, "date": "2026-11-13" },
     { "name": "Peggy's Cove", "lat": 44.4924, "lng": -63.9168, "date": "2026-11-14" },
     { "name": "Lunenburg", "lat": 44.3772, "lng": -64.3091, "date": "2026-11-15" },
